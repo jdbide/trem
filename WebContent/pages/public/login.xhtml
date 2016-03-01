@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/layout.xhtml">
+	<ui:define name="contenu">
+		<h:head>
+			<title>#{msg.p_login_titre}</title>
+		</h:head>
+		<h:body>
+			<h:form id="formulaire" enctype="application/x-www-form-urlencoded" action="j_security_check" class="form-signin">
+			
+				<div class="panel panel-primary loginForm">
+					<div class="panel-heading">#{msg.nom_application}</div>
+					
+					<div class="panel-body">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-4">
+									<h:outputLabel value="#{msg.p_login_user}" for="login" />
+								</div>
+								<div class="col-md-8">
+									<h:inputText id="login" class="form-control" value="#{login.login}" autofocus="true" />
+								</div>
+							</div>
+							
+							<div class="row text-center-xs">
+								<div class="col-md-4">
+									<h:outputLabel value="#{msg.p_login_password}" for="password" />
+								</div>
+								<div class="col-md-8">
+									<h:inputSecret id="password" class="form-control" value="#{login.password}" />
+								</div>
+							</div>
+							
+							<div class="row text-center">
+								<div class="col-md-3 col-sm-3 col-xs-12">
+									<h:commandButton class="btn btn-success" id="submit" value="#{msg.libelle_valider}"
+										ajax="false" action="#{login.login}" type="submit" />
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-12">
+									<h:commandButton class="btn btn-default" id="cancel" value="#{msg.libelle_annuler}"
+										ajax="false" action="#{login.cancel}" />
+								</div>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<h:commandButton class="btn btn-info " style="white-space: normal;"
+										id="Mdp" value="#{msg.p_login_mdpoublie}"
+										ajax="false" action="#{login.motDePasseOublier()}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

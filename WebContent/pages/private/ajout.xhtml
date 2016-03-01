@@ -1,0 +1,67 @@
+<ui:composition template="/pages/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="title">Ajout job</ui:define>
+	<ui:define name="contenu">
+		<h:outputStylesheet library="css" name="bootstrap.css" />
+
+		<p:outputPanel
+			rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJob')}">
+
+
+
+			<p:messages globalOnly="false" id="message_add_error"
+				autoUpdate="true" showDetail="true" />
+
+
+
+			<h:form class="form-horizontal">
+				<div class="form-group">
+					<label for="nomTechnique" class="col-sm-2 control-label"> <h:outputText
+							value="#{msg.p_dialog_libelle_nom_technique}"></h:outputText></label>
+					<div class="col-sm-10">
+						<p:inputText value="#{jobManagedBean.nomTechnique}"
+							required="true"
+							requiredMessage="#{msg.p_dialog_msg_requis_nom_technique}"
+							placeholder="#{msg.p_dialog_place_holder_nom_technique}">
+						</p:inputText>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="libelle" class="col-sm-2 control-label"><h:outputText
+							value="#{msg.p_dialog_libelle}"></h:outputText></label>
+					<div class="col-sm-10">
+						<p:inputText value="#{jobManagedBean.libelle}" required="true"
+							requiredMessage="#{msg.p_dialog_msg_requis_libelle}"
+							placeholder="#{msg.p_dialog_place_holder_libelle}"></p:inputText>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="classe" class="col-sm-2 control-label"><h:outputText
+							value="#{msg.p_dialog_libelle_classe}"></h:outputText></label>
+					<div class="col-sm-10">
+						<p:inputText value="#{jobManagedBean.classe}" required="true"
+							requiredMessage="#{msg.p_dialog_msg_requis_classe}"
+							placeholder="#{msg.p_dialog_place_holder_classe}"></p:inputText>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
+							type="submit" actionListener="#{jobManagedBean.add}"
+							action="job?faces-redirect=true" style="margin-right:5px;" />
+						<p:commandButton immediate="true"
+							value="#{msg.p_dialog_bouton_annuler_libelle}"
+							action="job?faces-redirect=true" />
+					</div>
+				</div>
+			</h:form>
+
+
+		</p:outputPanel>
+	</ui:define>
+</ui:composition>

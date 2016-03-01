@@ -1,0 +1,381 @@
+<ui:composition template="/pages/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="title">#{msg.p_user_titre}</ui:define>
+	<ui:define name="contenu">
+
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/enregistrement.gif" />
+		</p:dialog>
+
+
+
+		<p:commandLink oncomplete="PF('Ajout').show()"
+			actionListener="#{jobManagedBean.initProperties}">
+			<h:graphicImage id="add_job" name="private/image/plusVert.png">
+				<p:tooltip for="add_job" value="#{msg.p_user_header_ajout}" />
+			</h:graphicImage>
+
+		</p:commandLink>
+
+
+
+		<p:dialog widgetVar="Ajout" resizable="false"
+			header="#{msg.p_user_header_ajout}" id="ajout">
+			<p:messages globalOnly="false" id="message_add" autoUpdate="true"
+				showDetail="true" />
+			<h:form>
+
+				<table>
+					<tr>
+						<td><h:outputText value="#{msg.p_user_nom}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{userIhm.nom}" required="true"
+								placeholder="#{msg.p_user_nom}"></p:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="#{msg.p_user_prenom}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{userIhm.prenom}" required="true"
+								placeholder="#{msg.p_user_prenom}"></p:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="#{msg.p_user_login}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{userIhm.login}" required="true"
+								placeholder="#{msg.p_user_login}"></p:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="#{msg.p_user_password}"></h:outputText></td>
+						<td><h:outputText value=" : "></h:outputText> <p:inputText
+								value="#{userIhm.password}" required="true"
+								placeholder="#{msg.p_user_password}"></p:inputText></td>
+					</tr>
+				</table>
+				<p:commandButton value="#{msg.p_dialog_bouton_sauver_libelle}"
+					type="submit" actionListener="#{userIhm.add}"
+					oncomplete="if (handleSaveRequest(xhr, status, args)) PF('Ajout').hide();"
+					update=":formTableUsers" action="#{userIhm.reload()}" />
+				<p:commandButton immediate="true" onclick="PF('Ajout').close()"
+					value="#{msg.p_dialog_bouton_annuler_libelle}" type="cancel" />
+
+
+				<p:growl escape="false" for="growlUser" id="idGrowlUser" life="15000" showDetail="true" widgetVar="widgetGrowlUser"/>
+				<p:fieldset legend="#{msg.p_user_fieldset_identite}" styleClass="classFieldsetUser">
+					<h:panelGrid columns="3">
+						<h:outputLabel for="idInputTextAjoutNomUser" value="#{msg.p_user_nom} :"/>
+						<p:inputText id="idInputTextAjoutNomUser" maxlength="32" placeholder="#{msg.p_user_placeholder_nom}" required="true" requiredMessage="#{msg.p_user_nom} #{msg.p_user_vide} !" style="width: 256px;" validator="userValidator" value="#{userManagedBean.nom}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('NOM')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_nom} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_nom)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutNomUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutNomUser" id="idMessageAjoutNomUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+						<h:outputLabel for="idInputTextAjoutPrenomUser" value="#{msg.p_user_prenom} :"/>
+						<p:inputText id="idInputTextAjoutPrenomUser" maxlength="32" placeholder="#{msg.p_user_placeholder_prenom}" required="true" requiredMessage="#{msg.p_user_prenom} #{msg.p_user_vide} !" style="width: 256px;" validator="userValidator" value="#{userManagedBean.prenom}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('PRENOM')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_prenom} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_prenom)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutPrenomUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutPrenomUser" id="idMessageAjoutPrenomUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+					</h:panelGrid>
+				</p:fieldset>
+				<p:fieldset legend="#{msg.p_user_fieldset_connexion}" styleClass="classFieldsetUser">
+					<h:panelGrid columns="3">
+						<h:outputLabel for="idInputTextAjoutLoginUser" value="#{msg.p_user_login} :"/>
+						<p:inputText id="idInputTextAjoutLoginUser" maxlength="30" placeholder="#{msg.p_user_placeholder_login}" required="true" requiredMessage="#{msg.p_user_login} #{msg.p_user_vide} !" style="width: 256px;" validator="userValidator" value="#{userManagedBean.login}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('LOGIN')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_login} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_login)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutLoginUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutLoginUser" id="idMessageAjoutLoginUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+					</h:panelGrid>
+				</p:fieldset>
+				<p:fieldset legend="#{msg.p_user_fieldset_coordonnees}" styleClass="classFieldsetUser">
+					<h:panelGrid columns="3">
+						<h:outputLabel for="idInputTextAjoutEmailUser" value="#{msg.p_user_email} :"/>
+						<p:inputText id="idInputTextAjoutEmailUser" maxlength="64" placeholder="#{msg.p_user_placeholder_email}" required="true" requiredMessage="#{msg.p_user_email} #{msg.p_user_vide} !" style="width: 256px;" validator="userValidator" value="#{userManagedBean.email}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('EMAIL')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_email} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_email)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutEmailUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutEmailUser" id="idMessageAjoutEmailUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+						<h:outputLabel for="idInputTextAjoutEmailUser" value="#{msg.p_user_telephone} :"/>
+						<p:inputText id="idInputTextAjoutTelephoneUser" maxlength="10" placeholder="#{msg.p_user_placeholder_telephone}" required="true" requiredMessage="#{msg.p_user_telephone} #{msg.p_user_vide} !" style="width: 128px;" validator="userValidator" value="#{userManagedBean.telephone}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('TELEPHONE')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_telephone} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_telephone)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutTelephoneUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutTelephoneUser" id="idMessageAjoutTelephoneUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+						<h:outputLabel for="idInputTextAjoutFaxUser" value="#{msg.p_user_fax} :"/>
+						<p:inputText id="idInputTextAjoutFaxUser" maxlength="10" placeholder="#{msg.p_user_placeholder_fax}" required="true" requiredMessage="#{msg.p_user_fax} #{msg.p_user_vide} !" style="width: 128px;" validator="userValidator" value="#{userManagedBean.fax}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('FAX')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_fax} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_fax)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutFaxUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutFaxUser" id="idMessageAjoutFaxUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+					</h:panelGrid>
+				</p:fieldset>
+				<p:fieldset legend="#{msg.p_user_fieldset_adresse}" styleClass="classFieldsetUser">
+					<h:panelGrid columns="3">
+						<h:outputLabel for="idInputTextAjoutNumeroUser" value="#{msg.p_user_numero} :"/>
+						<p:inputText id="idInputTextAjoutNumeroUser" maxlength="4" placeholder="#{msg.p_user_placeholder_numero}" required="true" requiredMessage="#{msg.p_user_numero} #{msg.p_user_vide} !" style="width: 32px;" validator="userValidator" value="#{userManagedBean.numero}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('NUMERO')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_numero} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_numero)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutNumeroUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutNumeroUser" id="idMessageAjoutNumeroUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+						<h:outputLabel for="idInputTextAjoutRueUser" value="#{msg.p_user_rue} :"/>
+						<p:inputText id="idInputTextAjoutRueUser" maxlength="128" placeholder="#{msg.p_user_placeholder_rue}" required="true" requiredMessage="#{msg.p_user_rue} #{msg.p_user_vide} !" style="width: 512px;" validator="userValidator" value="#{userManagedBean.rue}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('RUE')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_rue} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_rue)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutRueUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutRueUser" id="idMessageAjoutRueUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+						<h:outputLabel for="idInputTextAjoutCodePostalUser" value="#{msg.p_user_code_postal} :"/>
+						<p:inputText id="idInputTextAjoutCodePostalUser" maxlength="5" placeholder="#{msg.p_user_placeholder_code_postal}" required="true" requiredMessage="#{msg.p_user_code_postal} #{msg.p_user_vide} !" style="width: 64px;" validator="userValidator" value="#{userManagedBean.codePostal}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('CODE_POSTAL')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_code_postal} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_code_postal)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutCodePostalUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutCodePostalUser" id="idMessageAjoutCodePostalUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>						
+						<h:outputLabel for="idInputTextAjoutVilleUser" value="#{msg.p_user_ville} :"/>
+						<p:inputText id="idInputTextAjoutVilleUser" maxlength="64" placeholder="#{msg.p_user_placeholder_ville}" required="true" requiredMessage="#{msg.p_user_ville} #{msg.p_user_vide} !" style="width: 256px;" validator="userValidator" value="#{userManagedBean.ville}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('VILLE')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_ville} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_ville)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutVilleUser"/>
+						</p:inputText>
+						<p:message for="idInputTextAjoutVilleUser" id="idMessageAjoutVilleUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>						
+					</h:panelGrid>
+				</p:fieldset>
+				<p:fieldset legend="#{msg.p_user_fieldset_complement}" styleClass="classFieldsetUser">
+					<h:panelGrid columns="3">
+						<h:outputLabel for="idInputTextareaAjoutCommentaireUser" value="#{msg.p_user_commentaire} :"/>
+						<p:inputTextarea autoResize="false" id="idInputTextareaAjoutCommentaireUser" maxlength="256" placeholder="#{msg.p_user_placeholder_commentaire}" required="true" requiredMessage="#{msg.p_user_commentaire} #{msg.p_user_vide} !" style="max-height: 34px; max-width: 512px; width:256px;" validator="userValidator" value="#{userManagedBean.commentaire}">
+							<f:attribute name="validatorExpression" value="#{userManagedBean.getExpression('COMMENTAIRE')}"/>
+							<f:attribute name="validatorMessage" value="#{msg.p_user_commentaire} #{msg.p_user_invalide} !"/>
+							<p:ajax event="focus" immediate="true" listener="#{userManagedBean.addRule(msg.p_user_regle_commentaire)}" update="idGrowlUser"/>
+							<p:ajax event="keyup" onstart="return isInvalidInputKey(event);" update="idMessageAjoutCommentaireUser"/>
+						</p:inputTextarea>
+						<p:message for="idInputTextareaAjoutCommentaireUser" id="idMessageAjoutCommentaireUser">
+							<p:effect event="load" type="pulsate">
+								<f:param name="times" value="1"/>
+							</p:effect>
+						</p:message>
+						<h:outputLabel for="idInputTextAjoutRobotUser" value="Robot :"/>
+						<p:selectBooleanCheckbox id="idInputTextAjoutRobotUser" value="#{userManagedBean.robot}">
+							<p:ajax event="change" oncomplete="PF('widgetGrowlUser').removeAll();"/>
+						</p:selectBooleanCheckbox>
+					</h:panelGrid>
+				</p:fieldset>
+				<h:panelGroup layout="block" style="text-align: center;">
+					<p:commandButton actionListener="#{userManagedBean.addUser}" update="@form" value="#{msg.p_user_button_ajouter}"/>
+					<p:commandButton actionListener="#{userManagedBean.cancelUser}" process="@this" update="@form" value="#{msg.p_user_button_annuler}"/>
+				</h:panelGroup>
+
+			</h:form>
+		</p:dialog>
+		<h:outputScript target="head">
+         function handleSaveRequest(xhr, status, args) {
+      
+           if( args.notValid || args.validationFailed ) 
+              return false;
+           return true; 
+          
+             } 
+        </h:outputScript>
+
+		<p:dialog id="modif" widgetVar="Modif" resizable="false"
+			draggable="false" header="#{msg.p_user_modif_dialogue_header}"
+			closeOnEscape="true">
+			<p:messages globalOnly="false" id="message_upd2" autoUpdate="false"
+				showDetail="true" />
+			<h:form>
+				<table>
+					<tr>
+						<td><h:outputText value="#{msg.p_user_id_column}"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.idUser}"
+								disabled="true">
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="#{msg.p_user_nom} :"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.nomUser}">
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="#{msg.p_user_prenom} :"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.prenomUser}">
+							</p:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="#{msg.p_user_login} :"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.loginUser}">
+							</p:inputText></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText value="#{msg.p_user_password}"></h:outputText></td>
+						<td><p:inputText value="#{userIhm.selectedUser.passwordUser}">
+							</p:inputText></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="#{msg.p_user_ajout_user}"></h:outputText></td>
+						<td><h:selectOneMenu effect="fold" editable="true"
+								value="#{userIhm.selectedItem}" style="width: auto;">
+								<f:selectItem itemLabel="Selectionnez Un Role"
+									itemValue="#{null}" />
+								<f:selectItems value="#{userIhm.users2roleItems}" />
+							</h:selectOneMenu></td>
+					</tr>
+				</table>
+				<br />
+				<br />
+				<p:commandButton value="Modifer" type="submit"
+					actionListener="#{userIhm.update()}"
+					style="background-color: white ; margin-left : 40 px ;"
+					oncomplete="if (#{userIhm.closeDialog}=true) PF('Modif').close();"
+					action="#{userIhm.reload()}">
+				</p:commandButton>
+				<p:commandButton immediate="true" onclick="PF('Modif').close()"
+					style="background-color: white ; margin-left : 40 px ;"
+					value="Annuler" type="cancel"></p:commandButton>
+			</h:form>
+		</p:dialog>
+
+
+
+		<p:fieldset legend="#{msg.p_user_fieldName}">
+			<h:form id="formTableUsers">
+				<p:dataTable value="#{userIhm.users}" rows="10" scrollable="true"
+					paginatorPosition="top" id="tableUser" var="user"
+					selectionMode="single" selection="#{userIhm.selectedUser}"
+					rowKey="#{user.idUser}" filteredValue="#{userIhm.filtredUser}"
+					rowIndexVar="index" emptyMessage="Pas d'Utilisateur"
+					rowsPerPageTemplate="5,10,15" paginator="true">
+					<p:ajax event="rowSelect" listener="#{userIhm.selectedUser}" />
+					<p:column headerText="ID Utilisateur">
+						<h:outputText value="#{user.idUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{msg.p_user_nom}" filterBy="#{user.nomUser}"
+						filterMatchMode="contains">
+						<h:outputText value="#{user.nomUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{msg.p_user_prenom}"
+						filterBy="#{user.prenomUser}" filterMatchMode="contains">
+						<h:outputText value="#{user.prenomUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{msg.p_user_login}">
+						<h:outputText value="#{user.loginUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="#{msg.p_user_password}">
+						<h:outputText value="#{user.passwordUser}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Modifier Utilisateur" width="50">
+
+						<p:commandLink update=":modif" id="update_user"
+							oncomplete="PF('Modif').show();">
+							<f:setPropertyActionListener value="#{user}"
+								target="#{userIhm.selectedUser}" />
+							<h:graphicImage name="private/image/edit.png"
+								styleClass="actionButtons">
+								<p:tooltip for="update_user"
+									value=" Modifier l'utilisateur : #{user.nomUser}  #{user.prenomUser}" />
+							</h:graphicImage>
+						</p:commandLink>
+						<p:commandLink id="delete_user"
+							onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}')) return false"
+							action="#{userIhm.delete}">
+
+							<p:ajax update=":formTableUsers" delay="1"
+								listener="#{userIhm.reload()}"></p:ajax>
+							<f:setPropertyActionListener value="#{user}"
+								target="#{userIhm.selectedUser}" />
+							<h:graphicImage id="img_delete"
+								name="private/image/corbeille2.png" styleClass="actionButtons">
+							</h:graphicImage>
+							<p:tooltip id="toolTip" for="delete_user"
+								value="supprimer l'utilisateur : #{user.nomUser}  #{user.prenomUser} " />
+						</p:commandLink>
+
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>
