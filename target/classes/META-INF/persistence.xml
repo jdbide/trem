@@ -8,6 +8,30 @@
 		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
 		<class>com.avancial.socle.data.model.databean.RefDirectoryDataBean</class>
 		<class>com.avancial.socle.data.model.databean.UserDataBean</class>
+		<class>com.avancial.app.data.databean.TremasApplication</class>
+		<class>com.avancial.app.data.databean.TremasJeuDonnee</class>
+		<class>com.avancial.app.data.databean.TremasTmdavth</class>
+		<class>com.avancial.app.data.databean.TremasTmdavtr</class>
+		<class>com.avancial.app.data.databean.TremasTmdcath</class>
+		<class>com.avancial.app.data.databean.TremasTmdcatr</class>
+		<class>com.avancial.app.data.databean.TremasTmdcdcl</class>
+		<class>com.avancial.app.data.databean.TremasTmdcdds</class>
+		<class>com.avancial.app.data.databean.TremasTmdcdem</class>
+		<class>com.avancial.app.data.databean.TremasTmddstr</class>
+		<class>com.avancial.app.data.databean.TremasTmdetvo</class>
+		<class>com.avancial.app.data.databean.TremasTmdgads</class>
+		<class>com.avancial.app.data.databean.TremasTmdkapp</class>
+		<class>com.avancial.app.data.databean.TremasTmdpare</class>
+		<class>com.avancial.app.data.databean.TremasTmdrame</class>
+		<class>com.avancial.app.data.databean.TremasTmdrcth</class>
+		<class>com.avancial.app.data.databean.TremasTmdspco</class>
+		<class>com.avancial.app.data.databean.TremasTmdsppl</class>
+		<class>com.avancial.app.data.databean.TremasTmdsvth</class>
+		<class>com.avancial.app.data.databean.TremasTmdtath</class>
+		<class>com.avancial.app.data.databean.TremasTmdtra1</class>
+		<class>com.avancial.app.data.databean.TremasTmdtrch</class>
+		<class>com.avancial.app.data.databean.TremasTmdvoit</class>
+		<class>com.avancial.app.data.databean.TremasTrain</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 

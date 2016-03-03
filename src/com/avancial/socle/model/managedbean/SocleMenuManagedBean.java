@@ -28,7 +28,7 @@ public class SocleMenuManagedBean implements Serializable {
 
    public static String goRole() {
       return SOCLE_constants.NAVIGATION_ROLE.toString();
-   }
+   }   
 
    public static String goUser() {
       return SOCLE_constants.NAVIGATION_USER.toString();

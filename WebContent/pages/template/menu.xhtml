@@ -8,20 +8,10 @@
 
 	<h:commandButton class="btn btn-info" value="#{msg.p_accueil_titre}" action="#{menu.goAccueil}" />
 	
-	<h:commandButton class="btn btn-info" 
-		value="Importation" 
-		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRobot')}" />
-		
-	<h:commandButton class="btn btn-info" 
-		value="Résultat des importations"  
-		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRobot')}" />
-		
-	<h:commandButton class="btn btn-info" 
-		value="Comparateur des jeux de données"  
-		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRobot')}" />
-	
+	<ui:include src="/pages/private/menuApp.xhtml" />
 	
 	<hr></hr>
+	
 	<h:commandButton class="btn btn-info" 
 		value="#{msg.p_robot_menu}" action="#{menu.goRobot}" 
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRobot')}" />
