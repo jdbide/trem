@@ -1,6 +1,5 @@
 package com.avancial.app.data.databean;
 
-import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name="tremas_application")
 @NamedQuery(name="TremasApplication.findAll", query="SELECT t FROM TremasApplication t")
-public class TremasApplication implements Serializable {
+public class TremasApplication extends ADataBean {	
 	private static final long serialVersionUID = 1L;
 
 	@Id

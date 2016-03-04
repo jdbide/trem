@@ -6,37 +6,37 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:commandButton class="btn btn-info" value="#{msg.p_accueil_titre}" action="#{menu.goAccueil}" />
+	<h:commandButton class="btn btn-primary" value="#{msg.p_accueil_titre}" action="#{menu.goAccueil}" />
 	
 	<ui:include src="/pages/private/menuApp.xhtml" />
 	
 	<hr></hr>
 	
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		value="#{msg.p_robot_menu}" action="#{menu.goRobot}" 
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRobot')}" />
 	
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		value="#{msg.p_role_menu}" action="#{menu.goRole}" 
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRole')}" />
 	
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		value="#{msg.p_job_menu}" action="#{menu.goJob}" 
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJob')}" />
 		
 	
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		
 		value="#{msg.p_jobPlanif_menu}" action="#{menu.goJobPlanif}" 
 		
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJobPlanif')}" />
 	
 	
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		value="#{msg.p_job_super_name}" action="#{menu.goJobSuper}" title="Supervision des Jobs"
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJobSupervision')}" />
 
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		value="#{msg.p_user_menu}" action="#{menu.goUser}"
 		rendered="#{ihmManagedBean.isLogged()}" />
 	

@@ -9,19 +9,23 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.avancial.app.data.controller.dao.implementation.TremasApplicationDAOImpl;
-import com.avancial.app.data.controller.dao.inter.TremasApplicationDAO;
+import com.avancial.app.data.controller.dao.implementation.TremasApplicationDAO;
+import com.avancial.app.data.controller.dao.inter.ITremasApplicationDAO;
 import com.avancial.app.data.databean.TremasApplication;
+import com.avancial.app.service.implementation.TremasApplicationService;
+import com.avancial.app.service.implementation.TremasJeuDonneeService;
 import com.avancial.socle.model.managedbean.AManageBean;
 
 @Named("test")
 @ViewScoped
 public class TestManagedBean extends AManageBean implements Serializable {
 	private static final long serialVersionUID = 1L;	
+
+	@Inject
+	private TremasApplicationService tremasApplicationService;
 	
-	//@Resource(name = "tremasApplicationDAO")
-	@ManagedProperty(value="#{tremasApplicationDAO}")
-    private TremasApplicationDAO dao;
+	@Inject
+	private ITremasApplicationDAO dao;
 	
 	private List<TremasApplication> tremasApplication;
 	
@@ -29,13 +33,13 @@ public class TestManagedBean extends AManageBean implements Serializable {
 	private TremasApplication           selectedItem;
 	
 	public TestManagedBean() {
-		this.dao = new TremasApplicationDAOImpl();
+		this.dao = new TremasApplicationDAO();
 		this.tremasApplication = new ArrayList<>();		
 	}
 	
 	public void reload() {
 	      this.tremasApplication.clear();
-	      this.tremasApplication.addAll(this.dao.retrieveAll());
+	      this.tremasApplication.addAll(this.tremasApplicationService.getAll());
 	}
 
 	/**

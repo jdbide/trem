@@ -1,6 +1,5 @@
 package com.avancial.app.data.databean;
 
-import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name="tremas_jeu_donnees")
 @NamedQuery(name="TremasJeuDonnee.findAll", query="SELECT t FROM TremasJeuDonnee t")
-public class TremasJeuDonnee implements Serializable {
+public class TremasJeuDonnee extends ADataBean {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,7 +21,7 @@ public class TremasJeuDonnee implements Serializable {
 	private int idJeuDonnees;
 
 	@Column(nullable=false)
-	private byte actifJeuDonnees;
+	private boolean actifJeuDonnees;
 
 	@Lob
 	@Column(nullable=false)
@@ -151,11 +150,11 @@ public class TremasJeuDonnee implements Serializable {
 		this.idJeuDonnees = idJeuDonnees;
 	}
 
-	public byte getActifJeuDonnees() {
+	public boolean getActifJeuDonnees() {
 		return this.actifJeuDonnees;
 	}
 
-	public void setActifJeuDonnees(byte actifJeuDonnees) {
+	public void setActifJeuDonnees(boolean actifJeuDonnees) {
 		this.actifJeuDonnees = actifJeuDonnees;
 	}
 

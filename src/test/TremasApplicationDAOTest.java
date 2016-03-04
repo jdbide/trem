@@ -10,21 +10,21 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 
-import com.avancial.app.data.controller.dao.implementation.TremasApplicationDAOImpl;
-import com.avancial.app.data.controller.dao.inter.TremasApplicationDAO;
+import com.avancial.app.data.controller.dao.implementation.TremasApplicationDAO;
+import com.avancial.app.data.controller.dao.inter.ITremasApplicationDAO;
 import com.avancial.app.data.databean.TremasApplication;
 
 public class TremasApplicationDAOTest {
 
 	@Resource(name = "tremasApplicationDAO")
-    private TremasApplicationDAO dao;
+    private ITremasApplicationDAO dao;
 	
-	public void setDao(TremasApplicationDAOImpl dao) {
+	public void setDao(TremasApplicationDAO dao) {
 		this.dao = dao;
 	}
 	
 	public TremasApplicationDAOTest() {
-		this.dao = new TremasApplicationDAOImpl();
+		this.dao = new TremasApplicationDAO();
 	}
 	
 	@Test

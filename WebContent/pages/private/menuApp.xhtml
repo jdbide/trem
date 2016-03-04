@@ -6,19 +6,19 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		value="Test" action="#{menuApp.goTest}" 
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRole')}" />
 		
-	<h:commandButton class="btn btn-info" 
-		value="Importation"  action="#{menuApp.goImportData}"
-		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRobot')}" />
+	<h:commandButton class="btn btn-primary" 
+		value="Importation" action="#{menuApp.goImportData}" 
+		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRole')}" />	
 		
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		value="Résultat des importations"  
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRobot')}" />
 		
-	<h:commandButton class="btn btn-info" 
+	<h:commandButton class="btn btn-primary" 
 		value="Comparateur des jeux de données"  
 		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRobot')}" />
 	

@@ -7,56 +7,58 @@
 
 	<ui:define name="title">Importation de données</ui:define>
 	<ui:define name="contenu">
-<f:metadata>
-         <f:event listener="#{test.reload}" type="preRenderView"></f:event>
-     </f:metadata>
-		<p:outputPanel
-			rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJob')}">
-
-			<p:ajaxStatus onstart="PF('statusDialog').show()"
-				onsuccess="PF('statusDialog').hide()" />
-
-			<p:messages id="idPageMessages" autoUpdate="true" closable="true"
-				redisplay="false" showDetail="true" globalOnly="false" />
-
-			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-				closable="false" resizable="false" showHeader="false">
-				<p:graphicImage name="/private/image/enregistrement.gif" />
-			</p:dialog>
-
-
-			<h:outputScript target="head">
-         function handleSaveRequest(xhr, status, args) {
-      
-           if( args.notValid || args.validationFailed ) 
-              return false;
-           return true; 
-          
-             } 
-         </h:outputScript>
-
-			
+		<h:head>
+		</h:head>
+		
+		<h:body>		
+			<h:form>
+			<div class="panel panel-primary">			
+  				<div class="panel-heading text-left">
+  				  <h3 class="panel-title text-left">Importation des données</h3> 				
+  				</div>
+  				<div class="panel-body">  					
+    				<div class="container-fluid">
+	  						<div class="row">	  							
+		  						<div class="center-block col-md-6" style="float: none;">
+		  								<div class="form-group">
+    										<label for="libelleJeuDonnees">Libelle jeu données</label>
+    										<h:inputText value="#{importDonnees.tremasJeuDonneeBean.libelleJeuDonnees}"   type="text" class="form-control" id="libelleJeuDonnees" placeholder="Libelle jeu données" required="true"></h:inputText >
+  										</div>
+  										<div class="form-group">
+    										<label for="nomTechniqueJeuDonnees">Nom technique jeu données</label>
+    										<h:inputText value="#{importDonnees.tremasJeuDonneeBean.nomTechniqueJeuDonnees}" type="text" class="form-control" id="nomTechniqueJeuDonnees" placeholder="Nom technique jeu donnees" required="true"></h:inputText >
+  										</div>  								  																		  									
+  										
+  										<div class="form-group">
+    										<label for="nomTechniqueJeuDonnees">Commentaire</label>
+    										<h:inputTextarea value="#{importDonnees.tremasJeuDonneeBean.commentaireJeuDonnees}" class="form-control" >
+  											</h:inputTextarea>					
+  										</div>  										
+		  						</div>
+	  						</div>	  					
+  					</div>
+  				</div>
+  				 <div class="panel-footer panel-primary">  				 	
+                    <div class="row">	  							
+		  				<div class="center-block col-md-6" style="float: none;">
+		  					<div class="col-md-1 col-md-offset-1">
+		  						<h:commandButton class="btn btn-primary"
+                            	value="Importation" type="submit"
+                                action="#{importDonnees.traitement}" />
+		  					</div>
+		  					<div class="col-md-1 col-md-offset-7">
+		  						<h:commandButton class="btn btn-danger" immediate="true"
+		                        value="#{msg.p_dialog_bouton_annuler_libelle}"
+		                        action="importation_data?faces-redirect=true" />
+		  					</div>
+		  				</div>
+		  			</div>
+		  		</div>
+		  		
+		  	</div>
+		  	</h:form>  	
 			<br />
 			<br />
-			
-			
-
-			<p:dataTable class="primeTable" var="item"
-				value="#{test.tremasApplication}" id="dataTable"
-				rowIndexVar="index" paginator="true" selectionMode="single" selection="#{test.selectedItem}"
-			rowKey="#{item.idApplication}">
-
-				<p:column headerText="idApplication" style="width:20px">
-					<h:outputText value="#{item.idApplication}"></h:outputText>
-				</p:column>
-				<p:column headerText="Libelle">
-					<h:outputText value="#{item.libelleApplication}"></h:outputText>
-				</p:column>
-				<p:column headerText="actifApplication">
-					<h:outputText value="#{item.actifApplication}"></h:outputText>
-				</p:column>
-				
-			</p:dataTable>
-		</p:outputPanel>
+		</h:body>			
 	</ui:define>
 </ui:composition>
