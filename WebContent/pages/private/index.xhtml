@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title><h:outputText value="#{msg.title}"/></title>
+	<style>
+		.err {
+			color: red;
+		}
+		.warn {
+			color: yellow;
+		}
+		.info {
+			color: blue;
+		}
+	</style>
+</h:head>
+<h:body>
+	<h:form id="form">
+	<div style="border: 1">
+		<span> Global Message Area:</span>
+	
+		<h:messages globalOnly="true" errorClass="err" warnClass="warn" infoClass="info"></h:messages>
+		
+		<h:messages globalOnly="false" errorClass="err" warnClass="warn" infoClass="info"></h:messages>
+	
+	</div>
+	<f:loadBundle var="messages" basename="net.javabeat.jsf.messages"></f:loadBundle>
+		<h1>
+			<h:outputText value="#{msg.head}" />
+		</h1>
+		<h2>
+			<h:outputText value="#{msg.example_name}" />
+		</h2>
+		<h:outputText value="#{msg.hello_message}"/>
+		<br/>
+		<br/>
+		<h:outputText value="#{messages.inlineLoad}"/>
+		<br/>
+		<br/>
+		<h:panelGrid columns="3">
+			<h:outputText value="#{msg.enter_message}"/>
+			<h:inputText id="message" value="#{indexBean.message}"/>
+			
+			<h:message for="message" errorClass="err" warnClass="warn" infoClass="info"></h:message>
+			
+			<h:outputText value="#{msg.enter_email}"/>
+			<h:inputText id="email" value="#{indexBean.email}"/>
+			
+			<h:message for="email" errorClass="err" warnClass="warn" infoClass="info"></h:message>
+		
+		</h:panelGrid>
+		<h:commandButton value="Send" action="#{indexBean.send}"/>
+		<h:commandButton value="#{messages.german}"
+			action="#{indexBean.changeLocale('de')}"
+				rendered="#{indexBean.locale == 'en'}"/>
+		<h:commandButton value="#{messages.english}"
+			action="#{indexBean.changeLocale('en')}"
+				rendered="#{indexBean.locale == 'de'}"/>
+	</h:form>
+</h:body>
+</html>

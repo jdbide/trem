@@ -9,9 +9,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.avancial.app.data.controller.dao.AGenericDAO;
 import com.avancial.app.data.controller.dao.implementation.TremasApplicationDAO;
 import com.avancial.app.data.controller.dao.inter.ITremasApplicationDAO;
 import com.avancial.app.data.databean.TremasApplication;
+import com.avancial.app.service.IGenericService;
 import com.avancial.app.service.implementation.TremasApplicationService;
 import com.avancial.app.service.implementation.TremasJeuDonneeService;
 import com.avancial.socle.model.managedbean.AManageBean;
@@ -27,6 +29,8 @@ public class TestManagedBean extends AManageBean implements Serializable {
 	@Inject
 	private ITremasApplicationDAO dao;
 	
+	private AGenericDAO test;
+	
 	private List<TremasApplication> tremasApplication;
 	
 	@Inject
@@ -34,7 +38,9 @@ public class TestManagedBean extends AManageBean implements Serializable {
 	
 	public TestManagedBean() {
 		this.dao = new TremasApplicationDAO();
-		this.tremasApplication = new ArrayList<>();		
+		this.tremasApplication = new ArrayList<>();
+		
+		test = new AGenericDAO(TremasApplication.class);
 	}
 	
 	public void reload() {

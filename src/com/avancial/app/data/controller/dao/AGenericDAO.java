@@ -16,7 +16,7 @@ import com.avancial.socle.data.controller.dao.AbstractDao;
  * @param <T>
  * @param <PK>
  */
-public abstract class AGenericDAO<T, PK extends Serializable> extends AbstractDao implements IGenericDAO<T, PK> {
+public class AGenericDAO<T, PK extends Serializable> extends AbstractDao implements IGenericDAO<T, PK> {
 
 	/**
 	 * 
