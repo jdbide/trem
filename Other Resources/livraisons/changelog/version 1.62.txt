@@ -1,3 +1,0 @@
-- Utilisation de Bootstrap
-- Modélisation des logs
-- Implémentation des logs pour les Jobs en BDD et en console
