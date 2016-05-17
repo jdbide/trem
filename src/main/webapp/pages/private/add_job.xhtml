@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/layout.xhtml">
+
+
+
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<ui:define name="title">#{p_job_titre}</ui:define>
+
+	<ui:define name="contenu"
+		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJob')}">
+		<p:messages globalOnly="false" id="idPageMessages" autoUpdate="true"
+			showDetail="true" />
+		<h:body>
+			<h:form>
+				<div class="panel panel-primary panelCRUD">
+					<div class="panel-heading">#{msg.p_dialog_ajout_title_job}</div>
+					<div class="panel-body">
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="nomTechnique">#{msg.p_dialog_libelle_nom_technique}</label>
+								<h:inputText
+									value="#{jobManagedBean.nomTechnique}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_nom_technique}"
+									placeholder="#{msg.p_dialog_place_holder_nom_technique}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="libelle">#{msg.p_dialog_libelle} </label>
+								<h:inputText value="#{jobManagedBean.libelle}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_libelle}"
+									placeholder="#{msg.p_dialog_msg_requis_libelle}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="classe">#{msg.p_dialog_libelle_classe} </label>
+								<h:inputText value="#{jobManagedBean.classe}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_classe}"
+									placeholder="#{msg.p_dialog_place_holder_classe}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+
+						<div class="form-group">
+							<div class="col-lg-5"></div>
+							<div class="col-xs-1 ">
+								<h:commandButton class="btn btn-primary"
+									value="#{msg.p_dialog_bouton_sauver_libelle}" type="submit"
+									action="#{jobManagedBean.add}" />
+							</div>
+
+							<h:commandButton class="btn btn-danger" immediate="true"
+								value="#{msg.p_dialog_bouton_annuler_libelle}"
+								action="job?faces-redirect=true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

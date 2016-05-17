@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/layout.xhtml">
+
+
+
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<ui:define name="title">#{p_role_titre}</ui:define>
+
+	<ui:define name="contenu"
+		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pagejobPlanif')}">
+		<p:messages globalOnly="false" id="idPageMessages" autoUpdate="true"
+			showDetail="false" />
+		<h:body>
+			<h:form>
+				<div class="panel panel-primary panelCRUDJobPlanif">
+					<div class="panel-heading">#{msg.p_dialog_ajout_title_jobPlanif}</div>
+					<div class="panel-body">
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="typePlanif">#{msg.p_dialog_type_planification}</label>
+								<h:selectOneMenu value="#{jobPlanifManagedBean.jobTypeSelected}"
+									id="selectJobPlanifType" class="form-control formCRUD">
+									<f:selectItems value="#{jobPlanifManagedBean.listePlanifType}"
+										var="bean" itemLabel="#{bean.libelleJobPlanifType}"></f:selectItems>
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="job">#{msg.p_dialog_job} </label>
+								<h:selectOneMenu value="#{jobPlanifManagedBean.jobSelected}"
+									id="selectJob" class="form-control formCRUD">
+									<f:selectItems value="#{jobPlanifManagedBean.listeJob}"
+										var="bean" itemLabel="#{bean.libelleJob}"></f:selectItems>
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="libelle">#{msg.p_dialog_libelle}</label>
+								<h:inputText value="#{jobPlanifManagedBean.libelle}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_libelle}"
+									placeholder="#{msg.p_dialog_place_holder_libelle}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="nomTechnique">#{msg.p_dialog_libelle_nom_technique}</label>
+								<h:inputText value="#{jobPlanifManagedBean.nomTechnique}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_nom_technique}"
+									placeholder="#{msg.p_dialog_place_holder_nom_technique}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="secondes">#{msg.p_dialog_libelle_secondes}</label>
+								<h:inputText value="#{jobPlanifManagedBean.secondes}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_seconde}"
+									placeholder="#{msg.p_dialog_place_holder_secondes}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="minutes">#{msg.p_dialog_libelle_minutes}</label>
+								<h:inputText value="#{jobPlanifManagedBean.minutes}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_minutes}"
+									placeholder="#{msg.p_dialog_place_holder_minutes}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="jourMois">#{msg.p_dialog_libelle_jour_mois}</label>
+								<h:inputText value="#{jobPlanifManagedBean.jourMois}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_le_jour_du_mois}"
+									placeholder="#{msg.p_dialog_place_holder_jour_mois}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="heures">#{msg.p_dialog_libelle_heures}</label>
+								<h:inputText value="#{jobPlanifManagedBean.heures}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_heures}"
+									placeholder="#{msg.p_dialog_place_holder_heures}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="mois">#{msg.p_dialog_libelle_mois}</label>
+								<h:inputText value="#{jobPlanifManagedBean.mois}"
+									required="true" 
+									requiredMessage="#{msg.p_dialog_msg_requis_mois}"
+									placeholder="#{msg.p_dialog_place_holder_mois}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="semaines">#{msg.p_dialog_libelle_jour_semaine}</label>
+								<h:inputText value="#{jobPlanifManagedBean.jourSemaine}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_jour_de_la_semaine}"
+									placeholder="#{msg.p_dialog_place_holder_jour_semaine}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="annees">#{msg.p_dialog_libelle_annee}</label>
+								<h:inputText value="#{jobPlanifManagedBean.annee}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_annee}"
+									placeholder="#{msg.p_dialog_place_holder_annee}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+
+						<div class="form-group">
+							<div class="col-lg-5"></div>
+							<div class="col-xs-1 ">
+								<h:commandButton class="btn btn-primary"
+									value="#{msg.p_dialog_bouton_sauver_libelle}" type="submit"
+									action="#{jobPlanifManagedBean.add}" />
+							</div>
+
+							<h:commandButton class="btn btn-danger" immediate="true"
+								value="#{msg.p_dialog_bouton_annuler_libelle}"
+								action="jobPlanif?faces-redirect=true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

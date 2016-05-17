@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/layout.xhtml">
+
+
+
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<ui:define name="title">#{p_job_user}</ui:define>
+
+	<f:metadata>
+		<f:event listener="#{userManagedBean.updateById}" type="preRenderView">
+		</f:event>
+	</f:metadata>
+
+	<ui:define name="contenu"
+		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageJob')}">
+		<p:messages globalOnly="false" id="idPageMessages" autoUpdate="true"
+			showDetail="true" />
+		<h:body>
+			<h:form>
+				<div class="panel panel-primary panelCRUDJobPlanif">
+					<div class="panel-heading">Modifier Utilisateur</div>
+					<div class="panel-body">
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="nom">#{msg.p_user_nom}</label>
+								<h:inputText value="#{userManagedBean.selectedUser.nomUser}"
+									required="true" placeholder="#{msg.p_user_nom}"
+									requiredMessage="#{msg.p_user_placeholder_nom}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="prenom">#{msg.p_user_prenom} </label>
+								<h:inputText value="#{userManagedBean.selectedUser.prenomUser}"
+									required="true" placeholder="#{msg.p_user_prenom}"
+									requiredMessage="#{msg.p_user_placeholder_prenom}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="mail">#{msg.p_user_email} </label>
+								<h:inputText value="#{userManagedBean.selectedUser.mailUser}"
+									required="true"
+									requiredMessage="#{msg.p_user_placeholder_email}"
+									placeholder="#{msg.p_user_email}" class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="tel">#{msg.p_user_telephone}</label>
+								<h:inputText
+									value="#{userManagedBean.selectedUser.telephonePortable1User}"
+									required="true" placeholder="#{msg.p_user_telephone}"
+									requiredMessage="#{msg.p_user_placeholder_telephone}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="fax">#{msg.p_user_fax} </label>
+								<h:inputText value="#{userManagedBean.selectedUser.fax1User}"
+									required="true" placeholder="#{msg.p_user_fax}"
+									requiredMessage="#{msg.p_user_placeholder_fax}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="numero">#{msg.p_user_numero} </label>
+								<h:inputText
+									value="#{userManagedBean.selectedUser.adresseNumeroRueUser}"
+									required="true"
+									requiredMessage="#{msg.p_user_placeholder_numero}"
+									placeholder="#{msg.p_user_numero}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="rue">#{msg.p_user_rue}</label>
+								<h:inputText
+									value="#{userManagedBean.selectedUser.adresseNomRueUser}"
+									required="true" placeholder="#{msg.p_user_rue}"
+									requiredMessage="#{msg.p_user_placeholder_rue}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="codePostal">#{msg.p_user_code_postal} </label>
+								<h:inputText
+									value="#{userManagedBean.selectedUser.adresseCodePostalUser}"
+									required="true" placeholder="#{msg.p_user_code_postal}"
+									requiredMessage="#{msg.p_user_placeholder_code_postal}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="ville">#{msg.p_user_ville} </label>
+								<h:inputText
+									value="#{userManagedBean.selectedUser.adresseVilleUser}"
+									required="true"
+									requiredMessage="#{msg.p_user_placeholder_ville}"
+									placeholder="#{msg.p_user_ville}" class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="commentaire">#{msg.p_user_commentaire}</label>
+								<h:inputText type="password"
+									value="#{userManagedBean.selectedUser.commentaireUtilisateurUser}"
+									required="false" placeholder="#{msg.p_user_commentaire}"
+									requiredMessage="#{msg.p_user_commentaire}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="robot">#{msg.p_user_robot} </label>
+								<h:inputText value="#{userManagedBean.selectedUser.robotUser}"
+									required="true" placeholder="#{msg.p_user_robot}"
+									requiredMessage="#{msg.p_user_placeholder_robot}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="login">#{msg.p_user_login} </label>
+								<h:inputText value="#{userManagedBean.selectedUser.loginUser}"
+									required="true"
+									requiredMessage="#{msg.p_user_placeholder_login}"
+									placeholder="#{msg.p_user_login}" class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="password">#{msg.p_user_password} </label>
+								<h:inputText
+									value="#{userManagedBean.selectedUser.passwordUser}"
+									required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_password}"
+									placeholder="#{msg.p_user_password}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+
+						<div class="form-group">
+							<div class="col-lg-5"></div>
+							<div class="col-xs-1 ">
+								<h:commandButton class="btn btn-primary"
+									value="#{msg.p_dialog_bouton_sauver_libelle}" type="submit"
+									action="#{userManagedBean.update}" />
+							</div>
+
+							<h:commandButton class="btn btn-danger" immediate="true"
+								value="#{msg.p_dialog_bouton_annuler_libelle}"
+								action="user?faces-redirect=true" />
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

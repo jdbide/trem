@@ -1,0 +1,96 @@
+<ui:composition template="/pages/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="title">#{msg.p_item2Role_titre}</ui:define>
+	<ui:define name="contenu">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="true" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/enregistrement.gif" />
+		</p:dialog>
+
+		<h:outputScript target="head">
+      function handleSaveRequest(xhr, status, args) {
+      
+           if( args.notValid || args.validationFailed ) 
+              return false;
+           return true; 
+          
+   } 
+
+</h:outputScript>
+		<p:link id="ajout_item" outcome="add_item2Role">
+			<h:graphicImage name="private/image/plusVert.png"
+				styleClass="actionButtonsAjout">
+			</h:graphicImage>
+		</p:link>
+
+		<br />
+		<p:dataTable class="primeTable" var="item"
+			value="#{security.listeItem2Role}" id="dataTable"
+			rowIndexVar="index" paginator="true"  ><!-- selectionMode="single"
+			selection="#{security.selectedItem}" rowKey="#{item}" -->
+			
+			<p:ajax event="rowSelect" listener="#{security.rowSelect}"
+				delay="1" />
+			<p:column headerText="#{msg.p_header_colonne_id}" style="width:20px">
+				<h:outputText value="#{index+1}"></h:outputText>
+			</p:column>
+			 <p:column headerText="#{msg.p_header_name_item2role}">
+				<h:outputText value="#{item.value.nameItem2Role}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_header_droit_affichage_item2role}">
+				<h:outputText value="#{item.value.isRendered}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_header_droit_modif_item2role}">
+				<h:outputText value="#{item.value.isEditable}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_header_droit_ajout_item2role}">
+				<h:outputText value="#{item.value.isAddable}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_header_droit_suppression_item2role}">
+				<h:outputText value="#{item.value.isDeletable}"></h:outputText>
+			</p:column>
+
+			 <p:column headerText="action" width="50" id="colonne_#{item.idItem2Role}">
+				<p:commandLink id="delete_item2Role" update="dataTable :idPageMessages"
+					actionListener="#{security.delete()}"
+					action="#{security.reload()}"
+					onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm} #{item.value.idItem2Role} (#{item.value.nameItem2Role}) ?')) return false">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{security.selectedItem}" />
+					<h:graphicImage id="img_delete" name="private/image/corbeille2.png"
+						styleClass="actionButtons">
+					</h:graphicImage>
+					<p:tooltip id="toolTip" for="delete_item2Role"
+						value="#{msg.p_role_bouton_supprimer_tip}" />
+				</p:commandLink>
+				<!-- <p:link id="update_item" outcome="update_role">
+
+
+					<f:param name="itemId" value="#{item.idRole}" />
+
+					<h:graphicImage name="private/image/edit.png"
+						styleClass="actionButtons">
+						<p:tooltip for="update_item"
+							value="#msg.p_role_dialog_modif_title} #{item.technicalNameRole} (#{item.labelRole})" />
+					</h:graphicImage>
+				</p:link> -->
+
+			</p:column>
+		</p:dataTable>
+
+
+
+	</ui:define>
+</ui:composition>

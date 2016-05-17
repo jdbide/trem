@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+	<link rel="stylesheet" type="text/css"	href="assets/css/style.css" />
+	<link rel="stylesheet" type="text/css"	href="vendor/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet"	href="vendor/font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="vendor/theme/css/AdminLTE.css" />
+	<link rel="stylesheet" href="vendor/theme/css/skins/skin-blue.min.css" />
+	<link rel="stylesheet" href="vendor/ng-table/ng-table.css" />
+	<!--[if lt IE 9]>
+	        <script src="vendor/html5shiv/3.7.3/html5shiv.min.js"></script>
+	        <script src="vendor/respond/1.4.2/respond.min.js"></script>
+	 	<![endif]-->
+	    
+	<title>Socle 2 | Starter</title>
+</head>
+<body class="hold-transition skin-blue sidebar-mini" ng-app="socle_app" ng-controller="globalCtrl">
+
+	<div class="wrapper">
+		<div ng-include="'views/partials/navbar-top.xhtml'"></div>
+		<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+		
+		  <!-- sidebar: style can be found in sidebar.less -->
+		  <section class="sidebar" ng-controller="menuCtrl">
+		      <socle-menu></socle-menu>
+		  </section>
+		  
+		</aside>
+		
+		<div class="content-wrapper">
+		    <section class="content-header"></section>
+		    <section class="content">
+		       <ng-view></ng-view>
+		    </section>
+	    </div>
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- REQUIRED JS SCRIPTS -->
+
+	<!-- jQuery 2.1.4 -->
+	<script src="vendor/jQuery/2.1.4/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="vendor/theme/js/app.js"></script>
+	<!-- Angularjs -->
+	<script src="vendor/angular/angular.min.js"></script>
+	<script src="vendor/angular/angular-route.min.js"></script>
+    <!-- Test -->
+    <script src="vendor/ng-table/ng-table.js"></script>
+
+	<!-- socle_app : Application angularjs -->
+	<script type="text/javascript" src="config/main.app.js"></script>
+	<script type="text/javascript" src="config/config.route.js"></script>
+
+    <!-- Contrôleurs -->
+	<script type="text/javascript" src="controllers/globalCtrl.js"></script>
+	<script type="text/javascript" src="controllers/menuCtrl.js"></script>
+	<script type="text/javascript" src="controllers/pagesCtrl.js"></script>
+	<script type="text/javascript" src="controllers/testCtrl.js"></script>
+
+    <!-- Directives -->
+	<script type="text/javascript" src="directives/menuDirective.js"></script>
+	<script type="text/javascript" src="directives/tableDirective.js"></script>
+
+    <!-- Factories -->
+	<script type="text/javascript" src="factories/menuFactory.js"></script>
+
+    <!-- Services -->
+	<script type="text/javascript" src="services/menuService.js"></script>
+
+</body>
+</html>

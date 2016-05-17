@@ -1,0 +1,87 @@
+<ui:composition template="/pages/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:define name="title">#{msg.p_user_titre}</ui:define>
+	<ui:define name="contenu">
+
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:messages id="idPageMessages" autoUpdate="true" closable="true"
+			redisplay="false" showDetail="true" globalOnly="false" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/private/image/enregistrement.gif" />
+		</p:dialog>
+
+
+
+		<h:outputScript target="head">
+         function handleSaveRequest(xhr, status, args) {
+      
+           if( args.notValid || args.validationFailed ) 
+              return false;
+           return true; 
+          
+             } 
+        </h:outputScript>
+		<p:link id="ajout_item" outcome="add_user">
+			<h:graphicImage name="private/image/plusVert.png"
+				styleClass="actionButtonsAjout">
+			</h:graphicImage>
+		</p:link>
+
+		<p:dataTable class="formTableUsers" var="item"
+			value="#{userManagedBean.users}" id="dataTable" rowIndexVar="index"
+			paginator="true" selectionMode="single"
+			selection="#{userManagedBean.selectedUser}" rowKey="#{item.idUser}">
+
+			<p:column headerText="#{msg.p_header_colonne_id}" style="width:30px">
+				<h:outputText value="#{index+1}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_user_nom}" style="width:150px">
+				<h:outputText value="#{item.nomUser}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_user_prenom}" style="width:150px">
+				<h:outputText value="#{item.prenomUser}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_user_login}" style="width:180px">
+				<h:outputText value="#{item.loginUser}"></h:outputText>
+			</p:column>
+			<p:column headerText="#{msg.p_user_password}" style="width:280px">
+				<h:outputText value="#{item.passwordUser}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="action" width="50" id="colonne_#{item.idUser}">
+				<p:commandLink id="delete_user" update="dataTable :idPageMessages"
+					actionListener="#{userManagedBean.delete()}"
+					action="#{userManagedBean.reload()}"
+					onclick="if (!confirm('#{msg.p_dialog_bouton_supprimer_confirm}  #{item.loginUser} (#{item.loginUser})?')) return false">
+				
+
+					<f:setPropertyActionListener value="#{user}"
+						target="#{userManagedBean.selectedUser}" />
+					<h:graphicImage id="img_delete" name="private/image/corbeille2.png"
+						styleClass="actionButtons">
+					</h:graphicImage>
+					<p:tooltip id="toolTip" for="delete_user"
+						value="supprimer l'utilisateur : #{item.loginUser}  #{item.passwordUser} " />
+				</p:commandLink>
+				<p:link id="update_item" outcome="update_user">
+					<f:param name="itemId" value="#{item.idUser}" />
+					<h:graphicImage name="private/image/edit.png"
+						styleClass="actionButtons">
+						<p:tooltip for="update_item"
+							value="#{msg.p_bouton_modifier_tip_user} #{item.loginUser} (#{item.passwordUser})" />
+					</h:graphicImage>
+				</p:link>
+			</p:column>
+
+		</p:dataTable>
+	</ui:define>
+</ui:composition>
