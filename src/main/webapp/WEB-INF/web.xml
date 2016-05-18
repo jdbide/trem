@@ -43,7 +43,8 @@
 		<servlet-name>servlet-jersey</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>			
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			
 			<param-value>com.avancial.socle.webService</param-value>
 		</init-param>
 		<init-param>
@@ -55,10 +56,11 @@
 
 	<servlet-mapping>
 		<servlet-name>servlet-jersey</servlet-name>
-		 
+		<!-- 
 			<url-pattern>/webService/socle/*</url-pattern>
-		<!--	<url-pattern>/webService/app/*</url-pattern> 
+			<url-pattern>/webService/app/*</url-pattern> 
 		-->
+		<url-pattern>/webService/*</url-pattern>
 	</servlet-mapping>
 
 
