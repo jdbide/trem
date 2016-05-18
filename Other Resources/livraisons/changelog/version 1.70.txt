@@ -1,0 +1,4 @@
+- Ajout du filtre sécurité
+- Séparation des constantes de navigation
+- modification des jobs
+- ajout du logger pour les jobs notamment.
