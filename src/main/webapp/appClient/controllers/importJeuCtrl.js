@@ -1,6 +1,6 @@
 'use strict';
 
-socle_app.controller("importJeuCtrl", ["$scope", function($scope) {
+socle_app.controller("importJeuCtrl", ["$scope", "importService", function($scope, importService) {
 	$scope.jeu = {
 		libelle: "",
 		nomTechnique: "",
@@ -14,6 +14,7 @@ socle_app.controller("importJeuCtrl", ["$scope", function($scope) {
 				nomTechnique: "",
 				commentaire: ""
 		};
+		//importService
 	};
 	
 	$scope.title = "Importation des données";
