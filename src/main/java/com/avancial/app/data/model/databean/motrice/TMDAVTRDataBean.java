@@ -1,4 +1,4 @@
-package com.avancial.app.data.model.databean;
+package com.avancial.app.data.model.databean.motrice;
 
 
 import java.util.Date;
