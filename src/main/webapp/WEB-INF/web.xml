@@ -45,7 +45,7 @@
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			
-			<param-value>com.avancial.socle.webService</param-value>
+			<param-value>com.avancial.socle.webService,com.avancial.app.webService</param-value>
 		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>

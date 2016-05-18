@@ -11,6 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 	<link rel="stylesheet" type="text/css"	href="assets/css/style.css" />
 	<link rel="stylesheet" type="text/css"	href="vendor/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"	href="vendor/m-loader/css/m-loader.css" />
 	<link rel="stylesheet"	href="vendor/font-awesome/css/font-awesome.min.css" />
 	<link rel="stylesheet" href="vendor/theme/css/AdminLTE.css" />
 	<link rel="stylesheet" href="vendor/theme/css/skins/skin-blue.min.css" />
@@ -41,8 +42,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <socle-breadcrumb></socle-breadcrumb>
             </section>
 		    <section class="content">
-		       <ng-view></ng-view>
+		        <ng-view></ng-view>
 		    </section>
+            <m-loader></m-loader>
 	    </div>
 	</div>
 	<!-- ./wrapper -->
@@ -60,7 +62,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script src="vendor/angular/angular-route.min.js"></script>
     <!-- Test -->
     <script src="vendor/ng-table/ng-table.js"></script>
-
+    <!-- m-loader -->
+    <script src="vendor/m-loader/js/m-loader.js"></script>
+    
 	<!-- socle_app : Application angularjs -->
 	<script type="text/javascript" src="config/main.app.js"></script>
 	<script type="text/javascript" src="config/config.route.js"></script>
@@ -75,11 +79,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Services -->
 	<script type="text/javascript" src="services/menuService.js"></script>
+	<script type="text/javascript" src="services/importService.js"></script>
+    <script type="text/javascript" src="services/loadingService.js"></script>
     
     <!-- Contrôleurs -->
 	<script type="text/javascript" src="controllers/globalCtrl.js"></script>
 	<script type="text/javascript" src="controllers/menuCtrl.js"></script>
 	<script type="text/javascript" src="controllers/pagesCtrl.js"></script>
+	<script type="text/javascript" src="controllers/testCtrl.js"></script>
+	<script type="text/javascript" src="controllers/tablesCtrl.js"></script>
+	<script type="text/javascript" src="controllers/importJeuCtrl.js"></script>
 	<script type="text/javascript" src="controllers/breadcrumbCtrl.js"></script>
 
 </body>
