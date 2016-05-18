@@ -18,17 +18,17 @@ public class TMDTRCHDataBean {
     private String TRCH_TRA1_COD_CIE;
     private String TRCH_TRA1_NUM_TRA1;
     private String TRCH_TRA1_IND_FER;
-    private String TRCH_NUM;
+    private Long TRCH_NUM;
     private String TRCH_COD_SENS_AUTO;
     private String TRCH_IND_TGV;
     private String TRCH_IND_VAL_DC;
     private Date TRCH_DAT_DER_MOD;
     private String TRCH_INPT_RR_ORIG;
     private String TRCH_INPT_RR_DEST;
-    private String TRCH_REGI_VAL;
+    private Boolean TRCH_REGI_VAL;
     private String TRCH_USER;
     private Date TRCH_DHDO;
-    private String TRCH_REGI_VAL_DC;
+    private Boolean TRCH_REGI_VAL_DC;
     private String TRCH_LIBS_SEMA_COD;
     
     public String getTRCH_TRA1_COD_CIE() {
@@ -49,10 +49,10 @@ public class TMDTRCHDataBean {
     public void setTRCH_TRA1_IND_FER(String tRCH_TRA1_IND_FER) {
         this.TRCH_TRA1_IND_FER = tRCH_TRA1_IND_FER;
     }
-    public String getTRCH_NUM() {
+    public Long getTRCH_NUM() {
         return this.TRCH_NUM;
     }
-    public void setTRCH_NUM(String tRCH_NUM) {
+    public void setTRCH_NUM(Long tRCH_NUM) {
         this.TRCH_NUM = tRCH_NUM;
     }
     public String getTRCH_COD_SENS_AUTO() {
@@ -91,10 +91,10 @@ public class TMDTRCHDataBean {
     public void setTRCH_INPT_RR_DEST(String tRCH_INPT_RR_DEST) {
         this.TRCH_INPT_RR_DEST = tRCH_INPT_RR_DEST;
     }
-    public String getTRCH_REGI_VAL() {
+    public Boolean getTRCH_REGI_VAL() {
         return this.TRCH_REGI_VAL;
     }
-    public void setTRCH_REGI_VAL(String tRCH_REGI_VAL) {
+    public void setTRCH_REGI_VAL(Boolean tRCH_REGI_VAL) {
         this.TRCH_REGI_VAL = tRCH_REGI_VAL;
     }
     public String getTRCH_USER() {
@@ -109,10 +109,10 @@ public class TMDTRCHDataBean {
     public void setTRCH_DHDO(Date tRCH_DHDO) {
         this.TRCH_DHDO = tRCH_DHDO;
     }
-    public String getTRCH_REGI_VAL_DC() {
+    public Boolean getTRCH_REGI_VAL_DC() {
         return this.TRCH_REGI_VAL_DC;
     }
-    public void setTRCH_REGI_VAL_DC(String tRCH_REGI_VAL_DC) {
+    public void setTRCH_REGI_VAL_DC(Boolean tRCH_REGI_VAL_DC) {
         this.TRCH_REGI_VAL_DC = tRCH_REGI_VAL_DC;
     }
     public String getTRCH_LIBS_SEMA_COD() {

@@ -20,6 +20,7 @@ public class TMDAVTRInternDataBean  {
     private String AVTR_LIBS_AVAL_COD;
     private String AVTR_USER;
     private Date AVTR_DHDO;
+    
     public String getAVTR_TRA1_COD_CIE() {
         return this.AVTR_TRA1_COD_CIE;
     }

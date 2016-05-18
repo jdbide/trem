@@ -18,7 +18,7 @@ public class TMDCDDSDataBean {
     private String CDDS_CDEM_COD_CIE;
     private String CDDS_CDEM_NUM_TRA1;
     private String CDDS_CDEM_IND_FER;
-    private String CDDS_CDEM_NUM_COND;
+    private Long CDDS_CDEM_NUM_COND;
     private String CDDS_INPT_RR_MONT;
     private String CDDS_INPT_RR_DESC;
     private String CDDS_USER;
@@ -42,10 +42,10 @@ public class TMDCDDSDataBean {
     public void setCDDS_CDEM_IND_FER(String cDDS_CDEM_IND_FER) {
         this.CDDS_CDEM_IND_FER = cDDS_CDEM_IND_FER;
     }
-    public String getCDDS_CDEM_NUM_COND() {
+    public Long getCDDS_CDEM_NUM_COND() {
         return this.CDDS_CDEM_NUM_COND;
     }
-    public void setCDDS_CDEM_NUM_COND(String cDDS_CDEM_NUM_COND) {
+    public void setCDDS_CDEM_NUM_COND(Long cDDS_CDEM_NUM_COND) {
         this.CDDS_CDEM_NUM_COND = cDDS_CDEM_NUM_COND;
     }
     public String getCDDS_INPT_RR_MONT() {

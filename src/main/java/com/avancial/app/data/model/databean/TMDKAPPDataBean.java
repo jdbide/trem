@@ -17,18 +17,18 @@ public class TMDKAPPDataBean {
     @Id
     private String KAPP_APP;
     private String KAPP_CON;
-    private String KAPP_TRA;
-    private String KAPP_ORI;
-    private String KAPP_DEX;
+    private Date KAPP_TRA;
+    private Date KAPP_ORI;
+    private Date KAPP_DEX;
     private String KAPP_INF;
     private String KAPP_MOD;
     private String KAPP_QAL;
     private String KAPP_SER;
     private String KAPP_TIT;
     private String KAPP_VAL;
-    private String KAPP_VES;
-    private String KAPP_VER;
-    private String KAPP_GLO;
+    private Long KAPP_VES;
+    private Long KAPP_VER;
+    private Long KAPP_GLO;
     private String KAPP_USER;
     private Date KAPP_DHDO;
     private Date KAPP_DTR;
@@ -45,22 +45,22 @@ public class TMDKAPPDataBean {
     public void setKAPP_CON(String kAPP_CON) {
         this.KAPP_CON = kAPP_CON;
     }
-    public String getKAPP_TRA() {
+    public Date getKAPP_TRA() {
         return this.KAPP_TRA;
     }
-    public void setKAPP_TRA(String kAPP_TRA) {
+    public void setKAPP_TRA(Date kAPP_TRA) {
         this.KAPP_TRA = kAPP_TRA;
     }
-    public String getKAPP_ORI() {
+    public Date getKAPP_ORI() {
         return this.KAPP_ORI;
     }
-    public void setKAPP_ORI(String kAPP_ORI) {
+    public void setKAPP_ORI(Date kAPP_ORI) {
         this.KAPP_ORI = kAPP_ORI;
     }
-    public String getKAPP_DEX() {
+    public Date getKAPP_DEX() {
         return this.KAPP_DEX;
     }
-    public void setKAPP_DEX(String kAPP_DEX) {
+    public void setKAPP_DEX(Date kAPP_DEX) {
         this.KAPP_DEX = kAPP_DEX;
     }
     public String getKAPP_INF() {
@@ -99,22 +99,22 @@ public class TMDKAPPDataBean {
     public void setKAPP_VAL(String kAPP_VAL) {
         this.KAPP_VAL = kAPP_VAL;
     }
-    public String getKAPP_VES() {
+    public Long getKAPP_VES() {
         return this.KAPP_VES;
     }
-    public void setKAPP_VES(String kAPP_VES) {
+    public void setKAPP_VES(Long kAPP_VES) {
         this.KAPP_VES = kAPP_VES;
     }
-    public String getKAPP_VER() {
+    public Long getKAPP_VER() {
         return this.KAPP_VER;
     }
-    public void setKAPP_VER(String kAPP_VER) {
+    public void setKAPP_VER(Long kAPP_VER) {
         this.KAPP_VER = kAPP_VER;
     }
-    public String getKAPP_GLO() {
+    public Long getKAPP_GLO() {
         return this.KAPP_GLO;
     }
-    public void setKAPP_GLO(String kAPP_GLO) {
+    public void setKAPP_GLO(Long kAPP_GLO) {
         this.KAPP_GLO = kAPP_GLO;
     }
     public String getKAPP_USER() {

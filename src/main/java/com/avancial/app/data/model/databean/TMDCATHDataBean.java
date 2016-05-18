@@ -18,8 +18,8 @@ public class TMDCATHDataBean {
     private String CATH_TRCH_COD_CIE;
     private String CATH_TRCH_NUM_TRA1;
     private String CATH_TRCH_IND_FER;
-    private String CATH_TRCH_NUM;
-    private String CATH_NUM;
+    private Long CATH_TRCH_NUM;
+    private Long CATH_NUM;
     private String CATH_CIRR_COD_CIE;
     private String CATH_REGI;
     private String CATH_ETAT_TRCH;
@@ -46,16 +46,16 @@ public class TMDCATHDataBean {
     public void setCATH_TRCH_IND_FER(String cATH_TRCH_IND_FER) {
         this.CATH_TRCH_IND_FER = cATH_TRCH_IND_FER;
     }
-    public String getCATH_TRCH_NUM() {
+    public Long getCATH_TRCH_NUM() {
         return this.CATH_TRCH_NUM;
     }
-    public void setCATH_TRCH_NUM(String cATH_TRCH_NUM) {
+    public void setCATH_TRCH_NUM(Long cATH_TRCH_NUM) {
         this.CATH_TRCH_NUM = cATH_TRCH_NUM;
     }
-    public String getCATH_NUM() {
+    public Long getCATH_NUM() {
         return this.CATH_NUM;
     }
-    public void setCATH_NUM(String cATH_NUM) {
+    public void setCATH_NUM(Long cATH_NUM) {
         this.CATH_NUM = cATH_NUM;
     }
     public String getCATH_CIRR_COD_CIE() {

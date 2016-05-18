@@ -18,7 +18,7 @@ public class TMDCDCLDataBean {
     private String CDCL_CDEM_COD_CIE;
     private String CDCL_CDEM_NUM_TRA1;
     private String CDCL_CDEM_IND_FER;
-    private String CDCL_CDEM_NUM_COND;
+    private Long CDCL_CDEM_NUM_COND;
     private String CDCL_CLBA_COD;
     private String CDCL_USER;
     private Date CDCL_DHDO;
@@ -41,10 +41,10 @@ public class TMDCDCLDataBean {
     public void setCDCL_CDEM_IND_FER(String cDCL_CDEM_IND_FER) {
         this.CDCL_CDEM_IND_FER = cDCL_CDEM_IND_FER;
     }
-    public String getCDCL_CDEM_NUM_COND() {
+    public Long getCDCL_CDEM_NUM_COND() {
         return this.CDCL_CDEM_NUM_COND;
     }
-    public void setCDCL_CDEM_NUM_COND(String cDCL_CDEM_NUM_COND) {
+    public void setCDCL_CDEM_NUM_COND(Long cDCL_CDEM_NUM_COND) {
         this.CDCL_CDEM_NUM_COND = cDCL_CDEM_NUM_COND;
     }
     public String getCDCL_CLBA_COD() {

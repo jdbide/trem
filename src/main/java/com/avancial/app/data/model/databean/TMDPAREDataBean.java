@@ -18,17 +18,17 @@ public class TMDPAREDataBean {
     private String PARE_SVTH_COD_CIE;
     private String PARE_SVTH_NUM_TRA1;
     private String PARE_SVTH_IND_FER;
-    private String PARE_SVTH_TRCH_NUM;
+    private Long PARE_SVTH_TRCH_NUM;
     private String PARE_SVTH_SERV_COD;
-    private String PARE_SVTH_NUM;
-    private String PARE_NUM_REST;
+    private Long PARE_SVTH_NUM;
+    private Long PARE_NUM_REST;
     private String PARE_TYRE_COD_REP;
     private String PARE_RESP_VOIT_NUM;
     private String PARE_VRES_NUM_SERV;
     private Date PARE_H_DEB_SERV;
     private Date PARE_H_FIN_SERV;
-    private String PARE_REGI;
-    private String PARE_NB_REPAS;
+    private Boolean PARE_REGI;
+    private Long PARE_NB_REPAS;
     private String PARE_IND_PLACE;
     private String PARE_IND_VOIT_REST;
     private String PARE_USER;
@@ -52,10 +52,10 @@ public class TMDPAREDataBean {
     public void setPARE_SVTH_IND_FER(String pARE_SVTH_IND_FER) {
         this.PARE_SVTH_IND_FER = pARE_SVTH_IND_FER;
     }
-    public String getPARE_SVTH_TRCH_NUM() {
+    public Long getPARE_SVTH_TRCH_NUM() {
         return this.PARE_SVTH_TRCH_NUM;
     }
-    public void setPARE_SVTH_TRCH_NUM(String pARE_SVTH_TRCH_NUM) {
+    public void setPARE_SVTH_TRCH_NUM(Long pARE_SVTH_TRCH_NUM) {
         this.PARE_SVTH_TRCH_NUM = pARE_SVTH_TRCH_NUM;
     }
     public String getPARE_SVTH_SERV_COD() {
@@ -64,16 +64,16 @@ public class TMDPAREDataBean {
     public void setPARE_SVTH_SERV_COD(String pARE_SVTH_SERV_COD) {
         this.PARE_SVTH_SERV_COD = pARE_SVTH_SERV_COD;
     }
-    public String getPARE_SVTH_NUM() {
+    public Long getPARE_SVTH_NUM() {
         return this.PARE_SVTH_NUM;
     }
-    public void setPARE_SVTH_NUM(String pARE_SVTH_NUM) {
+    public void setPARE_SVTH_NUM(Long pARE_SVTH_NUM) {
         this.PARE_SVTH_NUM = pARE_SVTH_NUM;
     }
-    public String getPARE_NUM_REST() {
+    public Long getPARE_NUM_REST() {
         return this.PARE_NUM_REST;
     }
-    public void setPARE_NUM_REST(String pARE_NUM_REST) {
+    public void setPARE_NUM_REST(Long pARE_NUM_REST) {
         this.PARE_NUM_REST = pARE_NUM_REST;
     }
     public String getPARE_TYRE_COD_REP() {
@@ -106,16 +106,16 @@ public class TMDPAREDataBean {
     public void setPARE_H_FIN_SERV(Date pARE_H_FIN_SERV) {
         this.PARE_H_FIN_SERV = pARE_H_FIN_SERV;
     }
-    public String getPARE_REGI() {
+    public Boolean getPARE_REGI() {
         return this.PARE_REGI;
     }
-    public void setPARE_REGI(String pARE_REGI) {
+    public void setPARE_REGI(Boolean pARE_REGI) {
         this.PARE_REGI = pARE_REGI;
     }
-    public String getPARE_NB_REPAS() {
+    public Long getPARE_NB_REPAS() {
         return this.PARE_NB_REPAS;
     }
-    public void setPARE_NB_REPAS(String pARE_NB_REPAS) {
+    public void setPARE_NB_REPAS(Long pARE_NB_REPAS) {
         this.PARE_NB_REPAS = pARE_NB_REPAS;
     }
     public String getPARE_IND_PLACE() {

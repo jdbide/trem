@@ -18,7 +18,7 @@ public class TMDAVTHDataBean {
     private String AVTH_TRCH_COD_CIE;
     private String AVTH_TRCH_NUM_TRA1;
     private String AVTH_TRCH_IND_FER;
-    private String AVTH_TRCH_NUM;
+    private Long AVTH_TRCH_NUM;
     private String AVTH_LIBS_AVAL_COD;
     private String AVTH_USER;
     private Date AVTH_DHDO;
@@ -41,10 +41,10 @@ public class TMDAVTHDataBean {
     public void setAVTH_TRCH_IND_FER(String aVTH_TRCH_IND_FER) {
         this.AVTH_TRCH_IND_FER = aVTH_TRCH_IND_FER;
     }
-    public String getAVTH_TRCH_NUM() {
+    public Long getAVTH_TRCH_NUM() {
         return this.AVTH_TRCH_NUM;
     }
-    public void setAVTH_TRCH_NUM(String aVTH_TRCH_NUM) {
+    public void setAVTH_TRCH_NUM(Long aVTH_TRCH_NUM) {
         this.AVTH_TRCH_NUM = aVTH_TRCH_NUM;
     }
     public String getAVTH_LIBS_AVAL_COD() {

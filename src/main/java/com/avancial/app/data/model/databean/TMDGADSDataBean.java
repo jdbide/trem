@@ -18,8 +18,8 @@ public class TMDGADSDataBean {
     private String GADS_DSTR_COD_CIE;
     private String GADS_DSTR_NUM_TRA1;
     private String GADS_DSTR_IND_FER;
-    private String GADS_DSTR_NUM;
-    private String GADS_NUM_GAR;
+    private Long GADS_DSTR_NUM;
+    private Long GADS_NUM_GAR;
     private String GADS_INPT_RR_GAR;
     private String GADS_DEB_ARRET;
     private String GADS_FIN_ARRET;
@@ -49,16 +49,16 @@ public class TMDGADSDataBean {
     public void setGADS_DSTR_IND_FER(String gADS_DSTR_IND_FER) {
         this.GADS_DSTR_IND_FER = gADS_DSTR_IND_FER;
     }
-    public String getGADS_DSTR_NUM() {
+    public long getGADS_DSTR_NUM() {
         return this.GADS_DSTR_NUM;
     }
-    public void setGADS_DSTR_NUM(String gADS_DSTR_NUM) {
+    public void setGADS_DSTR_NUM(Long gADS_DSTR_NUM) {
         this.GADS_DSTR_NUM = gADS_DSTR_NUM;
     }
-    public String getGADS_NUM_GAR() {
+    public Long getGADS_NUM_GAR() {
         return this.GADS_NUM_GAR;
     }
-    public void setGADS_NUM_GAR(String gADS_NUM_GAR) {
+    public void setGADS_NUM_GAR(Long gADS_NUM_GAR) {
         this.GADS_NUM_GAR = gADS_NUM_GAR;
     }
     public String getGADS_INPT_RR_GAR() {

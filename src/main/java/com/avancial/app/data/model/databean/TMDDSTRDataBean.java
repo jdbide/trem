@@ -18,8 +18,8 @@ public class TMDDSTRDataBean {
     private String DSTR_TRA1_COD_CIE;
     private String DSTR_TRA1_NUM_TRA1;
     private String DSTR_TRA1_IND_FER;
-    private String DSTR_NUM;
-    private String DSTR_REGI;
+    private Long DSTR_NUM;
+    private Boolean DSTR_REGI;
     private String DSTR_ETAT_TRA1;
     private String DSTR_COD_MISSION;
     private String DSTR_TYP_DES;
@@ -46,16 +46,16 @@ public class TMDDSTRDataBean {
     public void setDSTR_TRA1_IND_FER(String dSTR_TRA1_IND_FER) {
         this.DSTR_TRA1_IND_FER = dSTR_TRA1_IND_FER;
     }
-    public String getDSTR_NUM() {
+    public Long getDSTR_NUM() {
         return this.DSTR_NUM;
     }
-    public void setDSTR_NUM(String dSTR_NUM) {
+    public void setDSTR_NUM(Long dSTR_NUM) {
         this.DSTR_NUM = dSTR_NUM;
     }
-    public String getDSTR_REGI() {
+    public Boolean getDSTR_REGI() {
         return this.DSTR_REGI;
     }
-    public void setDSTR_REGI(String dSTR_REGI) {
+    public void setDSTR_REGI(Boolean dSTR_REGI) {
         this.DSTR_REGI = dSTR_REGI;
     }
     public String getDSTR_ETAT_TRA1() {

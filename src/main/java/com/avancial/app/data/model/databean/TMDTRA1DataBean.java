@@ -27,11 +27,11 @@ public class TMDTRA1DataBean {
     private String TRA1_IND_COMPO;
     private String TRA1_IND_CDEM;
     private String TRA1_IND_ECOLE;
-    private String TRA1_REGI_VAL;
-    private String TRA1_REGI_VAL_TRTH;
+    private Boolean TRA1_REGI_VAL;
+    private Boolean TRA1_REGI_VAL_TRTH;
     private String TRA1_USER;
     private Date TRA1_DHDO;
-    private String TRA1_REGI_NON_EXTR;
+    private Boolean TRA1_REGI_NON_EXTR;
     
     public String getTRA1_CIES_COD_CIE() {
         return this.TRA1_CIES_COD_CIE;
@@ -105,16 +105,16 @@ public class TMDTRA1DataBean {
     public void setTRA1_IND_ECOLE(String tRA1_IND_ECOLE) {
         this.TRA1_IND_ECOLE = tRA1_IND_ECOLE;
     }
-    public String getTRA1_REGI_VAL() {
+    public Boolean getTRA1_REGI_VAL() {
         return this.TRA1_REGI_VAL;
     }
-    public void setTRA1_REGI_VAL(String tRA1_REGI_VAL) {
+    public void setTRA1_REGI_VAL(Boolean tRA1_REGI_VAL) {
         this.TRA1_REGI_VAL = tRA1_REGI_VAL;
     }
-    public String getTRA1_REGI_VAL_TRTH() {
+    public Boolean getTRA1_REGI_VAL_TRTH() {
         return this.TRA1_REGI_VAL_TRTH;
     }
-    public void setTRA1_REGI_VAL_TRTH(String tRA1_REGI_VAL_TRTH) {
+    public void setTRA1_REGI_VAL_TRTH(Boolean tRA1_REGI_VAL_TRTH) {
         this.TRA1_REGI_VAL_TRTH = tRA1_REGI_VAL_TRTH;
     }
     public String getTRA1_USER() {
@@ -129,10 +129,10 @@ public class TMDTRA1DataBean {
     public void setTRA1_DHDO(Date tRA1_DHDO) {
         this.TRA1_DHDO = tRA1_DHDO;
     }
-    public String getTRA1_REGI_NON_EXTR() {
+    public Boolean getTRA1_REGI_NON_EXTR() {
         return this.TRA1_REGI_NON_EXTR;
     }
-    public void setTRA1_REGI_NON_EXTR(String tRA1_REGI_NON_EXTR) {
+    public void setTRA1_REGI_NON_EXTR(Boolean tRA1_REGI_NON_EXTR) {
         this.TRA1_REGI_NON_EXTR = tRA1_REGI_NON_EXTR;
     }
 }
