@@ -37,7 +37,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		</aside>
 		
 		<div class="content-wrapper">
-		    <section class="content-header"></section>
+		    <section class="content-header" ng-controller="breadcrumbCtrl">
+                <socle-breadcrumb></socle-breadcrumb>
+            </section>
 		    <section class="content">
 		       <ng-view></ng-view>
 		    </section>
@@ -63,21 +65,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script type="text/javascript" src="config/main.app.js"></script>
 	<script type="text/javascript" src="config/config.route.js"></script>
 
+    <!-- Directives -->
+	<script type="text/javascript" src="directives/menuDirective.js"></script>
+	<script type="text/javascript" src="directives/tableDirective.js"></script>
+	<script type="text/javascript" src="directives/breadcrumbDirective.js"></script>
+
+    <!-- Factories -->
+	<script type="text/javascript" src="factories/jsonFactory.js"></script>
+
+    <!-- Services -->
+	<script type="text/javascript" src="services/menuService.js"></script>
+    
     <!-- Contrôleurs -->
 	<script type="text/javascript" src="controllers/globalCtrl.js"></script>
 	<script type="text/javascript" src="controllers/menuCtrl.js"></script>
 	<script type="text/javascript" src="controllers/pagesCtrl.js"></script>
-	<script type="text/javascript" src="controllers/testCtrl.js"></script>
-
-    <!-- Directives -->
-	<script type="text/javascript" src="directives/menuDirective.js"></script>
-	<script type="text/javascript" src="directives/tableDirective.js"></script>
-
-    <!-- Factories -->
-	<script type="text/javascript" src="factories/menuFactory.js"></script>
-
-    <!-- Services -->
-	<script type="text/javascript" src="services/menuService.js"></script>
+	<script type="text/javascript" src="controllers/breadcrumbCtrl.js"></script>
 
 </body>
 </html>

@@ -1,17 +1,17 @@
 'use strict';
 
 /**
- * Appelle le WebService pour récupérer le JSON du menu de l'application
+ * Appelle un WebService pour récupérer le JSON qu'il envoie
  */
-socle_app.factory('menuFactory',['$http', function($http) {
-	var menuFactory = [];
+socle_app.factory('jsonFactory',['$http', function($http) {
+	var jsonFactory = [];
 	
-    menuFactory.getMenu = function () {                                                                           
+    jsonFactory.getJson = function (urlWebservice) {
         return $http({
                 method: "get",
-                url: "http://localhost:8080/appSocle/webService/menu",
+                url: urlWebservice,
                 async: false,
-                dataType: 'json',            
+                dataType: 'json',
                 crossDomain: false,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -21,5 +21,5 @@ socle_app.factory('menuFactory',['$http', function($http) {
         
     };
     
-    return menuFactory;
+    return jsonFactory;
 }]);

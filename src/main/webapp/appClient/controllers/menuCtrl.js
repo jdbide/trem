@@ -5,7 +5,7 @@
  */
 socle_app.controller('menuCtrl', [ '$scope', 'menuService', function($scope, menuService) {
 	$scope.menu = {
-			rubriques: null
+		rubriques: null
 	};
 	
 	function constructor() {
@@ -15,5 +15,11 @@ socle_app.controller('menuCtrl', [ '$scope', 'menuService', function($scope, men
 	}
 
 	constructor();
+	
+	$scope.setCurrentPage = function(indexRubrique, indexChapitre, indexPage) {
+		menuService.setRubriqueCourante($scope.menu.rubriques[indexRubrique].libelleIhmRubrique);
+		menuService.setChapitreCourant($scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].libelleIhmChapitre);
+		menuService.setPageCourante($scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].pages[indexPage].libelleIhmPage);
+	};
 	
 } ]);

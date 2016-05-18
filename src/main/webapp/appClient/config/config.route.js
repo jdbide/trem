@@ -7,12 +7,9 @@ socle_app.config(['$routeProvider', function($routeProvider) {
 		controller: 'globalCtrl'
 	})
 	.when('/pages', {
-		templateUrl: 'views/partials/pages.xhtml',
+		templateUrl: 'views/partials/socleTable.xhtml',
 		controller: 'pagesCtrl'
 	})
-	.when('/test', {
-		templateUrl: 'views/partials/test.xhtml',
-		controller: 'testCtrl'
 	})
 	.otherwise({
 		redirectTo: '/'
