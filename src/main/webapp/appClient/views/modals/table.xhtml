@@ -1,7 +1,9 @@
 <h3>{{tableTitre}}</h3>
 <table ng-table-dynamic="tableParametres with colonnes"
+  template-pagination="views/partials/tablePagination.xhtml"
   class="table table-directive table-condensed table-bordered table-hover">
   <tr ng-repeat="row in $data">
     <td ng-repeat="col in $columns">{{row[col.field]}}</td>
   </tr>
+  
 </table>

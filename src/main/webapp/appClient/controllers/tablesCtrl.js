@@ -18,10 +18,13 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "NgTab
 					show: (col.indexOf("id") < 0)
 				});
 			}
-
+			
 			$scope.params = new NgTableParams({
+				page: 1,
 				count: 20
 			}, {
+				paginationMaxBlocks: 2,
+				paginationMinBlocks: 2,
 				dataset : $scope.dataset
 			});
 		});
