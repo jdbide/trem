@@ -1,0 +1,19 @@
+Ajout de la supervision nagios
+La classe MenuManagedBean doit maintenant hériter de SocleMenuManagedBean 
+
+
+Supervision Nagios socle 2
+
+    Ajouter le user robot.nagios en tant que robot (voir script sql)
+    Ajouter la page robot.xhtml dans /pages/private/
+    Ajouter le code suivant dans footer.xhtml
+
+<h:outputText class="nagios"  value="#verifypositiveNagios#"></h:outputText>
+
+    Ajouter le code suivant dans le fichier de style
+
+.nagios {
+    visibility: hidden
+}
+
+
