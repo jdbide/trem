@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "VMDSPPL0", schema = "F$MDRP1")
+@Table(name = "VMDSPCO0", schema = "F$MDRP1")
 @Immutable
 public class TMDSPCODataBean {
    
