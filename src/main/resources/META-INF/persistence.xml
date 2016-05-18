@@ -6,8 +6,8 @@
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
-		<class>data.model.databean.RefDirectoryDataBean</class>
-		<class>data.model.databean.UserDataBean</class>
+		<class>com.avancial.socle.data.model.databean.RefDirectoryDataBean</class>
+		<class>com.avancial.socle.data.model.databean.UserDataBean</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/socle" />
