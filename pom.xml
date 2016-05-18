@@ -12,7 +12,7 @@
     </properties>
 
 	<build>
-		<finalName>Socle</finalName>
+		<finalName>tremas</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
