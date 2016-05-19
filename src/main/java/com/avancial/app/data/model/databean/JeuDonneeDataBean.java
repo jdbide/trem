@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="tremas_jeu_donnees")
-public class JeuDonneesDataBean  {
+public class JeuDonneeDataBean  {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

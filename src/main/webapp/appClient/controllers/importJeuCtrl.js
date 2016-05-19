@@ -1,22 +1,21 @@
 'use strict';
 
-socle_app.controller("importJeuCtrl", ["$scope", "importService", function($scope, importService) {
+socle_app.controller("importJeuCtrl", ["$scope", "importJeuDonneeService", function($scope, importJeuDonneeService) {
 	$scope.jeu = {
 		libelle: "",
 		nomTechnique: "",
 		commentaire: ""
 	};
 	
-	$scope.importJeu = function() {
-		console.log($scope.jeu);
-		$scope.jeu = {
-				libelle: "",
-				nomTechnique: "",
-				commentaire: ""
-		};
-		//importService
-	};
-	
 	$scope.title = "Importation des données";
 	
+	$scope.reponse = null;
+	
+	$scope.importJeu = function() {
+		importJeuDonneeService.startTreatement().then(function() {
+			$scope.reponse = importJeuDonneeService.getReponse();
+		}, function() {
+			$scope.reponse = importJeuDonneeService.getReponse();
+		});
+	};		
 }]);

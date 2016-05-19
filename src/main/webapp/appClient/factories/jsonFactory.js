@@ -21,5 +21,18 @@ socle_app.factory('jsonFactory',['$http', function($http) {
         
     };
     
+    jsonFactory.postJson = function (urlWebservice, data) {
+        return $http({
+                method: "post",
+                url: urlWebservice,
+                async: false,
+                dataType: 'json',
+                crossDomain: false,
+                contentType:"application/json; charset=utf-8",
+                data: data             
+        });
+        
+    };
+    
     return jsonFactory;
 }]);

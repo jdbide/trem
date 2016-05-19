@@ -9,19 +9,34 @@ package com.avancial.app.webService.bean;
  */
 public class ResponseBean {
    
-   private boolean importOK;
+   private boolean status;
+   private String message;
 
    /**
     * @return the importOK
     */
-   public boolean isImportOK() {
-      return this.importOK;
+   public boolean isStatus() {
+      return this.status;
    }
 
    /**
     * @param importOK the importOK to set
     */
-   public void setImportOK(boolean importOK) {
-      this.importOK = importOK;
+   public void setStatus(boolean status) {
+      this.status = status;
+   }
+
+   /**
+    * @return the message
+    */
+   public String getMessage() {
+      return this.message;
+   }
+
+   /**
+    * @param message the message to set
+    */
+   public void setMessage(String message) {
+      this.message = message;
    }
 }

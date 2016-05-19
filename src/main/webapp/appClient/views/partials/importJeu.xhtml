@@ -4,6 +4,24 @@
         <div class="box-header with-border">
             <h3 class="box-title">{{title}}</h3>
         </div>
+		
+        <div  ng-if="reponse != null && reponse.status" class="alert alert-success alert-dismissable">
+			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+			<h4>
+				<i class="icon fa fa-check"></i>
+				Alert!
+				</h4>
+				Success alert preview. This alert is dismissable.
+		</div>	
+		<div ng-if="reponse != null && !reponse.status" class="alert alert-danger  alert-dismissable">
+			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+			<h4>
+				<i class="icon fa fa-check"></i>
+				Alert!
+				</h4>
+				Success alert preview. This alert is dismissable.
+		</div>		
+        
         <form role="form">
             <div class="box-body">
                 <div class="form-group">
