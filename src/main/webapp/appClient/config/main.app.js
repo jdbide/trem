@@ -32,6 +32,10 @@
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {
+    	ngTableDefaults.params.page = 1;
     	ngTableDefaults.params.count = 10;
     	ngTableDefaults.settings.counts = [];
+    	ngTableDefaults.settings.paginationMaxBlocks = 2;
+    	ngTableDefaults.settings.paginationMinBlocks = 2;
+
     }]);

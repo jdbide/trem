@@ -1,18 +1,15 @@
 package com.avancial.app.webService;
 
 import java.util.List;
-
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import com.avancial.app.data.model.databean.TablesMotriceDataBean;
 import com.avancial.app.service.TablesMotriceService;
 
-@Path("/importData")
+@Path("/app/importData")
 public class TremasImportData {
 
    //TODO @Inject
