@@ -15,7 +15,7 @@ socle_app.config(['$routeProvider', function($routeProvider) {
 		controller: 'importJeuCtrl'
 	})
 	.when('/tables', {
-		templateUrl: 'views/partials/socleTable.xhtml',
+		templateUrl: 'views/partials/tablesMotrice.xhtml',
 		controller: 'tablesCtrl'
 	})
 	.otherwise({
