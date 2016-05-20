@@ -1,8 +1,6 @@
-package com.avancial.app.data.model.databean.motrice;
-
+package com.avancial.app.data.databean;
 
 import java.util.Date;
-import javax.annotation.concurrent.Immutable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,13 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="VMDAVTR0",schema="F$MDRP2")
-@Immutable
-public class TMDAVTRDataBean {
-
+@Table(name="TMDAVTR")
+public class TMDAVTRInternDataBean  {
     
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    private Long idTMDAVTR;
     private String AVTR_TRA1_COD_CIE;
     private String AVTR_TRA1_NUM_TRA1;
     private String AVTR_TRA1_IND_FER;
@@ -60,7 +57,12 @@ public class TMDAVTRDataBean {
     public void setAVTR_DHDO(Date aVTR_DHDO) {
         this.AVTR_DHDO = aVTR_DHDO;
     }
+    public Long getIdTMDAVTR() {
+        return this.idTMDAVTR;
+    }
+    public void setIdTMDAVTR(Long idTMDAVTR) {
+        this.idTMDAVTR = idTMDAVTR;
+    }
     
     
-   
 }
