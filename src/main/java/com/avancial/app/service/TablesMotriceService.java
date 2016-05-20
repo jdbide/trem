@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import com.avancial.app.data.model.databean.TablesMotriceDataBean;
+import com.avancial.app.data.databean.TablesMotriceDataBean;
 
 public class TablesMotriceService {
    // TODO @Inject

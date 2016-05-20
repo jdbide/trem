@@ -1,4 +1,4 @@
-package com.avancial.app.data.model.databean;
+package com.avancial.app.data.databean;
 
 import java.util.Date;
 import javax.persistence.Entity;

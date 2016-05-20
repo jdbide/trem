@@ -5,7 +5,7 @@ package com.avancial.app.traitement;
 
 import java.util.Date;
 
-import com.avancial.app.data.model.databean.JeuDonneeDataBean;
+import com.avancial.app.data.databean.JeuDonneeDataBean;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.traitement.ATraitementLogDetail;

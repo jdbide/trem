@@ -6,7 +6,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import com.avancial.app.data.model.databean.TablesMotriceDataBean;
+
+import com.avancial.app.data.databean.TablesMotriceDataBean;
 import com.avancial.app.service.TablesMotriceService;
 
 @Path("/app/importData")

@@ -1,4 +1,4 @@
-package com.avancial.app.data.model.databean;
+package com.avancial.app.data.databean;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

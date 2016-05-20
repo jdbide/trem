@@ -3,7 +3,7 @@ package com.avancial.app.service;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import com.avancial.app.data.model.databean.JeuDonneeDataBean;
+import com.avancial.app.data.databean.JeuDonneeDataBean;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 public class JeuDonneeService {
