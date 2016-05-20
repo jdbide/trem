@@ -27,8 +27,8 @@ public abstract class ATraitementLog extends ATraitement {
    @Socle_PUSocle
    protected EntityManager         em;
 
-   @Override
-   public final void execute() {
+   // @Override
+   public void execute() {
       this.startLogging();
       try {
          this.executeTraitement();
