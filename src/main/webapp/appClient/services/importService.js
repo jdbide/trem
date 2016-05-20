@@ -9,11 +9,11 @@ socle_app.service('importService', ['jsonFactory', 'loadingService', '$q', funct
 	
     var self = this;
     
-    self.getDataByServer = function () {
+    self.getDataByServer = function (entityName) {
     	loadingService.show();
         var deffered  = $q.defer();
 
-        var promissJsonFactory = jsonFactory.getJson("http://localhost:8080/tremas/webService/import");
+        var promissJsonFactory = jsonFactory.getJson("http://localhost:8080/tremas/webService/import/table/" + entityName);
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	cols = data.cols;

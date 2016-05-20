@@ -33,7 +33,7 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 	
 	$scope.displayTable = function(nomTable) {
 		if (nomTable.value != null) {
-			importService.getDataByServer().then(function() {
+			importService.getDataByServer($scope.selectedOption.value).then(function() {
 				var columns = importService.getCols();
 				$scope.dataset = importService.getDatas();
 		
