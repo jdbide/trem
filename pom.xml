@@ -7,9 +7,9 @@
 
 	<properties>
 		<arquillian-bom.version>1.1.11.Final</arquillian-bom.version>
-	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 
 	<build>
 		<finalName>tremas</finalName>
@@ -254,31 +254,30 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1</version>
 		</dependency>
-	             <dependency>
-                    <groupId>ibm.db2</groupId>
-                    <artifactId>db2jcc</artifactId>
-             </dependency>
-             <dependency>
-                    <groupId>ibm.db2</groupId>
-                    <artifactId>db2jcc_license_cisuz</artifactId>
-             </dependency>
+		<dependency>
+			<groupId>ibm.db2</groupId>
+			<artifactId>db2jcc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ibm.db2</groupId>
+			<artifactId>db2jcc_license_cisuz</artifactId>
+		</dependency>
+	</dependencies>
 
-       </dependencies>
-
-       <dependencyManagement>
-             <dependencies>
-                    <dependency>
-                           <groupId>ibm.db2</groupId>
-                           <artifactId>db2jcc</artifactId>
-                           <version>1</version>
-                    </dependency>
-                    <dependency>
-                           <groupId>ibm.db2</groupId>
-                           <artifactId>db2jcc_license_cisuz</artifactId>
-                           <version>1</version>
-                    </dependency>
-             </dependencies>
-       </dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>ibm.db2</groupId>
+				<artifactId>db2jcc</artifactId>
+				<version>1</version>
+			</dependency>
+			<dependency>
+				<groupId>ibm.db2</groupId>
+				<artifactId>db2jcc_license_cisuz</artifactId>
+				<version>1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 
 	<repositories>
