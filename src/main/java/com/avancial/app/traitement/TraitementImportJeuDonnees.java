@@ -7,7 +7,6 @@ import java.util.Date;
 
 import com.avancial.app.data.model.databean.JeuDonneeDataBean;
 import com.avancial.app.service.JeuDonneeService;
-import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 /**
@@ -17,15 +16,15 @@ import com.avancial.socle.traitement.ATraitementLogDetail;
 public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 
    private JeuDonneeService jeuDonneeService;
-
-   /**
-    * 
-    */
-   public TraitementImportJeuDonnees() {
-      super();
-
-      this.logBean = new LogTraitementDataBean();
-   }
+   //
+   // /**
+   // *
+   // */
+   // public TraitementImportJeuDonnees() {
+   // super();
+   //
+   // this.logBean = new LogTraitementDataBean();
+   // }
 
    /*
     * (non-Javadoc)
@@ -40,6 +39,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 
    /**
     * Initialise le jeu de données qui va être sauvegardé.
+    * 
     * @return
     */
    public JeuDonneeDataBean initJeuDonnee() {
@@ -54,7 +54,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
       jeuDonneeDataBean.setActifJeuDonnees(true);
       jeuDonneeDataBean.setCommentaireJeuDonnees("");
       jeuDonneeDataBean.setOrdreJeuDonnees(0);
-      
+
       return this.jeuDonneeService.save(jeuDonneeDataBean);
    }
 }
