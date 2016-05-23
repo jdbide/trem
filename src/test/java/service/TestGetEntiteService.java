@@ -56,6 +56,8 @@ public class TestGetEntiteService {
         
         Assert.assertEquals(entiteService.getClasseEntiteFromClasseEntiteImportMotrice(ImportTMDAVTRDataBean.class), TMDAVTRDataBean.class);
         Assert.assertEquals(entiteService.getClasseEntiteImportFromClasseEntiteMotrice(TMDAVTRDataBean.class), ImportTMDAVTRDataBean.class);
+        
+        Assert.assertEquals(entiteService.getNomTableImportFromTableMotrice("TMDAVTR"), "ImportTMDAVTR");
     }
 
 }
