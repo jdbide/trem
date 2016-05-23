@@ -6,6 +6,9 @@ package com.avancial.app.traitement;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+
 import com.avancial.app.data.databean.JeuDonneeDataBean;
 import com.avancial.app.data.databean.TablesMotriceDataBean;
 import com.avancial.app.service.JeuDonneeService;
@@ -17,9 +20,12 @@ import com.avancial.socle.traitement.ATraitementLogDetail;
  * Traitement qui importe un jeu de données.
  *
  */
+@RequestScoped
 public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 
+   @Inject
    private JeuDonneeService jeuDonneeService;
+   @Inject
    private TablesMotriceService tablesMotriceService;
 
    /**
@@ -45,17 +51,16 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
     */
    @Override
    protected void executeTraitement() {
-      this.jeuDonneeService = new JeuDonneeService();
+//      this.jeuDonneeService = new JeuDonneeService();
       
       JeuDonneeDataBean jeuDonneeDataBean = this.initJeuDonnee();
       jeuDonneeDataBean.getIdJeuDonnees();
       
       // on appelle le service qui récupère la liste des tables à importer
-      this.tablesMotriceService = new TablesMotriceService();
+//      this.tablesMotriceService = new TablesMotriceService();
       List<TablesMotriceDataBean> listTables = this.tablesMotriceService.getAllTablesMotrice();
       
       for(int i=0; i<listTables.size(); i++) {
-         System.out.println("Lecture table : " + listTables.get(i).getLibelleTablesMotrice());
          this.jeuDonneeService.readTable(listTables.get(i));
       }
    }

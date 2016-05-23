@@ -2,6 +2,8 @@ package com.avancial.app.webService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -15,6 +17,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 @Path("/import")
+@RequestScoped
 public class ImportTableService {
     
     private EntityManager em;
