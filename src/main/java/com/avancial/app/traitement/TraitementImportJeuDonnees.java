@@ -11,7 +11,10 @@ import javax.inject.Inject;
 
 import com.avancial.app.data.databean.JeuDonneeDataBean;
 import com.avancial.app.data.databean.TablesMotriceDataBean;
+import com.avancial.app.service.GetEntiteService;
+import com.avancial.app.service.ImportMotriceService;
 import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.MotriceService;
 import com.avancial.app.service.TablesMotriceService;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
@@ -27,6 +30,12 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
    private JeuDonneeService jeuDonneeService;
    @Inject
    private TablesMotriceService tablesMotriceService;
+   @Inject
+   private GetEntiteService getEntiteService;
+   @Inject
+   private MotriceService motriceService;
+   @Inject
+   private ImportMotriceService importMotriceService;
 
    /**
     * 
@@ -34,15 +43,6 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
    public TraitementImportJeuDonnees() {
       super();
    }
-   //
-   // /**
-   // *
-   // */
-   // public TraitementImportJeuDonnees() {
-   // super();
-   //
-   // this.logBean = new LogTraitementDataBean();
-   // }
 
    /*
     * (non-Javadoc)
@@ -50,18 +50,21 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
     * @see com.avancial.socle.traitement.ATraitement#executeTraitement()
     */
    @Override
-   protected void executeTraitement() {
-//      this.jeuDonneeService = new JeuDonneeService();
-      
+   protected void executeTraitement() {      
       JeuDonneeDataBean jeuDonneeDataBean = this.initJeuDonnee();
       jeuDonneeDataBean.getIdJeuDonnees();
       
       // on appelle le service qui récupère la liste des tables à importer
-//      this.tablesMotriceService = new TablesMotriceService();
       List<TablesMotriceDataBean> listTables = this.tablesMotriceService.getAllTablesMotrice();
-      
+      String libelleTableMotrice;
       for(int i=0; i<listTables.size(); i++) {
-         this.jeuDonneeService.readTable(listTables.get(i));
+         libelleTableMotrice = listTables.get(i).getLibelleTablesMotrice();
+//         this.importMotriceService.truncateTable(libelleTableMotrice);
+//         this.log("Truncate de la table d'import " + libelleTableMotrice);
+         
+         List<?> tmdDataBeans = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
+         this.importMotriceService.insertAll(tmdDataBeans, libelleTableMotrice);
+         this.log("Import de la table " + libelleTableMotrice);
       }
    }
 
