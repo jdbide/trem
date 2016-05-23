@@ -4,27 +4,28 @@
 package com.avancial.app.traitement;
 
 import java.util.Date;
+import java.util.List;
 
 import com.avancial.app.data.model.databean.JeuDonneeDataBean;
+import com.avancial.app.data.model.databean.TablesMotriceDataBean;
 import com.avancial.app.service.JeuDonneeService;
-import com.avancial.socle.data.model.databean.LogTraitementDataBean;
-import com.avancial.socle.traitement.ATraitementLogDetail;
+import com.avancial.app.service.TablesMotriceService;
+import com.avancial.socle.traitement.ATraitement;
 
 /**
  * Traitement qui importe un jeu de données.
  *
  */
-public class TraitementImportJeuDonnees extends ATraitementLogDetail {
+public class TraitementImportJeuDonnees extends ATraitement {
 
    private JeuDonneeService jeuDonneeService;
+   private TablesMotriceService tablesMotriceService;
 
    /**
     * 
     */
    public TraitementImportJeuDonnees() {
       super();
-
-      this.logBean = new LogTraitementDataBean();
    }
 
    /*
@@ -35,7 +36,18 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
    @Override
    protected void executeTraitement() {
       this.jeuDonneeService = new JeuDonneeService();
-      this.initJeuDonnee();
+      
+      JeuDonneeDataBean jeuDonneeDataBean = this.initJeuDonnee();
+      jeuDonneeDataBean.getIdJeuDonnees();
+      
+      // on appelle le service qui récupère la liste des tables à importer
+      this.tablesMotriceService = new TablesMotriceService();
+      List<TablesMotriceDataBean> listTables = this.tablesMotriceService.getAllTablesMotrice();
+      
+      for(int i=0; i<listTables.size(); i++) {
+         System.out.println("Lecture table : " + listTables.get(i).getLibelleTablesMotrice());
+         this.jeuDonneeService.readTable(listTables.get(i));
+      }
    }
 
    /**
@@ -56,5 +68,13 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
       jeuDonneeDataBean.setOrdreJeuDonnees(0);
       
       return this.jeuDonneeService.save(jeuDonneeDataBean);
+   }
+
+   /* (non-Javadoc)
+    * @see com.avancial.socle.traitement.ITraitement#execute()
+    */
+   @Override
+   public void execute() {
+      this.executeTraitement();
    }
 }

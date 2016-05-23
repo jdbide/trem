@@ -2,11 +2,11 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
 	version="2.0">
 
-	<persistence-unit name="PU_app"
-		transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="PU_app" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
-		<class>com.avancial.socle.data.model.databean.RefDirectoryDataBean</class>
+		<class>com.avancial.socle.data.model.databean.RefDirectoryDataBean
+		</class>
 		<class>com.avancial.socle.data.model.databean.UserDataBean</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
@@ -22,4 +22,19 @@
 			<property name="hibernate.use_sql_comments" value="false" />
 		</properties>
 	</persistence-unit>
+
+	<persistence-unit name="pu-externe" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<non-jta-data-source>java:comp/env/jdbc/externe</non-jta-data-source>
+		<!-- <class>arquillilan.tomcat.test.Game</class> -->
+		<properties>
+			<property name="hibernate.id.new_generator_mappings" value="true" />
+			<property name="hibernate.archive.autodetection" value="class" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
+			<property name="connection.autocommit" value="false" />
+		</properties>
+	</persistence-unit>
+
 </persistence>
