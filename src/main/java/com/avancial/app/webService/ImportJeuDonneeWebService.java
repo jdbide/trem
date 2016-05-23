@@ -3,6 +3,7 @@
  */
 package com.avancial.app.webService;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -19,18 +20,19 @@ import com.avancial.app.webService.bean.ResponseBean;
  *
  */
 @Path("/importJeu")
+@RequestScoped
 public class ImportJeuDonneeWebService {
-   
-//   @Inject
-//   TraitementImportJeuDonnees importJeuDonnees;
+
+   @Inject
+   TraitementImportJeuDonnees importJeuDonnees;
 
    @POST
    @Produces({ MediaType.APPLICATION_JSON })
    @Consumes({ MediaType.APPLICATION_JSON })
    public Response execute(Integer idApplication) throws Exception {
 
-      TraitementImportJeuDonnees importJeuDonnees = new TraitementImportJeuDonnees();
-      importJeuDonnees.execute();
+      // TraitementImportJeuDonnees importJeuDonnees = new TraitementImportJeuDonnees();
+      this.importJeuDonnees.execute();
 
       ResponseBean responseBean = new ResponseBean();
       responseBean.setStatus(true);

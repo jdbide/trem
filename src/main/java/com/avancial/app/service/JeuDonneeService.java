@@ -2,26 +2,29 @@ package com.avancial.app.service;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import com.avancial.app.data.model.databean.JeuDonneeDataBean;
-import com.avancial.app.data.model.databean.TablesMotriceDataBean;
+import com.avancial.app.data.databean.JeuDonneeDataBean;
+import com.avancial.app.data.databean.TablesMotriceDataBean;
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 public class JeuDonneeService {
-   // TODO @Inject
+   @Inject
+   @Socle_PUSocle
    private EntityManager em;
    private EntityManager ext;
 
    public JeuDonneeDataBean save(JeuDonneeDataBean jeuDonneeDataBean) {
       // FIXME a cenlever lors de la mise en place de l'@Inject
-      this.em = Persistence.createEntityManagerFactory("PU_app").createEntityManager();
+      // this.em = Persistence.createEntityManagerFactory("PU_app").createEntityManager();
       this.em.getTransaction().begin();
       this.em.persist(jeuDonneeDataBean);
       this.em.flush();
       this.em.getTransaction().commit();
-
       return jeuDonneeDataBean;
    }
 

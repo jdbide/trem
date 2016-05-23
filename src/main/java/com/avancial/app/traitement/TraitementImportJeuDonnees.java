@@ -6,17 +6,18 @@ package com.avancial.app.traitement;
 import java.util.Date;
 import java.util.List;
 
-import com.avancial.app.data.model.databean.JeuDonneeDataBean;
-import com.avancial.app.data.model.databean.TablesMotriceDataBean;
+import com.avancial.app.data.databean.JeuDonneeDataBean;
+import com.avancial.app.data.databean.TablesMotriceDataBean;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.TablesMotriceService;
-import com.avancial.socle.traitement.ATraitement;
+import com.avancial.socle.traitement.ATraitementLogDetail;
+
 
 /**
  * Traitement qui importe un jeu de données.
  *
  */
-public class TraitementImportJeuDonnees extends ATraitement {
+public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 
    private JeuDonneeService jeuDonneeService;
    private TablesMotriceService tablesMotriceService;
@@ -27,6 +28,15 @@ public class TraitementImportJeuDonnees extends ATraitement {
    public TraitementImportJeuDonnees() {
       super();
    }
+   //
+   // /**
+   // *
+   // */
+   // public TraitementImportJeuDonnees() {
+   // super();
+   //
+   // this.logBean = new LogTraitementDataBean();
+   // }
 
    /*
     * (non-Javadoc)
@@ -52,6 +62,7 @@ public class TraitementImportJeuDonnees extends ATraitement {
 
    /**
     * Initialise le jeu de données qui va être sauvegardé.
+    * 
     * @return
     */
    public JeuDonneeDataBean initJeuDonnee() {
@@ -66,15 +77,8 @@ public class TraitementImportJeuDonnees extends ATraitement {
       jeuDonneeDataBean.setActifJeuDonnees(true);
       jeuDonneeDataBean.setCommentaireJeuDonnees("");
       jeuDonneeDataBean.setOrdreJeuDonnees(0);
-      
+
       return this.jeuDonneeService.save(jeuDonneeDataBean);
    }
 
-   /* (non-Javadoc)
-    * @see com.avancial.socle.traitement.ITraitement#execute()
-    */
-   @Override
-   public void execute() {
-      this.executeTraitement();
-   }
 }
