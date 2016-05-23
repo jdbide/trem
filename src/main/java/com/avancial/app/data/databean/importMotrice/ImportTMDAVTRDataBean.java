@@ -5,10 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDAVTR")
+@NamedQuery(name = "ImportTMDAVTR.getAll", query= "SELECT t FROM ImportTMDAVTRDataBean t")
 public class ImportTMDAVTRDataBean {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -18,7 +18,7 @@ public class EntityManagerProducerSocle {
    @Produces
    @Socle_PUSocle
    EntityManager getEntityManager() {
-      return Persistence.createEntityManagerFactory("PU_app").createEntityManager();
+      return Persistence.createEntityManagerFactory("PU_socle").createEntityManager();
    }
 
 }

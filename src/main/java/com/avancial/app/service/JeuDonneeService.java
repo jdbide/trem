@@ -12,8 +12,7 @@ public class JeuDonneeService {
    private EntityManager em;
 
    public JeuDonneeDataBean save(JeuDonneeDataBean jeuDonneeDataBean) {
-      // FIXME a cenlever lors de la mise en place de l'@Inject
-      // this.em = Persistence.createEntityManagerFactory("PU_app").createEntityManager();
+
       this.em.getTransaction().begin();
       this.em.persist(jeuDonneeDataBean);
       this.em.flush();

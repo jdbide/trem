@@ -17,7 +17,7 @@ public class AbstractEntityManager {
 
    private static AbstractEntityManager instance;
 
-   private static final String          PERSISTENCE_UNIT_NAME = "PU_app";
+   private static final String          PERSISTENCE_UNIT_NAME = "PU_socle";
    private EntityManagerFactory         emf;
    private EntityManager                em;
 
