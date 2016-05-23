@@ -11,13 +11,22 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
-
+/**
+ * Service permetant de gerer les tables d'import
+ * @author gabriel.gagnier
+ *
+ */
 public class TablesImportService {
    @Inject
    @Socle_PUSocle
    private EntityManager em;
    
-
+/**
+ * renvoi les données contenue dans la table entityName (exemple: "TMDAVTR") en JSON
+ * @param entityName
+ * @return
+ * @throws ClassNotFoundException
+ */
    public JSONObject getDataTable(String entityName) throws ClassNotFoundException {
       GetEntiteService entiteService = new GetEntiteService();
       

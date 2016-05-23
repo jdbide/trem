@@ -12,7 +12,11 @@ import javax.ws.rs.core.Response;
 
 import com.avancial.app.data.databean.TablesMotriceDataBean;
 import com.avancial.app.service.TablesMotriceService;
-
+/**
+ * webService permetant la selection d'une table a afficher
+ * @author gabriel.gagnier
+ *
+ */
 @Path("/app/importData")
 @RequestScoped
 public class TremasImportData {

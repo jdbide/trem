@@ -11,6 +11,12 @@ import javax.ws.rs.core.Response;
 
 import com.avancial.app.service.TablesImportService;
 
+/**
+ * web service servant l'affichage des tables motrice
+ * 
+ * @author gabriel.gagnier
+ *
+ */
 @Path("/import")
 @RequestScoped
 public class ImportTableWebService {
@@ -18,11 +24,16 @@ public class ImportTableWebService {
    @Inject
    private TablesImportService tableImportService;
 
+   /**
+    * renvoi le contenue de la table entityName (exemple: TMDAVTR)
+    * @param entityName
+    * @return
+    */
    @GET
    @Path("/table/{entityName}")
    @Produces({ MediaType.APPLICATION_JSON })
    public Response getImport(@PathParam("entityName") String entityName) {
-       try {
+      try {
          return Response.status(200).entity(this.tableImportService.getDataTable(entityName)).build();
       } catch (ClassNotFoundException e) {
          e.printStackTrace();
