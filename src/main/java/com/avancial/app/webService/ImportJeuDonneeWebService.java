@@ -30,10 +30,7 @@ public class ImportJeuDonneeWebService {
    @Produces({ MediaType.APPLICATION_JSON })
    @Consumes({ MediaType.APPLICATION_JSON })
    public Response execute(Integer idApplication) throws Exception {
-<<<<<<< HEAD
-=======
 
->>>>>>> b527e31722ee8c094941f4bf794049b950d54bbc
       this.importJeuDonnees.execute();
 
       ResponseBean responseBean = new ResponseBean();

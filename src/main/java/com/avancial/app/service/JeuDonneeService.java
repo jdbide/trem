@@ -17,10 +17,7 @@ public class JeuDonneeService {
     * @return
     */
    public JeuDonneeDataBean save(JeuDonneeDataBean jeuDonneeDataBean) {
-<<<<<<< HEAD
-=======
 
->>>>>>> b527e31722ee8c094941f4bf794049b950d54bbc
       this.em.getTransaction().begin();
       this.em.persist(jeuDonneeDataBean);
       this.em.flush();
