@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "VMDRCTH0", schema = "F$MDRP2")
+@Table(name = "TMDRCTH", schema = "F$MDRP2")
 @Immutable
 public class TMDRCTHDataBean {
 
