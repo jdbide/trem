@@ -6,10 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDSPCO")
+@NamedQuery(name = "ImportTMDSPCO.getAll", query= "SELECT t FROM ImportTMDSPCODataBean t")
 public class ImportTMDSPCODataBean {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
