@@ -16,7 +16,11 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 			for (var i = 0; i < tables.length; i++) {
 				$scope.tablesMotrice.push({
 					label: tables[i].libelleTablesMotrice,
+<<<<<<< HEAD
 					value: tables[i].libelleTablesMotrice
+=======
+					value: tables[i].entityImportTablesMotrice
+>>>>>>> 43be8616e14867fe84f447abeba580ba70564865
 				});
 			}
 		});
@@ -25,7 +29,7 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 
 	constructor();
 	
-	$scope.title = "Test affichage";
+	$scope.title = "Table d'import";
 	$scope.selectName = "selectTable";
 	$scope.selectId = "idSelectTable";
 	$scope.selectedOption = "";
