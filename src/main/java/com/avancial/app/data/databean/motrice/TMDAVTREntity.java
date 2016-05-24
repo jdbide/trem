@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @Immutable
 public class TMDAVTREntity {
 
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private String AVTR_TRA1_COD_CIE;
    @Id

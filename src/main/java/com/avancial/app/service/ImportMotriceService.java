@@ -41,6 +41,7 @@ public class ImportMotriceService {
 
             Object object;
             for (int i = 0; i < tmdavtrDataBeans.size(); i++) {
+
                object = modelMapper.map(tmdavtrDataBeans.get(i), importDataBeanClass);
 
                this.em.persist(object);

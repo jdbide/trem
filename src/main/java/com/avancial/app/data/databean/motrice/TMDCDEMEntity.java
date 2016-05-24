@@ -4,23 +4,27 @@ import java.util.Date;
 
 import javax.annotation.concurrent.Immutable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
+@IdClass(TMDCDEMEntityId.class)
 @Table(name = "TMDCDEM", schema = "F$MDRP2")
 @Immutable
 public class TMDCDEMEntity {
 
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private String  CDEM_TRA1_COD_CIE;
+   @Id
    private String  CDEM_TRA1_NUM_TRA1;
+   @Id
    private String  CDEM_TRA1_IND_FER;
+   @Id
    private Long    CDEM_NUM_CONDITION;
+   @Id
    private String  CDEM_LIBS_TYCO_COD;
+   @Id
    private Boolean CDEM_REGI;
    private String  CDEM_USER;
    private Date    CDEM_DHDO;
