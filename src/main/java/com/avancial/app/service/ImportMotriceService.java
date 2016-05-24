@@ -26,7 +26,7 @@ public class ImportMotriceService {
    /**
     * Insère les enregistrements issus de la table DB2 dans la table d'import.
     * 
-    * @param entityList
+    * @param tmdavtrDataBeans
     *           liste des enregistrements
     * @param libelleTableMotrice
     *           nom de l'entité
@@ -35,32 +35,44 @@ public class ImportMotriceService {
    public void insertAll(List<?> entityList, String libelleTableMotrice) throws ClassNotFoundException {
       ModelMapper modelMapper = new ModelMapper();
       modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-      
+
       Class<?> importEntityClass = this.getEntiteService.getClasseEntiteImporFromTableMotrice(libelleTableMotrice);
 
       if (importEntityClass != null) {
          this.em.getTransaction().begin();
 
-         Object object;
-         for (int i = 0; i < entityList.size(); i++) {
-            object = modelMapper.map(entityList.get(i), importEntityClass);// mapping entre les deux entités
+         Class<?> importDataBeanClass = null;
+         try {
+            importDataBeanClass = this.getEntiteService.getClasseEntiteImporFromTableMotrice(libelleTableMotrice);
 
-            this.em.persist(object);
+            if (importDataBeanClass != null) {
+               this.em.getTransaction().begin();
+
+               Object object;
+               for (int i = 0; i < entityList.size(); i++) {
+                  object = modelMapper.map(entityList.get(i), importEntityClass);// mapping entre les deux entités
+
+                  this.em.persist(object);
+               }
+
+               this.em.flush();
+               this.em.getTransaction().commit();
+            }
+         } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
          }
-
-         this.em.flush();
-         this.em.getTransaction().commit();
       }
-   
    }
 
    /**
     * Supprime les enregistrements de la table avant import.
+    * 
     * @param entityName
     */
    public void deleteTable(String entityName) {
       String query = new StringBuilder("DELETE FROM ").append(entityName).toString();
-      
+
       this.em.getTransaction().begin();
       this.em.createQuery(query).executeUpdate();
       this.em.getTransaction().commit();

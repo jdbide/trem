@@ -4,25 +4,31 @@ import java.util.Date;
 
 import javax.annotation.concurrent.Immutable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
+@IdClass(TMDETVOEntityId.class)
 @Table(name = "TMDETVO", schema = "F$MDRP2")
 @Immutable
 public class TMDETVOEntity {
 
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private String  ETVO_VOIT_COD_CIE;
+   @Id
    private String  ETVO_VOIT_NUM_TRA1;
+   @Id
    private String  ETVO_VOIT_IND_FER;
+   @Id
    private Long    ETVO_VOIT_TRCH_NUM;
+   @Id
    private Long    ETVO_VOIT_NUM;
+   @Id
    private Long    ETVO_NUM;
+   @Id
    private String  ETVO_ETAT_VOIT;
+   @Id
    private Boolean ETVO_REGI;
    private String  ETVO_USER;
    private Date    ETCO_DHDO;

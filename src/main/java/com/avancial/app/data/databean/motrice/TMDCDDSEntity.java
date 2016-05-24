@@ -1,25 +1,30 @@
 package com.avancial.app.data.databean.motrice;
 
 import java.util.Date;
+
 import javax.annotation.concurrent.Immutable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
+@IdClass(TMDCDDSEntityId.class)
 @Table(name = "TMDCDDS", schema = "F$MDRP2")
 @Immutable
 public class TMDCDDSEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private String CDDS_CDEM_COD_CIE;
+    @Id
     private String CDDS_CDEM_NUM_TRA1;
+    @Id
     private String CDDS_CDEM_IND_FER;
+    @Id
     private Long CDDS_CDEM_NUM_COND;
+    @Id
     private String CDDS_INPT_RR_MONT;
+    @Id
     private String CDDS_INPT_RR_DESC;
     private String CDDS_USER;
     private Date CDDS_DHDO;
