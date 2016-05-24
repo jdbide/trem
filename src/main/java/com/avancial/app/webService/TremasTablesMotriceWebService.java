@@ -19,7 +19,7 @@ import com.avancial.app.service.TremasTablesMotriceService;
  */
 @Path("/app/tablesMotrice")
 @RequestScoped
-public class TremasImportData {
+public class TremasTablesMotriceWebService {
 
    @Inject
    private TremasTablesMotriceService motriceService;

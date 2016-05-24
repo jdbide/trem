@@ -21,7 +21,7 @@ import com.avancial.app.webService.bean.ResponseBean;
  */
 @Path("/importJeu")
 @RequestScoped
-public class ImportJeuDonneeWebService {
+public class JeuDonneeWebService {
 
    @Inject
    TraitementImportJeuDonnees importJeuDonnees;

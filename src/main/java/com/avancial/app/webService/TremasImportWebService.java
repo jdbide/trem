@@ -19,7 +19,7 @@ import com.avancial.app.service.TremasImportService;
  */
 @Path("/tablesImport")
 @RequestScoped
-public class ImportTableWebService {
+public class TremasImportWebService {
 
    @Inject
    private TremasImportService tableImportService;
