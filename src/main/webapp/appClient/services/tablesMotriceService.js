@@ -3,7 +3,7 @@
 /**
  * Service se chargeant de renvoyer l'import d'une table
  */
-socle_app.service('tablesMotriceService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
+socle_app.service('TremasTablesMotriceWebService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
 	var tablesMotrice = [];
 	
     var self = this;

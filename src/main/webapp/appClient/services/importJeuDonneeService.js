@@ -3,7 +3,7 @@
 /**
  * Service se chargeant de renvoyer l'import d'une table
  */
-socle_app.service('importJeuDonneeService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
+socle_app.service('ImportJeuDonneeWebService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
 	var reponse= 
 		{
 		 status : null,
