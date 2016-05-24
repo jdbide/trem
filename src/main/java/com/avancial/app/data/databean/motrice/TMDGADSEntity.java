@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @IdClass(TMDGADSEntityId.class)
-@Table(name = "TMDGADS", schema = "F$MDRP2")
+@Table(name = "TMDGADS", schema = "F$MDRP1")
 @Immutable
 public class TMDGADSEntity {
 
