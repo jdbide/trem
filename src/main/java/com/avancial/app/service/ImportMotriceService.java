@@ -26,7 +26,7 @@ public class ImportMotriceService {
    /**
     * Insère les enregistrements issus de la table DB2 dans la table d'import.
     * 
-    * @param tmdavtrDataBeans
+    * @param entityList
     *           liste des enregistrements
     * @param libelleTableMotrice
     *           nom de l'entité
@@ -41,22 +41,15 @@ public class ImportMotriceService {
       if (importEntityClass != null) {
          this.em.getTransaction().begin();
 
-         Class<?> importDataBeanClass = this.getEntiteService.getClasseEntiteImporFromTableMotrice(libelleTableMotrice);
+         Object object;
+         for (int i = 0; i < entityList.size(); i++) {
+            object = modelMapper.map(entityList.get(i), importEntityClass);// mapping entre les deux entités
 
-         if (importDataBeanClass != null) {
-            this.em.getTransaction().begin();
-
-            Object object;
-            for (int i = 0; i < entityList.size(); i++) {
-               object = modelMapper.map(entityList.get(i), importEntityClass);// mapping entre les deux entités
-
-               this.em.persist(object);
-            }
-
-            this.em.flush();
-            this.em.getTransaction().commit();
+            this.em.persist(object);
          }
 
+         this.em.flush();
+         this.em.getTransaction().commit();
       }
    }
 
