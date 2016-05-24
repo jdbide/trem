@@ -26,7 +26,7 @@ public class MotriceService {
     * @return
     */
    public List<?> readAll(String entity) {
-      Query query = this.ext.createQuery("FROM " + entity);
+      Query query = this.ext.createQuery(new StringBuilder("FROM ").append(entity).toString());
 
       return query.getResultList();
    }

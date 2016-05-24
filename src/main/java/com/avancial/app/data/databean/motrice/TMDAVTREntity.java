@@ -13,8 +13,6 @@ import javax.persistence.Table;
 @Table(name = "TMDAVTR", schema = "F$MDRP1")
 @Immutable
 public class TMDAVTREntity {
-
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private String AVTR_TRA1_COD_CIE;
    @Id
