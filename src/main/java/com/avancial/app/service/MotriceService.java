@@ -12,21 +12,22 @@ import javax.persistence.Query;
 import data.model.databean.Socle_PUExterne;
 
 /**
- * @author sebastien.benede
- * Classe qui gère toutes les requêtes dans les tables DB2.
+ * @author sebastien.benede Classe qui gère toutes les requêtes dans les tables DB2.
  */
 public class MotriceService {
    @Inject
    @Socle_PUExterne
-   private EntityManager    ext;
+   private EntityManager ext;
 
    /**
     * Récupère tous les enregistrements de l'entité.
-    * @param entity
-    * @return
+    * 
+    * @param entityName
+    *           nom de l'entité
+    * @return liste des enregistrements de type entityName
     */
-   public List<?> readAll(String entity) {
-      Query query = this.ext.createQuery("FROM " + entity);
+   public List<?> readAll(String entityName) {
+      Query query = this.ext.createQuery(new StringBuilder("FROM ").append(entityName).toString());
 
       return query.getResultList();
    }
