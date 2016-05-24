@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.avancial.app.data.databean.TablesMotriceDataBean;
+import com.avancial.app.data.databean.TablesMotriceEntity;
 import com.avancial.app.service.TablesMotriceService;
 /**
  * webService permetant la selection d'une table a afficher
@@ -28,7 +28,7 @@ public class TremasImportData {
    @Produces({ MediaType.APPLICATION_JSON })
    public Response getListTable() {
 
-      List<TablesMotriceDataBean> list = this.motriceService.getAllTablesMotrice();
+      List<TablesMotriceEntity> list = this.motriceService.getAllTablesMotrice();
 
       return Response.status(200).entity(list).build();
 
