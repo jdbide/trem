@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import com.avancial.app.data.databean.importMotrice.ImportTMDAVTREntity;
 import com.avancial.app.data.databean.motrice.TMDAVTREntity;
-import com.avancial.app.service.GetEntiteService;
+import com.avancial.app.service.EntiteService;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 
 @RunWith(Arquillian.class)
@@ -25,7 +25,7 @@ public class TestGetEntiteService {
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(IhmPageDataBean.class.getPackage())
                 // .addPackage(IhmPageDao.class.getPackage())
 
-                .addClass(GetEntiteService.class)
+                .addClass(EntiteService.class)
                 // .addAsManifestResource("arquillian.xml")
                 .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
                 .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
@@ -38,7 +38,7 @@ public class TestGetEntiteService {
     }
 
     @Inject
-    GetEntiteService entiteService;
+    EntiteService entiteService;
 
     @Test
     public void testService() throws ClassNotFoundException {

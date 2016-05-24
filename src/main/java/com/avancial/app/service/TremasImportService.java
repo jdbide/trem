@@ -25,7 +25,7 @@ public class TremasImportService {
    private EntityManager em;
 
    @Inject
-   private GetEntiteService entiteService;
+   private EntiteService entiteService;
 
    /**
     * Renvoie les données contenues dans la table entityName (exemple: "TMDAVTR") en JSON
