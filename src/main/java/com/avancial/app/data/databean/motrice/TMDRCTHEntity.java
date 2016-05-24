@@ -29,7 +29,7 @@ public class TMDRCTHEntity {
    @Id
    private String  RCTH_INPT_RR_D;
    @Id
-   private Boolean RCTH_REGI;
+   private String RCTH_REGI;
    private String  RCTH_USER;
    private Date    RCTH_DHDO;
 
@@ -89,11 +89,11 @@ public class TMDRCTHEntity {
       this.RCTH_INPT_RR_D = rCTH_INPT_RR_D;
    }
 
-   public Boolean getRCTH_REGI() {
+   public String getRCTH_REGI() {
       return this.RCTH_REGI;
    }
 
-   public void setRCTH_REGI(Boolean rCTH_REGI) {
+   public void setRCTH_REGI(String rCTH_REGI) {
       this.RCTH_REGI = rCTH_REGI;
    }
 

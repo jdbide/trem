@@ -14,7 +14,7 @@ public class TMDRAMEEntityId implements Serializable{
    private String RAME_RAMC_COD;
    private Double RAME_NUM;
    private String RAME_NUM_PREM_VOIT;
-   private Boolean RAME_REGI;
+   private String RAME_REGI;
    
    public boolean equals(Object o) {
       return super.equals(o);

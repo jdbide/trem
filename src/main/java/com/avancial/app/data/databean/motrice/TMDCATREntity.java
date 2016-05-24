@@ -33,7 +33,7 @@ public class TMDCATREntity {
     @Id
     private String CATR_IND_TRA1_RESA;
     @Id
-    private Boolean CATR_REGI;
+    private String CATR_REGI;
     @Id
     private String CATR_PARITE;
     private String CATR_USER;
@@ -93,10 +93,10 @@ public class TMDCATREntity {
     public void setCATR_IND_TRA1_RESA(String cATR_IND_TRA1_RESA) {
         this.CATR_IND_TRA1_RESA = cATR_IND_TRA1_RESA;
     }
-    public Boolean getCATR_REGI() {
+    public String getCATR_REGI() {
         return this.CATR_REGI;
     }
-    public void setCATR_REGI(Boolean cATR_REGI) {
+    public void setCATR_REGI(String cATR_REGI) {
         this.CATR_REGI = cATR_REGI;
     }
     public String getCATR_PARITE() {

@@ -14,7 +14,7 @@ public class TMDRCTHEntityId implements Serializable{
    private String RCTH_RESA_TYP;
    private String RCTH_CLBA_COD;
    private String RCTH_INPT_RR_D;
-   private Boolean RCTH_REGI;
+   private String RCTH_REGI;
    
    public boolean equals(Object o) {
       return super.equals(o);

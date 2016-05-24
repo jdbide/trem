@@ -31,7 +31,7 @@ public class TMDSPPLEntity {
    @Id
    private String  SPPL_SPEC_COD;
    @Id
-   private Boolean SPPL_REGI;
+   private String SPPL_REGI;
    private String  SPPL_USER;
    private Date    SPPL_DHDO;
 
@@ -158,7 +158,7 @@ public class TMDSPPLEntity {
    /**
     * @return the sPPL_REGI
     */
-   public Boolean getSPPL_REGI() {
+   public String getSPPL_REGI() {
       return this.SPPL_REGI;
    }
 
@@ -166,7 +166,7 @@ public class TMDSPPLEntity {
     * @param sPPL_REGI
     *           the sPPL_REGI to set
     */
-   public void setSPPL_REGI(Boolean sPPL_REGI) {
+   public void setSPPL_REGI(String sPPL_REGI) {
       this.SPPL_REGI = sPPL_REGI;
    }
 

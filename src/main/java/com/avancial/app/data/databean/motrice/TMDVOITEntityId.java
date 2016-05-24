@@ -20,7 +20,7 @@ public class TMDVOITEntityId implements Serializable{
    private Double VOIT_TYVO_NUM_TYP;
    private String VOIT_CIES_COD_GERE;
    private String VOIT_IND_ORIG;
-   private Boolean VOIT_REGI_UTIL;
+   private String VOIT_REGI_UTIL;
    private Double VOIT_ROUL_NUM;
    private Double VOIT_INDCE_CLASST;
    

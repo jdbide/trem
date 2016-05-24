@@ -24,7 +24,7 @@ public class ImportTMDRCTHEntity {
     private String RCTH_RESA_TYP;
     private String RCTH_CLBA_COD;
     private String RCTH_INPT_RR_D;
-    private Boolean RCTH_REGI;
+    private String RCTH_REGI;
     private String RCTH_USER;
     private Date RCTH_DHDO;
     
@@ -79,10 +79,10 @@ public class ImportTMDRCTHEntity {
     public void setRCTH_INPT_RR_D(String rCTH_INPT_RR_D) {
         this.RCTH_INPT_RR_D = rCTH_INPT_RR_D;
     }
-    public Boolean getRCTH_REGI() {
+    public String getRCTH_REGI() {
         return this.RCTH_REGI;
     }
-    public void setRCTH_REGI(Boolean rCTH_REGI) {
+    public void setRCTH_REGI(String rCTH_REGI) {
         this.RCTH_REGI = rCTH_REGI;
     }
     public String getRCTH_USER() {

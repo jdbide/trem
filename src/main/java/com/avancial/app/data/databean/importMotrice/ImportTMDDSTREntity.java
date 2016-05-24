@@ -20,7 +20,7 @@ public class ImportTMDDSTREntity {
     private String DSTR_TRA1_NUM_TRA1;
     private String DSTR_TRA1_IND_FER;
     private Double DSTR_NUM;
-    private Boolean DSTR_REGI;
+    private String DSTR_REGI;
     private String DSTR_ETAT_TRA1;
     private String DSTR_COD_MISSION;
     private String DSTR_TYP_DES;
@@ -53,10 +53,10 @@ public class ImportTMDDSTREntity {
     public void setDSTR_NUM(Double dSTR_NUM) {
         this.DSTR_NUM = dSTR_NUM;
     }
-    public Boolean getDSTR_REGI() {
+    public String getDSTR_REGI() {
         return this.DSTR_REGI;
     }
-    public void setDSTR_REGI(Boolean dSTR_REGI) {
+    public void setDSTR_REGI(String dSTR_REGI) {
         this.DSTR_REGI = dSTR_REGI;
     }
     public String getDSTR_ETAT_TRA1() {

@@ -12,7 +12,7 @@ public class TMDCDEMEntityId implements Serializable{
    private String  CDEM_TRA1_IND_FER;
    private Double    CDEM_NUM_CONDITION;
    private String  CDEM_LIBS_TYCO_COD;
-   private Boolean CDEM_REGI;
+   private String CDEM_REGI;
    
    public boolean equals(Object o) {
       return super.equals(o);

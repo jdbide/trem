@@ -15,7 +15,7 @@ public class TMDSPPLEntityId implements Serializable{
    private Double SPPL_PCDD_NUM_COMP;
    private Double SPPL_PCDD_NUM_PLAC;
    private String SPPL_SPEC_COD;
-   private Boolean SPPL_REGI;
+   private String SPPL_REGI;
    
    public boolean equals(Object o) {
       return super.equals(o);

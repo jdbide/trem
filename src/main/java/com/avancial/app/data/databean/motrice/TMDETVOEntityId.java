@@ -14,7 +14,7 @@ public class TMDETVOEntityId implements Serializable{
    private Double    ETVO_VOIT_NUM;
    private Double    ETVO_NUM;
    private String  ETVO_ETAT_VOIT;
-   private Boolean ETVO_REGI;
+   private String ETVO_REGI;
    
    public boolean equals(Object o) {
       return super.equals(o);

@@ -29,11 +29,11 @@ public class ImportTMDTRA1Entity {
    private String  TRA1_IND_COMPO;
    private String  TRA1_IND_CDEM;
    private String  TRA1_IND_ECOLE;
-   private Boolean TRA1_REGI_VAL;
-   private Boolean TRA1_REGI_VAL_TRTH;
+   private String TRA1_REGI_VAL;
+   private String TRA1_REGI_VAL_TRTH;
    private String  TRA1_USER;
    private Date    TRA1_DHDO;
-   private Boolean TRA1_REGI_NON_EXTR;
+   private String TRA1_REGI_NON_EXTR;
 
    public Double getIdTMDTRA1() {
       return this.idTMDTRA1;
@@ -139,19 +139,19 @@ public class ImportTMDTRA1Entity {
       this.TRA1_IND_ECOLE = tRA1_IND_ECOLE;
    }
 
-   public Boolean getTRA1_REGI_VAL() {
+   public String getTRA1_REGI_VAL() {
       return this.TRA1_REGI_VAL;
    }
 
-   public void setTRA1_REGI_VAL(Boolean tRA1_REGI_VAL) {
+   public void setTRA1_REGI_VAL(String tRA1_REGI_VAL) {
       this.TRA1_REGI_VAL = tRA1_REGI_VAL;
    }
 
-   public Boolean getTRA1_REGI_VAL_TRTH() {
+   public String getTRA1_REGI_VAL_TRTH() {
       return this.TRA1_REGI_VAL_TRTH;
    }
 
-   public void setTRA1_REGI_VAL_TRTH(Boolean tRA1_REGI_VAL_TRTH) {
+   public void setTRA1_REGI_VAL_TRTH(String tRA1_REGI_VAL_TRTH) {
       this.TRA1_REGI_VAL_TRTH = tRA1_REGI_VAL_TRTH;
    }
 
@@ -171,11 +171,11 @@ public class ImportTMDTRA1Entity {
       this.TRA1_DHDO = tRA1_DHDO;
    }
 
-   public Boolean getTRA1_REGI_NON_EXTR() {
+   public String getTRA1_REGI_NON_EXTR() {
       return this.TRA1_REGI_NON_EXTR;
    }
 
-   public void setTRA1_REGI_NON_EXTR(Boolean tRA1_REGI_NON_EXTR) {
+   public void setTRA1_REGI_NON_EXTR(String tRA1_REGI_NON_EXTR) {
       this.TRA1_REGI_NON_EXTR = tRA1_REGI_NON_EXTR;
    }
 }

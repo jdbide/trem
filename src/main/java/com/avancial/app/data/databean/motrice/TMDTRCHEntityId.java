@@ -20,8 +20,8 @@ public class TMDTRCHEntityId implements Serializable {
    private Date              TRCH_DAT_DER_MOD;
    private String            TRCH_INPT_RR_ORIG;
    private String            TRCH_INPT_RR_DEST;
-   private Boolean           TRCH_REGI_VAL;
-   private Boolean           TRCH_REGI_VAL_DC;
+   private String           TRCH_REGI_VAL;
+   private String           TRCH_REGI_VAL_DC;
    private String            TRCH_LIBS_SEMA_COD;
 
    public boolean equals(Object o) {

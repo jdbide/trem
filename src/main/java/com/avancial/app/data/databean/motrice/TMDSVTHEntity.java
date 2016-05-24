@@ -33,7 +33,7 @@ public class TMDSVTHEntity {
    @Id
    private String  SVTH_INPT_RR_F;
    @Id
-   private Boolean SVTH_REGI;
+   private String SVTH_REGI;
    @Id
    private String  SVTH_IND_SPTH;
    @Id
@@ -179,7 +179,7 @@ public class TMDSVTHEntity {
    /**
     * @return the sVTH_REGI
     */
-   public Boolean getSVTH_REGI() {
+   public String getSVTH_REGI() {
       return this.SVTH_REGI;
    }
 
@@ -187,7 +187,7 @@ public class TMDSVTHEntity {
     * @param sVTH_REGI
     *           the sVTH_REGI to set
     */
-   public void setSVTH_REGI(Boolean sVTH_REGI) {
+   public void setSVTH_REGI(String sVTH_REGI) {
       this.SVTH_REGI = sVTH_REGI;
    }
 

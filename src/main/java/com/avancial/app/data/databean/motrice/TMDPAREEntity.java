@@ -39,7 +39,7 @@ public class TMDPAREEntity {
    @Id
    private Date    PARE_H_FIN_SERV;
    @Id
-   private Boolean PARE_REGI;
+   private String PARE_REGI;
    @Id
    private Double    PARE_NB_REPAS;
    @Id
@@ -145,11 +145,11 @@ public class TMDPAREEntity {
       this.PARE_H_FIN_SERV = pARE_H_FIN_SERV;
    }
 
-   public Boolean getPARE_REGI() {
+   public String getPARE_REGI() {
       return this.PARE_REGI;
    }
 
-   public void setPARE_REGI(Boolean pARE_REGI) {
+   public void setPARE_REGI(String pARE_REGI) {
       this.PARE_REGI = pARE_REGI;
    }
 

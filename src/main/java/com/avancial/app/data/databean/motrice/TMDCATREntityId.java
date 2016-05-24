@@ -16,7 +16,7 @@ public class TMDCATREntityId implements Serializable{
    private String CATR_LIBS_QLCO_COD;
    private String CATR_LIBS_OURE_COD;
    private String CATR_IND_TRA1_RESA;
-   private Boolean CATR_REGI;
+   private String CATR_REGI;
    private String CATR_PARITE;
    
    public boolean equals(Object o) {

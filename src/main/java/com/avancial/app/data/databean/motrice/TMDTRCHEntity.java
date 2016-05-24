@@ -35,9 +35,9 @@ public class TMDTRCHEntity {
    @Id
    private String  TRCH_INPT_RR_DEST;
    @Id
-   private Boolean TRCH_REGI_VAL;
+   private String TRCH_REGI_VAL;
    @Id
-   private Boolean TRCH_REGI_VAL_DC;
+   private String TRCH_REGI_VAL_DC;
    @Id
    private String  TRCH_LIBS_SEMA_COD;
    private String  TRCH_USER;
@@ -123,11 +123,11 @@ public class TMDTRCHEntity {
       this.TRCH_INPT_RR_DEST = tRCH_INPT_RR_DEST;
    }
 
-   public Boolean getTRCH_REGI_VAL() {
+   public String getTRCH_REGI_VAL() {
       return this.TRCH_REGI_VAL;
    }
 
-   public void setTRCH_REGI_VAL(Boolean tRCH_REGI_VAL) {
+   public void setTRCH_REGI_VAL(String tRCH_REGI_VAL) {
       this.TRCH_REGI_VAL = tRCH_REGI_VAL;
    }
 
@@ -147,11 +147,11 @@ public class TMDTRCHEntity {
       this.TRCH_DHDO = tRCH_DHDO;
    }
 
-   public Boolean getTRCH_REGI_VAL_DC() {
+   public String getTRCH_REGI_VAL_DC() {
       return this.TRCH_REGI_VAL_DC;
    }
 
-   public void setTRCH_REGI_VAL_DC(Boolean tRCH_REGI_VAL_DC) {
+   public void setTRCH_REGI_VAL_DC(String tRCH_REGI_VAL_DC) {
       this.TRCH_REGI_VAL_DC = tRCH_REGI_VAL_DC;
    }
 

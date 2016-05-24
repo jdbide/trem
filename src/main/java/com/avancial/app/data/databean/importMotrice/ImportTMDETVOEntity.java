@@ -24,7 +24,7 @@ public class ImportTMDETVOEntity {
    private Double    ETVO_VOIT_NUM;
    private Double    ETVO_NUM;
    private String  ETVO_ETAT_VOIT;
-   private Boolean ETVO_REGI;
+   private String ETVO_REGI;
    private String  ETVO_USER;
    private Date    ETCO_DHDO;
 
@@ -151,7 +151,7 @@ public class ImportTMDETVOEntity {
    /**
     * @return the eTVO_REGI
     */
-   public Boolean getETVO_REGI() {
+   public String getETVO_REGI() {
       return this.ETVO_REGI;
    }
 
@@ -159,7 +159,7 @@ public class ImportTMDETVOEntity {
     * @param eTVO_REGI
     *           the eTVO_REGI to set
     */
-   public void setETVO_REGI(Boolean eTVO_REGI) {
+   public void setETVO_REGI(String eTVO_REGI) {
       this.ETVO_REGI = eTVO_REGI;
    }
 

@@ -30,7 +30,7 @@ public class ImportTMDVOITEntity {
     private Double VOIT_TYVO_NUM_TYP;
     private String VOIT_CIES_COD_GERE;
     private String VOIT_IND_ORIG;
-    private Boolean VOIT_REGI_UTIL;
+    private String VOIT_REGI_UTIL;
     private String VOIT_USER;
     private Date VOIT_DHDO;
     private Double VOIT_ROUL_NUM;
@@ -121,10 +121,10 @@ public class ImportTMDVOITEntity {
     public void setVOIT_IND_ORIG(String vOIT_IND_ORIG) {
         this.VOIT_IND_ORIG = vOIT_IND_ORIG;
     }
-    public Boolean getVOIT_REGI_UTIL() {
+    public String getVOIT_REGI_UTIL() {
         return this.VOIT_REGI_UTIL;
     }
-    public void setVOIT_REGI_UTIL(Boolean vOIT_REGI_UTIL) {
+    public void setVOIT_REGI_UTIL(String vOIT_REGI_UTIL) {
         this.VOIT_REGI_UTIL = vOIT_REGI_UTIL;
     }
     public String getVOIT_USER() {

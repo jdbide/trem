@@ -25,7 +25,7 @@ public class ImportTMDTATHEntity {
    private String  TATH_INPT_RR_D;
    private String  TATH_INPT_RR_F;
    private String  TATH_PRIX_HORS_SYS;
-   private Boolean TATH_REGI;
+   private String TATH_REGI;
    private String  TATH_USER;
    private Date    TATH_DHDO;
 
@@ -182,7 +182,7 @@ public class ImportTMDTATHEntity {
    /**
     * @return the tATH_REGI
     */
-   public Boolean getTATH_REGI() {
+   public String getTATH_REGI() {
       return this.TATH_REGI;
    }
 
@@ -190,7 +190,7 @@ public class ImportTMDTATHEntity {
     * @param tATH_REGI
     *           the tATH_REGI to set
     */
-   public void setTATH_REGI(Boolean tATH_REGI) {
+   public void setTATH_REGI(String tATH_REGI) {
       this.TATH_REGI = tATH_REGI;
    }
 

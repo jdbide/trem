@@ -20,7 +20,7 @@ public class TMDPAREEntityId implements Serializable{
    private String PARE_VRES_NUM_SERV;
    private Date PARE_H_DEB_SERV;
    private Date PARE_H_FIN_SERV;
-   private Boolean PARE_REGI;
+   private String PARE_REGI;
    private Double PARE_NB_REPAS;
    private String PARE_IND_PLACE;
    private String PARE_IND_VOIT_REST;

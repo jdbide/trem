@@ -29,7 +29,7 @@ public class ImportTMDPAREEntity {
    private String  PARE_VRES_NUM_SERV;
    private Date    PARE_H_DEB_SERV;
    private Date    PARE_H_FIN_SERV;
-   private Boolean PARE_REGI;
+   private String PARE_REGI;
    private Double    PARE_NB_REPAS;
    private String  PARE_IND_PLACE;
    private String  PARE_IND_VOIT_REST;
@@ -140,11 +140,11 @@ public class ImportTMDPAREEntity {
       this.PARE_H_FIN_SERV = pARE_H_FIN_SERV;
    }
 
-   public Boolean getPARE_REGI() {
+   public String getPARE_REGI() {
       return this.PARE_REGI;
    }
 
-   public void setPARE_REGI(Boolean pARE_REGI) {
+   public void setPARE_REGI(String pARE_REGI) {
       this.PARE_REGI = pARE_REGI;
    }
 

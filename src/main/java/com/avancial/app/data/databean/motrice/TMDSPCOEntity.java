@@ -29,7 +29,7 @@ public class TMDSPCOEntity {
    @Id
    private String  SPCO_SPEC_COD;
    @Id
-   private Boolean SPCO_REGI;
+   private String SPCO_REGI;
    private String  SPCO_USER;
    private Date    SPCO_DHDO;
 
@@ -141,7 +141,7 @@ public class TMDSPCOEntity {
    /**
     * @return the sPCO_REGI
     */
-   public Boolean getSPCO_REGI() {
+   public String getSPCO_REGI() {
       return this.SPCO_REGI;
    }
 
@@ -149,7 +149,7 @@ public class TMDSPCOEntity {
     * @param sPCO_REGI
     *           the sPCO_REGI to set
     */
-   public void setSPCO_REGI(Boolean sPCO_REGI) {
+   public void setSPCO_REGI(String sPCO_REGI) {
       this.SPCO_REGI = sPCO_REGI;
    }
 

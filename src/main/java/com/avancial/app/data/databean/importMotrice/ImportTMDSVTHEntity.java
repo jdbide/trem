@@ -26,7 +26,7 @@ public class ImportTMDSVTHEntity {
    private String  SVTH_COD_ORIGINE;
    private String  SVTH_INPT_RR_D;
    private String  SVTH_INPT_RR_F;
-   private Boolean SVTH_REGI;
+   private String SVTH_REGI;
    private String  SVTH_IND_SPTH;
    private String  SVTH_TYP_CLAS;
    private String  SVTH_USER;
@@ -185,7 +185,7 @@ public class ImportTMDSVTHEntity {
    /**
     * @return the sVTH_REGI
     */
-   public Boolean getSVTH_REGI() {
+   public String getSVTH_REGI() {
       return this.SVTH_REGI;
    }
 
@@ -193,7 +193,7 @@ public class ImportTMDSVTHEntity {
     * @param sVTH_REGI
     *           the sVTH_REGI to set
     */
-   public void setSVTH_REGI(Boolean sVTH_REGI) {
+   public void setSVTH_REGI(String sVTH_REGI) {
       this.SVTH_REGI = sVTH_REGI;
    }
 

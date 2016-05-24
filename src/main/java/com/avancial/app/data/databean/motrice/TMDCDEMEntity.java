@@ -25,7 +25,7 @@ public class TMDCDEMEntity {
    @Id
    private String  CDEM_LIBS_TYCO_COD;
    @Id
-   private Boolean CDEM_REGI;
+   private String CDEM_REGI;
    private String  CDEM_USER;
    private Date    CDEM_DHDO;
    /**
@@ -91,13 +91,13 @@ public class TMDCDEMEntity {
    /**
     * @return the cDEM_REGI
     */
-   public Boolean getCDEM_REGI() {
+   public String getCDEM_REGI() {
       return this.CDEM_REGI;
    }
    /**
     * @param cDEM_REGI the cDEM_REGI to set
     */
-   public void setCDEM_REGI(Boolean cDEM_REGI) {
+   public void setCDEM_REGI(String cDEM_REGI) {
       this.CDEM_REGI = cDEM_REGI;
    }
    /**

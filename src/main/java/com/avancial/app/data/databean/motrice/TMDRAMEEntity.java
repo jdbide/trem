@@ -29,7 +29,7 @@ public class TMDRAMEEntity {
    @Id
    private String  RAME_NUM_PREM_VOIT;
    @Id
-   private Boolean RAME_REGI;
+   private String RAME_REGI;
    private String  RAME_USER;
    private Date    RAME_DHDO;
 
@@ -141,7 +141,7 @@ public class TMDRAMEEntity {
    /**
     * @return the rAME_REGI
     */
-   public Boolean getRAME_REGI() {
+   public String getRAME_REGI() {
       return this.RAME_REGI;
    }
 
@@ -149,7 +149,7 @@ public class TMDRAMEEntity {
     * @param rAME_REGI
     *           the rAME_REGI to set
     */
-   public void setRAME_REGI(Boolean rAME_REGI) {
+   public void setRAME_REGI(String rAME_REGI) {
       this.RAME_REGI = rAME_REGI;
    }
 

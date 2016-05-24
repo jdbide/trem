@@ -23,7 +23,7 @@ public class TMDDSTREntity {
     @Id
     private Double DSTR_NUM;
     @Id
-    private Boolean DSTR_REGI;
+    private String DSTR_REGI;
     @Id
     private String DSTR_ETAT_TRA1;
     @Id
@@ -61,10 +61,10 @@ public class TMDDSTREntity {
     public void setDSTR_NUM(Double dSTR_NUM) {
         this.DSTR_NUM = dSTR_NUM;
     }
-    public Boolean getDSTR_REGI() {
+    public String getDSTR_REGI() {
         return this.DSTR_REGI;
     }
-    public void setDSTR_REGI(Boolean dSTR_REGI) {
+    public void setDSTR_REGI(String dSTR_REGI) {
         this.DSTR_REGI = dSTR_REGI;
     }
     public String getDSTR_ETAT_TRA1() {

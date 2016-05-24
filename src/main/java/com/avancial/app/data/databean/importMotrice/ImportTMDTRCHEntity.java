@@ -27,10 +27,10 @@ public class ImportTMDTRCHEntity {
    private Date    TRCH_DAT_DER_MOD;
    private String  TRCH_INPT_RR_ORIG;
    private String  TRCH_INPT_RR_DEST;
-   private Boolean TRCH_REGI_VAL;
+   private String TRCH_REGI_VAL;
    private String  TRCH_USER;
    private Date    TRCH_DHDO;
-   private Boolean TRCH_REGI_VAL_DC;
+   private String TRCH_REGI_VAL_DC;
    private String  TRCH_LIBS_SEMA_COD;
 
    public Double getIdTMDTRCH() {
@@ -121,11 +121,11 @@ public class ImportTMDTRCHEntity {
       this.TRCH_INPT_RR_DEST = tRCH_INPT_RR_DEST;
    }
 
-   public Boolean getTRCH_REGI_VAL() {
+   public String getTRCH_REGI_VAL() {
       return this.TRCH_REGI_VAL;
    }
 
-   public void setTRCH_REGI_VAL(Boolean tRCH_REGI_VAL) {
+   public void setTRCH_REGI_VAL(String tRCH_REGI_VAL) {
       this.TRCH_REGI_VAL = tRCH_REGI_VAL;
    }
 
@@ -145,11 +145,11 @@ public class ImportTMDTRCHEntity {
       this.TRCH_DHDO = tRCH_DHDO;
    }
 
-   public Boolean getTRCH_REGI_VAL_DC() {
+   public String getTRCH_REGI_VAL_DC() {
       return this.TRCH_REGI_VAL_DC;
    }
 
-   public void setTRCH_REGI_VAL_DC(Boolean tRCH_REGI_VAL_DC) {
+   public void setTRCH_REGI_VAL_DC(String tRCH_REGI_VAL_DC) {
       this.TRCH_REGI_VAL_DC = tRCH_REGI_VAL_DC;
    }
 

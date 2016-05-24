@@ -14,7 +14,7 @@ public class TMDSPCOEntityId implements Serializable{
    private Double SPCO_VOIT_NUM;
    private Double SPCO_COMP_NUM;
    private String SPCO_SPEC_COD;
-   private Boolean SPCO_REGI;
+   private String SPCO_REGI;
 
    public boolean equals(Object o) {
       return super.equals(o);

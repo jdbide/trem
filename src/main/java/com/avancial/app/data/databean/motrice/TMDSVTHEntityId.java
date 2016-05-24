@@ -16,7 +16,7 @@ public class TMDSVTHEntityId implements Serializable{
    private String SVTH_COD_ORIGINE;
    private String SVTH_INPT_RR_D;
    private String SVTH_INPT_RR_F;
-   private Boolean SVTH_REGI;
+   private String SVTH_REGI;
    private String SVTH_IND_SPTH;
    private String SVTH_TYP_CLAS;
    

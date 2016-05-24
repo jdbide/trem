@@ -41,7 +41,7 @@ public class TMDVOITEntity {
    @Id
    private String  VOIT_IND_ORIG;
    @Id
-   private Boolean VOIT_REGI_UTIL;
+   private String VOIT_REGI_UTIL;
    @Id
    private Double    VOIT_ROUL_NUM;
    @Id
@@ -153,11 +153,11 @@ public class TMDVOITEntity {
       this.VOIT_IND_ORIG = vOIT_IND_ORIG;
    }
 
-   public Boolean getVOIT_REGI_UTIL() {
+   public String getVOIT_REGI_UTIL() {
       return this.VOIT_REGI_UTIL;
    }
 
-   public void setVOIT_REGI_UTIL(Boolean vOIT_REGI_UTIL) {
+   public void setVOIT_REGI_UTIL(String vOIT_REGI_UTIL) {
       this.VOIT_REGI_UTIL = vOIT_REGI_UTIL;
    }
 

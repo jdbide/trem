@@ -22,7 +22,7 @@ public class ImportTMDCDEMEntity {
    private String  CDEM_TRA1_IND_FER;
    private Double    CDEM_NUM_CONDITION;
    private String  CDEM_LIBS_TYCO_COD;
-   private Boolean CDEM_REGI;
+   private String CDEM_REGI;
    private String  CDEM_USER;
    private Date    CDEM_DHDO;
    
@@ -102,13 +102,13 @@ public class ImportTMDCDEMEntity {
    /**
     * @return the cDEM_REGI
     */
-   public Boolean getCDEM_REGI() {
+   public String getCDEM_REGI() {
       return this.CDEM_REGI;
    }
    /**
     * @param cDEM_REGI the cDEM_REGI to set
     */
-   public void setCDEM_REGI(Boolean cDEM_REGI) {
+   public void setCDEM_REGI(String cDEM_REGI) {
       this.CDEM_REGI = cDEM_REGI;
    }
    /**
