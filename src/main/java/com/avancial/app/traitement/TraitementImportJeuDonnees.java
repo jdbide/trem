@@ -60,11 +60,16 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
       for(int i=0; i<listTables.size(); i++) {
          libelleTableMotrice = listTables.get(i).getLibelleTablesMotrice();
          this.importMotriceService.deleteTable(this.getEntiteService.getNomEntiteImportFromTableMotrice(libelleTableMotrice));
-         this.log("Truncate de la table d'import " + libelleTableMotrice);
+         this.log("Delete de la table d'import " + libelleTableMotrice);
          
-         List<?> tmdDataBeans = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
+         List<?> entityList = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
          
-         this.importMotriceService.insertAll(tmdDataBeans, libelleTableMotrice);
+         try {
+            this.importMotriceService.insertAll(entityList, libelleTableMotrice);
+         } catch (ClassNotFoundException e) {
+            this.log("Impossible d'instancier la classe à partir de la table " + libelleTableMotrice);
+            e.printStackTrace();
+         }
          this.log("Import de la table " + libelleTableMotrice);
       }
    }
