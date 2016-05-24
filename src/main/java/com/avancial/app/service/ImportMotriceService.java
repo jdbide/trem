@@ -55,11 +55,11 @@ public class ImportMotriceService {
       }
    }
 
-   public void truncateTable(String libelleTableMotrice) {
-      String query = new StringBuilder("DELETE FROM ").append(libelleTableMotrice).toString();
+   public void deleteTable(String entityName) {
+      String query = new StringBuilder("DELETE FROM ").append(entityName).toString();
       
       this.em.getTransaction().begin();
-      this.em.createNativeQuery(query).executeUpdate();
+      this.em.createQuery(query).executeUpdate();
       this.em.getTransaction().commit();
    }
 

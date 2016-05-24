@@ -59,8 +59,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
       String libelleTableMotrice;
       for(int i=0; i<listTables.size(); i++) {
          libelleTableMotrice = listTables.get(i).getLibelleTablesMotrice();
-//         this.importMotriceService.truncateTable(libelleTableMotrice);
-//         this.log("Truncate de la table d'import " + libelleTableMotrice);
+         this.importMotriceService.deleteTable(this.getEntiteService.getNomEntiteImportFromTableMotrice(libelleTableMotrice));
+         this.log("Truncate de la table d'import " + libelleTableMotrice);
          
          List<?> tmdDataBeans = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
          
