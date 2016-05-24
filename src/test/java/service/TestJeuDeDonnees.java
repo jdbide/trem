@@ -16,7 +16,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.service.TremasJeuDonneesService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -34,7 +34,7 @@ public class TestJeuDeDonnees {
       WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(IhmPageDataBean.class.getPackage())
             // .addPackage(IhmPageDao.class.getPackage())
 
-            .addClass(TremasJeuDonneesService.class).addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage())
+            .addClass(JeuDonneesService.class).addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage())
             // .addAsManifestResource("arquillian.xml")
             .addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
             // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -46,7 +46,7 @@ public class TestJeuDeDonnees {
    }
 
    @Inject
-   TremasJeuDonneesService service;
+   JeuDonneesService service;
 
    @Test
    public void TestInjection() {
