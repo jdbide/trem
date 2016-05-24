@@ -6,7 +6,8 @@ socle_app.directive("socleTable", function() {
 		scope : {
 			tableTitre : '=',
 			tableParametres : '=',
-			colonnes : '='
+			colonnes : '=',
+			tableFormat: '&'
 		},
 		templateUrl : 'views/modals/table.xhtml'
 	};

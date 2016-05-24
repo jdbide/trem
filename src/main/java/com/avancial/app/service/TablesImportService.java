@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.table.ColumnTable;
 
 /**
  * Service permettant de gérer les tables d'import
@@ -19,7 +20,7 @@ public class TablesImportService {
     @Inject
     @Socle_PUSocle
     private EntityManager em;
-    
+
     @Inject
     private GetEntiteService entiteService;
 
@@ -41,9 +42,15 @@ public class TablesImportService {
             e.printStackTrace();
         }
 
-        List<String> colNames = new ArrayList<>();
+        List<ColumnTable> columns = new ArrayList<>();
         for (int i = 0; i < entity.getDeclaredFields().length; i++) {
-            colNames.add(entity.getDeclaredFields()[i].getName());
+            String field = entity.getDeclaredFields()[i].getName();
+            String prefix = field.substring(0, 4);
+            String fieldData = field.replace(prefix, prefix.toLowerCase());
+
+            ColumnTable columnTable = new ColumnTable(fieldData, field, field, (!field.startsWith("id")),
+                    entity.getDeclaredFields()[i].getType().getSimpleName());
+            columns.add(columnTable);
         }
 
         Query query = this.em.createNamedQuery(
@@ -54,7 +61,7 @@ public class TablesImportService {
         datas.addAll(tmdavtrDataBeans);
 
         JSONObject retour = new JSONObject();
-        retour.put("cols", colNames);
+        retour.put("cols", columns);
         retour.put("dataset", datas);
         return retour;
     }
