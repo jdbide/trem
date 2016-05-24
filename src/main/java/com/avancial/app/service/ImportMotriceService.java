@@ -56,7 +56,7 @@ public class ImportMotriceService {
    }
 
    public void truncateTable(String libelleTableMotrice) {
-      String query = new StringBuilder("TRUNCATE TABLE ").append(libelleTableMotrice).toString();
+      String query = new StringBuilder("DELETE FROM ").append(libelleTableMotrice).toString();
       
       this.em.getTransaction().begin();
       this.em.createNativeQuery(query).executeUpdate();

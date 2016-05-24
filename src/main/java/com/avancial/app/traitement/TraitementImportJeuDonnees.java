@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import com.avancial.app.data.databean.JeuDonneeDataBean;
 import com.avancial.app.data.databean.TablesMotriceDataBean;
+import com.avancial.app.data.databean.motrice.TMDAVTRDataBean;
 import com.avancial.app.service.GetEntiteService;
 import com.avancial.app.service.ImportMotriceService;
 import com.avancial.app.service.JeuDonneeService;
@@ -63,7 +64,22 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 //         this.log("Truncate de la table d'import " + libelleTableMotrice);
          
          List<?> tmdDataBeans = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
-         this.importMotriceService.insertAll(tmdDataBeans, libelleTableMotrice);
+         
+         for(int j=0; j<50; j++) {
+            System.out.print(((TMDAVTRDataBean) tmdDataBeans.get(j)).getAVTR_LIBS_AVAL_COD());
+            System.out.print(";");
+            System.out.print(((TMDAVTRDataBean) tmdDataBeans.get(j)).getAVTR_TRA1_COD_CIE());
+            System.out.print(";");
+            System.out.print(((TMDAVTRDataBean) tmdDataBeans.get(j)).getAVTR_TRA1_IND_FER());
+            System.out.print(";");
+            System.out.print(((TMDAVTRDataBean) tmdDataBeans.get(j)).getAVTR_TRA1_NUM_TRA1());
+            System.out.print(";");
+            System.out.print(((TMDAVTRDataBean) tmdDataBeans.get(j)).getAVTR_USER());
+            System.out.print(";");
+            System.out.println(((TMDAVTRDataBean) tmdDataBeans.get(j)).getAVTR_DHDO());
+         }
+         
+//         this.importMotriceService.insertAll(tmdDataBeans, libelleTableMotrice);
          this.log("Import de la table " + libelleTableMotrice);
       }
    }
