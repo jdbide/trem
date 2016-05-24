@@ -30,7 +30,7 @@ public class ImportMotriceService {
     *           liste des enregistrements
     * @param libelleTableMotrice
     *           nom de l'entité
-    * @throws ClassNotFoundException 
+    * @throws ClassNotFoundException
     */
    public void insertAll(List<?> entityList, String libelleTableMotrice) throws ClassNotFoundException {
       ModelMapper modelMapper = new ModelMapper();
@@ -41,27 +41,22 @@ public class ImportMotriceService {
       if (importEntityClass != null) {
          this.em.getTransaction().begin();
 
-         Class<?> importDataBeanClass = null;
-         try {
-            importDataBeanClass = this.getEntiteService.getClasseEntiteImporFromTableMotrice(libelleTableMotrice);
+         Class<?> importDataBeanClass = this.getEntiteService.getClasseEntiteImporFromTableMotrice(libelleTableMotrice);
 
-            if (importDataBeanClass != null) {
-               this.em.getTransaction().begin();
+         if (importDataBeanClass != null) {
+            this.em.getTransaction().begin();
 
-               Object object;
-               for (int i = 0; i < entityList.size(); i++) {
-                  object = modelMapper.map(entityList.get(i), importEntityClass);// mapping entre les deux entités
+            Object object;
+            for (int i = 0; i < entityList.size(); i++) {
+               object = modelMapper.map(entityList.get(i), importEntityClass);// mapping entre les deux entités
 
-                  this.em.persist(object);
-               }
-
-               this.em.flush();
-               this.em.getTransaction().commit();
+               this.em.persist(object);
             }
-         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
+            this.em.flush();
+            this.em.getTransaction().commit();
          }
+
       }
    }
 
