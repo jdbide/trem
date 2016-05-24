@@ -12,10 +12,10 @@ import javax.inject.Inject;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.TablesMotriceEntity;
 import com.avancial.app.service.GetEntiteService;
-import com.avancial.app.service.JeuDonneesService;
+import com.avancial.app.service.TremasJeuDonneesService;
 import com.avancial.app.service.MotriceService;
-import com.avancial.app.service.ImportService;
-import com.avancial.app.service.TablesMotriceService;
+import com.avancial.app.service.TremasImportService;
+import com.avancial.app.service.TremasTablesMotriceService;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 
@@ -27,15 +27,15 @@ import com.avancial.socle.traitement.ATraitementLogDetail;
 public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 
    @Inject
-   private JeuDonneesService jeuDonneeService;
+   private TremasJeuDonneesService jeuDonneeService;
    @Inject
-   private TablesMotriceService tablesMotriceService;
+   private TremasTablesMotriceService tablesMotriceService;
    @Inject
    private GetEntiteService getEntiteService;
    @Inject
    private MotriceService motriceService;
    @Inject
-   private ImportService tablesImportService;
+   private TremasImportService tablesImportService;
 
    /**
     * 
@@ -63,11 +63,11 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
          this.log("Truncate de la table d'import " + libelleTableMotrice);
          
          // lecture des enregistrements dans motrice
-         List<?> tmdDataBeans = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
+         List<?> entityList = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
          
          try {// import des données en local
             this.log("Import de la table " + libelleTableMotrice);
-            this.tablesImportService.insertAll(tmdDataBeans, libelleTableMotrice);
+            this.tablesImportService.insertAll(entityList, libelleTableMotrice);
             
          } catch (ClassNotFoundException e) {
             this.log("Impossible d'instancier la classe associée à la table " + libelleTableMotrice);

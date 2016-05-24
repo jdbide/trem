@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.avancial.app.data.databean.TablesMotriceEntity;
-import com.avancial.app.service.TablesMotriceService;
+import com.avancial.app.service.TremasTablesMotriceService;
 /**
  * webService permetant la selection d'une table a afficher
  * @author gabriel.gagnier
@@ -22,7 +22,7 @@ import com.avancial.app.service.TablesMotriceService;
 public class TremasImportData {
 
    @Inject
-   private TablesMotriceService motriceService;
+   private TremasTablesMotriceService motriceService;
 
    @GET
    @Produces({ MediaType.APPLICATION_JSON })

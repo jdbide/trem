@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
-public class JeuDonneesService {
+public class TremasJeuDonneesService {
    @Inject
    @Socle_PUSocle
    private EntityManager em;

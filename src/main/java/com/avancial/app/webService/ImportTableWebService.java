@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.avancial.app.service.ImportService;
+import com.avancial.app.service.TremasImportService;
 
 /**
  * web service servant l'affichage des tables motrice
@@ -22,7 +22,7 @@ import com.avancial.app.service.ImportService;
 public class ImportTableWebService {
 
    @Inject
-   private ImportService tableImportService;
+   private TremasImportService tableImportService;
 
    /**
     * renvoi le contenue de la table entityName (exemple: TMDAVTR)

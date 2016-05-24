@@ -19,7 +19,7 @@ import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
  * @author gabriel.gagnier
  *
  */
-public class ImportService {
+public class TremasImportService {
    @Inject
    @Socle_PUSocle
    private EntityManager em;
@@ -34,6 +34,7 @@ public class ImportService {
     * @return
     * @throws ClassNotFoundException
     */
+   @SuppressWarnings("unchecked")
    public JSONObject getDataTable(String entityName) throws ClassNotFoundException {
       Class<?> entity = null;
 
@@ -48,7 +49,7 @@ public class ImportService {
          colNames.add(entity.getDeclaredFields()[i].getName());
       }
 
-      Query query = this.em.createNamedQuery(entiteService.getNomEntiteImportFromNomEntiteMotrice(entityName) + ".getAll", entiteService.getClasseEntiteImporFromTableMotrice(entityName));
+      Query query = this.em.createNamedQuery(new StringBuilder(this.entiteService.getNomEntiteImportFromNomEntiteMotrice(entityName)).append(".getAll").toString(), this.entiteService.getClasseEntiteImporFromTableMotrice(entityName));
       List<Object> tmdavtrDataBeans = query.getResultList();
       JSONArray datas = new JSONArray();
       datas.addAll(tmdavtrDataBeans);
