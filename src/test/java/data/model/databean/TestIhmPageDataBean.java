@@ -5,10 +5,13 @@ package data.model.databean;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -19,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.avancial.app.persistence.EntityManagerProviderDb2;
 import com.avancial.socle.data.model.databean.IhmChapitreDataBean;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.data.model.databean.IhmRubriqueDataBean;
@@ -42,6 +46,7 @@ public class TestIhmPageDataBean {
             // .addClass(PhraseBuilder.class)
             // .addAsManifestResource("arquillian.xml")
             .addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
+            .addPackage(EntityManagerProviderDb2.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
             // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
             .setWebXML("WEB-INF/web.xml").addAsManifestResource("META-INF/context.xml", "context.xml");
 
@@ -68,8 +73,12 @@ public class TestIhmPageDataBean {
    @Inject
    @Socle_PUSocle
    EntityManager       em;  
+    
    
-   public void initPage() {      
+   public void initPage() {
+      
+
+      
       em.getTransaction().begin();
       // rubrique.setIdRubrique(1L);
       rubrique.setLibelleIhmRubrique("Rubrique");
@@ -109,6 +118,82 @@ public class TestIhmPageDataBean {
    @Test
    public void testDaoInjection() {
       Assert.assertTrue(null != this.em);
+   }
+      
+   @Test
+   public void testInjectionConfPersist() {
+   // dynamic configuration
+      Map<String, String> props = new HashMap<>();
+      props.put("javax.persistence.jdbc.user", "dbad_tremas");
+      props.put("javax.persistence.jdbc.password", "!tremas-12");            
+      
+      EntityManager mm = null;
+      try {
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu-db2", props);
+         
+         
+         mm = emf.createEntityManager();
+      }
+      catch (Throwable ex) 
+      {
+                  ex.printStackTrace();
+          //throw new RuntimeException("Error al crear la factoria de JPA:->"+ ex.getMessage());
+      }
+            
+      mm.getTransaction().begin();
+      // rubrique.setIdRubrique(1L);
+      rubrique.setLibelleIhmRubrique("Rubrique");
+
+      mm.persist(rubrique);
+
+      // chapitre.setIdChapitre(1L);
+      chapitre.setLibelleIhmChapitre("Chapitre");
+      chapitre.setIhmRubriqueTypeDataBean(rubrique);
+      mm.persist(chapitre);
+
+      // page.setIdPage(1L);
+      page.setLibelleIhmPage("Test");
+      page.setIhmChapitreDataBean(chapitre);
+      mm.persist(page);
+      mm.flush();
+      mm.getTransaction().commit();
+      
+   }
+   
+   EntityManagerProviderDb2 emDb2;
+   
+   @Test
+   public void testInjectionConfPersistWithEntityManagerProviderDb2() {         
+      EntityManager mm = null;
+      
+      try {
+         this.emDb2 = EntityManagerProviderDb2.getInstance("dbad_tremas", "!tremas-12");      
+         mm = this.emDb2.getEm();
+      }
+      catch (Throwable ex) 
+      {
+                  ex.printStackTrace();
+          //throw new RuntimeException("Error al crear la factoria de JPA:->"+ ex.getMessage());
+      }
+            
+      mm.getTransaction().begin();
+      // rubrique.setIdRubrique(1L);
+      rubrique.setLibelleIhmRubrique("Rubrique testInjectionConfPersistWithEntityManagerProviderDb2");
+
+      mm.persist(rubrique);
+
+      // chapitre.setIdChapitre(1L);
+      chapitre.setLibelleIhmChapitre("Chapitre");
+      chapitre.setIhmRubriqueTypeDataBean(rubrique);
+      mm.persist(chapitre);
+
+      // page.setIdPage(1L);
+      page.setLibelleIhmPage("Test");
+      page.setIhmChapitreDataBean(chapitre);
+      mm.persist(page);
+      mm.flush();
+      mm.getTransaction().commit();
+      
    }
 
 }
