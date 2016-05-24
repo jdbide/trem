@@ -23,7 +23,6 @@ public class TMDTRA1EntityId implements Serializable {
    private String            TRA1_IND_CDEM;
    private String            TRA1_IND_ECOLE;
    private Boolean           TRA1_REGI_VAL;
-   private Boolean           TRA1_REGI_VAL_TRTH;
    private Boolean           TRA1_REGI_NON_EXTR;
 
    public boolean equals(Object o) {

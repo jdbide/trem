@@ -30,7 +30,9 @@ public class TMDRCTHEntity {
    private String  RCTH_INPT_RR_D;
    @Id
    private Boolean RCTH_REGI;
+   @Id
    private String  RCTH_USER;
+   @Id
    private Date    RCTH_DHDO;
 
    public String getRCTH_TRCH_COD_CIE() {
