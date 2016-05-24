@@ -33,8 +33,8 @@ public class ImportJeuDonneeWebService {
       this.importJeuDonnees.execute();
 
       ResponseBean responseBean = new ResponseBean();
-      responseBean.setStatus(true);
-      responseBean.setMessage("Traitement ok");
+      responseBean.setStatus(this.importJeuDonnees.isTraitementOk());
+      responseBean.setMessage(this.importJeuDonnees.isTraitementOk()?"Traitement ok":"Traitement ko");
 
       return Response.status(200).entity(responseBean).build();
    }

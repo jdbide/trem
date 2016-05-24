@@ -23,6 +23,17 @@ public class JeuDonneeService {
       this.em.getTransaction().commit();
       
       return jeuDonneeDataBean;
-   }  
+   }
 
+   /**
+    * Update l'entité jeu de données dans la table associée.
+    * @param jeuDonneeDataBean
+    */
+   public void update(JeuDonneeEntity jeuDonneeDataBean) {
+      this.em.getTransaction().begin();  
+      this.em.merge(jeuDonneeDataBean);   
+      this.em.flush();
+      this.em.getTransaction().commit();
+   }
+   
 }

@@ -36,12 +36,15 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
    private MotriceService motriceService;
    @Inject
    private ImportMotriceService importMotriceService;
+   
+   private boolean traitementOk;
 
    /**
     * 
     */
    public TraitementImportJeuDonnees() {
       super();
+      this.traitementOk = false;
    }
 
    /*
@@ -70,8 +73,12 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
             this.log("Impossible d'instancier la classe à partir de la table " + libelleTableMotrice);
             e.printStackTrace();
          }
-         this.log("Import de la table " + libelleTableMotrice);
       }
+      jeuDonneeDataBean.setStatusJeuDonnees(true);
+      jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());      
+      this.jeuDonneeService.update(jeuDonneeDataBean);
+      
+      this.traitementOk = true;
    }
 
    /**
@@ -91,8 +98,23 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
       jeuDonneeDataBean.setActifJeuDonnees(true);
       jeuDonneeDataBean.setCommentaireJeuDonnees("");
       jeuDonneeDataBean.setOrdreJeuDonnees(0);
+      jeuDonneeDataBean.setStatusJeuDonnees(false);
 
       return this.jeuDonneeService.save(jeuDonneeDataBean);
+   }
+
+   /**
+    * @return the traitementOk
+    */
+   public boolean isTraitementOk() {
+      return this.traitementOk;
+   }
+
+   /**
+    * @param traitementOk the traitementOk to set
+    */
+   public void setTraitementOk(boolean traitementOk) {
+      this.traitementOk = traitementOk;
    }
 
 }

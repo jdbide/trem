@@ -54,6 +54,9 @@ public class JeuDonneeEntity  {
 
     @Column(nullable=false)
     private int ordreJeuDonnees;
+    
+    @Column(nullable=false)
+    private boolean statusJeuDonnees;
 
     public int getIdJeuDonnees() {
         return this.idJeuDonnees;
@@ -134,5 +137,19 @@ public class JeuDonneeEntity  {
     public void setOrdreJeuDonnees(int ordreJeuDonnees) {
         this.ordreJeuDonnees = ordreJeuDonnees;
     }
+
+   /**
+    * @return the statusJeuDonnees
+    */
+   public boolean isStatusJeuDonnees() {
+      return this.statusJeuDonnees;
+   }
+
+   /**
+    * @param statusJeuDonnees the statusJeuDonnees to set
+    */
+   public void setStatusJeuDonnees(boolean statusJeuDonnees) {
+      this.statusJeuDonnees = statusJeuDonnees;
+   }
 
 }

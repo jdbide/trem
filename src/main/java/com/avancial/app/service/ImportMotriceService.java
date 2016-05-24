@@ -36,14 +36,14 @@ public class ImportMotriceService {
       ModelMapper modelMapper = new ModelMapper();
       modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
       
-      Class<?> importDataBeanClass = this.getEntiteService.getClasseEntiteImporFromTableMotrice(libelleTableMotrice);
+      Class<?> importEntityClass = this.getEntiteService.getClasseEntiteImporFromTableMotrice(libelleTableMotrice);
 
-      if (importDataBeanClass != null) {
+      if (importEntityClass != null) {
          this.em.getTransaction().begin();
 
          Object object;
          for (int i = 0; i < entityList.size(); i++) {
-            object = modelMapper.map(entityList.get(i), importDataBeanClass);
+            object = modelMapper.map(entityList.get(i), importEntityClass);// mapping entre les deux entités
 
             this.em.persist(object);
          }
@@ -54,6 +54,10 @@ public class ImportMotriceService {
    
    }
 
+   /**
+    * Supprime les enregistrements de la table avant import.
+    * @param entityName
+    */
    public void deleteTable(String entityName) {
       String query = new StringBuilder("DELETE FROM ").append(entityName).toString();
       
