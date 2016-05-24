@@ -13,7 +13,7 @@ public class TMDAVTHEntityId implements Serializable {
    private String            AVTH_TRCH_COD_CIE;
    private String            AVTH_TRCH_NUM_TRA1;
    private String            AVTH_TRCH_IND_FER;
-   private Long              AVTH_TRCH_NUM;
+   private Double              AVTH_TRCH_NUM;
    private String            AVTH_LIBS_AVAL_COD;
 
    public boolean equals(Object o) {

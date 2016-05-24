@@ -21,11 +21,11 @@ public class TMDSVTHEntity {
    @Id
    private String  SVTH_TRCH_IND_FER;
    @Id
-   private Long    SVTH_TRCH_NUM;
+   private Double    SVTH_TRCH_NUM;
    @Id
    private String  SVTH_LIBS_SERV_COD;
    @Id
-   private Long    SVTH_NUM;
+   private Double    SVTH_NUM;
    @Id
    private String  SVTH_COD_ORIGINE;
    @Id
@@ -89,7 +89,7 @@ public class TMDSVTHEntity {
    /**
     * @return the sVTH_TRCH_NUM
     */
-   public Long getSVTH_TRCH_NUM() {
+   public Double getSVTH_TRCH_NUM() {
       return this.SVTH_TRCH_NUM;
    }
 
@@ -97,7 +97,7 @@ public class TMDSVTHEntity {
     * @param sVTH_TRCH_NUM
     *           the sVTH_TRCH_NUM to set
     */
-   public void setSVTH_TRCH_NUM(Long sVTH_TRCH_NUM) {
+   public void setSVTH_TRCH_NUM(Double sVTH_TRCH_NUM) {
       this.SVTH_TRCH_NUM = sVTH_TRCH_NUM;
    }
 
@@ -119,7 +119,7 @@ public class TMDSVTHEntity {
    /**
     * @return the sVTH_NUM
     */
-   public Long getSVTH_NUM() {
+   public Double getSVTH_NUM() {
       return this.SVTH_NUM;
    }
 
@@ -127,7 +127,7 @@ public class TMDSVTHEntity {
     * @param sVTH_NUM
     *           the sVTH_NUM to set
     */
-   public void setSVTH_NUM(Long sVTH_NUM) {
+   public void setSVTH_NUM(Double sVTH_NUM) {
       this.SVTH_NUM = sVTH_NUM;
    }
 

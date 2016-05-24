@@ -21,7 +21,7 @@ public class TMDCDDSEntity {
     @Id
     private String CDDS_CDEM_IND_FER;
     @Id
-    private Long CDDS_CDEM_NUM_COND;
+    private Double CDDS_CDEM_NUM_COND;
     @Id
     private String CDDS_INPT_RR_MONT;
     @Id
@@ -47,10 +47,10 @@ public class TMDCDDSEntity {
     public void setCDDS_CDEM_IND_FER(String cDDS_CDEM_IND_FER) {
         this.CDDS_CDEM_IND_FER = cDDS_CDEM_IND_FER;
     }
-    public Long getCDDS_CDEM_NUM_COND() {
+    public Double getCDDS_CDEM_NUM_COND() {
         return this.CDDS_CDEM_NUM_COND;
     }
-    public void setCDDS_CDEM_NUM_COND(Long cDDS_CDEM_NUM_COND) {
+    public void setCDDS_CDEM_NUM_COND(Double cDDS_CDEM_NUM_COND) {
         this.CDDS_CDEM_NUM_COND = cDDS_CDEM_NUM_COND;
     }
     public String getCDDS_INPT_RR_MONT() {

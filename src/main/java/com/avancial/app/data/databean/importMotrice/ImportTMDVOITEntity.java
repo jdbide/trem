@@ -16,31 +16,31 @@ public class ImportTMDVOITEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long idTMDVOIT;
+    private Double idTMDVOIT;
     private String VOIT_TRCH_COD_CIE;
     private String VOIT_TRCH_NUM_TRA1;
     private String VOIT_TRCH_IND_FER;
-    private Long VOIT_TRCH_NUM;
-    private Long VOIT_NUM;
+    private Double VOIT_TRCH_NUM;
+    private Double VOIT_NUM;
     private String VOIT_NUM_RESA;
-    private Long VOIT_NUM_VOIT;
+    private Double VOIT_NUM_VOIT;
     private String VOIT_COD_ORIG;
-    private Long VOIT_SENS_ORIG;
-    private Long VOIT_NUM_ORIG;
-    private Long VOIT_TYVO_NUM_TYP;
+    private Double VOIT_SENS_ORIG;
+    private Double VOIT_NUM_ORIG;
+    private Double VOIT_TYVO_NUM_TYP;
     private String VOIT_CIES_COD_GERE;
     private String VOIT_IND_ORIG;
     private Boolean VOIT_REGI_UTIL;
     private String VOIT_USER;
     private Date VOIT_DHDO;
-    private Long VOIT_ROUL_NUM;
-    private Long VOIT_INDCE_CLASST;
+    private Double VOIT_ROUL_NUM;
+    private Double VOIT_INDCE_CLASST;
     
-   public Long getIdTMDVOIT() {
+   public Double getIdTMDVOIT() {
       return this.idTMDVOIT;
    }
 
-   public void setIdTMDVOIT(Long idTMDVOIT) {
+   public void setIdTMDVOIT(Double idTMDVOIT) {
       this.idTMDVOIT = idTMDVOIT;
    }
    public String getVOIT_TRCH_COD_CIE() {
@@ -61,16 +61,16 @@ public class ImportTMDVOITEntity {
     public void setVOIT_TRCH_IND_FER(String vOIT_TRCH_IND_FER) {
         this.VOIT_TRCH_IND_FER = vOIT_TRCH_IND_FER;
     }
-    public Long getVOIT_TRCH_NUM() {
+    public Double getVOIT_TRCH_NUM() {
         return this.VOIT_TRCH_NUM;
     }
-    public void setVOIT_TRCH_NUM(Long vOIT_TRCH_NUM) {
+    public void setVOIT_TRCH_NUM(Double vOIT_TRCH_NUM) {
         this.VOIT_TRCH_NUM = vOIT_TRCH_NUM;
     }
-    public Long getVOIT_NUM() {
+    public Double getVOIT_NUM() {
         return this.VOIT_NUM;
     }
-    public void setVOIT_NUM(Long vOIT_NUM) {
+    public void setVOIT_NUM(Double vOIT_NUM) {
         this.VOIT_NUM = vOIT_NUM;
     }
     public String getVOIT_NUM_RESA() {
@@ -79,10 +79,10 @@ public class ImportTMDVOITEntity {
     public void setVOIT_NUM_RESA(String vOIT_NUM_RESA) {
         this.VOIT_NUM_RESA = vOIT_NUM_RESA;
     }
-    public Long getVOIT_NUM_VOIT() {
+    public Double getVOIT_NUM_VOIT() {
         return this.VOIT_NUM_VOIT;
     }
-    public void setVOIT_NUM_VOIT(Long vOIT_NUM_VOIT) {
+    public void setVOIT_NUM_VOIT(Double vOIT_NUM_VOIT) {
         this.VOIT_NUM_VOIT = vOIT_NUM_VOIT;
     }
     public String getVOIT_COD_ORIG() {
@@ -91,22 +91,22 @@ public class ImportTMDVOITEntity {
     public void setVOIT_COD_ORIG(String vOIT_COD_ORIG) {
         this.VOIT_COD_ORIG = vOIT_COD_ORIG;
     }
-    public Long getVOIT_SENS_ORIG() {
+    public Double getVOIT_SENS_ORIG() {
         return this.VOIT_SENS_ORIG;
     }
-    public void setVOIT_SENS_ORIG(Long vOIT_SENS_ORIG) {
+    public void setVOIT_SENS_ORIG(Double vOIT_SENS_ORIG) {
         this.VOIT_SENS_ORIG = vOIT_SENS_ORIG;
     }
-    public Long getVOIT_NUM_ORIG() {
+    public Double getVOIT_NUM_ORIG() {
         return this.VOIT_NUM_ORIG;
     }
-    public void setVOIT_NUM_ORIG(Long vOIT_NUM_ORIG) {
+    public void setVOIT_NUM_ORIG(Double vOIT_NUM_ORIG) {
         this.VOIT_NUM_ORIG = vOIT_NUM_ORIG;
     }
-    public Long getVOIT_TYVO_NUM_TYP() {
+    public Double getVOIT_TYVO_NUM_TYP() {
         return this.VOIT_TYVO_NUM_TYP;
     }
-    public void setVOIT_TYVO_NUM_TYP(Long vOIT_TYVO_NUM_TYP) {
+    public void setVOIT_TYVO_NUM_TYP(Double vOIT_TYVO_NUM_TYP) {
         this.VOIT_TYVO_NUM_TYP = vOIT_TYVO_NUM_TYP;
     }
     public String getVOIT_CIES_COD_GERE() {
@@ -139,16 +139,16 @@ public class ImportTMDVOITEntity {
     public void setVOIT_DHDO(Date vOIT_DHDO) {
         this.VOIT_DHDO = vOIT_DHDO;
     }
-    public Long getVOIT_ROUL_NUM() {
+    public Double getVOIT_ROUL_NUM() {
         return this.VOIT_ROUL_NUM;
     }
-    public void setVOIT_ROUL_NUM(Long vOIT_ROUL_NUM) {
+    public void setVOIT_ROUL_NUM(Double vOIT_ROUL_NUM) {
         this.VOIT_ROUL_NUM = vOIT_ROUL_NUM;
     }
-    public Long getVOIT_INDCE_CLASST() {
+    public Double getVOIT_INDCE_CLASST() {
         return this.VOIT_INDCE_CLASST;
     }
-    public void setVOIT_INDCE_CLASST(Long vOIT_INDCE_CLASST) {
+    public void setVOIT_INDCE_CLASST(Double vOIT_INDCE_CLASST) {
         this.VOIT_INDCE_CLASST = vOIT_INDCE_CLASST;
     }
 }

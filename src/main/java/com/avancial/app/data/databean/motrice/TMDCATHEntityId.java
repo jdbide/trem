@@ -13,8 +13,8 @@ public class TMDCATHEntityId implements Serializable {
    private String CATH_TRCH_COD_CIE;
    private String CATH_TRCH_NUM_TRA1;
    private String CATH_TRCH_IND_FER;
-   private Long CATH_TRCH_NUM;
-   private Long CATH_NUM;
+   private Double CATH_TRCH_NUM;
+   private Double CATH_NUM;
    private String CATH_CIRR_COD_CIE;
    private String CATH_REGI;
    private String CATH_ETAT_TRCH;

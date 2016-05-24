@@ -21,13 +21,13 @@ public class TMDSPPLEntity {
    @Id
    private String  SPPL_VOIT_IND_FER;
    @Id
-   private Long    SPPL_VOIT_TRCH_NUM;
+   private Double    SPPL_VOIT_TRCH_NUM;
    @Id
-   private Long    SPPL_VOIT_NUM;
+   private Double    SPPL_VOIT_NUM;
    @Id
-   private Long    SPPL_PCDD_NUM_COMP;
+   private Double    SPPL_PCDD_NUM_COMP;
    @Id
-   private Long    SPPL_PCDD_NUM_PLAC;
+   private Double    SPPL_PCDD_NUM_PLAC;
    @Id
    private String  SPPL_SPEC_COD;
    @Id
@@ -83,7 +83,7 @@ public class TMDSPPLEntity {
    /**
     * @return the sPPL_VOIT_TRCH_NUM
     */
-   public Long getSPPL_VOIT_TRCH_NUM() {
+   public Double getSPPL_VOIT_TRCH_NUM() {
       return this.SPPL_VOIT_TRCH_NUM;
    }
 
@@ -91,14 +91,14 @@ public class TMDSPPLEntity {
     * @param sPPL_VOIT_TRCH_NUM
     *           the sPPL_VOIT_TRCH_NUM to set
     */
-   public void setSPPL_VOIT_TRCH_NUM(Long sPPL_VOIT_TRCH_NUM) {
+   public void setSPPL_VOIT_TRCH_NUM(Double sPPL_VOIT_TRCH_NUM) {
       this.SPPL_VOIT_TRCH_NUM = sPPL_VOIT_TRCH_NUM;
    }
 
    /**
     * @return the sPPL_VOIT_NUM
     */
-   public Long getSPPL_VOIT_NUM() {
+   public Double getSPPL_VOIT_NUM() {
       return this.SPPL_VOIT_NUM;
    }
 
@@ -106,14 +106,14 @@ public class TMDSPPLEntity {
     * @param sPPL_VOIT_NUM
     *           the sPPL_VOIT_NUM to set
     */
-   public void setSPPL_VOIT_NUM(Long sPPL_VOIT_NUM) {
+   public void setSPPL_VOIT_NUM(Double sPPL_VOIT_NUM) {
       this.SPPL_VOIT_NUM = sPPL_VOIT_NUM;
    }
 
    /**
     * @return the sPPL_PCDD_NUM_COMP
     */
-   public Long getSPPL_PCDD_NUM_COMP() {
+   public Double getSPPL_PCDD_NUM_COMP() {
       return this.SPPL_PCDD_NUM_COMP;
    }
 
@@ -121,14 +121,14 @@ public class TMDSPPLEntity {
     * @param sPPL_PCDD_NUM_COMP
     *           the sPPL_PCDD_NUM_COMP to set
     */
-   public void setSPPL_PCDD_NUM_COMP(Long sPPL_PCDD_NUM_COMP) {
+   public void setSPPL_PCDD_NUM_COMP(Double sPPL_PCDD_NUM_COMP) {
       this.SPPL_PCDD_NUM_COMP = sPPL_PCDD_NUM_COMP;
    }
 
    /**
     * @return the sPPL_PCDD_NUM_PLAC
     */
-   public Long getSPPL_PCDD_NUM_PLAC() {
+   public Double getSPPL_PCDD_NUM_PLAC() {
       return this.SPPL_PCDD_NUM_PLAC;
    }
 
@@ -136,7 +136,7 @@ public class TMDSPPLEntity {
     * @param sPPL_PCDD_NUM_PLAC
     *           the sPPL_PCDD_NUM_PLAC to set
     */
-   public void setSPPL_PCDD_NUM_PLAC(Long sPPL_PCDD_NUM_PLAC) {
+   public void setSPPL_PCDD_NUM_PLAC(Double sPPL_PCDD_NUM_PLAC) {
       this.SPPL_PCDD_NUM_PLAC = sPPL_PCDD_NUM_PLAC;
    }
 

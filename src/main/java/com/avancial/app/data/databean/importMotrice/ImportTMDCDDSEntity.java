@@ -16,21 +16,21 @@ public class ImportTMDCDDSEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long idTMDCDDS;
+    private Double idTMDCDDS;
     private String CDDS_CDEM_COD_CIE;
     private String CDDS_CDEM_NUM_TRA1;
     private String CDDS_CDEM_IND_FER;
-    private Long CDDS_CDEM_NUM_COND;
+    private Double CDDS_CDEM_NUM_COND;
     private String CDDS_INPT_RR_MONT;
     private String CDDS_INPT_RR_DESC;
     private String CDDS_USER;
     private Date CDDS_DHDO;
     
-   public Long getIdTMDCDDS() {
+   public Double getIdTMDCDDS() {
       return this.idTMDCDDS;
    }
 
-   public void setIdTMDCDDS(Long idTMDCDDS) {
+   public void setIdTMDCDDS(Double idTMDCDDS) {
       this.idTMDCDDS = idTMDCDDS;
    }
    public String getCDDS_CDEM_COD_CIE() {
@@ -51,10 +51,10 @@ public class ImportTMDCDDSEntity {
     public void setCDDS_CDEM_IND_FER(String cDDS_CDEM_IND_FER) {
         this.CDDS_CDEM_IND_FER = cDDS_CDEM_IND_FER;
     }
-    public Long getCDDS_CDEM_NUM_COND() {
+    public Double getCDDS_CDEM_NUM_COND() {
         return this.CDDS_CDEM_NUM_COND;
     }
-    public void setCDDS_CDEM_NUM_COND(Long cDDS_CDEM_NUM_COND) {
+    public void setCDDS_CDEM_NUM_COND(Double cDDS_CDEM_NUM_COND) {
         this.CDDS_CDEM_NUM_COND = cDDS_CDEM_NUM_COND;
     }
     public String getCDDS_INPT_RR_MONT() {

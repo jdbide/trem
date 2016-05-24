@@ -20,7 +20,7 @@ public class TMDAVTHEntity {
    @Id
    private String AVTH_TRCH_IND_FER;
    @Id
-   private Long   AVTH_TRCH_NUM;
+   private Double   AVTH_TRCH_NUM;
    @Id
    private String AVTH_LIBS_AVAL_COD;
    private String AVTH_USER;
@@ -50,11 +50,11 @@ public class TMDAVTHEntity {
       this.AVTH_TRCH_IND_FER = aVTH_TRCH_IND_FER;
    }
 
-   public Long getAVTH_TRCH_NUM() {
+   public Double getAVTH_TRCH_NUM() {
       return this.AVTH_TRCH_NUM;
    }
 
-   public void setAVTH_TRCH_NUM(Long aVTH_TRCH_NUM) {
+   public void setAVTH_TRCH_NUM(Double aVTH_TRCH_NUM) {
       this.AVTH_TRCH_NUM = aVTH_TRCH_NUM;
    }
 

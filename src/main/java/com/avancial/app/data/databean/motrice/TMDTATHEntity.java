@@ -21,7 +21,7 @@ public class TMDTATHEntity {
    @Id
    private String  TATH_TRCH_IND_FER;
    @Id
-   private Long    TATH_TRCH_NUM;
+   private Double    TATH_TRCH_NUM;
    @Id
    private String  TATH_TYP_TAX;
    @Id
@@ -85,7 +85,7 @@ public class TMDTATHEntity {
    /**
     * @return the tATH_TRCH_NUM
     */
-   public Long getTATH_TRCH_NUM() {
+   public Double getTATH_TRCH_NUM() {
       return this.TATH_TRCH_NUM;
    }
 
@@ -93,7 +93,7 @@ public class TMDTATHEntity {
     * @param tATH_TRCH_NUM
     *           the tATH_TRCH_NUM to set
     */
-   public void setTATH_TRCH_NUM(Long tATH_TRCH_NUM) {
+   public void setTATH_TRCH_NUM(Double tATH_TRCH_NUM) {
       this.TATH_TRCH_NUM = tATH_TRCH_NUM;
    }
 

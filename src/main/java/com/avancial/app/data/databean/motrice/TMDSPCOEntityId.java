@@ -10,9 +10,9 @@ public class TMDSPCOEntityId implements Serializable{
    private String SPCO_VOIT_COD_CIE;
    private String SPCO_VOIT_NUM_TRA1;
    private String SPCO_VOIT_IND_FER;
-   private Long SPCO_VOIT_TRCH_NUM;
-   private Long SPCO_VOIT_NUM;
-   private Long SPCO_COMP_NUM;
+   private Double SPCO_VOIT_TRCH_NUM;
+   private Double SPCO_VOIT_NUM;
+   private Double SPCO_COMP_NUM;
    private String SPCO_SPEC_COD;
    private Boolean SPCO_REGI;
 

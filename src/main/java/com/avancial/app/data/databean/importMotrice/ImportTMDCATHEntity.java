@@ -16,12 +16,12 @@ public class ImportTMDCATHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idTMDCATH;
+   private Double   idTMDCATH;
    private String CATH_TRCH_COD_CIE;
    private String CATH_TRCH_NUM_TRA1;
    private String CATH_TRCH_IND_FER;
-   private Long   CATH_TRCH_NUM;
-   private Long   CATH_NUM;
+   private Double   CATH_TRCH_NUM;
+   private Double   CATH_NUM;
    private String CATH_CIRR_COD_CIE;
    private String CATH_REGI;
    private String CATH_ETAT_TRCH;
@@ -30,11 +30,11 @@ public class ImportTMDCATHEntity {
    private String CATH_USER;
    private Date   CATH_DHDO;
 
-   public Long getIdTMDCATH() {
+   public Double getIdTMDCATH() {
       return this.idTMDCATH;
    }
 
-   public void setIdTMDCATH(Long idTMDCATH) {
+   public void setIdTMDCATH(Double idTMDCATH) {
       this.idTMDCATH = idTMDCATH;
    }
 
@@ -62,19 +62,19 @@ public class ImportTMDCATHEntity {
       this.CATH_TRCH_IND_FER = cATH_TRCH_IND_FER;
    }
 
-   public Long getCATH_TRCH_NUM() {
+   public Double getCATH_TRCH_NUM() {
       return this.CATH_TRCH_NUM;
    }
 
-   public void setCATH_TRCH_NUM(Long cATH_TRCH_NUM) {
+   public void setCATH_TRCH_NUM(Double cATH_TRCH_NUM) {
       this.CATH_TRCH_NUM = cATH_TRCH_NUM;
    }
 
-   public Long getCATH_NUM() {
+   public Double getCATH_NUM() {
       return this.CATH_NUM;
    }
 
-   public void setCATH_NUM(Long cATH_NUM) {
+   public void setCATH_NUM(Double cATH_NUM) {
       this.CATH_NUM = cATH_NUM;
    }
 

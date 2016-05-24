@@ -22,9 +22,9 @@ public class TMDCATHEntity {
     @Id
     private String CATH_TRCH_IND_FER;
     @Id
-    private Long CATH_TRCH_NUM;
+    private Double CATH_TRCH_NUM;
     @Id
-    private Long CATH_NUM;
+    private Double CATH_NUM;
     @Id
     private String CATH_CIRR_COD_CIE;
     @Id
@@ -56,16 +56,16 @@ public class TMDCATHEntity {
     public void setCATH_TRCH_IND_FER(String cATH_TRCH_IND_FER) {
         this.CATH_TRCH_IND_FER = cATH_TRCH_IND_FER;
     }
-    public Long getCATH_TRCH_NUM() {
+    public Double getCATH_TRCH_NUM() {
         return this.CATH_TRCH_NUM;
     }
-    public void setCATH_TRCH_NUM(Long cATH_TRCH_NUM) {
+    public void setCATH_TRCH_NUM(Double cATH_TRCH_NUM) {
         this.CATH_TRCH_NUM = cATH_TRCH_NUM;
     }
-    public Long getCATH_NUM() {
+    public Double getCATH_NUM() {
         return this.CATH_NUM;
     }
-    public void setCATH_NUM(Long cATH_NUM) {
+    public void setCATH_NUM(Double cATH_NUM) {
         this.CATH_NUM = cATH_NUM;
     }
     public String getCATH_CIRR_COD_CIE() {

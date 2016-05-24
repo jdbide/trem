@@ -10,7 +10,7 @@ public class TMDCDDSEntityId implements Serializable{
    private String CDDS_CDEM_COD_CIE;
    private String CDDS_CDEM_NUM_TRA1;
    private String CDDS_CDEM_IND_FER;
-   private Long CDDS_CDEM_NUM_COND;
+   private Double CDDS_CDEM_NUM_COND;
    private String CDDS_INPT_RR_MONT;
    private String CDDS_INPT_RR_DESC;
    

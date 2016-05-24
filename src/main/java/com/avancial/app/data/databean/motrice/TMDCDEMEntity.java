@@ -21,7 +21,7 @@ public class TMDCDEMEntity {
    @Id
    private String  CDEM_TRA1_IND_FER;
    @Id
-   private Long    CDEM_NUM_CONDITION;
+   private Double    CDEM_NUM_CONDITION;
    @Id
    private String  CDEM_LIBS_TYCO_COD;
    @Id
@@ -67,13 +67,13 @@ public class TMDCDEMEntity {
    /**
     * @return the cDEM_NUM_CONDITION
     */
-   public Long getCDEM_NUM_CONDITION() {
+   public Double getCDEM_NUM_CONDITION() {
       return this.CDEM_NUM_CONDITION;
    }
    /**
     * @param cDEM_NUM_CONDITION the cDEM_NUM_CONDITION to set
     */
-   public void setCDEM_NUM_CONDITION(Long cDEM_NUM_CONDITION) {
+   public void setCDEM_NUM_CONDITION(Double cDEM_NUM_CONDITION) {
       this.CDEM_NUM_CONDITION = cDEM_NUM_CONDITION;
    }
    /**

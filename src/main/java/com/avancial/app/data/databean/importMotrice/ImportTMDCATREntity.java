@@ -16,11 +16,11 @@ public class ImportTMDCATREntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDCATR;
+   private Double    idTMDCATR;
    private String  CATR_TRA1_COD_CIE;
    private String  CATR_TRA1_NUM_TRA1;
    private String  CATR_TRA1_IND_FER;
-   private Long    CATR_NUM;
+   private Double    CATR_NUM;
    private String  CATR_READ_COD;
    private String  CATR_TYEQ_COD;
    private String  CATR_LIBS_QLCO_COD;
@@ -31,11 +31,11 @@ public class ImportTMDCATREntity {
    private String  CATR_USER;
    private Date    CATR_DHDO;
 
-   public Long getIdTMDCATR() {
+   public Double getIdTMDCATR() {
       return this.idTMDCATR;
    }
 
-   public void setIdTMDCATR(Long idTMDCATR) {
+   public void setIdTMDCATR(Double idTMDCATR) {
       this.idTMDCATR = idTMDCATR;
    }
 
@@ -63,11 +63,11 @@ public class ImportTMDCATREntity {
       this.CATR_TRA1_IND_FER = cATR_TRA1_IND_FER;
    }
 
-   public Long getCATR_NUM() {
+   public Double getCATR_NUM() {
       return this.CATR_NUM;
    }
 
-   public void setCATR_NUM(Long cATR_NUM) {
+   public void setCATR_NUM(Double cATR_NUM) {
       this.CATR_NUM = cATR_NUM;
    }
 

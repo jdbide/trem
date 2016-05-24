@@ -19,9 +19,9 @@ public class TMDKAPPEntityId implements Serializable{
    private String KAPP_SER;
    private String KAPP_TIT;
    private String KAPP_VAL;
-   private Long KAPP_VES;
-   private Long KAPP_VER;
-   private Long KAPP_GLO;
+   private Double KAPP_VES;
+   private Double KAPP_VER;
+   private Double KAPP_GLO;
    
    public boolean equals(Object o) {
       return super.equals(o);

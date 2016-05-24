@@ -10,9 +10,9 @@ public class TMDSVTHEntityId implements Serializable{
    private String SVTH_TRCH_COD_CIE;
    private String SVTH_TRCH_NUM_TRA1;
    private String SVTH_TRCH_IND_FER;
-   private Long SVTH_TRCH_NUM;
+   private Double SVTH_TRCH_NUM;
    private String SVTH_LIBS_SERV_COD;
-   private Long SVTH_NUM;
+   private Double SVTH_NUM;
    private String SVTH_COD_ORIGINE;
    private String SVTH_INPT_RR_D;
    private String SVTH_INPT_RR_F;

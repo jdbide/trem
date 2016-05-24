@@ -10,19 +10,19 @@ public class TMDVOITEntityId implements Serializable{
    private String VOIT_TRCH_COD_CIE;
    private String VOIT_TRCH_NUM_TRA1;
    private String VOIT_TRCH_IND_FER;
-   private Long VOIT_TRCH_NUM;
-   private Long VOIT_NUM;
+   private Double VOIT_TRCH_NUM;
+   private Double VOIT_NUM;
    private String VOIT_NUM_RESA;
-   private Long VOIT_NUM_VOIT;
+   private Double VOIT_NUM_VOIT;
    private String VOIT_COD_ORIG;
-   private Long VOIT_SENS_ORIG;
-   private Long VOIT_NUM_ORIG;
-   private Long VOIT_TYVO_NUM_TYP;
+   private Double VOIT_SENS_ORIG;
+   private Double VOIT_NUM_ORIG;
+   private Double VOIT_TYVO_NUM_TYP;
    private String VOIT_CIES_COD_GERE;
    private String VOIT_IND_ORIG;
    private Boolean VOIT_REGI_UTIL;
-   private Long VOIT_ROUL_NUM;
-   private Long VOIT_INDCE_CLASST;
+   private Double VOIT_ROUL_NUM;
+   private Double VOIT_INDCE_CLASST;
    
    public boolean equals(Object o) {
       return super.equals(o);

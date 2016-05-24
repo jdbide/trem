@@ -16,20 +16,20 @@ public class ImportTMDAVTHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idTMDAVTH;
+   private Double   idTMDAVTH;
    private String AVTH_TRCH_COD_CIE;
    private String AVTH_TRCH_NUM_TRA1;
    private String AVTH_TRCH_IND_FER;
-   private Long   AVTH_TRCH_NUM;
+   private Double   AVTH_TRCH_NUM;
    private String AVTH_LIBS_AVAL_COD;
    private String AVTH_USER;
    private Date   AVTH_DHDO;
 
-   public Long getIdTMDAVTH() {
+   public Double getIdTMDAVTH() {
       return this.idTMDAVTH;
    }
 
-   public void setIdTMDAVTH(Long idTMDAVTH) {
+   public void setIdTMDAVTH(Double idTMDAVTH) {
       this.idTMDAVTH = idTMDAVTH;
    }
 
@@ -57,11 +57,11 @@ public class ImportTMDAVTHEntity {
       this.AVTH_TRCH_IND_FER = aVTH_TRCH_IND_FER;
    }
 
-   public Long getAVTH_TRCH_NUM() {
+   public Double getAVTH_TRCH_NUM() {
       return this.AVTH_TRCH_NUM;
    }
 
-   public void setAVTH_TRCH_NUM(Long aVTH_TRCH_NUM) {
+   public void setAVTH_TRCH_NUM(Double aVTH_TRCH_NUM) {
       this.AVTH_TRCH_NUM = aVTH_TRCH_NUM;
    }
 

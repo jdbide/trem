@@ -16,31 +16,31 @@ public class ImportTMDPAREEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDPARE;
+   private Double    idTMDPARE;
    private String  PARE_SVTH_COD_CIE;
    private String  PARE_SVTH_NUM_TRA1;
    private String  PARE_SVTH_IND_FER;
-   private Long    PARE_SVTH_TRCH_NUM;
+   private Double    PARE_SVTH_TRCH_NUM;
    private String  PARE_SVTH_SERV_COD;
-   private Long    PARE_SVTH_NUM;
-   private Long    PARE_NUM_REST;
+   private Double    PARE_SVTH_NUM;
+   private Double    PARE_NUM_REST;
    private String  PARE_TYRE_COD_REP;
    private String  PARE_RESP_VOIT_NUM;
    private String  PARE_VRES_NUM_SERV;
    private Date    PARE_H_DEB_SERV;
    private Date    PARE_H_FIN_SERV;
    private Boolean PARE_REGI;
-   private Long    PARE_NB_REPAS;
+   private Double    PARE_NB_REPAS;
    private String  PARE_IND_PLACE;
    private String  PARE_IND_VOIT_REST;
    private String  PARE_USER;
    private Date    PARE_DHDO;
 
-   public Long getIdTMDPARE() {
+   public Double getIdTMDPARE() {
       return this.idTMDPARE;
    }
 
-   public void setIdTMDPARE(Long idTMDPARE) {
+   public void setIdTMDPARE(Double idTMDPARE) {
       this.idTMDPARE = idTMDPARE;
    }
 
@@ -68,11 +68,11 @@ public class ImportTMDPAREEntity {
       this.PARE_SVTH_IND_FER = pARE_SVTH_IND_FER;
    }
 
-   public Long getPARE_SVTH_TRCH_NUM() {
+   public Double getPARE_SVTH_TRCH_NUM() {
       return this.PARE_SVTH_TRCH_NUM;
    }
 
-   public void setPARE_SVTH_TRCH_NUM(Long pARE_SVTH_TRCH_NUM) {
+   public void setPARE_SVTH_TRCH_NUM(Double pARE_SVTH_TRCH_NUM) {
       this.PARE_SVTH_TRCH_NUM = pARE_SVTH_TRCH_NUM;
    }
 
@@ -84,19 +84,19 @@ public class ImportTMDPAREEntity {
       this.PARE_SVTH_SERV_COD = pARE_SVTH_SERV_COD;
    }
 
-   public Long getPARE_SVTH_NUM() {
+   public Double getPARE_SVTH_NUM() {
       return this.PARE_SVTH_NUM;
    }
 
-   public void setPARE_SVTH_NUM(Long pARE_SVTH_NUM) {
+   public void setPARE_SVTH_NUM(Double pARE_SVTH_NUM) {
       this.PARE_SVTH_NUM = pARE_SVTH_NUM;
    }
 
-   public Long getPARE_NUM_REST() {
+   public Double getPARE_NUM_REST() {
       return this.PARE_NUM_REST;
    }
 
-   public void setPARE_NUM_REST(Long pARE_NUM_REST) {
+   public void setPARE_NUM_REST(Double pARE_NUM_REST) {
       this.PARE_NUM_REST = pARE_NUM_REST;
    }
 
@@ -148,11 +148,11 @@ public class ImportTMDPAREEntity {
       this.PARE_REGI = pARE_REGI;
    }
 
-   public Long getPARE_NB_REPAS() {
+   public Double getPARE_NB_REPAS() {
       return this.PARE_NB_REPAS;
    }
 
-   public void setPARE_NB_REPAS(Long pARE_NB_REPAS) {
+   public void setPARE_NB_REPAS(Double pARE_NB_REPAS) {
       this.PARE_NB_REPAS = pARE_NB_REPAS;
    }
 

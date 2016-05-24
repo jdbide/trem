@@ -13,7 +13,7 @@ public class TMDTRCHEntityId implements Serializable {
    private String            TRCH_TRA1_COD_CIE;
    private String            TRCH_TRA1_NUM_TRA1;
    private String            TRCH_TRA1_IND_FER;
-   private Long              TRCH_NUM;
+   private Double              TRCH_NUM;
    private String            TRCH_COD_SENS_AUTO;
    private String            TRCH_IND_TGV;
    private String            TRCH_IND_VAL_DC;

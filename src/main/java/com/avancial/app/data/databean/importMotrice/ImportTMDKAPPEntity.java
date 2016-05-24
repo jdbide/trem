@@ -16,7 +16,7 @@ public class ImportTMDKAPPEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idTMDKAPP;
+   private Double   idTMDKAPP;
    private String KAPP_APP;
    private String KAPP_CON;
    private Date   KAPP_TRA;
@@ -28,18 +28,18 @@ public class ImportTMDKAPPEntity {
    private String KAPP_SER;
    private String KAPP_TIT;
    private String KAPP_VAL;
-   private Long   KAPP_VES;
-   private Long   KAPP_VER;
-   private Long   KAPP_GLO;
+   private Double   KAPP_VES;
+   private Double   KAPP_VER;
+   private Double   KAPP_GLO;
    private String KAPP_USER;
    private Date   KAPP_DHDO;
    private Date   KAPP_DTR;
 
-   public Long getIdTMDKAPP() {
+   public Double getIdTMDKAPP() {
       return this.idTMDKAPP;
    }
 
-   public void setIdTMDKAPP(Long idTMDKAPP) {
+   public void setIdTMDKAPP(Double idTMDKAPP) {
       this.idTMDKAPP = idTMDKAPP;
    }
 
@@ -131,27 +131,27 @@ public class ImportTMDKAPPEntity {
       this.KAPP_VAL = kAPP_VAL;
    }
 
-   public Long getKAPP_VES() {
+   public Double getKAPP_VES() {
       return this.KAPP_VES;
    }
 
-   public void setKAPP_VES(Long kAPP_VES) {
+   public void setKAPP_VES(Double kAPP_VES) {
       this.KAPP_VES = kAPP_VES;
    }
 
-   public Long getKAPP_VER() {
+   public Double getKAPP_VER() {
       return this.KAPP_VER;
    }
 
-   public void setKAPP_VER(Long kAPP_VER) {
+   public void setKAPP_VER(Double kAPP_VER) {
       this.KAPP_VER = kAPP_VER;
    }
 
-   public Long getKAPP_GLO() {
+   public Double getKAPP_GLO() {
       return this.KAPP_GLO;
    }
 
-   public void setKAPP_GLO(Long kAPP_GLO) {
+   public void setKAPP_GLO(Double kAPP_GLO) {
       this.KAPP_GLO = kAPP_GLO;
    }
 

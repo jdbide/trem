@@ -10,8 +10,8 @@ public class TMDGADSEntityId implements Serializable{
    private String GADS_DSTR_COD_CIE;
    private String GADS_DSTR_NUM_TRA1;
    private String GADS_DSTR_IND_FER;
-   private Long GADS_DSTR_NUM;
-   private Long GADS_NUM_GAR;
+   private Double GADS_DSTR_NUM;
+   private Double GADS_NUM_GAR;
    private String GADS_INPT_RR_GAR;
    private String GADS_DEB_ARRET;
    private String GADS_FIN_ARRET;

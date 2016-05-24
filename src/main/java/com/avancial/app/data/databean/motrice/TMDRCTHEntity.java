@@ -21,7 +21,7 @@ public class TMDRCTHEntity {
    @Id
    private String  RCTH_TRCH_IND_FER;
    @Id
-   private Long    RCTH_TRCH_NUM;
+   private Double    RCTH_TRCH_NUM;
    @Id
    private String  RCTH_RESA_TYP;
    @Id
@@ -57,11 +57,11 @@ public class TMDRCTHEntity {
       this.RCTH_TRCH_IND_FER = rCTH_TRCH_IND_FER;
    }
 
-   public Long getRCTH_TRCH_NUM() {
+   public Double getRCTH_TRCH_NUM() {
       return this.RCTH_TRCH_NUM;
    }
 
-   public void setRCTH_TRCH_NUM(Long rCTH_TRCH_NUM) {
+   public void setRCTH_TRCH_NUM(Double rCTH_TRCH_NUM) {
       this.RCTH_TRCH_NUM = rCTH_TRCH_NUM;
    }
 

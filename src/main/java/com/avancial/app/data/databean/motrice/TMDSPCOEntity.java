@@ -21,11 +21,11 @@ public class TMDSPCOEntity {
    @Id
    private String  SPCO_VOIT_IND_FER;
    @Id
-   private Long    SPCO_VOIT_TRCH_NUM;
+   private Double    SPCO_VOIT_TRCH_NUM;
    @Id
-   private Long    SPCO_VOIT_NUM;
+   private Double    SPCO_VOIT_NUM;
    @Id
-   private Long    SPCO_COMP_NUM;
+   private Double    SPCO_COMP_NUM;
    @Id
    private String  SPCO_SPEC_COD;
    @Id
@@ -81,7 +81,7 @@ public class TMDSPCOEntity {
    /**
     * @return the sPCO_VOIT_TRCH_NUM
     */
-   public Long getSPCO_VOIT_TRCH_NUM() {
+   public Double getSPCO_VOIT_TRCH_NUM() {
       return this.SPCO_VOIT_TRCH_NUM;
    }
 
@@ -89,14 +89,14 @@ public class TMDSPCOEntity {
     * @param sPCO_VOIT_TRCH_NUM
     *           the sPCO_VOIT_TRCH_NUM to set
     */
-   public void setSPCO_VOIT_TRCH_NUM(Long sPCO_VOIT_TRCH_NUM) {
+   public void setSPCO_VOIT_TRCH_NUM(Double sPCO_VOIT_TRCH_NUM) {
       this.SPCO_VOIT_TRCH_NUM = sPCO_VOIT_TRCH_NUM;
    }
 
    /**
     * @return the sPCO_VOIT_NUM
     */
-   public Long getSPCO_VOIT_NUM() {
+   public Double getSPCO_VOIT_NUM() {
       return this.SPCO_VOIT_NUM;
    }
 
@@ -104,14 +104,14 @@ public class TMDSPCOEntity {
     * @param sPCO_VOIT_NUM
     *           the sPCO_VOIT_NUM to set
     */
-   public void setSPCO_VOIT_NUM(Long sPCO_VOIT_NUM) {
+   public void setSPCO_VOIT_NUM(Double sPCO_VOIT_NUM) {
       this.SPCO_VOIT_NUM = sPCO_VOIT_NUM;
    }
 
    /**
     * @return the sPCO_COMP_NUM
     */
-   public Long getSPCO_COMP_NUM() {
+   public Double getSPCO_COMP_NUM() {
       return this.SPCO_COMP_NUM;
    }
 
@@ -119,7 +119,7 @@ public class TMDSPCOEntity {
     * @param sPCO_COMP_NUM
     *           the sPCO_COMP_NUM to set
     */
-   public void setSPCO_COMP_NUM(Long sPCO_COMP_NUM) {
+   public void setSPCO_COMP_NUM(Double sPCO_COMP_NUM) {
       this.SPCO_COMP_NUM = sPCO_COMP_NUM;
    }
 

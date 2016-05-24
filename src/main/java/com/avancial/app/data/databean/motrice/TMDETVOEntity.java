@@ -21,11 +21,11 @@ public class TMDETVOEntity {
    @Id
    private String  ETVO_VOIT_IND_FER;
    @Id
-   private Long    ETVO_VOIT_TRCH_NUM;
+   private Double    ETVO_VOIT_TRCH_NUM;
    @Id
-   private Long    ETVO_VOIT_NUM;
+   private Double    ETVO_VOIT_NUM;
    @Id
-   private Long    ETVO_NUM;
+   private Double    ETVO_NUM;
    @Id
    private String  ETVO_ETAT_VOIT;
    @Id
@@ -71,37 +71,37 @@ public class TMDETVOEntity {
    /**
     * @return the eTVO_VOIT_TRCH_NUM
     */
-   public Long getETVO_VOIT_TRCH_NUM() {
+   public Double getETVO_VOIT_TRCH_NUM() {
       return this.ETVO_VOIT_TRCH_NUM;
    }
    /**
     * @param eTVO_VOIT_TRCH_NUM the eTVO_VOIT_TRCH_NUM to set
     */
-   public void setETVO_VOIT_TRCH_NUM(Long eTVO_VOIT_TRCH_NUM) {
+   public void setETVO_VOIT_TRCH_NUM(Double eTVO_VOIT_TRCH_NUM) {
       this.ETVO_VOIT_TRCH_NUM = eTVO_VOIT_TRCH_NUM;
    }
    /**
     * @return the eTVO_VOIT_NUM
     */
-   public Long getETVO_VOIT_NUM() {
+   public Double getETVO_VOIT_NUM() {
       return this.ETVO_VOIT_NUM;
    }
    /**
     * @param eTVO_VOIT_NUM the eTVO_VOIT_NUM to set
     */
-   public void setETVO_VOIT_NUM(Long eTVO_VOIT_NUM) {
+   public void setETVO_VOIT_NUM(Double eTVO_VOIT_NUM) {
       this.ETVO_VOIT_NUM = eTVO_VOIT_NUM;
    }
    /**
     * @return the eTVO_NUM
     */
-   public Long getETVO_NUM() {
+   public Double getETVO_NUM() {
       return this.ETVO_NUM;
    }
    /**
     * @param eTVO_NUM the eTVO_NUM to set
     */
-   public void setETVO_NUM(Long eTVO_NUM) {
+   public void setETVO_NUM(Double eTVO_NUM) {
       this.ETVO_NUM = eTVO_NUM;
    }
    /**

@@ -11,7 +11,7 @@ public class TMDTATHEntityId implements Serializable {
    private String            TATH_TRCH_COD_CIE;
    private String            TATH_TRCH_NUM_TRA1;
    private String            TATH_TRCH_IND_FER;
-   private Long              TATH_TRCH_NUM;
+   private Double              TATH_TRCH_NUM;
    private String            TATH_TYP_TAX;
    private String            TATH_CD_VAL;
    private String            TATH_INPT_RR_D;

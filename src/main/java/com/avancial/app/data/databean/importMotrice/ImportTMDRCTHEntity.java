@@ -16,11 +16,11 @@ public class ImportTMDRCTHEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long idTMDRCTH;
+    private Double idTMDRCTH;
     private String RCTH_TRCH_COD_CIE;
     private String RCTH_TRCH_NUM_TRA1;
     private String RCTH_TRCH_IND_FER;
-    private Long RCTH_TRCH_NUM;
+    private Double RCTH_TRCH_NUM;
     private String RCTH_RESA_TYP;
     private String RCTH_CLBA_COD;
     private String RCTH_INPT_RR_D;
@@ -30,11 +30,11 @@ public class ImportTMDRCTHEntity {
     
     
 
-   public Long getIdTMDRCTH() {
+   public Double getIdTMDRCTH() {
       return this.idTMDRCTH;
    }
 
-   public void setIdTMDRCTH(Long idTMDRCTH) {
+   public void setIdTMDRCTH(Double idTMDRCTH) {
       this.idTMDRCTH = idTMDRCTH;
    }
    public String getRCTH_TRCH_COD_CIE() {
@@ -55,10 +55,10 @@ public class ImportTMDRCTHEntity {
     public void setRCTH_TRCH_IND_FER(String rCTH_TRCH_IND_FER) {
         this.RCTH_TRCH_IND_FER = rCTH_TRCH_IND_FER;
     }
-    public Long getRCTH_TRCH_NUM() {
+    public Double getRCTH_TRCH_NUM() {
         return this.RCTH_TRCH_NUM;
     }
-    public void setRCTH_TRCH_NUM(Long rCTH_TRCH_NUM) {
+    public void setRCTH_TRCH_NUM(Double rCTH_TRCH_NUM) {
         this.RCTH_TRCH_NUM = rCTH_TRCH_NUM;
     }
     public String getRCTH_RESA_TYP() {

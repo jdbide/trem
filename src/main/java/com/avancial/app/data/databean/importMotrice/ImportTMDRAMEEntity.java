@@ -16,13 +16,13 @@ public class ImportTMDRAMEEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDRAME;
+   private Double    idTMDRAME;
    private String  RAME_TRCH_COD_CIE;
    private String  RAME_TRCH_NUM_TRA1;
    private String  RAME_TRCH_IND_FER;
-   private Long    RAME_TRCH_NUM;
+   private Double    RAME_TRCH_NUM;
    private String  RAME_RAMC_COD;
-   private Long    RAME_NUM;
+   private Double    RAME_NUM;
    private String  RAME_NUM_PREM_VOIT;
    private Boolean RAME_REGI;
    private String  RAME_USER;
@@ -31,7 +31,7 @@ public class ImportTMDRAMEEntity {
    /**
     * @return the idTMDRAME
     */
-   public Long getIdTMDRAME() {
+   public Double getIdTMDRAME() {
       return this.idTMDRAME;
    }
 
@@ -39,7 +39,7 @@ public class ImportTMDRAMEEntity {
     * @param idTMDRAME
     *           the idTMDRAME to set
     */
-   public void setIdTMDRAME(Long idTMDRAME) {
+   public void setIdTMDRAME(Double idTMDRAME) {
       this.idTMDRAME = idTMDRAME;
    }
 
@@ -91,7 +91,7 @@ public class ImportTMDRAMEEntity {
    /**
     * @return the rAME_TRCH_NUM
     */
-   public Long getRAME_TRCH_NUM() {
+   public Double getRAME_TRCH_NUM() {
       return this.RAME_TRCH_NUM;
    }
 
@@ -99,7 +99,7 @@ public class ImportTMDRAMEEntity {
     * @param rAME_TRCH_NUM
     *           the rAME_TRCH_NUM to set
     */
-   public void setRAME_TRCH_NUM(Long rAME_TRCH_NUM) {
+   public void setRAME_TRCH_NUM(Double rAME_TRCH_NUM) {
       this.RAME_TRCH_NUM = rAME_TRCH_NUM;
    }
 
@@ -121,7 +121,7 @@ public class ImportTMDRAMEEntity {
    /**
     * @return the rAME_NUM
     */
-   public Long getRAME_NUM() {
+   public Double getRAME_NUM() {
       return this.RAME_NUM;
    }
 
@@ -129,7 +129,7 @@ public class ImportTMDRAMEEntity {
     * @param rAME_NUM
     *           the rAME_NUM to set
     */
-   public void setRAME_NUM(Long rAME_NUM) {
+   public void setRAME_NUM(Double rAME_NUM) {
       this.RAME_NUM = rAME_NUM;
    }
 

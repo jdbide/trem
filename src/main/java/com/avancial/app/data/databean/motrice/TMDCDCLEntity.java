@@ -21,7 +21,7 @@ public class TMDCDCLEntity {
     @Id
     private String CDCL_CDEM_IND_FER;
     @Id
-    private Long CDCL_CDEM_NUM_COND;
+    private Double CDCL_CDEM_NUM_COND;
     @Id
     private String CDCL_CLBA_COD;
     private String CDCL_USER;
@@ -45,10 +45,10 @@ public class TMDCDCLEntity {
     public void setCDCL_CDEM_IND_FER(String cDCL_CDEM_IND_FER) {
         this.CDCL_CDEM_IND_FER = cDCL_CDEM_IND_FER;
     }
-    public Long getCDCL_CDEM_NUM_COND() {
+    public Double getCDCL_CDEM_NUM_COND() {
         return this.CDCL_CDEM_NUM_COND;
     }
-    public void setCDCL_CDEM_NUM_COND(Long cDCL_CDEM_NUM_COND) {
+    public void setCDCL_CDEM_NUM_COND(Double cDCL_CDEM_NUM_COND) {
         this.CDCL_CDEM_NUM_COND = cDCL_CDEM_NUM_COND;
     }
     public String getCDCL_CLBA_COD() {

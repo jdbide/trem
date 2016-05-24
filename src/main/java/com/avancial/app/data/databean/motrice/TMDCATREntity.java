@@ -21,7 +21,7 @@ public class TMDCATREntity {
     @Id
     private String CATR_TRA1_IND_FER;
     @Id
-    private Long CATR_NUM;
+    private Double CATR_NUM;
     @Id
     private String CATR_READ_COD;
     @Id
@@ -57,10 +57,10 @@ public class TMDCATREntity {
     public void setCATR_TRA1_IND_FER(String cATR_TRA1_IND_FER) {
         this.CATR_TRA1_IND_FER = cATR_TRA1_IND_FER;
     }
-    public Long getCATR_NUM() {
+    public Double getCATR_NUM() {
         return this.CATR_NUM;
     }
-    public void setCATR_NUM(Long cATR_NUM) {
+    public void setCATR_NUM(Double cATR_NUM) {
         this.CATR_NUM = cATR_NUM;
     }
     public String getCATR_READ_COD() {

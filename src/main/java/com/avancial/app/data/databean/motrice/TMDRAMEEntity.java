@@ -21,11 +21,11 @@ public class TMDRAMEEntity {
    @Id
    private String  RAME_TRCH_IND_FER;
    @Id
-   private Long    RAME_TRCH_NUM;
+   private Double    RAME_TRCH_NUM;
    @Id
    private String  RAME_RAMC_COD;
    @Id
-   private Long    RAME_NUM;
+   private Double    RAME_NUM;
    @Id
    private String  RAME_NUM_PREM_VOIT;
    @Id
@@ -81,7 +81,7 @@ public class TMDRAMEEntity {
    /**
     * @return the rAME_TRCH_NUM
     */
-   public Long getRAME_TRCH_NUM() {
+   public Double getRAME_TRCH_NUM() {
       return this.RAME_TRCH_NUM;
    }
 
@@ -89,7 +89,7 @@ public class TMDRAMEEntity {
     * @param rAME_TRCH_NUM
     *           the rAME_TRCH_NUM to set
     */
-   public void setRAME_TRCH_NUM(Long rAME_TRCH_NUM) {
+   public void setRAME_TRCH_NUM(Double rAME_TRCH_NUM) {
       this.RAME_TRCH_NUM = rAME_TRCH_NUM;
    }
 
@@ -111,7 +111,7 @@ public class TMDRAMEEntity {
    /**
     * @return the rAME_NUM
     */
-   public Long getRAME_NUM() {
+   public Double getRAME_NUM() {
       return this.RAME_NUM;
    }
 
@@ -119,7 +119,7 @@ public class TMDRAMEEntity {
     * @param rAME_NUM
     *           the rAME_NUM to set
     */
-   public void setRAME_NUM(Long rAME_NUM) {
+   public void setRAME_NUM(Double rAME_NUM) {
       this.RAME_NUM = rAME_NUM;
    }
 

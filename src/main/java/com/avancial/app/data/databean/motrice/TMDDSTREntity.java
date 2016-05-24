@@ -21,7 +21,7 @@ public class TMDDSTREntity {
     @Id
     private String DSTR_TRA1_IND_FER;
     @Id
-    private Long DSTR_NUM;
+    private Double DSTR_NUM;
     @Id
     private Boolean DSTR_REGI;
     @Id
@@ -55,10 +55,10 @@ public class TMDDSTREntity {
     public void setDSTR_TRA1_IND_FER(String dSTR_TRA1_IND_FER) {
         this.DSTR_TRA1_IND_FER = dSTR_TRA1_IND_FER;
     }
-    public Long getDSTR_NUM() {
+    public Double getDSTR_NUM() {
         return this.DSTR_NUM;
     }
-    public void setDSTR_NUM(Long dSTR_NUM) {
+    public void setDSTR_NUM(Double dSTR_NUM) {
         this.DSTR_NUM = dSTR_NUM;
     }
     public Boolean getDSTR_REGI() {

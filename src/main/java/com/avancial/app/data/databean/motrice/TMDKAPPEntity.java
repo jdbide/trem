@@ -37,11 +37,11 @@ public class TMDKAPPEntity {
    @Id
    private String KAPP_VAL;
    @Id
-   private Long   KAPP_VES;
+   private Double   KAPP_VES;
    @Id
-   private Long   KAPP_VER;
+   private Double   KAPP_VER;
    @Id
-   private Long   KAPP_GLO;
+   private Double   KAPP_GLO;
    private String KAPP_USER;
    private Date   KAPP_DHDO;
    private Date   KAPP_DTR;
@@ -134,27 +134,27 @@ public class TMDKAPPEntity {
       this.KAPP_VAL = kAPP_VAL;
    }
 
-   public Long getKAPP_VES() {
+   public Double getKAPP_VES() {
       return this.KAPP_VES;
    }
 
-   public void setKAPP_VES(Long kAPP_VES) {
+   public void setKAPP_VES(Double kAPP_VES) {
       this.KAPP_VES = kAPP_VES;
    }
 
-   public Long getKAPP_VER() {
+   public Double getKAPP_VER() {
       return this.KAPP_VER;
    }
 
-   public void setKAPP_VER(Long kAPP_VER) {
+   public void setKAPP_VER(Double kAPP_VER) {
       this.KAPP_VER = kAPP_VER;
    }
 
-   public Long getKAPP_GLO() {
+   public Double getKAPP_GLO() {
       return this.KAPP_GLO;
    }
 
-   public void setKAPP_GLO(Long kAPP_GLO) {
+   public void setKAPP_GLO(Double kAPP_GLO) {
       this.KAPP_GLO = kAPP_GLO;
    }
 

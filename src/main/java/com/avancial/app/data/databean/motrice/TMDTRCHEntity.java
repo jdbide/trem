@@ -21,7 +21,7 @@ public class TMDTRCHEntity {
    @Id
    private String  TRCH_TRA1_IND_FER;
    @Id
-   private Long    TRCH_NUM;
+   private Double    TRCH_NUM;
    @Id
    private String  TRCH_COD_SENS_AUTO;
    @Id
@@ -67,11 +67,11 @@ public class TMDTRCHEntity {
       this.TRCH_TRA1_IND_FER = tRCH_TRA1_IND_FER;
    }
 
-   public Long getTRCH_NUM() {
+   public Double getTRCH_NUM() {
       return this.TRCH_NUM;
    }
 
-   public void setTRCH_NUM(Long tRCH_NUM) {
+   public void setTRCH_NUM(Double tRCH_NUM) {
       this.TRCH_NUM = tRCH_NUM;
    }
 

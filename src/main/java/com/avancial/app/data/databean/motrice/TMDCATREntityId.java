@@ -10,7 +10,7 @@ public class TMDCATREntityId implements Serializable{
    private String CATR_TRA1_COD_CIE;
    private String CATR_TRA1_NUM_TRA1;
    private String CATR_TRA1_IND_FER;
-   private Long CATR_NUM;
+   private Double CATR_NUM;
    private String CATR_READ_COD;
    private String CATR_TYEQ_COD;
    private String CATR_LIBS_QLCO_COD;

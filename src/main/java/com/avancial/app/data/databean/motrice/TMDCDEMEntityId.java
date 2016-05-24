@@ -10,7 +10,7 @@ public class TMDCDEMEntityId implements Serializable{
    private String  CDEM_TRA1_COD_CIE;
    private String  CDEM_TRA1_NUM_TRA1;
    private String  CDEM_TRA1_IND_FER;
-   private Long    CDEM_NUM_CONDITION;
+   private Double    CDEM_NUM_CONDITION;
    private String  CDEM_LIBS_TYCO_COD;
    private Boolean CDEM_REGI;
    

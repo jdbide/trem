@@ -21,13 +21,13 @@ public class TMDPAREEntity {
    @Id
    private String  PARE_SVTH_IND_FER;
    @Id
-   private Long    PARE_SVTH_TRCH_NUM;
+   private Double    PARE_SVTH_TRCH_NUM;
    @Id
    private String  PARE_SVTH_SERV_COD;
    @Id
-   private Long    PARE_SVTH_NUM;
+   private Double    PARE_SVTH_NUM;
    @Id
-   private Long    PARE_NUM_REST;
+   private Double    PARE_NUM_REST;
    @Id
    private String  PARE_TYRE_COD_REP;
    @Id
@@ -41,7 +41,7 @@ public class TMDPAREEntity {
    @Id
    private Boolean PARE_REGI;
    @Id
-   private Long    PARE_NB_REPAS;
+   private Double    PARE_NB_REPAS;
    @Id
    private String  PARE_IND_PLACE;
    @Id
@@ -73,11 +73,11 @@ public class TMDPAREEntity {
       this.PARE_SVTH_IND_FER = pARE_SVTH_IND_FER;
    }
 
-   public Long getPARE_SVTH_TRCH_NUM() {
+   public Double getPARE_SVTH_TRCH_NUM() {
       return this.PARE_SVTH_TRCH_NUM;
    }
 
-   public void setPARE_SVTH_TRCH_NUM(Long pARE_SVTH_TRCH_NUM) {
+   public void setPARE_SVTH_TRCH_NUM(Double pARE_SVTH_TRCH_NUM) {
       this.PARE_SVTH_TRCH_NUM = pARE_SVTH_TRCH_NUM;
    }
 
@@ -89,19 +89,19 @@ public class TMDPAREEntity {
       this.PARE_SVTH_SERV_COD = pARE_SVTH_SERV_COD;
    }
 
-   public Long getPARE_SVTH_NUM() {
+   public Double getPARE_SVTH_NUM() {
       return this.PARE_SVTH_NUM;
    }
 
-   public void setPARE_SVTH_NUM(Long pARE_SVTH_NUM) {
+   public void setPARE_SVTH_NUM(Double pARE_SVTH_NUM) {
       this.PARE_SVTH_NUM = pARE_SVTH_NUM;
    }
 
-   public Long getPARE_NUM_REST() {
+   public Double getPARE_NUM_REST() {
       return this.PARE_NUM_REST;
    }
 
-   public void setPARE_NUM_REST(Long pARE_NUM_REST) {
+   public void setPARE_NUM_REST(Double pARE_NUM_REST) {
       this.PARE_NUM_REST = pARE_NUM_REST;
    }
 
@@ -153,11 +153,11 @@ public class TMDPAREEntity {
       this.PARE_REGI = pARE_REGI;
    }
 
-   public Long getPARE_NB_REPAS() {
+   public Double getPARE_NB_REPAS() {
       return this.PARE_NB_REPAS;
    }
 
-   public void setPARE_NB_REPAS(Long pARE_NB_REPAS) {
+   public void setPARE_NB_REPAS(Double pARE_NB_REPAS) {
       this.PARE_NB_REPAS = pARE_NB_REPAS;
    }
 

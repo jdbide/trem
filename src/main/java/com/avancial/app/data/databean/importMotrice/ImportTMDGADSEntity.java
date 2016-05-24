@@ -16,12 +16,12 @@ public class ImportTMDGADSEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idTMDGADS;
+   private Double   idTMDGADS;
    private String GADS_DSTR_COD_CIE;
    private String GADS_DSTR_NUM_TRA1;
    private String GADS_DSTR_IND_FER;
-   private Long   GADS_DSTR_NUM;
-   private Long   GADS_NUM_GAR;
+   private Double   GADS_DSTR_NUM;
+   private Double   GADS_NUM_GAR;
    private String GADS_INPT_RR_GAR;
    private String GADS_DEB_ARRET;
    private String GADS_FIN_ARRET;
@@ -33,11 +33,11 @@ public class ImportTMDGADSEntity {
    private String GADS_USER;
    private Date   GADS_DHDO;
 
-   public Long getIdTMDGADS() {
+   public Double getIdTMDGADS() {
       return this.idTMDGADS;
    }
 
-   public void setIdTMDGADS(Long idTMDGADS) {
+   public void setIdTMDGADS(Double idTMDGADS) {
       this.idTMDGADS = idTMDGADS;
    }
 
@@ -65,19 +65,19 @@ public class ImportTMDGADSEntity {
       this.GADS_DSTR_IND_FER = gADS_DSTR_IND_FER;
    }
 
-   public long getGADS_DSTR_NUM() {
+   public Double getGADS_DSTR_NUM() {
       return this.GADS_DSTR_NUM;
    }
 
-   public void setGADS_DSTR_NUM(Long gADS_DSTR_NUM) {
+   public void setGADS_DSTR_NUM(Double gADS_DSTR_NUM) {
       this.GADS_DSTR_NUM = gADS_DSTR_NUM;
    }
 
-   public Long getGADS_NUM_GAR() {
+   public Double getGADS_NUM_GAR() {
       return this.GADS_NUM_GAR;
    }
 
-   public void setGADS_NUM_GAR(Long gADS_NUM_GAR) {
+   public void setGADS_NUM_GAR(Double gADS_NUM_GAR) {
       this.GADS_NUM_GAR = gADS_NUM_GAR;
    }
 

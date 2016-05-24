@@ -15,11 +15,11 @@ import javax.persistence.Table;
 public class ImportTMDTATHEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDTATH;
+   private Double    idTMDTATH;
    private String  TATH_TRCH_COD_CIE;
    private String  TATH_TRCH_NUM_TRA1;
    private String  TATH_TRCH_IND_FER;
-   private Long    TATH_TRCH_NUM;
+   private Double    TATH_TRCH_NUM;
    private String  TATH_TYP_TAX;
    private String  TATH_CD_VAL;
    private String  TATH_INPT_RR_D;
@@ -32,7 +32,7 @@ public class ImportTMDTATHEntity {
    /**
     * @return the idTMDTATH
     */
-   public Long getIdTMDTATH() {
+   public Double getIdTMDTATH() {
       return this.idTMDTATH;
    }
 
@@ -40,7 +40,7 @@ public class ImportTMDTATHEntity {
     * @param idTMDTATH
     *           the idTMDTATH to set
     */
-   public void setIdTMDTATH(Long idTMDTATH) {
+   public void setIdTMDTATH(Double idTMDTATH) {
       this.idTMDTATH = idTMDTATH;
    }
 
@@ -92,7 +92,7 @@ public class ImportTMDTATHEntity {
    /**
     * @return the tATH_TRCH_NUM
     */
-   public Long getTATH_TRCH_NUM() {
+   public Double getTATH_TRCH_NUM() {
       return this.TATH_TRCH_NUM;
    }
 
@@ -100,7 +100,7 @@ public class ImportTMDTATHEntity {
     * @param tATH_TRCH_NUM
     *           the tATH_TRCH_NUM to set
     */
-   public void setTATH_TRCH_NUM(Long tATH_TRCH_NUM) {
+   public void setTATH_TRCH_NUM(Double tATH_TRCH_NUM) {
       this.TATH_TRCH_NUM = tATH_TRCH_NUM;
    }
 

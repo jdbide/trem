@@ -16,13 +16,13 @@ public class ImportTMDSVTHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDSVTH;
+   private Double    idTMDSVTH;
    private String  SVTH_TRCH_COD_CIE;
    private String  SVTH_TRCH_NUM_TRA1;
    private String  SVTH_TRCH_IND_FER;
-   private Long    SVTH_TRCH_NUM;
+   private Double    SVTH_TRCH_NUM;
    private String  SVTH_LIBS_SERV_COD;
-   private Long    SVTH_NUM;
+   private Double    SVTH_NUM;
    private String  SVTH_COD_ORIGINE;
    private String  SVTH_INPT_RR_D;
    private String  SVTH_INPT_RR_F;
@@ -35,7 +35,7 @@ public class ImportTMDSVTHEntity {
    /**
     * @return the idTMDSVTH
     */
-   public Long getIdTMDSVTH() {
+   public Double getIdTMDSVTH() {
       return this.idTMDSVTH;
    }
 
@@ -43,7 +43,7 @@ public class ImportTMDSVTHEntity {
     * @param idTMDSVTH
     *           the idTMDSVTH to set
     */
-   public void setIdTMDSVTH(Long idTMDSVTH) {
+   public void setIdTMDSVTH(Double idTMDSVTH) {
       this.idTMDSVTH = idTMDSVTH;
    }
 
@@ -95,7 +95,7 @@ public class ImportTMDSVTHEntity {
    /**
     * @return the sVTH_TRCH_NUM
     */
-   public Long getSVTH_TRCH_NUM() {
+   public Double getSVTH_TRCH_NUM() {
       return this.SVTH_TRCH_NUM;
    }
 
@@ -103,7 +103,7 @@ public class ImportTMDSVTHEntity {
     * @param sVTH_TRCH_NUM
     *           the sVTH_TRCH_NUM to set
     */
-   public void setSVTH_TRCH_NUM(Long sVTH_TRCH_NUM) {
+   public void setSVTH_TRCH_NUM(Double sVTH_TRCH_NUM) {
       this.SVTH_TRCH_NUM = sVTH_TRCH_NUM;
    }
 
@@ -125,7 +125,7 @@ public class ImportTMDSVTHEntity {
    /**
     * @return the sVTH_NUM
     */
-   public Long getSVTH_NUM() {
+   public Double getSVTH_NUM() {
       return this.SVTH_NUM;
    }
 
@@ -133,7 +133,7 @@ public class ImportTMDSVTHEntity {
     * @param sVTH_NUM
     *           the sVTH_NUM to set
     */
-   public void setSVTH_NUM(Long sVTH_NUM) {
+   public void setSVTH_NUM(Double sVTH_NUM) {
       this.SVTH_NUM = sVTH_NUM;
    }
 

@@ -16,11 +16,11 @@ public class ImportTMDCDEMEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long idTMDCDEM;
+   private Double idTMDCDEM;
    private String  CDEM_TRA1_COD_CIE;
    private String  CDEM_TRA1_NUM_TRA1;
    private String  CDEM_TRA1_IND_FER;
-   private Long    CDEM_NUM_CONDITION;
+   private Double    CDEM_NUM_CONDITION;
    private String  CDEM_LIBS_TYCO_COD;
    private Boolean CDEM_REGI;
    private String  CDEM_USER;
@@ -30,13 +30,13 @@ public class ImportTMDCDEMEntity {
    /**
     * @return the idTMDCDEM
     */
-   public Long getIdTMDCDEM() {
+   public Double getIdTMDCDEM() {
       return this.idTMDCDEM;
    }
    /**
     * @param idTMDCDEM the idTMDCDEM to set
     */
-   public void setIdTMDCDEM(Long idTMDCDEM) {
+   public void setIdTMDCDEM(Double idTMDCDEM) {
       this.idTMDCDEM = idTMDCDEM;
    }
    /**
@@ -78,13 +78,13 @@ public class ImportTMDCDEMEntity {
    /**
     * @return the cDEM_NUM_CONDITION
     */
-   public Long getCDEM_NUM_CONDITION() {
+   public Double getCDEM_NUM_CONDITION() {
       return this.CDEM_NUM_CONDITION;
    }
    /**
     * @param cDEM_NUM_CONDITION the cDEM_NUM_CONDITION to set
     */
-   public void setCDEM_NUM_CONDITION(Long cDEM_NUM_CONDITION) {
+   public void setCDEM_NUM_CONDITION(Double cDEM_NUM_CONDITION) {
       this.CDEM_NUM_CONDITION = cDEM_NUM_CONDITION;
    }
    /**

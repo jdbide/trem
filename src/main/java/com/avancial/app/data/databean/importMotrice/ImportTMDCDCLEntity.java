@@ -16,20 +16,20 @@ public class ImportTMDCDCLEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idTMDCDCL;
+   private Double   idTMDCDCL;
    private String CDCL_CDEM_COD_CIE;
    private String CDCL_CDEM_NUM_TRA1;
    private String CDCL_CDEM_IND_FER;
-   private Long   CDCL_CDEM_NUM_COND;
+   private Double   CDCL_CDEM_NUM_COND;
    private String CDCL_CLBA_COD;
    private String CDCL_USER;
    private Date   CDCL_DHDO;
 
-   public Long getIdTMDCDCL() {
+   public Double getIdTMDCDCL() {
       return this.idTMDCDCL;
    }
 
-   public void setIdTMDCDCL(Long idTMDCDCL) {
+   public void setIdTMDCDCL(Double idTMDCDCL) {
       this.idTMDCDCL = idTMDCDCL;
    }
 
@@ -57,11 +57,11 @@ public class ImportTMDCDCLEntity {
       this.CDCL_CDEM_IND_FER = cDCL_CDEM_IND_FER;
    }
 
-   public Long getCDCL_CDEM_NUM_COND() {
+   public Double getCDCL_CDEM_NUM_COND() {
       return this.CDCL_CDEM_NUM_COND;
    }
 
-   public void setCDCL_CDEM_NUM_COND(Long cDCL_CDEM_NUM_COND) {
+   public void setCDCL_CDEM_NUM_COND(Double cDCL_CDEM_NUM_COND) {
       this.CDCL_CDEM_NUM_COND = cDCL_CDEM_NUM_COND;
    }
 

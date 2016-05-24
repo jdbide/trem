@@ -16,11 +16,11 @@ public class ImportTMDTRCHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDTRCH;
+   private Double    idTMDTRCH;
    private String  TRCH_TRA1_COD_CIE;
    private String  TRCH_TRA1_NUM_TRA1;
    private String  TRCH_TRA1_IND_FER;
-   private Long    TRCH_NUM;
+   private Double    TRCH_NUM;
    private String  TRCH_COD_SENS_AUTO;
    private String  TRCH_IND_TGV;
    private String  TRCH_IND_VAL_DC;
@@ -33,11 +33,11 @@ public class ImportTMDTRCHEntity {
    private Boolean TRCH_REGI_VAL_DC;
    private String  TRCH_LIBS_SEMA_COD;
 
-   public Long getIdTMDTRCH() {
+   public Double getIdTMDTRCH() {
       return this.idTMDTRCH;
    }
 
-   public void setIdTMDTRCH(Long idTMDTRCH) {
+   public void setIdTMDTRCH(Double idTMDTRCH) {
       this.idTMDTRCH = idTMDTRCH;
    }
 
@@ -65,11 +65,11 @@ public class ImportTMDTRCHEntity {
       this.TRCH_TRA1_IND_FER = tRCH_TRA1_IND_FER;
    }
 
-   public Long getTRCH_NUM() {
+   public Double getTRCH_NUM() {
       return this.TRCH_NUM;
    }
 
-   public void setTRCH_NUM(Long tRCH_NUM) {
+   public void setTRCH_NUM(Double tRCH_NUM) {
       this.TRCH_NUM = tRCH_NUM;
    }
 

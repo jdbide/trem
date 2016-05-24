@@ -10,10 +10,10 @@ public class TMDSPPLEntityId implements Serializable{
    private String SPPL_VOIT_COD_CIE;
    private String SPPL_VOIT_NUM_TRA1;
    private String SPPL_VOIT_IND_FER;
-   private Long SPPL_VOIT_TRCH_NUM;
-   private Long SPPL_VOIT_NUM;
-   private Long SPPL_PCDD_NUM_COMP;
-   private Long SPPL_PCDD_NUM_PLAC;
+   private Double SPPL_VOIT_TRCH_NUM;
+   private Double SPPL_VOIT_NUM;
+   private Double SPPL_PCDD_NUM_COMP;
+   private Double SPPL_PCDD_NUM_PLAC;
    private String SPPL_SPEC_COD;
    private Boolean SPPL_REGI;
    

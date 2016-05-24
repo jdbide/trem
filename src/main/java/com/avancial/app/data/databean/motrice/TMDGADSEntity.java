@@ -21,9 +21,9 @@ public class TMDGADSEntity {
     @Id
     private String GADS_DSTR_IND_FER;
     @Id
-    private Long GADS_DSTR_NUM;
+    private Double GADS_DSTR_NUM;
     @Id
-    private Long GADS_NUM_GAR;
+    private Double GADS_NUM_GAR;
     @Id
     private String GADS_INPT_RR_GAR;
     @Id
@@ -61,16 +61,16 @@ public class TMDGADSEntity {
     public void setGADS_DSTR_IND_FER(String gADS_DSTR_IND_FER) {
         this.GADS_DSTR_IND_FER = gADS_DSTR_IND_FER;
     }
-    public long getGADS_DSTR_NUM() {
+    public Double getGADS_DSTR_NUM() {
         return this.GADS_DSTR_NUM;
     }
-    public void setGADS_DSTR_NUM(Long gADS_DSTR_NUM) {
+    public void setGADS_DSTR_NUM(Double gADS_DSTR_NUM) {
         this.GADS_DSTR_NUM = gADS_DSTR_NUM;
     }
-    public Long getGADS_NUM_GAR() {
+    public Double getGADS_NUM_GAR() {
         return this.GADS_NUM_GAR;
     }
-    public void setGADS_NUM_GAR(Long gADS_NUM_GAR) {
+    public void setGADS_NUM_GAR(Double gADS_NUM_GAR) {
         this.GADS_NUM_GAR = gADS_NUM_GAR;
     }
     public String getGADS_INPT_RR_GAR() {
