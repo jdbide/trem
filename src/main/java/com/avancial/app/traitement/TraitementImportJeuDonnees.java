@@ -12,9 +12,9 @@ import javax.inject.Inject;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.TablesMotriceEntity;
 import com.avancial.app.service.GetEntiteService;
-import com.avancial.app.service.JeuDonneesService;
+import com.avancial.app.service.ImportMotriceService;
+import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.MotriceService;
-import com.avancial.app.service.ImportService;
 import com.avancial.app.service.TablesMotriceService;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
@@ -27,7 +27,7 @@ import com.avancial.socle.traitement.ATraitementLogDetail;
 public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 
    @Inject
-   private JeuDonneesService jeuDonneeService;
+   private JeuDonneeService jeuDonneeService;
    @Inject
    private TablesMotriceService tablesMotriceService;
    @Inject
@@ -35,7 +35,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
    @Inject
    private MotriceService motriceService;
    @Inject
-   private ImportService tablesImportService;
+   private ImportMotriceService importMotriceService;
 
    /**
     * 
@@ -50,7 +50,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
     * @see com.avancial.socle.traitement.ATraitement#executeTraitement()
     */
    @Override
-   protected void executeTraitement() {
+   protected void executeTraitement() {      
       JeuDonneeEntity jeuDonneeDataBean = this.initJeuDonnee();
       jeuDonneeDataBean.getIdJeuDonnees();
       
@@ -59,20 +59,13 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
       String libelleTableMotrice;
       for(int i=0; i<listTables.size(); i++) {
          libelleTableMotrice = listTables.get(i).getLibelleTablesMotrice();
-         this.tablesImportService.deleteTable(this.getEntiteService.getNomEntiteFromNomEntiteImportMotrice(libelleTableMotrice));
+         this.importMotriceService.deleteTable(this.getEntiteService.getNomEntiteImportFromTableMotrice(libelleTableMotrice));
          this.log("Truncate de la table d'import " + libelleTableMotrice);
          
-         // lecture des enregistrements dans motrice
          List<?> tmdDataBeans = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
          
-         try {// import des données en local
-            this.log("Import de la table " + libelleTableMotrice);
-            this.tablesImportService.insertAll(tmdDataBeans, libelleTableMotrice);
-            
-         } catch (ClassNotFoundException e) {
-            this.log("Impossible d'instancier la classe associée à la table " + libelleTableMotrice);
-            e.printStackTrace();
-         }
+         this.importMotriceService.insertAll(tmdDataBeans, libelleTableMotrice);
+         this.log("Import de la table " + libelleTableMotrice);
       }
    }
 

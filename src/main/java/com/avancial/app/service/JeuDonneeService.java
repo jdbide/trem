@@ -6,14 +6,13 @@ import javax.persistence.EntityManager;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
-public class JeuDonneesService {
+public class JeuDonneeService {
    @Inject
    @Socle_PUSocle
-   private EntityManager em;
+   EntityManager       em;
 
    /**
     * Sauvegarde le jeu de données dans la table.
-    * 
     * @param jeuDonneeDataBean
     * @return
     */
@@ -22,8 +21,8 @@ public class JeuDonneesService {
       this.em.persist(jeuDonneeDataBean);
       this.em.flush();
       this.em.getTransaction().commit();
-
+      
       return jeuDonneeDataBean;
-   }
+   }  
 
 }
