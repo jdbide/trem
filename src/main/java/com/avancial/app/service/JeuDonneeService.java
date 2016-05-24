@@ -3,7 +3,7 @@ package com.avancial.app.service;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import com.avancial.app.data.databean.JeuDonneeDataBean;
+import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 public class JeuDonneeService {
@@ -16,7 +16,7 @@ public class JeuDonneeService {
     * @param jeuDonneeDataBean
     * @return
     */
-   public JeuDonneeDataBean save(JeuDonneeDataBean jeuDonneeDataBean) {
+   public JeuDonneeEntity save(JeuDonneeEntity jeuDonneeDataBean) {
       this.em.getTransaction().begin();
       this.em.persist(jeuDonneeDataBean);
       this.em.flush();

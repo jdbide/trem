@@ -10,8 +10,8 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.avancial.app.data.databean.importMotrice.ImportTMDAVTRDataBean;
-import com.avancial.app.data.databean.motrice.TMDAVTRDataBean;
+import com.avancial.app.data.databean.importMotrice.ImportTMDAVTREntity;
+import com.avancial.app.data.databean.motrice.TMDAVTREntity;
 import com.avancial.app.service.GetEntiteService;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 
@@ -42,20 +42,20 @@ public class TestGetEntiteService {
 
     @Test
     public void testService() throws ClassNotFoundException {
-        Assert.assertEquals(entiteService.getNomEntiteFromTableMotrice("tmdavtr"), "TMDAVTRDataBean");
-        Assert.assertEquals(entiteService.getNomEntiteImportFromTableMotrice("tmdavtr"), "ImportTMDAVTRDataBean");
+        Assert.assertEquals(entiteService.getNomEntiteFromTableMotrice("tmdavtr"), "TMDAVTREntity");
+        Assert.assertEquals(entiteService.getNomEntiteImportFromTableMotrice("tmdavtr"), "ImportTMDAVTREntity");
 
-        Assert.assertEquals(entiteService.getClasseEntiteFromTableMotrice("tmdavtr"), TMDAVTRDataBean.class);
-        Assert.assertEquals(entiteService.getClasseEntiteImporFromTableMotrice("tmdavtr"), ImportTMDAVTRDataBean.class);
+        Assert.assertEquals(entiteService.getClasseEntiteFromTableMotrice("tmdavtr"), TMDAVTREntity.class);
+        Assert.assertEquals(entiteService.getClasseEntiteImporFromTableMotrice("tmdavtr"), ImportTMDAVTREntity.class);
         
-        Assert.assertEquals(entiteService.getNomEntiteFromNomEntiteImportMotrice("ImportTMDAVTRDataBean"), "TMDAVTRDataBean");
-        Assert.assertEquals(entiteService.getNomEntiteImportFromNomEntiteMotrice("TMDAVTRDataBean"), "ImportTMDAVTRDataBean");
+        Assert.assertEquals(entiteService.getNomEntiteFromNomEntiteImportMotrice("ImportTMDAVTREntity"), "TMDAVTREntity");
+        Assert.assertEquals(entiteService.getNomEntiteImportFromNomEntiteMotrice("TMDAVTREntity"), "ImportTMDAVTREntity");
         
-        Assert.assertEquals(entiteService.getClasseEntiteFromNomEntiteMotrice("TMDAVTRDataBean"), TMDAVTRDataBean.class);
-        Assert.assertEquals(entiteService.getClasseEntiteImportFromNomEntiteImportMotrice("ImportTMDAVTRDataBean"), ImportTMDAVTRDataBean.class);
+        Assert.assertEquals(entiteService.getClasseEntiteFromNomEntiteMotrice("TMDAVTREntity"), TMDAVTREntity.class);
+        Assert.assertEquals(entiteService.getClasseEntiteImportFromNomEntiteImportMotrice("ImportTMDAVTREntity"), ImportTMDAVTREntity.class);
         
-        Assert.assertEquals(entiteService.getClasseEntiteFromClasseEntiteImportMotrice(ImportTMDAVTRDataBean.class), TMDAVTRDataBean.class);
-        Assert.assertEquals(entiteService.getClasseEntiteImportFromClasseEntiteMotrice(TMDAVTRDataBean.class), ImportTMDAVTRDataBean.class);
+        Assert.assertEquals(entiteService.getClasseEntiteFromClasseEntiteImportMotrice(ImportTMDAVTREntity.class), TMDAVTREntity.class);
+        Assert.assertEquals(entiteService.getClasseEntiteImportFromClasseEntiteMotrice(TMDAVTREntity.class), ImportTMDAVTREntity.class);
         
         Assert.assertEquals(entiteService.getNomTableImportFromTableMotrice("TMDAVTR"), "ImportTMDAVTR");
     }
