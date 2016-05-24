@@ -3,7 +3,7 @@
 /**
  * Service se chargeant de renvoyer l'import d'une table
  */
-socle_app.service('TremasImportWebService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
+socle_app.service('importService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
 	var cols = [];
 	var datas = [];
 	
