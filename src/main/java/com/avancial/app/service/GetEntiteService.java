@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
  * @author heloise.guillemaud
  *
  */
-public class EntiteService {
+public class GetEntiteService {
 
     /**
      * Retourne le nom de la classe @Entity qui représente la table motrice en paramètre.

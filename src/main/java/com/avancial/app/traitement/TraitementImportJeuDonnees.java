@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.TablesMotriceEntity;
-import com.avancial.app.service.EntiteService;
+import com.avancial.app.service.GetEntiteService;
 import com.avancial.app.service.TremasJeuDonneesService;
 import com.avancial.app.service.MotriceService;
 import com.avancial.app.service.TremasImportService;
@@ -31,7 +31,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
    @Inject
    private TremasTablesMotriceService tablesMotriceService;
    @Inject
-   private EntiteService getEntiteService;
+   private GetEntiteService getEntiteService;
    @Inject
    private MotriceService motriceService;
    @Inject
