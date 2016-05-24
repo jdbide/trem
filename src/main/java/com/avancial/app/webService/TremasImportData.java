@@ -17,7 +17,7 @@ import com.avancial.app.service.TablesMotriceService;
  * @author gabriel.gagnier
  *
  */
-@Path("/app/importData")
+@Path("/app/tablesMotrice")
 @RequestScoped
 public class TremasImportData {
 

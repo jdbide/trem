@@ -17,7 +17,7 @@ import com.avancial.app.service.TablesImportService;
  * @author gabriel.gagnier
  *
  */
-@Path("/import")
+@Path("/tablesImport")
 @RequestScoped
 public class ImportTableWebService {
 
@@ -30,7 +30,7 @@ public class ImportTableWebService {
     * @return
     */
    @GET
-   @Path("/table/{entityName}")
+   @Path("/{entityName}")
    @Produces({ MediaType.APPLICATION_JSON })
    public Response getImport(@PathParam("entityName") String entityName) {
       try {
