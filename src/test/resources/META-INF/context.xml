@@ -8,8 +8,8 @@
 		
 	
 	<Resource name="jdbc/socle" auth="Container" type="javax.sql.DataSource"
-		username="dbad_socle" password="!socle-12" driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://caliban/socle" maxActive="8" maxIdle="4"
+		username="dbad_tremas" password="!tremas-12" driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://caliban/tremas" maxActive="8" maxIdle="4"
 		maxWait="10000" />
 		
 	
