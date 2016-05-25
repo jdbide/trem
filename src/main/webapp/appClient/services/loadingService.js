@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Service pour afficher/cacher l'écran de chargement (bloquant l'application)
+ */
 socle_app.service('loadingService', ['$rootScope', function($rootScope) {
     var self = this;
     

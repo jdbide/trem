@@ -1,13 +1,17 @@
 'use strict';
 
 /**
- * Service se chargeant de renvoyer le menu de l'application
+ * Service gérant le menu de pages de l'application
  */
 socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q) {
 	var menu = [];
 	
     var self = this;
     
+    /**
+     * Retourne tous les menus de l'application:
+     * hiérarchie Rubriques > Chapitres > Pages
+     */
     self.getDataByServer = function () {        
         var deffered  = $q.defer();
 
@@ -28,6 +32,9 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
     	return menu;
     }
     
+    /**
+     * Rubrique de la page affichée
+     */
     var libelleRubriqueCourante = "";
     self.setRubriqueCourante = function(libelle) {
     	libelleRubriqueCourante = libelle;
@@ -36,6 +43,9 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
     	return libelleRubriqueCourante;
     } 
 
+    /**
+     * Chapitre de la page affichée
+     */
     var libelleChapitreCourant = "";
     self.setChapitreCourant = function(libelle) {
     	libelleChapitreCourant = libelle;
@@ -44,6 +54,9 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
     	return libelleChapitreCourant;
     } 
     
+    /**
+     * Page affichée
+     */
     var libellePageCourante = "";
     self.setPageCourante = function(libelle) {
     	libellePageCourante = libelle;

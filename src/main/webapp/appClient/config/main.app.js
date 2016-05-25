@@ -9,19 +9,19 @@
      * angularShamSpinner : Module pour l'affichage du loading pour chaque requête
      * ngCookies : Module de gestion des cookie (@see documentation officielle AngularJs : ngCookies)
      * myModal : C'est notre Directive (@see documentation officielle AngularJs : Directive) : pour la gestion des modal BootStrap (@see Bootstrap / Javascript / Modal)
-     * 
+     * <br>
      * Ces modules seront instanciés une seule fois au début de l'application (Principe IOC (Injection des dépendances "Principe pour la POO"))
-     *
+     * <br>
      * $httpProvider : Service déclaré dans angular.js pour gérer nos requêtes
      * .config : Configuration de notre application ici : On configure les header des requêtes
-     *
-     *
+     * <br>
+     * <br>
      * Documentation officielle AngularJs : https://docs.angularjs.org/api
-     *
+     * <br>
      * Author : Hamza LATEREM
-     *
+     * <br>
      * Version : 1.0
-     *
+     * <br>
      * Avancial
      *
      */

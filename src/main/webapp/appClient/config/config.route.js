@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Gestion de la navigation
+ */
 socle_app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 	.when('/', {

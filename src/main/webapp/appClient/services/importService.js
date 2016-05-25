@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Service se chargeant de renvoyer l'import d'une table
+ * Service se chargeant de renvoyer l'import d'une table motrice
  */
 socle_app.service('importService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
 	var cols = [];
