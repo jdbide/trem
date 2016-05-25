@@ -1,7 +1,14 @@
 .table-directive {
 	background-color: white;
+	table-layout: fixed;
 }
 
 .table-directive th {
 	background-color: silver;
 }
+
+.table-directive th div {
+	display: flex;
+    word-wrap: break-word;
+}
+
