@@ -42,9 +42,15 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 					var col = columns[i];
 					var type = col.fieldType;
 					if (type === "Date") {
-						col.format = "date";
+						col.format = {
+							name : "date",
+							params : ["yyyy-MM-dd h:mm:ss"]
+						}
 					} else {
-						col.format = "identity";
+						col.format = {
+							name : "identity",
+							params : []
+						}
 					}
 					$scope.cols.push(col);
 				}
@@ -64,7 +70,8 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 	};
 	
     $scope.format = function(model, filter) {
-        return $filter(filter)(model);
+    	var paramsArray = ([model]).concat(filter.params);
+    	return $filter(filter.name).apply(this, paramsArray);
     };
 	
 }]);

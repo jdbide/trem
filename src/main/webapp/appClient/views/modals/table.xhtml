@@ -8,10 +8,10 @@
           class="table table-directive table-condensed table-bordered table-hover">
           <tr ng-repeat="row in $data">
             <td ng-repeat="col in $columns">
-                <span ng-if="tableFormat({model: 'test', filter: 'identity'}) !== 'test'">
+                <span ng-if="tableFormat({model: 'test', filter: {name:'identity',params:[]}}) !== 'test'">
                     {{row[col.field]}}
                 </span>
-                <span ng-if="tableFormat({model: 'test', filter: 'identity'}) === 'test'">
+                <span ng-if="tableFormat({model: 'test', filter: {name:'identity',params:[]}}) === 'test'">
                     {{tableFormat({model: row[col.field], filter: col.format})}}
                 </span>
             </td>
