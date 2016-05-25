@@ -40,14 +40,19 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 				$scope.cols = [];
 				for (var i = 0; i < columns.length; i++) {
 					var col = columns[i];
-					var prefix = col.substr(0, 4);
-					col = col.replace(prefix, prefix.toLowerCase());
-					$scope.cols.push({
-						field: col,
-						title: col,
-						sortable: col,
-						show: (col.indexOf("id") < 0)
-					});
+					var type = col.fieldType;
+					if (type === "Date") {
+						col.format = {
+							name : "date",
+							params : ["yyyy-MM-dd h:mm:ss"]
+						}
+					} else {
+						col.format = {
+							name : "identity",
+							params : []
+						}
+					}
+					$scope.cols.push(col);
 				}
 				
 				$scope.params = new NgTableParams({
@@ -62,6 +67,11 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 			$scope.dataset = null;
 		}
 		
-	}
+	};
+	
+    $scope.format = function(model, filter) {
+    	var paramsArray = ([model]).concat(filter.params);
+    	return $filter(filter.name).apply(this, paramsArray);
+    };
 	
 }]);

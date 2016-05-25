@@ -7,7 +7,14 @@
           template-pagination="views/partials/tablePagination.xhtml"
           class="table table-directive table-condensed table-bordered table-hover">
           <tr ng-repeat="row in $data">
-            <td ng-repeat="col in $columns">{{row[col.field]}}</td>
+            <td ng-repeat="col in $columns">
+                <span ng-if="tableFormat({model: 'test', filter: {name:'identity',params:[]}}) !== 'test'">
+                    {{row[col.field]}}
+                </span>
+                <span ng-if="tableFormat({model: 'test', filter: {name:'identity',params:[]}}) === 'test'">
+                    {{tableFormat({model: row[col.field], filter: col.format})}}
+                </span>
+            </td>
           </tr>
         </table>
     </div>
