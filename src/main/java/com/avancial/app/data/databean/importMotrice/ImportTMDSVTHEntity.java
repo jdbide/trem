@@ -16,7 +16,7 @@ public class ImportTMDSVTHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double    idTMDSVTH;
+   private Long    idTMDSVTH;
    private String  SVTH_TRCH_COD_CIE;
    private String  SVTH_TRCH_NUM_TRA1;
    private String  SVTH_TRCH_IND_FER;
@@ -35,7 +35,7 @@ public class ImportTMDSVTHEntity {
    /**
     * @return the idTMDSVTH
     */
-   public Double getIdTMDSVTH() {
+   public Long getIdTMDSVTH() {
       return this.idTMDSVTH;
    }
 
@@ -43,7 +43,7 @@ public class ImportTMDSVTHEntity {
     * @param idTMDSVTH
     *           the idTMDSVTH to set
     */
-   public void setIdTMDSVTH(Double idTMDSVTH) {
+   public void setIdTMDSVTH(Long idTMDSVTH) {
       this.idTMDSVTH = idTMDSVTH;
    }
 

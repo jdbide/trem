@@ -16,7 +16,7 @@ public class ImportTMDCATHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double   idTMDCATH;
+   private Long   idTMDCATH;
    private String CATH_TRCH_COD_CIE;
    private String CATH_TRCH_NUM_TRA1;
    private String CATH_TRCH_IND_FER;
@@ -30,11 +30,11 @@ public class ImportTMDCATHEntity {
    private String CATH_USER;
    private Date   CATH_DHDO;
 
-   public Double getIdTMDCATH() {
+   public Long getIdTMDCATH() {
       return this.idTMDCATH;
    }
 
-   public void setIdTMDCATH(Double idTMDCATH) {
+   public void setIdTMDCATH(Long idTMDCATH) {
       this.idTMDCATH = idTMDCATH;
    }
 

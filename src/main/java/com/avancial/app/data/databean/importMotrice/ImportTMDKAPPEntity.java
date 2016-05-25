@@ -16,7 +16,7 @@ public class ImportTMDKAPPEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double   idTMDKAPP;
+   private Long   idTMDKAPP;
    private String KAPP_APP;
    private String KAPP_CON;
    private Date   KAPP_TRA;
@@ -35,11 +35,11 @@ public class ImportTMDKAPPEntity {
    private Date   KAPP_DHDO;
    private Date   KAPP_DTR;
 
-   public Double getIdTMDKAPP() {
+   public Long getIdTMDKAPP() {
       return this.idTMDKAPP;
    }
 
-   public void setIdTMDKAPP(Double idTMDKAPP) {
+   public void setIdTMDKAPP(Long idTMDKAPP) {
       this.idTMDKAPP = idTMDKAPP;
    }
 

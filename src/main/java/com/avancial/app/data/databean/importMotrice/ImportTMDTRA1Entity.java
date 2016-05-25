@@ -16,7 +16,7 @@ public class ImportTMDTRA1Entity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double    idTMDTRA1;
+   private Long    idTMDTRA1;
    private String  TRA1_CIES_COD_CIE;
    private String  TRA1_NUM_TRAIN;
    private String  TRA1_IND_FER_ROUTE;
@@ -35,11 +35,11 @@ public class ImportTMDTRA1Entity {
    private Date    TRA1_DHDO;
    private String TRA1_REGI_NON_EXTR;
 
-   public Double getIdTMDTRA1() {
+   public Long getIdTMDTRA1() {
       return this.idTMDTRA1;
    }
 
-   public void setIdTMDTRA1(Double idTMDTRA1) {
+   public void setIdTMDTRA1(Long idTMDTRA1) {
       this.idTMDTRA1 = idTMDTRA1;
    }
 

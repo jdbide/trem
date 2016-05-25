@@ -16,7 +16,7 @@ public class ImportTMDSPCOEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double    idTMDSPCO;
+   private Long    idTMDSPCO;
    private String  SPCO_VOIT_COD_CIE;
    private String  SPCO_VOIT_NUM_TRA1;
    private String  SPCO_VOIT_IND_FER;
@@ -31,7 +31,7 @@ public class ImportTMDSPCOEntity {
    /**
     * @return the idTMDSPCO
     */
-   public Double getIdTMDSPCO() {
+   public Long getIdTMDSPCO() {
       return this.idTMDSPCO;
    }
 
@@ -39,7 +39,7 @@ public class ImportTMDSPCOEntity {
     * @param idTMDSPCO
     *           the idTMDSPCO to set
     */
-   public void setIdTMDSPCO(Double idTMDSPCO) {
+   public void setIdTMDSPCO(Long idTMDSPCO) {
       this.idTMDSPCO = idTMDSPCO;
    }
 

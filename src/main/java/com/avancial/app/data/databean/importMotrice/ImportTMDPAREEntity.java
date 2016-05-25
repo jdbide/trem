@@ -16,7 +16,7 @@ public class ImportTMDPAREEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double    idTMDPARE;
+   private Long    idTMDPARE;
    private String  PARE_SVTH_COD_CIE;
    private String  PARE_SVTH_NUM_TRA1;
    private String  PARE_SVTH_IND_FER;
@@ -36,11 +36,11 @@ public class ImportTMDPAREEntity {
    private String  PARE_USER;
    private Date    PARE_DHDO;
 
-   public Double getIdTMDPARE() {
+   public Long getIdTMDPARE() {
       return this.idTMDPARE;
    }
 
-   public void setIdTMDPARE(Double idTMDPARE) {
+   public void setIdTMDPARE(Long idTMDPARE) {
       this.idTMDPARE = idTMDPARE;
    }
 

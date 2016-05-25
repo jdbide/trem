@@ -16,7 +16,7 @@ public class ImportTMDRAMEEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double    idTMDRAME;
+   private Long    idTMDRAME;
    private String  RAME_TRCH_COD_CIE;
    private String  RAME_TRCH_NUM_TRA1;
    private String  RAME_TRCH_IND_FER;
@@ -31,7 +31,7 @@ public class ImportTMDRAMEEntity {
    /**
     * @return the idTMDRAME
     */
-   public Double getIdTMDRAME() {
+   public Long getIdTMDRAME() {
       return this.idTMDRAME;
    }
 
@@ -39,7 +39,7 @@ public class ImportTMDRAMEEntity {
     * @param idTMDRAME
     *           the idTMDRAME to set
     */
-   public void setIdTMDRAME(Double idTMDRAME) {
+   public void setIdTMDRAME(Long idTMDRAME) {
       this.idTMDRAME = idTMDRAME;
    }
 

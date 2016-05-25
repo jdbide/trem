@@ -31,7 +31,7 @@ public class TMDETVOEntity {
    @Id
    private String ETVO_REGI;
    private String  ETVO_USER;
-   private Date    ETCO_DHDO;
+   private Date    ETVO_DHDO;
    /**
     * @return the eTVO_VOIT_COD_CIE
     */
@@ -141,16 +141,16 @@ public class TMDETVOEntity {
       this.ETVO_USER = eTVO_USER;
    }
    /**
-    * @return the eTCO_DHDO
+    * @return the eTVO_DHDO
     */
-   public Date getETCO_DHDO() {
-      return this.ETCO_DHDO;
+   public Date getETVO_DHDO() {
+      return this.ETVO_DHDO;
    }
    /**
-    * @param eTCO_DHDO the eTCO_DHDO to set
+    * @param eTVO_DHDO the eTVO_DHDO to set
     */
-   public void setETCO_DHDO(Date eTCO_DHDO) {
-      this.ETCO_DHDO = eTCO_DHDO;
+   public void setETVO_DHDO(Date eTVO_DHDO) {
+      this.ETVO_DHDO = eTVO_DHDO;
    }
    
    

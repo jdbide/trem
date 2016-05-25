@@ -16,6 +16,7 @@ public class ImportTMDDSTREntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    private Long idTMDDSTR;
     private String DSTR_TRA1_COD_CIE;
     private String DSTR_TRA1_NUM_TRA1;
     private String DSTR_TRA1_IND_FER;
@@ -101,4 +102,16 @@ public class ImportTMDDSTREntity {
     public void setDSTR_DHDO(Date dSTR_DHDO) {
         this.DSTR_DHDO = dSTR_DHDO;
     }
+   /**
+    * @return the idTMDDSTR
+    */
+   public Long getIdTMDDSTR() {
+      return this.idTMDDSTR;
+   }
+   /**
+    * @param idTMDDSTR the idTMDDSTR to set
+    */
+   public void setIdTMDDSTR(Long idTMDDSTR) {
+      this.idTMDDSTR = idTMDDSTR;
+   }
 }

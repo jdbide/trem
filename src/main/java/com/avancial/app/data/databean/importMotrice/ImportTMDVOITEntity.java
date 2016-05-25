@@ -16,7 +16,7 @@ public class ImportTMDVOITEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Double idTMDVOIT;
+    private Long idTMDVOIT;
     private String VOIT_TRCH_COD_CIE;
     private String VOIT_TRCH_NUM_TRA1;
     private String VOIT_TRCH_IND_FER;
@@ -36,11 +36,11 @@ public class ImportTMDVOITEntity {
     private Double VOIT_ROUL_NUM;
     private Double VOIT_INDCE_CLASST;
     
-   public Double getIdTMDVOIT() {
+   public Long getIdTMDVOIT() {
       return this.idTMDVOIT;
    }
 
-   public void setIdTMDVOIT(Double idTMDVOIT) {
+   public void setIdTMDVOIT(Long idTMDVOIT) {
       this.idTMDVOIT = idTMDVOIT;
    }
    public String getVOIT_TRCH_COD_CIE() {

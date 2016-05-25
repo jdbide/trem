@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_tables_motrice")
-@NamedQuery(name = "TablesMotrice.getAll", query = "SELECT t FROM TablesMotriceEntity t WHERE actifTablesMotrice = 1")
+@NamedQuery(name = "TablesMotrice.getAll", query = "SELECT t FROM TablesMotriceEntity t WHERE t.actifTablesMotrice = 1")
 public class TablesMotriceEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

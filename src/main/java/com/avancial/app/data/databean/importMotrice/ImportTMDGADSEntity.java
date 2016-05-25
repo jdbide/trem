@@ -16,7 +16,7 @@ public class ImportTMDGADSEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double   idTMDGADS;
+   private Long   idTMDGADS;
    private String GADS_DSTR_COD_CIE;
    private String GADS_DSTR_NUM_TRA1;
    private String GADS_DSTR_IND_FER;
@@ -33,11 +33,11 @@ public class ImportTMDGADSEntity {
    private String GADS_USER;
    private Date   GADS_DHDO;
 
-   public Double getIdTMDGADS() {
+   public Long getIdTMDGADS() {
       return this.idTMDGADS;
    }
 
-   public void setIdTMDGADS(Double idTMDGADS) {
+   public void setIdTMDGADS(Long idTMDGADS) {
       this.idTMDGADS = idTMDGADS;
    }
 

@@ -16,7 +16,7 @@ public class ImportTMDSPPLEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double    idTMDSPPL;
+   private Long    idTMDSPPL;
    private String  SPPL_VOIT_COD_CIE;
    private String  SPPL_VOIT_NUM_TRA1;
    private String  SPPL_VOIT_IND_FER;
@@ -32,7 +32,7 @@ public class ImportTMDSPPLEntity {
    /**
     * @return the idTMDSPPL
     */
-   public Double getIdTMDSPPL() {
+   public Long getIdTMDSPPL() {
       return this.idTMDSPPL;
    }
 
@@ -40,7 +40,7 @@ public class ImportTMDSPPLEntity {
     * @param idTMDSPPL
     *           the idTMDSPPL to set
     */
-   public void setIdTMDSPPL(Double idTMDSPPL) {
+   public void setIdTMDSPPL(Long idTMDSPPL) {
       this.idTMDSPPL = idTMDSPPL;
    }
 

@@ -16,7 +16,7 @@ public class ImportTMDCDCLEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Double   idTMDCDCL;
+   private Long   idTMDCDCL;
    private String CDCL_CDEM_COD_CIE;
    private String CDCL_CDEM_NUM_TRA1;
    private String CDCL_CDEM_IND_FER;
@@ -25,11 +25,11 @@ public class ImportTMDCDCLEntity {
    private String CDCL_USER;
    private Date   CDCL_DHDO;
 
-   public Double getIdTMDCDCL() {
+   public Long getIdTMDCDCL() {
       return this.idTMDCDCL;
    }
 
-   public void setIdTMDCDCL(Double idTMDCDCL) {
+   public void setIdTMDCDCL(Long idTMDCDCL) {
       this.idTMDCDCL = idTMDCDCL;
    }
 
