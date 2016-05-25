@@ -17,24 +17,41 @@ public class ColumnTable {
     private Map<String, String> filter;
     private String fieldType;
     
+    public ColumnTable(String field, String title, Boolean show, String fieldType) {
+        super();
+        this.field = field;
+        this.title = title;
+        this.show = show;
+        this.fieldType = fieldType;
+    }
+
+    public ColumnTable(String field, String title, Boolean show, String filterKey, String filterValue, String fieldType) {
+        super();
+        this.field = field;
+        this.title = title;
+        this.show = show;
+        this.setFilter(filterKey, filterValue);
+        this.fieldType = fieldType;
+    }
+
     public ColumnTable(String field, String title, String sortable, Boolean show, String fieldType) {
         super();
-        this.setField(field);
-        this.setTitle(title);
-        this.setSortable(sortable);
-        this.setShow(show);
-        this.setFieldType(fieldType);
+        this.field = field;
+        this.title = title;
+        this.sortable = sortable;
+        this.show = show;
+        this.fieldType = fieldType;
     }
 
     public ColumnTable(String field, String title, String sortable, Boolean show, String filterKey, String filterValue,
             String fieldType) {
         super();
-        this.setField(field);
-        this.setTitle(title);
-        this.setSortable(sortable);
-        this.setShow(show);
+        this.field = field;
+        this.title = title;
+        this.sortable = sortable;
+        this.show = show;
         this.setFilter(filterKey, filterValue);
-        this.setFieldType(fieldType);
+        this.fieldType = fieldType;
     }
 
     public String getField() {

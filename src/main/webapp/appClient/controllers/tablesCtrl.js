@@ -2,10 +2,15 @@
 
 socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "tablesMotriceService", "NgTableParams", 
                                     function($scope, $filter, importService, tablesMotriceService, NgTableParams) {
-	$scope.columns = null;
 	$scope.cols = [];
 	$scope.params = null;
+	$scope.tableVide = false;
 	$scope.tablesMotrice = [];
+	
+	function initTableDirective() {
+		$scope.cols = [];
+		$scope.params = null;
+	}
 	
 	function constructor() {
 		/* Récupération des tables pour le select */
@@ -35,36 +40,39 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 		if (nomTable.value != null) {
 			importService.getDataByServer($scope.selectedOption.value).then(function() {
 				var columns = importService.getCols();
-				$scope.dataset = importService.getDatas();
+				var datas = importService.getDatas();
 		
-				$scope.cols = [];
-				for (var i = 0; i < columns.length; i++) {
-					var col = columns[i];
-					var type = col.fieldType;
-					if (type === "Date") {
-						col.format = {
-							name : "date",
-							params : ["yyyy-MM-dd h:mm:ss"]
+				initTableDirective();
+				if (datas.length === 0) {
+					$scope.tableVide = true;
+				} else {
+					$scope.tableVide = false;
+					for (var i = 0; i < columns.length; i++) {
+						var col = columns[i];
+						var type = col.fieldType;
+						if (type === "Date") {
+							col.format = {
+								name : "date",
+								params : ["yyyy-MM-dd h:mm:ss"]
+							}
+						} else {
+							col.format = {
+								name : "identity",
+								params : []
+							}
 						}
-					} else {
-						col.format = {
-							name : "identity",
-							params : []
-						}
+						$scope.cols.push(col);
 					}
-					$scope.cols.push(col);
+					
+					$scope.params = new NgTableParams({
+						count: 20
+					}, {
+						dataset : datas
+					});
 				}
-				
-				$scope.params = new NgTableParams({
-					count: 20
-				}, {
-					dataset : $scope.dataset
-				});
 			});
 		} else {
-			$scope.params = new NgTableParams({}, {});
-			$scope.cols = [];
-			$scope.dataset = null;
+			initTableDirective();
 		}
 		
 	};

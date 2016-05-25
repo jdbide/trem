@@ -1,4 +1,4 @@
-<div class="box" ng-show="tableParametres.data.length > 0">
+<div class="box" ng-if="colonnes.length > 0 && !tableVide">
     <div class="box-header with-border">
         <h3 class="box-title">{{tableTitre}}</h3>
     </div>
@@ -20,6 +20,6 @@
     </div>
 </div>
 
-<div class="callout callout-info" ng-show="tableParametres.data.length == 0">
+<div class="callout callout-info" ng-if="tableVide">
     <p>La table demandée est vide.</p>
 </div>

@@ -48,7 +48,8 @@ public class TablesImportService {
             String prefix = field.substring(0, 4);
             String fieldData = field.replace(prefix, prefix.toLowerCase());
 
-            ColumnTable columnTable = new ColumnTable(fieldData, field, fieldData, (!field.startsWith("id")),
+            ColumnTable columnTable = new ColumnTable(fieldData, field, fieldData, (!field.startsWith("id")), fieldData,
+                    Number.class.isAssignableFrom(entity.getDeclaredFields()[i].getType()) ? "number" : "text",
                     entity.getDeclaredFields()[i].getType().getSimpleName());
             columns.add(columnTable);
         }
