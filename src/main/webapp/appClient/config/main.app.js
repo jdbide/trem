@@ -38,4 +38,12 @@
     	ngTableDefaults.settings.paginationMaxBlocks = 2;
     	ngTableDefaults.settings.paginationMinBlocks = 2;
 
+    }])
+    
+    .config(['ngTableFilterConfigProvider', function(ngTableFilterConfigProvider) {
+        ngTableFilterConfigProvider.setConfig({
+            aliasUrls: {
+            	"date": "views/modals/filterDate.html"
+            }
+        });
     }]);
