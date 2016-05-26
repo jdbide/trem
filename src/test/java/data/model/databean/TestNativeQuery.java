@@ -40,7 +40,7 @@ public class TestNativeQuery {
             // .addClass(PhraseBuilder.class)
             // .addAsManifestResource("arquillian.xml")
             .addPackage(Socle_PUSocle.class.getPackage()).addClass(EntityManagerProducerSocle.class).addPackage(EntityManagerProducerExterne.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
-            .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
+            .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").addAsWebInfResource("hibernate.cfg.xml", "classes/hibernate.cfg.xml")
             // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
             .setWebXML("WEB-INF/web.xml").addAsManifestResource("META-INF/context.xml", "context.xml");
 
@@ -65,7 +65,7 @@ public class TestNativeQuery {
    @Test
    public void nativeQuery() {
 
-      Query query = this.em.createNativeQuery("select * from f$mdrp1.TMDGADS");
+      Query query = this.em.createNativeQuery("select * from f$mdrp1.TMDGADS where GADS_DSTR_COD_CIE='BC'");
       // where GADS_DSTR_COD_CIE='BC'
 
       List<Object[]> liste = query.getResultList();
@@ -93,6 +93,7 @@ public class TestNativeQuery {
          System.out.println("Connexion effective !");
          final int limit = 1000;
          PreparedStatement ps = null;
+         this.emSocle.getTransaction().begin();
          for (Object[] objects : liste) {
             if (sqlValues.length() == 0)
                sqlValues.append("(null,");
@@ -107,11 +108,10 @@ public class TestNativeQuery {
             sqlValues.append(")");
 
             if (++this.count % limit == 0) {
-               this.em.getTransaction().begin();
+
                query = this.emSocle.createNativeQuery(sqlQuery.toString() + sqlValues.toString());
                query.executeUpdate();
-               em.flush();
-               em.getTransaction().commit();
+
                // ps.executeBatch();
                // ps.clearBatch();
                // System.out.println("Flush");
@@ -124,12 +124,13 @@ public class TestNativeQuery {
 
          }
          if (sqlValues.length() > 0) {
-            this.em.getTransaction().begin();
+
             query = this.emSocle.createNativeQuery(sqlQuery.toString() + sqlValues.toString());
             query.executeUpdate();
-            em.flush();
-            this.emSocle.getTransaction().commit();
+
          }
+         this.emSocle.flush();
+         this.emSocle.getTransaction().commit();
 
       } catch (Exception e) {
 
