@@ -22,19 +22,28 @@ import com.avancial.app.webService.bean.ResponseBean;
 @Path("/importJeu")
 @RequestScoped
 public class ImportJeuDonneeWebService {
-
    @Inject
-   TraitementImportJeuDonnees importJeuDonnees;
+   private TraitementImportJeuDonnees importJeuDonnees;
+   
+   private static boolean traitementEnCours;// gestion de l'unicité du traitement
 
    @POST
    @Produces({ MediaType.APPLICATION_JSON })
    @Consumes({ MediaType.APPLICATION_JSON })
    public Response execute(Integer idApplication) throws Exception {
-      this.importJeuDonnees.execute();
-
       ResponseBean responseBean = new ResponseBean();
-      responseBean.setStatus(this.importJeuDonnees.isTraitementOk());
-      responseBean.setMessage(this.importJeuDonnees.isTraitementOk()?"Traitement ok":"Traitement ko");
+
+      if (!traitementEnCours) {// un seul traitement à la fois
+         traitementEnCours = true;
+         this.importJeuDonnees.execute();
+         traitementEnCours = false;
+
+         responseBean.setStatus(this.importJeuDonnees.isTraitementOk());
+         responseBean.setMessage(this.importJeuDonnees.isTraitementOk() ? "Traitement ok" : "Traitement ko");
+      } else {
+         responseBean.setStatus(false);
+         responseBean.setMessage("Traitement déjà lancé !");
+      }
 
       return Response.status(200).entity(responseBean).build();
    }
