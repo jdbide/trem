@@ -1,0 +1,46 @@
+package com.avancial.app.persistence;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.enterprise.context.SessionScoped;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+/**
+ * Provisoir.
+ * 
+ * @author hamza.laterem
+ *
+ */
+@SessionScoped
+public class EntityManagerFactoryProviderDb2 {
+   public static final boolean DEBUG = true;
+   
+   private static final String PERSISTENCE_UNIT_NAME = "PU_db2";
+   
+   
+   /** Point d'accès pour l'instance unique du singleton */
+   public static synchronized EntityManagerFactory getInstance(String userName, String password) {
+      EntityManagerFactory emf = null;
+      Map<String, String> persistUnitConfig = new HashMap<>();      
+      try {
+         persistUnitConfig.put("javax.persistence.jdbc.user", userName);
+         persistUnitConfig.put("javax.persistence.jdbc.password", password);
+         
+         emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME, persistUnitConfig);
+         
+         if (DEBUG)
+            System.out.println(new java.util.Date() + " - EntityManagerProviderDb2 : Création de l'entity manager factory \""+PERSISTENCE_UNIT_NAME+"\" ");
+         
+         return emf;
+      } catch (Exception ex) {
+         if (DEBUG)
+            System.err.println(new java.util.Date() + " - EntityManagerFactoryProvider : Erreur de création de l'entity manager factory \""+PERSISTENCE_UNIT_NAME+"\"");
+         // Ajout d'un log
+         ex.printStackTrace();
+         throw ex;
+      }
+            
+   }
+}

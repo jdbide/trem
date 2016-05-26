@@ -1,59 +1,27 @@
-<!--DEV sur Caliban  -->
-<Context antiJARLocking="true" path="/appSocle">
-	<Resource name="BeanManager" auth="Container"
-		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context antiJARLocking="true" path="/Test">
+	<Resource name="jdbc/memoire" auth="Container" type="javax.sql.DataSource"
+		username="sa" password="" driverClassName="org.h2.Driver"
+		url="jdbc:h2:~/memoire;AUTO_SERVER=TRUE" maxActive="8" maxIdle="4"
+		maxWait="10000" />
 
 	<Resource name="jdbc/socle" auth="Container" type="javax.sql.DataSource"
-		username="webd_tremas" password="!tremas12" driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://caliban/tremas" maxActive="8" maxIdle="4" />
-
-	<Resource name="jdbc/test" auth="Container" type="javax.sql.DataSource"
 		username="dbad_tremas" password="!tremas-12" driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://caliban/tremas" maxActive="8" maxIdle="4" maxWait="10000" />
+		url="jdbc:mysql://caliban/tremas_test" maxActive="8" maxIdle="4"
+		maxWait="10000" />
 
 	<Resource name="jdbc/externe" auth="Container" type="javax.sql.DataSource"
 		username="SGAV026" password="bitchs39" driverClassName="com.ibm.db2.jcc.DB2Driver"
 		url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;"
-
 		maxActive="8" maxIdle="4" maxWait="10000" />
+	<!-- url="jdbc:db2://sbt.aiel.sncf.fr:5016/LILLE_DSNR:retrieveMessagesFromServerOnGetMessage=true;" -->
+	
+	<Resource name="jdbc/db2" auth="Container" type="javax.sql.DataSource"
+        driverClassName="com.ibm.db2.jcc.DB2Driver" maxActive="8" maxIdle="4" maxWait="10000"
+        url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;" />
 
-	<Realm className="org.apache.catalina.realm.DataSourceRealm"
-		dataSourceName="jdbc/socle" userTable="socle_user" userNameCol="loginUser"
-		userCredCol="passwordUser" userRoleTable="socle_user" roleNameCol="tomcatRoleUser"
-		localDataSource="true" digest="sha1">
-	</Realm>
-</Context>
-
-<!--DEV en local
-<Context antiJARLocking="true" path="/">
 	<Resource name="BeanManager" auth="Container"
 		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
 
-	<Resource name="jdbc/socle" auth="Container" type="javax.sql.DataSource"
-		username="webd_socle" password="!socle12" driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost/socle" maxActive="8" maxIdle="4" />
-
-	<Realm className="org.apache.catalina.realm.DataSourceRealm"
-		dataSourceName="jdbc/socle" userTable="socle_user" userNameCol="loginUser"
-		userCredCol="passwordUser" userRoleTable="socle_user" roleNameCol="tomcatRoleUser"
-		localDataSource="true" digest="sha1">
-	</Realm>
 </Context>
- -->
- 
-<!-- RECETTE sur Lapetus 
-<Context antiJARLocking="true" path="/">
-	<Resource name="BeanManager" auth="Container"
-		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
-
-	<Resource name="jdbc/socle" auth="Container" type="javax.sql.DataSource"
-		username="webr_gev" password="!gev12" driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost/gev_rec" maxActive="8" maxIdle="4" />
-
-	<Realm className="org.apache.catalina.realm.DataSourceRealm"
-		dataSourceName="jdbc/socle" userTable="gev_user" userNameCol="loginUser"
-		userCredCol="passwordUser" userRoleTable="gev_user" roleNameCol="tomcatRoleUser"
-		localDataSource="true" digest="sha1">
-	</Realm>
-</Context>
--->
