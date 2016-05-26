@@ -39,4 +39,10 @@
     	ngTableDefaults.settings.paginationMinBlocks = 2;
 
     }])
+    
+    .constant('pageAccueil', {
+    	rubrique: "Socle Administration",
+    	chapitre: "Accueil",
+    	page: "Bonjour"
+    })
     ;
