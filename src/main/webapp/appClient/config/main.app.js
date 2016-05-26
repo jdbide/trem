@@ -1,5 +1,5 @@
 
-    'use strict';    
+    'use strict';
     
     /**
      * Déclaration du module principal pour notre application angularjs (socle)
@@ -39,11 +39,4 @@
     	ngTableDefaults.settings.paginationMinBlocks = 2;
 
     }])
-    
-    .config(['ngTableFilterConfigProvider', function(ngTableFilterConfigProvider) {
-        ngTableFilterConfigProvider.setConfig({
-            aliasUrls: {
-            	"date": "views/modals/filterDate.html"
-            }
-        });
-    }]);
+    ;
