@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,30 +9,30 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDPARE")
-@NamedQuery(name = "ImportTMDPARE.getAll", query= "SELECT t FROM ImportTMDPAREEntity t")
+@NamedQuery(name = "ImportTMDPARE.getAll", query = "SELECT t FROM ImportTMDPAREEntity t")
 public class ImportTMDPAREEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDPARE;
-   private String  PARE_SVTH_COD_CIE;
-   private String  PARE_SVTH_NUM_TRA1;
-   private String  PARE_SVTH_IND_FER;
-   private Double    PARE_SVTH_TRCH_NUM;
-   private String  PARE_SVTH_SERV_COD;
-   private Double    PARE_SVTH_NUM;
-   private Double    PARE_NUM_REST;
-   private String  PARE_TYRE_COD_REP;
-   private String  PARE_RESP_VOIT_NUM;
-   private String  PARE_VRES_NUM_SERV;
-   private Date    PARE_H_DEB_SERV;
-   private Date    PARE_H_FIN_SERV;
+   private Long   idTMDPARE;
+   private String PARE_SVTH_COD_CIE;
+   private String PARE_SVTH_NUM_TRA1;
+   private String PARE_SVTH_IND_FER;
+   private String PARE_SVTH_TRCH_NUM;
+   private String PARE_SVTH_SERV_COD;
+   private String PARE_SVTH_NUM;
+   private String PARE_NUM_REST;
+   private String PARE_TYRE_COD_REP;
+   private String PARE_RESP_VOIT_NUM;
+   private String PARE_VRES_NUM_SERV;
+   private String PARE_H_DEB_SERV;
+   private String PARE_H_FIN_SERV;
    private String PARE_REGI;
-   private Double    PARE_NB_REPAS;
-   private String  PARE_IND_PLACE;
-   private String  PARE_IND_VOIT_REST;
-   private String  PARE_USER;
-   private Date    PARE_DHDO;
+   private String PARE_NB_REPAS;
+   private String PARE_IND_PLACE;
+   private String PARE_IND_VOIT_REST;
+   private String PARE_USER;
+   private String PARE_DHDO;
 
    public Long getIdTMDPARE() {
       return this.idTMDPARE;
@@ -68,11 +66,11 @@ public class ImportTMDPAREEntity {
       this.PARE_SVTH_IND_FER = pARE_SVTH_IND_FER;
    }
 
-   public Double getPARE_SVTH_TRCH_NUM() {
+   public String getPARE_SVTH_TRCH_NUM() {
       return this.PARE_SVTH_TRCH_NUM;
    }
 
-   public void setPARE_SVTH_TRCH_NUM(Double pARE_SVTH_TRCH_NUM) {
+   public void setPARE_SVTH_TRCH_NUM(String pARE_SVTH_TRCH_NUM) {
       this.PARE_SVTH_TRCH_NUM = pARE_SVTH_TRCH_NUM;
    }
 
@@ -84,19 +82,19 @@ public class ImportTMDPAREEntity {
       this.PARE_SVTH_SERV_COD = pARE_SVTH_SERV_COD;
    }
 
-   public Double getPARE_SVTH_NUM() {
+   public String getPARE_SVTH_NUM() {
       return this.PARE_SVTH_NUM;
    }
 
-   public void setPARE_SVTH_NUM(Double pARE_SVTH_NUM) {
+   public void setPARE_SVTH_NUM(String pARE_SVTH_NUM) {
       this.PARE_SVTH_NUM = pARE_SVTH_NUM;
    }
 
-   public Double getPARE_NUM_REST() {
+   public String getPARE_NUM_REST() {
       return this.PARE_NUM_REST;
    }
 
-   public void setPARE_NUM_REST(Double pARE_NUM_REST) {
+   public void setPARE_NUM_REST(String pARE_NUM_REST) {
       this.PARE_NUM_REST = pARE_NUM_REST;
    }
 
@@ -124,19 +122,19 @@ public class ImportTMDPAREEntity {
       this.PARE_VRES_NUM_SERV = pARE_VRES_NUM_SERV;
    }
 
-   public Date getPARE_H_DEB_SERV() {
+   public String getPARE_H_DEB_SERV() {
       return this.PARE_H_DEB_SERV;
    }
 
-   public void setPARE_H_DEB_SERV(Date pARE_H_DEB_SERV) {
+   public void setPARE_H_DEB_SERV(String pARE_H_DEB_SERV) {
       this.PARE_H_DEB_SERV = pARE_H_DEB_SERV;
    }
 
-   public Date getPARE_H_FIN_SERV() {
+   public String getPARE_H_FIN_SERV() {
       return this.PARE_H_FIN_SERV;
    }
 
-   public void setPARE_H_FIN_SERV(Date pARE_H_FIN_SERV) {
+   public void setPARE_H_FIN_SERV(String pARE_H_FIN_SERV) {
       this.PARE_H_FIN_SERV = pARE_H_FIN_SERV;
    }
 
@@ -148,11 +146,11 @@ public class ImportTMDPAREEntity {
       this.PARE_REGI = pARE_REGI;
    }
 
-   public Double getPARE_NB_REPAS() {
+   public String getPARE_NB_REPAS() {
       return this.PARE_NB_REPAS;
    }
 
-   public void setPARE_NB_REPAS(Double pARE_NB_REPAS) {
+   public void setPARE_NB_REPAS(String pARE_NB_REPAS) {
       this.PARE_NB_REPAS = pARE_NB_REPAS;
    }
 
@@ -180,11 +178,11 @@ public class ImportTMDPAREEntity {
       this.PARE_USER = pARE_USER;
    }
 
-   public Date getPARE_DHDO() {
+   public String getPARE_DHDO() {
       return this.PARE_DHDO;
    }
 
-   public void setPARE_DHDO(Date pARE_DHDO) {
+   public void setPARE_DHDO(String pARE_DHDO) {
       this.PARE_DHDO = pARE_DHDO;
    }
 }

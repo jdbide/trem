@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDCATH")
-@NamedQuery(name = "ImportTMDCATH.getAll", query= "SELECT t FROM ImportTMDCATHEntity t")
+@NamedQuery(name = "ImportTMDCATH.getAll", query = "SELECT t FROM ImportTMDCATHEntity t")
 public class ImportTMDCATHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +18,15 @@ public class ImportTMDCATHEntity {
    private String CATH_TRCH_COD_CIE;
    private String CATH_TRCH_NUM_TRA1;
    private String CATH_TRCH_IND_FER;
-   private Double   CATH_TRCH_NUM;
-   private Double   CATH_NUM;
+   private String CATH_TRCH_NUM;
+   private String CATH_NUM;
    private String CATH_CIRR_COD_CIE;
    private String CATH_REGI;
    private String CATH_ETAT_TRCH;
    private String CATH_EN_RESA;
    private String CATH_SSIM;
    private String CATH_USER;
-   private Date   CATH_DHDO;
+   private String CATH_DHDO;
 
    public Long getIdTMDCATH() {
       return this.idTMDCATH;
@@ -62,19 +60,19 @@ public class ImportTMDCATHEntity {
       this.CATH_TRCH_IND_FER = cATH_TRCH_IND_FER;
    }
 
-   public Double getCATH_TRCH_NUM() {
+   public String getCATH_TRCH_NUM() {
       return this.CATH_TRCH_NUM;
    }
 
-   public void setCATH_TRCH_NUM(Double cATH_TRCH_NUM) {
+   public void setCATH_TRCH_NUM(String cATH_TRCH_NUM) {
       this.CATH_TRCH_NUM = cATH_TRCH_NUM;
    }
 
-   public Double getCATH_NUM() {
+   public String getCATH_NUM() {
       return this.CATH_NUM;
    }
 
-   public void setCATH_NUM(Double cATH_NUM) {
+   public void setCATH_NUM(String cATH_NUM) {
       this.CATH_NUM = cATH_NUM;
    }
 
@@ -126,11 +124,11 @@ public class ImportTMDCATHEntity {
       this.CATH_USER = cATH_USER;
    }
 
-   public Date getCATH_DHDO() {
+   public String getCATH_DHDO() {
       return this.CATH_DHDO;
    }
 
-   public void setCATH_DHDO(Date cATH_DHDO) {
+   public void setCATH_DHDO(String cATH_DHDO) {
       this.CATH_DHDO = cATH_DHDO;
    }
 

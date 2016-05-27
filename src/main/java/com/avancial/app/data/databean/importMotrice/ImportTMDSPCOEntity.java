@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,22 +9,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDSPCO")
-@NamedQuery(name = "ImportTMDSPCO.getAll", query= "SELECT t FROM ImportTMDSPCOEntity t")
+@NamedQuery(name = "ImportTMDSPCO.getAll", query = "SELECT t FROM ImportTMDSPCOEntity t")
 public class ImportTMDSPCOEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDSPCO;
-   private String  SPCO_VOIT_COD_CIE;
-   private String  SPCO_VOIT_NUM_TRA1;
-   private String  SPCO_VOIT_IND_FER;
-   private Double    SPCO_VOIT_TRCH_NUM;
-   private Double    SPCO_VOIT_NUM;
-   private Double    SPCO_COMP_NUM;
-   private String  SPCO_SPEC_COD;
+   private Long   idTMDSPCO;
+   private String SPCO_VOIT_COD_CIE;
+   private String SPCO_VOIT_NUM_TRA1;
+   private String SPCO_VOIT_IND_FER;
+   private String SPCO_VOIT_TRCH_NUM;
+   private String SPCO_VOIT_NUM;
+   private String SPCO_COMP_NUM;
+   private String SPCO_SPEC_COD;
    private String SPCO_REGI;
-   private String  SPCO_USER;
-   private Date    SPCO_DHDO;
+   private String SPCO_USER;
+   private String SPCO_DHDO;
 
    /**
     * @return the idTMDSPCO
@@ -91,7 +89,7 @@ public class ImportTMDSPCOEntity {
    /**
     * @return the sPCO_VOIT_TRCH_NUM
     */
-   public Double getSPCO_VOIT_TRCH_NUM() {
+   public String getSPCO_VOIT_TRCH_NUM() {
       return this.SPCO_VOIT_TRCH_NUM;
    }
 
@@ -99,14 +97,14 @@ public class ImportTMDSPCOEntity {
     * @param sPCO_VOIT_TRCH_NUM
     *           the sPCO_VOIT_TRCH_NUM to set
     */
-   public void setSPCO_VOIT_TRCH_NUM(Double sPCO_VOIT_TRCH_NUM) {
+   public void setSPCO_VOIT_TRCH_NUM(String sPCO_VOIT_TRCH_NUM) {
       this.SPCO_VOIT_TRCH_NUM = sPCO_VOIT_TRCH_NUM;
    }
 
    /**
     * @return the sPCO_VOIT_NUM
     */
-   public Double getSPCO_VOIT_NUM() {
+   public String getSPCO_VOIT_NUM() {
       return this.SPCO_VOIT_NUM;
    }
 
@@ -114,14 +112,14 @@ public class ImportTMDSPCOEntity {
     * @param sPCO_VOIT_NUM
     *           the sPCO_VOIT_NUM to set
     */
-   public void setSPCO_VOIT_NUM(Double sPCO_VOIT_NUM) {
+   public void setSPCO_VOIT_NUM(String sPCO_VOIT_NUM) {
       this.SPCO_VOIT_NUM = sPCO_VOIT_NUM;
    }
 
    /**
     * @return the sPCO_COMP_NUM
     */
-   public Double getSPCO_COMP_NUM() {
+   public String getSPCO_COMP_NUM() {
       return this.SPCO_COMP_NUM;
    }
 
@@ -129,7 +127,7 @@ public class ImportTMDSPCOEntity {
     * @param sPCO_COMP_NUM
     *           the sPCO_COMP_NUM to set
     */
-   public void setSPCO_COMP_NUM(Double sPCO_COMP_NUM) {
+   public void setSPCO_COMP_NUM(String sPCO_COMP_NUM) {
       this.SPCO_COMP_NUM = sPCO_COMP_NUM;
    }
 
@@ -181,7 +179,7 @@ public class ImportTMDSPCOEntity {
    /**
     * @return the sPCO_DHDO
     */
-   public Date getSPCO_DHDO() {
+   public String getSPCO_DHDO() {
       return this.SPCO_DHDO;
    }
 
@@ -189,7 +187,7 @@ public class ImportTMDSPCOEntity {
     * @param sPCO_DHDO
     *           the sPCO_DHDO to set
     */
-   public void setSPCO_DHDO(Date sPCO_DHDO) {
+   public void setSPCO_DHDO(String sPCO_DHDO) {
       this.SPCO_DHDO = sPCO_DHDO;
    }
 

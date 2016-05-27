@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,23 +9,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDSPPL")
-@NamedQuery(name = "ImportTMDSPPL.getAll", query= "SELECT t FROM ImportTMDSPPLEntity t")
+@NamedQuery(name = "ImportTMDSPPL.getAll", query = "SELECT t FROM ImportTMDSPPLEntity t")
 public class ImportTMDSPPLEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDSPPL;
-   private String  SPPL_VOIT_COD_CIE;
-   private String  SPPL_VOIT_NUM_TRA1;
-   private String  SPPL_VOIT_IND_FER;
-   private Double    SPPL_VOIT_TRCH_NUM;
-   private Double    SPPL_VOIT_NUM;
-   private Double    SPPL_PCDD_NUM_COMP;
-   private Double    SPPL_PCDD_NUM_PLAC;
-   private String  SPPL_SPEC_COD;
+   private Long   idTMDSPPL;
+   private String SPPL_VOIT_COD_CIE;
+   private String SPPL_VOIT_NUM_TRA1;
+   private String SPPL_VOIT_IND_FER;
+   private String SPPL_VOIT_TRCH_NUM;
+   private String SPPL_VOIT_NUM;
+   private String SPPL_PCDD_NUM_COMP;
+   private String SPPL_PCDD_NUM_PLAC;
+   private String SPPL_SPEC_COD;
    private String SPPL_REGI;
-   private String  SPPL_USER;
-   private Date    SPPL_DHDO;
+   private String SPPL_USER;
+   private String SPPL_DHDO;
 
    /**
     * @return the idTMDSPPL
@@ -92,7 +90,7 @@ public class ImportTMDSPPLEntity {
    /**
     * @return the sPPL_VOIT_TRCH_NUM
     */
-   public Double getSPPL_VOIT_TRCH_NUM() {
+   public String getSPPL_VOIT_TRCH_NUM() {
       return this.SPPL_VOIT_TRCH_NUM;
    }
 
@@ -100,14 +98,14 @@ public class ImportTMDSPPLEntity {
     * @param sPPL_VOIT_TRCH_NUM
     *           the sPPL_VOIT_TRCH_NUM to set
     */
-   public void setSPPL_VOIT_TRCH_NUM(Double sPPL_VOIT_TRCH_NUM) {
+   public void setSPPL_VOIT_TRCH_NUM(String sPPL_VOIT_TRCH_NUM) {
       this.SPPL_VOIT_TRCH_NUM = sPPL_VOIT_TRCH_NUM;
    }
 
    /**
     * @return the sPPL_VOIT_NUM
     */
-   public Double getSPPL_VOIT_NUM() {
+   public String getSPPL_VOIT_NUM() {
       return this.SPPL_VOIT_NUM;
    }
 
@@ -115,14 +113,14 @@ public class ImportTMDSPPLEntity {
     * @param sPPL_VOIT_NUM
     *           the sPPL_VOIT_NUM to set
     */
-   public void setSPPL_VOIT_NUM(Double sPPL_VOIT_NUM) {
+   public void setSPPL_VOIT_NUM(String sPPL_VOIT_NUM) {
       this.SPPL_VOIT_NUM = sPPL_VOIT_NUM;
    }
 
    /**
     * @return the sPPL_PCDD_NUM_COMP
     */
-   public Double getSPPL_PCDD_NUM_COMP() {
+   public String getSPPL_PCDD_NUM_COMP() {
       return this.SPPL_PCDD_NUM_COMP;
    }
 
@@ -130,14 +128,14 @@ public class ImportTMDSPPLEntity {
     * @param sPPL_PCDD_NUM_COMP
     *           the sPPL_PCDD_NUM_COMP to set
     */
-   public void setSPPL_PCDD_NUM_COMP(Double sPPL_PCDD_NUM_COMP) {
+   public void setSPPL_PCDD_NUM_COMP(String sPPL_PCDD_NUM_COMP) {
       this.SPPL_PCDD_NUM_COMP = sPPL_PCDD_NUM_COMP;
    }
 
    /**
     * @return the sPPL_PCDD_NUM_PLAC
     */
-   public Double getSPPL_PCDD_NUM_PLAC() {
+   public String getSPPL_PCDD_NUM_PLAC() {
       return this.SPPL_PCDD_NUM_PLAC;
    }
 
@@ -145,7 +143,7 @@ public class ImportTMDSPPLEntity {
     * @param sPPL_PCDD_NUM_PLAC
     *           the sPPL_PCDD_NUM_PLAC to set
     */
-   public void setSPPL_PCDD_NUM_PLAC(Double sPPL_PCDD_NUM_PLAC) {
+   public void setSPPL_PCDD_NUM_PLAC(String sPPL_PCDD_NUM_PLAC) {
       this.SPPL_PCDD_NUM_PLAC = sPPL_PCDD_NUM_PLAC;
    }
 
@@ -197,7 +195,7 @@ public class ImportTMDSPPLEntity {
    /**
     * @return the sPPL_DHDO
     */
-   public Date getSPPL_DHDO() {
+   public String getSPPL_DHDO() {
       return this.SPPL_DHDO;
    }
 
@@ -205,7 +203,7 @@ public class ImportTMDSPPLEntity {
     * @param sPPL_DHDO
     *           the sPPL_DHDO to set
     */
-   public void setSPPL_DHDO(Date sPPL_DHDO) {
+   public void setSPPL_DHDO(String sPPL_DHDO) {
       this.SPPL_DHDO = sPPL_DHDO;
    }
 

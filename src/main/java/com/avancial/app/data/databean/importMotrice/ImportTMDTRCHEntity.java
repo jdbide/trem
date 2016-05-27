@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,27 +9,27 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDTRCH")
-@NamedQuery(name = "ImportTMDTRCH.getAll", query= "SELECT t FROM ImportTMDTRCHEntity t")
+@NamedQuery(name = "ImportTMDTRCH.getAll", query = "SELECT t FROM ImportTMDTRCHEntity t")
 public class ImportTMDTRCHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDTRCH;
-   private String  TRCH_TRA1_COD_CIE;
-   private String  TRCH_TRA1_NUM_TRA1;
-   private String  TRCH_TRA1_IND_FER;
-   private Double    TRCH_NUM;
-   private String  TRCH_COD_SENS_AUTO;
-   private String  TRCH_IND_TGV;
-   private String  TRCH_IND_VAL_DC;
-   private Date    TRCH_DAT_DER_MOD;
-   private String  TRCH_INPT_RR_ORIG;
-   private String  TRCH_INPT_RR_DEST;
+   private Long   idTMDTRCH;
+   private String TRCH_TRA1_COD_CIE;
+   private String TRCH_TRA1_NUM_TRA1;
+   private String TRCH_TRA1_IND_FER;
+   private String TRCH_NUM;
+   private String TRCH_COD_SENS_AUTO;
+   private String TRCH_IND_TGV;
+   private String TRCH_IND_VAL_DC;
+   private String TRCH_DAT_DER_MOD;
+   private String TRCH_INPT_RR_ORIG;
+   private String TRCH_INPT_RR_DEST;
    private String TRCH_REGI_VAL;
-   private String  TRCH_USER;
-   private Date    TRCH_DHDO;
+   private String TRCH_USER;
+   private String TRCH_DHDO;
    private String TRCH_REGI_VAL_DC;
-   private String  TRCH_LIBS_SEMA_COD;
+   private String TRCH_LIBS_SEMA_COD;
 
    public Long getIdTMDTRCH() {
       return this.idTMDTRCH;
@@ -65,11 +63,11 @@ public class ImportTMDTRCHEntity {
       this.TRCH_TRA1_IND_FER = tRCH_TRA1_IND_FER;
    }
 
-   public Double getTRCH_NUM() {
+   public String getTRCH_NUM() {
       return this.TRCH_NUM;
    }
 
-   public void setTRCH_NUM(Double tRCH_NUM) {
+   public void setTRCH_NUM(String tRCH_NUM) {
       this.TRCH_NUM = tRCH_NUM;
    }
 
@@ -97,11 +95,11 @@ public class ImportTMDTRCHEntity {
       this.TRCH_IND_VAL_DC = tRCH_IND_VAL_DC;
    }
 
-   public Date getTRCH_DAT_DER_MOD() {
+   public String getTRCH_DAT_DER_MOD() {
       return this.TRCH_DAT_DER_MOD;
    }
 
-   public void setTRCH_DAT_DER_MOD(Date tRCH_DAT_DER_MOD) {
+   public void setTRCH_DAT_DER_MOD(String tRCH_DAT_DER_MOD) {
       this.TRCH_DAT_DER_MOD = tRCH_DAT_DER_MOD;
    }
 
@@ -137,11 +135,11 @@ public class ImportTMDTRCHEntity {
       this.TRCH_USER = tRCH_USER;
    }
 
-   public Date getTRCH_DHDO() {
+   public String getTRCH_DHDO() {
       return this.TRCH_DHDO;
    }
 
-   public void setTRCH_DHDO(Date tRCH_DHDO) {
+   public void setTRCH_DHDO(String tRCH_DHDO) {
       this.TRCH_DHDO = tRCH_DHDO;
    }
 

@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDKAPP")
-@NamedQuery(name = "ImportTMDKAPP.getAll", query= "SELECT t FROM ImportTMDKAPPEntity t")
+@NamedQuery(name = "ImportTMDKAPP.getAll", query = "SELECT t FROM ImportTMDKAPPEntity t")
 public class ImportTMDKAPPEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,21 +17,21 @@ public class ImportTMDKAPPEntity {
    private Long   idTMDKAPP;
    private String KAPP_APP;
    private String KAPP_CON;
-   private Date   KAPP_TRA;
-   private Date   KAPP_ORI;
-   private Date   KAPP_DEX;
+   private String KAPP_TRA;
+   private String KAPP_ORI;
+   private String KAPP_DEX;
    private String KAPP_INF;
    private String KAPP_MOD;
    private String KAPP_QAL;
    private String KAPP_SER;
    private String KAPP_TIT;
    private String KAPP_VAL;
-   private Double   KAPP_VES;
-   private Double   KAPP_VER;
-   private Double   KAPP_GLO;
+   private String KAPP_VES;
+   private String KAPP_VER;
+   private String KAPP_GLO;
    private String KAPP_USER;
-   private Date   KAPP_DHDO;
-   private Date   KAPP_DTR;
+   private String KAPP_DHDO;
+   private String KAPP_DTR;
 
    public Long getIdTMDKAPP() {
       return this.idTMDKAPP;
@@ -59,27 +57,27 @@ public class ImportTMDKAPPEntity {
       this.KAPP_CON = kAPP_CON;
    }
 
-   public Date getKAPP_TRA() {
+   public String getKAPP_TRA() {
       return this.KAPP_TRA;
    }
 
-   public void setKAPP_TRA(Date kAPP_TRA) {
+   public void setKAPP_TRA(String kAPP_TRA) {
       this.KAPP_TRA = kAPP_TRA;
    }
 
-   public Date getKAPP_ORI() {
+   public String getKAPP_ORI() {
       return this.KAPP_ORI;
    }
 
-   public void setKAPP_ORI(Date kAPP_ORI) {
+   public void setKAPP_ORI(String kAPP_ORI) {
       this.KAPP_ORI = kAPP_ORI;
    }
 
-   public Date getKAPP_DEX() {
+   public String getKAPP_DEX() {
       return this.KAPP_DEX;
    }
 
-   public void setKAPP_DEX(Date kAPP_DEX) {
+   public void setKAPP_DEX(String kAPP_DEX) {
       this.KAPP_DEX = kAPP_DEX;
    }
 
@@ -131,27 +129,27 @@ public class ImportTMDKAPPEntity {
       this.KAPP_VAL = kAPP_VAL;
    }
 
-   public Double getKAPP_VES() {
+   public String getKAPP_VES() {
       return this.KAPP_VES;
    }
 
-   public void setKAPP_VES(Double kAPP_VES) {
+   public void setKAPP_VES(String kAPP_VES) {
       this.KAPP_VES = kAPP_VES;
    }
 
-   public Double getKAPP_VER() {
+   public String getKAPP_VER() {
       return this.KAPP_VER;
    }
 
-   public void setKAPP_VER(Double kAPP_VER) {
+   public void setKAPP_VER(String kAPP_VER) {
       this.KAPP_VER = kAPP_VER;
    }
 
-   public Double getKAPP_GLO() {
+   public String getKAPP_GLO() {
       return this.KAPP_GLO;
    }
 
-   public void setKAPP_GLO(Double kAPP_GLO) {
+   public void setKAPP_GLO(String kAPP_GLO) {
       this.KAPP_GLO = kAPP_GLO;
    }
 
@@ -163,19 +161,19 @@ public class ImportTMDKAPPEntity {
       this.KAPP_USER = kAPP_USER;
    }
 
-   public Date getKAPP_DHDO() {
+   public String getKAPP_DHDO() {
       return this.KAPP_DHDO;
    }
 
-   public void setKAPP_DHDO(Date kAPP_DHDO) {
+   public void setKAPP_DHDO(String kAPP_DHDO) {
       this.KAPP_DHDO = kAPP_DHDO;
    }
 
-   public Date getKAPP_DTR() {
+   public String getKAPP_DTR() {
       return this.KAPP_DTR;
    }
 
-   public void setKAPP_DTR(Date kAPP_DTR) {
+   public void setKAPP_DTR(String kAPP_DTR) {
       this.KAPP_DTR = kAPP_DTR;
    }
 }

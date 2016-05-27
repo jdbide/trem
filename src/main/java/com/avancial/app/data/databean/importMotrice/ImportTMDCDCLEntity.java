@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDCDCL")
-@NamedQuery(name = "ImportTMDCDCL.getAll", query= "SELECT t FROM ImportTMDCDCLEntity t")
+@NamedQuery(name = "ImportTMDCDCL.getAll", query = "SELECT t FROM ImportTMDCDCLEntity t")
 public class ImportTMDCDCLEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +18,10 @@ public class ImportTMDCDCLEntity {
    private String CDCL_CDEM_COD_CIE;
    private String CDCL_CDEM_NUM_TRA1;
    private String CDCL_CDEM_IND_FER;
-   private Double   CDCL_CDEM_NUM_COND;
+   private String CDCL_CDEM_NUM_COND;
    private String CDCL_CLBA_COD;
    private String CDCL_USER;
-   private Date   CDCL_DHDO;
+   private String CDCL_DHDO;
 
    public Long getIdTMDCDCL() {
       return this.idTMDCDCL;
@@ -57,11 +55,11 @@ public class ImportTMDCDCLEntity {
       this.CDCL_CDEM_IND_FER = cDCL_CDEM_IND_FER;
    }
 
-   public Double getCDCL_CDEM_NUM_COND() {
+   public String getCDCL_CDEM_NUM_COND() {
       return this.CDCL_CDEM_NUM_COND;
    }
 
-   public void setCDCL_CDEM_NUM_COND(Double cDCL_CDEM_NUM_COND) {
+   public void setCDCL_CDEM_NUM_COND(String cDCL_CDEM_NUM_COND) {
       this.CDCL_CDEM_NUM_COND = cDCL_CDEM_NUM_COND;
    }
 
@@ -81,11 +79,11 @@ public class ImportTMDCDCLEntity {
       this.CDCL_USER = cDCL_USER;
    }
 
-   public Date getCDCL_DHDO() {
+   public String getCDCL_DHDO() {
       return this.CDCL_DHDO;
    }
 
-   public void setCDCL_DHDO(Date cDCL_DHDO) {
+   public void setCDCL_DHDO(String cDCL_DHDO) {
       this.CDCL_DHDO = cDCL_DHDO;
    }
 }

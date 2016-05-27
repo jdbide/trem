@@ -1,6 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDAVTR")
-@NamedQuery(name = "ImportTMDAVTR.getAll", query= "SELECT t FROM ImportTMDAVTREntity t")
+@NamedQuery(name = "ImportTMDAVTR.getAll", query = "SELECT t FROM ImportTMDAVTREntity t")
 public class ImportTMDAVTREntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +20,7 @@ public class ImportTMDAVTREntity {
    private String AVTR_TRA1_IND_FER;
    private String AVTR_LIBS_AVAL_COD;
    private String AVTR_USER;
-   private Date   AVTR_DHDO;
+   private String AVTR_DHDO;
 
    public String getAVTR_TRA1_COD_CIE() {
       return this.AVTR_TRA1_COD_CIE;
@@ -63,11 +62,11 @@ public class ImportTMDAVTREntity {
       this.AVTR_USER = aVTR_USER;
    }
 
-   public Date getAVTR_DHDO() {
+   public String getAVTR_DHDO() {
       return this.AVTR_DHDO;
    }
 
-   public void setAVTR_DHDO(Date aVTR_DHDO) {
+   public void setAVTR_DHDO(String aVTR_DHDO) {
       this.AVTR_DHDO = aVTR_DHDO;
    }
 

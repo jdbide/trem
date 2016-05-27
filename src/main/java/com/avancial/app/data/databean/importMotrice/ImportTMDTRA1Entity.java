@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,28 +9,28 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDTRA1")
-@NamedQuery(name = "ImportTMDTRA1.getAll", query= "SELECT t FROM ImportTMDTRA1Entity t")
+@NamedQuery(name = "ImportTMDTRA1.getAll", query = "SELECT t FROM ImportTMDTRA1Entity t")
 public class ImportTMDTRA1Entity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDTRA1;
-   private String  TRA1_CIES_COD_CIE;
-   private String  TRA1_NUM_TRAIN;
-   private String  TRA1_IND_FER_ROUTE;
-   private String  TRA1_LIBS_GERE_COD;
-   private String  TRA1_NOM_TRAIN;
-   private String  TRA1_AUT_MOD_THOR;
-   private String  TRA1_NAT_MOD_THOR;
-   private Date    TRA1_DAT_MOD_THOR;
-   private Date    TRA1_DAT_DER_MOD;
-   private String  TRA1_IND_COMPO;
-   private String  TRA1_IND_CDEM;
-   private String  TRA1_IND_ECOLE;
+   private Long   idTMDTRA1;
+   private String TRA1_CIES_COD_CIE;
+   private String TRA1_NUM_TRAIN;
+   private String TRA1_IND_FER_ROUTE;
+   private String TRA1_LIBS_GERE_COD;
+   private String TRA1_NOM_TRAIN;
+   private String TRA1_AUT_MOD_THOR;
+   private String TRA1_NAT_MOD_THOR;
+   private String TRA1_DAT_MOD_THOR;
+   private String TRA1_DAT_DER_MOD;
+   private String TRA1_IND_COMPO;
+   private String TRA1_IND_CDEM;
+   private String TRA1_IND_ECOLE;
    private String TRA1_REGI_VAL;
    private String TRA1_REGI_VAL_TRTH;
-   private String  TRA1_USER;
-   private Date    TRA1_DHDO;
+   private String TRA1_USER;
+   private String TRA1_DHDO;
    private String TRA1_REGI_NON_EXTR;
 
    public Long getIdTMDTRA1() {
@@ -99,19 +97,19 @@ public class ImportTMDTRA1Entity {
       this.TRA1_NAT_MOD_THOR = tRA1_NAT_MOD_THOR;
    }
 
-   public Date getTRA1_DAT_MOD_THOR() {
+   public String getTRA1_DAT_MOD_THOR() {
       return this.TRA1_DAT_MOD_THOR;
    }
 
-   public void setTRA1_DAT_MOD_THOR(Date tRA1_DAT_MOD_THOR) {
+   public void setTRA1_DAT_MOD_THOR(String tRA1_DAT_MOD_THOR) {
       this.TRA1_DAT_MOD_THOR = tRA1_DAT_MOD_THOR;
    }
 
-   public Date getTRA1_DAT_DER_MOD() {
+   public String getTRA1_DAT_DER_MOD() {
       return this.TRA1_DAT_DER_MOD;
    }
 
-   public void setTRA1_DAT_DER_MOD(Date tRA1_DAT_DER_MOD) {
+   public void setTRA1_DAT_DER_MOD(String tRA1_DAT_DER_MOD) {
       this.TRA1_DAT_DER_MOD = tRA1_DAT_DER_MOD;
    }
 
@@ -163,11 +161,11 @@ public class ImportTMDTRA1Entity {
       this.TRA1_USER = tRA1_USER;
    }
 
-   public Date getTRA1_DHDO() {
+   public String getTRA1_DHDO() {
       return this.TRA1_DHDO;
    }
 
-   public void setTRA1_DHDO(Date tRA1_DHDO) {
+   public void setTRA1_DHDO(String tRA1_DHDO) {
       this.TRA1_DHDO = tRA1_DHDO;
    }
 

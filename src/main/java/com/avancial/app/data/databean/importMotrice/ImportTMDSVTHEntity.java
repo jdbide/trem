@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,26 +9,26 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDSVTH")
-@NamedQuery(name = "ImportTMDSVTH.getAll", query= "SELECT t FROM ImportTMDSVTHEntity t")
+@NamedQuery(name = "ImportTMDSVTH.getAll", query = "SELECT t FROM ImportTMDSVTHEntity t")
 public class ImportTMDSVTHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDSVTH;
-   private String  SVTH_TRCH_COD_CIE;
-   private String  SVTH_TRCH_NUM_TRA1;
-   private String  SVTH_TRCH_IND_FER;
-   private Double    SVTH_TRCH_NUM;
-   private String  SVTH_LIBS_SERV_COD;
-   private Double    SVTH_NUM;
-   private String  SVTH_COD_ORIGINE;
-   private String  SVTH_INPT_RR_D;
-   private String  SVTH_INPT_RR_F;
+   private Long   idTMDSVTH;
+   private String SVTH_TRCH_COD_CIE;
+   private String SVTH_TRCH_NUM_TRA1;
+   private String SVTH_TRCH_IND_FER;
+   private String SVTH_TRCH_NUM;
+   private String SVTH_LIBS_SERV_COD;
+   private String SVTH_NUM;
+   private String SVTH_COD_ORIGINE;
+   private String SVTH_INPT_RR_D;
+   private String SVTH_INPT_RR_F;
    private String SVTH_REGI;
-   private String  SVTH_IND_SPTH;
-   private String  SVTH_TYP_CLAS;
-   private String  SVTH_USER;
-   private Date    SVTH_DHDO;
+   private String SVTH_IND_SPTH;
+   private String SVTH_TYP_CLAS;
+   private String SVTH_USER;
+   private String SVTH_DHDO;
 
    /**
     * @return the idTMDSVTH
@@ -95,7 +93,7 @@ public class ImportTMDSVTHEntity {
    /**
     * @return the sVTH_TRCH_NUM
     */
-   public Double getSVTH_TRCH_NUM() {
+   public String getSVTH_TRCH_NUM() {
       return this.SVTH_TRCH_NUM;
    }
 
@@ -103,7 +101,7 @@ public class ImportTMDSVTHEntity {
     * @param sVTH_TRCH_NUM
     *           the sVTH_TRCH_NUM to set
     */
-   public void setSVTH_TRCH_NUM(Double sVTH_TRCH_NUM) {
+   public void setSVTH_TRCH_NUM(String sVTH_TRCH_NUM) {
       this.SVTH_TRCH_NUM = sVTH_TRCH_NUM;
    }
 
@@ -125,7 +123,7 @@ public class ImportTMDSVTHEntity {
    /**
     * @return the sVTH_NUM
     */
-   public Double getSVTH_NUM() {
+   public String getSVTH_NUM() {
       return this.SVTH_NUM;
    }
 
@@ -133,7 +131,7 @@ public class ImportTMDSVTHEntity {
     * @param sVTH_NUM
     *           the sVTH_NUM to set
     */
-   public void setSVTH_NUM(Double sVTH_NUM) {
+   public void setSVTH_NUM(String sVTH_NUM) {
       this.SVTH_NUM = sVTH_NUM;
    }
 
@@ -245,7 +243,7 @@ public class ImportTMDSVTHEntity {
    /**
     * @return the sVTH_DHDO
     */
-   public Date getSVTH_DHDO() {
+   public String getSVTH_DHDO() {
       return this.SVTH_DHDO;
    }
 
@@ -253,7 +251,7 @@ public class ImportTMDSVTHEntity {
     * @param sVTH_DHDO
     *           the sVTH_DHDO to set
     */
-   public void setSVTH_DHDO(Date sVTH_DHDO) {
+   public void setSVTH_DHDO(String sVTH_DHDO) {
       this.SVTH_DHDO = sVTH_DHDO;
    }
 
