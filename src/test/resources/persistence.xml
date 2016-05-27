@@ -53,7 +53,7 @@
         <properties>
             <property name="hibernate.id.new_generator_mappings" value="true" />
             <property name="hibernate.archive.autodetection" value="class" />
-            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.show_sql" value="false" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
             <property name="connection.autocommit" value="false" />

@@ -65,7 +65,7 @@ public class TestNativeQuery {
    @Test
    public void nativeQuery() {
 
-      Query query = this.em.createNativeQuery("select * from f$mdrp1.TMDGADS where GADS_DSTR_COD_CIE='BC'");
+      Query query = this.em.createNativeQuery("select * from f$mdrp1.TMDGADS");
       // where GADS_DSTR_COD_CIE='BC'
 
       List<Object[]> liste = query.getResultList();
