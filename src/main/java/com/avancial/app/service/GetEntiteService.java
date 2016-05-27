@@ -145,4 +145,14 @@ public class GetEntiteService {
                 getNomEntiteFromNomEntiteImportMotrice(classeEntiteImportMotrice.getSimpleName()));
     }
 
+    /**
+     * Retourne le nom de la table d'import tremas a partir du nom de la table db2
+     * @return La chaîne spécifiée<br>
+     * Exemple:<br>
+     * {@code "TMDAVTR" retourne "tremas_import_tmdavtr"}
+     */
+   public String getTableImportFromNomTable(String table) {
+      return "tremas_import_"+table.toLowerCase();
+   }
+
 }

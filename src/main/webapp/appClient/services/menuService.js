@@ -36,9 +36,6 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
      * Rubrique de la page affichée
      */
     var libelleRubriqueCourante = "";
-    self.setRubriqueCourante = function(libelle) {
-    	libelleRubriqueCourante = libelle;
-    }
     self.getRubriqueCourante = function() {
     	return libelleRubriqueCourante;
     } 
@@ -47,9 +44,6 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
      * Chapitre de la page affichée
      */
     var libelleChapitreCourant = "";
-    self.setChapitreCourant = function(libelle) {
-    	libelleChapitreCourant = libelle;
-    }
     self.getChapitreCourant = function() {
     	return libelleChapitreCourant;
     } 
@@ -58,12 +52,15 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
      * Page affichée
      */
     var libellePageCourante = "";
-    self.setPageCourante = function(libelle) {
-    	libellePageCourante = libelle;
-    }
     self.getPageCourante = function() {
     	return libellePageCourante;
-    } 
+    }
+    
+    self.setCheminCourant = function(libelleRubrique, libelleChapitre, libellePage) {
+    	libelleRubriqueCourante = libelleRubrique;
+    	libelleChapitreCourant = libelleChapitre;
+    	libellePageCourante = libellePage;
+    }
     
     return self;
 }]);

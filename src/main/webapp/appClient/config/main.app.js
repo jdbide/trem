@@ -1,5 +1,5 @@
 
-    'use strict';    
+    'use strict';
     
     /**
      * Déclaration du module principal pour notre application angularjs (socle)
@@ -28,7 +28,8 @@
     var socle_app = angular.module('socle_app', [
       'ngRoute',
       'ngTable',
-      'm-loader'
+      'm-loader',
+      'ui.bootstrap'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {
@@ -38,4 +39,11 @@
     	ngTableDefaults.settings.paginationMaxBlocks = 2;
     	ngTableDefaults.settings.paginationMinBlocks = 2;
 
-    }]);
+    }])
+    
+    .constant('pageAccueil', {
+    	rubrique: "Socle Administration",
+    	chapitre: "Accueil",
+    	page: "Bonjour"
+    })
+    ;

@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,22 +9,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDRAME")
-@NamedQuery(name = "ImportTMDRAME.getAll", query= "SELECT t FROM ImportTMDRAMEEntity t")
+@NamedQuery(name = "ImportTMDRAME.getAll", query = "SELECT t FROM ImportTMDRAMEEntity t")
 public class ImportTMDRAMEEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDRAME;
-   private String  RAME_TRCH_COD_CIE;
-   private String  RAME_TRCH_NUM_TRA1;
-   private String  RAME_TRCH_IND_FER;
-   private Double    RAME_TRCH_NUM;
-   private String  RAME_RAMC_COD;
-   private Double    RAME_NUM;
-   private String  RAME_NUM_PREM_VOIT;
+   private Long   idTMDRAME;
+   private String RAME_TRCH_COD_CIE;
+   private String RAME_TRCH_NUM_TRA1;
+   private String RAME_TRCH_IND_FER;
+   private String RAME_TRCH_NUM;
+   private String RAME_RAMC_COD;
+   private String RAME_NUM;
+   private String RAME_NUM_PREM_VOIT;
    private String RAME_REGI;
-   private String  RAME_USER;
-   private Date    RAME_DHDO;
+   private String RAME_USER;
+   private String RAME_DHDO;
 
    /**
     * @return the idTMDRAME
@@ -91,7 +89,7 @@ public class ImportTMDRAMEEntity {
    /**
     * @return the rAME_TRCH_NUM
     */
-   public Double getRAME_TRCH_NUM() {
+   public String getRAME_TRCH_NUM() {
       return this.RAME_TRCH_NUM;
    }
 
@@ -99,7 +97,7 @@ public class ImportTMDRAMEEntity {
     * @param rAME_TRCH_NUM
     *           the rAME_TRCH_NUM to set
     */
-   public void setRAME_TRCH_NUM(Double rAME_TRCH_NUM) {
+   public void setRAME_TRCH_NUM(String rAME_TRCH_NUM) {
       this.RAME_TRCH_NUM = rAME_TRCH_NUM;
    }
 
@@ -121,7 +119,7 @@ public class ImportTMDRAMEEntity {
    /**
     * @return the rAME_NUM
     */
-   public Double getRAME_NUM() {
+   public String getRAME_NUM() {
       return this.RAME_NUM;
    }
 
@@ -129,7 +127,7 @@ public class ImportTMDRAMEEntity {
     * @param rAME_NUM
     *           the rAME_NUM to set
     */
-   public void setRAME_NUM(Double rAME_NUM) {
+   public void setRAME_NUM(String rAME_NUM) {
       this.RAME_NUM = rAME_NUM;
    }
 
@@ -181,7 +179,7 @@ public class ImportTMDRAMEEntity {
    /**
     * @return the rAME_DHDO
     */
-   public Date getRAME_DHDO() {
+   public String getRAME_DHDO() {
       return this.RAME_DHDO;
    }
 
@@ -189,7 +187,7 @@ public class ImportTMDRAMEEntity {
     * @param rAME_DHDO
     *           the rAME_DHDO to set
     */
-   public void setRAME_DHDO(Date rAME_DHDO) {
+   public void setRAME_DHDO(String rAME_DHDO) {
       this.RAME_DHDO = rAME_DHDO;
    }
 

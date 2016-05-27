@@ -36,6 +36,21 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 	$scope.selectedOption = "";
 	$scope.labelSelect = "Veuillez choisir une table : ";
 	
+	function applyComparer(actual, expression) {
+		if (expression instanceof Date) {
+			return dateComparer(actual, expression);
+		} else {
+			var strValue = actual + '';
+			return strValue.contains(expression);
+		}
+	}
+
+	var dateComparer = function(actualDate, expressionDate) {
+		var expressionString = $filter('date')(expressionDate, 'yyyy-MM-dd');
+		var actualString = $filter('date')(actualDate, 'yyyy-MM-dd');
+		return actualDate && actualString.indexOf(expressionString) > -1;
+	}
+	
 	$scope.displayTable = function(nomTable) {
 		if (nomTable.value != null) {
 			importService.getDataByServer($scope.selectedOption.value).then(function() {
@@ -53,12 +68,11 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 						if (type === "Date") {
 							col.format = {
 								name : "date",
-								params : ["yyyy-MM-dd h:mm:ss"]
+								params : ["yyyy-MM-dd HH:mm:ss"]
 							}
 						} else {
 							col.format = {
-								name : "identity",
-								params : []
+								name : "identity"
 							}
 						}
 						$scope.cols.push(col);
@@ -67,6 +81,9 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 					$scope.params = new NgTableParams({
 						count: 20
 					}, {
+						filterOptions: {
+							filterComparator: applyComparer
+						},
 						dataset : datas
 					});
 				}

@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,25 +9,25 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDCATR")
-@NamedQuery(name = "ImportTMDCATR.getAll", query= "SELECT t FROM ImportTMDCATREntity t")
+@NamedQuery(name = "ImportTMDCATR.getAll", query = "SELECT t FROM ImportTMDCATREntity t")
 public class ImportTMDCATREntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDCATR;
-   private String  CATR_TRA1_COD_CIE;
-   private String  CATR_TRA1_NUM_TRA1;
-   private String  CATR_TRA1_IND_FER;
-   private Double    CATR_NUM;
-   private String  CATR_READ_COD;
-   private String  CATR_TYEQ_COD;
-   private String  CATR_LIBS_QLCO_COD;
-   private String  CATR_LIBS_OURE_COD;
-   private String  CATR_IND_TRA1_RESA;
+   private Long   idTMDCATR;
+   private String CATR_TRA1_COD_CIE;
+   private String CATR_TRA1_NUM_TRA1;
+   private String CATR_TRA1_IND_FER;
+   private String CATR_NUM;
+   private String CATR_READ_COD;
+   private String CATR_TYEQ_COD;
+   private String CATR_LIBS_QLCO_COD;
+   private String CATR_LIBS_OURE_COD;
+   private String CATR_IND_TRA1_RESA;
    private String CATR_REGI;
-   private String  CATR_PARITE;
-   private String  CATR_USER;
-   private Date    CATR_DHDO;
+   private String CATR_PARITE;
+   private String CATR_USER;
+   private String CATR_DHDO;
 
    public Long getIdTMDCATR() {
       return this.idTMDCATR;
@@ -63,11 +61,11 @@ public class ImportTMDCATREntity {
       this.CATR_TRA1_IND_FER = cATR_TRA1_IND_FER;
    }
 
-   public Double getCATR_NUM() {
+   public String getCATR_NUM() {
       return this.CATR_NUM;
    }
 
-   public void setCATR_NUM(Double cATR_NUM) {
+   public void setCATR_NUM(String cATR_NUM) {
       this.CATR_NUM = cATR_NUM;
    }
 
@@ -135,11 +133,11 @@ public class ImportTMDCATREntity {
       this.CATR_USER = cATR_USER;
    }
 
-   public Date getCATR_DHDO() {
+   public String getCATR_DHDO() {
       return this.CATR_DHDO;
    }
 
-   public void setCATR_DHDO(Date cATR_DHDO) {
+   public void setCATR_DHDO(String cATR_DHDO) {
       this.CATR_DHDO = cATR_DHDO;
    }
 }

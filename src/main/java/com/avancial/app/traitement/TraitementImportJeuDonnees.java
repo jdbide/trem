@@ -53,7 +53,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
     * @see com.avancial.socle.traitement.ATraitement#executeTraitement()
     */
    @Override
-   protected void executeTraitement() {      
+   protected void executeTraitement() {       
       JeuDonneeEntity jeuDonneeDataBean = this.initJeuDonnee();
       jeuDonneeDataBean.getIdJeuDonnees();
       
