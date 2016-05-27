@@ -28,7 +28,8 @@
     var socle_app = angular.module('socle_app', [
       'ngRoute',
       'ngTable',
-      'm-loader'
+      'm-loader',
+      'ui.bootstrap'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {
