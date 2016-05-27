@@ -3,8 +3,17 @@
 /**
  * Service gérant le menu de pages de l'application
  */
-socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q) {
+socle_app.service('menuService', ['jsonFactory', '$q', '$sessionStorage', 'pageAccueil', function(jsonFactory, $q, $sessionStorage, pageAccueil) {
 	var menu = [];
+	if (!$sessionStorage.rubrique) {
+		$sessionStorage.rubrique = pageAccueil.rubrique;
+	}
+	if (!$sessionStorage.chapitre) {
+		$sessionStorage.chapitre = pageAccueil.chapitre;
+	}
+	if (!$sessionStorage.page) {
+		$sessionStorage.page = pageAccueil.page;
+	}
 	
     var self = this;
     
@@ -35,31 +44,28 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
     /**
      * Rubrique de la page affichée
      */
-    var libelleRubriqueCourante = "";
     self.getRubriqueCourante = function() {
-    	return libelleRubriqueCourante;
+    	return $sessionStorage.rubrique;
     } 
 
     /**
      * Chapitre de la page affichée
      */
-    var libelleChapitreCourant = "";
     self.getChapitreCourant = function() {
-    	return libelleChapitreCourant;
+    	return $sessionStorage.chapitre;
     } 
     
     /**
      * Page affichée
      */
-    var libellePageCourante = "";
     self.getPageCourante = function() {
-    	return libellePageCourante;
+    	return $sessionStorage.page;
     }
     
     self.setCheminCourant = function(libelleRubrique, libelleChapitre, libellePage) {
-    	libelleRubriqueCourante = libelleRubrique;
-    	libelleChapitreCourant = libelleChapitre;
-    	libellePageCourante = libellePage;
+    	$sessionStorage.rubrique = libelleRubrique;
+    	$sessionStorage.chapitre = libelleChapitre;
+    	$sessionStorage.page = libellePage;
     }
     
     return self;

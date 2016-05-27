@@ -3,7 +3,8 @@
 /**
  * Contrôleur pour les données de menu de l'application
  */
-socle_app.controller('menuCtrl', [ '$scope', 'menuService', 'pageAccueil', function($scope, menuService, pageAccueil) {
+socle_app.controller('menuCtrl', [ '$scope', 'menuService', 
+                                   function($scope, menuService) {
 	$scope.menu = {
 		rubriques: null
 	};
@@ -11,9 +12,6 @@ socle_app.controller('menuCtrl', [ '$scope', 'menuService', 'pageAccueil', funct
 	function constructor() {
 		menuService.getDataByServer().then(function() {
 			$scope.menu.rubriques = menuService.getMenu();
-			
-			/* Page d'accueil */
-			menuService.setCheminCourant(pageAccueil.rubrique, pageAccueil.chapitre, pageAccueil.page);
 		});
 	}
 
@@ -27,6 +25,6 @@ socle_app.controller('menuCtrl', [ '$scope', 'menuService', 'pageAccueil', funct
 	};
 	
 	$scope.chapitreCourant = menuService.getChapitreCourant; 
-	$scope.pageCourante = menuService.getPageCourante; 
+	$scope.pageCourante = menuService.getPageCourante;
 	
 } ]);

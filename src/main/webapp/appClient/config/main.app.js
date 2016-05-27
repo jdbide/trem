@@ -29,7 +29,8 @@
       'ngRoute',
       'ngTable',
       'm-loader',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'ngStorage'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {
