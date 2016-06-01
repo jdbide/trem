@@ -7,7 +7,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.hibernate.SQLQuery;
+
 import com.avancial.app.data.databean.TablesMotriceEntity;
+import com.avancial.app.service.ImportMotriceService;
+import com.avancial.app.service.TablesMotriceService;
 import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.traitement.ATraitementImportDataBase;
 
@@ -52,18 +56,21 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
       return result;
    }
    
-//   @Override
-//   protected List<String> recuperationNomTablesImport() {
-//      GetEntiteService serv = new GetEntiteService();
-//      Query query = this.entityManagerSocle.createNamedQuery("TablesMotrice.getAll", TablesMotriceEntity.class);
-//      List<TablesMotriceEntity> entities = query.getResultList();
-//
-//      List<String> result = new ArrayList<String>();
-//      for (TablesMotriceEntity entite : entities) {
-//         result.add(serv.getTableImportFromNomTable(entite.getLibelleTablesMotrice()));
-//      }
-//      return result;
-//   }
+   @SuppressWarnings("unchecked")
+   @Override
+   protected void clearTable() {
+      GetEntiteService getEntiteService = new GetEntiteService();
+      Query query = this.entityManagerSocle.createNamedQuery("TablesMotrice.getAll", TablesMotriceEntity.class);
+      List<TablesMotriceEntity> listTables = query.getResultList();
+      String libelleTableMotrice;
+      SQLQuery delete;
+      for(int i=0; i<listTables.size(); i++) {
+         libelleTableMotrice = listTables.get(i).getLibelleTablesMotrice();
+         delete = this.sessionSocle.createSQLQuery("DELETE FROM "+ getEntiteService.getTableImportFromNomTable(libelleTableMotrice));
+         delete.executeUpdate();
+         this.sessionSocle.clear();
+      }
+   }
 
    /**
     * @see ATraitementImportDataBase

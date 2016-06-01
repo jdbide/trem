@@ -15,7 +15,7 @@
 	
 
        <Resource name="jdbc/externe" auth="Container" type="javax.sql.DataSource"
-        username="SGAV026" password="bitchs39" driverClassName="com.ibm.db2.jcc.DB2Driver"
+        username="ejmt013" password="fatima05" driverClassName="com.ibm.db2.jcc.DB2Driver"
         url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;"
 
          maxActive="8" maxIdle="4"

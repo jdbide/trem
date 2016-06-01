@@ -66,16 +66,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
       JeuDonneeEntity jeuDonneeDataBean = this.initJeuDonnee();
       jeuDonneeDataBean.getIdJeuDonnees();
       
-      // on appelle le service qui récupère la liste des tables à importer
-      List<TablesMotriceEntity> listTables = this.tablesMotriceService.getAllTablesMotrice();
-      String libelleTableMotrice;
-      //vide les tables d'import
-      for(int i=0; i<listTables.size(); i++) {
-         libelleTableMotrice = listTables.get(i).getLibelleTablesMotrice();
-         this.importMotriceService.deleteTable(this.getEntiteService.getNomEntiteImportFromTableMotrice(libelleTableMotrice));
-         this.log("Delete de la table d'import " + libelleTableMotrice);
-      }
-      //importer les tables
+
+      //vider puis importer les tables
       TraitementImportDb2Motrice traitement = new TraitementImportDb2Motrice(this.entityManagerSocle, this.entityManagerExterne, SchemaMotrice.ES.getSchema());
       try {
          traitement.execute();
