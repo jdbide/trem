@@ -2,8 +2,7 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
 	version="2.0">
 
-	<persistence-unit name="PU_socle"
-		transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="PU_socle" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
 		<class>com.avancial.socle.data.model.databean.RefDirectoryDataBean
@@ -14,7 +13,7 @@
 			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/socle" />
 			<property name="hibernate.id.new_generator_mappings" value="true" />
 			<property name="hibernate.archive.autodetection" value="class" />
-			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />

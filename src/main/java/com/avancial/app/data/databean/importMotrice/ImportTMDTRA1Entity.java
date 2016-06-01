@@ -32,6 +32,7 @@ public class ImportTMDTRA1Entity {
    private String TRA1_USER;
    private String TRA1_DHDO;
    private String TRA1_REGI_NON_EXTR;
+   private String TRA1_COMMENTAIRE;
 
    public Long getIdTMDTRA1() {
       return this.idTMDTRA1;
@@ -176,4 +177,14 @@ public class ImportTMDTRA1Entity {
    public void setTRA1_REGI_NON_EXTR(String tRA1_REGI_NON_EXTR) {
       this.TRA1_REGI_NON_EXTR = tRA1_REGI_NON_EXTR;
    }
+
+   public String getTRA1_COMMENTAIRE() {
+      return this.TRA1_COMMENTAIRE;
+   }
+
+   public void setTRA1_COMMENTAIRE(String tRA1_COMMENTAIRE) {
+      this.TRA1_COMMENTAIRE = tRA1_COMMENTAIRE;
+   }
+   
+   
 }

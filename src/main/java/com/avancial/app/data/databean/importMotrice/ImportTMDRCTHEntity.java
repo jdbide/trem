@@ -22,6 +22,7 @@ public class ImportTMDRCTHEntity {
    private String RCTH_RESA_TYP;
    private String RCTH_CLBA_COD;
    private String RCTH_INPT_RR_D;
+   private String RCTH_INPT_RR_F;
    private String RCTH_REGI;
    private String RCTH_USER;
    private String RCTH_DHDO;
@@ -88,6 +89,14 @@ public class ImportTMDRCTHEntity {
 
    public void setRCTH_INPT_RR_D(String rCTH_INPT_RR_D) {
       this.RCTH_INPT_RR_D = rCTH_INPT_RR_D;
+   }
+
+   public String getRCTH_INPT_RR_F() {
+      return this.RCTH_INPT_RR_F;
+   }
+
+   public void setRCTH_INPT_RR_F(String rCTH_INPT_RR_F) {
+      this.RCTH_INPT_RR_F = rCTH_INPT_RR_F;
    }
 
    public String getRCTH_REGI() {

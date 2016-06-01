@@ -1,4 +1,4 @@
-package com.avancial.app.service;
+package com.avancial.app.utilitaire;
 
 import org.apache.commons.lang.StringUtils;
 

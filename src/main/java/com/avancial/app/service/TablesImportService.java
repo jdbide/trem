@@ -2,11 +2,15 @@ package com.avancial.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.table.ColumnTable;
 
