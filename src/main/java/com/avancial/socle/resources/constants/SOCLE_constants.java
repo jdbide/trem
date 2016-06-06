@@ -33,7 +33,13 @@ public enum SOCLE_constants {
    DIALOG_DEL_MESSAGES("message_del"),
 
    EXCEPTION_DUPICATE_ID("exception_duplicate_id"),
-   EXCEPTION_UNKNOWN("exception_unknown");
+   EXCEPTION_UNKNOWN("exception_unknown"),
+   /* Libelle de l'attribut dans le cas d'un appel au webService sans que l'utilisateur sera connecté */
+   ERR_AUTH("msgErrAuth"),
+   INPUT_USER_NAME("j_username"),
+   INPUT_PASSWORD("j_password"),
+   ATT_SESSION_USER("sessionUser")
+   ;
 
    private String constant = "";
 

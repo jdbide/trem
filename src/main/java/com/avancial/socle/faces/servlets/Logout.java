@@ -20,7 +20,7 @@ import com.avancial.socle.security.SecurityManagedBean;
  * @author bruno.legloahec
  *
  */
-@WebServlet("/logout")
+@WebServlet("/logout2")
 public class Logout extends HttpServlet {
    @Inject
    private IhmManagedBean      ihmManagedBean;

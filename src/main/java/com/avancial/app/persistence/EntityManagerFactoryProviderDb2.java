@@ -13,7 +13,7 @@ import javax.persistence.Persistence;
  * @author hamza.laterem
  *
  */
-@SessionScoped
+
 public class EntityManagerFactoryProviderDb2 {
    public static final boolean DEBUG = true;
    

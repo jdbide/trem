@@ -15,6 +15,10 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
  *
  */
 public class UserDao extends AbstractDao {
+   
+   public UserDao() {
+      super();
+   }
 
    @SuppressWarnings("unchecked")
    @Override

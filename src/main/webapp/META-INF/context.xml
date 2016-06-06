@@ -8,8 +8,17 @@
 
 	<Resource name="jdbc/socle" auth="Container" type="javax.sql.DataSource"
 		username="dbad_tremas" password="!tremas-12" driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://caliban/tremas_test" maxActive="8" maxIdle="4"
+		url="jdbc:mysql://caliban/tremas" maxActive="8" maxIdle="4"
 		maxWait="10000" />
+		
+	<Realm className="org.apache.catalina.realm.DataSourceRealm"
+		dataSourceName="jdbc/socle" userTable="socle_user" userNameCol="loginUser"
+		userCredCol="passwordUser" userRoleTable="socle_user" roleNameCol="tomcatRoleUser"
+		localDataSource="true" digest="sha1">
+	</Realm>
+	
+	<Logger className="org.apache.catalina.logger.SystemOutLogger" verbosity="99"/>
+	
 
 	<Resource name="jdbc/externe" auth="Container" type="javax.sql.DataSource"
 		username="SGAV026" password="bitchs39" driverClassName="com.ibm.db2.jcc.DB2Driver"
@@ -24,4 +33,5 @@
 	<Resource name="BeanManager" auth="Container"
 		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
 
+	
 </Context>

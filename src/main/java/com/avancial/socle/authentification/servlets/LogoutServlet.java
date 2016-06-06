@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.avancial.socle.servlets;
+package com.avancial.socle.authentification.servlets;
 
 import java.io.IOException;
 
@@ -20,11 +20,11 @@ import com.avancial.socle.resources.constants.SOCLE_CodeStatus;
  * Servlet qui gère le LOGOUT de l'application.<\br>
  *
  */
-@WebServlet("/logout2")
-public class Logout extends HttpServlet{
+@WebServlet(name="Logout", urlPatterns="/logout")
+public class LogoutServlet extends HttpServlet{
    private static final long serialVersionUID = 1L;
       
-   public Logout() {
+   public LogoutServlet() {
       super();
    }
    
@@ -61,8 +61,9 @@ public class Logout extends HttpServlet{
          e.printStackTrace();
          response.setStatus(SOCLE_CodeStatus.ERROR.getStatus());
       }
-      
-      this.getServletContext().getRequestDispatcher("/").forward(request, response);      
+      /* Affichage de la page de connexion */
+      response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/login"));
+      //this.getServletContext().getRequestDispatcher("/login").forward(request, response);      
    }
 
 }
