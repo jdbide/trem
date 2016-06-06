@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDAVTH")
-@NamedQuery(name = "ImportTMDAVTH.getAll", query= "SELECT t FROM ImportTMDAVTHEntity t")
+@NamedQuery(name = "ImportTMDAVTH.getAll", query = "SELECT t FROM ImportTMDAVTHEntity t")
 public class ImportTMDAVTHEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +18,10 @@ public class ImportTMDAVTHEntity {
    private String AVTH_TRCH_COD_CIE;
    private String AVTH_TRCH_NUM_TRA1;
    private String AVTH_TRCH_IND_FER;
-   private Double   AVTH_TRCH_NUM;
+   private String AVTH_TRCH_NUM;
    private String AVTH_LIBS_AVAL_COD;
    private String AVTH_USER;
-   private Date   AVTH_DHDO;
+   private String AVTH_DHDO;
 
    public Long getIdTMDAVTH() {
       return this.idTMDAVTH;
@@ -57,11 +55,11 @@ public class ImportTMDAVTHEntity {
       this.AVTH_TRCH_IND_FER = aVTH_TRCH_IND_FER;
    }
 
-   public Double getAVTH_TRCH_NUM() {
+   public String getAVTH_TRCH_NUM() {
       return this.AVTH_TRCH_NUM;
    }
 
-   public void setAVTH_TRCH_NUM(Double aVTH_TRCH_NUM) {
+   public void setAVTH_TRCH_NUM(String aVTH_TRCH_NUM) {
       this.AVTH_TRCH_NUM = aVTH_TRCH_NUM;
    }
 
@@ -81,11 +79,11 @@ public class ImportTMDAVTHEntity {
       this.AVTH_USER = aVTH_USER;
    }
 
-   public Date getAVTH_DHDO() {
+   public String getAVTH_DHDO() {
       return this.AVTH_DHDO;
    }
 
-   public void setAVTH_DHDO(Date aVTH_DHDO) {
+   public void setAVTH_DHDO(String aVTH_DHDO) {
       this.AVTH_DHDO = aVTH_DHDO;
    }
 

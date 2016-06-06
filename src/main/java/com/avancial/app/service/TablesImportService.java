@@ -2,11 +2,15 @@ package com.avancial.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.table.ColumnTable;
 
@@ -44,13 +48,21 @@ public class TablesImportService {
 
         List<ColumnTable> columns = new ArrayList<>();
         for (int i = 0; i < entity.getDeclaredFields().length; i++) {
+            Class<?> fieldClass = entity.getDeclaredFields()[i].getType();
             String field = entity.getDeclaredFields()[i].getName();
             String prefix = field.substring(0, 4);
             String fieldData = field.replace(prefix, prefix.toLowerCase());
 
+            String filterValue = "text";
+            if (Number.class.isAssignableFrom(fieldClass)) {
+                filterValue = "number";
+            }
+            else if (java.sql.Date.class.isAssignableFrom(fieldClass)
+                    || java.util.Date.class.isAssignableFrom(fieldClass)) {
+                filterValue = "date";
+            }
             ColumnTable columnTable = new ColumnTable(fieldData, field, fieldData, (!field.startsWith("id")), fieldData,
-                    Number.class.isAssignableFrom(entity.getDeclaredFields()[i].getType()) ? "number" : "text",
-                    entity.getDeclaredFields()[i].getType().getSimpleName());
+                    filterValue, fieldClass.getSimpleName());
             columns.add(columnTable);
         }
 

@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDGADS")
-@NamedQuery(name = "ImportTMDGADS.getAll", query= "SELECT t FROM ImportTMDGADSEntity t")
+@NamedQuery(name = "ImportTMDGADS.getAll", query = "SELECT t FROM ImportTMDGADSEntity t")
 public class ImportTMDGADSEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +18,8 @@ public class ImportTMDGADSEntity {
    private String GADS_DSTR_COD_CIE;
    private String GADS_DSTR_NUM_TRA1;
    private String GADS_DSTR_IND_FER;
-   private Double   GADS_DSTR_NUM;
-   private Double   GADS_NUM_GAR;
+   private String GADS_DSTR_NUM;
+   private String GADS_NUM_GAR;
    private String GADS_INPT_RR_GAR;
    private String GADS_DEB_ARRET;
    private String GADS_FIN_ARRET;
@@ -31,7 +29,7 @@ public class ImportTMDGADSEntity {
    private String GADS_IND_PT_FRONT;
    private String GADS_IND_CIRC_THO;
    private String GADS_USER;
-   private Date   GADS_DHDO;
+   private String GADS_DHDO;
 
    public Long getIdTMDGADS() {
       return this.idTMDGADS;
@@ -65,19 +63,19 @@ public class ImportTMDGADSEntity {
       this.GADS_DSTR_IND_FER = gADS_DSTR_IND_FER;
    }
 
-   public Double getGADS_DSTR_NUM() {
+   public String getGADS_DSTR_NUM() {
       return this.GADS_DSTR_NUM;
    }
 
-   public void setGADS_DSTR_NUM(Double gADS_DSTR_NUM) {
+   public void setGADS_DSTR_NUM(String gADS_DSTR_NUM) {
       this.GADS_DSTR_NUM = gADS_DSTR_NUM;
    }
 
-   public Double getGADS_NUM_GAR() {
+   public String getGADS_NUM_GAR() {
       return this.GADS_NUM_GAR;
    }
 
-   public void setGADS_NUM_GAR(Double gADS_NUM_GAR) {
+   public void setGADS_NUM_GAR(String gADS_NUM_GAR) {
       this.GADS_NUM_GAR = gADS_NUM_GAR;
    }
 
@@ -153,11 +151,11 @@ public class ImportTMDGADSEntity {
       this.GADS_USER = gADS_USER;
    }
 
-   public Date getGADS_DHDO() {
+   public String getGADS_DHDO() {
       return this.GADS_DHDO;
    }
 
-   public void setGADS_DHDO(Date gADS_DHDO) {
+   public void setGADS_DHDO(String gADS_DHDO) {
       this.GADS_DHDO = gADS_DHDO;
    }
 }

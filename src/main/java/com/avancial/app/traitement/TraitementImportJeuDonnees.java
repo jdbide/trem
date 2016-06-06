@@ -8,15 +8,19 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.TablesMotriceEntity;
-import com.avancial.app.service.GetEntiteService;
 import com.avancial.app.service.ImportMotriceService;
 import com.avancial.app.service.JeuDonneeService;
-import com.avancial.app.service.MotriceService;
 import com.avancial.app.service.TablesMotriceService;
+import com.avancial.app.utilitaire.GetEntiteService;
+import com.avancial.app.utilitaire.SchemaMotrice;
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
+
+import data.model.databean.Socle_PUExterne;
 
 
 /**
@@ -25,15 +29,20 @@ import com.avancial.socle.traitement.ATraitementLogDetail;
  */
 @RequestScoped
 public class TraitementImportJeuDonnees extends ATraitementLogDetail {
-
+   @Inject
+   @Socle_PUSocle
+   EntityManager entityManagerSocle;
+   
+   @Inject
+   @Socle_PUExterne
+   EntityManager entityManagerExterne;
+   
    @Inject
    private JeuDonneeService jeuDonneeService;
    @Inject
    private TablesMotriceService tablesMotriceService;
    @Inject
    private GetEntiteService getEntiteService;
-   @Inject
-   private MotriceService motriceService;
    @Inject
    private ImportMotriceService importMotriceService;
    
@@ -53,27 +62,21 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
     * @see com.avancial.socle.traitement.ATraitement#executeTraitement()
     */
    @Override
-   protected void executeTraitement() {      
+   protected void executeTraitement() {       
       JeuDonneeEntity jeuDonneeDataBean = this.initJeuDonnee();
       jeuDonneeDataBean.getIdJeuDonnees();
       
-      // on appelle le service qui récupère la liste des tables à importer
-      List<TablesMotriceEntity> listTables = this.tablesMotriceService.getAllTablesMotrice();
-      String libelleTableMotrice;
-      for(int i=0; i<listTables.size(); i++) {
-         libelleTableMotrice = listTables.get(i).getLibelleTablesMotrice();
-         this.importMotriceService.deleteTable(this.getEntiteService.getNomEntiteImportFromTableMotrice(libelleTableMotrice));
-         this.log("Delete de la table d'import " + libelleTableMotrice);
-         
-         List<?> entityList = this.motriceService.readAll(this.getEntiteService.getNomEntiteFromTableMotrice(libelleTableMotrice));
-         
-         try {
-            this.importMotriceService.insertAll(entityList, libelleTableMotrice);
-         } catch (ClassNotFoundException e) {
-            this.log("Impossible d'instancier la classe à partir de la table " + libelleTableMotrice);
-            e.printStackTrace();
-         }
+
+      //vider puis importer les tables
+      TraitementImportDb2Motrice traitement = new TraitementImportDb2Motrice(this.entityManagerSocle, this.entityManagerExterne, SchemaMotrice.ES.getSchema());
+      try {
+         traitement.execute();
+      } catch (SecurityException e) {
+         this.log("Echec de l'import");
+         e.printStackTrace();
       }
+      
+      
       jeuDonneeDataBean.setStatusJeuDonnees(true);
       jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());      
       this.jeuDonneeService.update(jeuDonneeDataBean);

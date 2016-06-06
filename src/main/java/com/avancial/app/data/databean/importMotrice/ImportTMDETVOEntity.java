@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,22 +9,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDETVO")
-@NamedQuery(name = "ImportTMDETVO.getAll", query= "SELECT t FROM ImportTMDETVOEntity t")
+@NamedQuery(name = "ImportTMDETVO.getAll", query = "SELECT t FROM ImportTMDETVOEntity t")
 public class ImportTMDETVOEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDETVO;
-   private String  ETVO_VOIT_COD_CIE;
-   private String  ETVO_VOIT_NUM_TRA1;
-   private String  ETVO_VOIT_IND_FER;
-   private Double    ETVO_VOIT_TRCH_NUM;
-   private Double    ETVO_VOIT_NUM;
-   private Double    ETVO_NUM;
-   private String  ETVO_ETAT_VOIT;
+   private Long   idTMDETVO;
+   private String ETVO_VOIT_COD_CIE;
+   private String ETVO_VOIT_NUM_TRA1;
+   private String ETVO_VOIT_IND_FER;
+   private String ETVO_VOIT_TRCH_NUM;
+   private String ETVO_VOIT_NUM;
+   private String ETVO_NUM;
+   private String ETVO_ETAT_VOIT;
    private String ETVO_REGI;
-   private String  ETVO_USER;
-   private Date    ETVO_DHDO;
+   private String ETVO_USER;
+   private String ETVO_DHDO;
 
    /**
     * @return the idTMDETVO
@@ -91,7 +89,7 @@ public class ImportTMDETVOEntity {
    /**
     * @return the eTVO_VOIT_TRCH_NUM
     */
-   public Double getETVO_VOIT_TRCH_NUM() {
+   public String getETVO_VOIT_TRCH_NUM() {
       return this.ETVO_VOIT_TRCH_NUM;
    }
 
@@ -99,14 +97,14 @@ public class ImportTMDETVOEntity {
     * @param eTVO_VOIT_TRCH_NUM
     *           the eTVO_VOIT_TRCH_NUM to set
     */
-   public void setETVO_VOIT_TRCH_NUM(Double eTVO_VOIT_TRCH_NUM) {
+   public void setETVO_VOIT_TRCH_NUM(String eTVO_VOIT_TRCH_NUM) {
       this.ETVO_VOIT_TRCH_NUM = eTVO_VOIT_TRCH_NUM;
    }
 
    /**
     * @return the eTVO_VOIT_NUM
     */
-   public Double getETVO_VOIT_NUM() {
+   public String getETVO_VOIT_NUM() {
       return this.ETVO_VOIT_NUM;
    }
 
@@ -114,14 +112,14 @@ public class ImportTMDETVOEntity {
     * @param eTVO_VOIT_NUM
     *           the eTVO_VOIT_NUM to set
     */
-   public void setETVO_VOIT_NUM(Double eTVO_VOIT_NUM) {
+   public void setETVO_VOIT_NUM(String eTVO_VOIT_NUM) {
       this.ETVO_VOIT_NUM = eTVO_VOIT_NUM;
    }
 
    /**
     * @return the eTVO_NUM
     */
-   public Double getETVO_NUM() {
+   public String getETVO_NUM() {
       return this.ETVO_NUM;
    }
 
@@ -129,7 +127,7 @@ public class ImportTMDETVOEntity {
     * @param eTVO_NUM
     *           the eTVO_NUM to set
     */
-   public void setETVO_NUM(Double eTVO_NUM) {
+   public void setETVO_NUM(String eTVO_NUM) {
       this.ETVO_NUM = eTVO_NUM;
    }
 
@@ -181,14 +179,15 @@ public class ImportTMDETVOEntity {
    /**
     * @return the eTVO_DHDO
     */
-   public Date getETVO_DHDO() {
+   public String getETVO_DHDO() {
       return this.ETVO_DHDO;
    }
 
    /**
-    * @param eTVO_DHDO the eTVO_DHDO to set
+    * @param eTVO_DHDO
+    *           the eTVO_DHDO to set
     */
-   public void setETVO_DHDO(Date eTVO_DHDO) {
+   public void setETVO_DHDO(String eTVO_DHDO) {
       this.ETVO_DHDO = eTVO_DHDO;
    }
 

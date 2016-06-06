@@ -4,8 +4,7 @@
 package data.model.databean;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,7 +40,7 @@ public class TestNativeQuery {
             // .addClass(PhraseBuilder.class)
             // .addAsManifestResource("arquillian.xml")
             .addPackage(Socle_PUSocle.class.getPackage()).addClass(EntityManagerProducerSocle.class).addPackage(EntityManagerProducerExterne.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
-            .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
+            .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").addAsWebInfResource("hibernate.cfg.xml", "classes/hibernate.cfg.xml")
             // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
             .setWebXML("WEB-INF/web.xml").addAsManifestResource("META-INF/context.xml", "context.xml");
 
@@ -61,6 +60,8 @@ public class TestNativeQuery {
    @Socle_PUSocle
    EntityManager emSocle;
 
+   private int   count;
+
    @Test
    public void nativeQuery() {
 
@@ -73,26 +74,32 @@ public class TestNativeQuery {
 
       StringBuilder sqlQuery = new StringBuilder();
       StringBuilder sqlValues = new StringBuilder();
-      sqlQuery.append("insert into tremas_import_tmdgads1 values(null,");
+      sqlQuery.append("insert into tremas_import_tmdgads1 values ");
 
       try {
 
-         Class.forName("com.mysql.jdbc.Driver");
-
-         System.out.println("Driver O.K.");
-
-         String url = "jdbc:mysql://caliban/tremas";
-
-         String user = "dbad_tremas";
-
-         String passwd = "!tremas-12";
-
-         Connection conn = DriverManager.getConnection(url, user, passwd);
+         // Class.forName("com.mysql.jdbc.Driver");
+         //
+         // System.out.println("Driver O.K.");
+         //
+         // String url = "jdbc:mysql://caliban/tremas";
+         //
+         // String user = "dbad_tremas";
+         //
+         // String passwd = "!tremas-12";
+         //
+         // Connection conn = DriverManager.getConnection(url, user, passwd);
 
          System.out.println("Connexion effective !");
-
+         final int limit = 1000;
+         PreparedStatement ps = null;
+         this.emSocle.getTransaction().begin();
          for (Object[] objects : liste) {
-            sqlValues = new StringBuilder();
+            if (sqlValues.length() == 0)
+               sqlValues.append("(null,");
+            else
+               sqlValues.append(",(null,");
+
             for (int i = 0; i < objects.length; i++) {
                sqlValues.append("'").append(objects[i]).append("'");
                if (i != objects.length - 1)
@@ -100,20 +107,37 @@ public class TestNativeQuery {
             }
             sqlValues.append(")");
 
-            // query = this.emSocle.createNativeQuery(sql.toString());
-            java.sql.PreparedStatement ps = conn.prepareStatement(sqlQuery.toString() + sqlValues.toString());
+            if (++this.count % limit == 0) {
 
-            ps.executeUpdate();
-            System.out.println(sqlQuery.toString() + sqlValues.toString());
-            // query.executeUpdate();
-            // this.emSocle.getTransaction().commit();
+               query = this.emSocle.createNativeQuery(sqlQuery.toString() + sqlValues.toString());
+               query.executeUpdate();
+
+               // ps.executeBatch();
+               // ps.clearBatch();
+               // System.out.println("Flush");
+               // ps = conn.prepareStatement(sqlQuery.toString() + sqlValues.toString());
+               // ps.executeUpdate();
+               // System.out.println(sqlQuery.toString() + sqlValues.toString());
+               sqlValues.setLength(0);
+
+            }
 
          }
+         if (sqlValues.length() > 0) {
+
+            query = this.emSocle.createNativeQuery(sqlQuery.toString() + sqlValues.toString());
+            query.executeUpdate();
+
+         }
+         this.emSocle.flush();
+         this.emSocle.getTransaction().commit();
 
       } catch (Exception e) {
 
          e.printStackTrace();
 
+      } finally {
+         System.out.println("count : " + this.count);
       }
 
    }

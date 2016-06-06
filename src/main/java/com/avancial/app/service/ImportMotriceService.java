@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
+import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 /**

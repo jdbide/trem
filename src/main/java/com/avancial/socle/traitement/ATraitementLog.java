@@ -25,7 +25,7 @@ public abstract class ATraitementLog extends ATraitement {
 
    @Inject
    @Socle_PUSocle
-   protected EntityManager         em;
+   protected EntityManager         entityManagerSocle;
 
    // @Override
    public void execute() {
@@ -63,10 +63,10 @@ public abstract class ATraitementLog extends ATraitement {
     * 
     */
    protected void saveLog() {
-      this.em.getTransaction().begin();
-      this.em.persist(this.logBean);
-      this.em.flush();
-      this.em.getTransaction().commit();
+      this.entityManagerSocle.getTransaction().begin();
+      this.entityManagerSocle.persist(this.logBean);
+      this.entityManagerSocle.flush();
+      this.entityManagerSocle.getTransaction().commit();
 
    }
 

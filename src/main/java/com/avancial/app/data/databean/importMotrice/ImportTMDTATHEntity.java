@@ -1,7 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,23 +9,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDTATH")
-@NamedQuery(name = "ImportTMDTATH.getAll", query= "SELECT t FROM ImportTMDTATHEntity t")
+@NamedQuery(name = "ImportTMDTATH.getAll", query = "SELECT t FROM ImportTMDTATHEntity t")
 public class ImportTMDTATHEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long    idTMDTATH;
-   private String  TATH_TRCH_COD_CIE;
-   private String  TATH_TRCH_NUM_TRA1;
-   private String  TATH_TRCH_IND_FER;
-   private Double    TATH_TRCH_NUM;
-   private String  TATH_TYP_TAX;
-   private String  TATH_CD_VAL;
-   private String  TATH_INPT_RR_D;
-   private String  TATH_INPT_RR_F;
-   private String  TATH_PRIX_HORS_SYS;
+   private Long   idTMDTATH;
+   private String TATH_TRCH_COD_CIE;
+   private String TATH_TRCH_NUM_TRA1;
+   private String TATH_TRCH_IND_FER;
+   private String TATH_TRCH_NUM;
+   private String TATH_TYP_TAX;
+   private String TATH_CD_VAL;
+   private String TATH_INPT_RR_D;
+   private String TATH_INPT_RR_F;
+   private String TATH_PRIX_HORS_SYS;
    private String TATH_REGI;
-   private String  TATH_USER;
-   private Date    TATH_DHDO;
+   private String TATH_USER;
+   private String TATH_DHDO;
 
    /**
     * @return the idTMDTATH
@@ -92,7 +90,7 @@ public class ImportTMDTATHEntity {
    /**
     * @return the tATH_TRCH_NUM
     */
-   public Double getTATH_TRCH_NUM() {
+   public String getTATH_TRCH_NUM() {
       return this.TATH_TRCH_NUM;
    }
 
@@ -100,7 +98,7 @@ public class ImportTMDTATHEntity {
     * @param tATH_TRCH_NUM
     *           the tATH_TRCH_NUM to set
     */
-   public void setTATH_TRCH_NUM(Double tATH_TRCH_NUM) {
+   public void setTATH_TRCH_NUM(String tATH_TRCH_NUM) {
       this.TATH_TRCH_NUM = tATH_TRCH_NUM;
    }
 
@@ -212,7 +210,7 @@ public class ImportTMDTATHEntity {
    /**
     * @return the tATH_DHDO
     */
-   public Date getTATH_DHDO() {
+   public String getTATH_DHDO() {
       return this.TATH_DHDO;
    }
 
@@ -220,7 +218,7 @@ public class ImportTMDTATHEntity {
     * @param tATH_DHDO
     *           the tATH_DHDO to set
     */
-   public void setTATH_DHDO(Date tATH_DHDO) {
+   public void setTATH_DHDO(String tATH_DHDO) {
       this.TATH_DHDO = tATH_DHDO;
    }
 

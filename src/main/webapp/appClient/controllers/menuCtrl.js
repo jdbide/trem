@@ -3,7 +3,8 @@
 /**
  * Contrôleur pour les données de menu de l'application
  */
-socle_app.controller('menuCtrl', [ '$scope', 'menuService', function($scope, menuService) {
+socle_app.controller('menuCtrl', [ '$scope', 'menuService', 
+                                   function($scope, menuService) {
 	$scope.menu = {
 		rubriques: null
 	};
@@ -17,9 +18,13 @@ socle_app.controller('menuCtrl', [ '$scope', 'menuService', function($scope, men
 	constructor();
 	
 	$scope.setCurrentPage = function(indexRubrique, indexChapitre, indexPage) {
-		menuService.setRubriqueCourante($scope.menu.rubriques[indexRubrique].libelleIhmRubrique);
-		menuService.setChapitreCourant($scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].libelleIhmChapitre);
-		menuService.setPageCourante($scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].pages[indexPage].libelleIhmPage);
+		menuService.setCheminCourant(
+				$scope.menu.rubriques[indexRubrique].libelleIhmRubrique, 
+				$scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].libelleIhmChapitre, 
+				$scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].pages[indexPage].libelleIhmPage);
 	};
+	
+	$scope.chapitreCourant = menuService.getChapitreCourant; 
+	$scope.pageCourante = menuService.getPageCourante;
 	
 } ]);
