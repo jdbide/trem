@@ -30,6 +30,7 @@
       'ngTable',
       'm-loader',
       'ui.bootstrap',
+      'myModal',
       'ngStorage'
     ])
     

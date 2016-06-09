@@ -5,12 +5,21 @@ socle_app.controller("importJeuCtrl", ["$scope", "importJeuDonneeService", funct
 	$scope.title = "Importation des données";
 	
 	$scope.reponse = null;
+	$scope.showModalLogin = false;
+	
+	$scope.userform = importJeuDonneeService.getUserform();
+	
+	$scope.modalLogin = function() {
+		$scope.showModalLogin = !$scope.showModalLogin;
+	};
 	
 	$scope.importJeu = function() {
+		$scope.showModalLogin = false;
 		importJeuDonneeService.startTreatement().then(function() {
-			$scope.reponse = importJeuDonneeService.getReponse();
+			$scope.reponse = importJeuDonneeService.getReponse();			
 		}, function() {
-			$scope.reponse = importJeuDonneeService.getReponse();
-		});
-	};		
+			$scope.reponse = importJeuDonneeService.getReponse();			
+		});		
+    }
+	
 }]);
