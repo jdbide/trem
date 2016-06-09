@@ -3,13 +3,13 @@
 /**
  * Appelle un WebService pour récupérer le JSON qu'il envoie
  */
-socle_app.factory('jsonFactory',['$http', function($http) {
+socle_app.factory('jsonFactory',['$http', 'envService',function($http, envService) {
 	var jsonFactory = [];
 	
     jsonFactory.getJson = function (urlWebservice) {
         return $http({
                 method: "get",
-                url: urlWebservice,
+                url: envService.read('apiUrl')+urlWebservice,
                 async: false,
                 dataType: 'json',
                 crossDomain: false,

@@ -24,7 +24,7 @@ socle_app.service('menuService', ['jsonFactory', '$q', '$sessionStorage', 'pageA
     self.getDataByServer = function () {        
         var deffered  = $q.defer();
 
-        var promissJsonFactory = jsonFactory.getJson("http://localhost:8080/tremas/webService/menu");
+        var promissJsonFactory = jsonFactory.getJson("webService/menu");
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	menu = data;

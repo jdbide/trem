@@ -47,7 +47,7 @@ socle_app.service('importJeuDonneeService', ['jsonFactory', 'loadingService', '$
     	
         var deffered  = $q.defer();
         console.log(getDataSended());
-        var promissJsonFactory = jsonFactory.postJson("http://localhost:8080/tremas/webService/importJeu",  getDataSended());
+        var promissJsonFactory = jsonFactory.postJson("webService/importJeu",  getDataSended());
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	reponse.status = data.status;

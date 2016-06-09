@@ -31,6 +31,7 @@
       'm-loader',
       'ui.bootstrap',
       'myModal',
+      'environment',
       'ngStorage'
     ])
     
@@ -49,3 +50,50 @@
     	page: "Bonjour"
     })
     ;
+    
+    socle_app.config(function(envServiceProvider) {
+    	// set the domains and variables for each environment
+		envServiceProvider.config(
+            {
+                domains: {
+                    development: ['http://localhost:8080', 'localhost:8080', '127.0.0.1'],
+                    recette: ['http://tremas.rec-avancial.com:8080', 'tremas.rec-avancial.com:8080'],
+                    recette_client: [],
+                    recette_client_secu: [],
+				    production: [],
+					production_secu: []
+				    // anotherStage: []
+                },
+                
+                vars: {
+                    development: {
+                        apiUrl: 'http://localhost:8080/tremas/'
+                        // antoherCustomVar: ''
+                    },
+                    recette: {
+                        apiUrl: 'http://tremas.rec-avancial.com:8080/tremas/'
+                        // antoherCustomVar: ''
+                    },
+                    recette_client: {
+                        apiUrl: ''
+                        // antoherCustomVar: ''
+                    },
+                    recette_client_secu: {
+                        apiUrl: ''
+                        // antoherCustomVar: ''
+                    },
+                    production: {
+                        apiUrl: ''
+                        // antoherCustomVar: ''
+                    },
+					production_secu: {
+                        apiUrl: ''
+                        // antoherCustomVar: ''
+                    },
+                }
+            }
+       );
+		// run the environment check, so the comprobation is made
+		// before controllers and services are built
+		envServiceProvider.check(); 
+    });

@@ -12,7 +12,7 @@ socle_app.service('tablesMotriceService', ['jsonFactory', 'loadingService', '$q'
     	loadingService.show();
         var deffered  = $q.defer();
 
-        var promissJsonFactory = jsonFactory.getJson("http://localhost:8080/tremas/webService/app/tablesMotrice");
+        var promissJsonFactory = jsonFactory.getJson("webService/app/tablesMotrice");
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	tablesMotrice = data;

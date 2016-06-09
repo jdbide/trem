@@ -56,8 +56,8 @@
         url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;" connectionProperties="v$session.osuser=MyApp;"/>
 	
 </Context>
-
 -->
+
 
 <!--DEV en local <Context antiJARLocking="true" path="/"> <Resource name="BeanManager" 
 	auth="Container" type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" 
