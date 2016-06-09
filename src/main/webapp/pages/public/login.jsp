@@ -31,7 +31,7 @@
 	<div class="login-box">
 		
 		<div class="login-logo">
-			<a href="#"><b>Conexxion</b> - Tremas</a>
+			<a href="">${ infoPage.appName }</a>
 		</div>
 		
 		<div class="login-box-body">
@@ -63,22 +63,24 @@
 		        </div>
 			</form>
 				
+			<!--
 			<a href="#">I forgot my password</a><br/>
         	<a href="#" class="text-center">Register a new membership</a>			
+        	-->
 		</div><!-- /.login-box-body -->
-		<div style="background: red !important ;margin-bottom: 25px;text-align: center;">
-			<div class="col-xs-4" style="text-align: left;">- Avancial -</div><!-- /.col -->
-			<div class="col-xs-5" style="text-align: left;">
-				Etat du Serveur				
+		<div style="margin-bottom: 25px;text-align: center;">
+			<div class="col-xs-5" style="text-align: left;">${ infoPage.appVersionEtEnv } </div><!-- /.col -->
+			<div class="col-xs-4" style="text-align: left;">
+					- ${ infoPage.societeName } -	
 			</div>
 			<div class="col-xs-3" style="text-align: right;">				
 				<span>
-					<i class="fa fa-fw fa-database" style="color: green;" data-toggle="tooltip" data-placement="left" title="Serveur Bdd : actif (27/05/2016)"></i>
-					<i class="fa fa-fw fa-database" style="color: red;" data-toggle="tooltip" data-placement="left" title="Serveur Bdd : "></i>
+					
+					<i class="fa fa-fw fa-database" style="color: ${ infoPage.actifServerBdd ? 'green' : 'red' };" data-toggle="tooltip" data-placement="left" title="Serveur Bdd : actif"></i>
+					
 				</span> 
 				<span>
-					<i class="fa fa-fw fa-calendar-check-o" style="color: green;" data-toggle="tooltip" data-placement="left" title="Tooltip on left"></i>
-					<i class="fa fa-fw fa-calendar-times-o" style="color: red;" data-toggle="tooltip" data-placement="left" title="Tooltip on left"></i>
+					<i class="fa fa-fw fa-calendar-check-o" style="color: ${ infoPage.actifJob ? 'green' : 'red' };" data-toggle="tooltip" data-placement="left" title="Tooltip on left"></i>
 				</span>
 			</div><!-- /.col -->
 		</div>

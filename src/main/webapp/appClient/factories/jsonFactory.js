@@ -24,7 +24,7 @@ socle_app.factory('jsonFactory',['$http', 'envService',function($http, envServic
     jsonFactory.postJson = function (urlWebservice, data) {
         return $http({
                 method: "post",
-                url: urlWebservice,
+                url: envService.read('apiUrl')+urlWebservice,
                 async: false,
                 dataType: 'json',
                 crossDomain: false,

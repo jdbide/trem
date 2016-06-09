@@ -26,6 +26,8 @@ public class InfoPageService {
       /*
        * TODO 
        */
+      this.infoPageDto.setActifJob(true);
+      this.infoPageDto.setActifServerBdd(true); 
    }
    /**
     * Initialisation d'InfoPageDto
@@ -35,7 +37,7 @@ public class InfoPageService {
       this.infoPageDto = new InfoPageDto();
       this.infoPageDto.setSocieteName("Avancial");
       this.infoPageDto.setAppName("Tremas");
-      this.infoPageDto.setAppVersionEtEnv("Was ... - App ...");
+      this.infoPageDto.setAppVersionEtEnv("Socle 2.0 - App 1.0");
       this.infoPageDto.setMsgHeaderLogin("");
       this.infoPageDto.setActifJob(false);
       this.infoPageDto.setActifServerBdd(false);      
