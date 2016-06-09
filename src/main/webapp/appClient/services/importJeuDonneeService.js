@@ -10,21 +10,54 @@ socle_app.service('importJeuDonneeService', ['jsonFactory', 'loadingService', '$
 		 message : null
 		};
 	
+	var userForm = {
+	        username : null,
+	        password : null,
+	    }
+	
+	/**
+    *
+    * Private Methodes
+    */
+   var initUserForm = function () {
+		userForm.username = null;
+		userForm.password = null;
+   }
+	
+	var getDataSended = function () {
+		return {
+	        	   "idApplication":1,
+	        	   "username":userForm.username,
+	        	   "password":userForm.password
+	        };
+	}
+	
 	var self = this;
+	
+	/**
+    *
+    * Public Methodes
+    */
+   self.getUserform = function () {
+       return userForm;
+   }
 	
 	self.startTreatement = function () {
     	loadingService.show();
+    	
         var deffered  = $q.defer();
-
-        var promissJsonFactory = jsonFactory.postJson("http://localhost:8080/tremas/webService/importJeu", 1);
+        console.log(getDataSended());
+        var promissJsonFactory = jsonFactory.postJson("http://localhost:8080/tremas/webService/importJeu",  getDataSended());
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	reponse.status = data.status;
             	reponse.message = data.message;
-            	loadingService.hide();
+            	initUserForm();
+            	loadingService.hide();            	
                 deffered.resolve();
             })
             .error(function (data, status, headers, config) {
+            	initUserForm();
             	loadingService.hide();
                 deffered.reject();
         });
