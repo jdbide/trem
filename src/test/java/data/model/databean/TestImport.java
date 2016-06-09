@@ -7,7 +7,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
@@ -20,7 +19,6 @@ public class TestImport {
    // @Socle_PUExterne
    // private EntityManager eme;
 
-   @Test
    public void testImportTMDGADS() {
       try {
          Class.forName("com.mysql.jdbc.Driver");
@@ -65,12 +63,11 @@ public class TestImport {
                sqlInsertBis.append(")");
                stateSocle.executeUpdate(sqlInsert + "" + sqlInsertBis);
                sqlInsertBis.setLength(0);
-            }
-            else
+            } else
                sqlInsertBis.append("),(");
          }
          if (compt % 1000 != 0) {
-            sqlInsertBis.setLength(sqlInsertBis.length()-2);
+            sqlInsertBis.setLength(sqlInsertBis.length() - 2);
             stateSocle.executeUpdate(sqlInsert + "" + sqlInsertBis);
          }
 

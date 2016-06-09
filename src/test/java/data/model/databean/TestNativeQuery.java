@@ -16,7 +16,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
@@ -62,7 +61,6 @@ public class TestNativeQuery {
 
    private int   count;
 
-   @Test
    public void nativeQuery() {
 
       Query query = this.em.createNativeQuery("select * from f$mdrp1.TMDGADS");
