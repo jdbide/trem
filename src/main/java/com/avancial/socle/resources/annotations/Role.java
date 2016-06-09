@@ -15,8 +15,8 @@ import java.lang.annotation.Target;
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE) // on class level
+@Target({ElementType.TYPE, ElementType.METHOD}) // on class level
 public @interface Role {
 
-   String[] values();
+   String[] values() default "ADMIN_WAS";
 }

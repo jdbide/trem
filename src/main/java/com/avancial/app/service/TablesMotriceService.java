@@ -26,7 +26,7 @@ public class TablesMotriceService {
      */
     public List<TablesMotriceEntity> getAllTablesMotrice() {
         Query query = this.em.createNamedQuery("TablesMotrice.getAll", TablesMotriceEntity.class);
-        return query.getResultList();
+        return ((List<TablesMotriceEntity>) query.getResultList());
     }
 
 }

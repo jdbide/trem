@@ -48,30 +48,25 @@
 	</persistence-unit>
 	
 	<persistence-unit name="PU_db2" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>        
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <non-jta-data-source>java:comp/env/jdbc/db2</non-jta-data-source>   
         <properties>
         	<!-- Configuring JDBC properties -->
         	<!-- 
         	Not supported by BasicDataSource
         	<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/db2" /> 
-        	-->        	
-        	<property name="javax.persistence.jdbc.url" value="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;" />      		
-      		<property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver" /> 
-        
+        	       	
+        	
+      		<property name="javax.persistence.jdbc.user" value="SGAV026"/>
+      		<property name="javax.persistence.jdbc.password" value="bitchs39"/>
+        --> 
         	<!-- Hibernate properties -->
             <property name="hibernate.id.new_generator_mappings" value="true" />
             <property name="hibernate.archive.autodetection" value="class" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
-            <property name="connection.autocommit" value="false" />
-            
-            <!-- Configuring Connection Pool -->
-		      <property name="hibernate.c3p0.min_size" value="5" />
-		      <property name="hibernate.c3p0.max_size" value="20" />
-		      <property name="hibernate.c3p0.timeout" value="500" />
-		      <property name="hibernate.c3p0.max_statements" value="50" />
-		      <property name="hibernate.c3p0.idle_test_period" value="2000" />           
+            <property name="connection.autocommit" value="false" />             
         </properties>
     </persistence-unit>
 	

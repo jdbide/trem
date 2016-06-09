@@ -3,7 +3,6 @@ package com.avancial.app.persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -27,7 +26,7 @@ public class EntityManagerFactoryProviderDb2 {
       try {
          persistUnitConfig.put("javax.persistence.jdbc.user", userName);
          persistUnitConfig.put("javax.persistence.jdbc.password", password);
-         
+
          emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME, persistUnitConfig);
          
          if (DEBUG)

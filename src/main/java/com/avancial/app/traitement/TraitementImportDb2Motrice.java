@@ -10,8 +10,6 @@ import javax.persistence.Query;
 import org.hibernate.SQLQuery;
 
 import com.avancial.app.data.databean.TablesMotriceEntity;
-import com.avancial.app.service.ImportMotriceService;
-import com.avancial.app.service.TablesMotriceService;
 import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.traitement.ATraitementImportDataBase;
 

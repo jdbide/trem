@@ -14,6 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.avancial.app.data.dto.ImportJeuDonneesDto;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
 import com.avancial.app.webService.bean.ResponseBean;
 
@@ -33,11 +34,12 @@ public class ImportJeuDonneeWebService {
    @POST
    @Produces({ MediaType.APPLICATION_JSON })
    @Consumes({ MediaType.APPLICATION_JSON })
-   public Response execute(Integer idApplication) throws Exception {
+   public Response execute(ImportJeuDonneesDto importJeuDonneesDto) throws Exception {
       ResponseBean responseBean = new ResponseBean();
 
       if (!traitementEnCours) {// un seul traitement à la fois
          traitementEnCours = true;
+         this.importJeuDonnees.setImportJeuDonneesDto(importJeuDonneesDto);
          this.importJeuDonnees.execute();
          traitementEnCours = false;
 
