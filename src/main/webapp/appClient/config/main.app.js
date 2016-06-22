@@ -51,12 +51,22 @@
     })
     ;
     
+    /**
+     * Configuration de httpProvider
+     */
+    
+    socle_app.config(function ($provide, $httpProvider) {
+    	 // Add the interceptor to the $httpProvider.
+    	$httpProvider.interceptors.push('socleHttpProvider');
+    });
+    
     socle_app.config(function(envServiceProvider) {
     	// set the domains and variables for each environment
 		envServiceProvider.config(
             {
                 domains: {
-                    development: ['http://localhost:8080', 'localhost:8080', '127.0.0.1'],
+                    development: ['http://localhost:8080', 'localhost:8080', '127.0.0.1:8080'],
+                    development_b: ['http://localhost:8081', 'localhost:8081', '127.0.0.1:8081'],
                     recette: ['http://tremas.rec-avancial.com:8080', 'tremas.rec-avancial.com:8080'],
                     recette_client: [],
                     recette_client_secu: [],
@@ -67,11 +77,18 @@
                 
                 vars: {
                     development: {
-                        apiUrl: 'http://localhost:8080/tremas/'
+                        apiUrl: 'http://localhost:8080/tremas/',
+                        loginUrl: 'http://localhost:8080/tremas/login'
+                        // antoherCustomVar: ''
+                    },
+                    development_b: {
+                        apiUrl: 'http://localhost:8081/tremas/',
+                        loginUrl: 'http://localhost:8081/tremas/login'
                         // antoherCustomVar: ''
                     },
                     recette: {
-                        apiUrl: 'http://tremas.rec-avancial.com:8080/tremas/'
+                        apiUrl: 'http://tremas.rec-avancial.com:8080/tremas/',
+                        loginUrl: 'http://tremas.rec-avancial.com:8080/tremas/login'
                         // antoherCustomVar: ''
                     },
                     recette_client: {

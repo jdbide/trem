@@ -30,14 +30,12 @@
 		</properties>
 	</persistence-unit>
 	
-	<persistence-unit name="PU_externe" transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	<!-- <persistence-unit name="PU_externe" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<non-jta-data-source>java:comp/env/jdbc/externe</non-jta-data-source>
 
 		<properties>
-			<!-- Configuring JDBC properties -->
 			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/externe" />
-			<!-- Hibernate properties -->
 			<property name="hibernate.id.new_generator_mappings" value="true" />
 			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.show_sql" value="true" />
@@ -45,21 +43,13 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
 			<property name="connection.autocommit" value="false" />
 		</properties>
-	</persistence-unit>
+	</persistence-unit> -->
 	
 	<persistence-unit name="PU_db2" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <non-jta-data-source>java:comp/env/jdbc/db2</non-jta-data-source>   
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>   
         <properties>
-        	<!-- Configuring JDBC properties -->
-        	<!-- 
-        	Not supported by BasicDataSource
-        	<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/db2" /> 
-        	       	
-        	
-      		<property name="javax.persistence.jdbc.user" value="SGAV026"/>
-      		<property name="javax.persistence.jdbc.password" value="bitchs39"/>
-        --> 
+        	<property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;"/>
         	<!-- Hibernate properties -->
             <property name="hibernate.id.new_generator_mappings" value="true" />
             <property name="hibernate.archive.autodetection" value="class" />

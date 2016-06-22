@@ -9,7 +9,7 @@
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 	
-	<title>Tremas - Login</ui:insert></title>	
+	<title>Tremas - Login</title>	
 	<c:set var="pathContext" value="${pathContext}" />
 	
 	<!-- Bootstrap 3.3.5 -->
@@ -87,7 +87,7 @@
 	</div> <!-- /.login-box -->
 
 	<!-- jQuery 2.1.4 -->
-    <script src="${pathContext}/appClient/vendor/jQuery/2.1.4/jQuery-2.1.4.min.js"></script>
+    <script src="${pathContext}/appClient/vendor/jQuery/jquery-2.2.4.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="${pathContext}/appClient/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- iCheck -->

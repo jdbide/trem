@@ -69,7 +69,7 @@ public class LoginServlet  extends HttpServlet {
       * TODO remplacer avec le bon message
       */        
      if (msgErr != null)
-        request.setAttribute(AUTH_constants.ERR_AUTH.toString(), AUTH_error.SESSION_EXPIR.toString());
+        request.setAttribute(AUTH_constants.ERR_AUTH.toString(), msgErr);
   }
 
    /**

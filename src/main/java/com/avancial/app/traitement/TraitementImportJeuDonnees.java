@@ -27,7 +27,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
    @Inject
    @Socle_PUSocle
    EntityManager entityManagerSocle;
-      
+
+   
    EntityManager entityManagerDb2;
    
    @Inject
