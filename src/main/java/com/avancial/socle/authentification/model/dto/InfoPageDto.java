@@ -1,4 +1,4 @@
-package com.avancial.socle.authentification.dto;
+package com.avancial.socle.authentification.model.dto;
 
 import java.io.Serializable;
 /**

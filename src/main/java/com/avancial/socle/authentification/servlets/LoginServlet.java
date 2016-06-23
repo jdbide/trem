@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.avancial.socle.authentification.dto.InfoPageDto;
 import com.avancial.socle.authentification.form.authForm;
+import com.avancial.socle.authentification.model.dto.InfoPageDto;
 import com.avancial.socle.authentification.resources.constants.AUTH_constants;
 import com.avancial.socle.authentification.resources.constants.AUTH_error;
 import com.avancial.socle.authentification.resources.constants.AUTH_navigation;

@@ -25,11 +25,13 @@ import com.avancial.app.webService.bean.ResponseBean;
 @Path("/importJeu")
 @RequestScoped
 public class ImportJeuDonneeWebService {
+   @Context private HttpServletRequest request;
+   
    @Inject
    private TraitementImportJeuDonnees importJeuDonnees;
    
    private static boolean traitementEnCours;// gestion de l'unicité du traitement
-   @Context private HttpServletRequest servletRequest;
+   
    
    @POST
    @Produces({ MediaType.APPLICATION_JSON })

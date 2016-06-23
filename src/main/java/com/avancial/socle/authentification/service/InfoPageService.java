@@ -2,7 +2,7 @@ package com.avancial.socle.authentification.service;
 
 import javax.inject.Inject;
 
-import com.avancial.socle.authentification.dto.InfoPageDto;
+import com.avancial.socle.authentification.model.dto.InfoPageDto;
 /**
  * Service pour la gestion des info de la page de login
  * TODO a completer

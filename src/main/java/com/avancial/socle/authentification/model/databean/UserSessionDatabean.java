@@ -1,32 +1,29 @@
-/**
- * 
- */
-package com.avancial.socle.data.model.dto;
+package com.avancial.socle.authentification.model.databean;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * @author hamza.laterem
+ * Les données de l'utilisateur qui seront sauvegardé en session
  * 
- * Bean représente les données envoyés du serveur vers l'app concernant l'utlisateur connecté
+ * @author hamza.laterem
  *
  */
-public class UserDto {
+public class UserSessionDatabean {
    /*
     * Infos user
     */
-   private String username;
+   private Long idUser;   
+   private String username;   
    private String nomUser;
    private String prenomUser;
    private String mailUser;
-   private String cpUser;
-   private String robotUser;
+   private String cpUser;   
+   private boolean robotUser;
    
    /*
     * Rôles
     */
-   private List<Long>   idRoles;
+   private List<Long> idRoles;
    private List<String> labelRoles;
    /*
     * Ect, Uo, Equipe
@@ -35,89 +32,52 @@ public class UserDto {
    private String libelleUo;
    private String libelleEquipe;
    
-   /**
-    * 
-    */
-   public UserDto() {
+   public UserSessionDatabean() {
       this.idRoles = new ArrayList<Long>();
       this.labelRoles = new ArrayList<String>();
    }
 
+   public void addRole(String role) {
+      this.labelRoles.add(role);
+   }
+   
+   public void addRole(Long role) {
+      this.idRoles.add(role);
+   }
+   
    /**
-    * @return the loginUser
+    * @return the username
     */
    public String getUsername() {
-      return username;
+      return this.username;
    }
-
+   
    /**
-    * @param loginUser the loginUser to set
+    * @param username the username to set
     */
    public void setUsername(String username) {
       this.username = username;
    }
 
    /**
-    * @return the mailUser
+    * @return the idUser
     */
-   public String getMailUser() {
-      return mailUser;
+   public Long getIdUser() {
+      return this.idUser;
    }
 
    /**
-    * @param mailUser the mailUser to set
+    * @param idUser the idUser to set
     */
-   public void setMailUser(String mailUser) {
-      this.mailUser = mailUser;
-   }
-
-   /**
-    * @return the nomUser
-    */
-   public String getNomUser() {
-      return nomUser;
-   }
-
-   /**
-    * @param nomUser the nomUser to set
-    */
-   public void setNomUser(String nomUser) {
-      this.nomUser = nomUser;
-   }
-
-   /**
-    * @return the prenomUser
-    */
-   public String getPrenomUser() {
-      return prenomUser;
-   }
-
-   /**
-    * @param prenomUser the prenomUser to set
-    */
-   public void setPrenomUser(String prenomUser) {
-      this.prenomUser = prenomUser;
-   }
-
-   /**
-    * @return the robotUser
-    */
-   public String getRobotUser() {
-      return robotUser;
-   }
-
-   /**
-    * @param robotUser the robotUser to set
-    */
-   public void setRobotUser(String robotUser) {
-      this.robotUser = robotUser;
+   public void setIdUser(Long idUser) {
+      this.idUser = idUser;
    }
 
    /**
     * @return the idRoles
     */
    public List<Long> getIdRoles() {
-      return idRoles;
+      return this.idRoles;
    }
 
    /**
@@ -131,7 +91,7 @@ public class UserDto {
     * @return the labelRoles
     */
    public List<String> getLabelRoles() {
-      return labelRoles;
+      return this.labelRoles;
    }
 
    /**
@@ -184,6 +144,48 @@ public class UserDto {
    }
 
    /**
+    * @return the nomUser
+    */
+   public String getNomUser() {
+      return nomUser;
+   }
+
+   /**
+    * @param nomUser the nomUser to set
+    */
+   public void setNomUser(String nomUser) {
+      this.nomUser = nomUser;
+   }
+
+   /**
+    * @return the prenomUser
+    */
+   public String getPrenomUser() {
+      return prenomUser;
+   }
+
+   /**
+    * @param prenomUser the prenomUser to set
+    */
+   public void setPrenomUser(String prenomUser) {
+      this.prenomUser = prenomUser;
+   }
+
+   /**
+    * @return the mailUser
+    */
+   public String getMailUser() {
+      return mailUser;
+   }
+
+   /**
+    * @param mailUser the mailUser to set
+    */
+   public void setMailUser(String mailUser) {
+      this.mailUser = mailUser;
+   }
+
+   /**
     * @return the cpUser
     */
    public String getCpUser() {
@@ -195,6 +197,20 @@ public class UserDto {
     */
    public void setCpUser(String cpUser) {
       this.cpUser = cpUser;
+   }   
+
+   /**
+    * @return the robotUser
+    */
+   public boolean isRobotUser() {
+      return robotUser;
+   }
+
+   /**
+    * @param robotUser the robotUser to set
+    */
+   public void setRobotUser(boolean robotUser) {
+      this.robotUser = robotUser;
    }
 
 }
