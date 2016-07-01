@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 import org.json.simple.JSONArray;
 import com.avancial.socle.data.controller.dao.IhmRubriqueDao;
 
-@Path("/menu")
+@Path("/socle/menu")
 public class MenuService {
 
     @GET

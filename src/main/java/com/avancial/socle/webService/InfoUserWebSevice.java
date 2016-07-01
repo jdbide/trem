@@ -26,7 +26,7 @@ import com.avancial.socle.utils.SessionUtils;
  * @author hamza.laterem
  *
  */
-@Path("/infoUser")
+@Path("/socle/infoUser")
 @RequestScoped
 public class InfoUserWebSevice {
    @Context private HttpServletRequest request;

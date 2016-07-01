@@ -10,9 +10,9 @@ import javax.ws.rs.core.Response;
 
 import org.json.simple.JSONObject;
 
-@Path("/hello")
+@Path("/socle/hello")
 public class HelloService {
-   // variable pour récupérer la session lors de la requête
+   // variable pour rï¿½cupï¿½rer la session lors de la requï¿½te
    @Context private HttpServletRequest servletRequest;
    
    @GET   

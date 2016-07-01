@@ -17,7 +17,7 @@ import com.avancial.app.service.TablesImportService;
  * @author gabriel.gagnier
  *
  */
-@Path("/tablesImport")
+@Path("/app/tablesImport")
 @RequestScoped
 public class ImportTableWebService {
 

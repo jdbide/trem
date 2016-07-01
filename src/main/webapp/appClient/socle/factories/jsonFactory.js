@@ -6,10 +6,10 @@
 socle_app.factory('jsonFactory',['$http', 'envService',function($http, envService) {
 	var jsonFactory = [];
 	
-    jsonFactory.getJson = function (urlWebservice) {
+    jsonFactory.getJson = function (nameWebservice) {
         return $http({
                 method: "get",
-                url: envService.read('apiUrl')+urlWebservice,
+                url: envService.read('apiUrl')+nameWebservice,
                 async: false,
                 dataType: 'json',
                 crossDomain: false,
@@ -21,10 +21,10 @@ socle_app.factory('jsonFactory',['$http', 'envService',function($http, envServic
         
     };
     
-    jsonFactory.postJson = function (urlWebservice, data) {
+    jsonFactory.postJson = function (nameWebservice, data) {
         return $http({
                 method: "post",
-                url: envService.read('apiUrl')+urlWebservice,
+                url: envService.read('apiUrl')+nameWebservice,
                 async: false,
                 dataType: 'json',
                 crossDomain: false,

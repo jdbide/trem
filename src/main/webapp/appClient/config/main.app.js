@@ -78,16 +78,22 @@
                 vars: {
                     development: {
                         apiUrl: 'http://localhost:8080/tremas/',
+                        appWebService : 'http://localhost:8080/tremas/webService/app',
+                        socleWebService : 'http://localhost:8080/tremas/webService/socle',
                         loginUrl: 'http://localhost:8080/tremas/login'
                         // antoherCustomVar: ''
                     },
                     development_b: {
                         apiUrl: 'http://localhost:8081/tremas/',
+                        appWebService : 'http://localhost:8081/tremas/webService/app',
+                        socleWebService : 'http://localhost:8081/tremas/webService/socle',
                         loginUrl: 'http://localhost:8081/tremas/login'
                         // antoherCustomVar: ''
                     },
                     recette: {
                         apiUrl: 'http://tremas.rec-avancial.com:8080/tremas/',
+                        appWebService : 'http://tremas.rec-avancial.com:8080/tremas/webService/app',
+                        socleWebService : 'http://tremas.rec-avancial.com:8080/tremas/webService/socle',
                         loginUrl: 'http://tremas.rec-avancial.com:8080/tremas/login'
                         // antoherCustomVar: ''
                     },

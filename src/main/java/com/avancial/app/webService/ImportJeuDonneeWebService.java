@@ -22,7 +22,7 @@ import com.avancial.app.webService.bean.ResponseBean;
  * WebService appelé pour lancer l'import d'un jeu de données.
  *
  */
-@Path("/importJeu")
+@Path("/app/importJeu")
 @RequestScoped
 public class ImportJeuDonneeWebService {
    @Context private HttpServletRequest request;

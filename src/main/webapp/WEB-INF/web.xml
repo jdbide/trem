@@ -55,11 +55,7 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>servlet-jersey</servlet-name>
-		<!-- 
-			<url-pattern>/webService/socle/*</url-pattern>
-			<url-pattern>/webService/app/*</url-pattern> 
-		-->
+		<servlet-name>servlet-jersey</servlet-name>				
 		<url-pattern>/webService/*</url-pattern>
 	</servlet-mapping>
 

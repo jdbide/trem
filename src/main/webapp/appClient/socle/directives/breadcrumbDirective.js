@@ -7,6 +7,6 @@
 socle_app.directive('socleBreadcrumb', function() {
 	return {
 		restrict: 'E',
-		templateUrl: "views/modals/breadcrumb.xhtml"
+		templateUrl: "socle/views/modals/breadcrumb.xhtml"
 	};
 });

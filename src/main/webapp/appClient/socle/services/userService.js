@@ -16,7 +16,7 @@ socle_app.service('userService', ['jsonFactory', '$q', function(jsonFactory, $q)
 	self.getDataByServer = function () {
 		var deffered  = $q.defer();
 		
-		var promissJsonFactory = jsonFactory.getJson("webService/infoUser");
+		var promissJsonFactory = jsonFactory.getJson("webService/socle/infoUser");
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	user = data['userInfo'];

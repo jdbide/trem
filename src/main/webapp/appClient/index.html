@@ -26,7 +26,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body class="hold-transition skin-blue sidebar-mini" ng-app="socle_app" ng-controller="globalCtrl">
 
 	<div class="wrapper">
-		<div ng-include="'views/partials/navbar-top.xhtml'"></div>
+		<div ng-include="'socle/views/partials/navbar-top.xhtml'"></div>
 		<!-- Left side column. contains the sidebar -->
 		<aside class="main-sidebar">
 		
@@ -63,6 +63,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script src="vendor/angular/angular-animate.min.js"></script>
 	<script src="vendor/angular/angular-touch.min.js"></script>
 	<script src="vendor/angular/angular-locale_fr-fr.js"></script>
+	<!-- Module externes -->
+	<script type="text/javascript" src="vendor/angular-environment/angular-environment.js"></script>
     <!-- ng-table -->
     <script src="vendor/ng-table/ng-table.js"></script>
     <!-- m-loader -->
@@ -72,41 +74,54 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- ngStorage -->
     <script src="vendor/ngStorage/ngStorage.min.js"></script>
 
-    <!-- socle_app : Application angularjs -->
+    <!--  Application config angularjs -->
 	<script type="text/javascript" src="config/main.app.js"></script>
-	<script type="text/javascript" src="config/config.route.js"></script>
 	
-	<!-- Module externes -->
-	<script type="text/javascript" src="vendor/angular-environment/angular-environment.js"></script>
-
+	<!-- socle_app : config -->
+	<script type="text/javascript" src="socle/config/config.route.js"></script>
+	
+	<!-- socle_app -->	
+	<!-- socle_app : Application config angularjs -->
+	<script type="text/javascript" src="socle/config/config.route.js"></script>
     <!-- Directives -->
-	<script type="text/javascript" src="directives/menuDirective.js"></script>
-	<script type="text/javascript" src="directives/tableDirective.js"></script>
-	<script type="text/javascript" src="directives/breadcrumbDirective.js"></script>
-	<script type="text/javascript" src="directives/modelDirective.js"></script>
+	<script type="text/javascript" src="socle/directives/menuDirective.js"></script>
+	<script type="text/javascript" src="socle/directives/tableDirective.js"></script>
+	<script type="text/javascript" src="socle/directives/breadcrumbDirective.js"></script>
+	<script type="text/javascript" src="socle/directives/modelDirective.js"></script>
 
     <!-- Factories -->
-	<script type="text/javascript" src="factories/jsonFactory.js"></script>
+	<script type="text/javascript" src="socle/factories/jsonFactory.js"></script>
 
     <!-- Filters -->
-	<script type="text/javascript" src="filters/identityFilter.js"></script>
+	<script type="text/javascript" src="socle/filters/identityFilter.js"></script>
 
     <!-- Services -->
-	<script type="text/javascript" src="services/menuService.js"></script>
-	<script type="text/javascript" src="services/userService.js"></script>
-	<script type="text/javascript" src="services/importService.js"></script>
-    <script type="text/javascript" src="services/loadingService.js"></script>
-    <script type="text/javascript" src="services/importJeuDonneeService.js"></script>
-    <script type="text/javascript" src="services/tablesMotriceService.js"></script>
+	<script type="text/javascript" src="socle/services/menuService.js"></script>
+	<script type="text/javascript" src="socle/services/userService.js"></script>	
+    <script type="text/javascript" src="socle/services/loadingService.js"></script>    
     
     <!-- Contrôleurs -->
-	<script type="text/javascript" src="controllers/globalCtrl.js"></script>
-	<script type="text/javascript" src="controllers/menuCtrl.js"></script>
-	<script type="text/javascript" src="controllers/pagesCtrl.js"></script>
-	<script type="text/javascript" src="controllers/testCtrl.js"></script>
-	<script type="text/javascript" src="controllers/tablesCtrl.js"></script>
-	<script type="text/javascript" src="controllers/importJeuCtrl.js"></script>
-	<script type="text/javascript" src="controllers/breadcrumbCtrl.js"></script>
-	<script type="text/javascript" src="factories/socleHttpProvider.js"></script>
+	<script type="text/javascript" src="socle/controllers/globalCtrl.js"></script>
+	<script type="text/javascript" src="socle/controllers/menuCtrl.js"></script>
+	<script type="text/javascript" src="socle/controllers/pagesCtrl.js"></script>
+	<script type="text/javascript" src="socle/controllers/testCtrl.js"></script>
+	<script type="text/javascript" src="socle/controllers/breadcrumbCtrl.js"></script>
+	<!-- Interceptor -->
+	<script type="text/javascript" src="socle/factories/socleHttpProvider.js"></script>
+	
+	<!-- app : Application config angularjs -->
+	<script type="text/javascript" src="app/config/config.route.js"></script>
+	<!-- socle_app -->
+    <!-- Directives -->
+    <!-- Factories -->
+    <!-- Filters -->	
+
+    <!-- Services -->
+	<script type="text/javascript" src="app/services/importService.js"></script>
+    <script type="text/javascript" src="app/services/importJeuDonneeService.js"></script>
+    <script type="text/javascript" src="app/services/tablesMotriceService.js"></script>
+    
+    <!-- Contrôleurs -->
+	<script type="text/javascript" src="app/controllers/importJeuCtrl.js"></script>
 </body>
 </html>

@@ -24,7 +24,7 @@ socle_app.service('menuService', ['jsonFactory', '$q', '$sessionStorage', 'pageA
     self.getDataByServer = function () {        
         var deffered  = $q.defer();
 
-        var promissJsonFactory = jsonFactory.getJson("webService/menu");
+        var promissJsonFactory = jsonFactory.getJson("webService/socle/menu");
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	menu = data;
