@@ -21,7 +21,9 @@ socle_app.controller('menuCtrl', [ '$scope', 'menuService',
 		menuService.setCheminCourant(
 				$scope.menu.rubriques[indexRubrique].libelleIhmRubrique, 
 				$scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].libelleIhmChapitre, 
-				$scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].pages[indexPage].libelleIhmPage);
+				$scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].pages[indexPage].libelleIhmPage
+		);
+		menuService.savePageLien($scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].pages[indexPage].lienIhmPage);
 	};
 	
 	$scope.chapitreCourant = menuService.getChapitreCourant; 

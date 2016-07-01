@@ -3,16 +3,16 @@
 /**
  * Service gérant le menu de pages de l'application
  */
-socle_app.service('menuService', ['jsonFactory', '$q', '$sessionStorage', 'pageAccueil', function(jsonFactory, $q, $sessionStorage, pageAccueil) {
+socle_app.service('menuService', ['jsonFactory', '$q', 'pageAccueil', function(jsonFactory, $q, pageAccueil) {
 	var menu = [];
-	if (!$sessionStorage.rubrique) {
-		$sessionStorage.rubrique = pageAccueil.rubrique;
+	if (!sessionStorage.rubrique) {
+		sessionStorage.rubrique = pageAccueil.rubrique;
 	}
-	if (!$sessionStorage.chapitre) {
-		$sessionStorage.chapitre = pageAccueil.chapitre;
+	if (!sessionStorage.chapitre) {
+		sessionStorage.chapitre = pageAccueil.chapitre;
 	}
-	if (!$sessionStorage.page) {
-		$sessionStorage.page = pageAccueil.page;
+	if (!sessionStorage.page) {
+		sessionStorage.page = pageAccueil.page;
 	}
 	
     var self = this;
@@ -45,27 +45,58 @@ socle_app.service('menuService', ['jsonFactory', '$q', '$sessionStorage', 'pageA
      * Rubrique de la page affichée
      */
     self.getRubriqueCourante = function() {
-    	return $sessionStorage.rubrique;
+    	return sessionStorage.rubrique;
     } 
 
     /**
      * Chapitre de la page affichée
      */
     self.getChapitreCourant = function() {
-    	return $sessionStorage.chapitre;
+    	return sessionStorage.chapitre;
     } 
     
     /**
      * Page affichée
      */
     self.getPageCourante = function() {
-    	return $sessionStorage.page;
+    	return sessionStorage.page;
     }
     
     self.setCheminCourant = function(libelleRubrique, libelleChapitre, libellePage) {
-    	$sessionStorage.rubrique = libelleRubrique;
-    	$sessionStorage.chapitre = libelleChapitre;
-    	$sessionStorage.page = libellePage;
+    	sessionStorage.rubrique = libelleRubrique;
+    	sessionStorage.chapitre = libelleChapitre;
+    	sessionStorage.page = libellePage;
+    }
+    
+    self.setCheminCourantFromLien = function(lienPage) {
+    	var rubrique, chapitre, page;
+    	var pageTrouvee = false;
+    	for (var i = 0; i < menu.length; i++) {
+    		rubrique = menu[i].libelleIhmRubrique;
+    		for (var j = 0; j < menu[i].chapitres.length; j++) {
+    			chapitre = menu[i].chapitres[j].libelleIhmChapitre;
+    			for (var k = 0; k < menu[i].chapitres[j].pages.length; k++) {
+    				page = menu[i].chapitres[j].pages[k].libelleIhmPage;
+    				if (menu[i].chapitres[j].pages[k].lienIhmPage === lienPage) {
+    					pageTrouvee = true;
+    					break;
+    				}
+    			}
+    			if (pageTrouvee) {
+    				break;
+    			}
+    		}
+    		if (pageTrouvee) {
+    			break;
+    		}
+    	}
+    	if (rubrique && chapitre && page) {
+    		this.setCheminCourant(rubrique, chapitre, page);
+    	}
+    }
+    
+    self.savePageLien = function(lienPage) {
+    	sessionStorage.lienPage = lienPage;
     }
     
     return self;

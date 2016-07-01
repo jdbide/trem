@@ -31,8 +31,7 @@
       'm-loader',
       'ui.bootstrap',
       'myModal',
-      'environment',
-      'ngStorage'
+      'environment'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {
