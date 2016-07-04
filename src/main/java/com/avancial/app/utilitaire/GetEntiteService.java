@@ -1,6 +1,6 @@
 package com.avancial.app.utilitaire;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Retourne des classes ou noms de classe d'entités en fonction de tables ou d'entités données en paramètre.
