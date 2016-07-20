@@ -13,9 +13,9 @@ import javax.persistence.Table;
 public class MotriceTrainEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long idMotriceTrain;
-   private String  numeroTrain;
-   private Boolean validForRR;
+   private Long    idMotriceTrain;
+   private String  trainNumberMotriceTrain;
+   private Boolean validForRRMotriceTrain;
 
    /**
     * @return the idMotriceTrain
@@ -36,7 +36,7 @@ public class MotriceTrainEntity {
     * @return the numeroTrain
     */
    public String getNumeroTrain() {
-      return numeroTrain;
+      return trainNumberMotriceTrain;
    }
 
    /**
@@ -44,14 +44,14 @@ public class MotriceTrainEntity {
     *           the numeroTrain to set
     */
    public void setNumeroTrain(String numeroTrain) {
-      this.numeroTrain = numeroTrain;
+      this.trainNumberMotriceTrain = numeroTrain;
    }
 
    /**
     * @return the validForRR
     */
    public Boolean getValidForRR() {
-      return validForRR;
+      return validForRRMotriceTrain;
    }
 
    /**
@@ -59,6 +59,6 @@ public class MotriceTrainEntity {
     *           the validForRR to set
     */
    public void setValidForRR(Boolean validForRR) {
-      this.validForRR = validForRR;
+      this.validForRRMotriceTrain = validForRR;
    }
 }
