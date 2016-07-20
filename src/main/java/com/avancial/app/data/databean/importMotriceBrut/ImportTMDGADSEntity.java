@@ -1,4 +1,4 @@
-package com.avancial.app.data.databean.importMotrice;
+package com.avancial.app.data.databean.importMotriceBrut;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

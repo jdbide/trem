@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.data.databean.importMotrice.ImportTMDAVTREntity;
+import com.avancial.app.data.databean.importMotriceBrut.ImportTMDAVTREntity;
 import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 
