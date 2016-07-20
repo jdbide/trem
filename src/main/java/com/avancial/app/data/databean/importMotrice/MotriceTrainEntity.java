@@ -1,9 +1,14 @@
 package com.avancial.app.data.databean.importMotrice;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -16,6 +21,13 @@ public class MotriceTrainEntity {
    private Long    idMotriceTrain;
    private String  trainNumberMotriceTrain;
    private Boolean validForRRMotriceTrain;
+   
+   @ManyToMany
+   @JoinTable(
+       name ="tremas_motrice_train2tranche",
+       joinColumns=@JoinColumn(name="idMotriceTrain", referencedColumnName="idMotriceTrain"),
+       inverseJoinColumns=@JoinColumn(name="idMotriceTranche", referencedColumnName="idMotriceTrain"))
+   private List<MotriceTrancheEntity> MotriceTranches;
 
    /**
     * @return the idMotriceTrain
