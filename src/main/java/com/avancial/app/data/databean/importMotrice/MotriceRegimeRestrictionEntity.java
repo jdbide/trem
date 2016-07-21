@@ -19,7 +19,8 @@ public class MotriceRegimeRestrictionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegimeRestriction;
-
+    
+    @Column(nullable = false)
     private String typeMotriceRegimeRestriction;
 
     @Column(length = 5)
@@ -36,7 +37,7 @@ public class MotriceRegimeRestrictionEntity {
      * @return the idMotriceRegimeRestriction
      */
     public Long getIdMotriceRegimeRestriction() {
-        return idMotriceRegimeRestriction;
+        return this.idMotriceRegimeRestriction;
     }
 
     /**
@@ -50,7 +51,7 @@ public class MotriceRegimeRestrictionEntity {
      * @return the typeMotriceRegimeRestriction
      */
     public String getTypeMotriceRegimeRestriction() {
-        return typeMotriceRegimeRestriction;
+        return this.typeMotriceRegimeRestriction;
     }
 
     /**
@@ -64,7 +65,7 @@ public class MotriceRegimeRestrictionEntity {
      * @return the origineMotriceRegimeRestriction
      */
     public String getOrigineMotriceRegimeRestriction() {
-        return origineMotriceRegimeRestriction;
+        return this.origineMotriceRegimeRestriction;
     }
 
     /**
@@ -78,7 +79,7 @@ public class MotriceRegimeRestrictionEntity {
      * @return the destinationMotriceRegimeRestriction
      */
     public String getDestinationMotriceRegimeRestriction() {
-        return destinationMotriceRegimeRestriction;
+        return this.destinationMotriceRegimeRestriction;
     }
 
     /**
@@ -92,7 +93,7 @@ public class MotriceRegimeRestrictionEntity {
      * @return the motriceRegime
      */
     public MotriceRegimeEntity getMotriceRegime() {
-        return motriceRegime;
+        return this.motriceRegime;
     }
 
     /**
