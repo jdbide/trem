@@ -2,7 +2,7 @@ package com.avancial.app.data.databean.importMotrice;
 
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,290 +20,275 @@ import javax.persistence.Table;
 @NamedQuery(name = "MotriceRegime.getAll", query = "SELECT t FROM MotriceRegimeEntity t")
 public class MotriceRegimeEntity {
 
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Id
-   private Long idMotriceRegime;
-   private Date beginDateMotriceRegime;
-   private Date endDateMotriceRegime;
-   private String beginDayMotriceRegime;
-   private String endDayMotriceRegime;
-   
-   @ManyToOne(fetch=FetchType.LAZY)
-   @JoinColumn(name="idMotriceRefRegimeType")
-   private MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity;
-   
-   @ManyToOne(fetch=FetchType.LAZY)
-   @JoinColumn(name="idMotriceTrainTranche")
-   private MotriceTrainTrancheEntity motriceTrainTranche;
-   
-   @OneToMany(mappedBy="motriceRegime")
-   private List<MotriceRegimeStopEntity> motriceRegimeStops;
-   
-   @OneToMany(mappedBy="motriceRegime")
-   private List<MotriceRegimeServiceEntity> motriceRegimeServices;
-   
-   @OneToMany(mappedBy="motriceRegime")
-   private List<MotriceRegimeSpecificityEntity> motriceRegimeSpecificities;
-   
-   @OneToMany(mappedBy="motriceRegime")
-   private List<MotriceRegimeRestrictionEntity> motriceRegimeRestrictions;
-   
-   @OneToOne(fetch=FetchType.LAZY, mappedBy="motriceRegime")
-   private MotriceRegimeDistributionEntity motriceRegimeDistribution;
-   
-   @OneToOne(fetch=FetchType.LAZY, mappedBy="motriceRegime")
-   private MotriceRegimeSatcodeEntity motriceRegimeSatcode;
-   
-   @OneToOne(fetch=FetchType.LAZY, mappedBy="motriceRegime")
-   private MotriceRegimeFareProfileEntity motriceRegimeFareProfile;
-   
-   @OneToOne(fetch=FetchType.LAZY, mappedBy="motriceRegime")
-   private MotriceRegimeEqpTypeEntity motriceRegimeEqpType;
-   
-   @OneToOne(fetch=FetchType.LAZY, mappedBy="motriceRegime")
-   private MotriceRegimeCompositionEntity motriceRegimeComposition;
-   
-   @OneToOne(fetch=FetchType.LAZY, mappedBy="motriceRegime")
-   private MotriceRegimeMealTypeEntity motriceRegimeMealType;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long idMotriceRegime;
 
-   /**
-    * @return the idMotriceRegime
-    */
-   public Long getIdMotriceRegime() {
-      return this.idMotriceRegime;
-   }
+    @Column(nullable = false)
+    private String periodMotriceRegime;
 
-   /**
-    * @param idMotriceRegime the idMotriceRegime to set
-    */
-   public void setIdMotriceRegime(Long idMotriceRegime) {
-      this.idMotriceRegime = idMotriceRegime;
-   }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idMotriceRefRegimeType")
+    private MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity;
 
-   /**
-    * @return the beginDateMotriceRegime
-    */
-   public Date getBeginDateMotriceRegime() {
-      return this.beginDateMotriceRegime;
-   }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idMotriceTrainTranche")
+    private MotriceTrainTrancheEntity motriceTrainTranche;
 
-   /**
-    * @param beginDateMotriceRegime the beginDateMotriceRegime to set
-    */
-   public void setBeginDateMotriceRegime(Date beginDateMotriceRegime) {
-      this.beginDateMotriceRegime = beginDateMotriceRegime;
-   }
+    @OneToMany(mappedBy = "motriceRegime")
+    private List<MotriceRegimeStopEntity> motriceRegimeStops;
 
-   /**
-    * @return the endDateMotriceRegime
-    */
-   public Date getEndDateMotriceRegime() {
-      return this.endDateMotriceRegime;
-   }
+    @OneToMany(mappedBy = "motriceRegime")
+    private List<MotriceRegimeServiceEntity> motriceRegimeServices;
 
-   /**
-    * @param endDateMotriceRegime the endDateMotriceRegime to set
-    */
-   public void setEndDateMotriceRegime(Date endDateMotriceRegime) {
-      this.endDateMotriceRegime = endDateMotriceRegime;
-   }
+    @OneToMany(mappedBy = "motriceRegime")
+    private List<MotriceRegimeSpecificityEntity> motriceRegimeSpecificities;
 
-   /**
-    * @return the beginDayMotriceRegime
-    */
-   public String getBeginDayMotriceRegime() {
-      return this.beginDayMotriceRegime;
-   }
+    @OneToMany(mappedBy = "motriceRegime")
+    private List<MotriceRegimeRestrictionEntity> motriceRegimeRestrictions;
 
-   /**
-    * @param beginDayMotriceRegime the beginDayMotriceRegime to set
-    */
-   public void setBeginDayMotriceRegime(String beginDayMotriceRegime) {
-      this.beginDayMotriceRegime = beginDayMotriceRegime;
-   }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    private MotriceRegimeDistributionEntity motriceRegimeDistribution;
 
-   /**
-    * @return the endDayMotriceRegime
-    */
-   public String getEndDayMotriceRegime() {
-      return this.endDayMotriceRegime;
-   }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    private MotriceRegimeSatcodeEntity motriceRegimeSatcode;
 
-   /**
-    * @param endDayMotriceRegime the endDayMotriceRegime to set
-    */
-   public void setEndDayMotriceRegime(String endDayMotriceRegime) {
-      this.endDayMotriceRegime = endDayMotriceRegime;
-   }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    private MotriceRegimeFareProfileEntity motriceRegimeFareProfile;
 
-   /**
-    * @return the motriceRefRegimeTypeEntity
-    */
-   public MotriceRefRegimeTypeEntity getMotriceRefRegimeTypeEntity() {
-      return this.motriceRefRegimeTypeEntity;
-   }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    private MotriceRegimeEqpTypeEntity motriceRegimeEqpType;
 
-   /**
-    * @param motriceRefRegimeTypeEntity the motriceRefRegimeTypeEntity to set
-    */
-   public void setMotriceRefRegimeTypeEntity(MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity) {
-      this.motriceRefRegimeTypeEntity = motriceRefRegimeTypeEntity;
-   }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    private MotriceRegimeCompositionEntity motriceRegimeComposition;
 
-   /**
-    * @return the motriceTrainTranche
-    */
-   public MotriceTrainTrancheEntity getMotriceTrainTranche() {
-      return this.motriceTrainTranche;
-   }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    private MotriceRegimeMealTypeEntity motriceRegimeMealType;
 
-   /**
-    * @param motriceTrainTranche the motriceTrainTranche to set
-    */
-   public void setMotriceTrainTranche(MotriceTrainTrancheEntity motriceTrainTranche) {
-      this.motriceTrainTranche = motriceTrainTranche;
-   }
+    /**
+     * @return the idMotriceRegime
+     */
+    public Long getIdMotriceRegime() {
+        return this.idMotriceRegime;
+    }
 
-   /**
-    * @return the motriceRegimeStops
-    */
-   public List<MotriceRegimeStopEntity> getMotriceRegimeStops() {
-      return this.motriceRegimeStops;
-   }
+    /**
+     * @param idMotriceRegime
+     *            the idMotriceRegime to set
+     */
+    public void setIdMotriceRegime(Long idMotriceRegime) {
+        this.idMotriceRegime = idMotriceRegime;
+    }
 
-   /**
-    * @param motriceRegimeStops the motriceRegimeStops to set
-    */
-   public void setMotriceRegimeStops(List<MotriceRegimeStopEntity> motriceRegimeStops) {
-      this.motriceRegimeStops = motriceRegimeStops;
-   }
+    /**
+     * @return the motriceRefRegimeTypeEntity
+     */
+    public MotriceRefRegimeTypeEntity getMotriceRefRegimeTypeEntity() {
+        return this.motriceRefRegimeTypeEntity;
+    }
 
-   /**
-    * @return the motriceRegimeServices
-    */
-   public List<MotriceRegimeServiceEntity> getMotriceRegimeServices() {
-      return this.motriceRegimeServices;
-   }
+    /**
+     * @param motriceRefRegimeTypeEntity
+     *            the motriceRefRegimeTypeEntity to set
+     */
+    public void setMotriceRefRegimeTypeEntity(MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity) {
+        this.motriceRefRegimeTypeEntity = motriceRefRegimeTypeEntity;
+    }
 
-   /**
-    * @param motriceRegimeServices the motriceRegimeServices to set
-    */
-   public void setMotriceRegimeServices(List<MotriceRegimeServiceEntity> motriceRegimeServices) {
-      this.motriceRegimeServices = motriceRegimeServices;
-   }
+    /**
+     * @return the motriceTrainTranche
+     */
+    public MotriceTrainTrancheEntity getMotriceTrainTranche() {
+        return this.motriceTrainTranche;
+    }
 
-   /**
-    * @return the motriceRegimeSpecificities
-    */
-   public List<MotriceRegimeSpecificityEntity> getMotriceRegimeSpecificities() {
-      return this.motriceRegimeSpecificities;
-   }
+    /**
+     * @param motriceTrainTranche
+     *            the motriceTrainTranche to set
+     */
+    public void setMotriceTrainTranche(MotriceTrainTrancheEntity motriceTrainTranche) {
+        this.motriceTrainTranche = motriceTrainTranche;
+    }
 
-   /**
-    * @param motriceRegimeSpecificities the motriceRegimeSpecificities to set
-    */
-   public void setMotriceRegimeSpecificities(List<MotriceRegimeSpecificityEntity> motriceRegimeSpecificities) {
-      this.motriceRegimeSpecificities = motriceRegimeSpecificities;
-   }
+    /**
+     * @return the motriceRegimeStops
+     */
+    public List<MotriceRegimeStopEntity> getMotriceRegimeStops() {
+        return this.motriceRegimeStops;
+    }
 
-   /**
-    * @return the motriceRegimeRestrictions
-    */
-   public List<MotriceRegimeRestrictionEntity> getMotriceRegimeRestrictions() {
-      return this.motriceRegimeRestrictions;
-   }
+    /**
+     * @param motriceRegimeStops
+     *            the motriceRegimeStops to set
+     */
+    public void setMotriceRegimeStops(List<MotriceRegimeStopEntity> motriceRegimeStops) {
+        this.motriceRegimeStops = motriceRegimeStops;
+    }
 
-   /**
-    * @param motriceRegimeRestrictions the motriceRegimeRestrictions to set
-    */
-   public void setMotriceRegimeRestrictions(List<MotriceRegimeRestrictionEntity> motriceRegimeRestrictions) {
-      this.motriceRegimeRestrictions = motriceRegimeRestrictions;
-   }
+    /**
+     * @return the motriceRegimeServices
+     */
+    public List<MotriceRegimeServiceEntity> getMotriceRegimeServices() {
+        return this.motriceRegimeServices;
+    }
 
-   /**
-    * @return the motriceRegimeDistributions
-    */
-   public MotriceRegimeDistributionEntity getMotriceRegimeDistribution() {
-      return this.motriceRegimeDistribution;
-   }
+    /**
+     * @param motriceRegimeServices
+     *            the motriceRegimeServices to set
+     */
+    public void setMotriceRegimeServices(List<MotriceRegimeServiceEntity> motriceRegimeServices) {
+        this.motriceRegimeServices = motriceRegimeServices;
+    }
 
-   /**
-    * @param motriceRegimeDistributions the motriceRegimeDistributions to set
-    */
-   public void setMotriceRegimeDistribution(MotriceRegimeDistributionEntity motriceRegimeDistribution) {
-      this.motriceRegimeDistribution = motriceRegimeDistribution;
-   }
+    /**
+     * @return the motriceRegimeSpecificities
+     */
+    public List<MotriceRegimeSpecificityEntity> getMotriceRegimeSpecificities() {
+        return this.motriceRegimeSpecificities;
+    }
 
-   /**
-    * @return the motriceRegimeSatcodes
-    */
-   public MotriceRegimeSatcodeEntity getMotriceRegimeSatcode() {
-      return this.motriceRegimeSatcode;
-   }
+    /**
+     * @param motriceRegimeSpecificities
+     *            the motriceRegimeSpecificities to set
+     */
+    public void setMotriceRegimeSpecificities(List<MotriceRegimeSpecificityEntity> motriceRegimeSpecificities) {
+        this.motriceRegimeSpecificities = motriceRegimeSpecificities;
+    }
 
-   /**
-    * @param motriceRegimeSatcodes the motriceRegimeSatcodes to set
-    */
-   public void setMotriceRegimeSatcode(MotriceRegimeSatcodeEntity motriceRegimeSatcode) {
-      this.motriceRegimeSatcode = motriceRegimeSatcode;
-   }
+    /**
+     * @return the motriceRegimeRestrictions
+     */
+    public List<MotriceRegimeRestrictionEntity> getMotriceRegimeRestrictions() {
+        return this.motriceRegimeRestrictions;
+    }
 
-   /**
-    * @return the motriceRegimeFareProfiles
-    */
-   public MotriceRegimeFareProfileEntity getMotriceRegimeFareProfile() {
-      return this.motriceRegimeFareProfile;
-   }
+    /**
+     * @param motriceRegimeRestrictions
+     *            the motriceRegimeRestrictions to set
+     */
+    public void setMotriceRegimeRestrictions(List<MotriceRegimeRestrictionEntity> motriceRegimeRestrictions) {
+        this.motriceRegimeRestrictions = motriceRegimeRestrictions;
+    }
 
-   /**
-    * @param motriceRegimeFareProfiles the motriceRegimeFareProfiles to set
-    */
-   public void setMotriceRegimeFareProfile(MotriceRegimeFareProfileEntity motriceRegimeFareProfile) {
-      this.motriceRegimeFareProfile = motriceRegimeFareProfile;
-   }
+    /**
+     * @return the motriceRegimeDistributions
+     */
+    public MotriceRegimeDistributionEntity getMotriceRegimeDistribution() {
+        return this.motriceRegimeDistribution;
+    }
 
-   /**
-    * @return the motriceRegimeEqpTypes
-    */
-   public MotriceRegimeEqpTypeEntity getMotriceRegimeEqpType() {
-      return this.motriceRegimeEqpType;
-   }
+    /**
+     * @param motriceRegimeDistributions
+     *            the motriceRegimeDistributions to set
+     */
+    public void setMotriceRegimeDistribution(MotriceRegimeDistributionEntity motriceRegimeDistribution) {
+        this.motriceRegimeDistribution = motriceRegimeDistribution;
+    }
 
-   /**
-    * @param motriceRegimeEqpTypes the motriceRegimeEqpTypes to set
-    */
-   public void setMotriceRegimeEqpType(MotriceRegimeEqpTypeEntity motriceRegimeEqpType) {
-      this.motriceRegimeEqpType = motriceRegimeEqpType;
-   }
+    /**
+     * @return the motriceRegimeSatcodes
+     */
+    public MotriceRegimeSatcodeEntity getMotriceRegimeSatcode() {
+        return this.motriceRegimeSatcode;
+    }
 
-   /**
-    * @return the motriceRegimeCompositions
-    */
-   public MotriceRegimeCompositionEntity getMotriceRegimeComposition() {
-      return this.motriceRegimeComposition;
-   }
+    /**
+     * @param motriceRegimeSatcodes
+     *            the motriceRegimeSatcodes to set
+     */
+    public void setMotriceRegimeSatcode(MotriceRegimeSatcodeEntity motriceRegimeSatcode) {
+        this.motriceRegimeSatcode = motriceRegimeSatcode;
+    }
 
-   /**
-    * @param motriceRegimeCompositions the motriceRegimeCompositions to set
-    */
-   public void setMotriceRegimeCompositions(MotriceRegimeCompositionEntity motriceRegimeComposition) {
-      this.motriceRegimeComposition = motriceRegimeComposition;
-   }
+    /**
+     * @return the motriceRegimeFareProfiles
+     */
+    public MotriceRegimeFareProfileEntity getMotriceRegimeFareProfile() {
+        return this.motriceRegimeFareProfile;
+    }
 
-   /**
-    * @return the motriceRegimeMealTypes
-    */
-   public MotriceRegimeMealTypeEntity getMotriceRegimeMealType() {
-      return this.motriceRegimeMealType;
-   }
+    /**
+     * @param motriceRegimeFareProfiles
+     *            the motriceRegimeFareProfiles to set
+     */
+    public void setMotriceRegimeFareProfile(MotriceRegimeFareProfileEntity motriceRegimeFareProfile) {
+        this.motriceRegimeFareProfile = motriceRegimeFareProfile;
+    }
 
-   /**
-    * @param motriceRegimeMealTypes the motriceRegimeMealTypes to set
-    */
-   public void setMotriceRegimeMealTypes(MotriceRegimeMealTypeEntity motriceRegimeMealType) {
-      this.motriceRegimeMealType = motriceRegimeMealType;
-   }
-   
-   
+    /**
+     * @return the motriceRegimeEqpTypes
+     */
+    public MotriceRegimeEqpTypeEntity getMotriceRegimeEqpType() {
+        return this.motriceRegimeEqpType;
+    }
+
+    /**
+     * @param motriceRegimeEqpTypes
+     *            the motriceRegimeEqpTypes to set
+     */
+    public void setMotriceRegimeEqpType(MotriceRegimeEqpTypeEntity motriceRegimeEqpType) {
+        this.motriceRegimeEqpType = motriceRegimeEqpType;
+    }
+
+    /**
+     * @return the motriceRegimeCompositions
+     */
+    public MotriceRegimeCompositionEntity getMotriceRegimeComposition() {
+        return this.motriceRegimeComposition;
+    }
+
+    /**
+     * @param motriceRegimeCompositions
+     *            the motriceRegimeCompositions to set
+     */
+    public void setMotriceRegimeCompositions(MotriceRegimeCompositionEntity motriceRegimeComposition) {
+        this.motriceRegimeComposition = motriceRegimeComposition;
+    }
+
+    /**
+     * @return the motriceRegimeMealTypes
+     */
+    public MotriceRegimeMealTypeEntity getMotriceRegimeMealType() {
+        return this.motriceRegimeMealType;
+    }
+
+    /**
+     * @param motriceRegimeMealTypes
+     *            the motriceRegimeMealTypes to set
+     */
+    public void setMotriceRegimeMealTypes(MotriceRegimeMealTypeEntity motriceRegimeMealType) {
+        this.motriceRegimeMealType = motriceRegimeMealType;
+    }
+
+    /**
+     * @return the periodMotriceRegime
+     */
+    public String getPeriodMotriceRegime() {
+        return periodMotriceRegime;
+    }
+
+    /**
+     * @param periodMotriceRegime
+     *            the periodMotriceRegime to set
+     */
+    public void setPeriodMotriceRegime(String periodMotriceRegime) {
+        this.periodMotriceRegime = periodMotriceRegime;
+    }
+
+    /**
+     * @param motriceRegimeComposition
+     *            the motriceRegimeComposition to set
+     */
+    public void setMotriceRegimeComposition(MotriceRegimeCompositionEntity motriceRegimeComposition) {
+        this.motriceRegimeComposition = motriceRegimeComposition;
+    }
+
+    /**
+     * @param motriceRegimeMealType
+     *            the motriceRegimeMealType to set
+     */
+    public void setMotriceRegimeMealType(MotriceRegimeMealTypeEntity motriceRegimeMealType) {
+        this.motriceRegimeMealType = motriceRegimeMealType;
+    }
 
 }
