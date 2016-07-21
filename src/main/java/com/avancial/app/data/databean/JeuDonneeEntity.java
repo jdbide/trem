@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 public class JeuDonneeEntity  {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true, nullable=false)
     private int idJeuDonnees;
 

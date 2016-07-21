@@ -11,44 +11,46 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_eqptype")
 @NamedQuery(name = "MotriceRegimeEqpType.getAll", query = "SELECT t FROM MotriceRegimeEqpTypeEntity t")
 public class MotriceRegimeEqpTypeEntity {
 
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Id
-   private Long                idMotriceRegimeEqpType;
-   @Column(length = 3, nullable = false)
-   private String              eqpTypeRegimeEqpType;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long idMotriceRegimeEqpType;
+    @Column(length = 3, nullable = false)
+    private String eqpTypeRegimeEqpType;
 
-   @OneToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "idMotriceRegime")
-   private MotriceRegimeEntity motriceRegime;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idMotriceRegime")
+    @ForeignKey(name = "FK_motrice_regime_eqptype_idMotriceRegime")
+    private MotriceRegimeEntity motriceRegime;
 
-   public Long getIdMotriceRegimeEqpType() {
-      return idMotriceRegimeEqpType;
-   }
+    public Long getIdMotriceRegimeEqpType() {
+        return this.idMotriceRegimeEqpType;
+    }
 
-   public void setIdMotriceRegimeEqpType(Long idMotriceRegimeEqpType) {
-      this.idMotriceRegimeEqpType = idMotriceRegimeEqpType;
-   }
+    public void setIdMotriceRegimeEqpType(Long idMotriceRegimeEqpType) {
+        this.idMotriceRegimeEqpType = idMotriceRegimeEqpType;
+    }
 
-   public String getEqpTypeRegimeEqpType() {
-      return eqpTypeRegimeEqpType;
-   }
+    public String getEqpTypeRegimeEqpType() {
+        return this.eqpTypeRegimeEqpType;
+    }
 
-   public void setEqpTypeRegimeEqpType(String eqpTypeRegimeEqpType) {
-      this.eqpTypeRegimeEqpType = eqpTypeRegimeEqpType;
-   }
+    public void setEqpTypeRegimeEqpType(String eqpTypeRegimeEqpType) {
+        this.eqpTypeRegimeEqpType = eqpTypeRegimeEqpType;
+    }
 
-   public MotriceRegimeEntity getMotriceRegime() {
-      return motriceRegime;
-   }
+    public MotriceRegimeEntity getMotriceRegime() {
+        return this.motriceRegime;
+    }
 
-   public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
-      this.motriceRegime = motriceRegime;
-   }
+    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
+        this.motriceRegime = motriceRegime;
+    }
 
 }

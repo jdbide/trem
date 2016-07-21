@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_distribution")
@@ -24,10 +25,11 @@ public class MotriceRegimeDistributionEntity {
 
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "idMotriceRegime")
+   @ForeignKey(name = "FK_motrice_regime_distribution_idMotriceRegime")
    private MotriceRegimeEntity motriceRegime;
 
    public Long getIdMotriceRegimeDistribution() {
-      return idMotriceRegimeDistribution;
+      return this.idMotriceRegimeDistribution;
    }
 
    public void setIdMotriceRegimeDistribution(Long idMotriceRegimeDistribution) {
@@ -35,7 +37,7 @@ public class MotriceRegimeDistributionEntity {
    }
 
    public String getDistribIndexMotriceRegimeDistribution() {
-      return distribIndexMotriceRegimeDistribution;
+      return this.distribIndexMotriceRegimeDistribution;
    }
 
    public void setDistribIndexMotriceRegimeDistribution(String distribIndexMotriceRegimeDistribution) {
@@ -43,7 +45,7 @@ public class MotriceRegimeDistributionEntity {
    }
 
    public MotriceRegimeEntity getMotriceRegime() {
-      return motriceRegime;
+      return this.motriceRegime;
    }
 
    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {

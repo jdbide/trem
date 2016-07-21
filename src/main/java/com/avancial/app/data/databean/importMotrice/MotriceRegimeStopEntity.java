@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_stop")
@@ -28,6 +29,7 @@ public class MotriceRegimeStopEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
+    @ForeignKey(name = "FK_motrice_regime_stop_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;
 
     public Long getIdMotriceRegimeStop() {

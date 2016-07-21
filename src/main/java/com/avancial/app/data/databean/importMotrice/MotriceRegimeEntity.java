@@ -1,6 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime")
@@ -29,10 +29,12 @@ public class MotriceRegimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRefRegimeType")
+    @ForeignKey(name = "FK_motrice_regime_idMotriceRefRegimeType")
     private MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceTrainTranche")
+    @ForeignKey(name = "FK_motrice_regime_idMotriceTrainTranche")
     private MotriceTrainTrancheEntity motriceTrainTranche;
 
     @OneToMany(mappedBy = "motriceRegime")

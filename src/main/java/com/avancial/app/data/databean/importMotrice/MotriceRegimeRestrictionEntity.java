@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_restriction")
@@ -19,7 +20,7 @@ public class MotriceRegimeRestrictionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegimeRestriction;
-    
+
     @Column(nullable = false)
     private String typeMotriceRegimeRestriction;
 
@@ -31,6 +32,7 @@ public class MotriceRegimeRestrictionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
+    @ForeignKey(name = "FK_motrice_regime_restriction_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;
 
     /**
@@ -41,7 +43,8 @@ public class MotriceRegimeRestrictionEntity {
     }
 
     /**
-     * @param idMotriceRegimeRestriction the idMotriceRegimeRestriction to set
+     * @param idMotriceRegimeRestriction
+     *            the idMotriceRegimeRestriction to set
      */
     public void setIdMotriceRegimeRestriction(Long idMotriceRegimeRestriction) {
         this.idMotriceRegimeRestriction = idMotriceRegimeRestriction;
@@ -55,7 +58,8 @@ public class MotriceRegimeRestrictionEntity {
     }
 
     /**
-     * @param typeMotriceRegimeRestriction the typeMotriceRegimeRestriction to set
+     * @param typeMotriceRegimeRestriction
+     *            the typeMotriceRegimeRestriction to set
      */
     public void setTypeMotriceRegimeRestriction(String typeMotriceRegimeRestriction) {
         this.typeMotriceRegimeRestriction = typeMotriceRegimeRestriction;
@@ -69,7 +73,8 @@ public class MotriceRegimeRestrictionEntity {
     }
 
     /**
-     * @param origineMotriceRegimeRestriction the origineMotriceRegimeRestriction to set
+     * @param origineMotriceRegimeRestriction
+     *            the origineMotriceRegimeRestriction to set
      */
     public void setOrigineMotriceRegimeRestriction(String origineMotriceRegimeRestriction) {
         this.origineMotriceRegimeRestriction = origineMotriceRegimeRestriction;
@@ -83,7 +88,8 @@ public class MotriceRegimeRestrictionEntity {
     }
 
     /**
-     * @param destinationMotriceRegimeRestriction the destinationMotriceRegimeRestriction to set
+     * @param destinationMotriceRegimeRestriction
+     *            the destinationMotriceRegimeRestriction to set
      */
     public void setDestinationMotriceRegimeRestriction(String destinationMotriceRegimeRestriction) {
         this.destinationMotriceRegimeRestriction = destinationMotriceRegimeRestriction;
@@ -97,12 +103,11 @@ public class MotriceRegimeRestrictionEntity {
     }
 
     /**
-     * @param motriceRegime the motriceRegime to set
+     * @param motriceRegime
+     *            the motriceRegime to set
      */
     public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
         this.motriceRegime = motriceRegime;
     }
-    
-    
 
 }
