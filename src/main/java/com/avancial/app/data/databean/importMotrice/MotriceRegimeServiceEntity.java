@@ -15,21 +15,21 @@ import javax.persistence.Table;
 @Table(name = "tremas_motrice_regime_service")
 @NamedQuery(name = "MotriceRegimeService.getAll", query = "SELECT t FROM MotriceRegimeServiceEntity t")
 public class MotriceRegimeServiceEntity {
-    
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegimeService;
-    @Column(length=1, nullable=false)
+    @Column(length = 1, nullable = false)
     private String serviceCodeMotriceRegimeService;
-    @Column(length=1, nullable=false)
+    @Column(length = 1, nullable = false)
     private String classMotriceRegimeService;
-    @Column(length=5, nullable=false)
+    @Column(length = 5, nullable = false)
     private String origMotriceRegimeService;
-    @Column(length=5, nullable=false)
+    @Column(length = 5, nullable = false)
     private String destMotriceRegimeService;
-    
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idMotriceRegime")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;
 
     public Long getIdMotriceRegimeService() {
@@ -79,6 +79,5 @@ public class MotriceRegimeServiceEntity {
     public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
         this.motriceRegime = motriceRegime;
     }
-
 
 }

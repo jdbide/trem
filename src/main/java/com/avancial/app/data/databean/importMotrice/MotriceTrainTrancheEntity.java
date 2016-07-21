@@ -1,5 +1,6 @@
 package com.avancial.app.data.databean.importMotrice;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.avancial.app.data.databean.JeuDonneeEntity;
@@ -19,22 +21,22 @@ public class MotriceTrainTrancheEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceTrainTranche;
-    
-    @Column(length=6, nullable=false)
+
+    @Column(length = 6, nullable = false)
     private String trainNumberMotriceTrainTranche;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Boolean validForRRMotriceTrainTranche;
-    @Column(length=6, nullable=false)
+    @Column(length = 6, nullable = false)
     private String trancheNumberMotriceTrainTranche;
-    @Column(length=1, nullable=false)
+    @Column(length = 1, nullable = false)
     private String trancheStatusMotriceTrainTranche;
-    
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idJeuDonnees")
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idJeuDonnees")
     private JeuDonneeEntity jeuDonnee;
 
-//  @OneToMany(mappedBy="idMotriceTrainTranche")
-//  private List<MotriceRegimeEntity> motriceRegimeEntities;
+    @OneToMany(mappedBy = "motriceTrainTranche")
+    private List<MotriceRegimeEntity> motriceRegimeEntities;
 
     public Long getIdMotriceTrainTranche() {
         return this.idMotriceTrainTranche;
