@@ -1,5 +1,6 @@
 package com.avancial.app.data.databean.importMotrice;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,13 +16,39 @@ import javax.persistence.Table;
 @Table(name = "tremas_motrice_regime_eqptype")
 @NamedQuery(name = "MotriceRegimeEqpType.getAll", query = "SELECT t FROM MotriceRegimeEqpTypeEntity t")
 public class MotriceRegimeEqpTypeEntity {
-   
+
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long idMotriceRegimeEqpType;
-   
-   @OneToOne(fetch=FetchType.LAZY)
-   @JoinColumn(name="idMotriceRegime")
+   private Long                idMotriceRegimeEqpType;
+   @Column(length = 3, nullable = false)
+   private String              eqpTypeRegimeEqpType;
+
+   @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "idMotriceRegime")
    private MotriceRegimeEntity motriceRegime;
+
+   public Long getIdMotriceRegimeEqpType() {
+      return idMotriceRegimeEqpType;
+   }
+
+   public void setIdMotriceRegimeEqpType(Long idMotriceRegimeEqpType) {
+      this.idMotriceRegimeEqpType = idMotriceRegimeEqpType;
+   }
+
+   public String getEqpTypeRegimeEqpType() {
+      return eqpTypeRegimeEqpType;
+   }
+
+   public void setEqpTypeRegimeEqpType(String eqpTypeRegimeEqpType) {
+      this.eqpTypeRegimeEqpType = eqpTypeRegimeEqpType;
+   }
+
+   public MotriceRegimeEntity getMotriceRegime() {
+      return motriceRegime;
+   }
+
+   public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
+      this.motriceRegime = motriceRegime;
+   }
 
 }
