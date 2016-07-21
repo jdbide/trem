@@ -1,5 +1,6 @@
 package com.avancial.app.data.databean.importMotrice;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ public class MotriceRegimeDistributionEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long                idMotriceRegimeDistribution;
+   @Column(length = 1, nullable = false)
    private String              distribIndexMotriceRegimeDistribution;
 
    @OneToOne(fetch = FetchType.LAZY)

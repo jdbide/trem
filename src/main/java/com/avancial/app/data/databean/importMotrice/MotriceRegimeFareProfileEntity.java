@@ -1,5 +1,6 @@
 package com.avancial.app.data.databean.importMotrice;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class MotriceRegimeFareProfileEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long                idMotriceRegimeFareProfile;
+   @Column(length = 3, nullable = false)
    private String              fareProfileCodeMotriceRegimeFareProfile;
 
    @OneToOne(fetch = FetchType.LAZY)

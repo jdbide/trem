@@ -2,6 +2,7 @@ package com.avancial.app.data.databean.importMotrice;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,8 +22,11 @@ public class MotriceRegimeMealTypeEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long                idMotriceRegimeMealTypeEntity;
+   @Column(length = 1, nullable = false)
    private String              mealTypeMotriceRegimeMealType;
+   @Column(length = 8, nullable = false)
    private Date                beginServiceHourRegimeMealType;
+   @Column(length = 8, nullable = false)
    private Date                endServiceHourRegimeMealType;
 
    @OneToOne(fetch = FetchType.LAZY)
