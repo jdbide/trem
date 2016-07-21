@@ -15,13 +15,38 @@ import javax.persistence.Table;
 @Table(name = "tremas_motrice_regime_fareprofile")
 @NamedQuery(name = "MotriceRegimeFareProfile.getAll", query = "SELECT t FROM MotriceRegimeFareProfileEntity t")
 public class MotriceRegimeFareProfileEntity {
-   
+
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long idMotriceRegimeFareProfile;
-   
-   @OneToOne(fetch=FetchType.LAZY)
-   @JoinColumn(name="idMotriceRegime")
+   private Long                idMotriceRegimeFareProfile;
+   private String              fareProfileCodeMotriceRegimeFareProfile;
+
+   @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "idMotriceRegime")
    private MotriceRegimeEntity motriceRegime;
+
+   public Long getIdMotriceRegimeFareProfile() {
+      return idMotriceRegimeFareProfile;
+   }
+
+   public void setIdMotriceRegimeFareProfile(Long idMotriceRegimeFareProfile) {
+      this.idMotriceRegimeFareProfile = idMotriceRegimeFareProfile;
+   }
+
+   public String getFareProfileCodeMotriceRegimeFareProfile() {
+      return fareProfileCodeMotriceRegimeFareProfile;
+   }
+
+   public void setFareProfileCodeMotriceRegimeFareProfile(String fareProfileCodeMotriceRegimeFareProfile) {
+      this.fareProfileCodeMotriceRegimeFareProfile = fareProfileCodeMotriceRegimeFareProfile;
+   }
+
+   public MotriceRegimeEntity getMotriceRegime() {
+      return motriceRegime;
+   }
+
+   public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
+      this.motriceRegime = motriceRegime;
+   }
 
 }
