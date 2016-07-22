@@ -113,6 +113,19 @@ CREATE TABLE `tremas_import_tmddstr` (
   PRIMARY KEY (`idTMDDSTR`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+CREATE TABLE `tremas_import_tmddtrc` (
+  `idTMDDTRC` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DTRC_TRCH_COD_CIE` varchar(255) DEFAULT NULL,
+  `DTRC_TRCH_NUM_TRA1` varchar(255) DEFAULT NULL,
+  `DTRC_TRCH_IND_FER` varchar(255) DEFAULT NULL,
+  `DTRC_TRCH_NUM` decimal(10,0) DEFAULT NULL,
+  `DTRC_CODE` varchar(255) DEFAULT NULL,
+  `DTRC_REGI` varchar(255) DEFAULT NULL,
+  `DSTR_USER` varchar(255) DEFAULT NULL,
+  `DTRC_DHDO` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTMDDTRC`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 CREATE TABLE `tremas_import_tmdetvo` (
   `idTMDETVO` bigint(20) NOT NULL AUTO_INCREMENT,
   `ETVO_DHDO` varchar(255) DEFAULT NULL, 
@@ -402,3 +415,4 @@ INSERT INTO `tremas_tables_motrice` VALUES ('18', 'TMDTATH', '1');
 INSERT INTO `tremas_tables_motrice` VALUES ('19', 'TMDTRA1', '1');
 INSERT INTO `tremas_tables_motrice` VALUES ('20', 'TMDTRCH', '1');
 INSERT INTO `tremas_tables_motrice` VALUES ('21', 'TMDVOIT', '1');
+INSERT INTO `tremas_tables_motrice` VALUES ('22', 'TMDDTRC', '1');
