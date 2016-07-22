@@ -9,7 +9,7 @@
 	
 	<Resource name="jdbc/socle" auth="Container" type="javax.sql.DataSource"
 		username="dbad_tremas" password="!tremas-12" driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://caliban/tremas_rec" maxActive="8" maxIdle="4"
+		url="jdbc:mysql://caliban/tremas" maxActive="8" maxIdle="4"
 		maxWait="10000" />	
 
        <Resource name="jdbc/externe" auth="Container" type="javax.sql.DataSource"

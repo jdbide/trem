@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.avancial.app.utilitaire.transcodageregimemotrice;
+package com.avancial.socle.utils.transcodageregimemotrice;
 
 /**
  * Classe enum des type de jours pour un r�gime de circulation

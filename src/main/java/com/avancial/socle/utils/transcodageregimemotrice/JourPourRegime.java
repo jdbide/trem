@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.avancial.app.utilitaire.transcodageregimemotrice;
+package com.avancial.socle.utils.transcodageregimemotrice;
 
 import java.util.Date;
 

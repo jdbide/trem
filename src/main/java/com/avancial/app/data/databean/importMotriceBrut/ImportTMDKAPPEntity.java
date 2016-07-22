@@ -4,12 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_import_TMDKAPP")
-@NamedQuery(name = "ImportTMDKAPP.getAll", query = "SELECT t FROM ImportTMDKAPPEntity t")
+@NamedQueries({
+    @NamedQuery(name = "ImportTMDKAPP.getAll", query = "SELECT t FROM ImportTMDKAPPEntity t"),
+    @NamedQuery(name = "ImportTMDKAPP.getKht", query = "SELECT t FROM ImportTMDKAPPEntity t WHERE t.KAPP_APP = 'KHT'")
+})
+
 public class ImportTMDKAPPEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)

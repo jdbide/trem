@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.avancial.app.utilitaire.transcodageregimemotrice;
+package com.avancial.socle.utils.transcodageregimemotrice;
 
 /**
  * Classe de d�tail d'un type de jour
