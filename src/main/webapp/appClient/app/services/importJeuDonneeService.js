@@ -67,7 +67,40 @@ socle_app.service('importJeuDonneeService', ['jsonFactory', 'loadingService', '$
 	
 	self.getReponse = function () {
 		return reponse;
-	}	
+	}
 	
+	/* Liste des jeux de données */
+	
+	var cols = [];
+	var datas = [];
+	
+	self.getDataJeuDonnees = function() {
+    	loadingService.show();
+        var deffered  = $q.defer();
+
+        var promissJsonFactory = jsonFactory.getJson("webService/app/jeuxDonnees");
+        promissJsonFactory
+            .success(function (data, status, headers, config) {
+            	cols = data.cols;
+            	datas = data.dataset;
+            	loadingService.hide();
+                deffered.resolve();
+            })
+            .error(function (data, status, headers, config) {
+            	loadingService.hide();
+                deffered.reject();
+        });
+        
+        return deffered.promise;
+    }
+	
+    self.getCols = function() {
+    	return cols;
+    }
+
+    self.getDatas = function() {
+    	return datas;
+    }
+    
 	return self;
 }]);

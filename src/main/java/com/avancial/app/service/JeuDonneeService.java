@@ -1,10 +1,15 @@
 package com.avancial.app.service;
 
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-
+import javax.persistence.Query;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import com.avancial.app.data.databean.JeuDonneeEntity;
+import com.avancial.app.utilitaire.GetDataTableColumns;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.table.ColumnTable;
 
 public class JeuDonneeService {
    @Inject
@@ -34,6 +39,21 @@ public class JeuDonneeService {
       this.em.merge(jeuDonneeDataBean);   
       this.em.flush();
       this.em.getTransaction().commit();
+   }
+   
+   public JSONObject getAllDataTable() {
+       List<ColumnTable> columns = GetDataTableColumns.getColumns(JeuDonneeEntity.class);
+
+       Query query = this.em.createNamedQuery("JeuDonnees.getAll",
+               JeuDonneeEntity.class);
+       List<Object> jeuDonnees = query.getResultList();
+       JSONArray datas = new JSONArray();
+       datas.addAll(jeuDonnees);
+
+       JSONObject retour = new JSONObject();
+       retour.put("cols", columns);
+       retour.put("dataset", datas);
+       return retour;
    }
    
 }

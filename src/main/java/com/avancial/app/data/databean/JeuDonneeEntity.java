@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,6 +18,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tremas_jeu_donnees")
+@NamedQuery(name = "JeuDonnees.getAll", query = "SELECT j FROM JeuDonneeEntity j")
 public class JeuDonneeEntity {
 
     @Id

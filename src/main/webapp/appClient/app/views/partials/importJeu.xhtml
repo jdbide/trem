@@ -6,7 +6,7 @@
         </div>
 		
         <div  ng-if="reponse != null && reponse.status" class="alert alert-success alert-dismissable">
-			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">ï¿½</button>
 			<h4>
 				<i class="icon fa fa-check"></i>
 				Alert!
@@ -14,13 +14,16 @@
 				{{reponse.message}}
 		</div>	
 		<div ng-if="reponse != null && !reponse.status" class="alert alert-danger  alert-dismissable">
-			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">ï¿½</button>
 			<h4>
 				<i class="icon fa fa-check"></i>
 				Alert!
 				</h4>
 				{{reponse.message}}
-		</div>		
+		</div>
+        
+        <socle-table table-titre="title" table-parametres="params" colonnes="cols" 
+            table-format="format(model, filter)" table-vide="tableVide"></socle-table>
         
         <form role="form">
             <div class="box-body">
