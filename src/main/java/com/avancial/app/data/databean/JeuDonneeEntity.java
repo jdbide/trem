@@ -11,52 +11,57 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * The persistent class for the tremas_jeu_donnees database table.
  * 
  */
 @Entity
-@Table(name="tremas_jeu_donnees")
-public class JeuDonneeEntity  {
+@Table(name = "tremas_jeu_donnees")
+public class JeuDonneeEntity {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(unique=true, nullable=false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private int idJeuDonnees;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private boolean actifJeuDonnees;
 
     @Lob
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String commentaireJeuDonnees;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Date dateCreateJeuDonnees;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Date dateLastUpdateJeuDonnees;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private int idUtilisateurCreateJeuDonnees;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private int idUtilisateurLastUpdateJeuDonnees;
 
-    @Column(nullable=false, length=50)
+    @Column(nullable = false, length = 50)
     private String libelleJeuDonnees;
 
-    @Column(nullable=false, length=50)
+    @Column(nullable = false, length = 50)
     private String nomTechniqueJeuDonnees;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private int ordreJeuDonnees;
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private boolean statusJeuDonnees;
+
+    @Column(length = 2, nullable = false)
+    private String company;
+
+    @Column(nullable = false)
+    private String environment;
 
     public int getIdJeuDonnees() {
         return this.idJeuDonnees;
@@ -138,18 +143,35 @@ public class JeuDonneeEntity  {
         this.ordreJeuDonnees = ordreJeuDonnees;
     }
 
-   /**
-    * @return the statusJeuDonnees
-    */
-   public boolean isStatusJeuDonnees() {
-      return this.statusJeuDonnees;
-   }
+    /**
+     * @return the statusJeuDonnees
+     */
+    public boolean isStatusJeuDonnees() {
+        return this.statusJeuDonnees;
+    }
 
-   /**
-    * @param statusJeuDonnees the statusJeuDonnees to set
-    */
-   public void setStatusJeuDonnees(boolean statusJeuDonnees) {
-      this.statusJeuDonnees = statusJeuDonnees;
-   }
+    /**
+     * @param statusJeuDonnees
+     *            the statusJeuDonnees to set
+     */
+    public void setStatusJeuDonnees(boolean statusJeuDonnees) {
+        this.statusJeuDonnees = statusJeuDonnees;
+    }
+
+    public String getCompany() {
+        return this.company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getEnvironment() {
+        return this.environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
 
 }

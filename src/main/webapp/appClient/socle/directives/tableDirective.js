@@ -42,6 +42,6 @@ socle_app.directive("socleTable", function() {
 			 */
 			tableVide: '='
 		},
-		templateUrl : 'views/modals/table.xhtml'
+		templateUrl : 'socle/views/modals/table.xhtml'
 	};
 });

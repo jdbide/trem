@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_composition_coach")
@@ -25,6 +26,7 @@ public class MotriceRegimeCompositionCoachEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegimeComposition")
+    @ForeignKey(name = "FK_motrice_regime_composition_coach_idMotriceRegimeComposition")
     private MotriceRegimeCompositionEntity motriceRegimeComposition;
 
     /**

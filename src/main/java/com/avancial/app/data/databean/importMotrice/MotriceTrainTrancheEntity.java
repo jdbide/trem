@@ -12,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 
 @Entity
@@ -33,6 +34,7 @@ public class MotriceTrainTrancheEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idJeuDonnees")
+    @ForeignKey(name = "FK_motrice_regime_traintranche_idJeuDonnees")
     private JeuDonneeEntity jeuDonnee;
 
     @OneToMany(mappedBy = "motriceTrainTranche")
