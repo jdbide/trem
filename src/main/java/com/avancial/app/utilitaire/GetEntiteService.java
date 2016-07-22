@@ -72,7 +72,7 @@ public class GetEntiteService {
     *         {@code "TMDAVTR" retourne la classe} {@link com.avancial.app.data.databean.importMotriceBrut.ImportTMDAVTREntity}
     */
    public static Class<?> getClasseEntiteImporFromTableMotrice(String nomTableMotrice) throws ClassNotFoundException {
-      return Class.forName("com.avancial.app.data.databean.importMotrice." + getNomEntiteImportFromTableMotrice(nomTableMotrice));
+      return Class.forName("com.avancial.app.data.databean.importMotriceBrut." + getNomEntiteImportFromTableMotrice(nomTableMotrice));
    }
 
    /**
@@ -98,7 +98,7 @@ public class GetEntiteService {
     *         {@code "ImportTMDAVTREntity" retourne la classe} {@link com.avancial.app.data.databean.importMotriceBrut.ImportTMDAVTREntity}
     */
    public static Class<?> getClasseEntiteImportFromNomEntiteImportMotrice(String nomClasseEntiteImportMotrice) throws ClassNotFoundException {
-      return Class.forName("com.avancial.app.data.databean.importMotrice." + nomClasseEntiteImportMotrice);
+      return Class.forName("com.avancial.app.data.databean.importMotriceBrut." + nomClasseEntiteImportMotrice);
    }
 
    /**
