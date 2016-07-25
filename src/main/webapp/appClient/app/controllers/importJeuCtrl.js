@@ -1,7 +1,7 @@
 'use strict';
 
-socle_app.controller("importJeuCtrl", ["$scope", "$filter", "importJeuDonneeService", "NgTableParams", 
-                                       function($scope, $filter, importJeuDonneeService, NgTableParams) {
+socle_app.controller("importJeuCtrl", ["$scope", "$filter", "importJeuDonneeService", "NgTableParams", "generateNgTableService",
+                                       function($scope, $filter, importJeuDonneeService, NgTableParams, generateNgTableService) {
 	
 	$scope.title = "Importation des données";
 	$scope.cols = [];
@@ -25,15 +25,6 @@ socle_app.controller("importJeuCtrl", ["$scope", "$filter", "importJeuDonneeServ
 			$scope.reponse = importJeuDonneeService.getReponse();
 		});		
     }
-	
-	function applyComparer(actual, expression) {
-		if (expression instanceof Date) {
-			return dateComparer(actual, expression);
-		} else {
-			var strValue = actual + '';
-			return strValue.contains(expression);
-		}
-	}
 
 	function constructor() {
 		/* Récupération des tables pour le select */
@@ -45,27 +36,12 @@ socle_app.controller("importJeuCtrl", ["$scope", "$filter", "importJeuDonneeServ
 				$scope.tableVide = true;
 			} else {
 				$scope.tableVide = false;
-				for (var i = 0; i < columns.length; i++) {
-					var col = columns[i];
-					var type = col.fieldType;
-					if (type === "Date") {
-						col.format = {
-							name : "date",
-							params : ["yyyy-MM-dd HH:mm:ss"]
-						}
-					} else {
-						col.format = {
-							name : "identity"
-						}
-					}
-					$scope.cols.push(col);
-				}
-				
+				$scope.cols = generateNgTableService.getTableColumns(columns);
 				$scope.params = new NgTableParams({
 					count: 20
 				}, {
 					filterOptions: {
-						filterComparator: applyComparer
+						filterComparator: generateNgTableService.applyComparer
 					},
 					dataset : datas
 				});
@@ -75,9 +51,6 @@ socle_app.controller("importJeuCtrl", ["$scope", "$filter", "importJeuDonneeServ
 	
 	constructor();
 	
-	$scope.format = function(model, filter) {
-		var paramsArray = ([model]).concat(filter.params);
-		return $filter(filter.name).apply(this, paramsArray);
-	};
+	$scope.format = generateNgTableService.format;
 	
 }]);
