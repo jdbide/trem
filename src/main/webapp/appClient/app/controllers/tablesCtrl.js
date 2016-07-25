@@ -1,7 +1,7 @@
 'use strict';
 
-socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "tablesMotriceService", "NgTableParams", 
-                                    function($scope, $filter, importService, tablesMotriceService, NgTableParams) {
+socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "tablesMotriceService", "generateNgTableService", "NgTableParams", 
+                                    function($scope, $filter, importService, tablesMotriceService, generateNgTableService, NgTableParams) {
 	$scope.cols = [];
 	$scope.params = null;
 	$scope.tableVide = false;
@@ -35,22 +35,7 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 	$scope.selectId = "idSelectTable";
 	$scope.selectedOption = "";
 	$scope.labelSelect = "Veuillez choisir une table : ";
-	
-	function applyComparer(actual, expression) {
-		if (expression instanceof Date) {
-			return dateComparer(actual, expression);
-		} else {
-			var strValue = actual + '';
-			return strValue.contains(expression);
-		}
-	}
 
-	var dateComparer = function(actualDate, expressionDate) {
-		var expressionString = $filter('date')(expressionDate, 'yyyy-MM-dd');
-		var actualString = $filter('date')(actualDate, 'yyyy-MM-dd');
-		return actualDate && actualString.indexOf(expressionString) > -1;
-	}
-	
 	$scope.displayTable = function(nomTable) {
 		if (nomTable.value != null) {
 			importService.getDataByServer($scope.selectedOption.value).then(function() {
@@ -62,27 +47,13 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 					$scope.tableVide = true;
 				} else {
 					$scope.tableVide = false;
-					for (var i = 0; i < columns.length; i++) {
-						var col = columns[i];
-						var type = col.fieldType;
-						if (type === "Date") {
-							col.format = {
-								name : "date",
-								params : ["yyyy-MM-dd HH:mm:ss"]
-							}
-						} else {
-							col.format = {
-								name : "identity"
-							}
-						}
-						$scope.cols.push(col);
-					}
+					$scope.cols = generateNgTableService.getTableColumns(columns);
 					
 					$scope.params = new NgTableParams({
 						count: 20
 					}, {
 						filterOptions: {
-							filterComparator: applyComparer
+							filterComparator: generateNgTableService.applyComparer
 						},
 						dataset : datas
 					});
@@ -94,9 +65,6 @@ socle_app.controller("tablesCtrl", ["$scope", "$filter", "importService", "table
 		
 	};
 	
-    $scope.format = function(model, filter) {
-    	var paramsArray = ([model]).concat(filter.params);
-    	return $filter(filter.name).apply(this, paramsArray);
-    };
+    $scope.format = generateNgTableService.format;
 	
 }]);
