@@ -416,3 +416,15 @@ INSERT INTO `tremas_tables_motrice` VALUES ('19', 'TMDTRA1', '1');
 INSERT INTO `tremas_tables_motrice` VALUES ('20', 'TMDTRCH', '1');
 INSERT INTO `tremas_tables_motrice` VALUES ('21', 'TMDVOIT', '1');
 INSERT INTO `tremas_tables_motrice` VALUES ('22', 'TMDDTRC', '1');
+
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('1', 'Regime train tranche');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('2', 'Regime desserte');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('3', 'Regime service');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('4', 'Regime specificities');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('5', 'Regime restriction');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('6', 'Regime code sat');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('7', 'Regime fare profile');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('8', 'Regime equipement type');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('9', 'Regime meal type');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('10', 'Regime distribution');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('11', 'Regime composition');
