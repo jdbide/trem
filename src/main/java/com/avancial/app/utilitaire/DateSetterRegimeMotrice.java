@@ -9,10 +9,11 @@ import java.text.ParseException;
 public class DateSetterRegimeMotrice implements ITraitementDonnees {
 
     private static String app = null;
+    final String appValid = "KHT";
 
     @Override
     public String execute(String donnee) throws ParseException {
-        if (app.equals("KHT"))
+        if (app.equals(this.appValid))
             TranscodageRegimeMotrice.setDateDebutService(donnee);
         return donnee;
     }
