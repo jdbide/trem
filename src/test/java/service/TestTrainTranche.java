@@ -4,6 +4,7 @@
 package service;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,8 +18,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -43,8 +42,8 @@ public class TestTrainTranche {
 				.addPackage(EntityManagerProducerSocle.class.getPackage())
 				.addPackage(EntityManagerProducerSocle.class.getPackage())
 				.addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
-				.addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
-				.setWebXML("WEB-INF/web.xml").addAsManifestResource("META-INF/context.xml", "context.xml");
+				.addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
+				.addAsManifestResource("META-INF/context.xml", "context.xml");
 
 		System.out.println(jar.toString(true));
 
@@ -62,49 +61,69 @@ public class TestTrainTranche {
 		JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
 		jeuDonneeEntity.setIdJeuDonnees(1);
 
-		Query query = this.em.createNativeQuery(
-				"SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_NUM");
+		Query query = this.em.createNamedQuery("selectMotriceTrainTranche");
 
 		List<Object[]> trainsTranches = query.getResultList();
-
+		long cpt = 1;
 		MotriceTrainTrancheEntity motriceTrainTrancheEntity;
 		for (Object[] record : trainsTranches) {
 			motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
+			motriceTrainTrancheEntity.setIdMotriceTrainTranche(++cpt);
 			motriceTrainTrancheEntity.setJeuDonnee(jeuDonneeEntity);
 			motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche((String) record[0]);
 			motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche((String) record[1]);
-			motriceTrainTrancheEntity
-					.setValidForRRMotriceTrainTranche(new Boolean("1".equals(record[2].toString()) ? "true" : "false"));
+			motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(((BigInteger) record[2]).intValue() == 1);
 			motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche((String) record[3]);
 
-			this.em.getTransaction().begin();
-			this.em.persist(motriceTrainTrancheEntity);
-			this.em.getTransaction().commit();
-		}
-
-//		PropertyMap<Object[], MotriceTrainTrancheEntity> userMap = new PropertyMap<Object[], MotriceTrainTrancheEntity>() {
-//			@Override
-//			protected void configure() {
-//				map().setTrainNumberMotriceTrainTranche((String) this.source[0]);
-//				map().setTrancheNumberMotriceTrainTranche((String) this.source[1]);
-//				map().setValidForRRMotriceTrainTranche(
-//						new Boolean("1".equals(this.source[2].toString()) ? "true" : "false"));
-//				map().setTrancheStatusMotriceTrainTranche((String) this.source[3]);
-//
-//			}
-//		};
-//
-//		ModelMapper modelMapper = new ModelMapper();
-//		modelMapper.addMappings(userMap);
-//
-//		for (Object[] record : trainsTranches) {
-//			motriceTrainTrancheEntity = modelMapper.map(record, MotriceTrainTrancheEntity.class);
-//			motriceTrainTrancheEntity.setJeuDonnee(jeuDonneeEntity);
-//
 //			this.em.getTransaction().begin();
 //			this.em.persist(motriceTrainTrancheEntity);
 //			this.em.getTransaction().commit();
-//		}
+
+			Query queryRDesserte = this.em.createNativeQuery(
+					"SELECT desserte.GADS_INPT_RR_GAR AS station, desserte.GADS_DEB_ARRET AS arrivalHour, desserte.GADS_FIN_ARRET AS departureHour, distrib.DSTR_REGI AS regime "
+							+ "FROM tremas_import_tmdgads AS desserte "
+							+ "INNER JOIN tremas_import_tmddstr AS distrib ON desserte.GADS_DSTR_COD_CIE = distrib.DSTR_TRA1_COD_CIE "
+							+ "AND desserte.GADS_DSTR_NUM_TRA1 = distrib.DSTR_TRA1_NUM_TRA1 "
+							+ "AND desserte.GADS_DSTR_IND_FER = distrib.DSTR_TRA1_IND_FER "
+							+ "AND desserte.GADS_DSTR_NUM = distrib.DSTR_NUM "
+							+ "INNER JOIN tremas_import_tmdcath AS cat ON desserte.GADS_DSTR_COD_CIE = cat.CATH_CIRR_COD_CIE "
+							+ "AND desserte.GADS_DSTR_NUM_TRA1 = cat.CATH_TRCH_NUM_TRA1 "
+							+ "AND desserte.GADS_DSTR_IND_FER = cat.CATH_TRCH_IND_FER "
+							+ "AND desserte.GADS_DSTR_NUM = cat.CATH_NUM "
+							+ "WHERE cat.CATH_SSIM = ? "
+							+ "AND cat.CATH_TRCH_NUM_TRA1 = ?");
+			queryRDesserte.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
+			queryRDesserte.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+			
+			List<Object[]> rDesserte = queryRDesserte.getResultList();
+		}
+
+		// PropertyMap<Object[], MotriceTrainTrancheEntity> userMap = new
+		// PropertyMap<Object[], MotriceTrainTrancheEntity>() {
+		// @Override
+		// protected void configure() {
+		// map().setTrainNumberMotriceTrainTranche((String) this.source[0]);
+		// map().setTrancheNumberMotriceTrainTranche((String) this.source[1]);
+		// map().setValidForRRMotriceTrainTranche(
+		// new Boolean("1".equals(this.source[2].toString()) ? "true" :
+		// "false"));
+		// map().setTrancheStatusMotriceTrainTranche((String) this.source[3]);
+		//
+		// }
+		// };
+		//
+		// ModelMapper modelMapper = new ModelMapper();
+		// modelMapper.addMappings(userMap);
+		//
+		// for (Object[] record : trainsTranches) {
+		// motriceTrainTrancheEntity = modelMapper.map(record,
+		// MotriceTrainTrancheEntity.class);
+		// motriceTrainTrancheEntity.setJeuDonnee(jeuDonneeEntity);
+		//
+		// this.em.getTransaction().begin();
+		// this.em.persist(motriceTrainTrancheEntity);
+		// this.em.getTransaction().commit();
+		// }
 
 	}
 
