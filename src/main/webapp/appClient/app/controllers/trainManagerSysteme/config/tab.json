@@ -1,0 +1,27 @@
+[
+	{
+		"title": "Search",
+		"url": "app/views/partials/trainManagerSysteme/partials/search.xhtml",
+		"active":false
+	},
+	{
+		"title": "Calendar View",
+		"url": "app/views/partials/trainManagerSysteme/partials/calendar.xhtml",
+		"active":false
+	},
+	{
+		"title": "Import",
+		"url": "app/views/partials/trainManagerSysteme/partials/import.xhtml",
+		"active":true
+	},
+	{
+		"title": "Import History",
+		"url": "app/views/partials/trainManagerSysteme/partials/history.xhtml",
+		"active":false
+	},
+	{
+		"title": "Control",
+		"url": "app/views/partials/trainManagerSysteme/partials/control.xhtml",
+		"active":false
+	}
+]
