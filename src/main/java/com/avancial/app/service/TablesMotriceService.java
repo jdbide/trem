@@ -4,7 +4,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import com.avancial.app.data.databean.TablesMotriceEntity;
+import com.avancial.app.data.databean.RefTablesMotriceEntity;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 /**
@@ -24,9 +24,9 @@ public class TablesMotriceService {
      * 
      * @return List<{@link TablesMotriceEntity}>
      */
-    public List<TablesMotriceEntity> getAllTablesMotrice() {
-        Query query = this.em.createNamedQuery("TablesMotrice.getAll", TablesMotriceEntity.class);
-        return ((List<TablesMotriceEntity>) query.getResultList());
+    public List<RefTablesMotriceEntity> getAllTablesMotrice() {
+        Query query = this.em.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
+        return ((List<RefTablesMotriceEntity>) query.getResultList());
     }
 
 }

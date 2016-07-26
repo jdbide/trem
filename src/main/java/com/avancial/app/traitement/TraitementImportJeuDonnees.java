@@ -54,7 +54,6 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
      */
     @Override
     protected void executeTraitement() {
-        Date dateDebutService;
         try {
             this.entityManagerDb2 = EntityManagerFactoryProviderDb2
                     .getInstance(this.importJeuDonneesDto.getUsername(), this.importJeuDonneesDto.getPassword())
@@ -83,16 +82,6 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
         jeuDonneeDataBean.setStatusJeuDonnees(true);
         jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
         this.jeuDonneeService.update(jeuDonneeDataBean);
-        try {
-            TypedQuery<ImportTMDKAPPEntity> query = this.entityManagerSocle.createNamedQuery("ImportTMDKAPP.getKht",
-                    ImportTMDKAPPEntity.class);
-            ImportTMDKAPPEntity tmdkappKhtDataBean = query.getSingleResult();
-            TranscodageRegimeMotrice.setDateDebutService(tmdkappKhtDataBean.getKAPP_ORI());
-        }
-        catch (ParseException e) {
-            this.log("Echec du \"set\" de TranscodageRegimeMotrice.dateDebutService");
-            e.printStackTrace();
-        }
         this.traitementOk = true;
     }
 

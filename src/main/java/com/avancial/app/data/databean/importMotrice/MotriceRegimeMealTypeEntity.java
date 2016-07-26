@@ -1,6 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,9 +23,9 @@ public class MotriceRegimeMealTypeEntity {
     @Column(length = 1, nullable = false)
     private String mealTypeMotriceRegimeMealType;
     @Column(length = 8, nullable = false)
-    private Date beginServiceHourRegimeMealType;
+    private String beginServiceHourRegimeMealType;
     @Column(length = 8, nullable = false)
-    private Date endServiceHourRegimeMealType;
+    private String endServiceHourRegimeMealType;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
@@ -50,19 +48,19 @@ public class MotriceRegimeMealTypeEntity {
         this.mealTypeMotriceRegimeMealType = mealTypeMotriceRegimeMealType;
     }
 
-    public Date getBeginServiceHourRegimeMealType() {
+    public String getBeginServiceHourRegimeMealType() {
         return this.beginServiceHourRegimeMealType;
     }
 
-    public void setBeginServiceHourRegimeMealType(Date beginServiceHourRegimeMealType) {
+    public void setBeginServiceHourRegimeMealType(String beginServiceHourRegimeMealType) {
         this.beginServiceHourRegimeMealType = beginServiceHourRegimeMealType;
     }
 
-    public Date getEndServiceHourRegimeMealType() {
+    public String getEndServiceHourRegimeMealType() {
         return this.endServiceHourRegimeMealType;
     }
 
-    public void setEndServiceHourRegimeMealType(Date endServiceHourRegimeMealType) {
+    public void setEndServiceHourRegimeMealType(String endServiceHourRegimeMealType) {
         this.endServiceHourRegimeMealType = endServiceHourRegimeMealType;
     }
 

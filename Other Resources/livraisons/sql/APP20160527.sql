@@ -384,38 +384,39 @@ CREATE TABLE `tremas_jeu_donnees` (
   PRIMARY KEY (`idJeuDonnees`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE `tremas_tables_motrice` (
-  `idTablesMotrice` bigint(20) NOT NULL AUTO_INCREMENT,
-  `libelleTablesMotrice` varchar(255) DEFAULT NULL,
-  `actifTablesMotrice` tinyint(1) NOT NULL,
-  PRIMARY KEY (`idTablesMotrice`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `tremas_ref_tables_motrice` (
+  `idRefTablesMotrice` bigint(20) NOT NULL AUTO_INCREMENT,
+  `libelleRefTablesMotrice` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `actifRefTablesMotrice` tinyint(1) NOT NULL,
+  `ordreRefTablesMotrice` int(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idRefTablesMotrice`)
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='TMDKAPP doit etre prioritaire car on y recuppere la date utiliser pour traduire les regimes';
 
 -- ----------------------------
--- Records of tremas_tables_motrice
+-- Records of tremas_ref_tables_motrice
 -- ----------------------------
-INSERT INTO `tremas_tables_motrice` VALUES ('1', 'TMDAVTR', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('2', 'TMDAVTH', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('3', 'TMDCATH', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('4', 'TMDCATR', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('5', 'TMDCDCL', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('6', 'TMDCDDS', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('7', 'TMDCDEM', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('8', 'TMDDSTR', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('9', 'TMDETVO', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('10', 'TMDGADS', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('11', 'TMDKAPP', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('12', 'TMDPARE', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('13', 'TMDRAME', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('14', 'TMDRCTH', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('15', 'TMDSPCO', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('16', 'TMDSPPL', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('17', 'TMDSVTH', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('18', 'TMDTATH', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('19', 'TMDTRA1', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('20', 'TMDTRCH', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('21', 'TMDVOIT', '1');
-INSERT INTO `tremas_tables_motrice` VALUES ('22', 'TMDDTRC', '1');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('1', 'TMDAVTR', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('2', 'TMDAVTH', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('3', 'TMDCATH', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('4', 'TMDCATR', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('5', 'TMDCDCL', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('6', 'TMDCDDS', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('7', 'TMDCDEM', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('8', 'TMDDSTR', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('9', 'TMDETVO', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('10', 'TMDGADS', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('11', 'TMDKAPP', '1', '1');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('12', 'TMDPARE', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('13', 'TMDRAME', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('14', 'TMDRCTH', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('15', 'TMDSPCO', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('16', 'TMDSPPL', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('17', 'TMDSVTH', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('18', 'TMDTATH', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('19', 'TMDTRA1', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('20', 'TMDTRCH', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('21', 'TMDVOIT', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('22', 'TMDDTRC', '1', '10');
 
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('1', 'Regime train tranche');
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('2', 'Regime desserte');

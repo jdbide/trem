@@ -5,19 +5,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import com.avancial.socle.utils.Convertisseur;
 import utils.transcodage.UtilsTranscodageRegime;
-
-public class TranscodageRegimeMotrice {
+/**
+ * transcode les regime
+ * @author gabriel.gagnier
+ *
+ */
+public class TranscodageRegimeMotrice implements ITraitementDonnees{
     private static Date dateDebutService;
     private static final SimpleDateFormat FORMAT_DATE_YYYYMMDD = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Traduit une regime en Hexa en string lisible.
-     * @param regime
+     * @param donnee
      * @return
      * @throws ParseException 
      */
-    public String transcodageRegime(String regime) throws ParseException{
-        String regMotrice = Convertisseur.hexToBin(regime);
+    public String execute(String donnee) throws ParseException{
+        String regMotrice = Convertisseur.asciiToBin(donnee);
         return new UtilsTranscodageRegime(regMotrice, dateDebutService).executeTranscodage();
         
     }
