@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -65,6 +67,11 @@ public class JeuDonneeEntity {
     @Column(nullable = false)
     private String environment;
 
+    //uni-directional many-to-one association to DatasourceEntity
+    @ManyToOne
+    @JoinColumn(name="idCompagnieEnvironnement")
+    private CompagnieEnvironnementEntity compagnieEnvironnementEntity;
+    
     public int getIdJeuDonnees() {
         return this.idJeuDonnees;
     }
@@ -175,5 +182,19 @@ public class JeuDonneeEntity {
     public void setEnvironment(String environment) {
         this.environment = environment;
     }
+
+   /**
+    * @return the compagnieEnvironnementEntity
+    */
+   public CompagnieEnvironnementEntity getCompagnieEnvironnementEntity() {
+      return compagnieEnvironnementEntity;
+   }
+
+   /**
+    * @param compagnieEnvironnementEntity the compagnieEnvironnementEntity to set
+    */
+   public void setCompagnieEnvironnementEntity(CompagnieEnvironnementEntity compagnieEnvironnementEntity) {
+      this.compagnieEnvironnementEntity = compagnieEnvironnementEntity;
+   }
 
 }
