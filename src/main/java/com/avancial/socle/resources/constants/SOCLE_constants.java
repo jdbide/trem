@@ -34,12 +34,13 @@ public enum SOCLE_constants {
 
    EXCEPTION_DUPICATE_ID("exception_duplicate_id"),
    EXCEPTION_UNKNOWN("exception_unknown"),
+   CONNECTION_NOT_LOADED("message_collection_not_loaded"),
+   PARAM_NOT_FOUND("message_param_not_found"),
    /* Libelle de l'attribut dans le cas d'un appel au webService sans que l'utilisateur sera connecté */
    ERR_AUTH("msgErrAuth"),
    INPUT_USER_NAME("j_username"),
    INPUT_PASSWORD("j_password"),
-   ATT_SESSION_USER("sessionUser")
-   ;
+   ATT_SESSION_USER("sessionUser");
 
    private String constant = "";
 
