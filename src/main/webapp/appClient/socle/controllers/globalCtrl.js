@@ -7,6 +7,7 @@
 socle_app.controller("globalCtrl", ["$scope", "$rootScope", 'envService', 'userService', 'menuService', 'paramService',
                                     function($scope, $rootScope, envService, userService, menuService,paramService) {
 	function constructor () {
+		console.warn("Je suis la ");
 		$scope.welcome = "Socle 2";
 		console.log(envService.get());
 		
