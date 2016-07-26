@@ -22,7 +22,7 @@ public class MotriceRegimeEqpTypeEntity {
     @Id
     private Long idMotriceRegimeEqpType;
     @Column(length = 3, nullable = false)
-    private String eqpTypeRegimeEqpType;
+    private String eqpTypeMotriceRegimeEqpType;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
@@ -38,11 +38,11 @@ public class MotriceRegimeEqpTypeEntity {
     }
 
     public String getEqpTypeRegimeEqpType() {
-        return this.eqpTypeRegimeEqpType;
+        return this.eqpTypeMotriceRegimeEqpType;
     }
 
     public void setEqpTypeRegimeEqpType(String eqpTypeRegimeEqpType) {
-        this.eqpTypeRegimeEqpType = eqpTypeRegimeEqpType;
+        this.eqpTypeMotriceRegimeEqpType = eqpTypeRegimeEqpType;
     }
 
     public MotriceRegimeEntity getMotriceRegime() {

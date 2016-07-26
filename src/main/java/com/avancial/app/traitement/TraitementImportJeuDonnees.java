@@ -4,7 +4,6 @@
 package com.avancial.app.traitement;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -82,6 +81,17 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
         jeuDonneeDataBean.setStatusJeuDonnees(true);
         jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
         this.jeuDonneeService.update(jeuDonneeDataBean);
+        
+        /* Insertion dans les tables du modèle motrice */
+        TraitementMotrice traitementMotrice = new TraitementMotrice(jeuDonneeDataBean);
+        try {
+            traitementMotrice.execute();
+        }
+        catch (SecurityException e) {
+            this.log("Echec du traitement motrice.");
+            e.printStackTrace();
+        }
+
         this.traitementOk = true;
     }
 
