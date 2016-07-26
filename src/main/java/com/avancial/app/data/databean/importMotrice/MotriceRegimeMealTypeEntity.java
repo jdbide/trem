@@ -25,9 +25,9 @@ public class MotriceRegimeMealTypeEntity {
     @Column(length = 1, nullable = false)
     private String mealTypeMotriceRegimeMealType;
     @Column(length = 8, nullable = false)
-    private Date beginServiceHourRegimeMealType;
+    private Date beginServiceHourMotriceRegimeMealType;
     @Column(length = 8, nullable = false)
-    private Date endServiceHourRegimeMealType;
+    private Date endServiceHourMotriceRegimeMealType;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
@@ -51,19 +51,19 @@ public class MotriceRegimeMealTypeEntity {
     }
 
     public Date getBeginServiceHourRegimeMealType() {
-        return this.beginServiceHourRegimeMealType;
+        return this.beginServiceHourMotriceRegimeMealType;
     }
 
     public void setBeginServiceHourRegimeMealType(Date beginServiceHourRegimeMealType) {
-        this.beginServiceHourRegimeMealType = beginServiceHourRegimeMealType;
+        this.beginServiceHourMotriceRegimeMealType = beginServiceHourRegimeMealType;
     }
 
     public Date getEndServiceHourRegimeMealType() {
-        return this.endServiceHourRegimeMealType;
+        return this.endServiceHourMotriceRegimeMealType;
     }
 
     public void setEndServiceHourRegimeMealType(Date endServiceHourRegimeMealType) {
-        this.endServiceHourRegimeMealType = endServiceHourRegimeMealType;
+        this.endServiceHourMotriceRegimeMealType = endServiceHourRegimeMealType;
     }
 
     public MotriceRegimeEntity getMotriceRegime() {
