@@ -38,6 +38,7 @@ public class MapTraitementImportBrut extends HashMap<String, ITraitementDonnees>
         this.put("TRCH_REGI_VAL", transco);
         this.put("TRCH_REGI_VAL_DC", transco);
         this.put("VOIT_REGI_UTIL", transco); 
+        this.put("DTRC_REGI", transco); 
         
     }
 
