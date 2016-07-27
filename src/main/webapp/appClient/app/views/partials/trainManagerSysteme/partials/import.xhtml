@@ -1,0 +1,49 @@
+<div class="tab-pane" id="import" ng-controller="importTmsCtrl">
+	<h3>Import</h3>
+	<div class="row">
+		<div class="box-body table-responsive no-padding">
+			<table  class="table table-bordered table-striped table-tremas">
+				<thead>
+					<tr>
+						<th class="text-center" ROWSPAN=2>Company</th>
+						<th class="text-center" ROWSPAN=2>Environment</th>
+						<th class="text-center" COLSPAN=5>Active DataSet</th>
+						<th class="text-center" COLSPAN=5>Draft DataSet</th>
+						<th class="text-center" ROWSPAN=2>Import new Draft</th>				
+					</tr>
+					<tr>
+						<th class="text-center">Imported on</th>
+						<th class="text-center">by</th>
+						<th class="text-center">Validated on</th>
+						<th class="text-center">by</th>
+						<th class="text-center">Report</th>
+						
+						<th class="text-center">Imported on</th>
+						<th class="text-center">by</th>
+						<th class="text-center">Report</th>
+						<th class="text-center">Validate</th>
+						<th class="text-center">Delete</th>
+					</tr>			
+				</thead>
+				<tbody>
+					<tr ng-repeat="data in datas track by $index ">
+						<td>{{data.libelleCompagnie}}</td>
+		                <td>{{data.libelleEnvironnement}}</td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>	                
+		            </tr>
+		        </tbody>
+			</table>
+		</div>
+	</div>
+	<!-- /.box-body -->
+</div>

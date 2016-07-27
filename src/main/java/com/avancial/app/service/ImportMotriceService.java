@@ -37,7 +37,7 @@ public class ImportMotriceService {
       ModelMapper modelMapper = new ModelMapper();
       modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
 
-      Class<?> importEntityClass = this.getEntiteService.getClasseEntiteImporFromTableMotrice(libelleTableMotrice);
+      Class<?> importEntityClass = this.getEntiteService.getClasseEntiteImportFromTableMotrice(libelleTableMotrice);
 
       if (importEntityClass != null) {
          this.em.getTransaction().begin();

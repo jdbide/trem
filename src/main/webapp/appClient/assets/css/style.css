@@ -12,3 +12,10 @@
     word-wrap: break-word;
 }
 
+.table-tremas>thead {
+	background-color:#b3b3b3;
+}
+
+.table-tremas > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #e7e4e4;
+}

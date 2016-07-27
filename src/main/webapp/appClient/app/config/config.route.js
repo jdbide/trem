@@ -12,5 +12,9 @@ socle_app.config(['$routeProvider', function($routeProvider) {
 	.when('/tables', {
 		templateUrl: 'app/views/partials/tablesMotrice.xhtml',
 		controller: 'tablesCtrl'
+	})
+	.when('/trainMS', {
+		templateUrl: 'app/views/partials/trainManagerSysteme/accueil.xhtml',
+		controller: 'trainTmsCtrl'
 	});
 }]);
