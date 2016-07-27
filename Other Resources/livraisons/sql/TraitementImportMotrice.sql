@@ -262,3 +262,4 @@ INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('7', 1, 'MotriceRegimeSat
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('8', 1, 'MotriceRegimeServiceEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('9', 1, 'MotriceRegimeSpecificityEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('10', 1, 'MotriceRegimeStopEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('11', 1, 'MotriceRegimeODEntity', null);
