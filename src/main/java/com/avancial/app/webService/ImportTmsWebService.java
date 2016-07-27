@@ -8,6 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.simple.JSONArray;
+
 import com.avancial.app.service.ImportTmsService;
 
 /**
@@ -28,7 +30,9 @@ public class ImportTmsWebService {
 
    @GET
    @Produces({ MediaType.APPLICATION_JSON })
-   public Response getImportTms() throws Exception {     
-      return Response.status(200).entity(importTmsService.getAllImportTmsActif()).build();
+   public Response getImportTms() throws Exception {
+      JSONArray jsonArray = new JSONArray();      
+      jsonArray.addAll(importTmsService.getAllImportTmsActif());
+      return Response.status(200).entity(jsonArray).build();
    }
 }
