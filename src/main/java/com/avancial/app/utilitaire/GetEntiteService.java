@@ -71,7 +71,7 @@ public class GetEntiteService {
     *         Exemple:<br>
     *         {@code "TMDAVTR" retourne la classe} {@link com.avancial.app.data.databean.importMotriceBrut.ImportTMDAVTREntity}
     */
-   public static Class<?> getClasseEntiteImporFromTableMotrice(String nomTableMotrice) throws ClassNotFoundException {
+   public static Class<?> getClasseEntiteImportFromTableMotrice(String nomTableMotrice) throws ClassNotFoundException {
       return Class.forName("com.avancial.app.data.databean.importMotriceBrut." + getNomEntiteImportFromTableMotrice(nomTableMotrice));
    }
 
@@ -99,6 +99,19 @@ public class GetEntiteService {
     */
    public static Class<?> getClasseEntiteImportFromNomEntiteImportMotrice(String nomClasseEntiteImportMotrice) throws ClassNotFoundException {
       return Class.forName("com.avancial.app.data.databean.importMotriceBrut." + nomClasseEntiteImportMotrice);
+   }
+   
+   /**
+    * Retourne la classe @Entity à partir du nom de la classe qui représente une table motrice régime.
+    * 
+    * @param nomClasseEntiteImportMotriceRegime
+    *           Nom d'une entité de table motrice régime
+    * @return La classe spécifiée<br>
+    *         Exemple:<br>
+    *         {@code "MotriceRegimeDistributionEntity" retourne la classe} {@link com.avancial.app.data.databean.importMotrice.MotriceRegimeDistributionEntity}
+    */
+   public static Class<?> getClasseEntiteImportFromNomEntiteImportMotriceRegime(String nomClasseEntiteImportMotriceRegime) throws ClassNotFoundException {
+       return Class.forName("com.avancial.app.data.databean.importMotrice." + nomClasseEntiteImportMotriceRegime);
    }
 
    /**

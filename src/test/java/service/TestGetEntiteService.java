@@ -48,7 +48,7 @@ public class TestGetEntiteService {
         Assert.assertEquals(entiteService.getNomEntiteImportFromTableMotrice("tmdavtr"), "ImportTMDAVTREntity");
 
 //        Assert.assertEquals(entiteService.getClasseEntiteFromTableMotrice("tmdavtr"), TMDAVTREntity.class);
-        Assert.assertEquals(entiteService.getClasseEntiteImporFromTableMotrice("tmdavtr"), ImportTMDAVTREntity.class);
+        Assert.assertEquals(entiteService.getClasseEntiteImportFromTableMotrice("tmdavtr"), ImportTMDAVTREntity.class);
         
         Assert.assertEquals(entiteService.getNomEntiteFromNomEntiteImportMotrice("ImportTMDAVTREntity"), "TMDAVTREntity");
         Assert.assertEquals(entiteService.getNomEntiteImportFromNomEntiteMotrice("TMDAVTREntity"), "ImportTMDAVTREntity");

@@ -34,7 +34,7 @@ public class TablesImportService {
         Class<?> entity = null;
 
         try {
-            entity = GetEntiteService.getClasseEntiteImporFromTableMotrice(entityName);
+            entity = GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName);
         }
         catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -44,7 +44,7 @@ public class TablesImportService {
 
         Query query = this.em.createNamedQuery(
                 GetEntiteService.getNomEntiteImportFromNomEntiteMotrice(entityName) + ".getAll",
-                GetEntiteService.getClasseEntiteImporFromTableMotrice(entityName));
+                GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName));
         List<Object> tmdavtrDataBeans = query.getResultList();
         JSONArray datas = new JSONArray();
         datas.addAll(tmdavtrDataBeans);
