@@ -244,3 +244,21 @@ alter table tremas_motrice_traintranche
     add constraint FK_motrice_regime_traintranche_idJeuDonnees 
     foreign key (idJeuDonnees) 
     references tremas_jeu_donnees (idJeuDonnees);
+    
+create table tremas_ref_tables_motrice_regime (
+    idRefTablesMotriceRegime bigint not null auto_increment,
+    actifRefTablesMotriceRegime bit not null,
+    libelleRefTablesMotriceRegime varchar(255),
+    ordreRefTablesMotriceRegime bigint,
+    primary key (idRefTablesMotriceRegime)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('1', 1, 'MotriceRegimeCompositionEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('2', 1, 'MotriceRegimeDistributionEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('3', 1, 'MotriceRegimeEqpTypeEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('4', 1, 'MotriceRegimeFareProfileEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('5', 1, 'MotriceRegimeMealTypeEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('6', 1, 'MotriceRegimeRestrictionEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('7', 1, 'MotriceRegimeSatcodeEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('8', 1, 'MotriceRegimeServiceEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('9', 1, 'MotriceRegimeSpecificityEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('10', 1, 'MotriceRegimeStopEntity', null);
