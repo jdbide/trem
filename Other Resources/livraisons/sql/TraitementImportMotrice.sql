@@ -170,6 +170,27 @@ create table tremas_motrice_traintranche (
     primary key (idMotriceTrainTranche)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+DROP TABLE IF EXISTS `tremas_ref_code_rm`;
+CREATE TABLE `tremas_ref_code_rm` (
+  `idRefCodeRm` bigint(20) NOT NULL AUTO_INCREMENT,
+  `codeRmRefCodeRm` varchar(3) NOT NULL,
+  `libelleRefCodeRm` varchar(50) NOT NULL,
+  `rame1RefCodeRm` varchar(5) NOT NULL,
+  `rame2RefCodeRm` varchar(5) NOT NULL,
+  PRIMARY KEY (`idRefCodeRm`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tremas_ref_rame_classe`;
+CREATE TABLE `tremas_ref_rame_classe` (
+  `idRefRameClasse` bigint(20) NOT NULL AUTO_INCREMENT,
+  `classeRefRameClasse` varchar(5) NOT NULL,
+  `codeRameRefRameClasse` varchar(6) NOT NULL,
+  `numCompRefRameClasse` int(11) NOT NULL,
+  `numResaRefRameClasse` varchar(3) NOT NULL,
+  `rameCodeRefRameClasse` varchar(255) NOT NULL,
+  PRIMARY KEY (`idRefRameClasse`)
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=latin1;
+
 alter table tremas_motrice_regime 
     add constraint FK_motrice_regime_idMotriceRefRegimeType 
     foreign key (idMotriceRefRegimeType) 
@@ -252,6 +273,7 @@ create table tremas_ref_tables_motrice_regime (
     ordreRefTablesMotriceRegime bigint,
     primary key (idRefTablesMotriceRegime)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('1', 1, 'MotriceRegimeCompositionEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('2', 1, 'MotriceRegimeDistributionEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('3', 1, 'MotriceRegimeEqpTypeEntity', null);
@@ -263,3 +285,249 @@ INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('8', 1, 'MotriceRegimeSer
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('9', 1, 'MotriceRegimeSpecificityEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('10', 1, 'MotriceRegimeStopEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('11', 1, 'MotriceRegimeODEntity', null);
+
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'C30', 'Half-Leisure', '15H', '14B' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CHE', 'Business (Charter)', '05E', '06E' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CHF', 'Leisure', '13H', '14H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CHG', 'Standard class only', '13B', '14B' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CHH', 'Leisure', '15H', '16H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CHI', 'Leisure', '83H', '84H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CHJ', 'Standard class only', '83B', '84B' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CHK', 'Business (Charter)', '83A', '56E' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CTA', 'First Class (1 SP)', '91D', '56E' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CTB', 'First class (2 & 3 SP)', '92H', '56E' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CTC', 'First class (1, 2 & 3 SP)', '83H', '56E' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CTD', 'Standard Premier (15 & 16 BP)', '83H', '94A' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CTE', 'Standard Premier (16 BP)', '83H', '94H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CTF', 'Half SP (14, 15, 16 SP)', '83B', '84H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CTG', 'Half SP (1 BP, 2 & 3 SP)', '83B', '94H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CTH', 'Half BP (1 & 2 BP, 3 SP)', '83B', '94D' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'LDA', 'First Class (16 SP)', '83A', '94D' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'LDB', 'First class (14 & 15 SP)', '83A', '94H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'LDC', 'First class (14, 15 & 16 SP)', '83A', '84H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'LDD', 'Standard Premier (1 & 2 BP)', '81H', '84H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'LDE', 'Standard Premier (1 BP)', '92H', '84H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'LDF', 'Half SP (1, 2, 3 SP)', '83H', '84B' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'LDG', 'Half SP (1 BP, 2 & 3 SP)', '92H', '84B' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'LDH', 'Half BP (1SP, 2 & 3 BP)', '91D', '84B' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'S30', 'Half-First 12 Business/10+11 Leisure', '13B', '26H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'SHL', 'First class (9 Leisure)', '21H', '14A' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'SHT', 'Strong Business', '23H', '14A' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'SHU', 'First class (Business/Leisure)', '15H', '14A' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'SHV', 'First class 11+12 Business/Other Leisure', '15H', '24A' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'SHW', 'Half-First 12 Business/Other Leisure', '15H', '26H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'U30', 'Half-First 9 & 8 Leisure/7 Business', '23H', '14B' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'UKL', 'First class (10 Leisure)', '13A', '21A' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'UKT', 'Strong Business', '13A', '26H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'UKU', 'First class (Business/Leisure)', '13A', '16H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'UKV', 'First class (7 & 8 Business)', '21H', '16H' );
+INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'UKW', 'Half-First (7 Business/Other Leisure)', '23H', '16H' );
+
+
+
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','02034D','1','34','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','02034D','2','034','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','02034D','3','034','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','02034D','4','034','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('     ','02034D','1','035','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('     ','02034D','1','036','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','02034D','1','037','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','02034D','2','037','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','02034D','3','037','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','02034D','4','037','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','02034D','5','037','02D');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','1','001','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','2','001','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','3','001','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','4','001','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','5','001','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','6','001','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','7','001','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','1','002','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','2','002','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','3','002','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','4','002','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','5','002','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','6','002','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','7','002','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','8','002','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','1','003','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','2','003','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','3','003','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','4','003','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','5','003','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','6','003','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','7','003','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','8','003','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','1','004','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','2','004','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','3','004','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','4','004','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','5','004','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','6','004','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','7','004','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','8','004','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','1','005','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','2','005','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','3','005','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','4','005','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','5','005','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','6','005','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','7','005','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','31001H','8','005','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('     ','31001H','1','006','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','31001H','1','007','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','31001H','2','007','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','31001H','3','007','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','31001H','4','007','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','31001H','5','007','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','31001H','6','007','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','31001H','7','007','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','1','008','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','2','008','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','3','008','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','4','008','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','5','008','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','6','008','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','7','008','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','1','009','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','2','009','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','3','009','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','4','009','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','31001H','5','009','31H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','1','001','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','2','001','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','3','001','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','4','001','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','5','001','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','6','001','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','7','001','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','1','002','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','2','002','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','3','002','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','4','002','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','5','002','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','6','002','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','7','002','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','8','002','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','1','003','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','2','003','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','3','003','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','4','003','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','5','003','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','6','003','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','7','003','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','8','003','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','1','004','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','2','004','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','3','004','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','4','004','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','5','004','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','6','004','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','7','004','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','8','004','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','1','005','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','2','005','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','3','005','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','4','005','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','5','005','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','6','005','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','7','005','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','32001H','8','005','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('     ','32001H','1','006','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','1','007','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','2','007','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','3','007','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','4','007','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','5','007','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','6','007','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','7','007','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','1','008','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','2','008','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','3','008','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','4','008','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','5','008','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','6','008','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','32001H','7','008','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','32001H','1','009','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','32001H','2','009','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','32001H','3','009','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','32001H','4','009','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','32001H','5','009','32H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','1','001','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','2','001','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','3','001','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','4','001','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','5','001','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','6','001','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','7','001','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','1','002','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','2','002','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','3','002','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','4','002','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','5','002','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','6','002','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','7','002','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','8','002','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','1','003','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','2','003','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','3','003','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','4','003','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','5','003','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','6','003','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','7','003','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','8','003','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','1','004','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','2','004','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','3','004','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','4','004','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','5','004','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','6','004','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','7','004','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','8','004','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','1','005','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','2','005','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','3','005','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','4','005','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','5','005','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','6','005','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','7','005','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('B    ','33001H','8','005','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('     ','33001H','1','006','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','1','007','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','2','007','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','3','007','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','4','007','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','5','007','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','6','007','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','7','007','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','1','008','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','2','008','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','3','008','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','4','008','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','5','008','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','6','008','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','7','008','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','1','009','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','2','009','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','3','009','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','4','009','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','33001H','5','009','33H');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','1','010','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','2','010','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','3','010','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','4','010','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','5','010','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','1','011','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','2','011','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','3','011','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','4','011','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','5','011','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','6','011','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','7','011','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','1','012','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','2','012','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','3','012','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','4','012','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','5','012','34A');
+INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('A    ','34010A','6','012','34A');
