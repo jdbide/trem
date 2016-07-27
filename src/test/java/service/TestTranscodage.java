@@ -108,7 +108,7 @@ public class TestTranscodage {
             List<MotriceRefRegimeTypeEntity> refs = select.getResultList();
             MotriceRefRegimeTypeEntity ref = refs.get(0);
             MotriceRegimeEntity res = new MotriceRegimeEntity();
-            res.setMotriceRefRegimeTypeEntity(ref);
+            res.setMotriceRefRegimeType(ref);
             res.setMotriceTrainTranche(trainTranche);
             Query query = this.em.createNativeQuery("SELECT HEX(CATH_REGI) FROM tremas_import_TMDCATH");
             List<String> regis = query.getResultList();

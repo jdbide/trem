@@ -138,7 +138,6 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
                 sqlValues.append(")");
 
                 if (++count % limit == 0) {
-
                     query = this.sessionSocle.createSQLQuery(sqlQuery.toString() + sqlValues.toString());
                     query.executeUpdate();
                     sqlValues.setLength(0);
@@ -146,6 +145,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
                 }
             }
             if (sqlValues.length() > 0) {
+
                 query = this.sessionSocle.createSQLQuery(sqlQuery.toString() + sqlValues.toString());
                 query.executeUpdate();
                 this.sessionSocle.clear();

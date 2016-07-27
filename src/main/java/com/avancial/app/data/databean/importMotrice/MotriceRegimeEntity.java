@@ -30,7 +30,7 @@ public class MotriceRegimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRefRegimeType")
     @ForeignKey(name = "FK_motrice_regime_idMotriceRefRegimeType")
-    private MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity;
+    private MotriceRefRegimeTypeEntity motriceRefRegimeType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceTrainTranche")
@@ -67,6 +67,9 @@ public class MotriceRegimeEntity {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
     private MotriceRegimeMealTypeEntity motriceRegimeMealType;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    private MotriceRegimeODEntity motriceRegimeOD;
+
     /**
      * @return the idMotriceRegime
      */
@@ -85,16 +88,16 @@ public class MotriceRegimeEntity {
     /**
      * @return the motriceRefRegimeTypeEntity
      */
-    public MotriceRefRegimeTypeEntity getMotriceRefRegimeTypeEntity() {
-        return this.motriceRefRegimeTypeEntity;
+    public MotriceRefRegimeTypeEntity getMotriceRefRegimeType() {
+        return this.motriceRefRegimeType;
     }
 
     /**
      * @param motriceRefRegimeTypeEntity
      *            the motriceRefRegimeTypeEntity to set
      */
-    public void setMotriceRefRegimeTypeEntity(MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity) {
-        this.motriceRefRegimeTypeEntity = motriceRefRegimeTypeEntity;
+    public void setMotriceRefRegimeType(MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity) {
+        this.motriceRefRegimeType = motriceRefRegimeTypeEntity;
     }
 
     /**
@@ -266,7 +269,7 @@ public class MotriceRegimeEntity {
      * @return the periodMotriceRegime
      */
     public String getPeriodMotriceRegime() {
-        return periodMotriceRegime;
+        return this.periodMotriceRegime;
     }
 
     /**
