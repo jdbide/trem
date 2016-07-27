@@ -370,6 +370,34 @@ CREATE TABLE `tremas_import_tmdvoit` (
   PRIMARY KEY (`idTMDVOIT`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+CREATE TABLE `tremas_import_tmdpcdd` (
+  `idTMDPCDD` bigint(20) NOT NULL AUTO_INCREMENT,
+  `PCDD_COMP_COD_DIAG` varchar(255) DEFAULT NULL,
+  `PCDD_COMP_NUM_COMP` varchar(255) DEFAULT NULL,
+  `PCDD_NUM_PLACE` varchar(255) DEFAULT NULL,
+  `PCDD_PAPL_COD` varchar(255) DEFAULT NULL,
+  `PCDD_USER` varchar(255) DEFAULT NULL,
+  `PCDD_DHDO` varchar(255) DEFAULT NULL,
+  `PCDD_MVT_MAJ` varchar(255) DEFAULT NULL,
+  `PCDD_CLBA_COD` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTMDPCDD`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `tremas_import_tmdtyvo` (
+  `idTMDTYVO` bigint(20) NOT NULL AUTO_INCREMENT,
+  `TYVO_NUM_TYP` varchar(255) DEFAULT NULL,
+  `TYVO_DIAV_COD` varchar(255) DEFAULT NULL,
+  `TYVO_MARV_COD_MARQ` varchar(255) DEFAULT NULL,
+  `TYVO_CIES_COD_CIE` varchar(255) DEFAULT NULL,
+  `TYVO_TYEQ_COD` varchar(255) DEFAULT NULL,
+  `TYVO_PART_TYP` varchar(255) DEFAULT NULL,
+  `TYVO_USER` varchar(255) DEFAULT NULL,
+  `TYVO_DHDO` varchar(255) DEFAULT NULL,
+  `TYVO_MVT_MAJ` varchar(255) DEFAULT NULL,
+  `TYVO_DAT_PEREMP` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTMDTYVO`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 CREATE TABLE `tremas_jeu_donnees` (
   `idJeuDonnees` int(11) NOT NULL AUTO_INCREMENT,
   `actifJeuDonnees` bit(1) NOT NULL,
@@ -418,6 +446,8 @@ INSERT INTO `tremas_ref_tables_motrice` VALUES ('19', 'TMDTRA1', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('20', 'TMDTRCH', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('21', 'TMDVOIT', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('22', 'TMDDTRC', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('23', 'TMDPCDD', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('24', 'TMDTYVO', '1', '10');
 
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('1', 'Regime train tranche');
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('2', 'Regime desserte');

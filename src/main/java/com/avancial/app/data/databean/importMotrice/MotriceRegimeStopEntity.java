@@ -21,11 +21,11 @@ public class MotriceRegimeStopEntity {
     @Id
     private Long idMotriceRegimeStop;
     @Column(length = 5, nullable = false)
-    private String station;
+    private String stationMotriceRegimeStop;
     @Column(length = 4, nullable = false)
-    private String arrivalHour;
+    private String arrivalHourMotriceRegimeStop;
     @Column(length = 4, nullable = false)
-    private String departureHour;
+    private String departureHourMotriceRegimeStop;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
@@ -40,35 +40,35 @@ public class MotriceRegimeStopEntity {
         this.idMotriceRegimeStop = idMotriceRegimeStop;
     }
 
-    public String getStation() {
-        return this.station;
+    public String getStationMotriceRegimeStop() {
+        return this.stationMotriceRegimeStop;
     }
 
-    public void setStation(String station) {
-        this.station = station;
+    public void setStationMotriceRegimeStop(String station) {
+        this.stationMotriceRegimeStop = station;
     }
 
-    public String getArrivalHour() {
-        return this.arrivalHour;
+    public String getArrivalHourMotriceRegimeStop() {
+        return this.arrivalHourMotriceRegimeStop;
     }
 
-    public void setArrivalHour(String arrivalHour) {
-        this.arrivalHour = arrivalHour;
+    public void setArrivalHourMotriceRegimeStop(String arrivalHour) {
+        this.arrivalHourMotriceRegimeStop = arrivalHour;
     }
 
-    public String getDepartureHour() {
-        return this.departureHour;
+    public String getDepartureHourMotriceRegimeStop() {
+        return this.departureHourMotriceRegimeStop;
     }
 
-    public void setDepartureHour(String departureHour) {
-        this.departureHour = departureHour;
+    public void setDepartureHourMotriceRegimeStop(String departureHour) {
+        this.departureHourMotriceRegimeStop = departureHour;
     }
 
-    public MotriceRegimeEntity getMotriceRegime() {
+    public MotriceRegimeEntity getMotriceRegimeMotriceRegimeStop() {
         return this.motriceRegime;
     }
 
-    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
+    public void setMotriceRegimeMotriceRegimeStop(MotriceRegimeEntity motriceRegime) {
         this.motriceRegime = motriceRegime;
     }
 

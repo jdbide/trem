@@ -21,13 +21,13 @@ public class MotriceRegimeSpecificityEntity {
     @Id
     private Long idMotriceRegimeSpecificity;
     @Column(length = 3, nullable = false)
-    private String coachNumber;
+    private String coachNumberMotriceRegimeSpecificity;
     @Column(length = 3, nullable = false)
-    private String compartmentNumber;
+    private String compartmentNumberMotriceRegimeSpecificity;
     @Column(length = 3, nullable = false)
-    private String seatNumber;
+    private String seatNumberMotriceRegimeSpecificity;
     @Column(length = 2, nullable = false)
-    private String stateCode;
+    private String stateCodeMotriceRegimeSpecificity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
@@ -42,43 +42,43 @@ public class MotriceRegimeSpecificityEntity {
         this.idMotriceRegimeSpecificity = idMotriceRegimeSpecificity;
     }
 
-    public String getCoachNumber() {
-        return this.coachNumber;
+    public String getCoachNumberMotriceRegimeSpecificity() {
+        return this.coachNumberMotriceRegimeSpecificity;
     }
 
-    public void setCoachNumber(String coachNumber) {
-        this.coachNumber = coachNumber;
+    public void setCoachNumberMotriceRegimeSpecificity(String coachNumber) {
+        this.coachNumberMotriceRegimeSpecificity = coachNumber;
     }
 
-    public String getCompartmentNumber() {
-        return this.compartmentNumber;
+    public String getCompartmentNumberMotriceRegimeSpecificity() {
+        return this.compartmentNumberMotriceRegimeSpecificity;
     }
 
-    public void setCompartmentNumber(String compartmentNumber) {
-        this.compartmentNumber = compartmentNumber;
+    public void setCompartmentNumberMotriceRegimeSpecificity(String compartmentNumber) {
+        this.compartmentNumberMotriceRegimeSpecificity = compartmentNumber;
     }
 
-    public String getSeatNumber() {
-        return this.seatNumber;
+    public String getSeatNumberMotriceRegimeSpecificity() {
+        return this.seatNumberMotriceRegimeSpecificity;
     }
 
-    public void setSeatNumber(String seatNumber) {
-        this.seatNumber = seatNumber;
+    public void setSeatNumberMotriceRegimeSpecificity(String seatNumber) {
+        this.seatNumberMotriceRegimeSpecificity = seatNumber;
     }
 
-    public String getStateCode() {
-        return this.stateCode;
+    public String getStateCodeMotriceRegimeSpecificity() {
+        return this.stateCodeMotriceRegimeSpecificity;
     }
 
-    public void setStateCode(String stateCode) {
-        this.stateCode = stateCode;
+    public void setStateCodeMotriceRegimeSpecificity(String stateCode) {
+        this.stateCodeMotriceRegimeSpecificity = stateCode;
     }
 
-    public MotriceRegimeEntity getMotriceRegime() {
+    public MotriceRegimeEntity getMotriceRegimeMotriceRegimeSpecificity() {
         return this.motriceRegime;
     }
 
-    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
+    public void setMotriceRegimeMotriceRegimeSpecificity(MotriceRegimeEntity motriceRegime) {
         this.motriceRegime = motriceRegime;
     }
 

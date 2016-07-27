@@ -20,6 +20,8 @@ drop table if exists tremas_motrice_regime_specificity;
 
 drop table if exists tremas_motrice_regime_stop;
 
+drop table if exists tremas_motrice_regime_od;
+
 drop table if exists tremas_motrice_regime;
 
 drop table if exists tremas_motrice_ref_regime_type;
@@ -134,21 +136,28 @@ create table tremas_motrice_regime_service (
 
 create table tremas_motrice_regime_specificity (
     idMotriceRegimeSpecificity bigint not null auto_increment,
-    coachNumber varchar(3) not null,
-    compartmentNumber varchar(3) not null,
-    seatNumber varchar(3) not null,
-    stateCode varchar(2) not null,
+    coachNumberMotriceRegimeSpecificity varchar(3) not null,
+    compartmentNumberMotriceRegimeSpecificity varchar(3) not null,
+    seatNumberMotriceRegimeSpecificity varchar(3) not null,
+    stateCodeMotriceRegimeSpecificity varchar(2) not null,
     idMotriceRegime bigint,
     primary key (idMotriceRegimeSpecificity)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_regime_stop (
     idMotriceRegimeStop bigint not null auto_increment,
-    arrivalHour varchar(4) not null,
-    departureHour varchar(4) not null,
-    station varchar(5) not null,
-    idMotriceRegime bigint,
+    arrivalHourMotriceRegimeStop varchar(4) not null,
+    departureHourMotriceRegimeStop varchar(4) not null,
+    stationMotriceRegimeStop varchar(5) not null,
+    idMotriceRegimeMotriceRegimeStop bigint,
     primary key (idMotriceRegimeStop)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_regime_od (
+    idMotriceRegimeOD bigint not null auto_increment,
+    oriMotriceRegimeOD varchar(5) not null,
+    destMotriceRegimeOD varchar(5) not null,
+    primary key (idMotriceRegimeOD)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_traintranche (
@@ -223,6 +232,11 @@ alter table tremas_motrice_regime_specificity
 
 alter table tremas_motrice_regime_stop 
     add constraint FK_motrice_regime_stop_idMotriceRegime 
+    foreign key (idMotriceRegime) 
+    references tremas_motrice_regime (idMotriceRegime);
+    
+alter table tremas_motrice_regime_od 
+    add constraint FK_motrice_regime_od_idMotriceRegime 
     foreign key (idMotriceRegime) 
     references tremas_motrice_regime (idMotriceRegime);
 
