@@ -10,6 +10,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeFareProfileEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeMealTypeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeRestrictionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
@@ -73,6 +74,9 @@ public class MapGeneratorTablesMotriceRegime extends HashMap<Class<?>, IMultiple
 
         IMultipleInsertRequestGenerator generatorStop = new MultipleInsertRequestGenerator(session, limitNbValues);
         this.initGenerator(generatorStop, "tremas_motrice_regime_stop", MotriceRegimeStopEntity.class);
+        
+        IMultipleInsertRequestGenerator generatorOD = new MultipleInsertRequestGenerator(session, limitNbValues);
+        this.initGenerator(generatorOD, "tremas_motrice_regime_od", MotriceRegimeODEntity.class);
 
     }
 

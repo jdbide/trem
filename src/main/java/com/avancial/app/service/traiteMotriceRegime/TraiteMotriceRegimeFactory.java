@@ -7,6 +7,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeDistributionEnt
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeFareProfileEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeMealTypeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeRestrictionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
@@ -31,6 +32,7 @@ public class TraiteMotriceRegimeFactory {
         this.map.put(MotriceRegimeServiceEntity.class, new TraiteMotriceRegimeService());
         this.map.put(MotriceRegimeSpecificityEntity.class, new TraiteMotriceRegimeSpecificity());
         this.map.put(MotriceRegimeStopEntity.class, new TraiteMotriceRegimeStop());
+        this.map.put(MotriceRegimeODEntity.class, new TraiteMotriceRegimeOD());
     }
 
     public ITraiteMotriceRegime getTraiteMotriceRegime(Class<?> entity) throws Exception {
