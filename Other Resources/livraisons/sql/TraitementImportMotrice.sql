@@ -87,7 +87,7 @@ create table tremas_motrice_regime_distribution (
 
 create table tremas_motrice_regime_eqptype (
     idMotriceRegimeEqpType bigint not null auto_increment,
-    eqpTypeRegimeEqpType varchar(3) not null,
+    eqpTypeMotriceRegimeEqpType varchar(3) not null,
     idMotriceRegime bigint,
     primary key (idMotriceRegimeEqpType)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
