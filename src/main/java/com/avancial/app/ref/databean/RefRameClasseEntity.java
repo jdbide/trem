@@ -31,8 +31,8 @@ public class RefRameClasseEntity {
 	@Column(length = 3, nullable = false)
 	private String numResaRefRameClasse;
 
-	@Column(length = 4, nullable = false)
-	private Integer numCompRefRameClasse;
+	@Column(length = 3, nullable = false)
+	private String numCompRefRameClasse;
 
 	@Column(length = 5, nullable = false)
 	private String classeRefRameClasse;
