@@ -1,0 +1,18 @@
+<div class="row">
+	<!-- /.col -->
+	<div class="col-md-12">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.title)}"
+				ng-click="onClickTab(tab)"><a data-toggle="tab" >{{tab.title}}</a></li>
+				
+			</ul>
+			<div class="tab-content">
+				<div ng-include="currentTab.url"></div>						
+			</div>
+			<!-- /.tab-content -->
+		</div>
+		<!-- /.nav-tabs-custom -->		
+	</div>
+</div>
+<!-- /.row -->
