@@ -77,7 +77,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
     protected List<String> getColumnsName(String table) {
         List<String> res = new ArrayList<>();
         try {
-            for (Field field : GetEntiteService.getClasseEntiteImporFromTableMotrice(table).getDeclaredFields())
+            for (Field field : GetEntiteService.getClasseEntiteImportFromTableMotrice(table).getDeclaredFields())
                 if (!field.getName().equals("id" + table))
                     res.add(field.getName());
         }

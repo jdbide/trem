@@ -71,7 +71,7 @@ public class GetEntiteService {
     *         Exemple:<br>
     *         {@code "TMDAVTR" retourne la classe} {@link com.avancial.app.data.databean.importMotriceBrut.ImportTMDAVTREntity}
     */
-   public static Class<?> getClasseEntiteImporFromTableMotrice(String nomTableMotrice) throws ClassNotFoundException {
+   public static Class<?> getClasseEntiteImportFromTableMotrice(String nomTableMotrice) throws ClassNotFoundException {
       return Class.forName("com.avancial.app.data.databean.importMotriceBrut." + getNomEntiteImportFromTableMotrice(nomTableMotrice));
    }
 
