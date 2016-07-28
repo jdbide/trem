@@ -31,7 +31,8 @@
       'm-loader',
       'ui.bootstrap',
       'myModal',
-      'environment'
+      'environment',
+      'aDisabled'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {
@@ -40,15 +41,7 @@
     	ngTableDefaults.settings.counts = [];
     	ngTableDefaults.settings.paginationMaxBlocks = 2;
     	ngTableDefaults.settings.paginationMinBlocks = 2;
-
-    }])
-    
-    .constant('pageAccueil', {
-    	rubrique: "Socle Administration",
-    	chapitre: "Accueil",
-    	page: "Bonjour"
-    })
-    ;
+    }]);
     
     /**
      * Configuration de httpProvider

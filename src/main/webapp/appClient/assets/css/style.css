@@ -45,3 +45,9 @@
   line-height: 1.33;
   border-radius: 35px;
 }
+a.disabled {
+    color: #AAAAAA;
+    cursor: not-allowed;
+    pointer-events: auto;
+    text-decoration: none;
+}

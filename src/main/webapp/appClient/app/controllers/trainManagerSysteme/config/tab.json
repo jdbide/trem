@@ -1,27 +1,27 @@
 [
 	{
 		"title": "Search",
-		"url": "app/views/partials/trainManagerSysteme/partials/search.xhtml",
+		"url": "app/views/partials/trainManagerSysteme/search.xhtml",
 		"active":false
 	},
 	{
 		"title": "Calendar View",
-		"url": "app/views/partials/trainManagerSysteme/partials/calendar.xhtml",
+		"url": "app/views/partials/trainManagerSysteme/calendar.xhtml",
 		"active":false
 	},
 	{
 		"title": "Import",
-		"url": "app/views/partials/trainManagerSysteme/partials/import.xhtml",
+		"url": "app/views/partials/trainManagerSysteme/import.xhtml",
 		"active":true
 	},
 	{
 		"title": "Import History",
-		"url": "app/views/partials/trainManagerSysteme/partials/history.xhtml",
+		"url": "app/views/partials/trainManagerSysteme/history.xhtml",
 		"active":false
 	},
 	{
 		"title": "Control",
-		"url": "app/views/partials/trainManagerSysteme/partials/control.xhtml",
+		"url": "app/views/partials/trainManagerSysteme/control.xhtml",
 		"active":false
 	}
 ]

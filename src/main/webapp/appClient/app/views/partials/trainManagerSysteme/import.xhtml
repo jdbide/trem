@@ -1,0 +1,93 @@
+<div class="tab-pane" id="import" ng-controller="importTmsCtrl">
+	<modal visible="authentificationDb"
+		url="app/views/modals/trainManagerSysteme/authentificationDb.html"></modal>
+	
+	<h3>Import - {{Status.ACTIVE != data.statusJeudonneeActif}}</h3>
+	
+	<div ng-if="reponse != null && reponse.status"
+		class="alert alert-success alert-dismissable">
+		<button class="close" aria-hidden="true" data-dismiss="alert"
+			type="button">�</button>
+		<h4>
+			<i class="icon fa fa-check"></i> Alert!
+		</h4>
+		{{reponse.message}}
+	</div>
+	<div ng-if="reponse != null && !reponse.status"
+		class="alert alert-danger  alert-dismissable">
+		<button class="close" aria-hidden="true" data-dismiss="alert"
+			type="button">�</button>
+		<h4>
+			<i class="icon fa fa-check"></i> Alert!
+		</h4>
+		{{reponse.message}}
+	</div>
+	
+	<div class="box-body table-responsive no-padding">
+		<table class="table table-bordered table-striped table-tremas">
+			<thead>
+				<tr>
+					<th class="text-center" ROWSPAN=2 style="vertical-align: middle;">Company</th>
+					<th class="text-center" ROWSPAN=2 style="vertical-align: middle;">Environment</th>
+					<th class="text-center" COLSPAN=5>Active DataSet</th>
+					<th class="text-center" COLSPAN=5>Draft DataSet</th>
+					<th class="text-center" ROWSPAN=2 style="vertical-align: middle;">Import
+						new Draft</th>
+				</tr>
+				<tr>
+					<th class="text-center">Imported on</th>
+					<th class="text-center">by</th>
+					<th class="text-center">Validated on</th>
+					<th class="text-center">by</th>
+					<th class="text-center">Report</th>
+
+					<th class="text-center">Imported on</th>
+					<th class="text-center">by</th>
+					<th class="text-center">Report</th>
+					<th class="text-center">Validate</th>
+					<th class="text-center">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="data in datas track by $index ">
+					<td>{{data.libelleCompagnie}}</td>
+					<td>{{data.libelleEnvironnement}}</td>
+					<td>{{data.dateImportJeuDonneesActif}}</td>
+					<td>{{data.importJeuDonneesActifBy}}</td>
+					<td>{{data.dateValidateJeuDonneesActif}}</td>
+					<td>{{data.validateJeuDonneesActifBy}}</td>
+					<td class="text-center"><a
+						a-disabled="Status.ACTIVE != data.statusJeudonneeActif" href="#"
+						style="text-decoration: underline">read</a></td>
+					<td>{{data.dateImportJeuDonneesBrouillon}}</td>
+					<td>{{data.importJeuDonneesBrouillonBy}}</td>
+					<td class="text-center"><a
+						a-disabled="Status.DRAFT != data.statusJeudonneeBrouillon"
+						href="#" style="text-decoration: underline">read</a></td>
+					<td class="text-center">
+						<button class="btn btn-circle btn-default" type="button"
+							ng-disabled="{{Status.DRAFT != data.statusJeudonneeBrouillon}}">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+						</button>
+					</td>
+					<td class="text-center">
+						<button class="btn btn-default" type="button"
+							ng-disabled="{{Status.DRAFT != data.statusJeudonneeBrouillon}}">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+
+					</td>
+					<td class="text-center">
+						<!-- TODO  ajout a la condition s'il na pas d'autre importe des autres environnement -->
+						<button class="btn btn-circle btn-primary" type="button"
+							ng-disabled="{{Status.IMPORT == data.statusJeudonneeBrouillon}}"
+							ng-click="authentificateExternDb(data)">
+							<span class="glyphicon glyphicon-import" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- /.box-body -->
+</div>

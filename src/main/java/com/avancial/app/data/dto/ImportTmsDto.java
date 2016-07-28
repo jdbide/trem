@@ -24,6 +24,7 @@ public class ImportTmsDto {
    private Date dateValidateJeuDonneesActif;
    private String validateJeuDonneesActifBy;
    private String pathValidateJeuDonneesActif;
+   private Status statusJeudonneeActif;
    
    private int idJeuDonneeBrouillon;
    private Date dateImportJeuDonneesBrouillon;
@@ -45,6 +46,8 @@ public class ImportTmsDto {
       this.setImportJeuDonneesBrouillonBy(NameImportJeuDonneesBrouillonBy);
       // TODO
       this.setPathValidateJeuDonneesBrouillon("TODO");
+      
+      this.setStatusJeudonneeBrouillon(jeuDonneeEntityBrouillon.getStatusJeuDonnees());
    }
    
    public void mergeByJeuDonneesActif (JeuDonneeEntity jeuDonneeEntityActif, String nameValidateJeuDonneeBy) {
@@ -53,7 +56,8 @@ public class ImportTmsDto {
       this.setImportJeuDonneesActifBy(nameValidateJeuDonneeBy);
       this.setDateValidateJeuDonneesActif(new Date());
       this.setValidateJeuDonneesActifBy(nameValidateJeuDonneeBy);
-      this.setPathValidateJeuDonneesActif("TODO");      
+      this.setPathValidateJeuDonneesActif("TODO");  
+      this.setStatusJeudonneeBrouillon(jeuDonneeEntityActif.getStatusJeuDonnees());
    }
    
    /**
@@ -246,19 +250,33 @@ public class ImportTmsDto {
     */
    public void setPathValidateJeuDonneesBrouillon(String pathValidateJeuDonneesBrouillon) {
       this.pathValidateJeuDonneesBrouillon = pathValidateJeuDonneesBrouillon;
+   }   
+
+   /**
+    * @return the statusJeudonneeActif
+    */
+   public Status getStatusJeudonneeActif() {
+      return statusJeudonneeActif;
    }
 
    /**
-    * @return the actifJeudonneeBrouillon
+    * @param statusJeudonneeActif the statusJeudonneeActif to set
     */
-   public Status getActifJeudonneeBrouillon() {
+   public void setStatusJeudonneeActif(Status statusJeudonneeActif) {
+      this.statusJeudonneeActif = statusJeudonneeActif;
+   }
+
+   /**
+    * @return the statusJeudonneeBrouillon
+    */
+   public Status getStatusJeudonneeBrouillon() {
       return statusJeudonneeBrouillon;
    }
 
    /**
-    * @param actifJeudonneeBrouillon the actifJeudonneeBrouillon to set
+    * @param statusJeudonneeBrouillon the statusJeudonneeBrouillon to set
     */
-   public void setActifJeudonneeBrouillon(Status statusJeudonneeBrouillon) {
+   public void setStatusJeudonneeBrouillon(Status statusJeudonneeBrouillon) {
       this.statusJeudonneeBrouillon = statusJeudonneeBrouillon;
    }
 
