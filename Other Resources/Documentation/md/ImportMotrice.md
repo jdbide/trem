@@ -1,6 +1,6 @@
 # Documentation import des tables motrice
 
-Cette documentation a pour but d'expliquer le fonnctionnement de l'import des tables motrice de Tremas.
+Cette documentation a pour but d'expliquer le fonctionnement de l'import des tables motrice de Tremas.
 
 Pour des explications plus techniques, veuillez-vous reporter à la javadoc.
 
@@ -28,6 +28,6 @@ Ajout d'une table à importer:
 
 > Son entité doit etre créé dans src\main\java\com\avancial\app\data\databean\importMotriceBrut\
 
-> Si la table contient un champ devant etre traiter (tel que les champs regimes) avant d'être inserer dans la base de Tremas, le nom de se champ ainsi que l'instance de son traitement doivent etre ajouter a la map src\main\java\com\avancial\app\utilitaire\MapTraitementImportBrut.java
+> Si la table contient un champ devant être traité (tel que les champs regimes) avant d'être inserer dans la base de Tremas, le nom de se champ ainsi que l'instance de son traitement doivent etre ajouter a la map src\main\java\com\avancial\app\utilitaire\MapTraitementImportBrut.java (plus de détails dans TraitementImportBrut.md)
 
 ### Intégration dans le model Tremas du plan de transport
