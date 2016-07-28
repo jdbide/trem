@@ -81,7 +81,6 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
             e.printStackTrace();
         }
 
-        jeuDonneeDataBean.setStatusJeuDonnees(true);
         jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
         this.jeuDonneeService.update(jeuDonneeDataBean);
         
@@ -110,12 +109,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
         jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
         jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(-1);
         jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(-1);
-        jeuDonneeDataBean.setNomTechniqueJeuDonnees("");
-        jeuDonneeDataBean.setLibelleJeuDonnees("");
         jeuDonneeDataBean.setActifJeuDonnees(true);
         jeuDonneeDataBean.setCommentaireJeuDonnees("");
-        jeuDonneeDataBean.setOrdreJeuDonnees(0);
-        jeuDonneeDataBean.setStatusJeuDonnees(false);
 
         return this.jeuDonneeService.save(jeuDonneeDataBean);
     }

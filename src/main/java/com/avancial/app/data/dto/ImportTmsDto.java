@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
+import com.avancial.app.data.databean.Status;
 
 /**
  * Ce Bean représente les données à afficher sur la page import du module Train Management System.
@@ -28,7 +29,7 @@ public class ImportTmsDto {
    private Date dateImportJeuDonneesBrouillon;
    private String importJeuDonneesBrouillonBy;
    private String pathValidateJeuDonneesBrouillon;
-   private Boolean actifJeudonneeBrouillon;
+   private Status statusJeudonneeBrouillon;
    
    public ImportTmsDto() {
       // TODO Auto-generated constructor stub
@@ -250,15 +251,15 @@ public class ImportTmsDto {
    /**
     * @return the actifJeudonneeBrouillon
     */
-   public Boolean getActifJeudonneeBrouillon() {
-      return actifJeudonneeBrouillon;
+   public Status getActifJeudonneeBrouillon() {
+      return statusJeudonneeBrouillon;
    }
 
    /**
     * @param actifJeudonneeBrouillon the actifJeudonneeBrouillon to set
     */
-   public void setActifJeudonneeBrouillon(Boolean actifJeudonneeBrouillon) {
-      this.actifJeudonneeBrouillon = actifJeudonneeBrouillon;
+   public void setActifJeudonneeBrouillon(Status statusJeudonneeBrouillon) {
+      this.statusJeudonneeBrouillon = statusJeudonneeBrouillon;
    }
 
 }
