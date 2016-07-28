@@ -28,15 +28,16 @@ public class ImportTmsDto {
    private Date dateImportJeuDonneesBrouillon;
    private String importJeuDonneesBrouillonBy;
    private String pathValidateJeuDonneesBrouillon;
+   private Boolean actifJeudonneeBrouillon;
    
    public ImportTmsDto() {
       // TODO Auto-generated constructor stub
    }
    
    public void mergeByJeuDonneesBrouillon (JeuDonneeEntity jeuDonneeEntityBrouillon, String NameImportJeuDonneesBrouillonBy) {
-      this.setIdCompagnieEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnementEntity().getIdCompagnieEnvironnement());
-      this.setLibelleCompagnie(jeuDonneeEntityBrouillon.getCompagnieEnvironnementEntity().getLibelleCompagnie());
-      this.setLibelleEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnementEntity().getLibelleEnvironnement());
+      this.setIdCompagnieEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getIdCompagnieEnvironnement());
+      this.setLibelleCompagnie(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getLibelleCompagnie());
+      this.setLibelleEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getLibelleEnvironnement());
       this.setIdJeuDonneeBrouillon(jeuDonneeEntityBrouillon.getIdJeuDonnees());
       // TODO a modifier avec la date fin d'import brouillon
       this.setDateImportJeuDonneesBrouillon(jeuDonneeEntityBrouillon.getDateCreateJeuDonnees());
@@ -244,6 +245,20 @@ public class ImportTmsDto {
     */
    public void setPathValidateJeuDonneesBrouillon(String pathValidateJeuDonneesBrouillon) {
       this.pathValidateJeuDonneesBrouillon = pathValidateJeuDonneesBrouillon;
+   }
+
+   /**
+    * @return the actifJeudonneeBrouillon
+    */
+   public Boolean getActifJeudonneeBrouillon() {
+      return actifJeudonneeBrouillon;
+   }
+
+   /**
+    * @param actifJeudonneeBrouillon the actifJeudonneeBrouillon to set
+    */
+   public void setActifJeudonneeBrouillon(Boolean actifJeudonneeBrouillon) {
+      this.actifJeudonneeBrouillon = actifJeudonneeBrouillon;
    }
 
 }

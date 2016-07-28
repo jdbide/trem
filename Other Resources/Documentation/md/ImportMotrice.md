@@ -28,7 +28,7 @@ Ajout d'une table à importer:
 
 > Son entité doit être créée dans src\main\java\com\avancial\app\data\databean\importMotriceBrut\
 
-> Si la table contient un champ devant être traité (tel que les champs regimes) avant d'être inseré dans la base de Tremas, le nom de ce champ ainsi que l'instance de son traitement doivent être ajouté à la map src\main\java\com\avancial\app\utilitaire\MapTraitementImportBrut.java
+> Si la table contient un champ devant être traité (tel que les champs regimes) avant d'être inseré dans la base de Tremas, le nom de ce champ ainsi que l'instance de son traitement doivent être ajoutés à la map src\main\java\com\avancial\app\utilitaire\MapTraitementImportBrut.java
 
 ### Intégration dans le model Tremas du plan de transport
 Pour des raisons de performance, nous utilisons des requêtes SQL natives pour insérer dans les tables motrice_regime. À chaque import, nous insérons les données table par table, en une (ou plusieurs) requête(s) de la forme:

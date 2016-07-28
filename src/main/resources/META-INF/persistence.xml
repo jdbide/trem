@@ -7,7 +7,6 @@
 		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
 		<class>com.avancial.socle.data.model.databean.RefDirectoryDataBean</class>
 		<class>com.avancial.socle.data.model.databean.UserDataBean</class>
-		<class>com.avancial.app.data.databean.CompagnieEnvironnementEntity</class>
 		<class>com.avancial.app.data.databean.DatasourceEntity</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
