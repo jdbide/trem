@@ -38,6 +38,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 
     private ImportJeuDonneesDto importJeuDonneesDto;
 
+    @Inject
+    private TraitementMotrice traitementMotrice;
+
     /**
     * 
     */
@@ -83,9 +86,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
         this.jeuDonneeService.update(jeuDonneeDataBean);
         
         /* Insertion dans les tables du modèle motrice */
-        TraitementMotrice traitementMotrice = new TraitementMotrice(jeuDonneeDataBean);
+        this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
         try {
-            traitementMotrice.execute();
+            this.traitementMotrice.execute();
         }
         catch (SecurityException e) {
             this.log("Echec du traitement motrice.");
