@@ -63,7 +63,7 @@ public class TestTrainTranche {
         this.em.clear();
 
         JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
-        jeuDonneeEntity.setIdJeuDonnees(1);
+        jeuDonneeEntity.setIdJeuDonnees(3);
 
         Query query = this.em.createNamedQuery("selectMotriceTrainTranche");
 
@@ -72,33 +72,33 @@ public class TestTrainTranche {
         MotriceTrainTrancheEntity motriceTrainTrancheEntity;
         for (Object[] record : trainsTranches) {
             motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
-            motriceTrainTrancheEntity.setIdMotriceTrainTranche(++cpt);
+            motriceTrainTrancheEntity.setIdMotriceTrainTranche(cpt++);
             motriceTrainTrancheEntity.setJeuDonnee(jeuDonneeEntity);
             motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche((String) record[0]);
             motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche((String) record[1]);
             motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(((BigInteger) record[2]).intValue() == 1);
             motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche((String) record[3]);
 
-            // this.em.getTransaction().begin();
-            // this.em.persist(motriceTrainTrancheEntity);
-            // this.em.getTransaction().commit();
+             this.em.getTransaction().begin();
+             this.em.persist(motriceTrainTrancheEntity);
+             this.em.getTransaction().commit();
 
-            Query queryRDesserte = this.em.createNativeQuery(
-                    "SELECT desserte.GADS_INPT_RR_GAR AS station, desserte.GADS_DEB_ARRET AS arrivalHour, desserte.GADS_FIN_ARRET AS departureHour, distrib.DSTR_REGI AS regime "
-                            + "FROM tremas_import_tmdgads AS desserte "
-                            + "INNER JOIN tremas_import_tmddstr AS distrib ON desserte.GADS_DSTR_COD_CIE = distrib.DSTR_TRA1_COD_CIE "
-                            + "AND desserte.GADS_DSTR_NUM_TRA1 = distrib.DSTR_TRA1_NUM_TRA1 "
-                            + "AND desserte.GADS_DSTR_IND_FER = distrib.DSTR_TRA1_IND_FER "
-                            + "AND desserte.GADS_DSTR_NUM = distrib.DSTR_NUM "
-                            + "INNER JOIN tremas_import_tmdcath AS cat ON desserte.GADS_DSTR_COD_CIE = cat.CATH_CIRR_COD_CIE "
-                            + "AND desserte.GADS_DSTR_NUM_TRA1 = cat.CATH_TRCH_NUM_TRA1 "
-                            + "AND desserte.GADS_DSTR_IND_FER = cat.CATH_TRCH_IND_FER "
-                            + "AND desserte.GADS_DSTR_NUM = cat.CATH_NUM " + "WHERE cat.CATH_SSIM = ? "
-                            + "AND cat.CATH_TRCH_NUM_TRA1 = ?");
-            queryRDesserte.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
-            queryRDesserte.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
-
-            List<Object[]> rDesserte = queryRDesserte.getResultList();
+//            Query queryRDesserte = this.em.createNativeQuery(
+//                    "SELECT desserte.GADS_INPT_RR_GAR AS station, desserte.GADS_DEB_ARRET AS arrivalHour, desserte.GADS_FIN_ARRET AS departureHour, distrib.DSTR_REGI AS regime "
+//                            + "FROM tremas_import_tmdgads AS desserte "
+//                            + "INNER JOIN tremas_import_tmddstr AS distrib ON desserte.GADS_DSTR_COD_CIE = distrib.DSTR_TRA1_COD_CIE "
+//                            + "AND desserte.GADS_DSTR_NUM_TRA1 = distrib.DSTR_TRA1_NUM_TRA1 "
+//                            + "AND desserte.GADS_DSTR_IND_FER = distrib.DSTR_TRA1_IND_FER "
+//                            + "AND desserte.GADS_DSTR_NUM = distrib.DSTR_NUM "
+//                            + "INNER JOIN tremas_import_tmdcath AS cat ON desserte.GADS_DSTR_COD_CIE = cat.CATH_CIRR_COD_CIE "
+//                            + "AND desserte.GADS_DSTR_NUM_TRA1 = cat.CATH_TRCH_NUM_TRA1 "
+//                            + "AND desserte.GADS_DSTR_IND_FER = cat.CATH_TRCH_IND_FER "
+//                            + "AND desserte.GADS_DSTR_NUM = cat.CATH_NUM " + "WHERE cat.CATH_SSIM = ? "
+//                            + "AND cat.CATH_TRCH_NUM_TRA1 = ?");
+//            queryRDesserte.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
+//            queryRDesserte.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+//
+//            List<Object[]> rDesserte = queryRDesserte.getResultList();
         }
 
         // PropertyMap<Object[], MotriceTrainTrancheEntity> userMap = new
@@ -130,25 +130,25 @@ public class TestTrainTranche {
 
     }
 
-    public void testMotriceRegime() throws Exception {
-        MotriceTrainTrancheEntity motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
-        motriceTrainTrancheEntity.setIdMotriceTrainTranche((long) 1);
-        motriceTrainTrancheEntity.setJeuDonnee(new JeuDonneeEntity());
-        motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche("");
-        motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche("");
-        motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(true);
-        motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche("");
-
-        TraiteMotriceRegimeFactory traiteMotriceRegimeFactory = new TraiteMotriceRegimeFactory();
-        ITraiteMotriceRegime traiteMotriceRegime = traiteMotriceRegimeFactory
-                .getTraiteMotriceRegime(MotriceRegimeODEntity.class);
-        MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime();
-        MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(
-                this.em.unwrap(Session.class), 250);
-        traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime,
-                this.em);
-
-        mapGeneratorTablesMotriceRegime.get(MotriceRegimeODEntity.class).executeRequest();
-        mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).executeRequest();
-    }
+//    public void testMotriceRegime() throws Exception {
+//        MotriceTrainTrancheEntity motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
+//        motriceTrainTrancheEntity.setIdMotriceTrainTranche((long) 1);
+//        motriceTrainTrancheEntity.setJeuDonnee(new JeuDonneeEntity());
+//        motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche("");
+//        motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche("");
+//        motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(true);
+//        motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche("");
+//
+//        TraiteMotriceRegimeFactory traiteMotriceRegimeFactory = new TraiteMotriceRegimeFactory();
+//        ITraiteMotriceRegime traiteMotriceRegime = traiteMotriceRegimeFactory
+//                .getTraiteMotriceRegime(MotriceRegimeODEntity.class);
+//        MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime();
+//        MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(
+//                this.em.unwrap(Session.class), 250);
+//        traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime,
+//                this.em);
+//
+//        mapGeneratorTablesMotriceRegime.get(MotriceRegimeODEntity.class).executeRequest();
+//        mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).executeRequest();
+//    }
 }
