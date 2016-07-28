@@ -91,9 +91,7 @@ public class TraitementMotrice extends ATraitementLogDetail {
             /* Insertion dans les tables */
             /* On commence par la table tremas_motrice_regime */
             this.executeRequestGenerator(MotriceRegimeEntity.class, mapGeneratorTablesMotriceRegime);
-            /* Ensuite on insert dans les tables motrice_regime_xxx */
-            this.executeRequestGenerator(MotriceRegimeCompositionCoachEntity.class, mapGeneratorTablesMotriceRegime);
-            /* On insert enfin dans les autres tables */
+            /* Ensuite on insère dans les tables motrice_regime */
             for (RefTablesMotriceRegimeEntity motriceRegimeEntity : motriceRegimeEntities) {
                 try {
                     Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(
@@ -106,6 +104,8 @@ public class TraitementMotrice extends ATraitementLogDetail {
                     e.printStackTrace();
                 }
             }
+            /* On insère enfin dans les tables motrice_regime_xxx */
+            this.executeRequestGenerator(MotriceRegimeCompositionCoachEntity.class, mapGeneratorTablesMotriceRegime);
         }
 
     }

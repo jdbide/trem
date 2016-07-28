@@ -37,6 +37,25 @@ Pour des raisons de performance, nous utilisons des requêtes SQL natives pour i
 
 Nous utilisons une interface *IMultipleInsertRequestGenerator* pour générer ces requêtes, et nous avons besoin d'une instance par table. Le nombre de valeurs ajoutées en une seule requête est paramétrable.
 
-Puisque les tables sont vidées au début de chaque import, nous pouvons initialiser nous-mêmes les id des données, et ainsi remplir toutes les contraintes de foreign keys.
+Puisque les tables sont vidées au début de chaque import, nous pouvons initialiser nous-mêmes les id des données, et ainsi remplir toutes les contraintes de *foreign keys*.
 
-À cause de ces contraintes, nous sommes obligés de setter les valeurs des entités une à une.
+À cause de ces contraintes, nous sommes obligés de setter les valeurs des entités une à une. Pour importer toutes les données dans le modèle, nous bouclons sur les train-tranche, et pour chaque nous récupérons tous les types de données (dessertes, services...).
+
+Pour pouvoir insérer toutes les données d'un coup à la fin, des instances de *IMultipleInsertRequestGenerator* et de *Long* représentant les id sont partagées dans tous les traitements, au travers de deux *Map* dont les clés sont les classes des entités MotriceRegime.
+
+L'algorithme de l'import est le suivant:
+> 1. Initialisation des objets partagés par toutes les entités:
+  * Liste des entités MotriceRegime (donnée de référence)
+  * MapId
+  * MapGenerator  
+2. Chargement des train-tranche à partir des tables d'import brut
+3. Boucle sur les train-tranche:
+  * Insertion du régime lié au train-tranche
+  * Insertion du train-tranche
+  * Boucle sur les entités MotriceRegime
+    * Traitement des données par train-tranche:  
+      * Chargement du type de données et son régime associé
+      * Ajout des valeurs dans les générateurs
+      * Incrémentations des ids
+4. Exécution des requêtes d'insertion dans les tables:  
+**Attention** à cause des contraintes de *foreign keys*, l'insertion doit se faire dans un ordre particulier : d'abord les entités qui sont référencées dans des clés étrangères (donc en tout premier il faut remplir la table motrice_regime), en dernier les entités qui possèdent des clés étrangères (par exmemple, on remplit motrice_regime_composition avant motrice_regime_composition_coach)
