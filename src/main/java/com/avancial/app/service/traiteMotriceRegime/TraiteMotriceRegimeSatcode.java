@@ -15,7 +15,7 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager) {
 		/* SatCode */
 		Query queryRSatCode = entityManager
-				.createNativeQuery("SELECT regimesat.TATH_CD_VAL AS satcode, regimesat.TATH_REGI AS regime "
+				.createNativeQuery("SELECT regimesat.TATH_CD_VAL AS satcode, regimesat.TATH_REGI AS periodMotriceRegime "
 						+ "FROM tremas_import_tmdtath AS regimesat "
 						+ "INNER JOIN tremas_import_tmdcath AS cara ON regimesat.TATH_TRCH_COD_CIE = cara.CATH_CIRR_COD_CIE "
 						+ "AND regimesat.TATH_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 "

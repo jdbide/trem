@@ -20,7 +20,7 @@ public class MotriceRegimeServiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegimeService;
-    @Column(length = 1, nullable = false)
+    @Column(length = 2, nullable = false)
     private String serviceCodeMotriceRegimeService;
     @Column(length = 1, nullable = false)
     private String classMotriceRegimeService;
