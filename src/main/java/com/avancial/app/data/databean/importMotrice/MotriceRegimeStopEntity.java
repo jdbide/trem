@@ -20,12 +20,13 @@ public class MotriceRegimeStopEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegimeStop;
-    @Column(length = 5, nullable = false)
-    private String stationMotriceRegimeStop;
+    
     @Column(length = 4, nullable = false)
     private String arrivalHourMotriceRegimeStop;
     @Column(length = 4, nullable = false)
     private String departureHourMotriceRegimeStop;
+    @Column(length = 5, nullable = false)
+    private String stationMotriceRegimeStop;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
