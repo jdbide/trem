@@ -8,7 +8,12 @@ import com.avancial.socle.data.model.databean.IhmRubriqueDataBean;
 @SessionScoped
 public class IhmRubriqueDao extends AbstractDao {
 
-    @SuppressWarnings("unchecked")
+    /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+
+   @SuppressWarnings("unchecked")
     @Override
     public List<IhmRubriqueDataBean> getAll() {
         this.getEntityManager().clear();
@@ -25,5 +30,4 @@ public class IhmRubriqueDao extends AbstractDao {
         Query requete = this.getEntityManager().createQuery(sql);
         return requete.getResultList();
     }
-
 }

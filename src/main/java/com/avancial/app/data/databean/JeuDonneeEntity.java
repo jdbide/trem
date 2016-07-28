@@ -1,200 +1,121 @@
 package com.avancial.app.data.databean;
 
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+import javax.persistence.*;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 
 /**
  * The persistent class for the tremas_jeu_donnees database table.
  * 
  */
 @Entity
-@Table(name = "tremas_jeu_donnees")
-@NamedQuery(name = "JeuDonnees.getAll", query = "SELECT j FROM JeuDonneeEntity j")
-public class JeuDonneeEntity {
+@Table(name="tremas_jeu_donnees")
+@NamedQuery(name="JeuDonneeEntity.findAll", query="SELECT t FROM JeuDonneeEntity t")
+public class JeuDonneeEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private int idJeuDonnees;
+	@Id
+	private int idJeuDonnees;
 
-    @Column(nullable = false)
-    private boolean actifJeuDonnees;
+	private boolean actifJeuDonnees;
 
-    @Lob
-    @Column(nullable = false)
-    private String commentaireJeuDonnees;
+	@Lob
+	private String commentaireJeuDonnees;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date dateCreateJeuDonnees;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateCreateJeuDonnees;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date dateLastUpdateJeuDonnees;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateLastUpdateJeuDonnees;
 
-    @Column(nullable = false)
-    private int idUtilisateurCreateJeuDonnees;
+	private int idUtilisateurCreateJeuDonnees;
 
-    @Column(nullable = false)
-    private int idUtilisateurLastUpdateJeuDonnees;
+	private int idUtilisateurLastUpdateJeuDonnees;
 
-    @Column(nullable = false, length = 50)
-    private String libelleJeuDonnees;
+	@Column(nullable=true, columnDefinition="import")
+	private String statusJeuDonnees;
 
-    @Column(nullable = false, length = 50)
-    private String nomTechniqueJeuDonnees;
+	//uni-directional many-to-one association to TremasCompagnieEnvironnement
+	@ManyToOne
+	@JoinColumn(name="idCompagnieEnvironnement")
+	private CompagnieEnvironnementEntity compagnieEnvironnement;
 
-    @Column(nullable = false)
-    private int ordreJeuDonnees;
+	public JeuDonneeEntity() {
+	}
 
-    @Column(nullable = false)
-    private boolean statusJeuDonnees;
+	public int getIdJeuDonnees() {
+		return this.idJeuDonnees;
+	}
 
-    @Column(length = 2, nullable = false)
-    private String company;
+	public void setIdJeuDonnees(int idJeuDonnees) {
+		this.idJeuDonnees = idJeuDonnees;
+	}
 
-    @Column(nullable = false)
-    private String environment;
+	public boolean getActifJeuDonnees() {
+		return this.actifJeuDonnees;
+	}
 
-    //uni-directional many-to-one association to DatasourceEntity
-    @ManyToOne
-    @JoinColumn(name="idCompagnieEnvironnement")
-    private CompagnieEnvironnementEntity compagnieEnvironnementEntity;
-    
-    public int getIdJeuDonnees() {
-        return this.idJeuDonnees;
-    }
+	public void setActifJeuDonnees(boolean actifJeuDonnees) {
+		this.actifJeuDonnees = actifJeuDonnees;
+	}
 
-    public void setIdJeuDonnees(int idJeuDonnees) {
-        this.idJeuDonnees = idJeuDonnees;
-    }
+	public String getCommentaireJeuDonnees() {
+		return this.commentaireJeuDonnees;
+	}
 
-    public boolean getActifJeuDonnees() {
-        return this.actifJeuDonnees;
-    }
+	public void setCommentaireJeuDonnees(String commentaireJeuDonnees) {
+		this.commentaireJeuDonnees = commentaireJeuDonnees;
+	}
 
-    public void setActifJeuDonnees(boolean actifJeuDonnees) {
-        this.actifJeuDonnees = actifJeuDonnees;
-    }
+	public Date getDateCreateJeuDonnees() {
+		return this.dateCreateJeuDonnees;
+	}
 
-    public String getCommentaireJeuDonnees() {
-        return this.commentaireJeuDonnees;
-    }
+	public void setDateCreateJeuDonnees(Date dateCreateJeuDonnees) {
+		this.dateCreateJeuDonnees = dateCreateJeuDonnees;
+	}
 
-    public void setCommentaireJeuDonnees(String commentaireJeuDonnees) {
-        this.commentaireJeuDonnees = commentaireJeuDonnees;
-    }
+	public Date getDateLastUpdateJeuDonnees() {
+		return this.dateLastUpdateJeuDonnees;
+	}
 
-    public Date getDateCreateJeuDonnees() {
-        return this.dateCreateJeuDonnees;
-    }
+	public void setDateLastUpdateJeuDonnees(Date dateLastUpdateJeuDonnees) {
+		this.dateLastUpdateJeuDonnees = dateLastUpdateJeuDonnees;
+	}	
 
-    public void setDateCreateJeuDonnees(Date dateCreateJeuDonnees) {
-        this.dateCreateJeuDonnees = dateCreateJeuDonnees;
-    }
+	public int getIdUtilisateurCreateJeuDonnees() {
+		return this.idUtilisateurCreateJeuDonnees;
+	}
 
-    public Date getDateLastUpdateJeuDonnees() {
-        return this.dateLastUpdateJeuDonnees;
-    }
+	public void setIdUtilisateurCreateJeuDonnees(int idUtilisateurCreateJeuDonnees) {
+		this.idUtilisateurCreateJeuDonnees = idUtilisateurCreateJeuDonnees;
+	}
 
-    public void setDateLastUpdateJeuDonnees(Date dateLastUpdateJeuDonnees) {
-        this.dateLastUpdateJeuDonnees = dateLastUpdateJeuDonnees;
-    }
+	public int getIdUtilisateurLastUpdateJeuDonnees() {
+		return this.idUtilisateurLastUpdateJeuDonnees;
+	}
 
-    public int getIdUtilisateurCreateJeuDonnees() {
-        return this.idUtilisateurCreateJeuDonnees;
-    }
+	public void setIdUtilisateurLastUpdateJeuDonnees(int idUtilisateurLastUpdateJeuDonnees) {
+		this.idUtilisateurLastUpdateJeuDonnees = idUtilisateurLastUpdateJeuDonnees;
+	}
 
-    public void setIdUtilisateurCreateJeuDonnees(int idUtilisateurCreateJeuDonnees) {
-        this.idUtilisateurCreateJeuDonnees = idUtilisateurCreateJeuDonnees;
-    }
+	public String getStatusJeuDonnees() {
+		return this.statusJeuDonnees;
+	}
 
-    public int getIdUtilisateurLastUpdateJeuDonnees() {
-        return this.idUtilisateurLastUpdateJeuDonnees;
-    }
+	public void setStatusJeuDonnees(String statusJeuDonnees) {
+		this.statusJeuDonnees = statusJeuDonnees;
+	}
 
-    public void setIdUtilisateurLastUpdateJeuDonnees(int idUtilisateurLastUpdateJeuDonnees) {
-        this.idUtilisateurLastUpdateJeuDonnees = idUtilisateurLastUpdateJeuDonnees;
-    }
+	public CompagnieEnvironnementEntity getCompagnieEnvironnement() {
+		return this.compagnieEnvironnement;
+	}
 
-    public String getLibelleJeuDonnees() {
-        return this.libelleJeuDonnees;
-    }
-
-    public void setLibelleJeuDonnees(String libelleJeuDonnees) {
-        this.libelleJeuDonnees = libelleJeuDonnees;
-    }
-
-    public String getNomTechniqueJeuDonnees() {
-        return this.nomTechniqueJeuDonnees;
-    }
-
-    public void setNomTechniqueJeuDonnees(String nomTechniqueJeuDonnees) {
-        this.nomTechniqueJeuDonnees = nomTechniqueJeuDonnees;
-    }
-
-    public int getOrdreJeuDonnees() {
-        return this.ordreJeuDonnees;
-    }
-
-    public void setOrdreJeuDonnees(int ordreJeuDonnees) {
-        this.ordreJeuDonnees = ordreJeuDonnees;
-    }
-
-    /**
-     * @return the statusJeuDonnees
-     */
-    public boolean isStatusJeuDonnees() {
-        return this.statusJeuDonnees;
-    }
-
-    /**
-     * @param statusJeuDonnees
-     *            the statusJeuDonnees to set
-     */
-    public void setStatusJeuDonnees(boolean statusJeuDonnees) {
-        this.statusJeuDonnees = statusJeuDonnees;
-    }
-
-    public String getCompany() {
-        return this.company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getEnvironment() {
-        return this.environment;
-    }
-
-    public void setEnvironment(String environment) {
-        this.environment = environment;
-    }
-
-   /**
-    * @return the compagnieEnvironnementEntity
-    */
-   public CompagnieEnvironnementEntity getCompagnieEnvironnementEntity() {
-      return compagnieEnvironnementEntity;
-   }
-
-   /**
-    * @param compagnieEnvironnementEntity the compagnieEnvironnementEntity to set
-    */
-   public void setCompagnieEnvironnementEntity(CompagnieEnvironnementEntity compagnieEnvironnementEntity) {
-      this.compagnieEnvironnementEntity = compagnieEnvironnementEntity;
-   }
+	public void setCompagnieEnvironnement(CompagnieEnvironnementEntity compagnieEnvironnement) {
+		this.compagnieEnvironnement = compagnieEnvironnement;
+	}
 
 }

@@ -4,7 +4,7 @@
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
 				<li ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.title)}"
-				ng-click="onClickTab(tab)"><a data-toggle="tab" >{{tab.title}}</a></li>
+				ng-click="onClickTab(tab)" style="-moz-user-select: none;cursor: pointer;"><a data-toggle="tab" >{{tab.title}}</a></li>
 				
 			</ul>
 			<div class="tab-content">
