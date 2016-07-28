@@ -8,6 +8,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeFareProfileEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeMealTypeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeRestrictionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
@@ -34,6 +35,7 @@ public class MapIdTablesMotriceRegime extends HashMap<Class<?>, Long> {
         this.put(MotriceRegimeServiceEntity.class, new Long(1));
         this.put(MotriceRegimeSpecificityEntity.class, new Long(1));
         this.put(MotriceRegimeStopEntity.class, new Long(1));
+        this.put(MotriceRegimeODEntity.class, new Long(1));
     }
 
 }
