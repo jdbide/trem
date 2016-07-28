@@ -137,7 +137,7 @@ create table tremas_motrice_regime_service (
     classMotriceRegimeService varchar(1) not null,
     destMotriceRegimeService varchar(5) not null,
     origMotriceRegimeService varchar(5) not null,
-    serviceCodeMotriceRegimeService varchar(1) not null,
+    serviceCodeMotriceRegimeService varchar(2) not null,
     idMotriceRegime bigint,
     primary key (idMotriceRegimeService)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
