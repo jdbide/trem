@@ -101,11 +101,19 @@ create table tremas_motrice_regime_fareprofile (
 
 create table tremas_motrice_regime_mealtype (
     idMotriceRegimeMealTypeEntity bigint not null auto_increment,
-    beginServiceHourRegimeMealType datetime not null,
-    endServiceHourRegimeMealType datetime not null,
+    beginServiceHourRegimeMealType varchar(8) not null,
+    endServiceHourMotriceRegimeMealType varchar(8) not null,
     mealTypeMotriceRegimeMealType varchar(1) not null,
     idMotriceRegime bigint,
     primary key (idMotriceRegimeMealTypeEntity)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_regime_od (
+    idMotriceRegimeOD bigint not null auto_increment,
+    destMotriceRegimeOD varchar(5) not null,
+    oriMotriceRegimeOD varchar(5) not null,
+    idMotriceRegime bigint,
+    primary key (idMotriceRegimeOD)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_regime_restriction (
@@ -149,15 +157,8 @@ create table tremas_motrice_regime_stop (
     arrivalHourMotriceRegimeStop varchar(4) not null,
     departureHourMotriceRegimeStop varchar(4) not null,
     stationMotriceRegimeStop varchar(5) not null,
-    idMotriceRegimeMotriceRegimeStop bigint,
+    idMotriceRegime bigint,
     primary key (idMotriceRegimeStop)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-create table tremas_motrice_regime_od (
-    idMotriceRegimeOD bigint not null auto_increment,
-    oriMotriceRegimeOD varchar(5) not null,
-    destMotriceRegimeOD varchar(5) not null,
-    primary key (idMotriceRegimeOD)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_traintranche (
@@ -231,6 +232,11 @@ alter table tremas_motrice_regime_mealtype
     foreign key (idMotriceRegime) 
     references tremas_motrice_regime (idMotriceRegime);
 
+alter table tremas_motrice_regime_od 
+    add constraint FK_motrice_regime_od_idMotriceRegime 
+    foreign key (idMotriceRegime) 
+    references tremas_motrice_regime (idMotriceRegime);
+
 alter table tremas_motrice_regime_restriction 
     add constraint FK_motrice_regime_restriction_idMotriceRegime 
     foreign key (idMotriceRegime) 
@@ -255,11 +261,6 @@ alter table tremas_motrice_regime_stop
     add constraint FK_motrice_regime_stop_idMotriceRegime 
     foreign key (idMotriceRegime) 
     references tremas_motrice_regime (idMotriceRegime);
-    
-alter table tremas_motrice_regime_od 
-    add constraint FK_motrice_regime_od_idMotriceRegime 
-    foreign key (idMotriceRegime) 
-    references tremas_motrice_regime (idMotriceRegime);
 
 alter table tremas_motrice_traintranche 
     add constraint FK_motrice_regime_traintranche_idJeuDonnees 
@@ -273,7 +274,6 @@ create table tremas_ref_tables_motrice_regime (
     ordreRefTablesMotriceRegime bigint,
     primary key (idRefTablesMotriceRegime)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('1', 1, 'MotriceRegimeCompositionEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('2', 1, 'MotriceRegimeDistributionEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('3', 1, 'MotriceRegimeEqpTypeEntity', null);
