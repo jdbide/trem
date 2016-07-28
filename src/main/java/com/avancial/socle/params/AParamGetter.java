@@ -3,6 +3,7 @@
  */
 package com.avancial.socle.params;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -26,6 +27,9 @@ import com.avancial.socle.resources.constants.SOCLE_params;
  *
  */
 public abstract class AParamGetter implements IParamGetter {
+   /**
+    * 
+    */
    private Map<String, Map<String, IParamBean>> mapParamBean;
    private String                               pathToWebInf;
 

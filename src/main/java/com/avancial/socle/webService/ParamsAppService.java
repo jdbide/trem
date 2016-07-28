@@ -3,6 +3,10 @@
  */
 package com.avancial.socle.webService;
 
+import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,19 +28,24 @@ import com.avancial.socle.resources.constants.SOCLE_constants;
  */
 @Path("/params")
 // @WebService(serviceName="")
-public class ParamsAppService {
+@SessionScoped
+public class ParamsAppService  implements Serializable {
 
-   // @Inject
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+   @Inject
+   private ParamGetterManagedBean paramGetter;
 
    @GET
    @Produces({ MediaType.APPLICATION_JSON })
    @Path("{collection}/{paramName}")
    public Response getParam(@PathParam("collection") String collection, @PathParam("paramName") String paramName) throws Exception {
       JSONObject jsonObject = new JSONObject();
-      ParamGetterManagedBean paramGetter;
+      
       try {
-         paramGetter = new ParamGetterManagedBean();
-         jsonObject.put(paramName, paramGetter.getParam(collection, paramName).getValue());
+         jsonObject.put(paramName, this.paramGetter.getParam(collection, paramName).getValue());
          return Response.status(200).entity(jsonObject).build();
       } catch (ParamNotFoundException e) {
          jsonObject.put("Erreur", MessageController.getTraduction(SOCLE_constants.PARAM_NOT_FOUND.toString(), null));

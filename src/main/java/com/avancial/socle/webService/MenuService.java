@@ -1,5 +1,7 @@
 package com.avancial.socle.webService;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,17 +11,19 @@ import org.json.simple.JSONArray;
 import com.avancial.socle.data.controller.dao.IhmRubriqueDao;
 
 @Path("/socle/menu")
+@RequestScoped
 public class MenuService {
+   @Inject
+   private IhmRubriqueDao ihmRubriqueDao;
+   
+   @GET
+   @Produces({MediaType.APPLICATION_JSON})
+   public Response getMenu() {
+       JSONArray jsonArray = new JSONArray();
+       /* Liste des rubriques */
+        
+       jsonArray.addAll(this.ihmRubriqueDao.getAllActif());
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public static Response getMenu() {
-        JSONArray jsonArray = new JSONArray();
-
-        /* Liste des rubriques */
-        IhmRubriqueDao ihmRubriqueDao = new IhmRubriqueDao();
-        jsonArray.addAll(ihmRubriqueDao.getAllActif());
-
-        return Response.status(200).entity(jsonArray).build();
-    }
+       return Response.status(200).entity(jsonArray).build();
+   }
 }

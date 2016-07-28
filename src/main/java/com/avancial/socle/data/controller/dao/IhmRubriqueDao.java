@@ -1,9 +1,11 @@
 package com.avancial.socle.data.controller.dao;
 
 import java.util.List;
+
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.Query;
 import com.avancial.socle.data.model.databean.IhmRubriqueDataBean;
-
+@SessionScoped
 public class IhmRubriqueDao extends AbstractDao {
 
     @SuppressWarnings("unchecked")
@@ -11,7 +13,10 @@ public class IhmRubriqueDao extends AbstractDao {
     public List<IhmRubriqueDataBean> getAll() {
         this.getEntityManager().clear();
         Query query = this.getEntityManager().createQuery("FROM IhmRubriqueDataBean");
-        return query.getResultList();
+        
+        List<IhmRubriqueDataBean> listIhmRubrique = query.getResultList();
+        this.getEntityManager().close();
+        return listIhmRubrique;
     }
     
     @SuppressWarnings("unchecked")

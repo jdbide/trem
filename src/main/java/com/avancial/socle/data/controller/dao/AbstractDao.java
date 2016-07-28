@@ -6,6 +6,7 @@ package com.avancial.socle.data.controller.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
@@ -17,6 +18,7 @@ import com.avancial.socle.logging.ALogBean;
 import com.avancial.socle.logging.ILogger;
 import com.avancial.socle.logging.LogDaoBean;
 import com.avancial.socle.logging.Logger;
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.resources.constants.SOCLE_logSortie;
 
 /**
@@ -30,7 +32,10 @@ public abstract class AbstractDao implements Serializable {
     * 
     */
    private static final long serialVersionUID = 1L;
-   private EntityManager     entityManager;
+   @Inject
+   @Socle_PUSocle
+   private EntityManager       entityManager;
+
    protected ILogger logger;
    protected ALogBean logBean;
    
@@ -40,7 +45,7 @@ public abstract class AbstractDao implements Serializable {
     * @throws Exception 
     */
    public AbstractDao() {
-      this.setEntityManager(AbstractEntityManager.getInstance().getEntityManager());
+      //this.setEntityManager(AbstractEntityManager.getInstance().getEntityManager());
    }
    
    
@@ -51,7 +56,7 @@ public abstract class AbstractDao implements Serializable {
     */
    public AbstractDao(String libelleDoaLog) throws Exception{
       
-      this.setEntityManager(AbstractEntityManager.getInstance().getEntityManager());
+      //this.setEntityManager(AbstractEntityManager.getInstance().getEntityManager());
       this.logger = new Logger();
       this.logger.activerSortie(SOCLE_logSortie.CONSOLE);
       //TODO logger en fichier (mais pas encors implemanter)
@@ -68,9 +73,9 @@ public abstract class AbstractDao implements Serializable {
       return this.entityManager;
    }
 
-   protected void setEntityManager(EntityManager entityManager) {
+   /*protected void setEntityManager(EntityManager entityManager) {
       this.entityManager = entityManager;
-   }
+   }*/
 
    public Session getSession() {
       // if(this.getEntityManager().unwrap(Session.class)==null)
@@ -127,5 +132,4 @@ public abstract class AbstractDao implements Serializable {
       }
 
    }
-
 }

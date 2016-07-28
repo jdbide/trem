@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +44,9 @@ public class SocleInit extends HttpServlet {
     * 
     */
    private static final long serialVersionUID = 1L;
+   
+   @Inject
+   private JobPlanifDao dao;
 
    /*
     * (non-Javadoc)
@@ -73,10 +78,9 @@ public class SocleInit extends HttpServlet {
    private void quartzInit() throws SchedulerException {
 
       System.out.println("*****  SCHEDULER INIT  *****");
-
-      JobPlanifDao dao = new JobPlanifDao();
+      
       List<JobPlanifDataBean> jobs = new ArrayList<>();
-      jobs = dao.getAllActif();
+      jobs = this.dao.getAllActif();
 
       SchedulerFactory sf = new StdSchedulerFactory();
       this.sched = sf.getScheduler();
