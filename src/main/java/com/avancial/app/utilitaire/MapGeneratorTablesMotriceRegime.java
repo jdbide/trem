@@ -18,7 +18,19 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEnti
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
 import com.avancial.app.service.MultipleInsertRequestGenerator;
+import com.avancial.app.traitement.TraitementMotrice;
 
+/**
+ * Map ayant pour clés les entités du package
+ * {@link com.avancial.app.data.databean.importMotrice}, et contenant des objets
+ * {@link IMultipleInsertRequestGenerator} à utiliser pour faire des insertions
+ * dans les tables correspondant à chaque entité.<br>
+ * Elle est utilisée dans le {@link TraitementMotrice} pour insérer dans les
+ * tables motrice_regime.
+ * 
+ * @author heloise.guillemaud
+ *
+ */
 public class MapGeneratorTablesMotriceRegime extends HashMap<Class<?>, IMultipleInsertRequestGenerator> {
 
     /**
@@ -74,12 +86,22 @@ public class MapGeneratorTablesMotriceRegime extends HashMap<Class<?>, IMultiple
 
         IMultipleInsertRequestGenerator generatorStop = new MultipleInsertRequestGenerator(session, limitNbValues);
         this.initGenerator(generatorStop, "tremas_motrice_regime_stop", MotriceRegimeStopEntity.class);
-        
+
         IMultipleInsertRequestGenerator generatorOD = new MultipleInsertRequestGenerator(session, limitNbValues);
         this.initGenerator(generatorOD, "tremas_motrice_regime_od", MotriceRegimeODEntity.class);
 
     }
 
+    /**
+     * Insère un générateur dans la map, avec pour clé l'entité fournie.
+     * 
+     * @param generator
+     *            Instance de {@link IMultipleInsertRequestGenerator}
+     * @param nomTable
+     *            Nom de la table liée à l'entité
+     * @param entity
+     *            Clé
+     */
     private void initGenerator(IMultipleInsertRequestGenerator generator, String nomTable, Class<?> entity) {
         List<String> columns = GetDataTableColumns.getNameColumns(entity);
 

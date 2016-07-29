@@ -15,14 +15,25 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
+import com.avancial.app.service.IMultipleInsertRequestGenerator;
 
+/**
+ * Map ayant pour clés les entités du package
+ * {@link com.avancial.app.data.databean.importMotrice}, et contenant des objets
+ * {@link AtomicLong} à utiliser comme id d'insertion.<br>
+ * Elle est utilisée dans le {@link TraitementMotrice} pour le
+ * {@link IMultipleInsertRequestGenerator}.
+ * 
+ * @author heloise.guillemaud
+ *
+ */
 public class MapIdTablesMotriceRegime extends HashMap<Class<?>, AtomicLong> {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
-    
+
     public MapIdTablesMotriceRegime() {
         this.put(MotriceRegimeDistributionEntity.class, new AtomicLong(1));
         this.put(MotriceRegimeEntity.class, new AtomicLong(1));
