@@ -41,6 +41,22 @@ public class TraitementMotrice extends ATraitementLogDetail {
             MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(
                     this.entityManagerSocle.unwrap(Session.class), 250);
 
+            /* Vidage de toutes les tables d'import */
+            this.entityManagerSocle.getTransaction().begin();
+            /* On commence par les tables motrice_regime_xxx_xxx */
+            this.executeDeleteAll(MotriceRegimeCompositionCoachEntity.class);
+            /* On fait ensuite les tables motrice_regime_xxx */
+            for (Class<?> entity : mapIdTablesMotriceRegime.keySet()) {
+                if (!entity.equals(MotriceRegimeEntity.class)) {
+                    this.executeDeleteAll(entity);
+                }
+            }
+            /* Puis motrice_regime */
+            this.executeDeleteAll(MotriceRegimeEntity.class);
+            /* Et enfin motrice_traintranche */
+            this.executeDeleteAll(MotriceTrainTrancheEntity.class);
+            this.entityManagerSocle.getTransaction().commit();
+
             /* Récupération des train-tranche */
             Query query = this.entityManagerSocle.createNativeQuery(
                     "SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_NUM");
@@ -104,16 +120,21 @@ public class TraitementMotrice extends ATraitementLogDetail {
                     e.printStackTrace();
                 }
             }
-            /* On insère enfin dans les tables motrice_regime_xxx */
+            /* On insère enfin dans les tables motrice_regime_xxx_xxx */
             this.executeRequestGenerator(MotriceRegimeCompositionCoachEntity.class, mapGeneratorTablesMotriceRegime);
         }
 
     }
 
     /**
-     * Exécute la requête d'insertion présente dans le générateur correspondant à une entité MotriceRegime
-     * @param entity Entité correspondant à la table dans laquelle on veut insérer
-     * @param mapGeneratorTablesMotriceRegime Map contenant les générateurs associés aux tables motrice régime
+     * Exécute la requête d'insertion présente dans le générateur correspondant
+     * à une entité MotriceRegime
+     * 
+     * @param entity
+     *            Entité correspondant à la table dans laquelle on veut insérer
+     * @param mapGeneratorTablesMotriceRegime
+     *            Map contenant les générateurs associés aux tables motrice
+     *            régime
      */
     private void executeRequestGenerator(Class<?> entity,
             MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime) {
@@ -126,6 +147,19 @@ public class TraitementMotrice extends ATraitementLogDetail {
                     "Erreur dans l'insertion dans la table motrice régime pour l'entité : " + entity.getName());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Exécute la requête de deleteAll sur l'entité MotriceRegime donnée.
+     * 
+     * @param entity
+     *            Entité correspondant à la table que l'on veut vider
+     */
+    private void executeDeleteAll(Class<?> entity) {
+        this.entityManagerSocle
+                .createNamedQuery(
+                        GetEntiteService.getNomFromEntiteTableMotriceRegime(entity.getSimpleName()) + ".deleteAll")
+                .executeUpdate();
     }
 
     public void setJeuDonneeEntity(JeuDonneeEntity jeuDonneeEntity) {

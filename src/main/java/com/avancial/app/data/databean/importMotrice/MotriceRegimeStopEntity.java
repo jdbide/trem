@@ -8,13 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_stop")
-@NamedQuery(name = "MotriceRegimeStop.getAll", query = "SELECT t FROM MotriceRegimeStopEntity t")
+@NamedQueries({@NamedQuery(name = "MotriceRegimeStop.getAll", query = "SELECT t FROM MotriceRegimeStopEntity t"),
+        @NamedQuery(name = "MotriceRegimeStop.deleteAll", query = "DELETE FROM MotriceRegimeStopEntity")})
 public class MotriceRegimeStopEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
