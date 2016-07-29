@@ -3,6 +3,7 @@ package com.avancial.app.traitement;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import javax.inject.Inject;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -75,9 +76,10 @@ public class TraitementMotrice extends ATraitementLogDetail {
 
             MotriceTrainTrancheEntity motriceTrainTrancheEntity;
             MotriceRegimeEntity motriceRegimeEntity;
+            AtomicLong cptRegime;
             for (Object[] record : trainsTranches) {
                 motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
-                motriceTrainTrancheEntity.setIdMotriceTrainTranche(++cpt);
+                motriceTrainTrancheEntity.setIdMotriceTrainTranche(cpt++);
                 motriceTrainTrancheEntity.setJeuDonnee(this.jeuDonneeEntity);
                 motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche((String) record[0]);
                 motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche((String) record[1]);
@@ -89,7 +91,9 @@ public class TraitementMotrice extends ATraitementLogDetail {
                 this.entityManagerSocle.getTransaction().commit();
 
                 /* Insertion du régime lié au train-tranche */
+                cptRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
                 motriceRegimeEntity = new MotriceRegimeEntity();
+                motriceRegimeEntity.setIdMotriceRegime(cptRegime.incrementAndGet());
                 motriceRegimeEntity.setMotriceRefRegimeType(motriceRefRegimeTypeEntity);
                 motriceRegimeEntity.setPeriodMotriceRegime((String) record[4]);
                 motriceRegimeEntity.setMotriceTrainTranche(motriceTrainTrancheEntity);

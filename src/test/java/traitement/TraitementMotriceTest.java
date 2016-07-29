@@ -61,7 +61,7 @@ public class TraitementMotriceTest {
             this.entityManagerSocle.clear();
             
             JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
-            jeuDonneeEntity.setIdJeuDonnees(1);
+            jeuDonneeEntity.setIdJeuDonnees(2);
             this.traitementMotrice.setJeuDonneeEntity(jeuDonneeEntity);
 
             try {
