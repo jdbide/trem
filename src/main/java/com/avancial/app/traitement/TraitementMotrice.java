@@ -37,7 +37,7 @@ public class TraitementMotrice extends ATraitementLogDetail {
     }
 
     @Override
-    protected void executeTraitement() {
+    protected void executeTraitement() throws Exception {
         if (this.jeuDonneeEntity != null) {
             MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime();
             MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(
@@ -114,8 +114,10 @@ public class TraitementMotrice extends ATraitementLogDetail {
                     }
                     catch (Exception e) {
                         System.err.println("Erreur dans la récupération de l'entité motrice régime : "
-                                + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
+                                + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime()
+                                + " ou de son traitement.");
                         e.printStackTrace();
+                        throw e;
                     }
                 }
             }
@@ -134,6 +136,10 @@ public class TraitementMotrice extends ATraitementLogDetail {
                     System.err.println("Erreur dans la récupération de l'entité motrice régime : "
                             + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                     e.printStackTrace();
+                    throw e;
+                }
+                catch (SQLException e) {
+                    throw e;
                 }
             }
             /* On insère enfin dans les tables motrice_regime_xxx_xxx */
@@ -151,9 +157,10 @@ public class TraitementMotrice extends ATraitementLogDetail {
      * @param mapGeneratorTablesMotriceRegime
      *            Map contenant les générateurs associés aux tables motrice
      *            régime
+     * @throws SQLException
      */
     private void executeRequestGenerator(Class<?> entity,
-            MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime) {
+            MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime) throws SQLException {
         IMultipleInsertRequestGenerator multipleInsertRequestGenerator = mapGeneratorTablesMotriceRegime.get(entity);
         try {
             multipleInsertRequestGenerator.executeRequest();
@@ -162,6 +169,7 @@ public class TraitementMotrice extends ATraitementLogDetail {
             System.err.println(
                     "Erreur dans l'insertion dans la table motrice régime pour l'entité : " + entity.getName());
             e.printStackTrace();
+            throw e;
         }
     }
 
