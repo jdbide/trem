@@ -44,7 +44,7 @@ public class JeuDonneeService {
    public JSONObject getAllDataTable() {
        List<ColumnTable> columns = GetDataTableColumns.getColumns(JeuDonneeEntity.class);
 
-       Query query = this.em.createNamedQuery("JeuDonnees.getAll",
+       Query query = this.em.createNamedQuery("JeuDonneeEntity.getAll",
                JeuDonneeEntity.class);
        List<Object> jeuDonnees = query.getResultList();
        JSONArray datas = new JSONArray();
