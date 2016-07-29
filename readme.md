@@ -12,6 +12,6 @@ La documentation est localisée dans le répertoire Other Resources/documentatio
 
 |Fichiers|Explication|
 |--------|-----------|
-|ModelisationPlanTransport1.jpeg, ModelisationPlanTransport2.jpeg|Structure de la base de donnée representant une plan de transport|
+|TremasMotriceModel.png, TremasMotriceModelRegime.png|Structure de la base de donnée representant une plan de transport|
 |ImportMotrice.md|Documentation décrivant la mécanique d'import|
 |TraitementImportBrut.md|Documentation décrivant la mécanique de traitement des donnée avant l'insertion dans la base Tremas|
