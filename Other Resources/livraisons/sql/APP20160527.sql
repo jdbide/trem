@@ -460,3 +460,4 @@ INSERT INTO `tremas_motrice_ref_regime_type` VALUES('8', 'Regime equipement type
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('9', 'Regime meal type');
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('10', 'Regime distribution');
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('11', 'Regime composition');
+INSERT INTO `tremas_motrice_ref_regime_type` VALUES('12', 'Regime od');

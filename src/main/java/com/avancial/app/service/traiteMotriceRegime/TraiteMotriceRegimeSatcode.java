@@ -1,8 +1,13 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -14,8 +19,8 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager) {
 		/* SatCode */
-		Query queryRSatCode = entityManager
-				.createNativeQuery("SELECT regimesat.TATH_CD_VAL AS satcode, regimesat.TATH_REGI AS periodMotriceRegime "
+		Query queryRSatCode = entityManager.createNativeQuery(
+				"SELECT regimesat.TATH_CD_VAL AS satcode, regimesat.TATH_REGI AS periodMotriceRegime "
 						+ "FROM tremas_import_tmdtath AS regimesat "
 						+ "INNER JOIN tremas_import_tmdcath AS cara ON regimesat.TATH_TRCH_COD_CIE = cara.CATH_CIRR_COD_CIE "
 						+ "AND regimesat.TATH_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 "
@@ -23,6 +28,26 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
 						+ "AND cara.CATH_TRCH_NUM_TRA1 = ?");
 		queryRSatCode.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
 		queryRSatCode.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+
+		List<Object[]> listeSatcode = queryRSatCode.getResultList();
+		AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
+		AtomicLong idRegimeSatcode = mapIdTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class);
+		String oldRegime = "";
+		for (Object[] satcode : listeSatcode) {
+			if (!oldRegime.equals(satcode[1])) {// si le régime traité est
+												// différent du précédent
+												// on insère une nouvelle entrée
+				mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(),
+						satcode[1], 6, motriceTrainTrancheEntity.getIdMotriceTrainTranche());
+			}
+			// insertion du régime code sat lié au régime
+			mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class)
+					.addValue(idRegimeSatcode.getAndIncrement(), satcode[0], idRegime.get());
+
+			oldRegime = (String) satcode[1];
+
+		}
+
 	}
 
 }
