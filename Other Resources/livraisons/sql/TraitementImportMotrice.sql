@@ -64,9 +64,9 @@ create table tremas_motrice_regime (
 create table tremas_motrice_regime_composition (
     idMotriceRegimeComposition bigint not null auto_increment,
     classCodeMotriceRegimeComposition varchar(1) not null,
-    origCodeMotriceRegimeComposition varchar(3) not null,
+    diagCodeMotriceRegimeComposition varchar(3) not null,
     rameCodeMotriceRegimeComposition varchar(6) not null,
-    rmCodeMotriceRegimeComposition varchar(6) not null,
+    rmCodeMotriceRegimeComposition varchar(3) not null,
     idMotriceRegime bigint,
     primary key (idMotriceRegimeComposition)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
