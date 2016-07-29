@@ -85,9 +85,10 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
         try {
             this.traitementMotrice.execute();
         }
-        catch (SecurityException e) {
+        catch (Exception e) {
             this.log("Echec du traitement motrice.");
             e.printStackTrace();
+            throw e;
         }
 
         this.traitementOk = true;
