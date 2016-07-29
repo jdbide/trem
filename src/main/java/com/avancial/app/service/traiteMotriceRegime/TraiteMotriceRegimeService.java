@@ -35,11 +35,11 @@ public class TraiteMotriceRegimeService implements ITraiteMotriceRegime {
       String regime = "";
 
       for (Object[] record : rService) {
-         if (!regime.equals((String) record[1])) {
+         if (!regime.equals((String) record[4])) {
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[4], 3, idTrainTranche);
          }
          generatorService.addValue(idService.getAndIncrement(), (String) record[0], (String) record[1], (String) record[2], (String) record[3], idRegime);
-         regime = (String) record[1];
+         regime = (String) record[4];
       }
    }
 }

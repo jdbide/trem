@@ -38,7 +38,7 @@ public class TraiteMotriceRegimeMealType implements ITraiteMotriceRegime {
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[3], 9, idTrainTranche);
          }
          generatorMeal.addValue(idMeal.getAndIncrement(), (String) record[0], (String) record[1], (String) record[2], idRegime);
-         regime = (String) record[1];
+         regime = (String) record[3];
       }
 
    }

@@ -12,7 +12,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotriceBrut.ImportTMDAVTREntity;
 import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
@@ -44,22 +44,24 @@ public class TestGetEntiteService {
 
     @Test
     public void testService() throws ClassNotFoundException {
-        Assert.assertEquals(entiteService.getNomEntiteFromTableMotrice("tmdavtr"), "TMDAVTREntity");
-        Assert.assertEquals(entiteService.getNomEntiteImportFromTableMotrice("tmdavtr"), "ImportTMDAVTREntity");
+        Assert.assertEquals(GetEntiteService.getNomEntiteFromTableMotrice("tmdavtr"), "TMDAVTREntity");
+        Assert.assertEquals(GetEntiteService.getNomEntiteImportFromTableMotrice("tmdavtr"), "ImportTMDAVTREntity");
 
 //        Assert.assertEquals(entiteService.getClasseEntiteFromTableMotrice("tmdavtr"), TMDAVTREntity.class);
-        Assert.assertEquals(entiteService.getClasseEntiteImportFromTableMotrice("tmdavtr"), ImportTMDAVTREntity.class);
+        Assert.assertEquals(GetEntiteService.getClasseEntiteImportFromTableMotrice("tmdavtr"), ImportTMDAVTREntity.class);
         
-        Assert.assertEquals(entiteService.getNomEntiteFromNomEntiteImportMotrice("ImportTMDAVTREntity"), "TMDAVTREntity");
-        Assert.assertEquals(entiteService.getNomEntiteImportFromNomEntiteMotrice("TMDAVTREntity"), "ImportTMDAVTREntity");
+        Assert.assertEquals(GetEntiteService.getNomEntiteFromNomEntiteImportMotrice("ImportTMDAVTREntity"), "TMDAVTREntity");
+        Assert.assertEquals(GetEntiteService.getNomEntiteImportFromNomEntiteMotrice("TMDAVTREntity"), "ImportTMDAVTREntity");
         
 //        Assert.assertEquals(entiteService.getClasseEntiteFromNomEntiteMotrice("TMDAVTREntity"), TMDAVTREntity.class);
-        Assert.assertEquals(entiteService.getClasseEntiteImportFromNomEntiteImportMotrice("ImportTMDAVTREntity"), ImportTMDAVTREntity.class);
+        Assert.assertEquals(GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotrice("ImportTMDAVTREntity"), ImportTMDAVTREntity.class);
         
 //        Assert.assertEquals(entiteService.getClasseEntiteFromClasseEntiteImportMotrice(ImportTMDAVTREntity.class), TMDAVTREntity.class);
 //        Assert.assertEquals(entiteService.getClasseEntiteImportFromClasseEntiteMotrice(TMDAVTREntity.class), ImportTMDAVTREntity.class);
         
-        Assert.assertEquals(entiteService.getNomTableImportFromTableMotrice("TMDAVTR"), "ImportTMDAVTR");
+        Assert.assertEquals(GetEntiteService.getNomTableImportFromTableMotrice("TMDAVTR"), "ImportTMDAVTR");
+        
+        Assert.assertEquals("MotriceRegimeCompositionCoach", GetEntiteService.getNomFromEntiteTableMotriceRegime(MotriceRegimeCompositionCoachEntity.class.getSimpleName()));
     }
 
 }

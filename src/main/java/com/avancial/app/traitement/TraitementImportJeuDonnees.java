@@ -3,19 +3,15 @@
  */
 package com.avancial.app.traitement;
 
-import java.text.ParseException;
 import java.util.Date;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.importMotriceBrut.ImportTMDKAPPEntity;
 import com.avancial.app.data.dto.ImportJeuDonneesDto;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.utilitaire.SchemaMotrice;
-import com.avancial.app.utilitaire.TranscodageRegimeMotrice;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
