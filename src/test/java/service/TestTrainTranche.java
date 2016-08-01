@@ -23,6 +23,7 @@ import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
 import com.avancial.app.service.JeuDonneeService;
@@ -89,34 +90,34 @@ public class TestTrainTranche {
 		motriceRefRegimeTypeEntity.setIdMotriceRefRegimeType((long) 1);
 		motriceRefRegimeTypeEntity.setLabelRegimeType("Regime train tranche");
 		
-		for (Object[] record : trainsTranches) {
+//		for (Object[] record : trainsTranches) {
 			motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
 			motriceTrainTrancheEntity.setIdMotriceTrainTranche(++cpt);
 			motriceTrainTrancheEntity.setJeuDonnee(jeuDonneeEntity);
-			motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche((String) record[0]);
-			motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche((String) record[1]);
-			motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(((BigInteger) record[2]).intValue() == 1);
-			motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche((String) record[3]);
+			motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche("009012");
+			motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche("009012");
+			motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(true);
+			motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche("O");
 
-			this.em.getTransaction().begin();
-			this.em.persist(motriceTrainTrancheEntity);
-			this.em.getTransaction().commit();
+//			this.em.getTransaction().begin();
+//			this.em.persist(motriceTrainTrancheEntity);
+//			this.em.getTransaction().commit();
 			
 			motriceRegimeEntity = new MotriceRegimeEntity();
 			motriceRegimeEntity.setMotriceRefRegimeType(motriceRefRegimeTypeEntity);
-			motriceRegimeEntity.setPeriodMotriceRegime((String) record[4]);
+			motriceRegimeEntity.setPeriodMotriceRegime("(LU+ME+JE+DI*07125/29026+12+15125,01+02+09+12016,02+06+12+26026)MOINS(LU+JE+DI*21125/29125,ME+DI*27016/07026,14+16+17+30125,06+07+11016,04+08+14+22+24+28026)");
 			motriceRegimeEntity.setMotriceTrainTranche(motriceTrainTrancheEntity);
 			
-			this.em.getTransaction().begin();
-			this.em.persist(motriceRegimeEntity);
-			this.em.getTransaction().commit();
+//			this.em.getTransaction().begin();
+//			this.em.persist(motriceRegimeEntity);
+//			this.em.getTransaction().commit();
 
 			traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime,
 					this.em);
-		}
+//		}
 		
 		mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).executeRequest();
-		mapGeneratorTablesMotriceRegime.get(MotriceRegimeStopEntity.class).executeRequest();
+		mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class).executeRequest();
 
 		
 	}
