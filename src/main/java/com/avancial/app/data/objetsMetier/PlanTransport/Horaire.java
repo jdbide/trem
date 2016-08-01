@@ -4,22 +4,22 @@ import java.util.Date;
 
 public class Horaire {
 
-    private Date horaireArrivee;
-    private Date horaireDepart;
+    private Date horaireDebut;
+    private Date horaireFin;
 
     public Date getHoraireArrivee() {
-        return this.horaireArrivee;
+        return this.horaireDebut;
     }
 
     public void setHoraireArrivee(Date horaireArrivee) {
-        this.horaireArrivee = horaireArrivee;
+        this.horaireDebut = horaireArrivee;
     }
 
     public Date getHoraireDepart() {
-        return this.horaireDepart;
+        return this.horaireDebut;
     }
 
     public void setHoraireDepart(Date horaireDepart) {
-        this.horaireDepart = horaireDepart;
+        this.horaireDebut = horaireDepart;
     }
 }
