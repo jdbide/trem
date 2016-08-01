@@ -62,7 +62,7 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 				+ "LPAD(spco.SPCO_COMP_NUM, 3, '0') AS compartmentNumberMotriceRegimeSpecificity, "
 				+ "'' AS seatNumberMotriceRegimeSpecificity, "
 				+ "spco.SPCO_SPEC_COD AS stateCodeMotriceRegimeSpecificity, " + "spco.SPCO_REGI AS regime, "
-				+ "tyvo.TYVO_DIAV_COD, "
+				+ "tyvo.TYVO_DIAV_COD "
 				+ "FROM tremas_import_tmdvoit AS voiture "
 				+ "INNER JOIN tremas_import_tmdcath AS cara ON voiture.VOIT_TRCH_COD_CIE = cara.CATH_TRCH_COD_CIE "
 				+ "AND voiture.VOIT_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 "
