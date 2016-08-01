@@ -54,18 +54,11 @@ public class TestImport {
     public void testImportTMDVOIT() {
         try {
             this.entityManagerSocle.clear();
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Class.forName("com.ibm.db2.jcc.DB2Driver");
-//            System.out.println("Driver O.K.");
-//            String urlSocle = "jdbc:mysql://caliban/tremas";
-//            String urlDb2 = "jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;";
-//            String userSocle = "dbad_tremas";
+
             String userDb2 = "ejmt013";
-//            String passwdSocle = "!tremas-12";
+
             String passwdDb2 = "Isab1000";
-//            Connection connSocle = DriverManager.getConnection(urlSocle, userSocle, passwdSocle);
-////            Connection connDb2 = DriverManager.getConnection(urlDb2, userDb2, passwdDb2);
-//            System.out.println("Connexions effective !");
+
 
             try {
                 this.entityManagerDb2 = EntityManagerFactoryProviderDb2
@@ -79,86 +72,6 @@ public class TestImport {
             TraitementImportDb2Motrice traitementImportDb2Motrice = new TraitementImportDb2Motrice(this.entityManagerSocle, this.entityManagerDb2, "F$MDRP2");
             traitementImportDb2Motrice.execute();
 
-//            Statement stateDb2 = connDb2.createStatement();
-//            Statement stateSocle = connSocle.createStatement();
-//            ResultSet select1 = stateDb2.executeQuery("SELECT * FROM F$MDRP2.TMDKAPP");
-//            ResultSet select2 = stateDb2.executeQuery("SELECT * FROM F$MDRP2.TMDVOIT");
-//            ResultSetMetaData metaSelect1 = select1.getMetaData();
-//            ResultSetMetaData metaSelect2 = select2.getMetaData();
-//            MapTraitementImportBrut mapTraitementImportBrut = new MapTraitementImportBrut();
-//            int compt = 0;
-//
-//            StringBuilder sqlInsert = new StringBuilder();
-//            StringBuilder sqlInsertBis = new StringBuilder();
-//            sqlInsert.append("INSERT INTO tremas_import_tmdkapp (");
-//
-//            for (int i = 1; i <= metaSelect1.getColumnCount(); i++) {
-//                sqlInsert.append(metaSelect1.getColumnName(i).toUpperCase());
-//                if (i != metaSelect1.getColumnCount())
-//                    sqlInsert.append(",");
-//            }
-//            sqlInsert.append(") VALUES (");
-//
-//            while (select1.next()) {
-//                compt++;
-//                sqlInsertBis.setLength(0);
-//                for (int i = 1; i <= metaSelect1.getColumnCount(); i++) {
-//                    if (!mapTraitementImportBrut.containsKey(metaSelect1.getColumnName(i)))
-//                        sqlInsertBis.append("'" + select1.getObject(i).toString() + "'");
-//                    else
-//                        sqlInsertBis.append("'").append(mapTraitementImportBrut.get(metaSelect1.getColumnName(i))
-//                                .execute(select1.getObject(i).toString()).replaceAll("'", "''")).append("'");
-//                    if (i != metaSelect1.getColumnCount())
-//                        sqlInsertBis.append(",");
-//                }
-//                if (compt % 250 == 0) {
-//                    sqlInsertBis.append(")");
-//                    stateSocle.executeUpdate(sqlInsert + "" + sqlInsertBis);
-//                    sqlInsertBis.setLength(0);
-//                }
-//                else
-//                    sqlInsertBis.append("),(");
-//            }
-//            if (compt % 250 != 0) {
-//                sqlInsertBis.setLength(sqlInsertBis.length() - 2);
-//                stateSocle.executeUpdate(sqlInsert + "" + sqlInsertBis);
-//            }
-//
-//            compt = 0;
-//            sqlInsert.append("INSERT INTO tremas_import_tmdvoit (");
-//
-//            for (int i = 1; i <= metaSelect2.getColumnCount(); i++) {
-//                sqlInsert.append(metaSelect2.getColumnName(i).toUpperCase());
-//                if (i != metaSelect2.getColumnCount())
-//                    sqlInsert.append(",");
-//            }
-//            sqlInsert.append(") VALUES (");
-//
-//            while (select2.next()) {
-//                compt++;
-//                sqlInsertBis.setLength(0);
-//                for (int i = 1; i <= metaSelect2.getColumnCount(); i++) {
-//                    if (!mapTraitementImportBrut.containsKey(metaSelect2.getColumnName(i)))
-//                        sqlInsertBis.append("'" + select2.getObject(i).toString() + "'");
-//                    else
-//                        sqlInsertBis.append("'").append(mapTraitementImportBrut.get(metaSelect2.getColumnName(i))
-//                                .execute(select1.getObject(i).toString()).replaceAll("'", "''")).append("'");
-//                    if (i != metaSelect2.getColumnCount())
-//                        sqlInsertBis.append(",");
-//                }
-//                if (compt % 250 == 0) {
-//                    sqlInsertBis.append(")");
-//                    stateSocle.executeUpdate(sqlInsert + "" + sqlInsertBis);
-//                    sqlInsertBis.setLength(0);
-//                }
-//                else
-//                    sqlInsertBis.append("),(");
-//            }
-//            if (compt % 250 != 0) {
-//                sqlInsertBis.setLength(sqlInsertBis.length() - 2);
-//                stateSocle.executeUpdate(sqlInsert + "" + sqlInsertBis);
-//            }
-//
         }
         catch (Exception e) {
             e.printStackTrace();

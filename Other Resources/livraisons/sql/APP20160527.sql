@@ -12,6 +12,28 @@ CREATE TABLE `tremas_import_tmdavth` (
   PRIMARY KEY (`idTMDAVTH`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+CREATE TABLE `tremas_import_tmdsat1` (
+  `idTMDSAT1` bigint(20) NOT NULL AUTO_INCREMENT,
+  `SAT1_COD_SAT` varchar(255) DEFAULT NULL,
+  `SAT1_TYEQ_COD_EQP` varchar(255) DEFAULT NULL,
+  `SAT1_NUM` varchar(255) DEFAULT NULL,
+  `SAT1_USER` varchar(255) DEFAULT NULL,
+  `SAT_DHDO` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTMDSAT1`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `tremas_import_tmdkpro` (
+  `idTMDKPRO` bigint(20) NOT NULL AUTO_INCREMENT,
+  `KPRO_CODE_PROF` varchar(255) DEFAULT NULL,
+  `KPRO_ESP_GEN_COD` varchar(255) DEFAULT NULL,
+  `KPRO_TYPE_NUM` varchar(255) DEFAULT NULL,
+  `KPRO_TAUX_RMP` varchar(255) DEFAULT NULL,
+  `KPRO_LST_VOIT` varchar(255) DEFAULT NULL,
+  `KPRO_USER` varchar(255) DEFAULT NULL,
+  `KPRO_DHDO` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`idTMDKPRO`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 CREATE TABLE `tremas_import_tmdavtr` (
   `idTMDAVTR` bigint(20) NOT NULL AUTO_INCREMENT,
   `AVTR_DHDO` varchar(255) DEFAULT NULL,
@@ -448,6 +470,8 @@ INSERT INTO `tremas_ref_tables_motrice` VALUES ('21', 'TMDVOIT', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('22', 'TMDDTRC', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('23', 'TMDPCDD', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('24', 'TMDTYVO', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('25', 'TMDSAT1', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('26', 'TMDKPRO', '1', '10');
 
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('1', 'Regime train tranche');
 INSERT INTO `tremas_motrice_ref_regime_type` VALUES('2', 'Regime desserte');
