@@ -24,6 +24,12 @@ public class Train {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Train train = (Train) obj;
+        return this.numeroTrain.equals(train.getNumeroTrain());
+    }
+
     /**
      * @return the tranches
      */

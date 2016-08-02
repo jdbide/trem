@@ -60,6 +60,12 @@ public class Tranche {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Tranche tranche = (Tranche) obj;
+        return this.getNumeroTranche().equals(tranche.getNumeroTranche());
+    }
+
     /**
      * @return the numeroTranche
      */
