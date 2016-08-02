@@ -56,6 +56,10 @@ public class Tranche {
         this.originesDesitations = originesDesitations;
     }
 
+    public Tranche() {
+        // TODO Auto-generated constructor stub
+    }
+
     /**
      * @return the numeroTranche
      */

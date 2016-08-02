@@ -7,6 +7,7 @@ public class Train {
     private List<Tranche> tranches;
     private String numeroTrain;
     private boolean validePourRR;
+
     /**
      * @param tranches
      * @param numeroTrain
@@ -18,43 +19,54 @@ public class Train {
         this.numeroTrain = numeroTrain;
         this.validePourRR = validForRR;
     }
+
+    public Train() {
+        // TODO Auto-generated constructor stub
+    }
+
     /**
      * @return the tranches
      */
     public List<Tranche> getTranches() {
         return this.tranches;
     }
+
     /**
-     * @param tranches the tranches to set
+     * @param tranches
+     *            the tranches to set
      */
     public void setTranches(List<Tranche> tranches) {
         this.tranches = tranches;
     }
+
     /**
      * @return the validForRR
      */
     public boolean isValidForRR() {
         return this.validePourRR;
     }
+
     /**
-     * @param validForRR the validForRR to set
+     * @param validForRR
+     *            the validForRR to set
      */
     public void setValidForRR(boolean validForRR) {
         this.validePourRR = validForRR;
     }
+
     /**
      * @return the numeroTrain
      */
     public String getNumeroTrain() {
         return this.numeroTrain;
     }
+
     /**
-     * @param numeroTrain the numeroTrain to set
+     * @param numeroTrain
+     *            the numeroTrain to set
      */
     public void setNumeroTrain(String numeroTrain) {
         this.numeroTrain = numeroTrain;
     }
-    
-    
-    
+
 }

@@ -7,19 +7,19 @@ public class Horaire {
     private Date horaireDebut;
     private Date horaireFin;
 
-    public Date getHoraireArrivee() {
+    public Date getHoraireDebut() {
         return this.horaireDebut;
     }
 
-    public void setHoraireArrivee(Date horaireArrivee) {
-        this.horaireDebut = horaireArrivee;
+    public void setHoraireDebut(Date horaireDebut) {
+        this.horaireDebut = horaireDebut;
     }
 
-    public Date getHoraireDepart() {
-        return this.horaireDebut;
+    public Date getHoraireFin() {
+        return this.horaireFin;
     }
 
-    public void setHoraireDepart(Date horaireDepart) {
-        this.horaireDebut = horaireDepart;
+    public void setHoraireFin(Date horaireFin) {
+        this.horaireFin = horaireFin;
     }
 }

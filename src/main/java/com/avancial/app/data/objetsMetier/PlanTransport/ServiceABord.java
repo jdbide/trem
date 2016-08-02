@@ -2,7 +2,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 public class ServiceABord {
     private String codeService;
-    private ClasseService classe;
+    private EnumClasseService classe;
     private Gare origine;
     private Gare destination;
     private Regime regime;
@@ -14,13 +14,17 @@ public class ServiceABord {
      * @param destination
      * @param regime
      */
-    public ServiceABord(String codeService, ClasseService classe, Gare origine, Gare destination, Regime regime) {
+    public ServiceABord(String codeService, EnumClasseService classe, Gare origine, Gare destination, Regime regime) {
         super();
         this.codeService = codeService;
         this.classe = classe;
         this.origine = origine;
         this.destination = destination;
         this.regime = regime;
+    }
+
+    public ServiceABord() {
+        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -41,7 +45,7 @@ public class ServiceABord {
     /**
      * @return the classe
      */
-    public ClasseService getClasse() {
+    public EnumClasseService getClasse() {
         return this.classe;
     }
 
@@ -49,7 +53,7 @@ public class ServiceABord {
      * @param classe
      *            the classe to set
      */
-    public void setClasse(ClasseService classe) {
+    public void setClasse(EnumClasseService classe) {
         this.classe = classe;
     }
 
