@@ -24,6 +24,14 @@ public class Restriction {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Restriction restriction = (Restriction) obj;
+        return this.getOrigine().equals(restriction.getOrigine())
+                && this.getDestination().equals(restriction.getDestination())
+                && this.getType().equals(restriction.getType());
+    }
+
     /**
      * @return the origine
      */

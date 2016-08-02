@@ -6,6 +6,12 @@ public class TypeEquipement {
 
     private Regime regime;
 
+    @Override
+    public boolean equals(Object obj) {
+        TypeEquipement typeEquipement = (TypeEquipement) obj;
+        return this.getTypeEquipement().equals(typeEquipement.getTypeEquipement());
+    }
+
     public String getTypeEquipement() {
         return this.typeEquipement;
     }

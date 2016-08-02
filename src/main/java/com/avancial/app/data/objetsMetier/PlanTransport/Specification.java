@@ -21,6 +21,12 @@ public class Specification {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Specification specification = (Specification) obj;
+        return this.getVoiture().equals(specification.getVoiture()) && this.getEtat().equals(specification.getEtat());
+    }
+
     /**
      * @return the voiture
      */

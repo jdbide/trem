@@ -27,6 +27,15 @@ public class ServiceABord {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        ServiceABord serviceABord = (ServiceABord) obj;
+        return this.getCodeService().equals(serviceABord.getCodeService())
+                && this.getClasse().equals(serviceABord.getClasse())
+                && this.getOrigine().equals(serviceABord.getOrigine())
+                && this.getDestination().equals(serviceABord.getDestination());
+    }
+
     /**
      * @return the codeService
      */

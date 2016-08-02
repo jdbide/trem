@@ -2,21 +2,27 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 public class Repas {
     private EnumTypeRepas typeRepas;
-    private Horaire horraire;
+    private Horaire horaire;
     private Regime regime;
 
     /**
      * @param typeRepas
-     * @param horraire
+     * @param horaire
      */
-    public Repas(EnumTypeRepas typeRepas, Horaire horraire) {
+    public Repas(EnumTypeRepas typeRepas, Horaire horaire) {
         super();
         this.typeRepas = typeRepas;
-        this.horraire = horraire;
+        this.horaire = horaire;
     }
 
     public Repas() {
         // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Repas repas = (Repas) obj;
+        return this.getTypeRepas().equals(repas.getTypeRepas()) && this.getHoraire().equals(repas.getHoraire());
     }
 
     /**
@@ -35,18 +41,18 @@ public class Repas {
     }
 
     /**
-     * @return the horraire
+     * @return the horaire
      */
-    public Horaire getHorraire() {
-        return this.horraire;
+    public Horaire getHoraire() {
+        return this.horaire;
     }
 
     /**
-     * @param horraire
-     *            the horraire to set
+     * @param horaire
+     *            the horaire to set
      */
-    public void setHorraire(Horaire horraire) {
-        this.horraire = horraire;
+    public void setHoraire(Horaire horraire) {
+        this.horaire = horraire;
     }
 
     /**
