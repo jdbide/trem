@@ -1,11 +1,21 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.List;
+import com.avancial.socle.utils.ListUtils;
 
 public class PlanTransport {
 
     private EnumCompagnies compagnie;
     private List<Train> trains;
+
+    @Override
+    public boolean equals(Object obj) {
+        PlanTransport plan = (PlanTransport) obj;
+        if (plan.getCompagnie().equals(this.compagnie) && ListUtils.compareLists(plan.getTrains(), this.trains)) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * @param compagnie

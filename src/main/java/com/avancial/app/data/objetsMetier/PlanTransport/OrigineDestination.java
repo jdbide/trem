@@ -8,6 +8,15 @@ public class OrigineDestination {
 
     private Regime regime;
 
+    @Override
+    public boolean equals(Object obj) {
+        OrigineDestination od = (OrigineDestination) obj;
+        if (od.getOrigine().equals(this.origine) && od.getDestination().equals(this.destination)) {
+            return true;
+        }
+        return false;
+    }
+
     public Gare getOrigine() {
         return this.origine;
     }

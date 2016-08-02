@@ -6,6 +6,15 @@ public class Distribution {
 
     private Regime regime;
 
+    @Override
+    public boolean equals(Object obj) {
+        Distribution distribution = (Distribution) obj;
+        if (distribution.getIndiceDistribution().equals(this.indiceDistribution)) {
+            return true;
+        }
+        return false;
+    }
+
     public String getIndiceDistribution() {
         return this.indiceDistribution;
     }

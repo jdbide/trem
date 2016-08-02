@@ -7,6 +7,15 @@ public class Horaire {
     private Date horaireDebut;
     private Date horaireFin;
 
+    @Override
+    public boolean equals(Object obj) {
+        Horaire horaire = (Horaire) obj;
+        if (horaire.getHoraireDebut().equals(this.horaireDebut) && horaire.getHoraireFin().equals(this.horaireFin)) {
+            return true;
+        }
+        return false;
+    }
+
     public Date getHoraireDebut() {
         return this.horaireDebut;
     }

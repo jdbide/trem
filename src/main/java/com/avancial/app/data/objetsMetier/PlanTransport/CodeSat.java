@@ -22,4 +22,13 @@ public class CodeSat {
         this.regime = regime;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        CodeSat codeSat = (CodeSat) obj;
+        if (codeSat.getCodeSat().equals(this.codeSat)) {
+            return true;
+        }
+        return false;
+    }
+
 }

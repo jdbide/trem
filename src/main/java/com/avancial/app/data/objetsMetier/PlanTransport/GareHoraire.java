@@ -6,6 +6,15 @@ public class GareHoraire {
 
     private Horaire horaire;
 
+    @Override
+    public boolean equals(Object obj) {
+        GareHoraire gare = (GareHoraire) obj;
+        if (gare.getGare().equals(this.gare) && gare.getHoraire().equals(this.horaire)) {
+            return true;
+        }
+        return false;
+    }
+
     public Gare getGare() {
         return this.gare;
     }

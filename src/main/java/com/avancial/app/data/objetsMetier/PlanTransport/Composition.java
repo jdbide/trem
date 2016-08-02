@@ -1,6 +1,7 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.List;
+import com.avancial.socle.utils.ListUtils;
 
 public class Composition {
 
@@ -15,6 +16,17 @@ public class Composition {
     private List<Voiture> voitures;
 
     private Regime regime;
+
+    @Override
+    public boolean equals(Object obj) {
+        Composition composition = (Composition) obj;
+        if (composition.getCodeClasse().equals(this.codeClasse) && composition.getCodeDiag().equals(this.codeDiag)
+                && composition.getCodeRame().equals(this.codeRame) && composition.getCodeRm().equals(this.codeRm)
+                && ListUtils.compareLists(composition.getVoitures(), this.voitures)) {
+            return true;
+        }
+        return false;
+    }
 
     public String getCodeClasse() {
         return this.codeClasse;

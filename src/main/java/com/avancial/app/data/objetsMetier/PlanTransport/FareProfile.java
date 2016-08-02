@@ -6,6 +6,15 @@ public class FareProfile {
 
     private Regime regime;
 
+    @Override
+    public boolean equals(Object obj) {
+        FareProfile fareProfile = (FareProfile) obj;
+        if (fareProfile.getFareProfileCode().equals(this.fareProfileCode)) {
+            return true;
+        }
+        return false;
+    }
+
     public String getFareProfileCode() {
         return this.fareProfileCode;
     }

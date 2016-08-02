@@ -9,6 +9,15 @@ public class Regime {
 
     private List<Date> regimeDates;
 
+    @Override
+    public boolean equals(Object obj) {
+        Regime regime = (Regime) obj;
+        if (regime.getCodeRegime().equals(this.codeRegime)) {
+            return true;
+        }
+        return false;
+    }
+
     public String getCodeRegime() {
         return this.codeRegime;
     }
