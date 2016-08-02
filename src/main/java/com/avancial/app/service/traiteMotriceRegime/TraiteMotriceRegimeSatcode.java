@@ -19,13 +19,14 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager) {
 		/* SatCode */
-		Query queryRSatCode = entityManager.createNativeQuery(
-				"SELECT regimesat.TATH_CD_VAL AS satcode, regimesat.TATH_REGI AS periodMotriceRegime "
+		Query queryRSatCode = entityManager
+				.createNativeQuery("SELECT satcode.SAT1_COD_SAT AS satcode, regimesat.TATH_REGI AS periodMotriceRegime "
 						+ "FROM tremas_import_tmdtath AS regimesat "
 						+ "INNER JOIN tremas_import_tmdcath AS cara ON regimesat.TATH_TRCH_COD_CIE = cara.CATH_CIRR_COD_CIE "
 						+ "AND regimesat.TATH_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 "
-						+ "AND regimesat.TATH_TRCH_IND_FER = cara.CATH_TRCH_IND_FER " + "WHERE cara.CATH_SSIM = ? "
-						+ "AND cara.CATH_TRCH_NUM_TRA1 = ?");
+						+ "AND regimesat.TATH_TRCH_IND_FER = cara.CATH_TRCH_IND_FER "
+						+ "INNER JOIN tremas_import_tmdsat1 AS satcode ON regimesat.TATH_CD_VAL = satcode.SAT1_COD_SAT "
+						+ "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ?");
 		queryRSatCode.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
 		queryRSatCode.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
 
