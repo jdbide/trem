@@ -6,10 +6,18 @@
                  <h4 class="modal-title">{{ title }}</h4>
             </div>
             <div class="modal-body">
-                Le t�l�chargement des tandems est termin�. Vous pouvez d�sormais travailler en mode hors connexion sans risquer de perdre vos donn�es.
+                <p>Vous êtes sur le point de valider le jeu de données brouillon actuel pour</p>
+                </br>
+                <p>&nbsp;&nbsp;{{currentDataValidate.libelleCompagnie}} - {{currentDataValidate.libelleEnvironnement}}</p>
+                </br>
+                <p>Les données validées remplaceront les données actives le :</p>
+                </br>
+                <p>&nbsp;&nbsp;{{currentData.dateValidateJeuDonneesActif}}</p>
+                </br>
+                <p>Ces données seront visible à tous les utilisateurs et jeu de données sera considéré comme le nouveau point de référence.</p>
             </div>
             <div class="modal-footer">                
-                <button class="btn btn-danger" ng-click="setConfirmedResetDataByServer()">Valider</button>
+                <button class="btn btn-primary" ng-click="executeValidateDraft()">Valider</button>
             </div>
         </div>
     </div>

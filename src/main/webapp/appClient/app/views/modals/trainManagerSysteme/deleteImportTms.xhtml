@@ -1,0 +1,21 @@
+<div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Suppression des données du jeu données en brouillon</h4>
+            </div>
+            <div class="modal-body">
+                <p>Vous êtes sur le point de supprimer les données du jeu données en brouillon de :</p>
+                </br>
+                <p>&nbsp;&nbsp;{{currentDataDelete.libelleCompagnie}} - {{currentDataDelete.libelleEnvironnement}}</p>
+                </br>
+                <p>Ces données et le rapport correspondant ne seront pas conservés.</p>
+                <p>L'ensemble de données actif restera tel quel</p>
+            </div>
+            <div class="modal-footer">                
+                <button class="btn btn-danger" ng-click="executeDeleteDraft()">Suppimer</button>
+            </div>
+        </div>
+    </div>
+</div>

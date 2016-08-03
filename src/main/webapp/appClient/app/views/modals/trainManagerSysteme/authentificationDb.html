@@ -18,14 +18,14 @@
                   	</div>
 					
 					
-					<form ng-submit="executeImport(username, password)">
+					<form ng-submit="executeImport()">
 						<div class="form-group has-feedback">
-							<input type="text" class="form-control" placeholder="Identifiant" ng-model="username" name="username">
+							<input type="text" class="form-control" placeholder="Identifiant" ng-model="currentData.username" name="username">
 							<span class="glyphicon glyphicon-user form-control-feedback"></span>
 						</div>
 						<div class="form-group has-feedback">
 							<input type="password" class="form-control"
-								placeholder="Mot de passe" ng-model="password" name="password"> <span
+								placeholder="Mot de passe" ng-model="currentData.password" name="password"> <span
 								class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
 						<div class="row">
