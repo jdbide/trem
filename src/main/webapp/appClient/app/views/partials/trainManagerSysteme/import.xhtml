@@ -61,17 +61,19 @@
 					<td>{{data.dateValidateJeuDonneesActif}}</td>
 					<td>{{data.validateJeuDonneesActifBy}}</td>
 					<td class="text-center"><a
-						a-disabled="(Status.ACTIVE != data.statusJeudonneeActif)" href="#"
+						a-disabled="(Status.ACTIVE != data.statusJeudonneeActif)" 
+						href="{{urlDownloadFile+data.idJeuDonneesActif}}"
 						style="text-decoration: underline">read</a></td>
+
 					<!-- End ACTIVE -->
 					<!-- Start Draft -->
 					<td ng-if="startImport != $index">{{t+$index}}/07/2016 - 18:00{{data.dateImportJeuDonneesBrouillon}}</td>
 					<td ng-if="startImport != $index">Administrateur{{data.importJeuDonneesBrouillonBy}}</td>
 					<td ng-if="startImport != $index" class="text-center">
-					<!-- a-disabled="(Status.DRAFT != data.statusJeudonneeBrouillon)" -->
 						<a 
-						ng-click="downloadFileByIdJeuDonnees(1)"
-							href="#" style="text-decoration: underline">read
+							a-disabled="(Status.DRAFT != data.statusJeudonneeBrouillon)"
+							href="{{urlDownloadFile+data.idJeuDonneeBrouillon}}"
+							style="text-decoration: underline">read
 						</a>
 					</td>
 					<td ng-if="startImport != $index" class="text-center">

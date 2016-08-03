@@ -4,8 +4,8 @@
  * Contrôleur qui gère la page import du chapitre "Train manager systeme", 
  *
  */
-socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "importTmsService",
-                                 function($rootScope, $scope, importTmsService) {
+socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "importTmsService",
+                                 function($rootScope, $scope, envService, importTmsService) {
 	$scope.title = "Import";
 	/**
 	 * La liste des données à afficher : liste List<ImportTmsDto>
@@ -33,6 +33,8 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "importTmsService
 	$scope.disabledButton = false;
 
 	$scope.startImport =  -1;
+	
+	$scope.urlDownloadFile = envService.read('appWebService') + "/importTms/downloadFile/";
 	
 	$scope.t = 20;
 
@@ -162,12 +164,6 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "importTmsService
 		}, function() {
 			$scope.reponse = importTmsService.getReponse();
 			$scope.currentDataValidate = null;
-		});
-	}
-	
-	$scope.downloadFileByIdJeuDonnees = function (idJeuDonnee) {
-		importTmsService.downloadFileByIdJeuDonnees(idJeuDonnee).then(function() {			
-		}, function() {
 		});
 	}
 

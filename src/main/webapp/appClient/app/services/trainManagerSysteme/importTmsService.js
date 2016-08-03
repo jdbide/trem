@@ -107,30 +107,6 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
 
         return deffered.promise;
     }
-    
-    self.downloadFileByIdJeuDonnees = function (idJeuDonnee) {
-    	loadingService.show();
-
-        var deffered  = $q.defer();
-        var promissJsonFactory = jsonFactory.getJson("webService/app/importTms/downloadFile/"+idJeuDonnee);
-        promissJsonFactory
-            .success(function (data, status, headers, config) {
-            	reponse.status = data.status;
-            	reponse.message = data.message;
-            	loadingService.hide(); 
-                deffered.resolve();
-            })
-            .error(function (data, status, headers, config) {
-            	reponse.message = data.message;
-            	reponse.status = data.status;
-            	loadingService.hide();
-                deffered.reject();
-        });
-
-        return deffered.promise;
-    }
-    
-    
 
     self.getReponse = function () {
     	return reponse;

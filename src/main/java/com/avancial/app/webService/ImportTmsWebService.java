@@ -17,10 +17,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.service.ImportTmsService;
@@ -151,10 +149,27 @@ public class ImportTmsWebService {
    public Response downloadFileByIdJeuDonnees(@PathParam("idJeuDonnee") Integer idJeuDonnee) throws Exception {
       ResponseBuilder responseBuilder = null;
       try {
-         throw new Exception();
-        /* File fileDownload = new File("D:/Utilisateurs/hamza.laterem/Pictures/test.xlsx");
+         File fileDownload = new File("D:/Utilisateurs/hamza.laterem/Pictures/test.xlsx");
          responseBuilder = Response.ok((Object) fileDownload);
-         responseBuilder.header("Content-Disposition", "attachment; filename=\"hamza.xlsx\"");*/
+         responseBuilder.header("Content-Disposition", "attachment; filename=\"hamza.xlsx\"");
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBuilder = Response.status(400);
+         
+      } finally {
+         return responseBuilder.build();
+      }
+   }
+   
+   @GET
+   @Path("hamza")
+   @Produces({ MediaType.APPLICATION_JSON })
+   public Response hamza() throws Exception {
+      ResponseBuilder responseBuilder = null;
+      try {
+         //Thread thread = new Thread(){};
+
+         responseBuilder = Response.ok();
       } catch (Exception e) {
          e.printStackTrace();
          responseBuilder = Response.status(400);
