@@ -1,10 +1,20 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class FareProfile {
+public class FareProfile extends ARegimeComparable {
 
     private String fareProfileCode;
 
     private Regime regime;
+
+    public FareProfile() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public FareProfile(String fareProfileCode, Regime regime) {
+        super();
+        this.fareProfileCode = fareProfileCode;
+        this.regime = regime;
+    }
 
     @Override
     public boolean equals(Object obj) {

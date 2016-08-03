@@ -9,6 +9,16 @@ public class Voiture {
 
     private List<Compartiment> compartiments;
 
+    public Voiture() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Voiture(String numeroVoiture, List<Compartiment> compartiments) {
+        super();
+        this.numeroVoiture = numeroVoiture;
+        this.compartiments = compartiments;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Voiture voiture = (Voiture) obj;

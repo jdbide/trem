@@ -3,7 +3,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
-public class Composition {
+public class Composition extends ARegimeComparable {
 
     private String codeClasse;
 
@@ -16,6 +16,21 @@ public class Composition {
     private List<Voiture> voitures;
 
     private Regime regime;
+
+    public Composition() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Composition(String codeClasse, String codeDiag, String codeRame, String codeRm, List<Voiture> voitures,
+            Regime regime) {
+        super();
+        this.codeClasse = codeClasse;
+        this.codeDiag = codeDiag;
+        this.codeRame = codeRame;
+        this.codeRm = codeRm;
+        this.voitures = voitures;
+        this.regime = regime;
+    }
 
     @Override
     public boolean equals(Object obj) {

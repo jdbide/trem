@@ -9,6 +9,16 @@ public class Compartiment {
 
     private List<Siege> sieges;
 
+    public Compartiment() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Compartiment(String numeroCompartiment, List<Siege> sieges) {
+        super();
+        this.numeroCompartiment = numeroCompartiment;
+        this.sieges = sieges;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Compartiment compartiment = (Compartiment) obj;

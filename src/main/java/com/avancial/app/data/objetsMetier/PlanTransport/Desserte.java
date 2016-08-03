@@ -3,12 +3,22 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
-public class Desserte {
+public class Desserte extends ARegimeComparable {
 
     private List<GareHoraire> gareHoraires;
 
     private Regime regime;
-    
+
+    public Desserte() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Desserte(List<GareHoraire> gareHoraires, Regime regime) {
+        super();
+        this.gareHoraires = gareHoraires;
+        this.regime = regime;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Desserte desserte = (Desserte) obj;
@@ -17,7 +27,7 @@ public class Desserte {
         }
         return false;
     }
-    
+
     public List<GareHoraire> getGareHoraires() {
         return this.gareHoraires;
     }

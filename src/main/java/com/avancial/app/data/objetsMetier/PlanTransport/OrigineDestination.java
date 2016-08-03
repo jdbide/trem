@@ -1,12 +1,23 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class OrigineDestination {
+public class OrigineDestination extends ARegimeComparable {
 
     private Gare origine;
 
     private Gare destination;
 
     private Regime regime;
+
+    public OrigineDestination() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public OrigineDestination(Gare origine, Gare destination, Regime regime) {
+        super();
+        this.origine = origine;
+        this.destination = destination;
+        this.regime = regime;
+    }
 
     @Override
     public boolean equals(Object obj) {

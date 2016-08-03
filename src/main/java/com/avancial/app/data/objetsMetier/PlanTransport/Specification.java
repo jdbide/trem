@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class Specification {
+public class Specification extends ARegimeComparable {
     private Voiture voiture;
     private EnumEtatSpecification etat;
     private Regime regime;

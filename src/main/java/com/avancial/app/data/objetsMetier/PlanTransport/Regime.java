@@ -9,6 +9,16 @@ public class Regime {
 
     private List<Date> regimeDates;
 
+    public Regime() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Regime(String codeRegime, List<Date> regimeDates) {
+        super();
+        this.codeRegime = codeRegime;
+        this.regimeDates = regimeDates;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Regime regime = (Regime) obj;

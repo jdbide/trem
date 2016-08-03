@@ -1,10 +1,19 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class CodeSat {
+public class CodeSat extends ARegimeComparable {
 
     private String codeSat;
 
     private Regime regime;
+
+    public CodeSat() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public CodeSat(String codeSat, Regime regime) {
+        this.codeSat = codeSat;
+        this.regime = regime;
+    }
 
     public String getCodeSat() {
         return this.codeSat;

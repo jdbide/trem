@@ -2,10 +2,10 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.List;
 
-public class Tranche {
+public class Tranche extends ARegimeComparable {
     private String numeroTranche;
     private EnumTrancheStatut trancheStatut;
-    private Regime regimeTranche;
+    private Regime regime;
     private List<Desserte> dessertes;
     private List<ServiceABord> services;
     private List<Specification> specifications;
@@ -16,12 +16,14 @@ public class Tranche {
     private List<FareProfile> fareProfiles;
     private List<TypeEquipement> typeEquipements;
     private List<Repas> repas;
-    private List<OrigineDestination> originesDesitations;
+    private List<OrigineDestination> originesDestinations;
+    
+    private MapTranche values;
 
     /**
      * @param numeroTranche
      * @param trancheStatut
-     * @param regimeTranche
+     * @param regime
      * @param dessertes
      * @param services
      * @param specifications
@@ -32,7 +34,7 @@ public class Tranche {
      * @param fareProfiles
      * @param typeEquipements
      * @param repas
-     * @param originesDesitations
+     * @param originesDestinations
      */
     public Tranche(String numeroTranche, EnumTrancheStatut trancheStatut, Regime regimeTranche,
             List<Desserte> dessertes, List<ServiceABord> services, List<Specification> specifications,
@@ -42,7 +44,7 @@ public class Tranche {
         super();
         this.numeroTranche = numeroTranche;
         this.trancheStatut = trancheStatut;
-        this.regimeTranche = regimeTranche;
+        this.regime = regimeTranche;
         this.dessertes = dessertes;
         this.services = services;
         this.specifications = specifications;
@@ -53,7 +55,7 @@ public class Tranche {
         this.fareProfiles = fareProfiles;
         this.typeEquipements = typeEquipements;
         this.repas = repas;
-        this.originesDesitations = originesDesitations;
+        this.originesDestinations = originesDesitations;
     }
 
     public Tranche() {
@@ -97,18 +99,18 @@ public class Tranche {
     }
 
     /**
-     * @return the regimeTranche
+     * @return the regime
      */
-    public Regime getRegimeTranche() {
-        return this.regimeTranche;
+    public Regime getRegime() {
+        return this.regime;
     }
 
     /**
-     * @param regimeTranche
-     *            the regimeTranche to set
+     * @param regime
+     *            the regime to set
      */
-    public void setRegimeTranche(Regime regimeTranche) {
-        this.regimeTranche = regimeTranche;
+    public void setRegime(Regime regime) {
+        this.regime = regime;
     }
 
     /**
@@ -262,18 +264,18 @@ public class Tranche {
     }
 
     /**
-     * @return the originesDesitations
+     * @return the originesDestinations
      */
-    public List<OrigineDestination> getOriginesDesitations() {
-        return this.originesDesitations;
+    public List<OrigineDestination> getOriginesDestinations() {
+        return this.originesDestinations;
     }
 
     /**
-     * @param originesDesitations
-     *            the originesDesitations to set
+     * @param originesDestinations
+     *            the originesDestinations to set
      */
-    public void setOriginesDesitations(List<OrigineDestination> originesDesitations) {
-        this.originesDesitations = originesDesitations;
+    public void setOriginesDestinations(List<OrigineDestination> originesDestinations) {
+        this.originesDestinations = originesDestinations;
     }
 
 }

@@ -2,7 +2,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.List;
 
-public class Train {
+public class Train implements IPlanTransportComparable {
 
     private List<Tranche> tranches;
     private String numeroTrain;
@@ -73,6 +73,12 @@ public class Train {
      */
     public void setNumeroTrain(String numeroTrain) {
         this.numeroTrain = numeroTrain;
+    }
+
+    @Override
+    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

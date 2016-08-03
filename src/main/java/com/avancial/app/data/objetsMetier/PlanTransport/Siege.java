@@ -4,6 +4,15 @@ public class Siege {
 
     private String numeroSiege;
 
+    public Siege() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Siege(String numeroSiege) {
+        super();
+        this.numeroSiege = numeroSiege;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Siege siege = (Siege) obj;

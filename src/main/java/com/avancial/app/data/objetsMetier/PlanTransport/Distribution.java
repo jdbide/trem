@@ -1,10 +1,20 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class Distribution {
+public class Distribution extends ARegimeComparable {
 
     private String indiceDistribution;
 
     private Regime regime;
+
+    public Distribution() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Distribution(String indiceDistribution, Regime regime) {
+        super();
+        this.indiceDistribution = indiceDistribution;
+        this.regime = regime;
+    }
 
     @Override
     public boolean equals(Object obj) {

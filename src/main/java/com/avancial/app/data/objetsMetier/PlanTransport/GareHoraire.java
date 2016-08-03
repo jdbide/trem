@@ -6,6 +6,16 @@ public class GareHoraire {
 
     private Horaire horaire;
 
+    public GareHoraire() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public GareHoraire(Gare gare, Horaire horaire) {
+        super();
+        this.gare = gare;
+        this.horaire = horaire;
+    }
+
     @Override
     public boolean equals(Object obj) {
         GareHoraire gare = (GareHoraire) obj;

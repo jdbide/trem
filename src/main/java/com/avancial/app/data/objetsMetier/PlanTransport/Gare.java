@@ -4,6 +4,15 @@ public class Gare {
 
     private String codeGare;
 
+    public Gare() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Gare(String codeGare) {
+        super();
+        this.codeGare = codeGare;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Gare gare = (Gare) obj;

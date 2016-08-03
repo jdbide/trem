@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class Restriction {
+public class Restriction extends ARegimeComparable {
     private Gare origine;
     private Gare destination;
     private EnumTypeRestriction type;

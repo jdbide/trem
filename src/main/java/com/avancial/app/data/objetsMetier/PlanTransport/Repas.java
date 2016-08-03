@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class Repas {
+public class Repas extends ARegimeComparable {
     private EnumTypeRepas typeRepas;
     private Horaire horaire;
     private Regime regime;

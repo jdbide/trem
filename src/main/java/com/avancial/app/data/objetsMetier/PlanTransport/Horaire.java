@@ -7,6 +7,16 @@ public class Horaire {
     private Date horaireDebut;
     private Date horaireFin;
 
+    public Horaire() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Horaire(Date horaireDebut, Date horaireFin) {
+        super();
+        this.horaireDebut = horaireDebut;
+        this.horaireFin = horaireFin;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Horaire horaire = (Horaire) obj;

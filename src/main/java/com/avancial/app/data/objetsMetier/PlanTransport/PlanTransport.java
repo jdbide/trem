@@ -1,9 +1,10 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
-public class PlanTransport {
+public class PlanTransport implements IPlanTransportComparable {
 
     private EnumCompagnies compagnie;
     private List<Train> trains;
@@ -59,6 +60,22 @@ public class PlanTransport {
      */
     public void setTrains(List<Train> trains) {
         this.trains = trains;
+    }
+
+    @Override
+    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {
+        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        PlanTransport autrePlanTransport = (PlanTransport) autre;
+        
+        Train train, autreTrain;
+        for (int cpt = 0; cpt < this.trains.size(); cpt++) {
+            train = this.trains.get(cpt);
+            for (int cptAutre = cpt + 1; cptAutre < autrePlanTransport.getTrains().size(); cptAutre++) {
+                autreTrain = autrePlanTransport.getTrains().get(cptAutre);
+                res.addAll(train.compare(autreTrain));
+            }
+        }
+        return res;
     }
 
 }
