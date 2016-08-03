@@ -15,12 +15,12 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
+import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.traitement.TraitementImportDb2Motrice;
-import com.avancial.app.traitement.TraitementImportJeuDonnees;
-import com.avancial.app.utilitaire.MapTraitementImportBrut;
-import com.avancial.app.utilitaire.SchemaMotrice;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -32,8 +32,12 @@ public class TestImport {
         File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity()
                 .as(File.class);
 
-        WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(IhmPageDataBean.class.getPackage())
-                .addClass(JeuDonneeService.class).addPackage(Socle_PUSocle.class.getPackage())
+        WebArchive jar = ShrinkWrap.create(WebArchive.class)
+                 .addPackage(IhmPageDataBean.class.getPackage())
+                 .addPackage(CompagnieEnvironnementEntity.class.getPackage())
+                .addClass(JeuDonneeService.class)
+                .addClass(CompagnieEnvironnementService.class)
+                .addPackage(Socle_PUSocle.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())
                 .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
@@ -50,6 +54,10 @@ public class TestImport {
     EntityManager entityManagerSocle;
 
     EntityManager entityManagerDb2;
+    
+    @Inject CompagnieEnvironnementService compagnieEnvironnementService;
+    
+    
     @Test
     public void testImportTMDVOIT() {
         try {
@@ -66,10 +74,16 @@ public class TestImport {
 //            Connection connSocle = DriverManager.getConnection(urlSocle, userSocle, passwdSocle);
 ////            Connection connDb2 = DriverManager.getConnection(urlDb2, userDb2, passwdDb2);
 //            System.out.println("Connexions effective !");
-
+            CompagnieEnvironnementEntity compagnieEnvironnementEntity = null;
+            try {
+               // Récupération de l'environnement sélectionné
+               compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(1);
+            }catch (Throwable ex) {
+               throw ex;
+           }
             try {
                 this.entityManagerDb2 = EntityManagerFactoryProviderDb2
-                        .getInstance(userDb2, passwdDb2)
+                        .getInstance(compagnieEnvironnementEntity,userDb2, passwdDb2)
                         .createEntityManager();
             }
             catch (Throwable ex) {

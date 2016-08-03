@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
+import com.avancial.app.data.databean.DatasourceEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.service.JeuDonneeService;
@@ -73,19 +74,36 @@ public class TestJeuDeDonnees {
          Query query = this.entityManager.createQuery("SELECT t FROM CompagnieEnvironnementEntity t where t.idCompagnieEnvironnement = 1");
          CompagnieEnvironnementEntity compagnieEnvironnement = ((CompagnieEnvironnementEntity) query.getSingleResult());
          
-         JeuDonneeEntity jeuDonnee = new JeuDonneeEntity();
          
-         jeuDonnee.setActifJeuDonnees(true);
-         jeuDonnee.setCommentaireJeuDonnees("");
-         jeuDonnee.setCompagnieEnvironnement(compagnieEnvironnement);
-         jeuDonnee.setDateCreateJeuDonnees(new Date());
-         jeuDonnee.setDateLastUpdateJeuDonnees(new Date());
-         jeuDonnee.setIdUtilisateurCreateJeuDonnees(-1);
-         jeuDonnee.setIdUtilisateurLastUpdateJeuDonnees(-1);
+//         DatasourceEntity datasourceEntity = new DatasourceEntity();
+//         
+//         datasourceEntity.setActifDatasource(true);
+//         datasourceEntity.setCommentaireDataSource("");
+//         datasourceEntity.setDriverClassName("");
+//         datasourceEntity.setLibelleDataSource("");
+//         datasourceEntity.setNomTechniqueDataSource("T");
+//         datasourceEntity.setUrl("");
+//         
+//         this.entityManager.getTransaction().begin();
+//         this.entityManager.persist(datasourceEntity);
+//         //this.entityManager.flush();
+//         this.entityManager.getTransaction().commit();
          
+         JeuDonneeEntity tremasJD = new JeuDonneeEntity();
+         tremasJD.setActifJeuDonnees(true);
+         tremasJD.setCommentaireJeuDonnees("");
+         tremasJD.setCompagnieEnvironnement(compagnieEnvironnement);
+         tremasJD.setDateCreateJeuDonnees(new Date());
+         tremasJD.setDateLastUpdateJeuDonnees(new Date());
+         tremasJD.setIdUtilisateurCreateJeuDonnees(-1);
+         tremasJD.setIdUtilisateurLastUpdateJeuDonnees(-1);
+         tremasJD.setStatusJeuDonnees(Status.IMPORT);
          this.entityManager.getTransaction().begin();
-         this.entityManager.persist(jeuDonnee);
+         this.entityManager.persist(tremasJD);
+         this.entityManager.flush();
          this.entityManager.getTransaction().commit();
+         Assert.assertNotNull(tremasJD.getIdJeuDonnees());
+         Assert.assertFalse(tremasJD.getIdJeuDonnees() == 0);
       } catch (Exception e) {
          System.out.println(e.getMessage());
          e.printStackTrace();
