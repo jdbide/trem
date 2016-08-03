@@ -1,6 +1,8 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.util.ArrayList;
 import java.util.List;
+import com.avancial.socle.utils.ListUtils;
 
 public class ComparaisonPlanTransport<T extends IPlanTransportComparable> implements IComparaisonPlanTransport {
 
@@ -13,6 +15,23 @@ public class ComparaisonPlanTransport<T extends IPlanTransportComparable> implem
     private List<T> nouveauFields;
 
     private EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport;
+
+    public ComparaisonPlanTransport() {
+        this.numeroTrain = "";
+        this.numeroTranche = "";
+        this.ancienFields = new ArrayList<>();
+        this.nouveauFields = new ArrayList<>();
+        this.typeComparaisonPlanTransport = EnumTypeComparaisonPlanTransport.UNCHANGED;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        ComparaisonPlanTransport<T> comparaison = (ComparaisonPlanTransport<T>) obj;
+        return this.numeroTrain.equals(comparaison.getNumeroTrain())
+                && this.numeroTranche.equals(comparaison.getNumeroTranche())
+                && ListUtils.compareLists(this.ancienFields, comparaison.getAncienFields())
+                && ListUtils.compareLists(this.nouveauFields, comparaison.getNouveauFields());
+    }
 
     public String getNumeroTrain() {
         return this.numeroTrain;

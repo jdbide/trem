@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Test;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
+import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
@@ -21,7 +25,6 @@ public class TestComparePlanTransport {
 
     private ComparePlanTransport comparePlanTransport = new ComparePlanTransport();
 
-    @Test
     public void testNewDelete() {
 
         Tranche tranche1 = new Tranche();
@@ -150,6 +153,34 @@ public class TestComparePlanTransport {
         /* Specification */
         /* TypeEquipement */
         /* Tranche */
+    }
+
+    @Test
+    public void testPlanTransport() {
+        Train train1 = new Train(null, "1", true);
+        List<Train> trains1 = new ArrayList<>();
+        trains1.add(train1);
+        List<Train> trains2 = new ArrayList<>();
+
+        PlanTransport p1 = new PlanTransport(EnumCompagnies.ES, trains1);
+        PlanTransport p2 = new PlanTransport(EnumCompagnies.ES, trains2);
+        List<IComparaisonPlanTransport> expected = new ArrayList<>();
+        ComparaisonPlanTransport<IPlanTransportComparable> cpt = new ComparaisonPlanTransport<>();
+        cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
+        cpt.setNumeroTrain("1");
+        expected.add(cpt);
+        try {
+            Assert.assertTrue("Compare DELETE PlanTransport", ListUtils.compareLists(expected, p1.compare(p2)));
+            cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
+            Assert.assertTrue(ListUtils.compareLists(expected, p2.compare(p1)));
+            Assert.assertTrue(ListUtils.compareLists(new ArrayList<IComparaisonPlanTransport>(), p1.compare(p1)));
+            Assert.assertTrue(ListUtils.compareLists(new ArrayList<IComparaisonPlanTransport>(), p2.compare(p2)));
+        }
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
     public boolean compareMaps(Map<TrainTranche, TrainTranche> m1, Map<TrainTranche, TrainTranche> m2) {

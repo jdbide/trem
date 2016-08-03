@@ -25,7 +25,7 @@ public abstract class ARegimeComparable implements IPlanTransportComparable {
             res.add(comparaisonPlanTransport);
             return res;
         }
-        throw new Exception("Ne peut pas comparer deux instances de IRegimeComparable de classes différentes!");
+        throw new Exception("Ne peut pas comparer deux instances de IPlanTransportComparable de classes différentes!");
     }
 
 }

@@ -66,13 +66,75 @@ public class PlanTransport implements IPlanTransportComparable {
     public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         PlanTransport autrePlanTransport = (PlanTransport) autre;
-        
-        Train train, autreTrain;
-        for (int cpt = 0; cpt < this.trains.size(); cpt++) {
-            train = this.trains.get(cpt);
-            for (int cptAutre = cpt + 1; cptAutre < autrePlanTransport.getTrains().size(); cptAutre++) {
-                autreTrain = autrePlanTransport.getTrains().get(cptAutre);
-                res.addAll(train.compare(autreTrain));
+
+        res.addAll(this.compareNew(this.trains, autrePlanTransport.getTrains()));
+
+        res.addAll(this.compareDelete(this.trains, autrePlanTransport.getTrains()));
+
+        return res;
+    }
+
+    /**
+     * Récupère les trains nouveaux ainsi que toutes les modifications entre deux listes de trains.
+     * @param ancien Liste de trains d'un jeu de données moins récent
+     * @param nouveau Liste de trains d'un jeu de données plus récent
+     * @return
+     * @throws Exception
+     */
+    private List<IComparaisonPlanTransport> compareNew(List<Train> ancien, List<Train> nouveau) throws Exception {
+        return this.compare(ancien, nouveau, true);
+    }
+
+    /**
+     * Récupère les trains supprimés entre deux listes de trains.
+     * @param ancien Liste de trains d'un jeu de données moins récent
+     * @param nouveau Liste de trains d'un jeu de données plus récent
+     * @return
+     * @throws Exception
+     */
+    private List<IComparaisonPlanTransport> compareDelete(List<Train> ancien, List<Train> nouveau) throws Exception {
+        return this.compare(nouveau, ancien, false);
+    }
+
+    /**
+     * Compare deux listes de trains, et retourne la liste des différences entre
+     * les deux.
+     * 
+     * @param ancien
+     *            Liste de trains correspondant à un jeu de données moins récent
+     * @param nouveau
+     *            Liste de trains correspondant à un jeu de données plus récent
+     * @param chercheAjout
+     *            Indique si l'on cherche des trains ajoutés ou supprimés
+     * @return Liste des {@link IComparaisonPlanTransport} entre "nouveau" et
+     *         "ancien"
+     * @throws Exception
+     */
+    private List<IComparaisonPlanTransport> compare(List<Train> ancien, List<Train> nouveau, boolean chercheAjout)
+            throws Exception {
+        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport = chercheAjout
+                ? EnumTypeComparaisonPlanTransport.NEW : EnumTypeComparaisonPlanTransport.DELETE;
+        Train trainAncien;
+        ComparaisonPlanTransport<IPlanTransportComparable> comparaisonPlanTransport = null;
+
+        /* Boucle sur les trains de nouveau */
+        for (Train trainNouveau : nouveau) {
+            /* Vérifie si trainNouveau existe dans ancien */
+            int index = ancien.indexOf(trainNouveau);
+            /* Si trainNouveau n'est pas dans ancien */
+            if (index < 0) {
+                /* C'est un nouveau train */
+                comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+                comparaisonPlanTransport.setNumeroTrain(trainNouveau.getNumeroTrain());
+                comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
+                res.add(comparaisonPlanTransport);
+            }
+            /* TrainNouveau est dans ancien */
+            else if (chercheAjout) {
+                /* On ajoute les résultats du compare des trains */
+                trainAncien = ancien.get(index);
+                res.addAll(trainNouveau.compare(trainAncien));
             }
         }
         return res;
