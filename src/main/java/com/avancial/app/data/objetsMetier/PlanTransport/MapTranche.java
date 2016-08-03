@@ -3,7 +3,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapTranche extends HashMap<Class<? extends IPlanTransportComparable>, List<IPlanTransportComparable>> {
+public class MapTranche extends HashMap<Class<? extends IPlanTransportComparable>, List<? extends IPlanTransportComparable>> {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,8 +14,8 @@ public class MapTranche extends HashMap<Class<? extends IPlanTransportComparable
      *         list values is not equal to the key.
      */
     @Override
-    public List<IPlanTransportComparable> put(Class<? extends IPlanTransportComparable> key,
-            List<IPlanTransportComparable> value) {
+    public List<? extends IPlanTransportComparable> put(Class<? extends IPlanTransportComparable> key,
+            List<? extends IPlanTransportComparable> value) {
         if (value != null && value.size() > 0 && value.get(0).getClass().equals(key)) {
             return super.put(key, value);
         }

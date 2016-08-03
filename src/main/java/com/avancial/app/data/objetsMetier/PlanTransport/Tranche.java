@@ -17,7 +17,7 @@ public class Tranche extends ARegimeComparable {
      * @param key
      * @return getAttributs().get(key)
      */
-    public List<IPlanTransportComparable> getAttributsField(Class<? extends IPlanTransportComparable> key) {
+    public List<? extends IPlanTransportComparable> getAttributsField(Class<? extends IPlanTransportComparable> key) {
         return this.attributs.get(key);
     }
 
@@ -25,7 +25,7 @@ public class Tranche extends ARegimeComparable {
      * attrubuts.put(value.class, List\<value\>)
      * @param value
      */
-    public void addAttributsField(List<IPlanTransportComparable> value) {
+    public void addAttributsField(List<? extends IPlanTransportComparable> value) {
         if (value.size() > 0) {
             this.attributs.put(value.get(0).getClass(), value);
         }

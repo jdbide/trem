@@ -133,8 +133,8 @@ public class TestComparePlanTransport {
         List<CodeSat> cs2 = new ArrayList<>();
         cs2.add(codeSat2);
 
-        tranche1.setCodesSat(cs1);
-        tranche2.setCodesSat(cs2);
+        tranche1.addAttributsField(cs1);
+        tranche2.addAttributsField(cs2);
 
         List<ComparaisonTrainTranche<CodeSat>> expected = new ArrayList<>();
         expected.add(new ComparaisonTrainTranche<CodeSat>("1", "1", cs1, cs2));

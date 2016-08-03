@@ -145,7 +145,6 @@ public class ComparePlanTransport implements IComparePlanTransport {
     }
 
     private void compareTrainTranche(TrainTranche ttAncien, TrainTranche ttNouveau) {
-        this.compare(ttAncien.getTranche().getCodesSat(), ttNouveau.getTranche().getCodesSat());
         // TODO Auto-generated method stub
 
     }
