@@ -1,22 +1,24 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.Date;
-import java.util.List;
 
 public class Regime {
 
     private String codeRegime;
 
-    private List<Date> regimeDates;
+    private Date dateDebut;
+
+    private Date dateFin;
 
     public Regime() {
         // TODO Auto-generated constructor stub
     }
 
-    public Regime(String codeRegime, List<Date> regimeDates) {
+    public Regime(String codeRegime, Date dateDebut, Date dateFin) {
         super();
         this.codeRegime = codeRegime;
-        this.regimeDates = regimeDates;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
     }
 
     @Override
@@ -36,12 +38,19 @@ public class Regime {
         this.codeRegime = codeRegime;
     }
 
-    public List<Date> getRegimeDates() {
-        return this.regimeDates;
+    public Date getDateDebut() {
+        return this.dateDebut;
     }
 
-    public void setRegimeDates(List<Date> regimeDates) {
-        this.regimeDates = regimeDates;
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
+    public Date getDateFin() {
+        return this.dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
 }
