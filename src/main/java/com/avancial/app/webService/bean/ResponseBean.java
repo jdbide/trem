@@ -11,6 +11,7 @@ public class ResponseBean {
    
    private boolean status;
    private String message;
+   private Object data;
 
    /**
     * @return the importOK
@@ -38,5 +39,19 @@ public class ResponseBean {
     */
    public void setMessage(String message) {
       this.message = message;
+   }
+
+   /**
+    * @return the data
+    */
+   public Object getData() {
+      return data;
+   }
+
+   /**
+    * @param data the data to set
+    */
+   public void setData(Object data) {
+      this.data = data;
    }
 }
