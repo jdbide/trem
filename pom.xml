@@ -267,10 +267,21 @@
 			<artifactId>modelmapper</artifactId>
 			<version>0.7.5</version>
 		</dependency>
-	<dependency>
+		<dependency>
+    		<groupId>com.mchange</groupId>
+    		<artifactId>c3p0</artifactId>
+    		<version>0.9.5</version>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
-			<version>3.6.3.Final</version>
+			<version>4.2.0.Final</version>
+			<exclusions>
+        		<exclusion>
+		            <artifactId>c3p0</artifactId>
+		            <groupId>c3p0</groupId>
+        		</exclusion>
+    		</exclusions>
 		</dependency>
 	</dependencies>
 
