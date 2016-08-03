@@ -15,9 +15,10 @@ public class DatasourceEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idDatasource;
 
-	private byte actifDatasource;
+	private boolean actifDatasource;
 
 	@Lob
 	private String commentaireDataSource;
@@ -41,11 +42,11 @@ public class DatasourceEntity implements Serializable {
 		this.idDatasource = idDatasource;
 	}
 
-	public byte getActifDatasource() {
+	public boolean getActifDatasource() {
 		return this.actifDatasource;
 	}
 
-	public void setActifDatasource(byte actifDatasource) {
+	public void setActifDatasource(boolean actifDatasource) {
 		this.actifDatasource = actifDatasource;
 	}
 

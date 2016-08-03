@@ -1,8 +1,6 @@
 package com.avancial.app.data.databean;
 
 import java.io.Serializable;
-
-import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -18,11 +16,12 @@ public class JeuDonneeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idJeuDonnees;
 
-	private boolean actifJeuDonnees;
+	private Boolean actifJeuDonnees;
 
-	@Lob
+	//@Lob
 	private String commentaireJeuDonnees;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -31,7 +30,7 @@ public class JeuDonneeEntity implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateLastUpdateJeuDonnees;
 
-	private int idUtilisateurCreateJeuDonnees;
+   private int idUtilisateurCreateJeuDonnees;
 
 	private int idUtilisateurLastUpdateJeuDonnees;
 
@@ -55,11 +54,11 @@ public class JeuDonneeEntity implements Serializable {
 		this.idJeuDonnees = idJeuDonnees;
 	}
 
-	public boolean getActifJeuDonnees() {
+	public Boolean getActifJeuDonnees() {
 		return this.actifJeuDonnees;
 	}
 
-	public void setActifJeuDonnees(boolean actifJeuDonnees) {
+	public void setActifJeuDonnees(Boolean actifJeuDonnees) {
 		this.actifJeuDonnees = actifJeuDonnees;
 	}
 

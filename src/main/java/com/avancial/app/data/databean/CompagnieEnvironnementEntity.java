@@ -11,12 +11,16 @@ import java.util.Date;
  */
 @Entity
 @Table(name="tremas_compagnie_environnement")
-/*@NamedQuery(name="CompagnieEnvironnementEntity.findAll", query="SELECT t FROM CompagnieEnvironnementEntity t")*/
-@NamedQuery(name="CompagnieEnvironnementEntity.findAllActif", query="SELECT t FROM CompagnieEnvironnementEntity t where t.actifCompagnieEnvironnement = 1")
+@NamedQueries({
+   @NamedQuery(name="CompagnieEnvironnementEntity.findAll", query="SELECT t FROM CompagnieEnvironnementEntity t"),
+   @NamedQuery(name="CompagnieEnvironnementEntity.findAllActif", query="SELECT t FROM CompagnieEnvironnementEntity t where t.actifCompagnieEnvironnement = 1"),
+   @NamedQuery(name="CompagnieEnvironnementEntity.findById", query="SELECT t FROM CompagnieEnvironnementEntity t where t.idCompagnieEnvironnement = :idCompagnieEnvironnement"),
+})   
 public class CompagnieEnvironnementEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idCompagnieEnvironnement;
 
 	private byte actifCompagnieEnvironnement;
@@ -138,11 +142,11 @@ public class CompagnieEnvironnementEntity implements Serializable {
 		this.ordreCompagnieEnvironnement = ordreCompagnieEnvironnement;
 	}
 
-	public DatasourceEntity getTremasDatasource() {
+	public DatasourceEntity getDatasource() {
 		return this.datasourceEntity;
 	}
 
-	public void setTremasDatasource(DatasourceEntity datasourceEntity) {
+	public void setDatasource(DatasourceEntity datasourceEntity) {
 		this.datasourceEntity = datasourceEntity;
 	}
 
