@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
+
 /**
  * Provisoir.
  * 
@@ -20,11 +22,13 @@ public class EntityManagerFactoryProviderDb2 {
    
    
    /** Point d'accès pour l'instance unique du singleton */
-   public static synchronized EntityManagerFactory getInstance(String userName, String password) {
+   public static synchronized EntityManagerFactory getInstance(CompagnieEnvironnementEntity compagnieEnvironnementEntity, String username, String password) {
       EntityManagerFactory emf = null;
       Map<String, String> persistUnitConfig = new HashMap<>();      
       try {
-         persistUnitConfig.put("javax.persistence.jdbc.user", userName);
+         persistUnitConfig.put("javax.persistence.jdbc.driver", compagnieEnvironnementEntity.getDatasource().getDriverClassName());
+         persistUnitConfig.put("javax.persistence.jdbc.url", compagnieEnvironnementEntity.getDatasource().getUrl());
+         persistUnitConfig.put("javax.persistence.jdbc.user", username);
          persistUnitConfig.put("javax.persistence.jdbc.password", password);
 
          emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME, persistUnitConfig);
