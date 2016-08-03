@@ -1,17 +1,23 @@
 package com.avancial.app.service;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.utilitaire.GetDataTableColumns;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
-import com.avancial.socle.table.ColumnTable;
 
-public class JeuDonneeService {
+import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
+import com.avancial.app.data.databean.JeuDonneeEntity;
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+@SessionScoped
+public class JeuDonneeService implements Serializable {
+  /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+   
    @Inject
    @Socle_PUSocle
    EntityManager       em;
@@ -22,11 +28,16 @@ public class JeuDonneeService {
     * @return
     */
    public JeuDonneeEntity save(JeuDonneeEntity jeuDonneeDataBean) {
-      this.em.getTransaction().begin();
-      this.em.persist(jeuDonneeDataBean);
-      this.em.flush();
-      this.em.getTransaction().commit();
-      
+      try {         
+         this.em.getTransaction().begin();
+         this.em.persist(jeuDonneeDataBean);
+         this.em.flush();
+         this.em.getTransaction().commit();
+      } catch (Exception ex) {
+         ex.printStackTrace();
+         this.em.getTransaction().rollback();
+      }
+            
       return jeuDonneeDataBean;
    }
 
@@ -35,25 +46,50 @@ public class JeuDonneeService {
     * @param jeuDonneeDataBean
     */
    public void update(JeuDonneeEntity jeuDonneeDataBean) {
-      this.em.getTransaction().begin();  
-      this.em.merge(jeuDonneeDataBean);   
-      this.em.flush();
-      this.em.getTransaction().commit();
+      try {
+         this.em.getTransaction().begin();  
+         this.em.merge(jeuDonneeDataBean);   
+         this.em.flush();
+         this.em.getTransaction().commit();
+      } catch (Exception e) {
+         e.printStackTrace();      
+         this.em.getTransaction().rollback();
+      }
+      
+   }
+
+   public JeuDonneeEntity initJeuDonnee(CompagnieEnvironnementEntity compagnieEnvironnement) {
+   // création de l'entite
+      JeuDonneeEntity jeuDonneeDataBean = new JeuDonneeEntity();
+      jeuDonneeDataBean.setDateCreateJeuDonnees(new Date());
+      jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
+      jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(-1);
+      jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(-1);
+      jeuDonneeDataBean.setActifJeuDonnees(true);
+      jeuDonneeDataBean.setCommentaireJeuDonnees("");
+      jeuDonneeDataBean.setCompagnieEnvironnement(compagnieEnvironnement);
+      
+      return jeuDonneeDataBean;
    }
    
-   public JSONObject getAllDataTable() {
-       List<ColumnTable> columns = GetDataTableColumns.getColumns(JeuDonneeEntity.class);
+   public void desactiveJeuDonnee(JeuDonneeEntity jeuDonnee) {
+      jeuDonnee.setDateLastUpdateJeuDonnees(new Date());
+      jeuDonnee.setActifJeuDonnees(false);
+      this.update(jeuDonnee);
+   }
 
-       Query query = this.em.createNamedQuery("JeuDonneeEntity.findAll",
-               JeuDonneeEntity.class);
-       List<Object> jeuDonnees = query.getResultList();
-       JSONArray datas = new JSONArray();
-       datas.addAll(jeuDonnees);
-
-       JSONObject retour = new JSONObject();
-       retour.put("cols", columns);
-       retour.put("dataset", datas);
-       return retour;
+   public int deleteById(int idJeuDonnee) {
+      int deleteEntity = 0;
+      try {
+         String hqlDelete = "delete JeuDonneEntity jd where jd.idJeuDonnee = :idJeudonnee";
+         deleteEntity = this.em.createQuery(hqlDelete)
+               .setParameter("idJeudonnee", idJeuDonnee)
+               .executeUpdate();
+      } catch (Exception e) {
+         throw e;
+      } finally {
+         return deleteEntity;
+      }
    }
    
 }

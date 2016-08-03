@@ -6,33 +6,34 @@ import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.dto.ImportTmsDto;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 @SessionScoped
 public class ImportTmsService implements Serializable {
    /**
     * 
     */
    private static final long serialVersionUID = 1L;
-   @Inject
-   @Socle_PUSocle
-   private EntityManager       em;
    
+   @Inject
+   private CompagnieEnvironnementService compagnieEnvironnementService;
+
+   @Inject
+   private JeuDonneeService jeuDonneeService;
+
    public ImportTmsService() {
       // TODO Auto-generated constructor stub
    }
 
-   public List<ImportTmsDto> getAllImportTmsActif() {
-      Query query = this.em.createNamedQuery("CompagnieEnvironnementEntity.findAllActif", CompagnieEnvironnementEntity.class);
-      List<CompagnieEnvironnementEntity> listCompagnieEnvironnementEntity = ((List<CompagnieEnvironnementEntity>) query.getResultList());
-      
+   /**
+    * TODO Recuperation des jeu de données
+    * @return
+    */
+   public List<ImportTmsDto> getAllImportTmsActif() {            
       List<ImportTmsDto> listImportTmsDto = new ArrayList<ImportTmsDto>();
       
-      for (CompagnieEnvironnementEntity compagnieEnvironnementEntity : listCompagnieEnvironnementEntity) {
+      for (CompagnieEnvironnementEntity compagnieEnvironnementEntity : this.compagnieEnvironnementService.getAllCompagnieEnvironnementActif()) {
          ImportTmsDto newImportTmsDto = new ImportTmsDto();
          
          newImportTmsDto.mergeByCompagnieEnvironnement(compagnieEnvironnementEntity);
@@ -41,6 +42,18 @@ public class ImportTmsService implements Serializable {
       }
       
       return listImportTmsDto;
+   }
+   /**
+    * Suppression d'un jeu de données en brouillon
+    * @param importTmsDto
+    * @return
+    */
+   public Boolean deleteDraft(ImportTmsDto importTmsDto) {
+      try {
+         return (this.jeuDonneeService.deleteById(importTmsDto.getIdJeuDonneeBrouillon()) > 0) ? true : false;
+      } catch (Exception e) {
+         throw e;
+      }
    }
 
 }
