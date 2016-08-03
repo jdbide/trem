@@ -30,6 +30,28 @@ drop table if exists tremas_motrice_traintranche;
 
 drop table if exists tremas_jeu_donnees;
 
+drop table if exists tremas_motrice_ref_stop;
+
+drop table if exists tremas_motrice_ref_distribution;
+
+drop table if exists tremas_motrice_ref_satcode;
+
+drop table if exists tremas_motrice_ref_fareprofilcode;
+
+drop table if exists tremas_motrice_ref_eqptype;
+
+drop table if exists tremas_motrice_ref_service;
+
+drop table if exists tremas_motrice_ref_mealtype;
+
+drop table if exists tremas_motrice_ref_codediagramme;
+
+drop table if exists tremas_motrice_ref_compositionclass;
+
+drop table if exists tremas_motrice_ref_serviceclass;
+
+drop table if exists tremas_motrice_ref_ramecode;
+
 create table tremas_jeu_donnees (
         idJeuDonnees integer not null auto_increment,
         actifJeuDonnees bit not null,
@@ -51,6 +73,73 @@ create table tremas_motrice_ref_regime_type (
     idMotriceRefRegimeType bigint not null auto_increment,
     labelRegimeType varchar(30) not null,
     primary key (idMotriceRefRegimeType)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_stop (
+    idMotriceRefStop bigint not null auto_increment,
+    labelStop varchar(5) not null,
+    primary key (idMotriceRefStop)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_distribution (
+    idMotriceRefDistribution bigint not null auto_increment,
+    labelDistribution varchar(1) not null,
+    primary key (idMotriceRefDistribution)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_satcode (
+    idMotriceRefSatCode bigint not null auto_increment,
+    labelSatCode varchar(3) not null,
+    primary key (idMotriceRefSatCode)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_fareprofilcode (
+    idMotriceRefFareProfileCode bigint not null auto_increment,
+    labelFareProfileCode varchar(3) not null,
+    primary key (idMotriceRefFareProfileCode)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_eqptype (
+    idMotriceEqpType bigint not null auto_increment,
+    labelEqpType varchar(3) not null,
+    primary key (idMotriceEqpType)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_service (
+    idMotriceRefService bigint not null auto_increment,
+    labelService varchar(2) not null,
+    primary key (idMotriceRefService)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_mealtype (
+    idMotriceRefMealType bigint not null auto_increment,
+    labelMealType varchar(1) not null,
+    primary key (idMotriceRefMealType)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_codediagramme(
+    idMotriceRefCodeDiagramme bigint not null auto_increment,
+    labelCodeDiagramme varchar(3) not null,
+    primary key (idMotriceRefCodeDiagramme)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_compositionclass(
+    idMotriceRefCompositionClass bigint not null auto_increment,
+    labelCompositionClass varchar(1) not null,
+    primary key (idMotriceRefCompositionClass)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_serviceclass(
+    idMotriceRefServiceClass bigint not null auto_increment,
+    labelServiceClass varchar(1) not null,
+    libelleServiceClass varchar(6) not null,
+    primary key (idMotriceRefServiceClass)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_ramecode(
+    idMotriceRefRameCode bigint not null auto_increment,
+    labelRameCode varchar(6) not null,
+    primary key (idMotriceRefRameCode)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_regime (
