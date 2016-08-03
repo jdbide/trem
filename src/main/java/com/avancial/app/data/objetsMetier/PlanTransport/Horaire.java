@@ -8,7 +8,8 @@ public class Horaire {
     private Date horaireFin;
 
     public Horaire() {
-        // TODO Auto-generated constructor stub
+        this.horaireDebut = new Date();
+        this.horaireFin = new Date();
     }
 
     public Horaire(Date horaireDebut, Date horaireFin) {

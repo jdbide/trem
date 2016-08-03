@@ -18,7 +18,9 @@ public class Specification extends ARegimeComparable {
     }
 
     public Specification() {
-        // TODO Auto-generated constructor stub
+        this.voiture = new Voiture();
+        this.etat = EnumEtatSpecification.fermer;
+        this.regime = new Regime();
     }
 
     @Override

@@ -7,7 +7,8 @@ public class FareProfile extends ARegimeComparable {
     private Regime regime;
 
     public FareProfile() {
-        // TODO Auto-generated constructor stub
+        this.fareProfileCode = "";
+        this.regime = new Regime();
     }
 
     public FareProfile(String fareProfileCode, Regime regime) {

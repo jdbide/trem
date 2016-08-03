@@ -29,7 +29,8 @@ public class PlanTransport implements IPlanTransportComparable {
     }
 
     public PlanTransport() {
-        // TODO Auto-generated constructor stub
+        this.compagnie = EnumCompagnies.ES;
+        this.trains = new ArrayList<>();
     }
 
     /**
@@ -75,9 +76,13 @@ public class PlanTransport implements IPlanTransportComparable {
     }
 
     /**
-     * Récupère les trains nouveaux ainsi que toutes les modifications entre deux listes de trains.
-     * @param ancien Liste de trains d'un jeu de données moins récent
-     * @param nouveau Liste de trains d'un jeu de données plus récent
+     * Récupère les trains nouveaux ainsi que toutes les modifications entre
+     * deux listes de trains.
+     * 
+     * @param ancien
+     *            Liste de trains d'un jeu de données moins récent
+     * @param nouveau
+     *            Liste de trains d'un jeu de données plus récent
      * @return
      * @throws Exception
      */
@@ -87,8 +92,11 @@ public class PlanTransport implements IPlanTransportComparable {
 
     /**
      * Récupère les trains supprimés entre deux listes de trains.
-     * @param ancien Liste de trains d'un jeu de données moins récent
-     * @param nouveau Liste de trains d'un jeu de données plus récent
+     * 
+     * @param ancien
+     *            Liste de trains d'un jeu de données moins récent
+     * @param nouveau
+     *            Liste de trains d'un jeu de données plus récent
      * @return
      * @throws Exception
      */

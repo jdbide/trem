@@ -16,7 +16,9 @@ public class Repas extends ARegimeComparable {
     }
 
     public Repas() {
-        // TODO Auto-generated constructor stub
+        this.typeRepas = EnumTypeRepas.Dejeuner;
+        this.horaire = new Horaire();
+        this.regime = new Regime();
     }
 
     @Override

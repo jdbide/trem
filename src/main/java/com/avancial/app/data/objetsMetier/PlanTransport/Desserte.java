@@ -1,5 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
@@ -10,7 +11,8 @@ public class Desserte extends ARegimeComparable {
     private Regime regime;
 
     public Desserte() {
-        // TODO Auto-generated constructor stub
+        this.gareHoraires = new ArrayList<>();
+        this.regime = new Regime();
     }
 
     public Desserte(List<GareHoraire> gareHoraires, Regime regime) {

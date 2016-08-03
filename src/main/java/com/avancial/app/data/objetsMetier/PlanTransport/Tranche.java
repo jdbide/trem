@@ -12,6 +12,12 @@ public class Tranche extends ARegimeComparable {
      */
     private MapTranche attributs;
 
+    public Tranche() {
+        this.numeroTranche = "";
+        this.trancheStatut = EnumTrancheStatut.Fermer;
+        this.regime = new Regime();
+    }
+
     /**
      * 
      * @param key
@@ -23,6 +29,7 @@ public class Tranche extends ARegimeComparable {
 
     /**
      * attrubuts.put(value.class, List\<value\>)
+     * 
      * @param value
      */
     public void addAttributsField(List<? extends IPlanTransportComparable> value) {

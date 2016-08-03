@@ -5,7 +5,7 @@ public class Siege {
     private String numeroSiege;
 
     public Siege() {
-        // TODO Auto-generated constructor stub
+        this.numeroSiege = "";
     }
 
     public Siege(String numeroSiege) {

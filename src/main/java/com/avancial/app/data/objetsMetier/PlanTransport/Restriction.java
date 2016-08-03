@@ -21,7 +21,10 @@ public class Restriction extends ARegimeComparable {
     }
 
     public Restriction() {
-        // TODO Auto-generated constructor stub
+        this.origine = new Gare();
+        this.destination = new Gare();
+        this.type = EnumTypeRestriction.dessenteInterdite;
+        this.regime = new Regime();
     }
 
     @Override

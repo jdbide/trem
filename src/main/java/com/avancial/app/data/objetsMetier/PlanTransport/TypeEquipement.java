@@ -7,7 +7,8 @@ public class TypeEquipement extends ARegimeComparable {
     private Regime regime;
 
     public TypeEquipement() {
-        // TODO Auto-generated constructor stub
+        this.typeEquipement = "";
+        this.regime = new Regime();
     }
 
     public TypeEquipement(String typeEquipement, Regime regime) {

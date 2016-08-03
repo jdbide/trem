@@ -9,7 +9,9 @@ public class OrigineDestination extends ARegimeComparable {
     private Regime regime;
 
     public OrigineDestination() {
-        // TODO Auto-generated constructor stub
+        this.origine = new Gare();
+        this.destination = new Gare();
+        this.regime = new Regime();
     }
 
     public OrigineDestination(Gare origine, Gare destination, Regime regime) {

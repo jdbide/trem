@@ -11,7 +11,9 @@ public class Regime {
     private Date dateFin;
 
     public Regime() {
-        // TODO Auto-generated constructor stub
+        this.codeRegime = "";
+        this.dateDebut = new Date();
+        this.dateFin = new Date();
     }
 
     public Regime(String codeRegime, Date dateDebut, Date dateFin) {

@@ -1,5 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
@@ -10,7 +11,8 @@ public class Voiture {
     private List<Compartiment> compartiments;
 
     public Voiture() {
-        // TODO Auto-generated constructor stub
+        this.numeroVoiture = "";
+        this.compartiments = new ArrayList<>();
     }
 
     public Voiture(String numeroVoiture, List<Compartiment> compartiments) {

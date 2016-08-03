@@ -7,7 +7,8 @@ public class CodeSat extends ARegimeComparable {
     private Regime regime;
 
     public CodeSat() {
-        // TODO Auto-generated constructor stub
+        this.codeSat = "";
+        this.regime = new Regime();
     }
 
     public CodeSat(String codeSat, Regime regime) {

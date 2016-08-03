@@ -5,7 +5,7 @@ public class Gare {
     private String codeGare;
 
     public Gare() {
-        // TODO Auto-generated constructor stub
+        this.codeGare = "";
     }
 
     public Gare(String codeGare) {

@@ -7,7 +7,8 @@ public class Distribution extends ARegimeComparable {
     private Regime regime;
 
     public Distribution() {
-        // TODO Auto-generated constructor stub
+        this.indiceDistribution = "";
+        this.regime = new Regime();
     }
 
     public Distribution(String indiceDistribution, Regime regime) {

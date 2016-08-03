@@ -24,7 +24,11 @@ public class ServiceABord extends ARegimeComparable {
     }
 
     public ServiceABord() {
-        // TODO Auto-generated constructor stub
+        this.codeService = "";
+        this.classe = EnumClasseService.Erreur;
+        this.origine = new Gare();
+        this.destination = new Gare();
+        this.regime = new Regime();
     }
 
     @Override

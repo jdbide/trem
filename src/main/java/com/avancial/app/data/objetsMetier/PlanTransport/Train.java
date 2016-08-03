@@ -1,5 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Train implements IPlanTransportComparable {
@@ -21,7 +22,9 @@ public class Train implements IPlanTransportComparable {
     }
 
     public Train() {
-        // TODO Auto-generated constructor stub
+        this.tranches = new ArrayList<>();
+        this.numeroTrain = "";
+        this.validePourRR = false;
     }
 
     @Override
@@ -77,8 +80,7 @@ public class Train implements IPlanTransportComparable {
 
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+        return new ArrayList<>();
     }
 
 }

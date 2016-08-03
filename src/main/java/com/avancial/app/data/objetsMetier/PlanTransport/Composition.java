@@ -18,7 +18,10 @@ public class Composition extends ARegimeComparable {
     private Regime regime;
 
     public Composition() {
-        // TODO Auto-generated constructor stub
+        this.codeClasse = "";
+        this.codeDiag = "";
+        this.codeRame = "";
+        this.codeRm = "";
     }
 
     public Composition(String codeClasse, String codeDiag, String codeRame, String codeRm, List<Voiture> voitures,

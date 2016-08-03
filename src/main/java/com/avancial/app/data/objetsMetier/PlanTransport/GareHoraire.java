@@ -7,7 +7,8 @@ public class GareHoraire {
     private Horaire horaire;
 
     public GareHoraire() {
-        // TODO Auto-generated constructor stub
+        this.gare = new Gare();
+        this.horaire = new Horaire();
     }
 
     public GareHoraire(Gare gare, Horaire horaire) {
