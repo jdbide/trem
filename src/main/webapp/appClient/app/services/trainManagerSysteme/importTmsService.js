@@ -7,17 +7,18 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
 	var reponse= 
 	{
 		status : null,
-		message : null
+		message : null,
+		data : null
 	};
-	
-	var getDataSended = function (currentData,username,password) {
-		return {
-				   "importTmsDto" : currentData,
-	        	   "username":username,
-	        	   "password":password
-	        };
-	}
-	
+
+	function initDataDraft(currentData) {
+    	currentData.dateImportJeuDonneesBrouillon = null;
+    	currentData.importJeuDonneesBrouillonBy = null;
+    	currentData.statusJeudonneeBrouillon = null;
+    	currentData.idJeuDonneeBrouillon = null;
+    	currentData.pathValidateJeuDonneesBrouillon = null;
+    }
+
     var self = this;
     
     self.getDataByServer = function () {
@@ -38,32 +39,102 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
         return deffered.promise;
     }
     
-    self.executeImport = function (currentData, username, password) {
-    	loadingService.show();
-    	console.log(getDataSended(currentData, username, password));
+    self.executeImport = function (currentData) {
+    	loadingService.show();    	
+    	
         var deffered  = $q.defer();
-        var promissJsonFactory = jsonFactory.postJson("webService/app/importTms/execute",   /*getDataSended(currentData, username, password)*/);
+        var promissJsonFactory = jsonFactory.postJson("webService/app/importTms", currentData);
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	reponse.status = data.status;
             	reponse.message = data.message;
-            	
             	loadingService.hide(); 
                 deffered.resolve();
             })
             .error(function (data, status, headers, config) {
             	reponse.message = data.message;
-            	
+            	reponse.status = data.status;
             	loadingService.hide();
                 deffered.reject();
         });
         
         return deffered.promise;
     }
+
+    self.executeDeleteDraft = function (currentData) {
+    	loadingService.show();    	
+    	
+        var deffered  = $q.defer();
+        var promissJsonFactory = jsonFactory.deleteJson("webService/app/importTms/deleteDraft", currentData);
+        promissJsonFactory
+            .success(function (data, status, headers, config) {
+            	reponse.status = data.status;
+            	reponse.message = data.message;
+            	initDataDraft(currentData);
+            	
+            	loadingService.hide();
+                deffered.resolve();
+            })
+            .error(function (data, status, headers, config) {
+            	reponse.message = data.message;
+            	reponse.status = data.status;
+            	loadingService.hide();
+                deffered.reject();
+        });
+        
+        return deffered.promise;
+    }
+
+    self.executeValidateDraft = function (currentData) {
+    	loadingService.show();
+
+        var deffered  = $q.defer();
+        var promissJsonFactory = jsonFactory.putJson("webService/app/importTms", currentData);
+        promissJsonFactory
+            .success(function (data, status, headers, config) {
+            	reponse.status = data.status;
+            	reponse.message = data.message;
+            	reponse.data = data.data;
+            	loadingService.hide(); 
+                deffered.resolve();
+            })
+            .error(function (data, status, headers, config) {
+            	reponse.message = data.message;
+            	reponse.status = data.status;
+            	loadingService.hide();
+                deffered.reject();
+        });
+
+        return deffered.promise;
+    }
     
+    self.downloadFileByIdJeuDonnees = function (idJeuDonnee) {
+    	loadingService.show();
+
+        var deffered  = $q.defer();
+        var promissJsonFactory = jsonFactory.getJson("webService/app/importTms/downloadFile/"+idJeuDonnee);
+        promissJsonFactory
+            .success(function (data, status, headers, config) {
+            	reponse.status = data.status;
+            	reponse.message = data.message;
+            	loadingService.hide(); 
+                deffered.resolve();
+            })
+            .error(function (data, status, headers, config) {
+            	reponse.message = data.message;
+            	reponse.status = data.status;
+            	loadingService.hide();
+                deffered.reject();
+        });
+
+        return deffered.promise;
+    }
+    
+    
+
     self.getReponse = function () {
     	return reponse;
     }
-        
+
     return self;
 }]);

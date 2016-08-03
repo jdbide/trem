@@ -1,22 +1,24 @@
 <div class="tab-pane" id="import" ng-controller="importTmsCtrl">
 	<modal visible="authentificationDb"
 		url="app/views/modals/trainManagerSysteme/authentificationDb.html"></modal>
+	<modal visible="deleteImportTms"
+		url="app/views/modals/trainManagerSysteme/deleteImportTms.xhtml"></modal>
+	<modal visible="validateImportTms"
+		url="app/views/modals/trainManagerSysteme/validateImportTms.xhtml"></modal>
 	
-	<h3>Import - {{Status.ACTIVE != data.statusJeudonneeActif}}</h3>
-	
+	<h3>Import</h3>
+
 	<div ng-if="reponse != null && reponse.status"
 		class="alert alert-success alert-dismissable">
 		<button class="close" aria-hidden="true" data-dismiss="alert"
-			type="button">�</button>
-		<h4>
-			<i class="icon fa fa-check"></i> Alert!
-		</h4>
+			type="button">x</button>
+		<i class="icon fa fa-check"></i> 
 		{{reponse.message}}
 	</div>
 	<div ng-if="reponse != null && !reponse.status"
 		class="alert alert-danger  alert-dismissable">
 		<button class="close" aria-hidden="true" data-dismiss="alert"
-			type="button">�</button>
+			type="button">x</button>
 		<h4>
 			<i class="icon fa fa-check"></i> Alert!
 		</h4>
@@ -24,6 +26,7 @@
 	</div>
 	
 	<div class="box-body table-responsive no-padding">
+	
 		<table class="table table-bordered table-striped table-tremas">
 			<thead>
 				<tr>
@@ -52,35 +55,54 @@
 				<tr ng-repeat="data in datas track by $index ">
 					<td>{{data.libelleCompagnie}}</td>
 					<td>{{data.libelleEnvironnement}}</td>
+					<!-- Start ACTIVE -->
 					<td>{{data.dateImportJeuDonneesActif}}</td>
 					<td>{{data.importJeuDonneesActifBy}}</td>
 					<td>{{data.dateValidateJeuDonneesActif}}</td>
 					<td>{{data.validateJeuDonneesActifBy}}</td>
 					<td class="text-center"><a
-						a-disabled="Status.ACTIVE != data.statusJeudonneeActif" href="#"
+						a-disabled="(Status.ACTIVE != data.statusJeudonneeActif)" href="#"
 						style="text-decoration: underline">read</a></td>
-					<td>{{data.dateImportJeuDonneesBrouillon}}</td>
-					<td>{{data.importJeuDonneesBrouillonBy}}</td>
-					<td class="text-center"><a
-						a-disabled="Status.DRAFT != data.statusJeudonneeBrouillon"
-						href="#" style="text-decoration: underline">read</a></td>
-					<td class="text-center">
+					<!-- End ACTIVE -->
+					<!-- Start Draft -->
+					<td ng-if="startImport != $index">{{t+$index}}/07/2016 - 18:00{{data.dateImportJeuDonneesBrouillon}}</td>
+					<td ng-if="startImport != $index">Administrateur{{data.importJeuDonneesBrouillonBy}}</td>
+					<td ng-if="startImport != $index" class="text-center">
+					<!-- a-disabled="(Status.DRAFT != data.statusJeudonneeBrouillon)" -->
+						<a 
+						ng-click="downloadFileByIdJeuDonnees(1)"
+							href="#" style="text-decoration: underline">read
+						</a>
+					</td>
+					<td ng-if="startImport != $index" class="text-center">
 						<button class="btn btn-circle btn-default" type="button"
-							ng-disabled="{{Status.DRAFT != data.statusJeudonneeBrouillon}}">
+							
+							ng-click="startModalValidateImportTms(data)">
 							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 						</button>
 					</td>
-					<td class="text-center">
+					<td ng-if="startImport != $index" class="text-center">
 						<button class="btn btn-default" type="button"
-							ng-disabled="{{Status.DRAFT != data.statusJeudonneeBrouillon}}">
+							
+							ng-click="startModalDeleteImportTms(data)">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</button>
-
 					</td>
+
+					<td ng-if="startImport == $index" class="box box-solid" COLSPAN=5>
+						
+                		<div class="overlay">
+                		<div class="box-body text-center">
+                  			IMPORTING - 54%
+						</div>
+                		<i class="fa fa-refresh fa-spin" style="left: 80%; !important"></i>
+                		</div>
+					</td>
+					<!-- End DRAFT -->
 					<td class="text-center">
 						<!-- TODO  ajout a la condition s'il na pas d'autre importe des autres environnement -->
 						<button class="btn btn-circle btn-primary" type="button"
-							ng-disabled="{{Status.IMPORT == data.statusJeudonneeBrouillon}}"
+							ng-disabled="(disabledButton) || (Status.IMPORT == data.statusJeudonneeBrouillon)"
 							ng-click="authentificateExternDb(data)">
 							<span class="glyphicon glyphicon-import" aria-hidden="true"></span>
 						</button>
