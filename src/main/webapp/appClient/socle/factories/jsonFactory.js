@@ -34,5 +34,31 @@ socle_app.factory('jsonFactory',['$http', 'envService',function($http, envServic
         
     };
     
+    jsonFactory.putJson = function (nameWebservice, data) {
+        return $http({
+                method: "put",
+                url: envService.read('apiUrl')+nameWebservice,
+                async: false,
+                dataType: 'json',
+                crossDomain: false,
+                contentType:"application/json; charset=utf-8",
+                data: data             
+        });
+        
+    };
+    
+    jsonFactory.deleteJson = function (nameWebservice, data) {
+        return $http({
+                method: "delete",
+                url: envService.read('apiUrl')+nameWebservice,
+                async: false,
+                dataType: 'json',
+                crossDomain: false,
+                contentType:"application/json; charset=utf-8",
+                data: data             
+        });
+        
+    };
+    
     return jsonFactory;
 }]);

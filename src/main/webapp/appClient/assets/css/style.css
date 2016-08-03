@@ -51,3 +51,14 @@ a.disabled {
     pointer-events: auto;
     text-decoration: none;
 }
+
+.fa-loading-tremas
+{
+	color: #000;
+    font-size: 30px;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    position: absolute;
+    top: 50%;
+}
