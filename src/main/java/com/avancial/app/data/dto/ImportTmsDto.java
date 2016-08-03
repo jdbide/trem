@@ -1,6 +1,9 @@
 package com.avancial.app.data.dto;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
@@ -12,8 +15,12 @@ import com.avancial.app.data.databean.Status;
  * @author hamza.laterem
  *
  */
-public class ImportTmsDto {
+public class ImportTmsDto implements Serializable{
 
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    private int idCompagnieEnvironnement;
    private String libelleCompagnie;
    private String libelleEnvironnement;
@@ -32,10 +39,14 @@ public class ImportTmsDto {
    private String pathValidateJeuDonneesBrouillon;
    private Status statusJeudonneeBrouillon;
    
+   private String username;
+   private String password;
+   
    public ImportTmsDto() {
       // TODO Auto-generated constructor stub
    }
    
+   @JsonIgnore
    public void mergeByJeuDonneesBrouillon (JeuDonneeEntity jeuDonneeEntityBrouillon, String NameImportJeuDonneesBrouillonBy) {
       this.setIdCompagnieEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getIdCompagnieEnvironnement());
       this.setLibelleCompagnie(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getLibelleCompagnie());
@@ -50,6 +61,7 @@ public class ImportTmsDto {
       this.setStatusJeudonneeBrouillon(jeuDonneeEntityBrouillon.getStatusJeuDonnees());
    }
    
+   @JsonIgnore
    public void mergeByJeuDonneesActif (JeuDonneeEntity jeuDonneeEntityActif, String nameValidateJeuDonneeBy) {
       this.setIdJeuDonneesActif(jeuDonneeEntityActif.getIdJeuDonnees());
       this.setDateImportJeuDonneesActif(new Date());
@@ -64,6 +76,7 @@ public class ImportTmsDto {
     * TODO à supprimer
     * @param compagnieEnvironnementEntity
     */
+   @JsonIgnore
    public void mergeByCompagnieEnvironnement (CompagnieEnvironnementEntity compagnieEnvironnementEntity) {
       this.setIdCompagnieEnvironnement(compagnieEnvironnementEntity.getIdCompagnieEnvironnement());
       this.setLibelleCompagnie(compagnieEnvironnementEntity.getLibelleCompagnie());
@@ -278,6 +291,34 @@ public class ImportTmsDto {
     */
    public void setStatusJeudonneeBrouillon(Status statusJeudonneeBrouillon) {
       this.statusJeudonneeBrouillon = statusJeudonneeBrouillon;
+   }
+
+   /**
+    * @return the username
+    */
+   public String getUsername() {
+      return username;
+   }
+
+   /**
+    * @param username the username to set
+    */
+   public void setUsername(String username) {
+      this.username = username;
+   }
+
+   /**
+    * @return the password
+    */
+   public String getPassword() {
+      return password;
+   }
+
+   /**
+    * @param password the password to set
+    */
+   public void setPassword(String password) {
+      this.password = password;
    }
 
 }
