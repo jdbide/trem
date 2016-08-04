@@ -27,7 +27,7 @@ public class MotriceRegimeFareProfileEntity {
     @Column(length = 3, nullable = false)
     private String fareProfileCodeMotriceRegimeFareProfile;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_fareprofile_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;

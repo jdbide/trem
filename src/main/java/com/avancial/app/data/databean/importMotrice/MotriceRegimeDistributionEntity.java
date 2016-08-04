@@ -29,7 +29,7 @@ public class MotriceRegimeDistributionEntity {
     @Column(length = 1, nullable = false)
     private String distribIndexMotriceRegimeDistribution;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_distribution_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;

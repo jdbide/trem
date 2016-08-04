@@ -33,7 +33,7 @@ public class MotriceRegimeRestrictionEntity {
     @Column(length = 5)
     private String destinationMotriceRegimeRestriction;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_restriction_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;

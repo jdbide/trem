@@ -36,12 +36,12 @@ public class MotriceTrainTrancheEntity {
     @Column(length = 1, nullable = false)
     private String trancheStatusMotriceTrainTranche;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idJeuDonnees")
     @ForeignKey(name = "FK_motrice_regime_traintranche_idJeuDonnees")
     private JeuDonneeEntity jeuDonnee;
 
-    @OneToMany(mappedBy = "motriceTrainTranche")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceTrainTranche")
     private List<MotriceRegimeEntity> motriceRegimeEntities;
 
     public Long getIdMotriceTrainTranche() {

@@ -26,7 +26,7 @@ public class MotriceRegimeEqpTypeEntity {
     @Column(length = 3, nullable = false)
     private String eqpTypeMotriceRegimeEqpType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_eqptype_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;

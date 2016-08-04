@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="tremas_jeu_donnees")
-@NamedQuery(name="JeuDonneeEntity.findAll", query="SELECT t FROM JeuDonneeEntity t")
+@NamedQuery(name="JeuDonneeEntity.getAll", query="SELECT t FROM JeuDonneeEntity t")
 public class JeuDonneeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

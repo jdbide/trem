@@ -29,48 +29,48 @@ public class MotriceRegimeEntity {
     @Column(nullable = false)
     private String periodMotriceRegime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idMotriceRefRegimeType")
     @ForeignKey(name = "FK_motrice_regime_idMotriceRefRegimeType")
     private MotriceRefRegimeTypeEntity motriceRefRegimeType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idMotriceTrainTranche")
     @ForeignKey(name = "FK_motrice_regime_idMotriceTrainTranche")
     private MotriceTrainTrancheEntity motriceTrainTranche;
 
-    @OneToMany(mappedBy = "motriceRegime")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
     private List<MotriceRegimeStopEntity> motriceRegimeStops;
 
-    @OneToMany(mappedBy = "motriceRegime")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
     private List<MotriceRegimeServiceEntity> motriceRegimeServices;
 
-    @OneToMany(mappedBy = "motriceRegime")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
     private List<MotriceRegimeSpecificityEntity> motriceRegimeSpecificities;
 
-    @OneToMany(mappedBy = "motriceRegime")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
     private List<MotriceRegimeRestrictionEntity> motriceRegimeRestrictions;
 
-    @OneToMany(mappedBy = "motriceRegime")
-    private MotriceRegimeDistributionEntity motriceRegimeDistribution;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+    private List<MotriceRegimeDistributionEntity> motriceRegimeDistribution;
 
-    @OneToMany(mappedBy = "motriceRegime")
-    private MotriceRegimeSatcodeEntity motriceRegimeSatcode;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+    private List<MotriceRegimeSatcodeEntity> motriceRegimeSatcode;
 
-    @OneToMany(mappedBy = "motriceRegime")
-    private MotriceRegimeFareProfileEntity motriceRegimeFareProfile;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+    private List<MotriceRegimeFareProfileEntity> motriceRegimeFareProfile;
 
-    @OneToMany(mappedBy = "motriceRegime")
-    private MotriceRegimeEqpTypeEntity motriceRegimeEqpType;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+    private List<MotriceRegimeEqpTypeEntity> motriceRegimeEqpType;
 
-    @OneToMany(mappedBy = "motriceRegime")
-    private MotriceRegimeCompositionEntity motriceRegimeComposition;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+    private List<MotriceRegimeCompositionEntity> motriceRegimeComposition;
 
-    @OneToMany(mappedBy = "motriceRegime")
-    private MotriceRegimeMealTypeEntity motriceRegimeMealType;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+    private List<MotriceRegimeMealTypeEntity> motriceRegimeMealType;
 
-    @OneToMany(mappedBy = "motriceRegime")
-    private MotriceRegimeODEntity motriceRegimeOD;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+    private List<MotriceRegimeODEntity> motriceRegimeOD;
 
     /**
      * @return the idMotriceRegime
@@ -180,7 +180,7 @@ public class MotriceRegimeEntity {
     /**
      * @return the motriceRegimeDistributions
      */
-    public MotriceRegimeDistributionEntity getMotriceRegimeDistribution() {
+    public List<MotriceRegimeDistributionEntity> getMotriceRegimeDistribution() {
         return this.motriceRegimeDistribution;
     }
 
@@ -188,14 +188,14 @@ public class MotriceRegimeEntity {
      * @param motriceRegimeDistributions
      *            the motriceRegimeDistributions to set
      */
-    public void setMotriceRegimeDistribution(MotriceRegimeDistributionEntity motriceRegimeDistribution) {
+    public void setMotriceRegimeDistribution(List<MotriceRegimeDistributionEntity> motriceRegimeDistribution) {
         this.motriceRegimeDistribution = motriceRegimeDistribution;
     }
 
     /**
      * @return the motriceRegimeSatcodes
      */
-    public MotriceRegimeSatcodeEntity getMotriceRegimeSatcode() {
+    public List<MotriceRegimeSatcodeEntity> getMotriceRegimeSatcode() {
         return this.motriceRegimeSatcode;
     }
 
@@ -203,14 +203,14 @@ public class MotriceRegimeEntity {
      * @param motriceRegimeSatcodes
      *            the motriceRegimeSatcodes to set
      */
-    public void setMotriceRegimeSatcode(MotriceRegimeSatcodeEntity motriceRegimeSatcode) {
+    public void setMotriceRegimeSatcode(List<MotriceRegimeSatcodeEntity> motriceRegimeSatcode) {
         this.motriceRegimeSatcode = motriceRegimeSatcode;
     }
 
     /**
      * @return the motriceRegimeFareProfiles
      */
-    public MotriceRegimeFareProfileEntity getMotriceRegimeFareProfile() {
+    public List<MotriceRegimeFareProfileEntity> getMotriceRegimeFareProfile() {
         return this.motriceRegimeFareProfile;
     }
 
@@ -218,14 +218,14 @@ public class MotriceRegimeEntity {
      * @param motriceRegimeFareProfiles
      *            the motriceRegimeFareProfiles to set
      */
-    public void setMotriceRegimeFareProfile(MotriceRegimeFareProfileEntity motriceRegimeFareProfile) {
+    public void setMotriceRegimeFareProfile(List<MotriceRegimeFareProfileEntity> motriceRegimeFareProfile) {
         this.motriceRegimeFareProfile = motriceRegimeFareProfile;
     }
 
     /**
      * @return the motriceRegimeEqpTypes
      */
-    public MotriceRegimeEqpTypeEntity getMotriceRegimeEqpType() {
+    public List<MotriceRegimeEqpTypeEntity> getMotriceRegimeEqpType() {
         return this.motriceRegimeEqpType;
     }
 
@@ -233,14 +233,14 @@ public class MotriceRegimeEntity {
      * @param motriceRegimeEqpTypes
      *            the motriceRegimeEqpTypes to set
      */
-    public void setMotriceRegimeEqpType(MotriceRegimeEqpTypeEntity motriceRegimeEqpType) {
+    public void setMotriceRegimeEqpType(List<MotriceRegimeEqpTypeEntity> motriceRegimeEqpType) {
         this.motriceRegimeEqpType = motriceRegimeEqpType;
     }
 
     /**
      * @return the motriceRegimeCompositions
      */
-    public MotriceRegimeCompositionEntity getMotriceRegimeComposition() {
+    public List<MotriceRegimeCompositionEntity> getMotriceRegimeComposition() {
         return this.motriceRegimeComposition;
     }
 
@@ -248,14 +248,14 @@ public class MotriceRegimeEntity {
      * @param motriceRegimeCompositions
      *            the motriceRegimeCompositions to set
      */
-    public void setMotriceRegimeCompositions(MotriceRegimeCompositionEntity motriceRegimeComposition) {
+    public void setMotriceRegimeCompositions(List<MotriceRegimeCompositionEntity> motriceRegimeComposition) {
         this.motriceRegimeComposition = motriceRegimeComposition;
     }
 
     /**
      * @return the motriceRegimeMealTypes
      */
-    public MotriceRegimeMealTypeEntity getMotriceRegimeMealType() {
+    public List<MotriceRegimeMealTypeEntity> getMotriceRegimeMealType() {
         return this.motriceRegimeMealType;
     }
 
@@ -263,7 +263,7 @@ public class MotriceRegimeEntity {
      * @param motriceRegimeMealTypes
      *            the motriceRegimeMealTypes to set
      */
-    public void setMotriceRegimeMealTypes(MotriceRegimeMealTypeEntity motriceRegimeMealType) {
+    public void setMotriceRegimeMealTypes(List<MotriceRegimeMealTypeEntity> motriceRegimeMealType) {
         this.motriceRegimeMealType = motriceRegimeMealType;
     }
 
@@ -286,7 +286,7 @@ public class MotriceRegimeEntity {
      * @param motriceRegimeComposition
      *            the motriceRegimeComposition to set
      */
-    public void setMotriceRegimeComposition(MotriceRegimeCompositionEntity motriceRegimeComposition) {
+    public void setMotriceRegimeComposition(List<MotriceRegimeCompositionEntity> motriceRegimeComposition) {
         this.motriceRegimeComposition = motriceRegimeComposition;
     }
 
@@ -294,7 +294,7 @@ public class MotriceRegimeEntity {
      * @param motriceRegimeMealType
      *            the motriceRegimeMealType to set
      */
-    public void setMotriceRegimeMealType(MotriceRegimeMealTypeEntity motriceRegimeMealType) {
+    public void setMotriceRegimeMealType(List<MotriceRegimeMealTypeEntity> motriceRegimeMealType) {
         this.motriceRegimeMealType = motriceRegimeMealType;
     }
 

@@ -31,7 +31,7 @@ public class MotriceRegimeServiceEntity {
     @Column(length = 5, nullable = false)
     private String destMotriceRegimeService;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_service_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;

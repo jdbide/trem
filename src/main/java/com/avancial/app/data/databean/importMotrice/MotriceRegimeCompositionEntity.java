@@ -41,10 +41,10 @@ public class MotriceRegimeCompositionEntity {
 	@Column(length = 3, nullable = false)
 	private String rmCodeMotriceRegimeComposition;
 
-	@OneToMany(mappedBy = "motriceRegimeComposition")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegimeComposition")
 	private List<MotriceRegimeCompositionCoachEntity> carsNumbers;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idMotriceRegime")
 	@ForeignKey(name = "FK_motrice_regime_composition_idMotriceRegime")
 	private MotriceRegimeEntity motriceRegime;
