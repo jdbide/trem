@@ -21,7 +21,7 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
         Tranche trancheNouveau = (Tranche) comparableNouveau;
         
         /* Boucle sur les attributs de trancheNouveau */
-        for (Class<? extends IPlanTransportComparable> attribut : trancheNouveau.getAttributs().keySet()) {
+        for (Class<?> attribut : trancheNouveau.getAttributs().keySet()) {
             res.addAll(this.compareAttributListsModify(trancheAncien.getAttributsField(attribut),
                     trancheNouveau.getAttributsField(attribut)));
         }

@@ -1,17 +1,12 @@
 package traitement;
 
 import java.io.File;
-import java.math.BigInteger;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-
-import org.hibernate.Session;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -19,33 +14,16 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.RefTablesMotriceRegimeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
-import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
 import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
-import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
-import com.avancial.app.data.objetsMetier.PlanTransport.GareHoraire;
-import com.avancial.app.data.objetsMetier.PlanTransport.Horaire;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.service.IMultipleInsertRequestGenerator;
 import com.avancial.app.service.JeuDonneeService;
-import com.avancial.app.service.RefTablesMotriceRegimeService;
-import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
-import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
-import com.avancial.app.utilitaire.GetEntiteService;
-import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
-import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -119,7 +97,7 @@ public class RemplissageObjMetierTestHibernate {
 
 				List<Object[]> distributions = query.getResultList();
 
-				List<Distribution> listeDistribution = new ArrayList<Distribution>();
+				List<ARegimeComparable> listeDistribution = new ArrayList<ARegimeComparable>();
 
 				/* Remplissage de la liste des distributions */
 				for (Object[] resDistribution : distributions) {
@@ -136,9 +114,11 @@ public class RemplissageObjMetierTestHibernate {
 			planTransport.getTrains().add(train);
 		}
 
+		Distribution distribution;
 		for (Train train : planTransport.getTrains()) {
 			for (Tranche tranche : train.getTranches()) {
-				for (Distribution distribution : (List<Distribution>) tranche.getAttributsField(Distribution.class)) {
+				for (ARegimeComparable regimeComparable : tranche.getAttributsField(Distribution.class)) {
+				    distribution = (Distribution) regimeComparable;
 					System.out.println("(" + train.getNumeroTrain() + ", " + tranche.getNumeroTranche() + ", "
 							+ tranche.getRegime().getCodeRegime() + ", " + distribution.getIndiceDistribution() + ", "
 							+ distribution.getRegime().getCodeRegime() + ")");

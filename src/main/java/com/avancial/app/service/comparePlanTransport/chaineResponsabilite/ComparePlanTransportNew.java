@@ -16,7 +16,7 @@ public class ComparePlanTransportNew extends AChaineComparePlanTransport {
         PlanTransport pdtAncien = (PlanTransport) comparableAncien;
         PlanTransport pdtNouveau = (PlanTransport) comparableNouveau;
         
-        PlanTransport copyAncien = pdtAncien.clonePlanTransport();
+        PlanTransport copyAncien;
         PlanTransport copyNouveau;
         // TODO Auto-generated method stub
         return null;
