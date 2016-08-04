@@ -51,25 +51,25 @@ public class MotriceRegimeEntity {
     @OneToMany(mappedBy = "motriceRegime")
     private List<MotriceRegimeRestrictionEntity> motriceRegimeRestrictions;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    @OneToMany(mappedBy = "motriceRegime")
     private MotriceRegimeDistributionEntity motriceRegimeDistribution;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    @OneToMany(mappedBy = "motriceRegime")
     private MotriceRegimeSatcodeEntity motriceRegimeSatcode;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    @OneToMany(mappedBy = "motriceRegime")
     private MotriceRegimeFareProfileEntity motriceRegimeFareProfile;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    @OneToMany(mappedBy = "motriceRegime")
     private MotriceRegimeEqpTypeEntity motriceRegimeEqpType;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    @OneToMany(mappedBy = "motriceRegime")
     private MotriceRegimeCompositionEntity motriceRegimeComposition;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    @OneToMany(mappedBy = "motriceRegime")
     private MotriceRegimeMealTypeEntity motriceRegimeMealType;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
+    @OneToMany(mappedBy = "motriceRegime")
     private MotriceRegimeODEntity motriceRegimeOD;
 
     /**

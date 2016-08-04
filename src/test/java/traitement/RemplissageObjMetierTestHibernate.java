@@ -51,7 +51,7 @@ import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 @RunWith(Arquillian.class)
-public class RemplissageObjMetierTest {
+public class RemplissageObjMetierTestHibernate {
 	@Deployment
 	public static WebArchive createDeployment() {
 		File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity()
@@ -82,15 +82,15 @@ public class RemplissageObjMetierTest {
 		/* Creation du plan de transport */
 		PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
 
-		Query query = this.em.createNativeQuery(
-				"SELECT DISTINCT train.trainNumberMotriceTrainTranche AS numeroTrain, train.validForRRMotriceTrainTranche AS validePourRR "
-						+ "FROM tremas_motrice_traintranche AS train ");
+		Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t", MotriceTrainTrancheEntity.class);
 
-		List<Object[]> trains = query.getResultList();
+		List<MotriceTrainTrancheEntity> trains = query.getResultList();
 
 		/* Remplissage de la liste des trains */
-		for (Object[] resTrain : trains) {
-			Train train = new Train(new ArrayList<Tranche>(), (String) resTrain[0], true);
+		for (MotriceTrainTrancheEntity resTrain : trains) {
+			Train train = new Train(new ArrayList<Tranche>(), resTrain.getTrainNumberMotriceTrainTranche(), true);
+			
+			Object motriceRegimeEntity = resTrain.getMotriceRegimeEntities().get(0);
 
 			query = this.em.createNativeQuery(
 					"SELECT tranche.idMotriceTrainTranche AS idMotriceTrainTranche, tranche.trancheNumberMotriceTrainTranche, tranche.trancheStatusMotriceTrainTranche AS trancheStatut, regime.periodMotriceRegime AS regimeTranche "
@@ -98,7 +98,7 @@ public class RemplissageObjMetierTest {
 							+ "INNER JOIN tremas_motrice_regime AS regime ON regime.idMotriceTrainTranche = tranche.idMotriceTrainTranche "
 							+ "WHERE regime.idMotriceRefRegimeType = 1 "
 							+ "AND tranche.trainNumberMotriceTrainTranche = ?");
-			query.setParameter(1, (String) resTrain[0]);
+			query.setParameter(1, resTrain.getTrainNumberMotriceTrainTranche());
 
 			List<Object[]> tranches = query.getResultList();
 

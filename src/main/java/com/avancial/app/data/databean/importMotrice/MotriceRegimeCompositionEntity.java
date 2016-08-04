@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,7 +44,7 @@ public class MotriceRegimeCompositionEntity {
 	@OneToMany(mappedBy = "motriceRegimeComposition")
 	private List<MotriceRegimeCompositionCoachEntity> carsNumbers;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idMotriceRegime")
 	@ForeignKey(name = "FK_motrice_regime_composition_idMotriceRegime")
 	private MotriceRegimeEntity motriceRegime;
