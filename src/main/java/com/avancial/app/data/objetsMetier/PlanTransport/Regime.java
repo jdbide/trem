@@ -23,6 +23,14 @@ public class Regime {
         this.dateFin = dateFin;
     }
 
+    public Regime clone() {
+        Regime regime = new Regime();
+        regime.setCodeRegime(this.codeRegime);
+        regime.setDateDebut((Date) this.dateDebut.clone());
+        regime.setDateFin((Date) this.dateFin.clone());
+        return regime;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Regime regime = (Regime) obj;
