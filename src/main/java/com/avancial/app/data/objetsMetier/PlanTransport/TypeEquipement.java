@@ -16,6 +16,13 @@ public class TypeEquipement extends ARegimeComparable {
         this.typeEquipement = typeEquipement;
         this.regime = regime;
     }
+    
+    public TypeEquipement clone(){
+        TypeEquipement res = new TypeEquipement();
+        res.setRegime(this.regime.clone());
+        res.setTypeEquipement(this.typeEquipement);
+        return res;
+    }
 
     @Override
     public boolean equals(Object obj) {

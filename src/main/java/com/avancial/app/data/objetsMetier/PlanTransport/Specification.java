@@ -23,6 +23,13 @@ public class Specification extends ARegimeComparable {
         this.regime = new Regime();
     }
 
+    public Specification clone(){
+        Specification res = new Specification();
+        res.setEtat(this.etat);
+        res.setRegime(this.regime.clone());
+        res.setVoiture(this.voiture.clone());
+        return res;
+    }
     @Override
     public boolean equals(Object obj) {
         Specification specification = (Specification) obj;

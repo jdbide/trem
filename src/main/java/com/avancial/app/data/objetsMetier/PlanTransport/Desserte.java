@@ -14,6 +14,17 @@ public class Desserte extends ARegimeComparable {
         this.gareHoraires = new ArrayList<>();
         this.regime = new Regime();
     }
+    
+    public Desserte clone(){
+        Desserte res = new Desserte();
+        List<GareHoraire> resGareHoraires = new ArrayList<>();
+        res.setRegime(this.regime.clone());
+        for (GareHoraire gareHoraire : this.gareHoraires) {
+            resGareHoraires.add(gareHoraire.clone());
+        }
+        res.setGareHoraires(resGareHoraires);
+        return res;        
+    }
 
     public Desserte(List<GareHoraire> gareHoraires, Regime regime) {
         super();

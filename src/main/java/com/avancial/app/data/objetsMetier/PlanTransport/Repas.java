@@ -20,6 +20,14 @@ public class Repas extends ARegimeComparable {
         this.horaire = new Horaire();
         this.regime = new Regime();
     }
+    
+    public Repas clone(){
+        Repas res = new Repas();
+        res.setHoraire(this.horaire.clone());
+        res.setRegime(this.regime.clone());
+        res.setTypeRepas(this.typeRepas);
+        return res;
+    }
 
     @Override
     public boolean equals(Object obj) {

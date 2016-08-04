@@ -17,6 +17,13 @@ public class Horaire {
         this.horaireDebut = horaireDebut;
         this.horaireFin = horaireFin;
     }
+    
+    public Horaire clone(){
+        Horaire res = new Horaire();
+        res.setHoraireDebut((Date) this.horaireDebut.clone());
+        res.setHoraireFin((Date) this.horaireFin.clone());
+        return res;
+    }
 
     @Override
     public boolean equals(Object obj) {

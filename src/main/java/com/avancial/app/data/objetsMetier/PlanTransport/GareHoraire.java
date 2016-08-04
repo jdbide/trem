@@ -16,6 +16,13 @@ public class GareHoraire {
         this.gare = gare;
         this.horaire = horaire;
     }
+    
+    public GareHoraire clone(){
+        GareHoraire res = new GareHoraire();
+        res.setGare(this.gare.clone());
+        res.setHoraire(this.horaire.clone());
+        return res;
+    }
 
     @Override
     public boolean equals(Object obj) {

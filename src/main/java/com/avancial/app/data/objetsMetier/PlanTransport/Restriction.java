@@ -26,6 +26,15 @@ public class Restriction extends ARegimeComparable {
         this.type = EnumTypeRestriction.dessenteInterdite;
         this.regime = new Regime();
     }
+    
+    public Restriction clone(){
+        Restriction res = new Restriction();
+        res.setDestination(this.destination.clone());
+        res.setOrigine(this.origine.clone());
+        res.setRegime(this.regime.clone());
+        res.setType(this.type);
+        return res;
+    }
 
     @Override
     public boolean equals(Object obj) {

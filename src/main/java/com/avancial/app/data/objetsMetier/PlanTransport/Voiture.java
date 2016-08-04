@@ -15,6 +15,16 @@ public class Voiture {
         this.compartiments = new ArrayList<>();
     }
 
+    public Voiture clone(){
+        Voiture res = new Voiture();
+        List<Compartiment> resCompartiments = new ArrayList<>();
+        res.setNumeroVoiture(this.numeroVoiture);
+        for (Compartiment compartiment : this.compartiments) {
+            resCompartiments.add(compartiment.clone());
+        }
+        res.setCompartiments(resCompartiments);
+        return res;
+    }
     public Voiture(String numeroVoiture, List<Compartiment> compartiments) {
         super();
         this.numeroVoiture = numeroVoiture;

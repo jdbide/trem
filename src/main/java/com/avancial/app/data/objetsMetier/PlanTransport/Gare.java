@@ -13,6 +13,11 @@ public class Gare {
         this.codeGare = codeGare;
     }
 
+    public Gare clone(){
+        Gare res = new Gare();
+        res.setCodeGare(this.codeGare);
+        return res;
+    }
     @Override
     public boolean equals(Object obj) {
         Gare gare = (Gare) obj;

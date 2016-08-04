@@ -15,6 +15,17 @@ public class Compartiment {
         this.sieges = new ArrayList<>();
     }
 
+    public Compartiment clone() {
+        Compartiment res = new Compartiment();
+        List<Siege> resSieges = new ArrayList<>();
+        res.setNumeroCompartiment(this.numeroCompartiment);
+        for (Siege siege : this.sieges) {
+            resSieges.add(siege.clone());
+        }
+        res.setSieges(resSieges);
+        return res;
+    }
+
     public Compartiment(String numeroCompartiment, List<Siege> sieges) {
         super();
         this.numeroCompartiment = numeroCompartiment;

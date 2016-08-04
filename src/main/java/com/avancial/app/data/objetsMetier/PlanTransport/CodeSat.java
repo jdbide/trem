@@ -10,6 +10,13 @@ public class CodeSat extends ARegimeComparable {
         this.codeSat = "";
         this.regime = new Regime();
     }
+    
+    public CodeSat clone(){
+        CodeSat res = new CodeSat();
+        res.setCodeSat(this.codeSat);
+        res.setRegime(this.regime.clone());
+        return res;
+    }
 
     public CodeSat(String codeSat, Regime regime) {
         this.codeSat = codeSat;

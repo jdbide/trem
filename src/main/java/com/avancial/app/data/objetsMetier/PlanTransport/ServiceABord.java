@@ -31,6 +31,15 @@ public class ServiceABord extends ARegimeComparable {
         this.regime = new Regime();
     }
 
+    public ServiceABord clone(){
+        ServiceABord res = new ServiceABord();
+        res.setClasse(this.classe);
+        res.setCodeService(this.codeService);
+        res.setDestination(this.destination.clone());
+        res.setOrigine(this.origine.clone());
+        res.setRegime(this.regime.clone());
+        return res;
+    }
     @Override
     public boolean equals(Object obj) {
         ServiceABord serviceABord = (ServiceABord) obj;

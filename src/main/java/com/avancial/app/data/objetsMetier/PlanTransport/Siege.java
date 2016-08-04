@@ -7,6 +7,12 @@ public class Siege {
     public Siege() {
         this.numeroSiege = "";
     }
+    
+    public Siege clone(){
+        Siege res = new Siege();
+        res.setNumeroSiege(this.numeroSiege);
+        return res;
+    }
 
     public Siege(String numeroSiege) {
         super();

@@ -16,6 +16,13 @@ public class FareProfile extends ARegimeComparable {
         this.fareProfileCode = fareProfileCode;
         this.regime = regime;
     }
+    
+    public FareProfile clone(){
+        FareProfile res = new FareProfile();
+        res.setFareProfileCode(this.fareProfileCode);
+        res.setRegime(this.regime.clone());
+        return res;
+    }
 
     @Override
     public boolean equals(Object obj) {

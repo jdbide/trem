@@ -1,5 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
@@ -22,6 +23,21 @@ public class Composition extends ARegimeComparable {
         this.codeDiag = "";
         this.codeRame = "";
         this.codeRm = "";
+    }
+
+    public Composition clone() {
+        Composition res = new Composition();
+        List<Voiture> resVoitures = new ArrayList<>();
+        res.setCodeClasse(this.codeClasse);
+        res.setCodeDiag(this.codeDiag);
+        res.setCodeRame(this.codeRame);
+        res.setCodeRm(this.codeRm);
+        for (Voiture voiture : this.voitures) {
+            resVoitures.add(voiture.clone());
+        }
+        res.setVoitures(resVoitures);
+        return res;
+
     }
 
     public Composition(String codeClasse, String codeDiag, String codeRame, String codeRm, List<Voiture> voitures,

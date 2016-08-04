@@ -16,6 +16,13 @@ public class Distribution extends ARegimeComparable {
         this.indiceDistribution = indiceDistribution;
         this.regime = regime;
     }
+    
+    public Distribution clone(){
+        Distribution res = new Distribution();
+        res.setIndiceDistribution(this.indiceDistribution);
+        res.setRegime(this.regime.clone());
+        return res;
+    }
 
     @Override
     public boolean equals(Object obj) {

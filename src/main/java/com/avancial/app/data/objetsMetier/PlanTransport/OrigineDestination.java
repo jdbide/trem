@@ -20,6 +20,14 @@ public class OrigineDestination extends ARegimeComparable {
         this.destination = destination;
         this.regime = regime;
     }
+    
+    public OrigineDestination clone(){
+        OrigineDestination res = new OrigineDestination();
+        res.setDestination(this.destination.clone());
+        res.setOrigine(this.destination.clone());
+        res.setRegime(this.regime.clone());
+        return res;
+    }
 
     @Override
     public boolean equals(Object obj) {
