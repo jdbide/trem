@@ -28,7 +28,7 @@ public class MotriceRegimeODEntity {
     @Column(length = 5, nullable = false)
     private String destMotriceRegimeOD;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_od_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;
