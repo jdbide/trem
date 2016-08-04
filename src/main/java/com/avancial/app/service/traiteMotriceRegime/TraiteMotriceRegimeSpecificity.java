@@ -70,25 +70,17 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
          key.setRegime((String) comp[4]);
          key.setVoiture((String) comp[0]);
          key.setStateCode((String) comp[3]);
-         System.out.println("************************");
-         System.out.println(key.getCodeDiagramme());
-         System.out.println(key.getRegime());
-         System.out.println(key.getStateCode());
-         System.out.println(key.getVoiture());
          Collection<String> compartiments = mapRegimeCodeDiag.get(key);
          if (compartiments == null) {
             compartiments = new ArrayList<String>();
             mapRegimeCodeDiag.put(key, compartiments);
          }
          compartiments.add((String) comp[1]);
-         System.out.println((String) comp[1]);
-         System.out.println("************************");
       }
       
       for (KeyMotriceRegimeSpecificity mapKey : mapRegimeCodeDiag.keySet()) {
          int i = 0;
          while (!mapKey.getCodeDiagramme().equals((String) nbComp.get(i)[0])) {
-            System.out.println("Rentre dans le while");
             i++;
          }
          mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), mapKey.getRegime(), 4, motriceTrainTrancheEntity.getIdMotriceTrainTranche());

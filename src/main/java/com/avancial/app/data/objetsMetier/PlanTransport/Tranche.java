@@ -16,6 +16,7 @@ public class Tranche extends ARegimeComparable {
         this.numeroTranche = "";
         this.trancheStatut = EnumTrancheStatut.Fermer;
         this.regime = new Regime();
+        this.attributs = new MapTranche();
     }
 
     /**
@@ -28,7 +29,7 @@ public class Tranche extends ARegimeComparable {
     }
 
     /**
-     * attrubuts.put(value.class, List\<value\>)
+     * attributs.put(value.class, List\<value\>)
      * 
      * @param value
      */
