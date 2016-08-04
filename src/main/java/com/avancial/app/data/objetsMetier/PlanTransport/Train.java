@@ -26,6 +26,18 @@ public class Train implements IPlanTransportComparable {
         this.numeroTrain = "";
         this.validePourRR = false;
     }
+    
+    public Train clone(){
+        Train res = new Train();
+        List<Tranche> resTranches = new ArrayList<>();
+        res.setNumeroTrain(this.numeroTrain);
+        res.setValidForRR(this.validePourRR);
+        for (Tranche tranche : this.tranches) {
+            resTranches.add(tranche.clone());
+        }
+        res.setTranches(resTranches);
+        return res;    
+    }
 
     @Override
     public boolean equals(Object obj) {

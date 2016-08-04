@@ -9,6 +9,17 @@ public class PlanTransport implements IPlanTransportComparable {
     private EnumCompagnies compagnie;
     private List<Train> trains;
 
+    
+    public PlanTransport clone(){
+        PlanTransport res = new PlanTransport();
+        List<Train> resTrains = new ArrayList();
+        res.setCompagnie(this.compagnie);
+        for (Train train : this.trains) {
+            resTrains.add(train.clone());
+        }
+        res.setTrains(resTrains);
+        return res;
+    }
     @Override
     public boolean equals(Object obj) {
         PlanTransport plan = (PlanTransport) obj;
