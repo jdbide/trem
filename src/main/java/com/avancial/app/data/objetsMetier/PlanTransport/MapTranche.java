@@ -1,9 +1,10 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapTranche extends HashMap<Class<? extends IPlanTransportComparable>, List<? extends IPlanTransportComparable>> {
+public class MapTranche extends HashMap<Class<?>, List<ARegimeComparable>> {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,12 +15,26 @@ public class MapTranche extends HashMap<Class<? extends IPlanTransportComparable
      *         list values is not equal to the key.
      */
     @Override
-    public List<? extends IPlanTransportComparable> put(Class<? extends IPlanTransportComparable> key,
-            List<? extends IPlanTransportComparable> value) {
+    public List<ARegimeComparable> put(Class<?> key,
+            List<ARegimeComparable> value) {
         if (value != null && value.size() > 0 && value.get(0).getClass().equals(key)) {
             return super.put(key, value);
         }
         return null;
+    }
+    
+    public MapTranche clone() {
+        HashMap<String, String> test = new HashMap<>();
+        test.clone();
+        MapTranche mapTranche = new MapTranche();
+        for (Class<?> comparable : this.keySet()) {
+            List<ARegimeComparable> objects = new ArrayList<>();
+            for (ARegimeComparable object : this.get(comparable)) {
+                objects.add(object.clone());
+            }
+            mapTranche.put(comparable, objects);
+        }
+        return mapTranche;
     }
 
 }

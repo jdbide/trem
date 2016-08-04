@@ -1,15 +1,20 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.junit.Test;
+import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.MapTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
@@ -47,7 +52,6 @@ public class TestComparePlanTransport {
 
     }
 
-    @Test
     public void testChaine() {
         Train train1 = new Train(null, "1", true);
         List<Train> trains1 = new ArrayList<>();
@@ -65,6 +69,20 @@ public class TestComparePlanTransport {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    
+    @Test
+    public void testClone() {
+        MapTranche mapTranche = new MapTranche();
+        List<ARegimeComparable> l = new ArrayList<>();
+        Regime regime = new Regime("0", new Date(), new Date());
+        ARegimeComparable codeSat = new CodeSat("1", regime);
+        l.add(codeSat);
+        mapTranche.put(CodeSat.class, l);
+        MapTranche yo = mapTranche.clone();
+        MapTranche you = yo.clone();
+        mapTranche.clear();
+        System.out.println("cooucou");
     }
     
     public boolean compareMaps(Map<TrainTranche, TrainTranche> m1, Map<TrainTranche, TrainTranche> m2) {

@@ -6,6 +6,8 @@ import java.util.List;
 public abstract class ARegimeComparable implements IPlanTransportComparable {
     
     public abstract Regime getRegime();
+    
+    public abstract ARegimeComparable clone();
 
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {

@@ -8,7 +8,7 @@ public class Tranche extends ARegimeComparable {
     private Regime regime;
 
     /**
-     * map contenant tout les types de regime d'un tranche
+     * Map contenant tout les types de regime d'un tranche
      */
     private MapTranche attributs;
 
@@ -19,12 +19,20 @@ public class Tranche extends ARegimeComparable {
         this.attributs = new MapTranche();
     }
 
+    public Tranche clone() {
+        Tranche tranche = new Tranche();
+        tranche.setNumeroTranche(this.numeroTranche);
+        tranche.setTrancheStatut(this.trancheStatut);
+        tranche.setAttributs(this.attributs.clone());
+        return tranche;
+    }
+
     /**
      * 
      * @param key
      * @return getAttributs().get(key)
      */
-    public List<? extends IPlanTransportComparable> getAttributsField(Class<? extends IPlanTransportComparable> key) {
+    public List<ARegimeComparable> getAttributsField(Class<?> key) {
         return this.attributs.get(key);
     }
 
@@ -33,9 +41,9 @@ public class Tranche extends ARegimeComparable {
      * 
      * @param value
      */
-    public void addAttributsField(List<? extends IPlanTransportComparable> value) {
+    public void addAttributsField(List<ARegimeComparable> value) {
         if (value.size() > 0) {
-            this.attributs.put(value.get(0).getClass(), value);
+            this.attributs.put((Class<ARegimeComparable>) value.get(0).getClass(), value);
         }
     }
 
