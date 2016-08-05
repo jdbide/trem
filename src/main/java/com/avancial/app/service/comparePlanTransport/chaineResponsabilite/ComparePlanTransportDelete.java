@@ -6,7 +6,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTranspor
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 
-public class ComparePlanTransportDelete extends AComparePlanTransport {
+public class ComparePlanTransportDelete extends AComparePlanTransportType {
 
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien,

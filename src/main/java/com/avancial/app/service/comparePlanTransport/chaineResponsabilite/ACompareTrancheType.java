@@ -11,7 +11,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.service.comparePlanTransport.CompareAttributTranche;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 
-public abstract class ACompareTranche extends AChaineComparePlanTransport {
+public abstract class ACompareTrancheType extends AChaineComparePlanTransport {
 
     /**
      * Indique s'il reste des attributs à tester dans les listes

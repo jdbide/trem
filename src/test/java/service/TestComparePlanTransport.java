@@ -26,7 +26,6 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.CompareTranche;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
-import com.avancial.app.service.comparePlanTransport.TrainTranche;
 import com.avancial.socle.utils.ListUtils;
 import junit.framework.Assert;
 
@@ -63,8 +62,8 @@ public class TestComparePlanTransport {
             cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
             Assert.assertTrue("Compare UNCHANGED1 PlanTransport",
                     ListUtils.compareLists(expected, comparePlanTransport.compare(p1, p1)));
-            Assert.assertTrue("Compare UNCHANGED2 PlanTransport",
-                    ListUtils.compareLists(new ArrayList<IComparaisonPlanTransport>(), comparePlanTransport.compare(p2, p2)));
+            Assert.assertTrue("Compare UNCHANGED2 PlanTransport", ListUtils
+                    .compareLists(new ArrayList<IComparaisonPlanTransport>(), comparePlanTransport.compare(p2, p2)));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -216,10 +215,10 @@ public class TestComparePlanTransport {
         Assert.assertTrue(ListUtils.compareLists(comparaison, expected));
     }
 
-    public boolean compareMaps(Map<TrainTranche, TrainTranche> m1, Map<TrainTranche, TrainTranche> m2) {
-        TrainTranche tt = null;
-        for (TrainTranche tt1 : m1.keySet()) {
-            for (TrainTranche tt2 : m2.keySet()) {
+    public boolean compareMaps(Map<Object, Object> m1, Map<Object, Object> m2) {
+        Object tt = null;
+        for (Object tt1 : m1.keySet()) {
+            for (Object tt2 : m2.keySet()) {
                 if (tt2.equals(tt1)) {
                     tt = tt2;
                     break;
@@ -229,8 +228,8 @@ public class TestComparePlanTransport {
                 return false;
             }
         }
-        for (TrainTranche tt2 : m2.keySet()) {
-            for (TrainTranche tt1 : m1.keySet()) {
+        for (Object tt2 : m2.keySet()) {
+            for (Object tt1 : m1.keySet()) {
                 if (tt1.equals(tt2)) {
                     tt = tt1;
                     break;

@@ -10,7 +10,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
-public abstract class AComparePlanTransport extends AChaineComparePlanTransport {
+public abstract class AComparePlanTransportType extends AChaineComparePlanTransport {
 
     @SuppressWarnings("unchecked")
     protected List<IComparaisonPlanTransport> compareTrainLists(

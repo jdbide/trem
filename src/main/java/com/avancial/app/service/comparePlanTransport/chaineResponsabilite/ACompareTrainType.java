@@ -9,7 +9,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTranspor
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
-public abstract class ACompareTrain extends AChaineComparePlanTransport {
+public abstract class ACompareTrainType extends AChaineComparePlanTransport {
 
     protected List<IComparaisonPlanTransport> compareTrancheLists(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, String numeroTrain,
