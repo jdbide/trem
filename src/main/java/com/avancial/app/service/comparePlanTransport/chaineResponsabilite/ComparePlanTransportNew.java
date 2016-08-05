@@ -12,14 +12,14 @@ public class ComparePlanTransportNew extends AChaineComparePlanTransport {
 
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien,
-            IPlanTransportComparable comparableNouveau) throws CloneNotSupportedException {
+            IPlanTransportComparable comparableNouveau) throws Exception {
         PlanTransport pdtAncien = (PlanTransport) comparableAncien;
         PlanTransport pdtNouveau = (PlanTransport) comparableNouveau;
         
-        PlanTransport copyAncien;
-        PlanTransport copyNouveau;
-        // TODO Auto-generated method stub
-        return null;
+        PlanTransport copyAncien = pdtAncien.clone();
+        PlanTransport copyNouveau = pdtNouveau.clone();
+        System.out.println("ComparePlanTransportNew");
+        return this.successeurCompare(comparableAncien, comparableNouveau);
     }
 
 }

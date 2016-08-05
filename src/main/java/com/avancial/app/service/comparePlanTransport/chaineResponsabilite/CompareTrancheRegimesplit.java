@@ -8,9 +8,9 @@ public class CompareTrancheRegimesplit extends AChaineComparePlanTransport {
 
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien,
-            IPlanTransportComparable comparableNouveau) {
-        // TODO Auto-generated method stub
-        return null;
+            IPlanTransportComparable comparableNouveau) throws Exception {
+        System.out.println("CompareTrancheRegimesplit");
+        return this.successeurCompare(comparableAncien, comparableNouveau);
     }
 
 }

@@ -16,6 +16,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.MapTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.TrainTranche;
@@ -52,11 +53,24 @@ public class TestComparePlanTransport {
 
     }
 
+    @Test
     public void testChaine() {
-        Train train1 = new Train(null, "1", true);
+        Train train1 = new Train();
+        train1.setNumeroTrain("1");
         List<Train> trains1 = new ArrayList<>();
         trains1.add(train1);
         List<Train> trains2 = new ArrayList<>();
+        trains2.add(train1);
+        
+        Tranche tranche1 = new Tranche();
+        tranche1.setNumeroTranche("10");
+        train1.getTranches().add(tranche1);
+        
+        CodeSat codeSat1 = new CodeSat();
+        codeSat1.setCodeSat("100");
+        List<ARegimeComparable> l = new ArrayList<>();
+        l.add(codeSat1);
+        tranche1.addAttributsField(l);
 
         PlanTransport p1 = new PlanTransport(EnumCompagnies.ES, trains1);
         PlanTransport p2 = new PlanTransport(EnumCompagnies.ES, trains2);
@@ -65,13 +79,12 @@ public class TestComparePlanTransport {
         try {
             comparePlanTransport.compare(p1, p2);
         }
-        catch (CloneNotSupportedException e) {
+        catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
     
-    @Test
     public void testClone() {
         MapTranche mapTranche = new MapTranche();
         List<ARegimeComparable> l = new ArrayList<>();

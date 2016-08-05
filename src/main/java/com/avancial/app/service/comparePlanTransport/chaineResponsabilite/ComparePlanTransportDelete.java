@@ -8,9 +8,9 @@ public class ComparePlanTransportDelete extends AChaineComparePlanTransport {
 
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien,
-            IPlanTransportComparable comparableNouveau) {
-        // TODO Auto-generated method stub
-        return null;
+            IPlanTransportComparable comparableNouveau) throws Exception {
+        System.out.println("ComparePlanTransportDelete");
+        return this.successeurCompare(comparableAncien, comparableNouveau);
     }
 
 }
