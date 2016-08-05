@@ -6,7 +6,8 @@ import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.Compar
 import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.IChaineComparePlanTransport;
 
 /**
- * Création de la chaîne de responsabilité pour comparer deux tranches.<br>
+ * Création de la chaîne de responsabilité pour comparer deux {@link Tranche}.
+ * <br>
  * On commence par la comparaison UNCHANGED, qui va recevoir le résultat de
  * comparaison du maillon suivant de la chaîne.<br>
  * Les maillons suivants sont MODIFY et REGIMESPLIT; ainsi, si UNCHANGED ne
