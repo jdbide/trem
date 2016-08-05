@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class ComparaisonPlanTransport<T extends IPlanTransportComparable> implements IComparaisonPlanTransport {
+public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComparaisonPlanTransport {
 
     private String numeroTrain;
 

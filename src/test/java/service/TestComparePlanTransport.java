@@ -16,7 +16,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.Horaire;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.MapTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
@@ -42,7 +42,7 @@ public class TestComparePlanTransport {
         PlanTransport p1 = new PlanTransport(EnumCompagnies.ES, trains1);
         PlanTransport p2 = new PlanTransport(EnumCompagnies.ES, trains2);
         List<IComparaisonPlanTransport> expected = new ArrayList<>();
-        ComparaisonPlanTransport<IPlanTransportComparable> cpt = new ComparaisonPlanTransport<>();
+        ComparaisonPlanTransport<IPlanTransport> cpt = new ComparaisonPlanTransport<>();
         cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
         cpt.setNumeroTrain("1");
         expected.add(cpt);
@@ -113,14 +113,14 @@ public class TestComparePlanTransport {
         MapTranche mapTranche2 = new MapTranche();
 
         /* CodeSat MODIFY */
-        List<ARegimeComparable> listCodeSat1 = new ArrayList<>();
-        List<ARegimeComparable> listCodeSat2 = new ArrayList<>();
+        List<CodeSat> listCodeSat1 = new ArrayList<>();
+        List<CodeSat> listCodeSat2 = new ArrayList<>();
         /* FareProfile SPLIT */
-        List<ARegimeComparable> listFareProfile1 = new ArrayList<>();
-        List<ARegimeComparable> listFareProfile2 = new ArrayList<>();
+        List<FareProfile> listFareProfile1 = new ArrayList<>();
+        List<FareProfile> listFareProfile2 = new ArrayList<>();
         /* Repas UNCHENGED */
-        List<ARegimeComparable> listRepas1 = new ArrayList<>();
-        List<ARegimeComparable> listRepas2 = new ArrayList<>();
+        List<Repas> listRepas1 = new ArrayList<>();
+        List<Repas> listRepas2 = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -10);
         Date date1 = cal.getTime();
@@ -134,12 +134,12 @@ public class TestComparePlanTransport {
         Regime regimeTranche = new Regime("0", new Date(), new Date());
         Regime regime1 = new Regime("1", date1, date2);
         Regime regime2 = new Regime("2", date3, date4);
-        ARegimeComparable codeSat1 = new CodeSat("1", regime1);
-        ARegimeComparable codeSat2 = new CodeSat("2", regime1);
-        ARegimeComparable fareProfile1 = new FareProfile("1", regime1);
-        ARegimeComparable fareProfile2 = new FareProfile("1", regime2);
-        ARegimeComparable repas1 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
-        ARegimeComparable repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
+        CodeSat codeSat1 = new CodeSat("1", regime1);
+        CodeSat codeSat2 = new CodeSat("2", regime1);
+        FareProfile fareProfile1 = new FareProfile("1", regime1);
+        FareProfile fareProfile2 = new FareProfile("1", regime2);
+        Repas repas1 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
+        Repas repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
 
         listCodeSat1.add(codeSat1);
         listCodeSat2.add(codeSat2);
@@ -178,19 +178,19 @@ public class TestComparePlanTransport {
         }
         
         List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
-        ComparaisonPlanTransport<ARegimeComparable> codeSatExpected = new ComparaisonPlanTransport<>();
+        ComparaisonPlanTransport<CodeSat> codeSatExpected = new ComparaisonPlanTransport<>();
         codeSatExpected.setNumeroTranche("1");
         codeSatExpected.setAncienField(codeSat1);
         codeSatExpected.setNouveauField(codeSat2);
         codeSatExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
 
-        ComparaisonPlanTransport<ARegimeComparable> fareProfileExpected = new ComparaisonPlanTransport<>();
+        ComparaisonPlanTransport<FareProfile> fareProfileExpected = new ComparaisonPlanTransport<>();
         fareProfileExpected.setNumeroTranche("1");
         fareProfileExpected.setAncienField(fareProfile1);
         fareProfileExpected.setNouveauField(fareProfile2);
         fareProfileExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
         
-        ComparaisonPlanTransport<ARegimeComparable> repasExpected = new ComparaisonPlanTransport<>();
+        ComparaisonPlanTransport<Repas> repasExpected = new ComparaisonPlanTransport<>();
         repasExpected.setNumeroTranche("1");
         repasExpected.setAncienField(repas1);
         repasExpected.setNouveauField(repas2);

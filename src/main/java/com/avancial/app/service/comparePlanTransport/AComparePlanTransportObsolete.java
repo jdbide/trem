@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 
 @Deprecated
@@ -54,7 +54,7 @@ public abstract class AComparePlanTransportObsolete implements IComparePlanTrans
         this.initLists();
     }
 
-    public <T extends IPlanTransportComparable> List<IComparaisonPlanTransport> compare(List<T> ancien, List<T> nouveau,
+    public <T extends IPlanTransport> List<IComparaisonPlanTransport> compare(List<T> ancien, List<T> nouveau,
             boolean chercheAjout) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport = chercheAjout
@@ -76,7 +76,7 @@ public abstract class AComparePlanTransportObsolete implements IComparePlanTrans
             else if (chercheAjout) {
                 /* On ajoute les résultats du chaineComparePlanTransport des trains */
                 trainAncien = ancien.get(index);
-                res.addAll(this.updateComparaisonPlanTransport(trainNouveau.compare(trainAncien)));
+//                res.addAll(this.updateComparaisonPlanTransport(trainNouveau.compare(trainAncien)));
             }
         }
         return res;

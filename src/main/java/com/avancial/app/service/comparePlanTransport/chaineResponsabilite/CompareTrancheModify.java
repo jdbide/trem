@@ -7,7 +7,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.comparePlanTransport.CompareAttributTranche;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
@@ -20,8 +20,8 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
     private boolean tousModify = true;
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien,
-            IPlanTransportComparable comparableNouveau) throws Exception {
+    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien,
+            IPlanTransport comparableNouveau) throws Exception {
         System.out.println("CompareTrancheModify");
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         Tranche trancheAncien = (Tranche) comparableAncien;
@@ -54,11 +54,11 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
     @SuppressWarnings("unchecked")
     private List<IComparaisonPlanTransport> compareAttributListsModify(
             String numeroTranche,
-            List<? extends IPlanTransportComparable> attributsFieldAncien,
-            List<? extends IPlanTransportComparable> attributsFieldNouveau) throws Exception {
+            List<? extends IPlanTransport> attributsFieldAncien,
+            List<? extends IPlanTransport> attributsFieldNouveau) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
 
-        ComparaisonPlanTransport<IPlanTransportComparable> comparaisonPlanTransport;
+        ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
         IComparePlanTransport comparePlanTransport = new CompareAttributTranche();
 
         /* Boucle sur les attributs de nouveau */
@@ -81,9 +81,9 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
                  * des listes
                  */
                 if (resComparaison.size() > 0
-                        && ((ComparaisonPlanTransport<IPlanTransportComparable>) resComparaison.get(0))
+                        && ((ComparaisonPlanTransport<IPlanTransport>) resComparaison.get(0))
                                 .getTypeComparaisonPlanTransport().equals(EnumTypeComparaisonPlanTransport.MODIFY)) {
-                    comparaisonPlanTransport = (ComparaisonPlanTransport<IPlanTransportComparable>) resComparaison.get(0);
+                    comparaisonPlanTransport = (ComparaisonPlanTransport<IPlanTransport>) resComparaison.get(0);
                     comparaisonPlanTransport.setNumeroTranche(numeroTranche);
                     res.addAll(resComparaison);
 

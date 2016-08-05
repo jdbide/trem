@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
-public class PlanTransport implements IPlanTransportComparable {
+public class PlanTransport implements IPlanTransport {
 
     private EnumCompagnies compagnie;
     private List<Train> trains;
@@ -74,7 +74,7 @@ public class PlanTransport implements IPlanTransportComparable {
         this.trains = trains;
     }
 
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {
+    public List<IComparaisonPlanTransport> compare(IPlanTransport autre) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         PlanTransport autrePlanTransport = (PlanTransport) autre;
 
@@ -134,7 +134,7 @@ public class PlanTransport implements IPlanTransportComparable {
         EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport = chercheAjout
                 ? EnumTypeComparaisonPlanTransport.NEW : EnumTypeComparaisonPlanTransport.DELETE;
         Train trainAncien;
-        ComparaisonPlanTransport<IPlanTransportComparable> comparaisonPlanTransport = null;
+        ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = null;
 
         /* Boucle sur les trains de nouveau */
         for (Train trainNouveau : nouveau) {
@@ -152,7 +152,7 @@ public class PlanTransport implements IPlanTransportComparable {
             else if (chercheAjout) {
                 /* On ajoute les résultats du compare des trains */
                 trainAncien = ancien.get(index);
-                res.addAll(trainNouveau.compare(trainAncien));
+//                res.addAll(trainNouveau.compare(trainAncien));
             }
         }
         return res;

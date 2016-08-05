@@ -6,13 +6,13 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 
 public class CompareAttributTrancheRegimesplit extends AChaineComparePlanTransport {
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien,
-            IPlanTransportComparable comparableNouveau) throws Exception {
+    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien,
+            IPlanTransport comparableNouveau) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         System.out.println("CompareAttributTrancheRegimesplit");
         ARegimeComparable attributAncien = (ARegimeComparable) comparableAncien;
@@ -21,7 +21,7 @@ public class CompareAttributTrancheRegimesplit extends AChaineComparePlanTranspo
         ComparaisonPlanTransport<ARegimeComparable> comparaisonPlanTransport = new ComparaisonPlanTransport<ARegimeComparable>();
         if (!attributNouveau.getClass().equals(attributAncien.getClass())) {
             throw new Exception(
-                    "Ne peut pas comparer deux instances de IPlanTransportComparable de classes différentes!");
+                    "Ne peut pas comparer deux instances de IPlanTransport de classes différentes!");
         }
         
         if (!attributNouveau.getRegime().equals(attributAncien.getRegime())

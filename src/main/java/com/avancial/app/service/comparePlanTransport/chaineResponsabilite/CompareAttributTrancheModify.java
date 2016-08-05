@@ -6,13 +6,13 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 
 public class CompareAttributTrancheModify extends AChaineComparePlanTransport {
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien,
-            IPlanTransportComparable comparableNouveau) throws Exception {
+    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien,
+            IPlanTransport comparableNouveau) throws Exception {
         System.out.println("CompareAttributTrancheModify");
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         ARegimeComparable attributAncien = (ARegimeComparable) comparableAncien;
