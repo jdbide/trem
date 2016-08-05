@@ -1,6 +1,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,14 +10,21 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
+import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
+import com.avancial.app.data.objetsMetier.PlanTransport.Horaire;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.MapTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
+import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
+import com.avancial.app.service.comparePlanTransport.CompareTranche;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.TrainTranche;
 import com.avancial.socle.utils.ListUtils;
@@ -24,7 +32,7 @@ import junit.framework.Assert;
 
 public class TestComparePlanTransport {
 
-//    @Test
+    // @Test
     public void testPlanTransport() {
         Train train1 = new Train(null, "1", true);
         List<Train> trains1 = new ArrayList<>();
@@ -60,7 +68,7 @@ public class TestComparePlanTransport {
 
         PlanTransport p1 = new PlanTransport(EnumCompagnies.ES, trains1);
         PlanTransport p2 = new PlanTransport(EnumCompagnies.ES, trains2);
-        
+
         IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
         try {
             comparePlanTransport.compare(p1, p2);
@@ -70,7 +78,7 @@ public class TestComparePlanTransport {
             e.printStackTrace();
         }
     }
-    
+
     @Test
     public void testClone() {
         MapTranche mapTranche = new MapTranche();
@@ -84,7 +92,102 @@ public class TestComparePlanTransport {
         mapTranche.clear();
         System.out.println("cooucou");
     }
-    
+
+    public void testTranche() {
+        MapTranche mapTranche1 = new MapTranche();
+        MapTranche mapTranche2 = new MapTranche();
+
+        /* CodeSat MODIFY */
+        List<ARegimeComparable> listCodeSat1 = new ArrayList<>();
+        List<ARegimeComparable> listCodeSat2 = new ArrayList<>();
+        /* FareProfile SPLIT */
+        List<ARegimeComparable> listFareProfile1 = new ArrayList<>();
+        List<ARegimeComparable> listFareProfile2 = new ArrayList<>();
+        /* Repas UNCHENGED */
+        List<ARegimeComparable> listRepas1 = new ArrayList<>();
+        List<ARegimeComparable> listRepas2 = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -10);
+        Date date1 = cal.getTime();
+        cal.add(Calendar.DATE, 20);
+        Date date2 = cal.getTime();
+        cal.add(Calendar.DATE, -15);
+        Date date3 = cal.getTime();
+        cal.add(Calendar.DATE, 10);
+        Date date4 = cal.getTime();
+
+        Regime regimeTranche = new Regime("0", new Date(), new Date());
+        Regime regime1 = new Regime("1", date1, date2);
+        Regime regime2 = new Regime("2", date3, date4);
+        ARegimeComparable codeSat1 = new CodeSat("1", regime1);
+        ARegimeComparable codeSat2 = new CodeSat("2", regime1);
+        ARegimeComparable fareProfile1 = new FareProfile("1", regime1);
+        ARegimeComparable fareProfile2 = new FareProfile("1", regime2);
+        ARegimeComparable repas1 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
+        ARegimeComparable repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
+
+        listCodeSat1.add(codeSat1);
+        listCodeSat2.add(codeSat2);
+        listFareProfile1.add(fareProfile1);
+        listFareProfile2.add(fareProfile2);
+        listRepas1.add(repas1);
+        listRepas2.add(repas2);
+
+        mapTranche1.put(codeSat1.getClass(), listCodeSat1);
+        mapTranche2.put(codeSat2.getClass(), listCodeSat2);
+        mapTranche1.put(fareProfile1.getClass(), listFareProfile1);
+        mapTranche2.put(fareProfile2.getClass(), listFareProfile2);
+        mapTranche1.put(repas1.getClass(), listRepas1);
+        mapTranche2.put(repas2.getClass(), listRepas2);
+
+        Tranche tranche1 = new Tranche();
+        Tranche tranche2 = new Tranche();
+
+        tranche1.setAttributs(mapTranche1);
+        tranche2.setAttributs(mapTranche2);
+        tranche1.setNumeroTranche("1");
+        tranche2.setNumeroTranche("1");
+        tranche1.setRegime(regimeTranche);
+        tranche2.setRegime(regimeTranche);
+        tranche1.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        tranche2.setTrancheStatut(EnumTrancheStatut.Ouvert);
+
+        IComparePlanTransport compareTranche = new CompareTranche();
+        List<IComparaisonPlanTransport> comparaison = null;
+        try {
+            comparaison = compareTranche.compare(tranche1, tranche2);
+        }
+        catch (CloneNotSupportedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
+        ComparaisonPlanTransport<ARegimeComparable> codeSatExpected = new ComparaisonPlanTransport<>();
+        codeSatExpected.setNumeroTranche("1");
+        codeSatExpected.setAncienFields(listCodeSat1);
+        codeSatExpected.setNouveauFields(listCodeSat2);
+        codeSatExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
+
+        ComparaisonPlanTransport<ARegimeComparable> fareProfileExpected = new ComparaisonPlanTransport<>();
+        fareProfileExpected.setNumeroTranche("1");
+        fareProfileExpected.setAncienFields(listFareProfile1);
+        fareProfileExpected.setNouveauFields(listFareProfile2);
+        fareProfileExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
+        
+        ComparaisonPlanTransport<ARegimeComparable> repasExpected = new ComparaisonPlanTransport<>();
+        repasExpected.setNumeroTranche("1");
+        repasExpected.setAncienFields(listRepas1);
+        repasExpected.setNouveauFields(listRepas2);
+        repasExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+        
+        expected.add(codeSatExpected);
+        expected.add(fareProfileExpected);
+        expected.add(repasExpected);
+
+        Assert.assertTrue(ListUtils.compareLists(comparaison, expected));
+    }
+
     public boolean compareMaps(Map<TrainTranche, TrainTranche> m1, Map<TrainTranche, TrainTranche> m2) {
         TrainTranche tt = null;
         for (TrainTranche tt1 : m1.keySet()) {

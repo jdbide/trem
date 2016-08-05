@@ -8,6 +8,18 @@ public class Repas extends ARegimeComparable {
     /**
      * @param typeRepas
      * @param horaire
+     * @param regime
+     */
+    public Repas(EnumTypeRepas typeRepas, Horaire horaire, Regime regime) {
+        super();
+        this.typeRepas = typeRepas;
+        this.horaire = horaire;
+        this.regime = regime;
+    }
+
+    /**
+     * @param typeRepas
+     * @param horaire
      */
     public Repas(EnumTypeRepas typeRepas, Horaire horaire) {
         super();
