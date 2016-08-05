@@ -9,8 +9,34 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTranspor
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
-public abstract class ACompareTrainType extends AChaineComparePlanTransport {
+/**
+ * Implémentation pour les comparaisons NEW et DELETE au niveau d'un train,
+ * c'est-à-dire la détection de nouvelles tranches entre deux listes de
+ * tranches.
+ * 
+ * @author heloise.guillemaud
+ *
+ */
+public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport {
 
+    /**
+     * Compare deux listes de tranches, et retourne la liste de tranches
+     * nouvelles entre les deux.
+     * 
+     * @param typeComparaisonPlanTransport
+     *            Type de comparaison pour les résultats (NEW ou DELETE)
+     * @param numeroTrain
+     *            Numéro du train auquel les tranches appartiennent
+     * @param tranchesAncien
+     *            Liste de tranches d'un train d'un jeu de données moins récent
+     * @param tranchesNouveau
+     *            Liste de tranches d'un train d'un jeu de données plus récent
+     * @return Liste de {@link IComparaisonPlanTransport} correspondant à tous
+     *         les train-tranches nouveaux dans la liste de tranches plus
+     *         récentes.
+     * @throws Exception
+     */
+    @SuppressWarnings("unchecked")
     protected List<IComparaisonPlanTransport> compareTrancheLists(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, String numeroTrain,
             List<? extends IPlanTransport> tranchesAncien, List<? extends IPlanTransport> tranchesNouveau)

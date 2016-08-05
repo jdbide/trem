@@ -7,7 +7,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTranspor
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
-public class CompareTrancheModify extends ACompareTrancheType {
+public class CompareTrancheModify extends ACompareTrancheModifyRegimesplit {
 
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
@@ -17,7 +17,7 @@ public class CompareTrancheModify extends ACompareTrancheType {
         Tranche trancheAncien = (Tranche) comparableAncien;
         Tranche trancheNouveau = (Tranche) comparableNouveau;
 
-        /* Boucle sur les attributs de trancheNouveau */
+        /* Boucle sur les listes d'attributs de trancheNouveau */
         for (Class<?> attribut : trancheNouveau.getAttributs().keySet()) {
             res.addAll(this.compareAttributLists(EnumTypeComparaisonPlanTransport.MODIFY,
                     trancheNouveau.getNumeroTranche(), trancheAncien.getAttributsField(attribut),

@@ -11,7 +11,15 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.service.comparePlanTransport.CompareAttributTranche;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 
-public abstract class ACompareTrancheType extends AChaineComparePlanTransport {
+/**
+ * Implémentation pour les comparaisons MODIFY et REGIMESPLIT au niveau d'une
+ * tranche, c'est-à-dire la détection de paires d'attributs qui sont modifiés
+ * (soit dans leur valeur, soit dans leur régime) entre deux listes d'attributs.
+ * 
+ * @author heloise.guillemaud
+ *
+ */
+public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePlanTransport {
 
     /**
      * Indique s'il reste des attributs à tester dans les listes
@@ -20,14 +28,14 @@ public abstract class ACompareTrancheType extends AChaineComparePlanTransport {
 
     /**
      * Compare deux listes d'attributs de tranches, et retourne une liste de
-     * {@link IComparaisonPlanTransport} correspondant aux comparaisons d'un
-     * type donné trouvées.<br>
+     * {@link IComparaisonPlanTransport} correspondant aux comparaisons de type
+     * MODIFY ou REGIMESPLIT.<br>
      * Pour chaque paire attributAncien-attributNouveau du type de comparaison
      * donné trouvée, les éléments correspondants sont retirés des listes (afin
      * qu'on ne les teste pas sur d'autres types de comparaison).
      * 
      * @param typeComparaisonPlanTransport
-     *            Type de comparaison cherché
+     *            Type de comparaison cherché (MODIFY ou REGIMESPLIT)
      * @param numeroTranche
      *            Numéro de la tranche à laquelle les attributs appartiennent
      * @param attributsFieldAncien
