@@ -16,3 +16,4 @@ La documentation est localisée dans le répertoire Other Resources/documentatio
 |ImportMotrice.md|Documentation décrivant la mécanique d'import|
 |TraitementImportBrut.md|Documentation décrivant la mécanique de traitement des donnée avant l'insertion dans la base Tremas|
 |PlanTransport.ucls|Diagramme de classe du plan de transport|
+|ChaineDeComparaisonPlanTransport.png|Schemas representant la chaine de responsabiliter de la comparaison d'un plan de transport|
