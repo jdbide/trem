@@ -60,13 +60,11 @@ public class TestComparePlanTransport {
             cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
             Assert.assertTrue("Compare NEW PlanTransport",
                     ListUtils.compareLists(expected, comparePlanTransport.compare(p2, p1)));
-            // cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
-            // Assert.assertTrue("Compare UNCHANGED PlanTransport",
-            // ListUtils.compareLists(expected, comparePlanTransport.compare(p1,
-            // p1)));
-            // Assert.assertTrue("Compare UNCHANGED PlanTransport",
-            // ListUtils.compareLists(expected, comparePlanTransport.compare(p2,
-            // p2)));
+            cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+            Assert.assertTrue("Compare UNCHANGED1 PlanTransport",
+                    ListUtils.compareLists(expected, comparePlanTransport.compare(p1, p1)));
+            Assert.assertTrue("Compare UNCHANGED2 PlanTransport",
+                    ListUtils.compareLists(new ArrayList<IComparaisonPlanTransport>(), comparePlanTransport.compare(p2, p2)));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +104,7 @@ public class TestComparePlanTransport {
         }
     }
 
-//     @Test
+    // @Test
     public void testClone() {
         MapTranche mapTranche = new MapTranche();
         List<ARegimeComparable> l = new ArrayList<>();
@@ -120,7 +118,7 @@ public class TestComparePlanTransport {
         System.out.println("cooucou");
     }
 
-     @Test
+    @Test
     public void testTranche() {
         MapTranche mapTranche1 = new MapTranche();
         MapTranche mapTranche2 = new MapTranche();

@@ -1,6 +1,7 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
@@ -20,10 +21,18 @@ public class ComparePlanTransportOther extends AChaineComparePlanTransport {
         PlanTransport pdtNouveau = (PlanTransport) comparableNouveau;
 
         IComparePlanTransport comparePlanTransport = new CompareTrain();
+        /* Boucle sur les trains de nouveau */
         for (Train trainNouveau : pdtNouveau.getTrains()) {
-            for (Train trainAncien : pdtAncien.getTrains()) {
+            /* Boucle sur les trains de ancien */
+            for (Iterator<Train> itTrainAncien = (Iterator<Train>) pdtAncien.getTrains().iterator(); itTrainAncien
+                    .hasNext();) {
+                Train trainAncien = itTrainAncien.next();
+                /* Si les trains ont le même numeroTrain, on les compare */
                 if (trainNouveau.equals(trainAncien)) {
                     res.addAll(comparePlanTransport.compare(trainAncien, trainNouveau));
+                    /* Comparaison entre les trains terminée */
+                    itTrainAncien.remove();
+                    break;
                 }
             }
         }
