@@ -39,6 +39,11 @@ public class Regime {
         }
         return false;
     }
+    
+    public boolean estInclusDans(Regime regime) {
+        return (this.dateDebut.after(regime.getDateDebut()) || this.dateDebut.equals(regime.getDateDebut()))
+                && (this.dateFin.before(regime.getDateFin()) || this.dateFin.equals(regime.getDateFin()));
+    }
 
     public String getCodeRegime() {
         return this.codeRegime;

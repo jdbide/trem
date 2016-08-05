@@ -3,7 +3,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Train implements IPlanTransportComparable {
+public class Train implements IPlanTransport {
 
     private List<Tranche> tranches;
     private String numeroTrain;
@@ -26,8 +26,8 @@ public class Train implements IPlanTransportComparable {
         this.numeroTrain = "";
         this.validePourRR = false;
     }
-    
-    public Train clone(){
+
+    public Train clone() {
         Train res = new Train();
         List<Tranche> resTranches = new ArrayList<>();
         res.setNumeroTrain(this.numeroTrain);
@@ -36,7 +36,7 @@ public class Train implements IPlanTransportComparable {
             resTranches.add(tranche.clone());
         }
         res.setTranches(resTranches);
-        return res;    
+        return res;
     }
 
     @Override
@@ -88,11 +88,6 @@ public class Train implements IPlanTransportComparable {
      */
     public void setNumeroTrain(String numeroTrain) {
         this.numeroTrain = numeroTrain;
-    }
-
-    @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {
-        return new ArrayList<>();
     }
 
 }

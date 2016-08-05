@@ -32,7 +32,7 @@ public class Tranche extends ARegimeComparable {
      * @param key
      * @return getAttributs().get(key)
      */
-    public List<ARegimeComparable> getAttributsField(Class<?> key) {
+    public List<? extends ARegimeComparable> getAttributsField(Class<?> key) {
         return this.attributs.get(key);
     }
 

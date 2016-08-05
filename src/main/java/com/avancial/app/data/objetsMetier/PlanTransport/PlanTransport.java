@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
-public class PlanTransport implements IPlanTransportComparable {
+public class PlanTransport implements IPlanTransport {
 
     private EnumCompagnies compagnie;
     private List<Train> trains;
 
-    
-    public PlanTransport clone(){
+    public PlanTransport clone() {
         PlanTransport res = new PlanTransport();
-        List<Train> resTrains = new ArrayList();
+        List<Train> resTrains = new ArrayList<Train>();
         res.setCompagnie(this.compagnie);
         for (Train train : this.trains) {
             resTrains.add(train.clone());
@@ -20,6 +19,7 @@ public class PlanTransport implements IPlanTransportComparable {
         res.setTrains(resTrains);
         return res;
     }
+
     @Override
     public boolean equals(Object obj) {
         PlanTransport plan = (PlanTransport) obj;
@@ -74,8 +74,7 @@ public class PlanTransport implements IPlanTransportComparable {
         this.trains = trains;
     }
 
-    @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {
+    public List<IComparaisonPlanTransport> compare(IPlanTransport autre) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         PlanTransport autrePlanTransport = (PlanTransport) autre;
 
@@ -135,7 +134,7 @@ public class PlanTransport implements IPlanTransportComparable {
         EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport = chercheAjout
                 ? EnumTypeComparaisonPlanTransport.NEW : EnumTypeComparaisonPlanTransport.DELETE;
         Train trainAncien;
-        ComparaisonPlanTransport<IPlanTransportComparable> comparaisonPlanTransport = null;
+        ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = null;
 
         /* Boucle sur les trains de nouveau */
         for (Train trainNouveau : nouveau) {
@@ -153,7 +152,7 @@ public class PlanTransport implements IPlanTransportComparable {
             else if (chercheAjout) {
                 /* On ajoute les résultats du compare des trains */
                 trainAncien = ancien.get(index);
-                res.addAll(trainNouveau.compare(trainAncien));
+//                res.addAll(trainNouveau.compare(trainAncien));
             }
         }
         return res;

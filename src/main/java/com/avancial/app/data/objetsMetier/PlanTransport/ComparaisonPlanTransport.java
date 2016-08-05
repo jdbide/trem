@@ -1,26 +1,22 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.avancial.socle.utils.ListUtils;
-
-public class ComparaisonPlanTransport<T extends IPlanTransportComparable> implements IComparaisonPlanTransport {
+public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComparaisonPlanTransport {
 
     private String numeroTrain;
 
     private String numeroTranche;
 
-    private List<T> ancienFields;
+    private T ancienField;
 
-    private List<T> nouveauFields;
+    private T nouveauField;
 
     private EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport;
 
     public ComparaisonPlanTransport() {
         this.numeroTrain = "";
         this.numeroTranche = "";
-        this.ancienFields = new ArrayList<>();
-        this.nouveauFields = new ArrayList<>();
+        this.ancienField = null;
+        this.nouveauField = null;
         this.typeComparaisonPlanTransport = EnumTypeComparaisonPlanTransport.UNCHANGED;
     }
 
@@ -29,8 +25,10 @@ public class ComparaisonPlanTransport<T extends IPlanTransportComparable> implem
         ComparaisonPlanTransport<T> comparaison = (ComparaisonPlanTransport<T>) obj;
         return this.numeroTrain.equals(comparaison.getNumeroTrain())
                 && this.numeroTranche.equals(comparaison.getNumeroTranche())
-                && ListUtils.compareLists(this.ancienFields, comparaison.getAncienFields())
-                && ListUtils.compareLists(this.nouveauFields, comparaison.getNouveauFields());
+                && this.ancienField.getClass().equals(comparaison.getAncienField().getClass())
+                && this.ancienField.equals(comparaison.getAncienField())
+                && this.nouveauField.getClass().equals(comparaison.getNouveauField().getClass())
+                && this.nouveauField.equals(comparaison.getNouveauField());
     }
 
     public String getNumeroTrain() {
@@ -49,20 +47,20 @@ public class ComparaisonPlanTransport<T extends IPlanTransportComparable> implem
         this.numeroTranche = numeroTranche;
     }
 
-    public List<T> getAncienFields() {
-        return this.ancienFields;
+    public T getAncienField() {
+        return this.ancienField;
     }
 
-    public void setAncienFields(List<T> ancienFields) {
-        this.ancienFields = ancienFields;
+    public void setAncienField(T ancienField) {
+        this.ancienField = ancienField;
     }
 
-    public List<T> getNouveauFields() {
-        return this.nouveauFields;
+    public T getNouveauField() {
+        return this.nouveauField;
     }
 
-    public void setNouveauFields(List<T> nouveauFields) {
-        this.nouveauFields = nouveauFields;
+    public void setNouveauField(T nouveauField) {
+        this.nouveauField = nouveauField;
     }
 
     public EnumTypeComparaisonPlanTransport getTypeComparaisonPlanTransport() {

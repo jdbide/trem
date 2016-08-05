@@ -2,7 +2,7 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 
 public class ComparePlanTransportNew extends AChaineComparePlanTransport {
@@ -11,8 +11,8 @@ public class ComparePlanTransportNew extends AChaineComparePlanTransport {
     // (supprimer les trains passés en new, ceux en delete, puis idem sur les tranches...)
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien,
-            IPlanTransportComparable comparableNouveau) throws Exception {
+    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien,
+            IPlanTransport comparableNouveau) throws Exception {
         PlanTransport pdtAncien = (PlanTransport) comparableAncien;
         PlanTransport pdtNouveau = (PlanTransport) comparableNouveau;
         

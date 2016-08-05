@@ -1,8 +1,9 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.comparePlanTransport.CompareTranche;
@@ -11,9 +12,10 @@ import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 public class CompareTrainOther extends AChaineComparePlanTransport {
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien,
-            IPlanTransportComparable comparableNouveau) throws Exception {
+    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien,
+            IPlanTransport comparableNouveau) throws Exception {
         System.out.println("CompareTrainOther");
+        List<IComparaisonPlanTransport> res = new ArrayList<>();
         Train trainAncien = (Train) comparableAncien;
         Train trainNouveau = (Train) comparableNouveau;
 
@@ -23,7 +25,8 @@ public class CompareTrainOther extends AChaineComparePlanTransport {
                 comparePlanTransport.compare(trancheAncien, trancheNouveau);
             }
         }
-        return this.successeurCompare(comparableAncien, comparableNouveau);
+        res.addAll(this.successeurCompare(comparableAncien, comparableNouveau));
+        return res;
     }
 
 }
