@@ -9,12 +9,12 @@ public class CompareTranche extends AComparePlanTransport {
 
     @Override
     protected void initChaineComparePlanTransport() {
+        IChaineComparePlanTransport chaineCompareTrancheUnchanged = new CompareTrancheUnchanged();
         IChaineComparePlanTransport chaineCompareTrancheModify = new CompareTrancheModify();
         IChaineComparePlanTransport chaineCompareTrancheRegimesplit = new CompareTrancheRegimesplit();
-        IChaineComparePlanTransport chaineCompareTrancheUnchanged = new CompareTrancheUnchanged();
 
+        chaineCompareTrancheUnchanged.setSuccesseur(chaineCompareTrancheModify);
         chaineCompareTrancheModify.setSuccesseur(chaineCompareTrancheRegimesplit);
-        chaineCompareTrancheRegimesplit.setSuccesseur(chaineCompareTrancheUnchanged);
         
         this.chaineComparePlanTransport = chaineCompareTrancheModify;
     }

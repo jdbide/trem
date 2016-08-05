@@ -2,6 +2,7 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
@@ -14,22 +15,19 @@ public class CompareTrancheUnchanged extends ACompareTranche {
             throws Exception {
         System.out.println("CompareTrancheUnchanged");
         List<IComparaisonPlanTransport> res = new ArrayList<>();
-        Tranche trancheAncien = (Tranche) comparableAncien;
-        Tranche trancheNouveau = (Tranche) comparableNouveau;
 
-        /* Boucle sur les attributs de trancheNouveau */
-        for (Class<?> attribut : trancheNouveau.getAttributs().keySet()) {
-            res.addAll(this.compareAttributLists(EnumTypeComparaisonPlanTransport.UNCHANGED,
-                    trancheNouveau.getNumeroTranche(), trancheAncien.getAttributsField(attribut),
-                    trancheNouveau.getAttributsField(attribut)));
-        }
+        /* On récupère les résultats du ou des successeurs */
+        res.addAll(this.successeurCompare(comparableAncien, comparableNouveau));
 
         /*
-         * Si tous les tests de regimesplit sont vrais, pas besoin de continuer
-         * la chaîne
+         * Si la liste est vide, c'est qu'aucun attribut n'est modifié : la
+         * tranche est inchangée
          */
-        if (this.attributRestant) {
-            res.addAll(this.successeurCompare(comparableAncien, comparableNouveau));
+        if (res.size() == 0) {
+            ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+            comparaisonPlanTransport.setNumeroTranche(((Tranche) comparableNouveau).getNumeroTranche());
+            comparaisonPlanTransport.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+            res.add(comparaisonPlanTransport);
         }
 
         return res;
