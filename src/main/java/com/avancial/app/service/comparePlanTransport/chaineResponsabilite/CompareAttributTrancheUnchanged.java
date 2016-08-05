@@ -2,7 +2,7 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
@@ -10,7 +10,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 
 /**
  * Implémentation de la comparaison UNCHANGED entre deux attributs de Tranche
- * (ils héritent de {@link ARegimeComparable})
+ * (ils héritent de {@link ASousRegimeTranche})
  * 
  * @author heloise.guillemaud
  *
@@ -22,14 +22,14 @@ public class CompareAttributTrancheUnchanged extends AChaineComparePlanTransport
             throws Exception {
         System.out.println("CompareAttributTrancheUnchanged");
         List<IComparaisonPlanTransport> res = new ArrayList<>();
-        ARegimeComparable attributAncien = (ARegimeComparable) comparableAncien;
-        ARegimeComparable attributNouveau = (ARegimeComparable) comparableNouveau;
+        ASousRegimeTranche attributAncien = (ASousRegimeTranche) comparableAncien;
+        ASousRegimeTranche attributNouveau = (ASousRegimeTranche) comparableNouveau;
 
         if (!attributNouveau.getClass().equals(attributAncien.getClass())) {
             throw new Exception("Ne peut pas comparer deux instances de IPlanTransport de classes différentes!");
         }
 
-        ComparaisonPlanTransport<ARegimeComparable> comparaisonPlanTransport = new ComparaisonPlanTransport<ARegimeComparable>();
+        ComparaisonPlanTransport<ASousRegimeTranche> comparaisonPlanTransport = new ComparaisonPlanTransport<ASousRegimeTranche>();
         /*
          * Deux attributs sont inchangés entre deux jeux de données s'ils ont le
          * même régime et la même valeur

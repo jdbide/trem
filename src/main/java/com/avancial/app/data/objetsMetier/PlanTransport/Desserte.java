@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
-public class Desserte extends ARegimeComparable {
+public class Desserte extends ASousRegimeTranche {
 
     private List<GareHoraire> gareHoraires;
 

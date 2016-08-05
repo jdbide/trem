@@ -15,7 +15,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
@@ -97,7 +97,7 @@ public class RemplissageObjMetierTestHibernate {
 
 				List<Object[]> distributions = query.getResultList();
 
-				List<ARegimeComparable> listeDistribution = new ArrayList<ARegimeComparable>();
+				List<ASousRegimeTranche> listeDistribution = new ArrayList<ASousRegimeTranche>();
 
 				/* Remplissage de la liste des distributions */
 				for (Object[] resDistribution : distributions) {
@@ -117,7 +117,7 @@ public class RemplissageObjMetierTestHibernate {
 		Distribution distribution;
 		for (Train train : planTransport.getTrains()) {
 			for (Tranche tranche : train.getTranches()) {
-				for (ARegimeComparable regimeComparable : tranche.getAttributsField(Distribution.class)) {
+				for (ASousRegimeTranche regimeComparable : tranche.getAttributsField(Distribution.class)) {
 				    distribution = (Distribution) regimeComparable;
 					System.out.println("(" + train.getNumeroTrain() + ", " + tranche.getNumeroTranche() + ", "
 							+ tranche.getRegime().getCodeRegime() + ", " + distribution.getIndiceDistribution() + ", "

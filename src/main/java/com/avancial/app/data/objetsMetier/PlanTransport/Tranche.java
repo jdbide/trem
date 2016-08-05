@@ -2,7 +2,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.List;
 
-public class Tranche extends ARegimeComparable {
+public class Tranche extends ASousRegimeTranche {
     private String numeroTranche;
     private EnumTrancheStatut trancheStatut;
     private Regime regime;
@@ -32,7 +32,7 @@ public class Tranche extends ARegimeComparable {
      * @param key
      * @return getAttributs().get(key)
      */
-    public List<? extends ARegimeComparable> getAttributsField(Class<?> key) {
+    public List<? extends ASousRegimeTranche> getAttributsField(Class<?> key) {
         return this.attributs.get(key);
     }
 
@@ -41,9 +41,9 @@ public class Tranche extends ARegimeComparable {
      * 
      * @param value
      */
-    public void addAttributsField(List<ARegimeComparable> value) {
+    public void addAttributsField(List<ASousRegimeTranche> value) {
         if (value.size() > 0) {
-            this.attributs.put((Class<ARegimeComparable>) value.get(0).getClass(), value);
+            this.attributs.put((Class<ASousRegimeTranche>) value.get(0).getClass(), value);
         }
     }
 

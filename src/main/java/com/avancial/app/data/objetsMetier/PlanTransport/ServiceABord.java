@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class ServiceABord extends ARegimeComparable {
+public class ServiceABord extends ASousRegimeTranche {
     private String codeService;
     private EnumClasseService classe;
     private Gare origine;

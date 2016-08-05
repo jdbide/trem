@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class CodeSat extends ARegimeComparable {
+public class CodeSat extends ASousRegimeTranche {
 
     private String codeSat;
 
