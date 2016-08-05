@@ -6,5 +6,5 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable
 
 public interface IComparePlanTransport {
 
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparable1, IPlanTransportComparable comparable2) throws CloneNotSupportedException;
+    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparable1, IPlanTransportComparable comparable2) throws Exception;
 }

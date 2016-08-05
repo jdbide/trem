@@ -13,7 +13,7 @@ public abstract class AComparePlanTransport implements IComparePlanTransport {
     
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparable1,
-            IPlanTransportComparable comparable2) throws CloneNotSupportedException {
+            IPlanTransportComparable comparable2) throws Exception {
         this.initChaineComparePlanTransport();
         return this.chaineComparePlanTransport.compare(comparable1, comparable2);
     }

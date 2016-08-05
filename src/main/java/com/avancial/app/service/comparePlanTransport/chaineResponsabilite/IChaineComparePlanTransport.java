@@ -8,5 +8,5 @@ public interface IChaineComparePlanTransport {
 
     public void setSuccesseur(IChaineComparePlanTransport chaineComparePlanTransport);
     
-    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien, IPlanTransportComparable comparableNouveau) throws CloneNotSupportedException;
+    public List<IComparaisonPlanTransport> compare(IPlanTransportComparable comparableAncien, IPlanTransportComparable comparableNouveau) throws Exception;
 }

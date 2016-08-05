@@ -60,11 +60,24 @@ public class TestComparePlanTransport {
 
     }
 
+    @Test
     public void testChaine() {
-        Train train1 = new Train(null, "1", true);
+        Train train1 = new Train();
+        train1.setNumeroTrain("1");
         List<Train> trains1 = new ArrayList<>();
         trains1.add(train1);
         List<Train> trains2 = new ArrayList<>();
+        trains2.add(train1);
+        
+        Tranche tranche1 = new Tranche();
+        tranche1.setNumeroTranche("10");
+        train1.getTranches().add(tranche1);
+        
+        CodeSat codeSat1 = new CodeSat();
+        codeSat1.setCodeSat("100");
+        List<ARegimeComparable> l = new ArrayList<>();
+        l.add(codeSat1);
+        tranche1.addAttributsField(l);
 
         PlanTransport p1 = new PlanTransport(EnumCompagnies.ES, trains1);
         PlanTransport p2 = new PlanTransport(EnumCompagnies.ES, trains2);
@@ -73,7 +86,7 @@ public class TestComparePlanTransport {
         try {
             comparePlanTransport.compare(p1, p2);
         }
-        catch (CloneNotSupportedException e) {
+        catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -88,6 +101,7 @@ public class TestComparePlanTransport {
         l.add(codeSat);
         mapTranche.put(CodeSat.class, l);
         MapTranche yo = mapTranche.clone();
+        @SuppressWarnings("unused")
         MapTranche you = yo.clone();
         mapTranche.clear();
         System.out.println("cooucou");
@@ -157,7 +171,7 @@ public class TestComparePlanTransport {
         try {
             comparaison = compareTranche.compare(tranche1, tranche2);
         }
-        catch (CloneNotSupportedException e) {
+        catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
