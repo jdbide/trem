@@ -7,8 +7,19 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 
 public abstract class AChaineComparePlanTransport implements IChaineComparePlanTransport {
 
+    /**
+     * Successeur dans la chaîne de responsabilité
+     */
     protected IChaineComparePlanTransport successeur;
-    
+
+    /**
+     * Appelle la comparaison du successeur, et retourne son résultat
+     * 
+     * @param comparableAncien
+     * @param comparableNouveau
+     * @return
+     * @throws Exception
+     */
     protected List<IComparaisonPlanTransport> successeurCompare(IPlanTransport comparableAncien,
             IPlanTransport comparableNouveau) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();

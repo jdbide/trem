@@ -13,6 +13,9 @@ import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 
 public abstract class ACompareTranche extends AChaineComparePlanTransport {
 
+    /**
+     * Indique s'il reste des attributs à tester dans les listes
+     */
     protected boolean attributRestant = false;
 
     /**
@@ -23,11 +26,16 @@ public abstract class ACompareTranche extends AChaineComparePlanTransport {
      * donné trouvée, les éléments correspondants sont retirés des listes (afin
      * qu'on ne les teste pas sur d'autres types de comparaison).
      * 
-     * @param typeComparaisonPlanTransport Type de comparaison cherché
-     * @param numeroTranche Numéro de la tranche à laquelle les attributs appartiennent
-     * @param attributsFieldAncien Liste d'attributs dans la tranche la moins récente
-     * @param attributsFieldNouveau Liste d'attributs dans la tranche la plus récente
-     * @return Liste de {@link IComparaisonPlanTransport} du type typeComparaisonPlanTransport
+     * @param typeComparaisonPlanTransport
+     *            Type de comparaison cherché
+     * @param numeroTranche
+     *            Numéro de la tranche à laquelle les attributs appartiennent
+     * @param attributsFieldAncien
+     *            Liste d'attributs dans la tranche la moins récente
+     * @param attributsFieldNouveau
+     *            Liste d'attributs dans la tranche la plus récente
+     * @return Liste de {@link IComparaisonPlanTransport} du type
+     *         typeComparaisonPlanTransport
      * @throws Exception
      */
     @SuppressWarnings("unchecked")

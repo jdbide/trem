@@ -25,10 +25,24 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
         ComparaisonPlanTransport<T> comparaison = (ComparaisonPlanTransport<T>) obj;
         return this.numeroTrain.equals(comparaison.getNumeroTrain())
                 && this.numeroTranche.equals(comparaison.getNumeroTranche())
-                && this.ancienField.getClass().equals(comparaison.getAncienField().getClass())
-                && this.ancienField.equals(comparaison.getAncienField())
-                && this.nouveauField.getClass().equals(comparaison.getNouveauField().getClass())
-                && this.nouveauField.equals(comparaison.getNouveauField());
+                && this.fieldEquals(this.ancienField, comparaison.getAncienField())
+                && this.fieldEquals(this.nouveauField, comparaison.getNouveauField());
+    }
+
+    /**
+     * Retourne le résultat de la comparaison de deux attributs de comparaison:
+     * <ul>
+     * <li>soit les deux sont nuls, et donc égaux</li>
+     * <li>soit les deux sont non nuls, alors on vérifie qu'ils sont de la même classe et qu'ils sont égaux</li>
+     * <li>soit seulement un des deux est nul, alors ils ne sont pas égaux</li>
+     * </ul>
+     * @param field1
+     * @param field2
+     * @return
+     */
+    private boolean fieldEquals(T field1, T field2) {
+        return (field1 == null && field2 == null) || (!(field1 == null || field2 == null)
+                && field1.getClass().equals(field2.getClass()) && field1.equals(field2));
     }
 
     public String getNumeroTrain() {
