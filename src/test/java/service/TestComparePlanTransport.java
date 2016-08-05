@@ -32,14 +32,14 @@ import junit.framework.Assert;
 
 public class TestComparePlanTransport {
 
-     @Test
+    @Test
     public void testPlanTransport() {
         Train train1 = new Train();
         train1.setNumeroTrain("1");
         List<Train> trains1 = new ArrayList<>();
         trains1.add(train1);
         List<Train> trains2 = new ArrayList<>();
-        
+
         Tranche tranche1 = new Tranche();
         tranche1.setNumeroTranche("10");
         train1.getTranches().add(tranche1);
@@ -55,12 +55,18 @@ public class TestComparePlanTransport {
 
         IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
         try {
-            Assert.assertTrue("Compare DELETE PlanTransport", ListUtils.compareLists(expected, comparePlanTransport.compare(p1, p2)));
+            Assert.assertTrue("Compare DELETE PlanTransport",
+                    ListUtils.compareLists(expected, comparePlanTransport.compare(p1, p2)));
             cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
-            Assert.assertTrue("Compare NEW PlanTransport", ListUtils.compareLists(expected, comparePlanTransport.compare(p2, p1)));
-//            cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
-//            Assert.assertTrue("Compare UNCHANGED PlanTransport", ListUtils.compareLists(expected, comparePlanTransport.compare(p1, p1)));
-//            Assert.assertTrue("Compare UNCHANGED PlanTransport", ListUtils.compareLists(expected, comparePlanTransport.compare(p2, p2)));
+            Assert.assertTrue("Compare NEW PlanTransport",
+                    ListUtils.compareLists(expected, comparePlanTransport.compare(p2, p1)));
+            // cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+            // Assert.assertTrue("Compare UNCHANGED PlanTransport",
+            // ListUtils.compareLists(expected, comparePlanTransport.compare(p1,
+            // p1)));
+            // Assert.assertTrue("Compare UNCHANGED PlanTransport",
+            // ListUtils.compareLists(expected, comparePlanTransport.compare(p2,
+            // p2)));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -100,7 +106,7 @@ public class TestComparePlanTransport {
         }
     }
 
-    // @Test
+//     @Test
     public void testClone() {
         MapTranche mapTranche = new MapTranche();
         List<ARegimeComparable> l = new ArrayList<>();
@@ -109,13 +115,12 @@ public class TestComparePlanTransport {
         l.add(codeSat);
         mapTranche.put(CodeSat.class, l);
         MapTranche yo = mapTranche.clone();
-        @SuppressWarnings("unused")
         MapTranche you = yo.clone();
         mapTranche.clear();
         System.out.println("cooucou");
     }
 
-//    @Test
+     @Test
     public void testTranche() {
         MapTranche mapTranche1 = new MapTranche();
         MapTranche mapTranche2 = new MapTranche();
@@ -126,7 +131,7 @@ public class TestComparePlanTransport {
         /* FareProfile SPLIT */
         List<FareProfile> listFareProfile1 = new ArrayList<>();
         List<FareProfile> listFareProfile2 = new ArrayList<>();
-        /* Repas UNCHENGED */
+        /* Repas UNCHANGED */
         List<Repas> listRepas1 = new ArrayList<>();
         List<Repas> listRepas2 = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
@@ -136,23 +141,26 @@ public class TestComparePlanTransport {
         Date date2 = cal.getTime();
         cal.add(Calendar.DATE, -15);
         Date date3 = cal.getTime();
-        cal.add(Calendar.DATE, 10);
-        Date date4 = cal.getTime();
 
         Regime regimeTranche = new Regime("0", new Date(), new Date());
         Regime regime1 = new Regime("1", date1, date2);
-        Regime regime2 = new Regime("2", date3, date4);
+        Regime regime2 = new Regime("2", date1, date3);
+        Regime regime3 = new Regime("2", date3, date2);
         CodeSat codeSat1 = new CodeSat("1", regime1);
         CodeSat codeSat2 = new CodeSat("2", regime1);
         FareProfile fareProfile1 = new FareProfile("1", regime1);
         FareProfile fareProfile2 = new FareProfile("1", regime2);
+        FareProfile fareProfile3 = new FareProfile("1", regime3);
         Repas repas1 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
         Repas repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
 
         listCodeSat1.add(codeSat1);
         listCodeSat2.add(codeSat2);
+
         listFareProfile1.add(fareProfile1);
         listFareProfile2.add(fareProfile2);
+        listFareProfile2.add(fareProfile3);
+
         listRepas1.add(repas1);
         listRepas2.add(repas2);
 
@@ -181,18 +189,17 @@ public class TestComparePlanTransport {
             comparaison = compareTranche.compare(tranche1, tranche2);
         }
         catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
-        ComparaisonPlanTransport<CodeSat> codeSatExpected = new ComparaisonPlanTransport<>();
+        ComparaisonPlanTransport<ARegimeComparable> codeSatExpected = new ComparaisonPlanTransport<>();
         codeSatExpected.setNumeroTranche("1");
         codeSatExpected.setAncienField(codeSat1);
         codeSatExpected.setNouveauField(codeSat2);
         codeSatExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
 
-        ComparaisonPlanTransport<FareProfile> fareProfileExpected = new ComparaisonPlanTransport<>();
+        ComparaisonPlanTransport<ARegimeComparable> fareProfileExpected = new ComparaisonPlanTransport<>();
         fareProfileExpected.setNumeroTranche("1");
         fareProfileExpected.setAncienField(fareProfile1);
         fareProfileExpected.setNouveauField(fareProfile2);
@@ -206,7 +213,7 @@ public class TestComparePlanTransport {
 
         expected.add(codeSatExpected);
         expected.add(fareProfileExpected);
-//        expected.add(repasExpected);
+        // expected.add(repasExpected);
 
         Assert.assertTrue(ListUtils.compareLists(comparaison, expected));
     }
