@@ -9,6 +9,8 @@ import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanT
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransportComparable;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.comparePlanTransport.CompareAttributTranche;
+import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 
 public class CompareTrancheModify extends AChaineComparePlanTransport {
 
@@ -27,7 +29,7 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
 
         /* Boucle sur les attributs de trancheNouveau */
         for (Class<?> attribut : trancheNouveau.getAttributs().keySet()) {
-            res.addAll(this.compareAttributListsModify(trancheAncien.getAttributsField(attribut),
+            res.addAll(this.compareAttributListsModify(trancheNouveau.getNumeroTranche(), trancheAncien.getAttributsField(attribut),
                     trancheNouveau.getAttributsField(attribut)));
         }
 
@@ -51,13 +53,13 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
      */
     @SuppressWarnings("unchecked")
     private List<IComparaisonPlanTransport> compareAttributListsModify(
+            String numeroTranche,
             List<? extends IPlanTransportComparable> attributsFieldAncien,
             List<? extends IPlanTransportComparable> attributsFieldNouveau) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
 
         ComparaisonPlanTransport<IPlanTransportComparable> comparaisonPlanTransport;
-        List<IPlanTransportComparable> ancien = new ArrayList<>();
-        List<IPlanTransportComparable> nouveau = new ArrayList<>();
+        IComparePlanTransport comparePlanTransport = new CompareAttributTranche();
 
         /* Boucle sur les attributs de nouveau */
         for (Iterator<ARegimeComparable> itRegimeComparableNouveau = (Iterator<ARegimeComparable>) attributsFieldNouveau
@@ -70,8 +72,8 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
                 ARegimeComparable regimeComparableAncien = itRegimeComparableAncien.next();
 
                 /* On compare les attributs de nouveau et ancien deux à deux */
-                List<IComparaisonPlanTransport> resComparaison = regimeComparableNouveau
-                        .compare(regimeComparableAncien);
+                List<IComparaisonPlanTransport> resComparaison = comparePlanTransport.compare(regimeComparableAncien,
+                        regimeComparableNouveau);
 
                 /*
                  * Si on trouve un attribut modifié entre ancien et nouveau, on
@@ -81,6 +83,9 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
                 if (resComparaison.size() > 0
                         && ((ComparaisonPlanTransport<IPlanTransportComparable>) resComparaison.get(0))
                                 .getTypeComparaisonPlanTransport().equals(EnumTypeComparaisonPlanTransport.MODIFY)) {
+                    comparaisonPlanTransport = (ComparaisonPlanTransport<IPlanTransportComparable>) resComparaison.get(0);
+                    comparaisonPlanTransport.setNumeroTranche(numeroTranche);
+                    res.addAll(resComparaison);
 
                     itRegimeComparableAncien.remove();
                     itRegimeComparableNouveau.remove();

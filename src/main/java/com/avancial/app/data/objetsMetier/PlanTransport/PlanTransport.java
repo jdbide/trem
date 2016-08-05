@@ -9,10 +9,9 @@ public class PlanTransport implements IPlanTransportComparable {
     private EnumCompagnies compagnie;
     private List<Train> trains;
 
-    
-    public PlanTransport clone(){
+    public PlanTransport clone() {
         PlanTransport res = new PlanTransport();
-        List<Train> resTrains = new ArrayList();
+        List<Train> resTrains = new ArrayList<Train>();
         res.setCompagnie(this.compagnie);
         for (Train train : this.trains) {
             resTrains.add(train.clone());
@@ -20,6 +19,7 @@ public class PlanTransport implements IPlanTransportComparable {
         res.setTrains(resTrains);
         return res;
     }
+
     @Override
     public boolean equals(Object obj) {
         PlanTransport plan = (PlanTransport) obj;
@@ -74,7 +74,6 @@ public class PlanTransport implements IPlanTransportComparable {
         this.trains = trains;
     }
 
-    @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransportComparable autre) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         PlanTransport autrePlanTransport = (PlanTransport) autre;
