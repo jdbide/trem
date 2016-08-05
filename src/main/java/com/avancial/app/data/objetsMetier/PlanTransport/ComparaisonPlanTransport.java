@@ -25,7 +25,9 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
         ComparaisonPlanTransport<T> comparaison = (ComparaisonPlanTransport<T>) obj;
         return this.numeroTrain.equals(comparaison.getNumeroTrain())
                 && this.numeroTranche.equals(comparaison.getNumeroTranche())
+                && this.ancienField.getClass().equals(comparaison.getAncienField().getClass())
                 && this.ancienField.equals(comparaison.getAncienField())
+                && this.nouveauField.getClass().equals(comparaison.getNouveauField().getClass())
                 && this.nouveauField.equals(comparaison.getNouveauField());
     }
 
