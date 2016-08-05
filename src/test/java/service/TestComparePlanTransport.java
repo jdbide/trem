@@ -60,7 +60,7 @@ public class TestComparePlanTransport {
 
     }
 
-    @Test
+//    @Test
     public void testChaine() {
         Train train1 = new Train();
         train1.setNumeroTrain("1");
@@ -92,7 +92,7 @@ public class TestComparePlanTransport {
         }
     }
 
-    @Test
+//    @Test
     public void testClone() {
         MapTranche mapTranche = new MapTranche();
         List<ARegimeComparable> l = new ArrayList<>();
@@ -107,6 +107,7 @@ public class TestComparePlanTransport {
         System.out.println("cooucou");
     }
 
+    @Test
     public void testTranche() {
         MapTranche mapTranche1 = new MapTranche();
         MapTranche mapTranche2 = new MapTranche();
@@ -179,20 +180,20 @@ public class TestComparePlanTransport {
         List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
         ComparaisonPlanTransport<ARegimeComparable> codeSatExpected = new ComparaisonPlanTransport<>();
         codeSatExpected.setNumeroTranche("1");
-        codeSatExpected.setAncienFields(listCodeSat1);
-        codeSatExpected.setNouveauFields(listCodeSat2);
+        codeSatExpected.setAncienField(codeSat1);
+        codeSatExpected.setNouveauField(codeSat2);
         codeSatExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
 
         ComparaisonPlanTransport<ARegimeComparable> fareProfileExpected = new ComparaisonPlanTransport<>();
         fareProfileExpected.setNumeroTranche("1");
-        fareProfileExpected.setAncienFields(listFareProfile1);
-        fareProfileExpected.setNouveauFields(listFareProfile2);
+        fareProfileExpected.setAncienField(fareProfile1);
+        fareProfileExpected.setNouveauField(fareProfile2);
         fareProfileExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
         
         ComparaisonPlanTransport<ARegimeComparable> repasExpected = new ComparaisonPlanTransport<>();
         repasExpected.setNumeroTranche("1");
-        repasExpected.setAncienFields(listRepas1);
-        repasExpected.setNouveauFields(listRepas2);
+        repasExpected.setAncienField(repas1);
+        repasExpected.setNouveauField(repas2);
         repasExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
         
         expected.add(codeSatExpected);

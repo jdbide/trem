@@ -81,15 +81,6 @@ public class CompareTrancheModify extends AChaineComparePlanTransport {
                 if (resComparaison.size() > 0
                         && ((ComparaisonPlanTransport<IPlanTransportComparable>) resComparaison.get(0))
                                 .getTypeComparaisonPlanTransport().equals(EnumTypeComparaisonPlanTransport.MODIFY)) {
-                    ancien.clear();
-                    ancien.add(regimeComparableAncien);
-                    nouveau.clear();
-                    nouveau.add(regimeComparableNouveau);
-                    comparaisonPlanTransport = new ComparaisonPlanTransport<IPlanTransportComparable>();
-                    comparaisonPlanTransport.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
-                    comparaisonPlanTransport.setAncienFields(ancien);
-                    comparaisonPlanTransport.setNouveauFields(nouveau);
-                    res.add(comparaisonPlanTransport);
 
                     itRegimeComparableAncien.remove();
                     itRegimeComparableNouveau.remove();
