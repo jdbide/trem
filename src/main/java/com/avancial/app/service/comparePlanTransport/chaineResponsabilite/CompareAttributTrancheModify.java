@@ -21,6 +21,9 @@ public class CompareAttributTrancheModify extends AChaineComparePlanTransport {
         ComparaisonPlanTransport<ARegimeComparable> comparaisonPlanTransport = new ComparaisonPlanTransport<ARegimeComparable>();
         if (attributNouveau.getRegime().equals(attributAncien.getRegime()) && !attributNouveau.equals(attributAncien)) {
             comparaisonPlanTransport.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
+            comparaisonPlanTransport.setAncienField(attributAncien);
+            comparaisonPlanTransport.setNouveauField(attributNouveau);
+            res.add(comparaisonPlanTransport);
             return res;
         }
         return this.successeurCompare(attributAncien, attributNouveau);
