@@ -60,7 +60,7 @@ public class TestComparePlanTransport {
 
     }
 
-    @Test
+//    @Test
     public void testChaine() {
         Train train1 = new Train();
         train1.setNumeroTrain("1");
@@ -92,7 +92,7 @@ public class TestComparePlanTransport {
         }
     }
 
-    @Test
+
     public void testClone() {
         MapTranche mapTranche = new MapTranche();
         List<ARegimeComparable> l = new ArrayList<>();
@@ -106,7 +106,7 @@ public class TestComparePlanTransport {
         mapTranche.clear();
         System.out.println("cooucou");
     }
-
+    @Test
     public void testTranche() {
         MapTranche mapTranche1 = new MapTranche();
         MapTranche mapTranche2 = new MapTranche();
@@ -127,23 +127,27 @@ public class TestComparePlanTransport {
         Date date2 = cal.getTime();
         cal.add(Calendar.DATE, -15);
         Date date3 = cal.getTime();
-        cal.add(Calendar.DATE, 10);
-        Date date4 = cal.getTime();
+
 
         Regime regimeTranche = new Regime("0", new Date(), new Date());
         Regime regime1 = new Regime("1", date1, date2);
-        Regime regime2 = new Regime("2", date3, date4);
+        Regime regime2 = new Regime("2", date1, date3);
+        Regime regime3 = new Regime("3", date3, date2);
         ARegimeComparable codeSat1 = new CodeSat("1", regime1);
         ARegimeComparable codeSat2 = new CodeSat("2", regime1);
         ARegimeComparable fareProfile1 = new FareProfile("1", regime1);
         ARegimeComparable fareProfile2 = new FareProfile("1", regime2);
+        ARegimeComparable fareProfile3 = new FareProfile("1", regime3);
         ARegimeComparable repas1 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
         ARegimeComparable repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
 
         listCodeSat1.add(codeSat1);
         listCodeSat2.add(codeSat2);
+
         listFareProfile1.add(fareProfile1);
         listFareProfile2.add(fareProfile2);
+        listFareProfile2.add(fareProfile3);
+        
         listRepas1.add(repas1);
         listRepas2.add(repas2);
 
