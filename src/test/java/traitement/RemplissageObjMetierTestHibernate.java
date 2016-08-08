@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
@@ -102,7 +102,7 @@ public class RemplissageObjMetierTestHibernate {
       System.out.println("RESULTAT DES (Train, Tranche, RegimeDistribution, IndiceDistribution) ");
       for (Train tra : planTransport.getTrains()) {
          for (Tranche trch : tra.getTranches()) {
-            for (ARegimeComparable distribution : trch.getAttributsField(Distribution.class)) {
+            for (ASousRegimeTranche distribution : trch.getAttributsField(Distribution.class)) {
                System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + distribution.getRegime().getCodeRegime() + ", " + ((Distribution) distribution).getIndiceDistribution() + ")");
             }
          }
@@ -110,7 +110,7 @@ public class RemplissageObjMetierTestHibernate {
       System.out.println("RESULTAT DES (Train, Tranche, RegimeEqpType, EqpType) ");
       for (Train tra : planTransport.getTrains()) {
          for (Tranche trch : tra.getTranches()) {
-            for (ARegimeComparable typeEquipement : trch.getAttributsField(TypeEquipement.class)) {
+            for (ASousRegimeTranche typeEquipement : trch.getAttributsField(TypeEquipement.class)) {
                System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + typeEquipement.getRegime().getCodeRegime() + ", " + ((TypeEquipement) typeEquipement).getTypeEquipement() + ")");
             }
          }
