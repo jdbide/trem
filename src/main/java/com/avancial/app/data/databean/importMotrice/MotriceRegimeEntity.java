@@ -298,4 +298,19 @@ public class MotriceRegimeEntity {
         this.motriceRegimeMealType = motriceRegimeMealType;
     }
 
+   /**
+    * @return the motriceRegimeOD
+    */
+   public List<MotriceRegimeODEntity> getMotriceRegimeOD() {
+      return motriceRegimeOD;
+   }
+
+   /**
+    * @param motriceRegimeOD
+    *           the motriceRegimeOD to set
+    */
+   public void setMotriceRegimeOD(List<MotriceRegimeODEntity> motriceRegimeOD) {
+      this.motriceRegimeOD = motriceRegimeOD;
+   }
+    
 }

@@ -25,9 +25,14 @@ import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
+import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.MapTranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
+import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
+import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
+import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
@@ -67,7 +72,7 @@ public class RemplissageObjMetierTestHibernate {
       /* Creation du plan de transport */
       PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
 
-      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t where idMotriceTrainTranche = 1", MotriceTrainTrancheEntity.class);
+      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t where t.idMotriceTrainTranche = 1", MotriceTrainTrancheEntity.class);
 
       List<MotriceTrainTrancheEntity> trainsTranches = query.getResultList();
       Train train = new Train();
@@ -83,12 +88,11 @@ public class RemplissageObjMetierTestHibernate {
          atomicTranche.get().setNumeroTranche(resTrainTranche.getTrancheNumberMotriceTrainTranche());
 
          List<MotriceRegimeEntity> regimeEntities = resTrainTranche.getMotriceRegimeEntities();
-
          for (MotriceRegimeEntity regime : regimeEntities) {
             ITraiteObjetMetier traiteObjetMetier = traiteObjetMetierRegimeFactory.getTraiteMotriceRegime(regime.getMotriceRefRegimeType().getIdMotriceRefRegimeType());
             traiteObjetMetier.traite(atomicTranche, regime);
          }
-
+         
          train.getTranches().add(atomicTranche.get());
          planTransport.getTrains().add(train);
          lastTrainNumber = resTrainTranche.getTrainNumberMotriceTrainTranche();
@@ -112,6 +116,54 @@ public class RemplissageObjMetierTestHibernate {
          for (Tranche trch : tra.getTranches()) {
             for (ASousRegimeTranche typeEquipement : trch.getAttributsField(TypeEquipement.class)) {
                System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + typeEquipement.getRegime().getCodeRegime() + ", " + ((TypeEquipement) typeEquipement).getTypeEquipement() + ")");
+            }
+         }
+      }
+      System.out.println("RESULTAT DES (Train, Tranche, RegimeFareProfile, FareProfile) ");
+      for (Train tra : planTransport.getTrains()) {
+         for (Tranche trch : tra.getTranches()) {
+            for (ASousRegimeTranche fareProfile : trch.getAttributsField(FareProfile.class)) {
+               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + fareProfile.getRegime().getCodeRegime() + ", " + ((FareProfile) fareProfile).getFareProfileCode() + ")");
+            }
+         }
+      }
+      System.out.println("RESULTAT DES (Train, Tranche, RegimeCodeSat, CodeSat) ");
+      for (Train tra : planTransport.getTrains()) {
+         for (Tranche trch : tra.getTranches()) {
+            for (ASousRegimeTranche codeSat : trch.getAttributsField(CodeSat.class)) {
+               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + codeSat.getRegime().getCodeRegime() + ", " + ((CodeSat) codeSat).getCodeSat() + ")");
+            }
+         }
+      }
+      System.out.println("RESULTAT DES (Train, Tranche, RegimeOD, Origine, Destination) ");
+      for (Train tra : planTransport.getTrains()) {
+         for (Tranche trch : tra.getTranches()) {
+            for (ASousRegimeTranche origineDestination : trch.getAttributsField(OrigineDestination.class)) {
+               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + origineDestination.getRegime().getCodeRegime() + ", " + ((OrigineDestination) origineDestination).getOrigine().getCodeGare() + ", " + ((OrigineDestination) origineDestination).getDestination().getCodeGare() + ")");
+            }
+         }
+      }
+      System.out.println("RESULTAT DES (Train, Tranche, RegimeMeal, HeureDebut, HeureFin) ");
+      for (Train tra : planTransport.getTrains()) {
+         for (Tranche trch : tra.getTranches()) {
+            for (ASousRegimeTranche meal : trch.getAttributsField(Repas.class)) {
+               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + meal.getRegime().getCodeRegime() + ", " + ((Repas) meal).getHoraire().getHoraireDebut() + ", " + ((Repas) meal).getHoraire().getHoraireFin() + ")");
+            }
+         }
+      }
+      System.out.println("RESULTAT DES (Train, Tranche, RegimeRestriction, OrigineRestriction, DestinationRestriction) ");
+      for (Train tra : planTransport.getTrains()) {
+         for (Tranche trch : tra.getTranches()) {
+            for (ASousRegimeTranche restriction : trch.getAttributsField(Restriction.class)) {
+               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + restriction.getRegime().getCodeRegime() + ", " + ((Restriction) restriction).getOrigine().getCodeGare() + ", " + ((Restriction) restriction).getDestination().getCodeGare() + ")");       
+            }
+         }
+      }
+      System.out.println("RESULTAT DES (Train, Tranche, RegimeService, TypeService, OrigineService, DestinationService) ");
+      for (Train tra : planTransport.getTrains()) {
+         for (Tranche trch : tra.getTranches()) {
+            for (ASousRegimeTranche service : trch.getAttributsField(ServiceABord.class)) {
+               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + service.getRegime().getCodeRegime() + ", " + ((ServiceABord) service).getCodeService() + ", " + ((ServiceABord) service).getOrigine().getCodeGare() + ", " + ((ServiceABord) service).getDestination().getCodeGare() + ")");       
             }
          }
       }
