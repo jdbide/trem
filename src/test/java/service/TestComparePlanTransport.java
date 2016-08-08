@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.junit.Test;
-import com.avancial.app.data.objetsMetier.PlanTransport.ARegimeComparable;
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
@@ -86,7 +86,7 @@ public class TestComparePlanTransport {
 
         CodeSat codeSat1 = new CodeSat();
         codeSat1.setCodeSat("100");
-        List<ARegimeComparable> l = new ArrayList<>();
+        List<ASousRegimeTranche> l = new ArrayList<>();
         l.add(codeSat1);
         tranche1.addAttributsField(l);
 
@@ -106,9 +106,9 @@ public class TestComparePlanTransport {
     // @Test
     public void testClone() {
         MapTranche mapTranche = new MapTranche();
-        List<ARegimeComparable> l = new ArrayList<>();
+        List<ASousRegimeTranche> l = new ArrayList<>();
         Regime regime = new Regime("0", new Date(), new Date());
-        ARegimeComparable codeSat = new CodeSat("1", regime);
+        ASousRegimeTranche codeSat = new CodeSat("1", regime);
         l.add(codeSat);
         mapTranche.put(CodeSat.class, l);
         MapTranche yo = mapTranche.clone();
@@ -190,13 +190,13 @@ public class TestComparePlanTransport {
         }
 
         List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
-        ComparaisonPlanTransport<ARegimeComparable> codeSatExpected = new ComparaisonPlanTransport<>();
+        ComparaisonPlanTransport<ASousRegimeTranche> codeSatExpected = new ComparaisonPlanTransport<>();
         codeSatExpected.setNumeroTranche("1");
         codeSatExpected.setAncienField(codeSat1);
         codeSatExpected.setNouveauField(codeSat2);
         codeSatExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
 
-        ComparaisonPlanTransport<ARegimeComparable> fareProfileExpected = new ComparaisonPlanTransport<>();
+        ComparaisonPlanTransport<ASousRegimeTranche> fareProfileExpected = new ComparaisonPlanTransport<>();
         fareProfileExpected.setNumeroTranche("1");
         fareProfileExpected.setAncienField(fareProfile1);
         fareProfileExpected.setNouveauField(fareProfile2);

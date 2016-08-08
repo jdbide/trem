@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class Distribution extends ARegimeComparable {
+public class Distribution extends ASousRegimeTranche {
 
     private String indiceDistribution;
 

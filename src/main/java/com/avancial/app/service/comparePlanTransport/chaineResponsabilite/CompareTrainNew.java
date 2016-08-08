@@ -6,7 +6,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTranspor
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 
-public class CompareTrainNew extends ACompareTrainType {
+public class CompareTrainNew extends ACompareTrainNewDelete {
 
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
@@ -15,6 +15,10 @@ public class CompareTrainNew extends ACompareTrainType {
         Train trainAncien = (Train) comparableAncien;
         Train trainNouveau = (Train) comparableNouveau;
 
+        /*
+         * Comparaison des listes de tranches pour détecter les nouvelles dans
+         * trainNouveau par rapport à trainAncien
+         */
         List<IComparaisonPlanTransport> res = this.compareTrancheLists(EnumTypeComparaisonPlanTransport.NEW,
                 trainNouveau.getNumeroTrain(), trainAncien.getTranches(), trainNouveau.getTranches());
 

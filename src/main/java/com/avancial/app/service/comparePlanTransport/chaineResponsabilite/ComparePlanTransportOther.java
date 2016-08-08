@@ -10,6 +10,13 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.service.comparePlanTransport.CompareTrain;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 
+/**
+ * Appelle la chaîne de comparaison entre deux trains que l'on retrouve dans
+ * deux plans de transport.
+ * 
+ * @author heloise.guillemaud
+ *
+ */
 public class ComparePlanTransportOther extends AChaineComparePlanTransport {
 
     @Override

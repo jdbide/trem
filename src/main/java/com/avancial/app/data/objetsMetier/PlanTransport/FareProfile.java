@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class FareProfile extends ARegimeComparable {
+public class FareProfile extends ASousRegimeTranche {
 
     private String fareProfileCode;
 

@@ -1,10 +1,18 @@
 package com.avancial.app.service.comparePlanTransport;
 
+import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.ComparePlanTransportDelete;
 import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.ComparePlanTransportNew;
 import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.ComparePlanTransportOther;
 import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.IChaineComparePlanTransport;
 
+/**
+ * Création de la chaîne de responsabilité pour comparer deux
+ * {@link PlanTransport}
+ * 
+ * @author heloise.guillemaud
+ *
+ */
 public class ComparePlanTransport extends AComparePlanTransport {
 
     @Override
@@ -15,7 +23,7 @@ public class ComparePlanTransport extends AComparePlanTransport {
 
         chaineComparePlanTransportNew.setSuccesseur(chaineComparePlanTransportDelete);
         chaineComparePlanTransportDelete.setSuccesseur(chaineComparePlanTransportOther);
-        
+
         this.chaineComparePlanTransport = chaineComparePlanTransportNew;
     }
 

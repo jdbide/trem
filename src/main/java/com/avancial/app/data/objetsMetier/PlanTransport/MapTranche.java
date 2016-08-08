@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapTranche extends HashMap<Class<?>, List<? extends ARegimeComparable>> {
+public class MapTranche extends HashMap<Class<?>, List<? extends ASousRegimeTranche>> {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,8 +15,8 @@ public class MapTranche extends HashMap<Class<?>, List<? extends ARegimeComparab
      *         list values is not equal to the key.
      */
     @Override
-    public List<? extends ARegimeComparable> put(Class<?> key,
-            List<? extends ARegimeComparable> value) {
+    public List<? extends ASousRegimeTranche> put(Class<?> key,
+            List<? extends ASousRegimeTranche> value) {
         if (value != null && value.size() > 0 && value.get(0).getClass().equals(key)) {
             return super.put(key, value);
         }
@@ -28,8 +28,8 @@ public class MapTranche extends HashMap<Class<?>, List<? extends ARegimeComparab
         test.clone();
         MapTranche mapTranche = new MapTranche();
         for (Class<?> comparable : this.keySet()) {
-            List<ARegimeComparable> objects = new ArrayList<>();
-            for (ARegimeComparable object : this.get(comparable)) {
+            List<ASousRegimeTranche> objects = new ArrayList<>();
+            for (ASousRegimeTranche object : this.get(comparable)) {
                 objects.add(object.clone());
             }
             mapTranche.put(comparable, objects);

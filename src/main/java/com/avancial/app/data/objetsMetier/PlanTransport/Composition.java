@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.avancial.socle.utils.ListUtils;
 
-public class Composition extends ARegimeComparable {
+public class Composition extends ASousRegimeTranche {
 
     private String codeClasse;
 

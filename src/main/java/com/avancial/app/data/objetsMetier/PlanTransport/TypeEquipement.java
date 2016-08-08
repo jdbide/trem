@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class TypeEquipement extends ARegimeComparable {
+public class TypeEquipement extends ASousRegimeTranche {
 
     private String typeEquipement;
 

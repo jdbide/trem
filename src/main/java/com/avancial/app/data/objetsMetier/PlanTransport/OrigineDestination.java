@@ -1,6 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
-public class OrigineDestination extends ARegimeComparable {
+public class OrigineDestination extends ASousRegimeTranche {
 
     private Gare origine;
 
