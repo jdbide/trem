@@ -28,7 +28,7 @@ public class MotriceRegimeCompositionCoachEntity {
     @Column(length = 3, nullable = false)
     private String coachNumberMotriceRegimeCompositionCoach;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegimeComposition")
     @ForeignKey(name = "FK_motrice_regime_composition_coach_idMotriceRegimeComposition")
     private MotriceRegimeCompositionEntity motriceRegimeComposition;

@@ -31,7 +31,7 @@ public class MotriceRegimeMealTypeEntity {
     @Column(length = 8, nullable = false)
     private String endServiceHourMotriceRegimeMealType;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_mealtype_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;

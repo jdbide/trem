@@ -30,7 +30,7 @@ public class MotriceRegimeStopEntity {
     @Column(length = 5, nullable = false)
     private String stationMotriceRegimeStop;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_stop_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;

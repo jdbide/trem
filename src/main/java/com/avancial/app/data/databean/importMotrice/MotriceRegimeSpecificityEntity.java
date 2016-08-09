@@ -32,7 +32,7 @@ public class MotriceRegimeSpecificityEntity {
     @Column(length = 2, nullable = false)
     private String stateCodeMotriceRegimeSpecificity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_specificity_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;

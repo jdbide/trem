@@ -26,7 +26,7 @@ public class MotriceRegimeSatcodeEntity {
     @Column(length = 3, nullable = false)
     private String satCodeMotriceRegimeSatcode;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_satcode_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;
