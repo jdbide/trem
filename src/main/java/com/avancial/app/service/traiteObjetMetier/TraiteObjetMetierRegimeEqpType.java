@@ -20,7 +20,7 @@ public class TraiteObjetMetierRegimeEqpType implements ITraiteObjetMetier {
          listeTypeEquipement = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeEqpTypeEntity regimeEqpType : regime.getMotriceRegimeEqpType()) {
-         listeTypeEquipement.add(new TypeEquipement(regimeEqpType.getEqpTypeRegimeEqpType(), new Regime(regime.getPeriodMotriceRegime(), null, null)));
+         listeTypeEquipement.add(new TypeEquipement(regimeEqpType.getEqpTypeRegimeEqpType(), new Regime(regime.getPeriodMotriceRegime())));
       }
       atomicTranche.get().addAttributsField(listeTypeEquipement);
    }

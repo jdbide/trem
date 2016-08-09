@@ -22,7 +22,7 @@ public class TraiteObjetMetierRegimeDistribution implements ITraiteObjetMetier {
          listeDistributions = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeDistributionEntity regimeDistribution : regime.getMotriceRegimeDistribution()) {
-         listeDistributions.add(new Distribution(regimeDistribution.getDistribIndexMotriceRegimeDistribution(), new Regime(regime.getPeriodMotriceRegime(), null, null)));
+         listeDistributions.add(new Distribution(regimeDistribution.getDistribIndexMotriceRegimeDistribution(), new Regime(regime.getPeriodMotriceRegime())));
       }
       atomicTranche.get().addAttributsField(listeDistributions);
    }

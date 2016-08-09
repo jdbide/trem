@@ -23,7 +23,7 @@ public class TraiteObjetMetierRegimeSATCode implements ITraiteObjetMetier {
          listeCodeSat = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeSatcodeEntity regimeCodeSat : regime.getMotriceRegimeSatcode()) {
-         listeCodeSat.add(new CodeSat(regimeCodeSat.getSatCodeMotriceRegimeSatcode(), new Regime(regime.getPeriodMotriceRegime(), null, null)));
+         listeCodeSat.add(new CodeSat(regimeCodeSat.getSatCodeMotriceRegimeSatcode(), new Regime(regime.getPeriodMotriceRegime())));
       }
       atomicTranche.get().addAttributsField(listeCodeSat);
    }

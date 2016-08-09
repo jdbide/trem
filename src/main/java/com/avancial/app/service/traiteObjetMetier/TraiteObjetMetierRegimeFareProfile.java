@@ -22,7 +22,7 @@ public class TraiteObjetMetierRegimeFareProfile implements ITraiteObjetMetier {
          listeFareProfile = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeFareProfileEntity regimeFareProfile : regime.getMotriceRegimeFareProfile()) {
-         listeFareProfile.add(new FareProfile(regimeFareProfile.getFareProfileCodeMotriceRegimeFareProfile(), new Regime(regime.getPeriodMotriceRegime(), null, null)));
+         listeFareProfile.add(new FareProfile(regimeFareProfile.getFareProfileCodeMotriceRegimeFareProfile(), new Regime(regime.getPeriodMotriceRegime())));
       }
       atomicTranche.get().addAttributsField(listeFareProfile);
    }

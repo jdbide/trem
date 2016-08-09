@@ -11,7 +11,7 @@ public class TraiteObjetMetierRegimeTranche implements ITraiteObjetMetier {
 
    @Override
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime) {
-      atomicTranche.get().setRegime(new Regime(regime.getPeriodMotriceRegime(), null, null));
+      atomicTranche.get().setRegime(new Regime(regime.getPeriodMotriceRegime()));
    }
 
 }

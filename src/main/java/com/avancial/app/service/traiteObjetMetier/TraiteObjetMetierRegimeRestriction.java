@@ -23,7 +23,7 @@ public class TraiteObjetMetierRegimeRestriction implements ITraiteObjetMetier {
          listeRestrictions = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeRestrictionEntity regimeRestriction : regime.getMotriceRegimeRestrictions()) {
-         listeRestrictions.add(new Restriction(new Gare(regimeRestriction.getOrigineMotriceRegimeRestriction()), new Gare(regimeRestriction.getDestinationMotriceRegimeRestriction()), null, new Regime(regime.getPeriodMotriceRegime(), null, null)));
+         listeRestrictions.add(new Restriction(new Gare(regimeRestriction.getOrigineMotriceRegimeRestriction()), new Gare(regimeRestriction.getDestinationMotriceRegimeRestriction()), null, new Regime(regime.getPeriodMotriceRegime())));
       }
       atomicTranche.get().addAttributsField(listeRestrictions);
    }

@@ -23,7 +23,7 @@ public class TraiteObjetMetierRegimeService implements ITraiteObjetMetier {
          listeServices = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeServiceEntity regimeService : regime.getMotriceRegimeServices()) {
-         listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(), null, new Gare(regimeService.getOrigMotriceRegimeService()), new Gare(regimeService.getDestMotriceRegimeService()), new Regime(regime.getPeriodMotriceRegime(), null, null)));
+         listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(), null, new Gare(regimeService.getOrigMotriceRegimeService()), new Gare(regimeService.getDestMotriceRegimeService()), new Regime(regime.getPeriodMotriceRegime())));
       }
       atomicTranche.get().addAttributsField(listeServices); 
    }

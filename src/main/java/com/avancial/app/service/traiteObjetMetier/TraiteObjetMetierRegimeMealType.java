@@ -28,7 +28,7 @@ public class TraiteObjetMetierRegimeMealType implements ITraiteObjetMetier {
       }
       for (MotriceRegimeMealTypeEntity regimeMeal : regime.getMotriceRegimeMealType()) {
          try {
-            listeMeal.add(new Repas(null, new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()), formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())), new Regime(regime.getPeriodMotriceRegime(), null, null)));
+            listeMeal.add(new Repas(null, new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()), formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())), new Regime(regime.getPeriodMotriceRegime())));
          } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

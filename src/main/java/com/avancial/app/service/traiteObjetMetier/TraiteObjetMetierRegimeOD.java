@@ -23,7 +23,7 @@ public class TraiteObjetMetierRegimeOD implements ITraiteObjetMetier {
          listeOD = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeODEntity regimeOD : regime.getMotriceRegimeOD()) {
-         listeOD.add(new OrigineDestination(new Gare(regimeOD.getOriMotriceRegimeOD()), new Gare(regimeOD.getDestMotriceRegimeOD()), new Regime(regime.getPeriodMotriceRegime(), null, null)));
+         listeOD.add(new OrigineDestination(new Gare(regimeOD.getOriMotriceRegimeOD()), new Gare(regimeOD.getDestMotriceRegimeOD()), new Regime(regime.getPeriodMotriceRegime())));
       }
       atomicTranche.get().addAttributsField(listeOD);
    }
