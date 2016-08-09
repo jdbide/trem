@@ -2,6 +2,8 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.Date;
 
+import com.avancial.app.utilitaire.DecodageRegime;
+
 public class Regime {
 
     private String codeRegime;
@@ -21,6 +23,14 @@ public class Regime {
         this.codeRegime = codeRegime;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
+    }
+    
+    public Regime(String codeRegime) {
+       super();
+       DecodageRegime decodageRegime = new DecodageRegime();
+       this.codeRegime = codeRegime;
+       this.dateDebut = decodageRegime.dateDebut(codeRegime);
+       this.dateFin = decodageRegime.dateFin(codeRegime);
     }
 
     public Regime clone() {
