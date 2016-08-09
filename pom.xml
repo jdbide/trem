@@ -283,6 +283,22 @@
         		</exclusion>
     		</exclusions>
 		</dependency>
+		<!-- DeltaSpike  : controlling-cdi-containers-in-se-and-ee  -->
+		<dependency>
+		    <groupId>org.apache.deltaspike.core</groupId>
+		    <artifactId>deltaspike-core-impl</artifactId>
+		    <version>1.7.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.deltaspike.cdictrl</groupId>
+		    <artifactId>deltaspike-cdictrl-api</artifactId>
+		    <version>1.7.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.deltaspike.cdictrl</groupId>
+		    <artifactId>deltaspike-cdictrl-weld</artifactId>
+		    <version>1.7.1</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

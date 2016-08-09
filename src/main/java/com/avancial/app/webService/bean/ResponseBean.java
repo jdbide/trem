@@ -3,12 +3,18 @@
  */
 package com.avancial.app.webService.bean;
 
+import java.io.Serializable;
+
 /**
  * @author sebastien.benede
  *
  */
-public class ResponseBean {
+public class ResponseBean implements Serializable {
    
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    private boolean status;
    private String message;
    private Object data;

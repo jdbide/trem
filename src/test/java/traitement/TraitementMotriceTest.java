@@ -3,6 +3,8 @@ package traitement;
 import java.io.File;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -10,6 +12,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.service.JeuDonneeService;
@@ -62,6 +66,12 @@ public class TraitementMotriceTest {
             
             JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
             jeuDonneeEntity.setIdJeuDonnees(2);
+            
+            Query query = this.entityManagerSocle.createQuery("SELECT t FROM CompagnieEnvironnementEntity t where t.idCompagnieEnvironnement = 1");
+            CompagnieEnvironnementEntity compagnieEnvironnement = ((CompagnieEnvironnementEntity) query.getSingleResult());
+            
+            
+            jeuDonneeEntity.setCompagnieEnvironnement(compagnieEnvironnement);
             this.traitementMotrice.setJeuDonneeEntity(jeuDonneeEntity);
 
             try {

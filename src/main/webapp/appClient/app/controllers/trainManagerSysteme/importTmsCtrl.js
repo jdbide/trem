@@ -4,8 +4,8 @@
  * Contrôleur qui gère la page import du chapitre "Train manager systeme", 
  *
  */
-socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "importTmsService",
-                                 function($rootScope, $scope, envService, importTmsService) {
+socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", '$interval',"importTmsService",
+                                 function($rootScope, $scope, envService, $interval, importTmsService) {
 	$scope.title = "Import";
 	/**
 	 * La liste des données à afficher : liste List<ImportTmsDto>
@@ -35,8 +35,15 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "im
 	$scope.startImport =  -1;
 	
 	$scope.urlDownloadFile = envService.read('appWebService') + "/importTms/downloadFile/";
-	
+		
 	$scope.t = 20;
+
+	$scope.progressImport = {
+		endTraitement : null,
+		traitementOk : null,
+		lastMsg : null,
+		msgErr : null,
+	}
 
 	/**
 	 * Constructeur du controlleur, il récupère la liste List<ImportTmsDto>
@@ -48,7 +55,7 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "im
 			}, function() {
 				alert("Erreur serveur!!");
 			}
-		);		
+		);
 	}
 
 	/**
@@ -69,7 +76,7 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "im
 		$scope.disabledButton = false;
 		$scope.startImport = -1;
 	}
-	
+
 	/**
 	 * Suppression d'un element d'un tableau
 	 */
@@ -92,6 +99,40 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "im
 		}
 	}
 
+	function initProgressImport() {
+		progressImport.endTraitement = null;
+		progressImport.traitementOk = null;
+		progressImport.lastMsg = null;
+		progressImport.msgErr = null;
+	}
+
+	function startCheckProgressImport(idTask) {
+		importTmsService.initReponse();
+		$scope.reponse = importTmsService.getReponse();
+		var myInterval = $interval(function() {
+			importTmsService.getProgressImport(idTask)
+			.success(function (data, status, headers, config) {
+            	$scope.progressImport = data.data;
+            	if ($scope.progressImport != null && $scope.progressImport.endTraitement == true && $scope.progressImport.traitementOk == false) {
+            		endImportByData();
+            		$scope.reponse.status = false;
+            		$scope.reponse.message = $scope.progressImport.msgErr;
+            		$interval.cancel(myInterval);
+            	}
+            	else if ($scope.progressImport == null || $scope.progressImport.endTraitement == true && $scope.progressImport.traitementOk == true) {
+            		endImportByData();
+            		$scope.reponse.status = true;
+            		$scope.reponse.message = "Fin de l'import avec succès";
+            		$interval.cancel(myInterval);
+            	}
+            })
+            .error(function (data, status, headers, config) {
+            	endImportByData();
+            	$interval.cancel(myInterval);
+            });
+	    }, 1000);
+	}
+
 	/**
 	 * Lancer le modal pour l'authentification à la BDD Motrice
 	 */
@@ -99,14 +140,14 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "im
 		$scope.currentData = data;
 		$scope.authentificationDb = !$scope.authentificationDb;
 	}
-	
+
 	/**
 	 */
 	$scope.startModalDeleteImportTms = function (data) {
 		$scope.currentDataDelete = data;
 		$scope.deleteImportTms = !$scope.deleteImportTms;
 	}
-	
+
 	/**
 	 */
 	$scope.startModalValidateImportTms = function (data) {
@@ -129,9 +170,16 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "im
 			startImportByData();
 
 			importTmsService.executeImport($scope.currentData).then(function() {
-				$scope.reponse = importTmsService.getReponse();
+				var reponse = importTmsService.getReponse();				
 				$scope.currentData = null;
-				endImportByData();
+				
+				if (reponse.status) {
+					startCheckProgressImport(reponse.data);
+				} else {
+					// Erreur
+					endImportByData();
+					$scope.reponse = importTmsService.getReponse();
+				}
 			}, function() {
 				$scope.reponse = importTmsService.getReponse();
 				$scope.currentData = null;
@@ -153,7 +201,7 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", "im
 
 		//mergeDeleteElementInDatas($scope.datas, $scope.currentDataDelete);
 	}
-	
+
 	$scope.executeValidateDraft = function () {
 		$scope.validateImportTms = !$scope.validateImportTms;
 		/*Aprés reponse du webService*/

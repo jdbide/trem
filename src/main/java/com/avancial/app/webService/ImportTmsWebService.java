@@ -3,6 +3,7 @@ package com.avancial.app.webService;
 import java.io.File;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -18,11 +19,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.apache.deltaspike.cdise.api.ContextControl;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.json.simple.JSONArray;
 
+import com.avancial.app.data.Task;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.service.ImportTmsService;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
+import com.avancial.app.traitement.TraitementImportJeuDonneesImp;
 import com.avancial.app.webService.bean.ResponseBean;
 
 /**
@@ -39,15 +44,16 @@ import com.avancial.app.webService.bean.ResponseBean;
 @RequestScoped
 public class ImportTmsWebService {
    @Context private HttpServletRequest request;
-   
+
    @Inject
    private TraitementImportJeuDonnees traitementImportJeuDonnees;
-   
-   private static boolean traitementEnCours;// gestion de l'unicité du traitement
-   
+
+   @Inject
+   private TraitementImportJeuDonneesImp traitementImportJeuDonneesImp;
+
    @Inject
    private ImportTmsService importTmsService;
-   
+
    public ImportTmsWebService() {
       // TODO Auto-generated constructor stub
    }
@@ -64,38 +70,7 @@ public class ImportTmsWebService {
       jsonArray.addAll(importTmsService.getAllImportTmsActif());
       return Response.status(200).entity(jsonArray).build();
    }
-   
-   /**
-    * exécuter un import d'un nouveau jeux de données
-    * @param importTmsDto
-    * @return
-    * @throws Exception
-    */
-   @POST
-   @Produces({ MediaType.APPLICATION_JSON })
-   @Consumes({ MediaType.APPLICATION_JSON })   
-   public Response postImportTms(ImportTmsDto importTmsDto) throws Exception {
-      ResponseBean responseBean = new ResponseBean();
-      
-      if (!traitementEnCours) {// un seul traitement à la fois
-         traitementEnCours = true;
-         
-         this.traitementImportJeuDonnees.setImportJeuDonneesDto(importTmsDto);
-         this.traitementImportJeuDonnees.execute();
-         traitementEnCours = false;
 
-         responseBean.setStatus(this.traitementImportJeuDonnees.isTraitementOk());
-         responseBean.setMessage(this.traitementImportJeuDonnees.isTraitementOk() ? "L'import a été réalisé avec succès !" : "L'import ne s'est pas terminé correctement !");
-      } else {
-//         String userName = this.servletRequest.getUserPrincipal().getName();
-         responseBean.setStatus(false);
-//         responseBean.setMessage(new StringBuilder("Traitement déjà lancé par ").append(userName).toString());
-         responseBean.setMessage("Un import est déjà en cours !");
-      }
-
-      return Response.status(200).entity(responseBean).build();
-   }
-   
    /**
     * exécuter un import d'un nouveau jeux de données
     * @param importTmsDto
@@ -161,19 +136,79 @@ public class ImportTmsWebService {
       }
    }
    
-   @GET
-   @Path("hamza")
+   /**
+    * exécuter un import d'un nouveau jeux de données
+    * @param importTmsDto
+    * @return
+    * @throws Exception
+    */
+   @POST
    @Produces({ MediaType.APPLICATION_JSON })
-   public Response hamza() throws Exception {
+   @Consumes({ MediaType.APPLICATION_JSON })
+   public Response postImportTms(final ImportTmsDto importTmsDto) throws Exception {
       ResponseBuilder responseBuilder = null;
-      try {
-         //Thread thread = new Thread(){};
+      final ResponseBean responseBean = new ResponseBean();
+      Long idNewThread;
 
-         responseBuilder = Response.ok();
+      try {
+         // un seul traitement à la fois
+         if (!Task.isActiveTask()) {
+            Thread thread = new Thread() {
+               public void run() {
+                  try {
+                     Task.addTask(Thread.currentThread().getId(), "Start import");
+                     
+                     ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
+                     // this will implicitly bind a new RequestContext to your current thread
+                     ctxCtrl.startContext(SessionScoped.class);
+                     TraitementImportJeuDonneesImp globalResultHolder = BeanProvider.getContextualReference(TraitementImportJeuDonneesImp.class);
+                     globalResultHolder.setImportJeuDonneesDto(importTmsDto);
+                     globalResultHolder.setIdTask(Thread.currentThread().getId());
+                     globalResultHolder.execute();
+                     Task.finishOkTask(Thread.currentThread().getId());
+                  } catch (Exception e) {
+                     Task.finishKoTask(Thread.currentThread().getId(), "Echec de l'import");
+                  }
+               }
+            };
+
+            idNewThread  = thread.getId();
+            responseBean.setData((String)Long.toString(idNewThread));
+            thread.start();
+
+            responseBean.setStatus(true);
+            responseBean.setMessage("Traitement start");
+         } else {
+            responseBean.setStatus(false);
+            responseBean.setMessage("Un import est déjà en cours !");
+         }
+         
+         responseBuilder = Response.ok((Object) responseBean);
       } catch (Exception e) {
          e.printStackTrace();
          responseBuilder = Response.status(400);
+      } finally {
+         return responseBuilder.build();
+      }
+   }
+   
+   @POST
+   @Path("progressImport")
+   @Produces({ MediaType.APPLICATION_JSON })
+   @Consumes({ MediaType.APPLICATION_JSON })
+   public Response progressImport (Long idTask) throws Exception {
+      ResponseBuilder responseBuilder = null;
+      try {
+         ResponseBean responseBean = new ResponseBean();
+         responseBean.setData(Task.getReponseTask(idTask));
          
+         if (Task.getReponseTask(idTask) != null && Task.getReponseTask(idTask).getEndTraitement())
+            Task.removeTask(idTask);
+         
+         responseBuilder = Response.ok(responseBean);
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBuilder = Response.status(400);
       } finally {
          return responseBuilder.build();
       }

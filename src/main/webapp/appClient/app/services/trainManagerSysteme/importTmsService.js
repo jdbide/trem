@@ -10,6 +10,20 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
 		message : null,
 		data : null
 	};
+	
+	var progressImport= {
+		endTraitement : null,
+		traitementOk : null,
+		lastMsg : null,
+		msgErr : null,
+	}
+	
+	function initProgressImport() {
+		progressImport.endTraitement = null;
+		progressImport.traitementOk = null;
+		progressImport.lastMsg = null;
+		progressImport.msgErr = null;
+	}
 
 	function initDataDraft(currentData) {
     	currentData.dateImportJeuDonneesBrouillon = null;
@@ -48,12 +62,14 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
             .success(function (data, status, headers, config) {
             	reponse.status = data.status;
             	reponse.message = data.message;
+            	reponse.data = data.data;
             	loadingService.hide(); 
                 deffered.resolve();
             })
             .error(function (data, status, headers, config) {
             	reponse.message = data.message;
             	reponse.status = data.status;
+            	reponse.data = data.data;
             	loadingService.hide();
                 deffered.reject();
         });
@@ -97,8 +113,7 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
             	reponse.data = data.data;
             	loadingService.hide(); 
                 deffered.resolve();
-            })
-            .error(function (data, status, headers, config) {
+            }).error(function (data, status, headers, config) {
             	reponse.message = data.message;
             	reponse.status = data.status;
             	loadingService.hide();
@@ -107,9 +122,26 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
 
         return deffered.promise;
     }
+    
+    self.getProgressImport = function (idTask) {
+    	//var deffered  = $q.defer();
+    	
+        var promissJsonFactory = jsonFactory.postJson("webService/app/importTms/progressImport", idTask);
+        return promissJsonFactory;
+    }
+    
+    self.getResponseProgressImport = function () {
+    	return progressImport;
+    }
 
     self.getReponse = function () {
     	return reponse;
+    }
+    
+    self.initReponse = function () {
+    	reponse.status=null;
+    	reponse.message=null;
+    	reponse.data=null;
     }
 
     return self;

@@ -31,7 +31,6 @@ public abstract class AJob implements Job, IJob {
    @Override
    public void execute(JobExecutionContext context) throws JobExecutionException {
       try {
-
          this.executeJob();
 
       } catch (Exception | ASocleException e) {

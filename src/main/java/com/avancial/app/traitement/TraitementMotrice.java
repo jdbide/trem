@@ -1,5 +1,6 @@
 package com.avancial.app.traitement;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,7 +23,12 @@ import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
-public class TraitementMotrice extends ATraitementLogDetail {
+public class TraitementMotrice extends ATraitementLogDetail implements Serializable {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+
    private JeuDonneeEntity               jeuDonneeEntity;
 
    @Inject

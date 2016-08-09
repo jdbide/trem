@@ -56,7 +56,6 @@ public abstract class ATraitementLog extends ATraitement {
       this.logBean.setLibelleUserLogTraitement(this.userTraitement);
       this.logBean.setMessageTraitement("Le traitement a démarré");
       this.saveLog();
-
    }
 
    /**
@@ -67,7 +66,6 @@ public abstract class ATraitementLog extends ATraitement {
       this.entityManagerSocle.persist(this.logBean);
       this.entityManagerSocle.flush();
       this.entityManagerSocle.getTransaction().commit();
-
    }
 
    /**

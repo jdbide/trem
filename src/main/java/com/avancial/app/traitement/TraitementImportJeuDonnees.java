@@ -3,8 +3,9 @@
  */
 package com.avancial.app.traitement;
 
+import java.io.Serializable;
 import java.util.Date;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -16,20 +17,24 @@ import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.utilitaire.SchemaMotrice;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 /**
  * Traitement qui importe un jeu de données.
  *
  */
-@RequestScoped
-public class TraitementImportJeuDonnees extends ATraitementLogDetail {
-    @Inject
+@SessionScoped
+public class TraitementImportJeuDonnees extends ATraitementLogDetail implements Serializable{
+/*    @Inject
     @Socle_PUSocle
-    EntityManager entityManagerSocle;
+    EntityManager entityManagerSocle;*/
 
-    EntityManager entityManagerDb2;
+    /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+
+   EntityManager entityManagerDb2;
 
     @Inject
     private CompagnieEnvironnementService compagnieEnvironnementService;
@@ -42,6 +47,11 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
 
     @Inject
     private TraitementMotrice traitementMotrice;
+    
+    /**
+     * Id du currentThread
+     */
+    private Long idTask;
 
     /**
     * 
@@ -151,5 +161,19 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail {
     public void setImportJeuDonneesDto(ImportTmsDto importTmsDto) {
         this.importTmsDto = importTmsDto;
     }
+
+   /**
+    * @return the idTask
+    */
+   public Long getIdTask() {
+      return idTask;
+   }
+
+   /**
+    * @param idTask the idTask to set
+    */
+   public void setIdTask(Long idTask) {
+      this.idTask = idTask;
+   }
 
 }

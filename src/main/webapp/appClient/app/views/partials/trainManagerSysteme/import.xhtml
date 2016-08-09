@@ -15,7 +15,7 @@
 		<i class="icon fa fa-check"></i> 
 		{{reponse.message}}
 	</div>
-	<div ng-if="reponse != null && !reponse.status"
+	<div ng-if="reponse != null && reponse.status != null && !reponse.status"
 		class="alert alert-danger  alert-dismissable">
 		<button class="close" aria-hidden="true" data-dismiss="alert"
 			type="button">x</button>
@@ -92,12 +92,11 @@
 					</td>
 
 					<td ng-if="startImport == $index" class="box box-solid" COLSPAN=5>
-						
-                		<div class="overlay">
-                		<div class="box-body text-center">
-                  			IMPORTING - 54%
-						</div>
-                		<i class="fa fa-refresh fa-spin" style="left: 80%; !important"></i>
+						<div class="overlay">
+                			<div class="box-body text-center">
+                  				{{progressImport.lastMsg}}
+							</div>
+                			<i class="fa fa-refresh fa-spin" style="left: 80%; !important"></i>
                 		</div>
 					</td>
 					<!-- End DRAFT -->

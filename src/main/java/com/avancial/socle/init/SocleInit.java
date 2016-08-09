@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
