@@ -21,7 +21,7 @@ public class TraiteObjetMetierRegimeStop implements ITraiteObjetMetier {
 
    @Override
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime) {
-      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+      SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
       String heureArrivee, heureDepart;
       List<ASousRegimeTranche> listeDessertes = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Desserte.class);
       List<GareHoraire> garesHoraires = new ArrayList<GareHoraire>();
@@ -33,7 +33,6 @@ public class TraiteObjetMetierRegimeStop implements ITraiteObjetMetier {
          Date horaireFin = null;
          heureArrivee = regimeDesserte.getArrivalHourMotriceRegimeStop();
          if (!heureArrivee.equals("    ")) {
-            heureArrivee = heureArrivee.substring(0, 2) + ":" + heureArrivee.substring(2, 4) + ":00";
             try {
                horaireDebut = formatter.parse(heureArrivee);
             } catch (ParseException e) {
@@ -43,7 +42,6 @@ public class TraiteObjetMetierRegimeStop implements ITraiteObjetMetier {
          }
          heureDepart = regimeDesserte.getDepartureHourMotriceRegimeStop();
          if (!heureDepart.equals("    ")) {
-            heureDepart = heureDepart.substring(0, 2) + ":" + heureDepart.substring(2, 4) + ":00";
             try {
                horaireFin = formatter.parse(heureDepart);
             } catch (ParseException e) {
