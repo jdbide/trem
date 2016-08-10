@@ -1,8 +1,11 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import javax.persistence.EntityManager;
 
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
@@ -21,8 +24,9 @@ public interface ITraiteMotriceRegime {
      *            Map des générateurs de requête d'insertion dans chaque table
      *            motrice régime
      * @param entityManager TODO
+     * @param atomicTranche TODO
      */
     public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity,
             MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
-            MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager);
+            MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche);
 }

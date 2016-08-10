@@ -85,7 +85,7 @@ public class TestRegimeService {
          this.em.persist(motriceTrainTrancheEntity);
          this.em.getTransaction().commit();
 
-         traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em);
+         traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em, null);
 
       }
 

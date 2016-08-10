@@ -116,7 +116,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
                   Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory.getTraiteMotriceRegime(entity);
                   System.out.println("Debut du traitement de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
-                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.entityManagerSocle);
+                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.entityManagerSocle, null);
                   System.out.println("Fin du traitement de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                } catch (Exception e) {
                   System.err.println("Erreur dans la récupération de l'entité motrice régime : " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime() + " ou de son traitement");

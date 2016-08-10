@@ -2,6 +2,7 @@ package com.avancial.app.service.traiteMotriceRegime;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -9,6 +10,7 @@ import javax.persistence.Query;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
@@ -17,7 +19,7 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
 	@Override
 	public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity,
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
-			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager) {
+			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche) {
 		/* SatCode */
 		Query queryRSatCode = entityManager
 				.createNativeQuery("SELECT satcode.SAT1_COD_SAT AS satcode, regimesat.TATH_REGI AS periodMotriceRegime "

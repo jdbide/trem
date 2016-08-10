@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -13,13 +14,14 @@ import javax.persistence.Query;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
 public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 
    @Override
-   public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager) {
+   public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche) {
 
       Query query = entityManager.createNativeQuery("SELECT voiture.VOIT_NUM_RESA AS coachNumberMotriceRegimeSpecificity, " + "'' AS compartmentNumberMotriceRegimeSpecificity, " + "LPAD( CONCAT( sppl.SPPL_PCDD_NUM_COMP, sppl.SPPL_PCDD_NUM_PLAC ), 3, '0' ) AS seatNumberMotriceRegimeSpecificity, "
             + "sppl.SPPL_SPEC_COD AS stateCodeMotriceRegimeSpecificity, " + "sppl.SPPL_REGI AS regime " + "FROM tremas_import_tmdvoit AS voiture " + "INNER JOIN tremas_import_tmdcath AS cara ON voiture.VOIT_TRCH_COD_CIE = cara.CATH_TRCH_COD_CIE "
