@@ -5,8 +5,10 @@ package service;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -21,14 +23,24 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeDistributionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
+import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
+import com.avancial.app.data.objetsMetier.PlanTransport.Train;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
+import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
+import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
@@ -70,8 +82,13 @@ public class TestTrainTranche {
 		JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
 		jeuDonneeEntity.setIdJeuDonnees(2);
 
-		Query query = this.em.createNativeQuery(
-                "SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche, train.TRA1_REGI_VAL_TRTH AS regime FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_NUM");
+		Query query = this.em.createNativeQuery("SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, "
+				+ "categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, "
+				+ "IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, "
+				+ "categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche, "
+				+ "train.TRA1_REGI_VAL_TRTH AS regime " + "FROM tremas_import_tmdtrch AS tranche "
+				+ "LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE "
+				+ "INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_NUM");
 
 		List<Object[]> trainsTranches = query.getResultList();
 		long cpt = 1034;
@@ -79,47 +96,72 @@ public class TestTrainTranche {
 		MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime();
 		MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(
 				this.em.unwrap(Session.class), 250);
-		
+
 		TraiteMotriceRegimeFactory traiteMotriceRegimeFactory = new TraiteMotriceRegimeFactory();
 		ITraiteMotriceRegime traiteMotriceRegime = traiteMotriceRegimeFactory
-				.getTraiteMotriceRegime(MotriceRegimeStopEntity.class);		
-		
+				.getTraiteMotriceRegime(MotriceRegimeEqpTypeEntity.class);// le régime à tester !
+
 		MotriceRegimeEntity motriceRegimeEntity;
 
 		MotriceRefRegimeTypeEntity motriceRefRegimeTypeEntity = new MotriceRefRegimeTypeEntity();
 		motriceRefRegimeTypeEntity.setIdMotriceRefRegimeType((long) 1);
 		motriceRefRegimeTypeEntity.setLabelRegimeType("Regime train tranche");
-		
-//		for (Object[] record : trainsTranches) {
+
+		PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
+		TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory = new TraiteObjetMetierRegimeFactory();
+		Train train = new Train();
+		String lastTrainNumber = "";
+
+		for (Object[] record : trainsTranches) {
 			motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
 			motriceTrainTrancheEntity.setIdMotriceTrainTranche(++cpt);
 			motriceTrainTrancheEntity.setJeuDonnee(jeuDonneeEntity);
-			motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche("009012");
-			motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche("009012");
-			motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(true);
-			motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche("O");
+			motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche((String) record[0]);
+			motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche((String) record[1]);
+			motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(
+					new Boolean(((BigInteger) record[2]).intValue() == 1 ? "true" : "false"));
+			motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche((String) record[3]);
 
-//			this.em.getTransaction().begin();
-//			this.em.persist(motriceTrainTrancheEntity);
-//			this.em.getTransaction().commit();
-			
+			// this.em.getTransaction().begin();
+			// this.em.persist(motriceTrainTrancheEntity);
+			// this.em.getTransaction().commit();
+
 			motriceRegimeEntity = new MotriceRegimeEntity();
 			motriceRegimeEntity.setMotriceRefRegimeType(motriceRefRegimeTypeEntity);
-			motriceRegimeEntity.setPeriodMotriceRegime("(LU+ME+JE+DI*07125/29026+12+15125,01+02+09+12016,02+06+12+26026)MOINS(LU+JE+DI*21125/29125,ME+DI*27016/07026,14+16+17+30125,06+07+11016,04+08+14+22+24+28026)");
+			motriceRegimeEntity.setPeriodMotriceRegime((String) record[4]);
 			motriceRegimeEntity.setMotriceTrainTranche(motriceTrainTrancheEntity);
-			
-//			this.em.getTransaction().begin();
-//			this.em.persist(motriceRegimeEntity);
-//			this.em.getTransaction().commit();
 
-			traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime,
-					this.em);
-//		}
-		
+			// this.em.getTransaction().begin();
+			// this.em.persist(motriceRegimeEntity);
+			// this.em.getTransaction().commit();
+
+			if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
+				train = new Train(new ArrayList<Tranche>(),
+						motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
+						motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
+			}
+			AtomicReference<Tranche> atomicTranche = new AtomicReference<Tranche>(new Tranche());
+			atomicTranche.get().setNumeroTranche(motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
+			atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime()));
+
+//			List<MotriceRegimeEntity> regimeEntities = motriceTrainTrancheEntity.getMotriceRegimeEntities();
+//			for (MotriceRegimeEntity regime : regimeEntities) {
+//				ITraiteObjetMetier traiteObjetMetier = traiteObjetMetierRegimeFactory
+//						.getTraiteMotriceRegime(regime.getMotriceRefRegimeType().getIdMotriceRefRegimeType());
+//				traiteObjetMetier.traite(atomicTranche, regime);
+//			}
+
+			train.getTranches().add(atomicTranche.get());
+			planTransport.getTrains().add(train);
+			lastTrainNumber = motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche();
+
+			traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime,
+					mapGeneratorTablesMotriceRegime, this.em, atomicTranche);
+		}
+
 		mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).executeRequest();
 		mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class).executeRequest();
 
-		
 	}
 
 }

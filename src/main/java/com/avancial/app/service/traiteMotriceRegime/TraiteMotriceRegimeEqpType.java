@@ -1,7 +1,9 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -9,6 +11,10 @@ import javax.persistence.Query;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -16,7 +22,7 @@ import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 public class TraiteMotriceRegimeEqpType implements ITraiteMotriceRegime {
 
    @Override
-   public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager) {
+   public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche) {
 
       IMultipleInsertRequestGenerator generatorRegime = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class);
       IMultipleInsertRequestGenerator generatorEqpType = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEqpTypeEntity.class);
@@ -33,13 +39,21 @@ public class TraiteMotriceRegimeEqpType implements ITraiteMotriceRegime {
       List<Object[]> rEqpType = queryREqpType.getResultList();
       String regime = "";
 
+      List<ASousRegimeTranche> listeTypeEquipement = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(TypeEquipement.class);
+      if (listeTypeEquipement == null) {
+         listeTypeEquipement = new ArrayList<ASousRegimeTranche>();
+      }
+
       for (Object[] record : rEqpType) {
          if (!regime.equals((String) record[1])) {
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 8, idTrainTranche);
+            listeTypeEquipement.add(new TypeEquipement((String) record[0], new Regime((String) record[1])));
          }
          generatorEqpType.addValue(idEqpType.getAndIncrement(), (String) record[0], idRegime);
+         
          regime = (String) record[1];
       }
+      atomicTranche.get().addAttributsField(listeTypeEquipement);
    }
 
 }
