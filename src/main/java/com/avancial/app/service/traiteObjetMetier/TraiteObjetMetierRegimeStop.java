@@ -1,6 +1,9 @@
 package com.avancial.app.service.traiteObjetMetier;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -18,13 +21,38 @@ public class TraiteObjetMetierRegimeStop implements ITraiteObjetMetier {
 
    @Override
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime) {
+      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+      String heureArrivee, heureDepart;
       List<ASousRegimeTranche> listeDessertes = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Desserte.class);
       List<GareHoraire> garesHoraires = new ArrayList<GareHoraire>();
       if (listeDessertes == null) {
          listeDessertes = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeStopEntity regimeDesserte : regime.getMotriceRegimeStops()) {
-         garesHoraires.add(new GareHoraire(new Gare(regimeDesserte.getStationMotriceRegimeStop()), new Horaire(null, null)));
+         Date horaireDebut = null;
+         Date horaireFin = null;
+         heureArrivee = regimeDesserte.getArrivalHourMotriceRegimeStop();
+         if (!heureArrivee.equals("    ")) {
+            heureArrivee = heureArrivee.substring(0, 2) + ":" + heureArrivee.substring(2, 4) + ":00";
+            try {
+               horaireDebut = formatter.parse(heureArrivee);
+            } catch (ParseException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+            }
+         }
+         heureDepart = regimeDesserte.getDepartureHourMotriceRegimeStop();
+         if (!heureDepart.equals("    ")) {
+            heureDepart = heureDepart.substring(0, 2) + ":" + heureDepart.substring(2, 4) + ":00";
+            try {
+               horaireFin = formatter.parse(heureDepart);
+            } catch (ParseException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+            }
+         }
+         garesHoraires.add(new GareHoraire(new Gare(regimeDesserte.getStationMotriceRegimeStop()), new Horaire(horaireDebut, horaireFin)));
+
       }
       listeDessertes.add(new Desserte(garesHoraires, new Regime(regime.getPeriodMotriceRegime())));
       atomicTranche.get().addAttributsField(listeDessertes);
