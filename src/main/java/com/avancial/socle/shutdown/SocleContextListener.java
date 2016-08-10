@@ -59,7 +59,7 @@ public class SocleContextListener implements ServletContextListener {
    @Override
    public void contextInitialized(ServletContextEvent arg0) {
       System.out.println("*********************************************");
-      System.out.println("Le contexte vient d'�tre r�-initialis�");
+      System.out.println("Le contexte vient d'être ré-initialisé");
       System.out.println("*********************************************");
       try {
          FacesContext.getCurrentInstance().getExternalContext().redirect(SOCLE_navigation.NAVIGATION_ACCUEIL.name());
