@@ -11,7 +11,7 @@ public class KeyMotriceRegimeSpecificity {
     * @return the voiture
     */
    public String getVoiture() {
-      return voiture;
+      return this.voiture;
    }
 
    /**
@@ -26,7 +26,7 @@ public class KeyMotriceRegimeSpecificity {
     * @return the regime
     */
    public String getRegime() {
-      return regime;
+      return this.regime;
    }
 
    /**
@@ -41,7 +41,7 @@ public class KeyMotriceRegimeSpecificity {
     * @return the codeDiagramme
     */
    public String getCodeDiagramme() {
-      return codeDiagramme;
+      return this.codeDiagramme;
    }
 
    /**
@@ -56,7 +56,7 @@ public class KeyMotriceRegimeSpecificity {
     * @return the stateCode
     */
    public String getStateCode() {
-      return stateCode;
+      return this.stateCode;
    }
 
    /**

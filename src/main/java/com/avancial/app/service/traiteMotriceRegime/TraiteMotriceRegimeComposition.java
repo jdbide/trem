@@ -77,6 +77,7 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
 			if (!oldCoachNumber.equals(compo[4])) {
 				mapGeneratorTablesMotriceRegime.get(MotriceRegimeCompositionCoachEntity.class)
 						.addValue(idRegimeCompoCoach.getAndIncrement(), compo[4], idRegimeCompo.get());
+				
 				oldCoachNumber = (String) compo[4];
 
 				voitures.add(new Voiture((String) compo[4], null));

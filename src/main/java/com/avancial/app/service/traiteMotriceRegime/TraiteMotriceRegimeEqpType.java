@@ -46,10 +46,11 @@ public class TraiteMotriceRegimeEqpType implements ITraiteMotriceRegime {
 
       for (Object[] record : rEqpType) {
          if (!regime.equals((String) record[1])) {
-            generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 8, idTrainTranche);
-            listeTypeEquipement.add(new TypeEquipement((String) record[0], new Regime((String) record[1])));
+            generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 8, idTrainTranche);    
          }
          generatorEqpType.addValue(idEqpType.getAndIncrement(), (String) record[0], idRegime);
+         
+         listeTypeEquipement.add(new TypeEquipement((String) record[0], new Regime((String) record[1])));
          
          regime = (String) record[1];
       }

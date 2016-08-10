@@ -60,7 +60,9 @@ public class TraiteMotriceRegimeDistribution implements ITraiteMotriceRegime {
 				generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 10, idTrainTranche);
 			}
 			generatorDistribution.addValue(idDistribution.getAndIncrement(), (String) record[0], idRegime);
+
 			listeDistributions.add(new Distribution((String) record[0], new Regime((String) record[1])));
+
 			regime = (String) record[1];
 		}
 		atomicTranche.get().addAttributsField(listeDistributions);
