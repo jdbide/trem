@@ -8,6 +8,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeRestrictionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumClasseService;
 import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
@@ -23,7 +24,7 @@ public class TraiteObjetMetierRegimeService implements ITraiteObjetMetier {
          listeServices = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeServiceEntity regimeService : regime.getMotriceRegimeServices()) {
-         listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(), null, new Gare(regimeService.getOrigMotriceRegimeService()), new Gare(regimeService.getDestMotriceRegimeService()), new Regime(regime.getPeriodMotriceRegime())));
+         listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(), EnumClasseService.getEnumClasseService(regimeService.getClassMotriceRegimeService()), new Gare(regimeService.getOrigMotriceRegimeService()), new Gare(regimeService.getDestMotriceRegimeService()), new Regime(regime.getPeriodMotriceRegime())));
       }
       atomicTranche.get().addAttributsField(listeServices); 
    }

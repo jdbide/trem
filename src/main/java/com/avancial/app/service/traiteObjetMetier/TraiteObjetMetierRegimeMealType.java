@@ -10,6 +10,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeMealTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
 import com.avancial.app.data.objetsMetier.PlanTransport.Horaire;
 import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
@@ -28,7 +29,7 @@ public class TraiteObjetMetierRegimeMealType implements ITraiteObjetMetier {
       }
       for (MotriceRegimeMealTypeEntity regimeMeal : regime.getMotriceRegimeMealType()) {
          try {
-            listeMeal.add(new Repas(null, new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()), formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())), new Regime(regime.getPeriodMotriceRegime())));
+            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(regimeMeal.getMealTypeMotriceRegimeMealType()), new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()), formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())), new Regime(regime.getPeriodMotriceRegime())));
          } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
