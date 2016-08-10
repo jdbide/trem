@@ -1,5 +1,6 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionEntity;
@@ -14,9 +15,13 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
 
-public class TraiteMotriceRegimeFactory {
+public class TraiteMotriceRegimeFactory  implements Serializable {
 
-    private Map<Class<?>, ITraiteMotriceRegime> map = new HashMap<>();
+    /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+   private Map<Class<?>, ITraiteMotriceRegime> map = new HashMap<>();
 
     /**
      * Constructeur

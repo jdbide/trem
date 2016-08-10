@@ -1,5 +1,6 @@
 package com.avancial.app.service.traiteObjetMetier;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +28,12 @@ import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeService;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeSpecificity;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeStop;
 
-public class TraiteObjetMetierRegimeFactory {
+public class TraiteObjetMetierRegimeFactory implements Serializable{
 
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    private Map<Long, ITraiteObjetMetier> map = new HashMap<>();
 
    /**

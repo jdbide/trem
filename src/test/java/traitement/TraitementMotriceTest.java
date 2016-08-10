@@ -1,6 +1,7 @@
 package traitement;
 
 import java.io.File;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -16,7 +17,6 @@ import org.junit.runner.RunWith;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
-import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.traitement.TraitementMotrice;
@@ -24,6 +24,7 @@ import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.logging.ALogBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.traitement.ATraitement;
 
 @RunWith(Arquillian.class)
 public class TraitementMotriceTest {
@@ -33,19 +34,21 @@ public class TraitementMotriceTest {
                 .as(File.class);
 
         WebArchive jar = ShrinkWrap.create(WebArchive.class)
-                .addPackage(MotriceRegimeEntity.class.getPackage())
-                .addPackage(JeuDonneeEntity.class.getPackage())
-                .addPackage(TraitementMotrice.class.getPackage())
-                .addPackage(ITraiteMotriceRegime.class.getPackage())
-                .addPackage(IhmPageDataBean.class.getPackage())
-                .addPackage(Socle_PUSocle.class.getPackage())
-                .addPackage(EntityManagerProducerSocle.class.getPackage())
-                .addPackage(ALogBean.class.getPackage())
-                .addClass(JeuDonneeService.class)
-                .addClass(RefTablesMotriceRegimeService.class)
-                .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
-                .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
-                .addAsManifestResource("META-INF/context.xml", "context.xml");
+
+
+              .addPackage(MotriceRegimeEntity.class.getPackage())
+              .addPackage(JeuDonneeEntity.class.getPackage())
+              .addPackage(ITraiteMotriceRegime.class.getPackage())
+              .addPackage(IhmPageDataBean.class.getPackage())
+              .addClass(RefTablesMotriceRegimeService.class)
+              .addPackage(ALogBean.class.getPackage())
+              .addPackage(ATraitement.class.getPackage())
+              .addClass(TraitementMotrice.class)
+              .addPackage(EntityManagerProducerSocle.class.getPackage())
+              .addPackage(Socle_PUSocle.class.getPackage())
+              .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
+              .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
+              .addAsManifestResource("META-INF/context.xml", "context.xml");
 
         System.out.println(jar.toString(true));
 

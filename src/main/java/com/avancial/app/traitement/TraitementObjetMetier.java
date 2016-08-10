@@ -1,5 +1,6 @@
 package com.avancial.app.traitement;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,11 @@ import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
-public class TraitementObjetMetier {
+public class TraitementObjetMetier implements Serializable {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    @Inject
    private TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory;
 
