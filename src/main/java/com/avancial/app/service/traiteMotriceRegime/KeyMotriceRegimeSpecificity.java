@@ -6,12 +6,35 @@ public class KeyMotriceRegimeSpecificity {
    private String regime;
    private String codeDiagramme;
    private String stateCode;
+   
+   
+
+   /**
+    * 
+    */
+   public KeyMotriceRegimeSpecificity() {
+      super();
+   }
+
+   /**
+    * @param voiture
+    * @param regime
+    * @param codeDiagramme
+    * @param stateCode
+    */
+   public KeyMotriceRegimeSpecificity(String voiture, String regime, String codeDiagramme, String stateCode) {
+      super();
+      this.voiture = voiture;
+      this.regime = regime;
+      this.codeDiagramme = codeDiagramme;
+      this.stateCode = stateCode;
+   }
 
    /**
     * @return the voiture
     */
    public String getVoiture() {
-      return voiture;
+      return this.voiture;
    }
 
    /**
@@ -26,7 +49,7 @@ public class KeyMotriceRegimeSpecificity {
     * @return the regime
     */
    public String getRegime() {
-      return regime;
+      return this.regime;
    }
 
    /**
@@ -41,7 +64,7 @@ public class KeyMotriceRegimeSpecificity {
     * @return the codeDiagramme
     */
    public String getCodeDiagramme() {
-      return codeDiagramme;
+      return this.codeDiagramme;
    }
 
    /**
@@ -56,7 +79,7 @@ public class KeyMotriceRegimeSpecificity {
     * @return the stateCode
     */
    public String getStateCode() {
-      return stateCode;
+      return this.stateCode;
    }
 
    /**

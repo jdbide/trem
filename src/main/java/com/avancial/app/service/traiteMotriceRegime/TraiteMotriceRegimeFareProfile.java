@@ -1,5 +1,6 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -10,6 +11,9 @@ import javax.persistence.Query;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeFareProfileEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
+import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -19,7 +23,8 @@ public class TraiteMotriceRegimeFareProfile implements ITraiteMotriceRegime {
 	@Override
 	public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity,
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
-			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche) {
+			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager,
+			AtomicReference<Tranche> atomicTranche) {
 		/* SatCode */
 		Query query = entityManager.createNativeQuery(
 				"SELECT IFNULL( satcode.SAT1_COD_SAT, regimeprofil.TATH_CD_VAL ) AS fareprofil, regimeprofil.TATH_REGI AS periodMotriceRegime "
@@ -36,6 +41,13 @@ public class TraiteMotriceRegimeFareProfile implements ITraiteMotriceRegime {
 		AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
 		AtomicLong idRegimeFareprofil = mapIdTablesMotriceRegime.get(MotriceRegimeFareProfileEntity.class);
 		String oldRegime = "";
+
+		List<ASousRegimeTranche> listeFareProfile = (List<ASousRegimeTranche>) atomicTranche.get()
+				.getAttributsField(FareProfile.class);
+		if (listeFareProfile == null) {
+			listeFareProfile = new ArrayList<ASousRegimeTranche>();
+		}
+
 		for (Object[] fareprofil : listeFareProfil) {
 			if (!oldRegime.equals(fareprofil[1])) {// si le régime traité est
 													// différent du précédent
@@ -47,11 +59,12 @@ public class TraiteMotriceRegimeFareProfile implements ITraiteMotriceRegime {
 			// insertion du régime code sat lié au régime
 			mapGeneratorTablesMotriceRegime.get(MotriceRegimeFareProfileEntity.class)
 					.addValue(idRegimeFareprofil.getAndIncrement(), fareprofil[0], idRegime.get());
-
+			
+			listeFareProfile.add(new FareProfile((String) fareprofil[0], new Regime((String) fareprofil[1])));
+			
 			oldRegime = (String) fareprofil[1];
-
 		}
-
+		atomicTranche.get().addAttributsField(listeFareProfile);
 	}
 
 }

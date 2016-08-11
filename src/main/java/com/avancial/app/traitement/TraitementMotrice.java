@@ -3,8 +3,10 @@ package com.avancial.app.traitement;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 import javax.persistence.Query;
@@ -17,6 +19,11 @@ import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
+import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
+import com.avancial.app.data.objetsMetier.PlanTransport.Train;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
@@ -28,8 +35,8 @@ import com.avancial.socle.traitement.ATraitementLogDetail;
 
 public class TraitementMotrice extends ATraitementLogDetail implements Serializable {
    /**
-    * 
-    */
+   * 
+   */
    private static final long             serialVersionUID = 1L;
 
    private JeuDonneeEntity               jeuDonneeEntity;
@@ -83,9 +90,13 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          motriceRefRegimeTypeEntity.setIdMotriceRefRegimeType((long) 1);
          motriceRefRegimeTypeEntity.setLabelRegimeType("Regime train tranche");
 
+         PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
          MotriceTrainTrancheEntity motriceTrainTrancheEntity;
          MotriceRegimeEntity motriceRegimeEntity;
          AtomicLong cptRegime;
+         Train train = new Train();
+         String lastTrainNumber = "";
+
          for (Object[] record : trainsTranches) {
             System.out.println("TRAITEMENT DU TRAIN-TRANCHE " + cpt);
             motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
@@ -113,13 +124,26 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             this.em.getTransaction().commit();
             System.out.println("Insertion dans la table tremas_motrice_regime du regime train-tranche associe");
 
+            if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
+               train = new Train(new ArrayList<Tranche>(), motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(), motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
+            }
+            AtomicReference<Tranche> atomicTranche = new AtomicReference<>(new Tranche());
+            atomicTranche.get().setNumeroTranche(motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
+            atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime()));
+
+            train.getTranches().add(atomicTranche.get());
+            planTransport.getTrains().add(train);
+            lastTrainNumber = motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche();
+
             /* Initialisation des données du train-tranche */
             for (RefTablesMotriceRegimeEntity refTablesMotriceRegimeEntity : motriceRegimeEntities) {
                try {
                   Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory.getTraiteMotriceRegime(entity);
                   System.out.println("Debut du traitement de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
-                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em, null);
+
+                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em, atomicTranche);
+
                   System.out.println("Fin du traitement de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                } catch (Exception e) {
                   System.err.println("Erreur dans la récupération de l'entité motrice régime : " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime() + " ou de son traitement");
