@@ -7,18 +7,25 @@
 socle_app.controller("globalCtrl", ["$scope", "$rootScope", 'envService', 'userService', 'menuService', 'paramService',
                                     function($scope, $rootScope, envService, userService, menuService,paramService) {
 	function constructor () {
-		console.warn("Je suis la ");
 		$scope.welcome = "Socle 2";
-		console.log(envService.get());
+		//console.log(envService.get());
+		
+	
+	
+		// Récupération paramètres
+		paramService.getDataByServer('app','libelle_projet').then(function() {
+			$scope.libelle_projet = paramService.getParam();
+		}, function() {
+			alert("Impossible de récupérer le libellé du projet");
+		});	
+
 		
 		// Récupération paramètres
 		paramService.getDataByServer('app','nom_projet').then(function() {
-			$scope.welcome = paramService.getParam();
+			$scope.nom_projet = paramService.getParam();
 		}, function() {
-			alert("Probleme au niveau des paramètres");
+			alert("Impossible de récupérer le nom du projet");
 		});	
-	
-		
 		
 		// Récupération des infos de l'utilisateur
 		userService.getDataByServer().then(function() {

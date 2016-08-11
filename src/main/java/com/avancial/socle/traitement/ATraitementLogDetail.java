@@ -20,10 +20,10 @@ public abstract class ATraitementLogDetail extends ATraitementLog {
       this.logDetailBean.setDateLogTraitementDetail(new Date());
       this.logDetailBean.setLogTraitementDataBean(this.logBean);
       this.logDetailBean.setMessageTraitementDetail(message);
-      this.entityManagerSocle.getTransaction().begin();
-      this.entityManagerSocle.merge(this.logDetailBean);
-      this.entityManagerSocle.flush();
-      this.entityManagerSocle.getTransaction().commit();
+      this.em.getTransaction().begin();
+      this.em.merge(this.logDetailBean);
+      this.em.flush();
+      this.em.getTransaction().commit();
    }
 
 }

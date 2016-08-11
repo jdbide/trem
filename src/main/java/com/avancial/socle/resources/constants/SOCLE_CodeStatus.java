@@ -21,7 +21,7 @@ public enum SOCLE_CodeStatus {
    /**
     * Entier représente la réponse : Utilisateur non connecté
     */
-   ACCESS_DANIED(403),
+   ACCESS_DENIED(403),
    
    /**
     * Entier représente la réponse : Erreur

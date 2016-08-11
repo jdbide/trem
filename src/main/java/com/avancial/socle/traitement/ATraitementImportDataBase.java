@@ -74,10 +74,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
       this.sessionSocle = this.entityManagerSocle.unwrap(Session.class);
    }
 
-   public void execute() {
-      this.executeTraitement();
-   }
-
+   @Override
    protected void executeTraitement() {
       List<String> columns = null;
       List<Object[]> donnees = null;

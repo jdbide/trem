@@ -23,31 +23,31 @@ public class TraitementImportJeuDonneesImp extends ATraitementLogDetail implemen
    /**
     * 
     */
-   private static final long serialVersionUID = 1L;
+   private static final long             serialVersionUID = 1L;
 
-   EntityManager entityManagerDb2;
+   EntityManager                         entityManagerDb2;
 
    @Inject
    private CompagnieEnvironnementService compagnieEnvironnementService;
 
    @Inject
-   private JeuDonneeService jeuDonneeService;
+   private JeuDonneeService              jeuDonneeService;
 
-   private ImportTmsDto importTmsDto;
+   private ImportTmsDto                  importTmsDto;
 
    @Inject
-   private TraitementMotrice traitementMotrice;
+   private TraitementMotrice             traitementMotrice;
 
    /**
     * Id du currentThread
     */
-   private Long idTask;
+   private Long                          idTask;
 
    /**
    * 
    */
    public TraitementImportJeuDonneesImp() {
-       super();
+      super();
    }
 
    /*
@@ -69,8 +69,7 @@ public class TraitementImportJeuDonneesImp extends ATraitementLogDetail implemen
             // Instanciation et sauvegarde du nouveau jeu de données
             jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(compagnieEnvironnementEntity);
             this.jeuDonneeService.save(jeuDonneeDataBean);
-         }
-         catch (Throwable ex) {
+         } catch (Throwable ex) {
             this.logBean.setExceptionTraitement(ex.getMessage());
             this.logBean.setMessageTraitement("L'environnement sélectionné n'existe pas");
             Task.finishKoTask(this.idTask, "L'environnement sélectionné n'existe pas");
@@ -78,58 +77,54 @@ public class TraitementImportJeuDonneesImp extends ATraitementLogDetail implemen
             throw ex;
          }
 
-          try {
-             // Instanciation EntityManagerFactory avec les bonnes données de la dataSource de l'environnement
-             Task.setMsgTask(this.idTask, "Connexion avec la BDD externe 5%");
-             System.err.println("------> Connexion avec la BDD externe 5%");
-              this.entityManagerDb2 = EntityManagerFactoryProviderDb2
-                      .getInstance(compagnieEnvironnementEntity, this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
-          }
-          catch (Throwable ex) {
-              this.logBean.setExceptionTraitement(ex.getMessage());
-              this.logBean.setMessageTraitement("Echec de connexion avec la base de données externe Db2");
-              Task.finishKoTask(this.idTask, "Echec de connexion avec la base de données externe Db2");
-              System.err.println("------> Echec de connexion avec la base de données externe Db2");
-              throw ex;
-          }
+         try {
+            // Instanciation EntityManagerFactory avec les bonnes données de la dataSource de l'environnement
+            Task.setMsgTask(this.idTask, "Connexion avec la BDD externe 5%");
+            System.err.println("------> Connexion avec la BDD externe 5%");
+            this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(compagnieEnvironnementEntity, this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
+         } catch (Throwable ex) {
+            this.logBean.setExceptionTraitement(ex.getMessage());
+            this.logBean.setMessageTraitement("Echec de connexion avec la base de données externe Db2");
+            Task.finishKoTask(this.idTask, "Echec de connexion avec la base de données externe Db2");
+            System.err.println("------> Echec de connexion avec la base de données externe Db2");
+            throw ex;
+         }
 
-          Task.setMsgTask(this.idTask, "Nettoyage des données et importation des données 7%");
-          System.out.println("------> Nettoyage des données et importation des données 7%");
-          // vider puis importer les tables
-          TraitementImportDb2Motrice traitement = new TraitementImportDb2Motrice(this.entityManagerSocle,
-                  this.entityManagerDb2, SchemaMotrice.ES.getSchema());
-          try {
-             Thread.sleep(10000);
-              //traitement.execute();              
-          } catch (SecurityException e) {
-             this.log("Echec de l'import");
-             Task.finishKoTask(this.idTask, "Echec de l'import");
-             System.err.println("------> Echec de l'import");
-             e.printStackTrace();
-             throw e;
-          }
+         Task.setMsgTask(this.idTask, "Nettoyage des données et importation des données 7%");
+         System.out.println("------> Nettoyage des données et importation des données 7%");
+         // vider puis importer les tables
+         TraitementImportDb2Motrice traitement = new TraitementImportDb2Motrice(this.em, this.entityManagerDb2, SchemaMotrice.ES.getSchema());
+         try {
+            Thread.sleep(10000);
+            // traitement.execute();
+         } catch (SecurityException e) {
+            this.log("Echec de l'import");
+            Task.finishKoTask(this.idTask, "Echec de l'import");
+            System.err.println("------> Echec de l'import");
+            e.printStackTrace();
+            throw e;
+         }
 
-          /* Insertion dans les tables du modèle motrice */
-          this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
-          Task.setMsgTask(this.idTask, "Integration des données importés 15%");
-          System.out.println("------> Integration des données importés 15%");
-          try {
-             Thread.sleep(10000);
-              //this.traitementMotrice.execute();
-          }
-          catch (Exception e) {              
-              this.log("Echec du traitement motrice.");
-              Task.finishKoTask(this.idTask, "Echec du traitement motrice.");
-              System.err.println("------> Echec du traitement motrice");
-              e.printStackTrace();
-              throw e;
-          }
+         /* Insertion dans les tables du modèle motrice */
+         this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
+         Task.setMsgTask(this.idTask, "Integration des données importés 15%");
+         System.out.println("------> Integration des données importés 15%");
+         try {
+            Thread.sleep(10000);
+            // this.traitementMotrice.execute();
+         } catch (Exception e) {
+            this.log("Echec du traitement motrice.");
+            Task.finishKoTask(this.idTask, "Echec du traitement motrice.");
+            System.err.println("------> Echec du traitement motrice");
+            e.printStackTrace();
+            throw e;
+         }
 
-          Task.setMsgTask(this.idTask, "Données integrés 99%");
-          System.out.println("------> Données integrés 99%");
-          jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-          jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
-      }  catch (Throwable ex) {
+         Task.setMsgTask(this.idTask, "Données integrés 99%");
+         System.out.println("------> Données integrés 99%");
+         jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
+         jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
+      } catch (Throwable ex) {
          if (jeuDonneeDataBean != null) {
             jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
             jeuDonneeDataBean.setActifJeuDonnees(false);
@@ -147,29 +142,30 @@ public class TraitementImportJeuDonneesImp extends ATraitementLogDetail implemen
     * @return the importJeuDonneesDto
     */
    public ImportTmsDto getImportJeuDonneesDto() {
-       return this.importTmsDto;
+      return this.importTmsDto;
    }
 
    /**
     * @param importJeuDonneesDto
-    *            the importJeuDonneesDto to set
+    *           the importJeuDonneesDto to set
     */
    public void setImportJeuDonneesDto(ImportTmsDto importTmsDto) {
-       this.importTmsDto = importTmsDto;
+      this.importTmsDto = importTmsDto;
    }
 
-  /**
-   * @return the idTask
-   */
-  public Long getIdTask() {
-     return idTask;
-  }
+   /**
+    * @return the idTask
+    */
+   public Long getIdTask() {
+      return idTask;
+   }
 
-  /**
-   * @param idTask the idTask to set
-   */
-  public void setIdTask(Long idTask) {
-     this.idTask = idTask;
-  }
+   /**
+    * @param idTask
+    *           the idTask to set
+    */
+   public void setIdTask(Long idTask) {
+      this.idTask = idTask;
+   }
 
 }

@@ -11,10 +11,10 @@ public enum SOCLE_navigation {
    * 
    */
    NAVIGATION_ACCUEIL("/pages/public/accueil?faces-redirect=true"),
+   // NAVIGATION_ACCUEIL2("/appClient/index?faces-redirect=true"),
    NAVIGATION_ACCUEIL2("/appClient/index.html"),
-   NAVIGATION_LOGIN2("/pages/public/login2.xhtml"),
-   NAVIGATION_LOGIN3("/pages/public/login3.xhtml"),
-   NAVIGATION_LOGIN("/pages/public/login.jsp"),
+   // NAVIGATION_LOGIN("/pages/public/login?faces-redirect=true"),
+   // NAVIGATION_LOGIN("/pages/public/login.jsp"),
    NAVIGATION_MDPOUBLIE("/pages/public/mdpoublie?faces-redirect=true"),
    NAVIGATION_ROLE("/pages/private/role?faces-redirect=true"),
    NAVIGATION_USER("/pages/private/user?faces-redirect=true"),

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.avancial.socle.resources.constants.SOCLE_navigation;
+import com.avancial.socle.authentification.resources.constants.AUTH_navigation;
 
 /**
  * Servlet implementation class loginKo
@@ -40,7 +40,7 @@ public class LoginKo extends HttpServlet {
       response.addHeader("Cache-Control", "must-revalidate");
       // response.addHeader("Expires", "-1");
       response.addHeader("cache-Control", "private");
-      response.sendRedirect(request.getServletContext().getContextPath() + SOCLE_navigation.NAVIGATION_LOGIN.getPagePath());
+      response.sendRedirect(request.getServletContext().getContextPath() + AUTH_navigation.NAVIGATION_LOGIN.getPagePath());
    }
 
    /**

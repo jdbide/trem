@@ -12,6 +12,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import com.avancial.socle.authentification.resources.constants.AUTH_navigation;
 import com.avancial.socle.data.model.databean.User2RoleDataBean;
 import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.resources.ContextController;
@@ -75,7 +76,7 @@ public class IhmManagedBean implements Serializable {
          this.setOriginalURL(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString());
       }
 
-      return SOCLE_navigation.NAVIGATION_LOGIN.toString();
+      return AUTH_navigation.NAVIGATION_LOGIN.toString();
    }
 
    /**

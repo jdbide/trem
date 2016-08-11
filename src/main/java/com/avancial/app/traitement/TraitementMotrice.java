@@ -5,9 +5,12 @@ import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
 import javax.inject.Inject;
 import javax.persistence.Query;
+
 import org.hibernate.Session;
+
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.RefTablesMotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
@@ -27,7 +30,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
    /**
     * 
     */
-   private static final long serialVersionUID = 1L;
+   private static final long             serialVersionUID = 1L;
 
    private JeuDonneeEntity               jeuDonneeEntity;
 
@@ -46,10 +49,10 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
    protected void executeTraitement() throws Exception {
       if (this.jeuDonneeEntity != null) {
          MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime();
-         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(this.entityManagerSocle.unwrap(Session.class), 250);
+         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(this.em.unwrap(Session.class), 250);
          this.log("Debut du vidage des tables d'import");
          /* Vidage de toutes les tables d'import */
-         this.entityManagerSocle.getTransaction().begin();
+         this.em.getTransaction().begin();
          /* On commence par les tables motrice_regime_xxx_xxx */
          this.executeDeleteAll(MotriceRegimeCompositionCoachEntity.class);
          /* On fait ensuite les tables motrice_regime_xxx */
@@ -62,12 +65,12 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          this.executeDeleteAll(MotriceRegimeEntity.class);
          /* Et enfin motrice_traintranche */
          this.executeDeleteAll(MotriceTrainTrancheEntity.class);
-         this.entityManagerSocle.getTransaction().commit();
+         this.em.getTransaction().commit();
          this.log("Fin du vidage des tables d'import");
 
          this.log("Debut de recuperation des train-tranche");
          /* Récupération des train-tranche */
-         Query query = this.entityManagerSocle.createNativeQuery(
+         Query query = this.em.createNativeQuery(
                "SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche, categorie.CATH_REGI AS regime FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_TRCH_NUM");
 
          List<Object[]> trainsTranches = query.getResultList();
@@ -93,9 +96,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(((BigInteger) record[2]).intValue() == 1);
             motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche((String) record[3]);
 
-            this.entityManagerSocle.getTransaction().begin();
-            this.entityManagerSocle.persist(motriceTrainTrancheEntity);
-            this.entityManagerSocle.getTransaction().commit();
+            this.em.getTransaction().begin();
+            this.em.persist(motriceTrainTrancheEntity);
+            this.em.getTransaction().commit();
             System.out.println("Insertion dans la table tremas_motrice_train_tranche");
             /* Insertion du régime lié au train-tranche */
             cptRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
@@ -105,18 +108,18 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             motriceRegimeEntity.setPeriodMotriceRegime((String) record[4]);
             motriceRegimeEntity.setMotriceTrainTranche(motriceTrainTrancheEntity);
 
-            this.entityManagerSocle.getTransaction().begin();
-            this.entityManagerSocle.persist(motriceRegimeEntity);
-            this.entityManagerSocle.getTransaction().commit();
+            this.em.getTransaction().begin();
+            this.em.persist(motriceRegimeEntity);
+            this.em.getTransaction().commit();
             System.out.println("Insertion dans la table tremas_motrice_regime du regime train-tranche associe");
-            
+
             /* Initialisation des données du train-tranche */
             for (RefTablesMotriceRegimeEntity refTablesMotriceRegimeEntity : motriceRegimeEntities) {
                try {
                   Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory.getTraiteMotriceRegime(entity);
                   System.out.println("Debut du traitement de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
-                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.entityManagerSocle, null);
+                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em, null);
                   System.out.println("Fin du traitement de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                } catch (Exception e) {
                   System.err.println("Erreur dans la récupération de l'entité motrice régime : " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime() + " ou de son traitement");
@@ -160,7 +163,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
     *           Entité correspondant à la table dans laquelle on veut insérer
     * @param mapGeneratorTablesMotriceRegime
     *           Map contenant les générateurs associés aux tables motrice régime
-    *           @throws SQLException
+    * @throws SQLException
     */
    private void executeRequestGenerator(Class<?> entity, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime) throws SQLException {
       IMultipleInsertRequestGenerator multipleInsertRequestGenerator = mapGeneratorTablesMotriceRegime.get(entity);
@@ -180,7 +183,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
     *           Entité correspondant à la table que l'on veut vider
     */
    private void executeDeleteAll(Class<?> entity) {
-      this.entityManagerSocle.createNamedQuery(GetEntiteService.getNomFromEntiteTableMotriceRegime(entity.getSimpleName()) + ".deleteAll").executeUpdate();
+      this.em.createNamedQuery(GetEntiteService.getNomFromEntiteTableMotriceRegime(entity.getSimpleName()) + ".deleteAll").executeUpdate();
    }
 
    public void setJeuDonneeEntity(JeuDonneeEntity jeuDonneeEntity) {

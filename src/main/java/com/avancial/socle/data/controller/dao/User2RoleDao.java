@@ -13,11 +13,6 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
  *
  */
 public class User2RoleDao extends AbstractDao {
-   
-   public User2RoleDao() {
-      super();
-   }
-   
    @SuppressWarnings("unchecked")
    @Override
    public List<User2RoleDataBean> getAll() {

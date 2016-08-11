@@ -19,7 +19,7 @@ socle_app.service('paramService', ['jsonFactory', '$q', function(jsonFactory, $q
 		var promissJsonFactory = jsonFactory.getJson("webService/params/"+type+"/"+param_name);
         promissJsonFactory
             .success(function (data, status, headers, config) {
-            	param = data['nom_projet'];
+            	param = data[param_name];
                 deffered.resolve();
             })
             .error(function (data, status, headers, config) {

@@ -12,6 +12,6 @@ interface ITraitement {
    /**
     * Méthode appellée pour executer le traitement
     */
-   public void execute();
+   public void execute() throws Exception;
 
 }

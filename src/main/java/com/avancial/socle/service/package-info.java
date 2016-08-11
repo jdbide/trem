@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author hamza.laterem
+ * @author bruno.legloahec
  *
  */
 package com.avancial.socle.service;

@@ -1,6 +1,7 @@
 package com.avancial.socle.data.model.databean;
 
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,57 +14,57 @@ import javax.persistence.Table;
 @Table(name = "socle_ihm_rubrique")
 public class IhmRubriqueDataBean extends AbstractDataBean {
 
-    private static final long serialVersionUID = 1L;
+   private static final long         serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRubrique;
-    private String libelleIhmRubrique;
-    private boolean actifIhmRubrique;
-    private Long ordreIhmRubrique;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long                      idIhmRubrique;
+   private String                    libelleIhmRubrique;
+   private boolean                   actifIhmRubrique;
+   private Long                      ordreIhmRubrique;
 
-    @OneToMany
-    @JoinColumn(name="idRubrique")
-    private List<IhmChapitreDataBean> chapitres;
+   @OneToMany
+   @JoinColumn(name = "idIhmRubrique")
+   private List<IhmChapitreDataBean> chapitres;
 
-    public Long getIdRubrique() {
-        return this.idRubrique;
-    }
+   public Long getIdRubrique() {
+      return this.idIhmRubrique;
+   }
 
-    public void setIdRubrique(Long idRubrique) {
-        this.idRubrique = idRubrique;
-    }
+   public void setIdRubrique(Long idRubrique) {
+      this.idIhmRubrique = idRubrique;
+   }
 
-    public String getLibelleIhmRubrique() {
-        return this.libelleIhmRubrique;
-    }
+   public String getLibelleIhmRubrique() {
+      return this.libelleIhmRubrique;
+   }
 
-    public void setLibelleIhmRubrique(String libelleIhmRubrique) {
-        this.libelleIhmRubrique = libelleIhmRubrique;
-    }
+   public void setLibelleIhmRubrique(String libelleIhmRubrique) {
+      this.libelleIhmRubrique = libelleIhmRubrique;
+   }
 
-    public boolean isActifIhmRubrique() {
-        return this.actifIhmRubrique;
-    }
+   public boolean isActifIhmRubrique() {
+      return this.actifIhmRubrique;
+   }
 
-    public void setActifIhmRubrique(boolean actifIhmRubrique) {
-        this.actifIhmRubrique = actifIhmRubrique;
-    }
+   public void setActifIhmRubrique(boolean actifIhmRubrique) {
+      this.actifIhmRubrique = actifIhmRubrique;
+   }
 
-    public Long getOrdreIhmRubrique() {
-        return this.ordreIhmRubrique;
-    }
+   public Long getOrdreIhmRubrique() {
+      return this.ordreIhmRubrique;
+   }
 
-    public void setOrdreIhmRubrique(Long ordreIhmRubrique) {
-        this.ordreIhmRubrique = ordreIhmRubrique;
-    }
+   public void setOrdreIhmRubrique(Long ordreIhmRubrique) {
+      this.ordreIhmRubrique = ordreIhmRubrique;
+   }
 
-    public List<IhmChapitreDataBean> getChapitres() {
-        return this.chapitres;
-    }
+   public List<IhmChapitreDataBean> getChapitres() {
+      return this.chapitres;
+   }
 
-    public void setChapitres(List<IhmChapitreDataBean> chapitres) {
-        this.chapitres = chapitres;
-    }
+   public void setChapitres(List<IhmChapitreDataBean> chapitres) {
+      this.chapitres = chapitres;
+   }
 
 }

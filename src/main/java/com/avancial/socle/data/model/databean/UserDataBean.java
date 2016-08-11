@@ -68,7 +68,7 @@ public class UserDataBean extends AbstractDataBean {
    private String tomcatRoleUser;
    private String commentaireUtilisateurUser;
 
-   @OneToMany(fetch = FetchType.LAZY)
+   @OneToMany(fetch = FetchType.EAGER)
    @JoinTable(name = "socle_user2role", joinColumns = @JoinColumn(name = "idUser"), inverseJoinColumns = @JoinColumn(name = "idRole"))
    private List<RoleDataBean> roles;
 

@@ -1,7 +1,7 @@
 package com.avancial.socle.authentification.resources.constants;
 
 public enum AUTH_navigation {
-   NAVIGATION_LOGIN("/pages/public/login.jsp"),
+   NAVIGATION_LOGIN("//faces/pages/public/login.xhtml"),
    NAVIGATION_ACCUEIL("/appClient/index.html"),
    URL_LOGIN("/login");
 

@@ -3,25 +3,30 @@
  */
 package com.avancial.app.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import data.model.databean.Socle_PUExterne;
+import com.avancial.socle.persistence.qualifiers.Socle_PUExterne;
 
 /**
- * @author sebastien.benede
- * Classe qui gère toutes les requêtes dans les tables DB2.
+ * @author sebastien.benede Classe qui gère toutes les requêtes dans les tables DB2.
  */
-public class MotriceService {
+public class MotriceService implements Serializable {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    @Inject
    @Socle_PUExterne
-   private EntityManager    ext;
+   private EntityManager     ext;
 
    /**
     * Récupère tous les enregistrements de l'entité.
+    * 
     * @param entity
     * @return
     */

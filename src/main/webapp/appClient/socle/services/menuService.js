@@ -3,17 +3,9 @@
 /**
  * Service gérant le menu de pages de l'application
  */
-socle_app.service('menuService', ['jsonFactory', '$q', /*"pageAccueil",*/ function(jsonFactory, $q/*, pageAccueil*/) {
+socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q) {
 	var menu = [];
-	if (!sessionStorage.rubrique) {
-	//	sessionStorage.rubrique = pageAccueil.rubrique;
-	}
-	if (!sessionStorage.chapitre) {
-	//	sessionStorage.chapitre = pageAccueil.chapitre;
-	}
-	if (!sessionStorage.page) {
-	//	sessionStorage.page = pageAccueil.page;
-	}
+	
 	
     var self = this;
     

@@ -2,58 +2,61 @@ package com.avancial.socle.authentification.model.databean;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Les données de l'utilisateur qui seront sauvegardé en session
  * 
  * @author hamza.laterem
  *
  */
+// @SessionScoped
 public class UserSessionDatabean {
    /*
     * Infos user
     */
-   private Long idUser;   
-   private String username;   
-   private String nomUser;
-   private String prenomUser;
-   private String mailUser;
-   private String cpUser;   
-   private boolean robotUser;
-   
+   private Long         idUser;
+   private String       username;
+   private String       nomUser;
+   private String       prenomUser;
+   private String       mailUser;
+   private String       cpUser;
+   private boolean      robotUser;
+
    /*
     * Rôles
     */
-   private List<Long> idRoles;
+   private List<Long>   idRoles;
    private List<String> labelRoles;
    /*
     * Ect, Uo, Equipe
     */
-   private String libelleEct;
-   private String libelleUo;
-   private String libelleEquipe;
-   
+   private String       libelleEct;
+   private String       libelleUo;
+   private String       libelleEquipe;
+
    public UserSessionDatabean() {
-      this.idRoles = new ArrayList<Long>();
-      this.labelRoles = new ArrayList<String>();
+      this.idRoles = new ArrayList<>();
+      this.labelRoles = new ArrayList<>();
    }
 
    public void addRole(String role) {
       this.labelRoles.add(role);
    }
-   
+
    public void addRole(Long role) {
       this.idRoles.add(role);
    }
-   
+
    /**
     * @return the username
     */
    public String getUsername() {
       return this.username;
    }
-   
+
    /**
-    * @param username the username to set
+    * @param username
+    *           the username to set
     */
    public void setUsername(String username) {
       this.username = username;
@@ -67,7 +70,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param idUser the idUser to set
+    * @param idUser
+    *           the idUser to set
     */
    public void setIdUser(Long idUser) {
       this.idUser = idUser;
@@ -81,7 +85,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param idRoles the idRoles to set
+    * @param idRoles
+    *           the idRoles to set
     */
    public void setIdRoles(List<Long> idRoles) {
       this.idRoles = idRoles;
@@ -95,7 +100,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param labelRoles the labelRoles to set
+    * @param labelRoles
+    *           the labelRoles to set
     */
    public void setLabelRoles(List<String> labelRoles) {
       this.labelRoles = labelRoles;
@@ -109,7 +115,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param libelleEct the libelleEct to set
+    * @param libelleEct
+    *           the libelleEct to set
     */
    public void setLibelleEct(String libelleEct) {
       this.libelleEct = libelleEct;
@@ -123,7 +130,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param libelleUo the libelleUo to set
+    * @param libelleUo
+    *           the libelleUo to set
     */
    public void setLibelleUo(String libelleUo) {
       this.libelleUo = libelleUo;
@@ -137,7 +145,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param libelleEquipe the libelleEquipe to set
+    * @param libelleEquipe
+    *           the libelleEquipe to set
     */
    public void setLibelleEquipe(String libelleEquipe) {
       this.libelleEquipe = libelleEquipe;
@@ -151,7 +160,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param nomUser the nomUser to set
+    * @param nomUser
+    *           the nomUser to set
     */
    public void setNomUser(String nomUser) {
       this.nomUser = nomUser;
@@ -165,7 +175,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param prenomUser the prenomUser to set
+    * @param prenomUser
+    *           the prenomUser to set
     */
    public void setPrenomUser(String prenomUser) {
       this.prenomUser = prenomUser;
@@ -179,7 +190,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param mailUser the mailUser to set
+    * @param mailUser
+    *           the mailUser to set
     */
    public void setMailUser(String mailUser) {
       this.mailUser = mailUser;
@@ -193,11 +205,12 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param cpUser the cpUser to set
+    * @param cpUser
+    *           the cpUser to set
     */
    public void setCpUser(String cpUser) {
       this.cpUser = cpUser;
-   }   
+   }
 
    /**
     * @return the robotUser
@@ -207,7 +220,8 @@ public class UserSessionDatabean {
    }
 
    /**
-    * @param robotUser the robotUser to set
+    * @param robotUser
+    *           the robotUser to set
     */
    public void setRobotUser(boolean robotUser) {
       this.robotUser = robotUser;

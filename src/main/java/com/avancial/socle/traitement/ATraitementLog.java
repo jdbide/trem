@@ -25,9 +25,9 @@ public abstract class ATraitementLog extends ATraitement {
 
    @Inject
    @Socle_PUSocle
-   protected EntityManager         entityManagerSocle;
+   protected EntityManager         em;
 
-   // @Override
+   @Override
    public void execute() {
       this.startLogging();
       try {
@@ -56,16 +56,18 @@ public abstract class ATraitementLog extends ATraitement {
       this.logBean.setLibelleUserLogTraitement(this.userTraitement);
       this.logBean.setMessageTraitement("Le traitement a démarré");
       this.saveLog();
+
    }
 
    /**
     * 
     */
    protected void saveLog() {
-      this.entityManagerSocle.getTransaction().begin();
-      this.entityManagerSocle.persist(this.logBean);
-      this.entityManagerSocle.flush();
-      this.entityManagerSocle.getTransaction().commit();
+      this.em.getTransaction().begin();
+      this.em.persist(this.logBean);
+      this.em.flush();
+      this.em.getTransaction().commit();
+
    }
 
    /**

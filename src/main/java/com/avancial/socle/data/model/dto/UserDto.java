@@ -6,23 +6,25 @@ package com.avancial.socle.data.model.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avancial.socle.authentification.model.User;
+
 /**
  * @author hamza.laterem
  * 
- * Bean représente les données envoyés du serveur vers l'app concernant l'utlisateur connecté
+ *         Bean représente les données envoyés du serveur vers l'app concernant l'utlisateur connecté
  *
  */
 public class UserDto {
    /*
     * Infos user
     */
-   private String username;
-   private String nomUser;
-   private String prenomUser;
-   private String mailUser;
-   private String cpUser;
-   private String robotUser;
-   
+   private String       nomUser;
+   private String       prenomUser;
+   private String       mailUser;
+   private String       cpUser;
+   private String       robotUser;
+   private String       loginUser;
+
    /*
     * Rôles
     */
@@ -31,30 +33,25 @@ public class UserDto {
    /*
     * Ect, Uo, Equipe
     */
-   private String libelleEct;
-   private String libelleUo;
-   private String libelleEquipe;
-   
+   private String       libelleEct;
+   private String       libelleUo;
+   private String       libelleEquipe;
+
    /**
     * 
     */
    public UserDto() {
-      this.idRoles = new ArrayList<Long>();
-      this.labelRoles = new ArrayList<String>();
+      this.idRoles = new ArrayList<>();
+      this.labelRoles = new ArrayList<>();
    }
 
-   /**
-    * @return the loginUser
-    */
-   public String getUsername() {
-      return username;
-   }
+   public void setUserInfoFromUser(User user) {
 
-   /**
-    * @param loginUser the loginUser to set
-    */
-   public void setUsername(String username) {
-      this.username = username;
+      this.setCpUser(user.getCpUser());
+      this.setNomUser(user.getNomUser());
+      this.setPrenomUser(user.getPrenomUser());
+      this.setLoginUser(user.getLoginUser());
+
    }
 
    /**
@@ -65,7 +62,8 @@ public class UserDto {
    }
 
    /**
-    * @param mailUser the mailUser to set
+    * @param mailUser
+    *           the mailUser to set
     */
    public void setMailUser(String mailUser) {
       this.mailUser = mailUser;
@@ -79,7 +77,8 @@ public class UserDto {
    }
 
    /**
-    * @param nomUser the nomUser to set
+    * @param nomUser
+    *           the nomUser to set
     */
    public void setNomUser(String nomUser) {
       this.nomUser = nomUser;
@@ -93,7 +92,8 @@ public class UserDto {
    }
 
    /**
-    * @param prenomUser the prenomUser to set
+    * @param prenomUser
+    *           the prenomUser to set
     */
    public void setPrenomUser(String prenomUser) {
       this.prenomUser = prenomUser;
@@ -107,7 +107,8 @@ public class UserDto {
    }
 
    /**
-    * @param robotUser the robotUser to set
+    * @param robotUser
+    *           the robotUser to set
     */
    public void setRobotUser(String robotUser) {
       this.robotUser = robotUser;
@@ -121,7 +122,8 @@ public class UserDto {
    }
 
    /**
-    * @param idRoles the idRoles to set
+    * @param idRoles
+    *           the idRoles to set
     */
    public void setIdRoles(List<Long> idRoles) {
       this.idRoles = idRoles;
@@ -135,7 +137,8 @@ public class UserDto {
    }
 
    /**
-    * @param labelRoles the labelRoles to set
+    * @param labelRoles
+    *           the labelRoles to set
     */
    public void setLabelRoles(List<String> labelRoles) {
       this.labelRoles = labelRoles;
@@ -149,7 +152,8 @@ public class UserDto {
    }
 
    /**
-    * @param libelleEct the libelleEct to set
+    * @param libelleEct
+    *           the libelleEct to set
     */
    public void setLibelleEct(String libelleEct) {
       this.libelleEct = libelleEct;
@@ -163,7 +167,8 @@ public class UserDto {
    }
 
    /**
-    * @param libelleUo the libelleUo to set
+    * @param libelleUo
+    *           the libelleUo to set
     */
    public void setLibelleUo(String libelleUo) {
       this.libelleUo = libelleUo;
@@ -177,7 +182,8 @@ public class UserDto {
    }
 
    /**
-    * @param libelleEquipe the libelleEquipe to set
+    * @param libelleEquipe
+    *           the libelleEquipe to set
     */
    public void setLibelleEquipe(String libelleEquipe) {
       this.libelleEquipe = libelleEquipe;
@@ -191,10 +197,19 @@ public class UserDto {
    }
 
    /**
-    * @param cpUser the cpUser to set
+    * @param cpUser
+    *           the cpUser to set
     */
    public void setCpUser(String cpUser) {
       this.cpUser = cpUser;
+   }
+
+   public String getLoginUser() {
+      return this.loginUser;
+   }
+
+   public void setLoginUser(String loginUser) {
+      this.loginUser = loginUser;
    }
 
 }

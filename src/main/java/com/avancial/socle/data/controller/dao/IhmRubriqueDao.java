@@ -1,27 +1,17 @@
 package com.avancial.socle.data.controller.dao;
 
 import java.util.List;
-
-import javax.enterprise.context.SessionScoped;
 import javax.persistence.Query;
 import com.avancial.socle.data.model.databean.IhmRubriqueDataBean;
-@SessionScoped
+
 public class IhmRubriqueDao extends AbstractDao {
 
-    /**
-    * 
-    */
-   private static final long serialVersionUID = 1L;
-
-   @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     @Override
     public List<IhmRubriqueDataBean> getAll() {
         this.getEntityManager().clear();
         Query query = this.getEntityManager().createQuery("FROM IhmRubriqueDataBean");
-        
-        List<IhmRubriqueDataBean> listIhmRubrique = query.getResultList();
-        this.getEntityManager().close();
-        return listIhmRubrique;
+        return query.getResultList();
     }
     
     @SuppressWarnings("unchecked")
@@ -30,4 +20,5 @@ public class IhmRubriqueDao extends AbstractDao {
         Query requete = this.getEntityManager().createQuery(sql);
         return requete.getResultList();
     }
+
 }

@@ -1,4 +1,4 @@
-
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -18,7 +18,7 @@
 		
 		<title><ui:insert name="title">#{msg.nom_application}</ui:insert></title>
 		
-		<!-- Bootstrap 3.3.6 -->
+		<!-- Bootstrap 3.3.5 -->
 		<link rel="stylesheet" type="text/css" href="#{root}/appClient/vendor/bootstrap/css/bootstrap.min.css" />
     	<!-- Font Awesome -->
     	<link rel="stylesheet" href="#{root}/appClient/vendor/font-awesome/css/font-awesome.min.css" />
@@ -41,7 +41,7 @@
 			</div>
 			<div class="login-box-body">
 				<p class="login-box-msg">Sign in to start your session</p>
-				<h:form enctype="application/x-www-form-urlencoded">
+				<h:form enctype="application/x-www-form-urlencoded">								
 					<div class="form-group has-feedback">
 						<h:inputText  class="form-control" value="#{login.login}" placeholder="#{msg.p_login_user}" autofocus="true" />
             			<span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -72,9 +72,9 @@
 			</div><!-- /.login-box-body -->
 		</div> <!-- /.login-box -->
 		
-		<!-- jQuery 2.2.4 -->
-    	<script src="#{root}/appClient/vendor/jQuery/jquery-2.2.4.min.js"></script>
-    	<!-- Bootstrap 3.3.6 -->
+		<!-- jQuery 2.1.4 -->
+    	<script src="#{root}/appClient/vendor/jQuery/2.1.4/jQuery-2.1.4.min.js"></script>
+    	<!-- Bootstrap 3.3.5 -->
     	<script src="#{root}/appClient/vendor/bootstrap/js/bootstrap.min.js"></script>
     	<!-- iCheck -->
     	<script src="#{root}/appClient/vendor/iCheck/icheck.min.js"></script>
