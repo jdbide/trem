@@ -29,6 +29,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
@@ -99,7 +100,7 @@ public class TestTrainTranche {
 
 		TraiteMotriceRegimeFactory traiteMotriceRegimeFactory = new TraiteMotriceRegimeFactory();
 		ITraiteMotriceRegime traiteMotriceRegime = traiteMotriceRegimeFactory
-				.getTraiteMotriceRegime(MotriceRegimeEqpTypeEntity.class);// le régime à tester !
+				.getTraiteMotriceRegime(MotriceRegimeSpecificityEntity.class);// le régime à tester !
 
 		MotriceRegimeEntity motriceRegimeEntity;
 
