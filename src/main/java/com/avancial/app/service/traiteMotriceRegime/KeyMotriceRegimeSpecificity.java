@@ -6,6 +6,29 @@ public class KeyMotriceRegimeSpecificity {
    private String regime;
    private String codeDiagramme;
    private String stateCode;
+   
+   
+
+   /**
+    * 
+    */
+   public KeyMotriceRegimeSpecificity() {
+      super();
+   }
+
+   /**
+    * @param voiture
+    * @param regime
+    * @param codeDiagramme
+    * @param stateCode
+    */
+   public KeyMotriceRegimeSpecificity(String voiture, String regime, String codeDiagramme, String stateCode) {
+      super();
+      this.voiture = voiture;
+      this.regime = regime;
+      this.codeDiagramme = codeDiagramme;
+      this.stateCode = stateCode;
+   }
 
    /**
     * @return the voiture

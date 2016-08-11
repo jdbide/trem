@@ -49,11 +49,24 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
          oldRegime = (String) seat[4];
       }
 
-      query = entityManager.createNativeQuery("SELECT voiture.VOIT_NUM_RESA AS coachNumberMotriceRegimeSpecificity, " + "LPAD(spco.SPCO_COMP_NUM, 3, '0') AS compartmentNumberMotriceRegimeSpecificity, " + "'' AS seatNumberMotriceRegimeSpecificity, "
-            + "spco.SPCO_SPEC_COD AS stateCodeMotriceRegimeSpecificity, " + "spco.SPCO_REGI AS regime, " + "tyvo.TYVO_DIAV_COD " + "FROM tremas_import_tmdvoit AS voiture " + "INNER JOIN tremas_import_tmdcath AS cara ON voiture.VOIT_TRCH_COD_CIE = cara.CATH_TRCH_COD_CIE "
-            + "AND voiture.VOIT_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 " + "AND voiture.VOIT_TRCH_IND_FER = cara.CATH_TRCH_IND_FER" + " AND voiture.VOIT_TRCH_NUM = cara.CATH_TRCH_NUM " + "INNER JOIN tremas_import_tmdspco AS spco ON voiture.VOIT_NUM = spco.SPCO_VOIT_NUM "
-            + "AND voiture.VOIT_TRCH_COD_CIE = spco.SPCO_VOIT_COD_CIE " + "AND voiture.VOIT_TRCH_NUM_TRA1 = spco.SPCO_VOIT_NUM_TRA1 " + "AND voiture.VOIT_TRCH_NUM = spco.SPCO_VOIT_TRCH_NUM " + "AND voiture.VOIT_TRCH_IND_FER = spco.SPCO_VOIT_IND_FER "
-            + "INNER JOIN tremas_import_tmdtyvo AS tyvo ON voiture.VOIT_TYVO_NUM_TYP = tyvo.TYVO_NUM_TYP " + "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ? AND spco.SPCO_SPEC_COD = 'F'");
+      query = entityManager.createNativeQuery("SELECT voiture.VOIT_NUM_RESA AS coachNumberMotriceRegimeSpecificity, "
+            + "LPAD(spco.SPCO_COMP_NUM, 3, '0') AS compartmentNumberMotriceRegimeSpecificity, "
+            + "'' AS seatNumberMotriceRegimeSpecificity, "
+            + "spco.SPCO_SPEC_COD AS stateCodeMotriceRegimeSpecificity, "
+            + "spco.SPCO_REGI AS regime, "
+            + "tyvo.TYVO_DIAV_COD "
+            + "FROM tremas_import_tmdvoit AS voiture "
+            + "INNER JOIN tremas_import_tmdcath AS cara ON voiture.VOIT_TRCH_COD_CIE = cara.CATH_TRCH_COD_CIE "
+            + "AND voiture.VOIT_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 "
+            + "AND voiture.VOIT_TRCH_IND_FER = cara.CATH_TRCH_IND_FER"
+            + " AND voiture.VOIT_TRCH_NUM = cara.CATH_TRCH_NUM "
+            + "INNER JOIN tremas_import_tmdspco AS spco ON voiture.VOIT_NUM = spco.SPCO_VOIT_NUM "
+            + "AND voiture.VOIT_TRCH_COD_CIE = spco.SPCO_VOIT_COD_CIE "
+            + "AND voiture.VOIT_TRCH_NUM_TRA1 = spco.SPCO_VOIT_NUM_TRA1 "
+            + "AND voiture.VOIT_TRCH_NUM = spco.SPCO_VOIT_TRCH_NUM "
+            + "AND voiture.VOIT_TRCH_IND_FER = spco.SPCO_VOIT_IND_FER "
+            + "INNER JOIN tremas_import_tmdtyvo AS tyvo ON voiture.VOIT_TYVO_NUM_TYP = tyvo.TYVO_NUM_TYP "
+            + "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ? AND spco.SPCO_SPEC_COD = 'F'");
       query.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
       query.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
 
@@ -65,13 +78,9 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
       List<Object[]> nbComp = query.getResultList();
 
       Map<KeyMotriceRegimeSpecificity, Collection<String>> mapRegimeCodeDiag = new HashMap<>();
-      KeyMotriceRegimeSpecificity key = new KeyMotriceRegimeSpecificity();
 
       for (Object[] comp : listeComp) {
-         key.setCodeDiagramme((String) comp[5]);
-         key.setRegime((String) comp[4]);
-         key.setVoiture((String) comp[0]);
-         key.setStateCode((String) comp[3]);
+         KeyMotriceRegimeSpecificity key = new KeyMotriceRegimeSpecificity((String) comp[0], (String) comp[4], (String) comp[5], (String) comp[3]);
          Collection<String> compartiments = mapRegimeCodeDiag.get(key);
          if (compartiments == null) {
             compartiments = new ArrayList<String>();
@@ -96,21 +105,6 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
             }
          }
       }
-
-//      oldRegime = "";
-//      for (Object[] comp : listeComp) {
-//         if (!oldRegime.equals(comp[4])) {// si le régime traité est
-//            // différent du précédent
-//            // on insère une nouvelle
-//            // entrée
-//            mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), comp[1], 4, motriceTrainTrancheEntity.getIdMotriceTrainTranche());
-//         }
-//         // insertion du régime specificity lié au régime
-//         mapGeneratorTablesMotriceRegime.get(MotriceRegimeSpecificityEntity.class).addValue(idRegimeComp.getAndIncrement(), comp[0], comp[1], comp[2], comp[3], idRegime.get());
-//
-//         oldRegime = (String) comp[4];
-//
-//      }
 
    }
 
