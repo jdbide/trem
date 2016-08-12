@@ -46,6 +46,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
+import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -56,8 +57,14 @@ public class RemplissageObjMetierTestHibernate {
    public static WebArchive createDeployment() {
       File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity().as(File.class);
 
-      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(CodeSat.class.getPackage()).addPackage(IhmPageDataBean.class.getPackage()).addClass(JeuDonneeService.class).addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage())
-            .addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
+      WebArchive jar = ShrinkWrap.create(WebArchive.class)
+            .addPackage(CodeSat.class.getPackage())
+            .addPackage(IhmPageDataBean.class.getPackage())
+            .addClass(JeuDonneeService.class)
+            .addPackage(Socle_PUSocle.class.getPackage())
+            .addPackage(EntityManagerProducerSocle.class.getPackage())
+            .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml")
+            .addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
             .addAsManifestResource("META-INF/context.xml", "context.xml");
 
       System.out.println(jar.toString(true));
@@ -74,9 +81,11 @@ public class RemplissageObjMetierTestHibernate {
       this.em.clear();
 
       TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory = new TraiteObjetMetierRegimeFactory();
+      MapPlansDeTransport mapPlansDeTransport = new MapPlansDeTransport();
 
       /* Creation du plan de transport */
-      PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
+      //PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
+      PlanTransport planTransport = mapPlansDeTransport.get(1).get();
 
       Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t", MotriceTrainTrancheEntity.class);
 
@@ -105,7 +114,7 @@ public class RemplissageObjMetierTestHibernate {
          lastTrainNumber = resTrainTranche.getTrainNumberMotriceTrainTranche();
       }
       /* Fin du remplissage du plan de transport */
-      
+
       /* Affichage de certains resultats */
       System.out.println("RESULTAT DES (Train, Tranche, RegimeTranche) ");
       for (Train tra : planTransport.getTrains()) {
@@ -158,7 +167,8 @@ public class RemplissageObjMetierTestHibernate {
 //      for (Train tra : planTransport.getTrains()) {
 //         for (Tranche trch : tra.getTranches()) {
 //            for (ASousRegimeTranche meal : trch.getAttributsField(Repas.class)) {
-//               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + meal.getRegime().getCodeRegime() + ", " + ((Repas) meal).getTypeRepas().getSymbol() + ", " + ((Repas) meal).getHoraire().getHoraireDebut() + ", " + ((Repas) meal).getHoraire().getHoraireFin() + ")");
+//               System.out
+//                     .println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + meal.getRegime().getCodeRegime() + ", " + ((Repas) meal).getTypeRepas().getSymbol() + ", " + ((Repas) meal).getHoraire().getHoraireDebut() + ", " + ((Repas) meal).getHoraire().getHoraireFin() + ")");
 //            }
 //         }
 //      }
@@ -174,17 +184,26 @@ public class RemplissageObjMetierTestHibernate {
 //      for (Train tra : planTransport.getTrains()) {
 //         for (Tranche trch : tra.getTranches()) {
 //            for (ASousRegimeTranche service : trch.getAttributsField(ServiceABord.class)) {
-//               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + service.getRegime().getCodeRegime() + ", " + ((ServiceABord) service).getClasse().getSymbol() + ", " + ((ServiceABord) service).getCodeService() + ", " + ((ServiceABord) service).getOrigine().getCodeGare() + ", "
-//                     + ((ServiceABord) service).getDestination().getCodeGare() + ")");
+//               System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + service.getRegime().getCodeRegime() + ", " + ((ServiceABord) service).getClasse().getSymbol() + ", " + ((ServiceABord) service).getCodeService() + ", "
+//                     + ((ServiceABord) service).getOrigine().getCodeGare() + ", " + ((ServiceABord) service).getDestination().getCodeGare() + ")");
 //            }
 //         }
 //      }
-//      System.out.println("RESULTAT DES (Train, Tranche, RegimeDesserte, Gare) ");
+//      System.out.println("RESULTAT DES (Train, Tranche, RegimeDesserte, Gare, HeureArrivee, HeureDepart) ");
 //      for (Train tra : planTransport.getTrains()) {
 //         for (Tranche trch : tra.getTranches()) {
 //            for (ASousRegimeTranche dessertes : trch.getAttributsField(Desserte.class)) {
 //               for (GareHoraire stop : ((Desserte) dessertes).getGareHoraires()) {
-//                  System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + dessertes.getRegime().getCodeRegime() + ", " + stop.getGare().getCodeGare() + ")");
+//                  if (stop.getHoraire().getHoraireDebut() == null) {
+//                     System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + dessertes.getRegime().getCodeRegime() + ", " + stop.getGare().getCodeGare() + ", " + "    " + ", " + stop.getHoraire().getHoraireFin().getHours() + ":"
+//                           + stop.getHoraire().getHoraireFin().getMinutes() + ")");
+//                  } else if (stop.getHoraire().getHoraireFin() == null) {
+//                     System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + dessertes.getRegime().getCodeRegime() + ", " + stop.getGare().getCodeGare() + ", " + stop.getHoraire().getHoraireDebut().getHours() + ":" + stop.getHoraire().getHoraireDebut().getMinutes()
+//                           + ", " + "    " + ")");
+//                  } else {
+//                     System.out.println("(" + tra.getNumeroTrain() + ", " + trch.getNumeroTranche() + ", " + dessertes.getRegime().getCodeRegime() + ", " + stop.getGare().getCodeGare() + ", " + stop.getHoraire().getHoraireDebut().getHours() + ":" + stop.getHoraire().getHoraireDebut().getMinutes()
+//                           + ", " + stop.getHoraire().getHoraireFin().getHours() + ":" + stop.getHoraire().getHoraireFin().getMinutes() + ")");
+//                  }
 //               }
 //            }
 //         }

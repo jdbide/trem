@@ -31,6 +31,7 @@ import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
 import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
+import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 public class TraitementMotrice extends ATraitementLogDetail implements Serializable {
@@ -46,6 +47,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 
    @Inject
    private TraiteMotriceRegimeFactory    traiteMotriceRegimeFactory;
+   
+   @Inject
+   private MapPlansDeTransport mapPlansDeTransport;
 
    @Inject
    public TraitementMotrice() {
@@ -90,7 +94,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          motriceRefRegimeTypeEntity.setIdMotriceRefRegimeType((long) 1);
          motriceRefRegimeTypeEntity.setLabelRegimeType("Regime train tranche");
 
-         PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
+         PlanTransport planTransport = this.mapPlansDeTransport.get(2).get();
          MotriceTrainTrancheEntity motriceTrainTrancheEntity;
          MotriceRegimeEntity motriceRegimeEntity;
          AtomicLong cptRegime;

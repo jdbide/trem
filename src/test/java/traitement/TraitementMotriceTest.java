@@ -20,6 +20,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.traitement.TraitementMotrice;
+import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.logging.ALogBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
@@ -44,6 +45,7 @@ public class TraitementMotriceTest {
               .addPackage(ALogBean.class.getPackage())
               .addPackage(ATraitement.class.getPackage())
               .addClass(TraitementMotrice.class)
+              .addClass(MapPlansDeTransport.class)
               .addPackage(EntityManagerProducerSocle.class.getPackage())
               .addPackage(Socle_PUSocle.class.getPackage())
               .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)

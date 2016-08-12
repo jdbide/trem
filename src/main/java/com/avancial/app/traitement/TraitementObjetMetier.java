@@ -3,6 +3,7 @@ package com.avancial.app.traitement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -16,15 +17,20 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
+import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.traitement.ATraitementLogDetail;
 
-public class TraitementObjetMetier implements Serializable {
+public class TraitementObjetMetier extends ATraitementLogDetail implements Serializable {
    /**
     * 
     */
-   private static final long serialVersionUID = 1L;
+   private static final long              serialVersionUID = 1L;
    @Inject
    private TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory;
+
+   @Inject
+   private MapPlansDeTransport            mapPlansDeTransport;
 
    @Inject
    public TraitementObjetMetier() {
@@ -33,13 +39,13 @@ public class TraitementObjetMetier implements Serializable {
 
    @Inject
    @Socle_PUSocle
-   EntityManager     entityManagerSocle;
-   
-   public PlanTransport executeTraitement() throws Exception {
-      /* Creation du plan de transport */
-      PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
+   EntityManager entityManagerSocle;
 
-      Query query = this.entityManagerSocle.createQuery("SELECT t FROM MotriceTrainTrancheEntity t", MotriceTrainTrancheEntity.class);
+   public void executeTraitement() throws Exception {
+      /* Creation du plan de transport */
+      PlanTransport planTransport = this.mapPlansDeTransport.get(1).get();
+
+      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t", MotriceTrainTrancheEntity.class);
 
       List<MotriceTrainTrancheEntity> trainsTranches = query.getResultList();
       Train train = new Train();
@@ -51,24 +57,20 @@ public class TraitementObjetMetier implements Serializable {
          if (!resTrainTranche.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
             train = new Train(new ArrayList<Tranche>(), resTrainTranche.getTrainNumberMotriceTrainTranche(), resTrainTranche.getValidForRRMotriceTrainTranche());
          }
-         Tranche tranche = new Tranche();
-         tranche.setNumeroTranche(resTrainTranche.getTrancheNumberMotriceTrainTranche());
+         AtomicReference<Tranche> atomicTranche = new AtomicReference<Tranche>(new Tranche());
+         atomicTranche.get().setNumeroTranche(resTrainTranche.getTrancheNumberMotriceTrainTranche());
 
          List<MotriceRegimeEntity> regimeEntities = resTrainTranche.getMotriceRegimeEntities();
-
-         /* Ajout de tous les regimes de la tranche */
          for (MotriceRegimeEntity regime : regimeEntities) {
-            try {
-               ITraiteObjetMetier traiteObjetMetier = this.traiteObjetMetierRegimeFactory.getTraiteMotriceRegime(regime.getMotriceRefRegimeType().getIdMotriceRefRegimeType());
-               traiteObjetMetier.traite(null, null);
-            } catch (Exception e) {
-               // TODO: handle exception
-            }
+            System.out.println("Traitement de " + regime.getMotriceRefRegimeType().getLabelRegimeType());
+            ITraiteObjetMetier traiteObjetMetier = traiteObjetMetierRegimeFactory.getTraiteMotriceRegime(regime.getMotriceRefRegimeType().getIdMotriceRefRegimeType());
+            traiteObjetMetier.traite(atomicTranche, regime);
          }
-         train.getTranches().add(tranche);
+
+         train.getTranches().add(atomicTranche.get());
          planTransport.getTrains().add(train);
          lastTrainNumber = resTrainTranche.getTrainNumberMotriceTrainTranche();
       }
-      return planTransport;
+      /* Fin du remplissage du plan de transport */
    }
 }
