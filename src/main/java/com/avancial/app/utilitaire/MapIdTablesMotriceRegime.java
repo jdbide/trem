@@ -2,6 +2,9 @@ package com.avancial.app.utilitaire;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
+
+import javax.persistence.EntityManager;
+
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeDistributionEntity;
@@ -29,25 +32,38 @@ import com.avancial.app.service.IMultipleInsertRequestGenerator;
  */
 public class MapIdTablesMotriceRegime extends HashMap<Class<?>, AtomicLong> {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    public MapIdTablesMotriceRegime() {
-        this.put(MotriceRegimeDistributionEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeCompositionCoachEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeCompositionEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeEqpTypeEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeFareProfileEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeMealTypeEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeRestrictionEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeSatcodeEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeServiceEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeSpecificityEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeStopEntity.class, new AtomicLong(1));
-        this.put(MotriceRegimeODEntity.class, new AtomicLong(1));
-    }
+	EntityManager entityManager;
+
+	public MapIdTablesMotriceRegime(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	/**
+	 * Initisalise les id pour chaque entité, avant insetion en bdd.
+	 */
+	public void initMapIdTablesMotriceRegime(Class<?> entity) {
+
+		this.put(entity, new AtomicLong(this.getNewIdRegime(entity)));
+	}
+
+	/**
+	 * Calcule la valeur de l'auto incrément.
+	 * @return le prochain id à insérer
+	 */
+	private long getNewIdRegime(Class<?> entity) {
+		Long lastId = this.entityManager.createNamedQuery(entity.getSimpleName(), Long.class)
+				.getSingleResult();
+
+		if (lastId == null) {
+			return 1;
+		} else {
+			return lastId.longValue()+1;
+		}
+	}
 
 }

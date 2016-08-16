@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
@@ -19,7 +20,8 @@ import org.hibernate.annotations.ForeignKey;
         @NamedQuery(name = " MotriceRegimeCompositionCoach.getAll",
                 query = "SELECT t FROM  MotriceRegimeCompositionCoachEntity t"),
         @NamedQuery(name = "MotriceRegimeCompositionCoach.deleteAll",
-                query = "DELETE FROM MotriceRegimeCompositionCoachEntity")})
+                query = "DELETE FROM MotriceRegimeCompositionCoachEntity"),
+        @NamedQuery(name = "MotriceRegimeCompositionCoachEntity.getLastIdgetLastId", query = "SELECT MAX( idMotriceRegimeCompositionCoach ) FROM MotriceRegimeCompositionCoachEntity")})
 public class MotriceRegimeCompositionCoachEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

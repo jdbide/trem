@@ -1,6 +1,7 @@
 package com.avancial.app.data.databean.importMotrice;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,17 +13,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime")
 @NamedQueries({@NamedQuery(name = "MotriceRegime.getAll", query = "SELECT t FROM MotriceRegimeEntity t"),
-        @NamedQuery(name = "MotriceRegime.deleteAll", query = "DELETE FROM MotriceRegimeEntity")})
+        @NamedQuery(name = "MotriceRegime.deleteAll", query = "DELETE FROM MotriceRegimeEntity"),
+        @NamedQuery(name = "MotriceRegimeEntity.getLastId", query = "SELECT MAX( idMotriceRegime ) FROM MotriceRegimeEntity")})
 public class MotriceRegimeEntity {
 
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegime;
 

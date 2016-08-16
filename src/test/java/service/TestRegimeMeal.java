@@ -69,7 +69,7 @@ public class TestRegimeMeal {
       MotriceTrainTrancheEntity motriceTrainTrancheEntity;
       TraiteMotriceRegimeFactory traiteMotriceRegimeFactory = new TraiteMotriceRegimeFactory();
       ITraiteMotriceRegime traiteMotriceRegime = traiteMotriceRegimeFactory.getTraiteMotriceRegime(MotriceRegimeMealTypeEntity.class);
-      MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime();
+      MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime(this.em);
       MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(this.em.unwrap(Session.class), 250);
       for (Object[] record : trainsTranches) {
          motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
