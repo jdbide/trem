@@ -23,7 +23,7 @@ public abstract class ASocleExportService {
    /**
     * 
     */
-   public ASocleExportService() {
+   public ASocleExportService()  throws Exception  {
    }
 
    /**
@@ -31,7 +31,7 @@ public abstract class ASocleExportService {
     * @param fileName
     * @param filePath
     */
-   public ASocleExportService(String fileName, String filePath) {
+   public ASocleExportService(String fileName, String filePath)  throws Exception  {
       this.fileName = fileName;
    }
 
@@ -43,7 +43,7 @@ public abstract class ASocleExportService {
     * @param contentType
     * @param httpResponse
     */
-   public ASocleExportService(String fileName, String filePath, String fileExtension) {
+   public ASocleExportService(String fileName, String filePath, String fileExtension)  throws Exception  {
       this.fileName = fileName;
       this.fileExtension = fileExtension;
       this.filePath = filePath;

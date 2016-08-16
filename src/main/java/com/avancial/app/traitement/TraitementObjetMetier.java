@@ -6,19 +6,16 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 public class TraitementObjetMetier extends ATraitementLogDetail implements Serializable {
@@ -29,7 +26,6 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
    @Inject
    private TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory;
 
-   @Inject
    private MapPlansDeTransport            mapPlansDeTransport;
 
    @Inject
@@ -37,16 +33,14 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
       super();
    }
 
-   @Inject
-   @Socle_PUSocle
-   EntityManager entityManagerSocle;
-
    public void executeTraitement() throws Exception {
       /* Creation du plan de transport */
       PlanTransport planTransport = this.mapPlansDeTransport.get(1).get();
-
-      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t", MotriceTrainTrancheEntity.class);
-
+      
+      
+      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t JOIN t.jeuDonnee j JOIN j.compagnieEnvironnement c WHERE c.nomTechniqueCompagnieEnvironnement = ?", MotriceTrainTrancheEntity.class);
+      query.setParameter(1, "ES_PROD");
+      
       List<MotriceTrainTrancheEntity> trainsTranches = query.getResultList();
       Train train = new Train();
 
@@ -72,5 +66,10 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
          lastTrainNumber = resTrainTranche.getTrainNumberMotriceTrainTranche();
       }
       /* Fin du remplissage du plan de transport */
+   }
+
+   public void setMap(MapPlansDeTransport mapPlansDeTransport) {
+      this.mapPlansDeTransport = mapPlansDeTransport;
+      
    }
 }

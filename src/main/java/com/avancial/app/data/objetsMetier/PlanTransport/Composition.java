@@ -32,10 +32,15 @@ public class Composition extends ASousRegimeTranche {
         res.setCodeDiag(this.codeDiag);
         res.setCodeRame(this.codeRame);
         res.setCodeRm(this.codeRm);
-        for (Voiture voiture : this.voitures) {
-            resVoitures.add(voiture.clone());
+        if (this.voitures != null) {
+           for (Voiture voiture : this.voitures) {
+              resVoitures.add(voiture.clone());
+          }
+          res.setVoitures(resVoitures);
+        } else {
+           res.setVoitures(null);
         }
-        res.setVoitures(resVoitures);
+        
         return res;
 
     }

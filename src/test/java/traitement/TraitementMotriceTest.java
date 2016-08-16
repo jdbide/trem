@@ -62,12 +62,17 @@ public class TraitementMotriceTest {
     EntityManager entityManagerSocle;
     
     @Inject
+    MapPlansDeTransport   mapPlansDeTransport;
+    
+    @Inject
     TraitementMotrice traitementMotrice;
 
     @Test
     public void main() {
         try {
             this.entityManagerSocle.clear();
+            
+            this.traitementMotrice.setMap(this.mapPlansDeTransport);
             
             JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
             jeuDonneeEntity.setIdJeuDonnees(2);

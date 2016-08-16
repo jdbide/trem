@@ -19,8 +19,12 @@ public class GareHoraire {
     
     public GareHoraire clone(){
         GareHoraire res = new GareHoraire();
-        res.setGare(this.gare.clone());
-        res.setHoraire(this.horaire.clone());
+        if (this.gare != null) {
+           res.setGare(this.gare.clone());
+        }
+        if (this.horaire != null) {
+           res.setHoraire(this.horaire.clone());
+        }
         return res;
     }
 

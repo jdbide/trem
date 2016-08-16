@@ -1,12 +1,9 @@
 package traitement;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -15,16 +12,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
-import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
-import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
-import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
-import com.avancial.app.data.objetsMetier.PlanTransport.Train;
-import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.traitement.TraitementObjetMetier;
@@ -35,50 +23,42 @@ import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 @RunWith(Arquillian.class)
 public class RemplissageObjMetierTest {
-    @Deployment
-    public static WebArchive createDeployment() {
-        File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity()
-                .as(File.class);
+   @Deployment
+   public static WebArchive createDeployment() {
+      File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity().as(File.class);
 
-        WebArchive jar = ShrinkWrap.create(WebArchive.class)
-                 .addPackage(CodeSat.class.getPackage())
-                 .addPackage(IhmPageDataBean.class.getPackage())
-                 .addClass(JeuDonneeService.class)
-                 .addClass(TraiteObjetMetierRegimeFactory.class)
-                 .addClass(MapPlansDeTransport.class)
-                 .addClass(TraitementObjetMetier.class)
-                 .addPackage(Socle_PUSocle.class.getPackage())
-                 .addPackage(EntityManagerProducerSocle.class.getPackage())
-                 .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
-                 .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
-                 .addAsManifestResource("META-INF/context.xml", "context.xml");
+      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(CodeSat.class.getPackage()).addPackage(IhmPageDataBean.class.getPackage()).addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class).addClass(TraitementObjetMetier.class)
+            .addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
+            .addAsManifestResource("META-INF/context.xml", "context.xml");
 
-        System.out.println(jar.toString(true));
+      System.out.println(jar.toString(true));
 
-        return jar;
-    }
+      return jar;
+   }
 
-    @Inject
-    @Socle_PUSocle
-    EntityManager em;
-    
-    @Inject
-    TraitementObjetMetier traitementObjetMetier;
+   @Inject
+   @Socle_PUSocle
+   EntityManager         em;
 
-    @Test
-    public void testRemplissageObjetMetier() throws Exception {
-       try {
-          this.em.clear();
-          try {
-              this.traitementObjetMetier.execute();
-          }
-          catch (Throwable ex) {
-              throw ex;
-          }
+   @Inject
+   MapPlansDeTransport   mapPlansDeTransport;
 
+   @Inject
+   TraitementObjetMetier traitementObjetMetier;
+
+   @Test
+   public void testRemplissageObjetMetier() throws Exception {
+      try {
+         this.em.clear();
+         try {
+            this.traitementObjetMetier.setMap(this.mapPlansDeTransport);
+            this.traitementObjetMetier.execute();
+         } catch (Throwable ex) {
+            throw ex;
+         }
+
+      } catch (Exception e) {
+         e.printStackTrace();
       }
-      catch (Exception e) {
-          e.printStackTrace();
-      }
-  }
+   }
 }

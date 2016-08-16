@@ -20,7 +20,11 @@ public class Distribution extends ASousRegimeTranche {
     public Distribution clone(){
         Distribution res = new Distribution();
         res.setIndiceDistribution(this.indiceDistribution);
-        res.setRegime(this.regime.clone());
+        if (this.regime != null) {
+           res.setRegime(this.regime.clone());
+        } else {
+           res.setRegime(null);
+        }
         return res;
     }
 

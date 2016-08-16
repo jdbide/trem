@@ -13,7 +13,6 @@ public class DecodageRegime {
    public Date dateDebut(String regime) {
       String sepa = "/";
       int debut = regime.indexOf(sepa) - 5, fin = regime.indexOf(sepa);
-      System.out.println(regime + " , " + debut + " , " + fin);
       String dateDebut = regime.substring(debut, fin);
       return decodeDate(dateDebut);
    }

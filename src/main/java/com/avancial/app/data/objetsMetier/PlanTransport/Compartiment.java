@@ -6,56 +6,60 @@ import com.avancial.socle.utils.ListUtils;
 
 public class Compartiment {
 
-    private String numeroCompartiment;
+   private String      numeroCompartiment;
 
-    private List<Siege> sieges;
+   private List<Siege> sieges;
 
-    public Compartiment() {
-        this.numeroCompartiment = "";
-        this.sieges = new ArrayList<>();
-    }
+   public Compartiment() {
+      this.numeroCompartiment = "";
+      this.sieges = new ArrayList<>();
+   }
 
-    public Compartiment clone() {
-        Compartiment res = new Compartiment();
-        List<Siege> resSieges = new ArrayList<>();
-        res.setNumeroCompartiment(this.numeroCompartiment);
-        for (Siege siege : this.sieges) {
+   public Compartiment clone() {
+      Compartiment res = new Compartiment();
+      List<Siege> resSieges = new ArrayList<>();
+      res.setNumeroCompartiment(this.numeroCompartiment);
+      if (this.sieges != null) {
+         for (Siege siege : this.sieges) {
             resSieges.add(siege.clone());
-        }
-        res.setSieges(resSieges);
-        return res;
-    }
+         }
+         res.setSieges(resSieges);
+      } else {
+         res.setSieges(null);
+      }
 
-    public Compartiment(String numeroCompartiment, List<Siege> sieges) {
-        super();
-        this.numeroCompartiment = numeroCompartiment;
-        this.sieges = sieges;
-    }
+      return res;
+   }
 
-    @Override
-    public boolean equals(Object obj) {
-        Compartiment compartiment = (Compartiment) obj;
-        if (compartiment.getNumeroCompartiment().equals(this.numeroCompartiment)
-                && ListUtils.compareLists(compartiment.getSieges(), this.sieges)) {
-            return true;
-        }
-        return false;
-    }
+   public Compartiment(String numeroCompartiment, List<Siege> sieges) {
+      super();
+      this.numeroCompartiment = numeroCompartiment;
+      this.sieges = sieges;
+   }
 
-    public String getNumeroCompartiment() {
-        return this.numeroCompartiment;
-    }
+   @Override
+   public boolean equals(Object obj) {
+      Compartiment compartiment = (Compartiment) obj;
+      if (compartiment.getNumeroCompartiment().equals(this.numeroCompartiment) && ListUtils.compareLists(compartiment.getSieges(), this.sieges)) {
+         return true;
+      }
+      return false;
+   }
 
-    public void setNumeroCompartiment(String numeroCompartiment) {
-        this.numeroCompartiment = numeroCompartiment;
-    }
+   public String getNumeroCompartiment() {
+      return this.numeroCompartiment;
+   }
 
-    public List<Siege> getSieges() {
-        return this.sieges;
-    }
+   public void setNumeroCompartiment(String numeroCompartiment) {
+      this.numeroCompartiment = numeroCompartiment;
+   }
 
-    public void setSieges(List<Siege> sieges) {
-        this.sieges = sieges;
-    }
+   public List<Siege> getSieges() {
+      return this.sieges;
+   }
+
+   public void setSieges(List<Siege> sieges) {
+      this.sieges = sieges;
+   }
 
 }
