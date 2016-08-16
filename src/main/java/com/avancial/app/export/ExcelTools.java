@@ -19,17 +19,18 @@ import org.apache.poi.ss.util.CellReference;
  *
  */
 public class ExcelTools {
-   private Workbook      classeur = null;
+   private Workbook classeur                  = null;
    private Sheet    sheet;
    private Row      ligneSheet;
    private Cell     cell;
-   
+
    public CellStyle styleNombre               = null;
    public CellStyle styleNombreUnLock         = null;
    public CellStyle styleNombreHide           = null;
    public CellStyle styleNombreStandard       = null;
    public CellStyle styleNombreStandardUnLock = null;
-   public CellStyle styleEntete               = null;
+   public CellStyle styleEnteteGris           = null;
+   public CellStyle styleEnteteJaune          = null;
    public CellStyle styleTexte                = null;
    public CellStyle stylePourcent             = null;
    public CellStyle stylePourcentOk           = null;
@@ -82,7 +83,7 @@ public class ExcelTools {
       this.sheet = sheet;
       this.initStyle();
    }
-   
+
    /**
     * Constructeur avec le Workbook et String : le nom de l'onglet pour la creation du sheet
     * 
@@ -94,7 +95,7 @@ public class ExcelTools {
       this.sheet = this.classeur.createSheet(nameSheet);
       this.initStyle();
    }
-   
+
    /**
     * Création d'un nouveau sheet
     * 
@@ -193,13 +194,10 @@ public class ExcelTools {
     * @param isSuppressDropDownArrow
     * @param valueSelected
     */
-   /*public void createCellDropDown(int firstRow, int lastRow, int firstCol, int lastCol, String[] explicitListValues) {
-      CellRangeAddressList addressList = new CellRangeAddressList(firstRow, lastRow, firstCol, lastCol);
-      DVConstraint dvConstraint = DVConstraint.createExplicitListConstraint(explicitListValues);
-      DataValidation dataValidation = new DataValidation(addressList, dvConstraint);
-      dataValidation.setSuppressDropDownArrow(false);
-      this.sheet.addValidationData(dataValidation);
-   }*/
+   /*
+    * public void createCellDropDown(int firstRow, int lastRow, int firstCol, int lastCol, String[] explicitListValues) { CellRangeAddressList addressList = new CellRangeAddressList(firstRow, lastRow, firstCol, lastCol); DVConstraint dvConstraint =
+    * DVConstraint.createExplicitListConstraint(explicitListValues); DataValidation dataValidation = new DataValidation(addressList, dvConstraint); dataValidation.setSuppressDropDownArrow(false); this.sheet.addValidationData(dataValidation); }
+    */
 
    /**
     * <p>
@@ -215,14 +213,11 @@ public class ExcelTools {
     * @param sizeMax
     * @param nameCol
     */
-   /*public void createCellTextelimitSize(final int colonne, final String sizeMin, final String sizeMax, String nameCol) {
-      CellRangeAddressList addressList = new CellRangeAddressList(this.ligneSheet.getRowNum(), this.ligneSheet.getRowNum(), colonne, colonne);
-      DVConstraint dvConstraint = DVConstraint.createNumericConstraint(DataValidationConstraint.ValidationType.TEXT_LENGTH, DataValidationConstraint.OperatorType.BETWEEN, sizeMin, sizeMax);
-      DataValidation dataValidation = new DataValidation(addressList, dvConstraint);
-      dataValidation.setShowErrorBox(true);
-      dataValidation.createErrorBox("Impec : " + nameCol, "Le nombre de caractères de la cellule est compris entre " + sizeMin + " et " + sizeMax);
-      this.sheet.addValidationData(dataValidation);
-   }*/
+   /*
+    * public void createCellTextelimitSize(final int colonne, final String sizeMin, final String sizeMax, String nameCol) { CellRangeAddressList addressList = new CellRangeAddressList(this.ligneSheet.getRowNum(), this.ligneSheet.getRowNum(), colonne, colonne); DVConstraint dvConstraint =
+    * DVConstraint.createNumericConstraint(DataValidationConstraint.ValidationType.TEXT_LENGTH, DataValidationConstraint.OperatorType.BETWEEN, sizeMin, sizeMax); DataValidation dataValidation = new DataValidation(addressList, dvConstraint); dataValidation.setShowErrorBox(true);
+    * dataValidation.createErrorBox("Impec : " + nameCol, "Le nombre de caractères de la cellule est compris entre " + sizeMin + " et " + sizeMax); this.sheet.addValidationData(dataValidation); }
+    */
 
    /**
     * Masquer la ligne en cours
@@ -473,6 +468,18 @@ public class ExcelTools {
    }
 
    /**
+    * Création d'une cellule texte avec un style en parametre
+    * 
+    * @param colonne
+    * @param value
+    */
+   public void createCellTexteWithStyle(final int colonne, final String value, Object styleTexte) {
+      this.cell = this.ligneSheet.createCell(colonne);
+      this.cell.setCellStyle((CellStyle) styleTexte);
+      this.cell.setCellValue(value);
+   }
+
+   /**
     * Création d'une cellule texte en entete
     * 
     * @param colonne
@@ -480,7 +487,7 @@ public class ExcelTools {
     */
    public void createCellTexteEntete(final int colonne, final String value) {
       this.cell = this.ligneSheet.createCell(colonne);
-      this.cell.setCellStyle(this.styleEntete);
+      this.cell.setCellStyle(this.styleEnteteGris);
       this.cell.setCellValue(value);
    }
 
@@ -842,10 +849,17 @@ public class ExcelTools {
       this.styleNombreHide.setLocked(true);
       this.styleNombreHide.setHidden(true);
 
-      this.styleEntete = this.classeur.createCellStyle();
-      this.styleEntete.setFont(this.fontEntete);
-      this.styleEntete.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
-      this.styleEntete.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
+      this.styleEnteteGris = this.classeur.createCellStyle();
+      this.styleEnteteGris.setFont(this.fontEntete);
+      this.styleEnteteGris.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+      this.styleEnteteGris.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
+      
+      this.styleEnteteJaune = this.classeur.createCellStyle();
+      this.styleEnteteJaune.setFont(this.fontEntete);
+      this.styleEnteteJaune.setFillForegroundColor(HSSFColor.YELLOW.index);
+      this.styleEnteteJaune.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
+      
+      
 
       this.styleTexteLock = this.classeur.createCellStyle();
       this.styleTexteLock.setAlignment(CellStyle.ALIGN_LEFT);

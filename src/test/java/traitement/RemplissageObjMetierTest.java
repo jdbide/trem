@@ -1,12 +1,10 @@
 package traitement;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -15,16 +13,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
-import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
-import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
-import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
-import com.avancial.app.data.objetsMetier.PlanTransport.Train;
-import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.traitement.TraitementObjetMetier;
