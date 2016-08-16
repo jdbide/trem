@@ -2,7 +2,6 @@ package service;
 
 import java.io.File;
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,17 +18,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.RefTablesMotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.service.IMultipleInsertRequestGenerator;
 import com.avancial.app.service.JeuDonneeService;
-import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
-import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
