@@ -1,6 +1,7 @@
 package traitement;
 
 import java.io.File;
+import java.util.Date;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -76,6 +77,7 @@ public class TraitementMotriceTest {
             
             JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
             jeuDonneeEntity.setIdJeuDonnees(2);
+            jeuDonneeEntity.setDateLastUpdateJeuDonnees(new Date());
             
             Query query = this.entityManagerSocle.createQuery("SELECT t FROM CompagnieEnvironnementEntity t where t.idCompagnieEnvironnement = 1");
             CompagnieEnvironnementEntity compagnieEnvironnement = ((CompagnieEnvironnementEntity) query.getSingleResult());

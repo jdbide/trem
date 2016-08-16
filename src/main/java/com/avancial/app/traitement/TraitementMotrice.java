@@ -63,7 +63,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 					.getAllRefTablesMotriceRegime();
 
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime(this.em);
-			
+			mapIdTablesMotriceRegime.initMapIdTablesMotriceRegime(MotriceRegimeCompositionCoachEntity.class);
 			for (RefTablesMotriceRegimeEntity refTablesMotriceRegimeEntity : motriceRegimeEntities) {
 				Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(
 						refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
@@ -79,6 +79,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			this.em.getTransaction().begin();
 			/* On commence par les tables motrice_regime_xxx_xxx */
 			this.executeDeleteAll(MotriceRegimeCompositionCoachEntity.class);
+
 			/* On fait ensuite les tables motrice_regime_xxx */
 			for (Class<?> entity : mapIdTablesMotriceRegime.keySet()) {
 				if (!entity.equals(MotriceRegimeEntity.class)) {
@@ -87,11 +88,12 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			}
 			/* Puis motrice_regime */
 			this.executeDeleteAll(MotriceRegimeEntity.class);
+			
 			/* Et enfin motrice_traintranche */
 			this.executeDeleteAll(MotriceTrainTrancheEntity.class);
 			// this.em.getTransaction().commit();
 			this.log("Fin du vidage des tables d'import");
-
+			this.em.getTransaction().commit();
 			this.log("Debut de recuperation des train-tranche");
 			/* Récupération des train-tranche */
 			Query query = this.em.createNativeQuery(
@@ -138,8 +140,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 
 				// this.em.getTransaction().begin();
 				this.em.persist(motriceRegimeEntity);
-				this.em.getTransaction().commit();
-				this.em.close();
+				
 				System.out.println("Insertion dans la table tremas_motrice_regime du regime train-tranche associe");
 
 				if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
@@ -205,6 +206,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			/* On insère enfin dans les tables motrice_regime_xxx_xxx */
 			this.log("Debut d'insertion dans la table tremas_motrice_regime_composition_coach");
 			this.executeRequestGenerator(MotriceRegimeCompositionCoachEntity.class, mapGeneratorTablesMotriceRegime);
+			
+			
+			
 			this.log("Fin d'insertion dans la table tremas_motrice_regime_composition_coach");
 		}
 

@@ -5,20 +5,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.persistence.EntityManager;
 
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeDistributionEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeFareProfileEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeMealTypeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeRestrictionEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.traitement.TraitementMotrice;
 
 /**
  * Map ayant pour clés les entités du package
@@ -56,7 +44,7 @@ public class MapIdTablesMotriceRegime extends HashMap<Class<?>, AtomicLong> {
 	 * @return le prochain id à insérer
 	 */
 	private long getNewIdRegime(Class<?> entity) {
-		Long lastId = this.entityManager.createNamedQuery(entity.getSimpleName(), Long.class)
+		Long lastId = this.entityManager.createNamedQuery(new StringBuilder(entity.getSimpleName()).append(".getLastId").toString(), Long.class)
 				.getSingleResult();
 
 		if (lastId == null) {

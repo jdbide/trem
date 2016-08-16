@@ -23,7 +23,7 @@ import org.hibernate.annotations.ForeignKey;
 @NamedQueries({
         @NamedQuery(name = "MotriceRegimeComposition.getAll", query = "SELECT t FROM MotriceRegimeCompositionEntity t"),
         @NamedQuery(name = "MotriceRegimeComposition.deleteAll", query = "DELETE FROM MotriceRegimeCompositionEntity"),
-        @NamedQuery(name = "MotriceRegimeCompositionEntity.getLastIdgetLastId", query = "SELECT MAX( idMotriceRegimeComposition ) FROM MotriceRegimeCompositionEntity")})
+        @NamedQuery(name = "MotriceRegimeCompositionEntity.getLastId", query = "SELECT MAX( idMotriceRegimeComposition ) FROM MotriceRegimeCompositionEntity")})
 public class MotriceRegimeCompositionEntity {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
