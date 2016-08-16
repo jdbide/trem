@@ -5,7 +5,6 @@ package service;
 
 import java.io.File;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -21,7 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
-import com.avancial.app.data.databean.DatasourceEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.service.JeuDonneeService;
