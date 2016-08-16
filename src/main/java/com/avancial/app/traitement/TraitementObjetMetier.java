@@ -11,7 +11,6 @@ import javax.persistence.Query;
 
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
@@ -29,7 +28,6 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
    @Inject
    private TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory;
 
-   @Inject
    private MapPlansDeTransport            mapPlansDeTransport;
 
    @Inject
@@ -37,16 +35,13 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
       super();
    }
 
-   @Inject
-   @Socle_PUSocle
-   EntityManager entityManagerSocle;
-
    public void executeTraitement() throws Exception {
       /* Creation du plan de transport */
       PlanTransport planTransport = this.mapPlansDeTransport.get(1).get();
 
-      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t", MotriceTrainTrancheEntity.class);
-
+      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t WHERE t.jeuDonnee.compagnieEnvironnement.idCompagnieEnvironnement = ?", MotriceTrainTrancheEntity.class);
+      query.setParameter(1, 1);
+      
       List<MotriceTrainTrancheEntity> trainsTranches = query.getResultList();
       Train train = new Train();
 
@@ -72,5 +67,10 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
          lastTrainNumber = resTrainTranche.getTrainNumberMotriceTrainTranche();
       }
       /* Fin du remplissage du plan de transport */
+   }
+
+   public void setMap(MapPlansDeTransport mapPlansDeTransport) {
+      this.mapPlansDeTransport = mapPlansDeTransport;
+      
    }
 }

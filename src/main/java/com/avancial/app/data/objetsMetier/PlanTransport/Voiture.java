@@ -6,51 +6,55 @@ import com.avancial.socle.utils.ListUtils;
 
 public class Voiture {
 
-    private String numeroVoiture;
+   private String             numeroVoiture;
 
-    private List<Compartiment> compartiments;
+   private List<Compartiment> compartiments;
 
-    public Voiture() {
-        this.numeroVoiture = "";
-        this.compartiments = new ArrayList<>();
-    }
+   public Voiture() {
+      this.numeroVoiture = "";
+      this.compartiments = new ArrayList<>();
+   }
 
-    public Voiture clone(){
-        Voiture res = new Voiture();
-        List<Compartiment> resCompartiments = new ArrayList<>();
-        res.setNumeroVoiture(this.numeroVoiture);
-        for (Compartiment compartiment : this.compartiments) {
+   public Voiture clone() {
+      Voiture res = new Voiture();
+      List<Compartiment> resCompartiments = new ArrayList<>();
+      res.setNumeroVoiture(this.numeroVoiture);
+      if (this.compartiments != null) {
+         for (Compartiment compartiment : this.compartiments) {
             resCompartiments.add(compartiment.clone());
-        }
-        res.setCompartiments(resCompartiments);
-        return res;
-    }
-    public Voiture(String numeroVoiture, List<Compartiment> compartiments) {
-        super();
-        this.numeroVoiture = numeroVoiture;
-        this.compartiments = compartiments;
-    }
+         }
+         res.setCompartiments(resCompartiments);
+      } else {
+         res.setCompartiments(null);
+      }
+      return res;
+   }
 
-    @Override
-    public boolean equals(Object obj) {
-        Voiture voiture = (Voiture) obj;
-        return this.getNumeroVoiture().equals(voiture.getNumeroVoiture())
-                && ListUtils.compareLists(this.getCompartiments(), voiture.getCompartiments());
-    }
+   public Voiture(String numeroVoiture, List<Compartiment> compartiments) {
+      super();
+      this.numeroVoiture = numeroVoiture;
+      this.compartiments = compartiments;
+   }
 
-    public String getNumeroVoiture() {
-        return this.numeroVoiture;
-    }
+   @Override
+   public boolean equals(Object obj) {
+      Voiture voiture = (Voiture) obj;
+      return this.getNumeroVoiture().equals(voiture.getNumeroVoiture()) && ListUtils.compareLists(this.getCompartiments(), voiture.getCompartiments());
+   }
 
-    public void setNumeroVoiture(String numeroVoiture) {
-        this.numeroVoiture = numeroVoiture;
-    }
+   public String getNumeroVoiture() {
+      return this.numeroVoiture;
+   }
 
-    public List<Compartiment> getCompartiments() {
-        return this.compartiments;
-    }
+   public void setNumeroVoiture(String numeroVoiture) {
+      this.numeroVoiture = numeroVoiture;
+   }
 
-    public void setCompartiments(List<Compartiment> compartiments) {
-        this.compartiments = compartiments;
-    }
+   public List<Compartiment> getCompartiments() {
+      return this.compartiments;
+   }
+
+   public void setCompartiments(List<Compartiment> compartiments) {
+      this.compartiments = compartiments;
+   }
 }

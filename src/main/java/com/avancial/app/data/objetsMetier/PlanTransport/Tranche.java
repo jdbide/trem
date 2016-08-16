@@ -23,7 +23,11 @@ public class Tranche extends ASousRegimeTranche {
         Tranche tranche = new Tranche();
         tranche.setNumeroTranche(this.numeroTranche);
         tranche.setTrancheStatut(this.trancheStatut);
-        tranche.setAttributs(this.attributs.clone());
+        if (this.attributs != null) {
+           tranche.setAttributs(this.attributs.clone());
+        } else {
+           tranche.setAttributs(null);
+        }     
         return tranche;
     }
 

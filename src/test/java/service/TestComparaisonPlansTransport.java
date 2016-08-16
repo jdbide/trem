@@ -107,7 +107,9 @@ public class TestComparaisonPlansTransport {
          this.traitementMotrice.setJeuDonneeEntity(jeuDonneeEntity);
          
          try {
+            this.traitementMotrice.setMap(this.mapPlansDeTransport);
             this.traitementMotrice.execute();
+            this.traitementObjetMetier.setMap(this.mapPlansDeTransport);
             this.traitementObjetMetier.execute();
             List<IComparaisonPlanTransport> expected = new ArrayList<>();
 

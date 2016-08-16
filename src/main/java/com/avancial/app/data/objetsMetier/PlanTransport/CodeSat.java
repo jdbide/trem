@@ -14,7 +14,12 @@ public class CodeSat extends ASousRegimeTranche {
     public CodeSat clone(){
         CodeSat res = new CodeSat();
         res.setCodeSat(this.codeSat);
-        res.setRegime(this.regime.clone());
+        if (this.regime != null) {
+           res.setRegime(this.regime.clone());
+        } else {
+           res.setRegime(null);
+        }
+        
         return res;
     }
 

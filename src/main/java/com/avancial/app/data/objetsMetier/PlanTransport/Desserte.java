@@ -6,55 +6,64 @@ import com.avancial.socle.utils.ListUtils;
 
 public class Desserte extends ASousRegimeTranche {
 
-    private List<GareHoraire> gareHoraires;
+   private List<GareHoraire> gareHoraires;
 
-    private Regime regime;
+   private Regime            regime;
 
-    public Desserte() {
-        this.gareHoraires = new ArrayList<>();
-        this.regime = new Regime();
-    }
-    
-    public Desserte clone(){
-        Desserte res = new Desserte();
-        List<GareHoraire> resGareHoraires = new ArrayList<>();
-        res.setRegime(this.regime.clone());
-        for (GareHoraire gareHoraire : this.gareHoraires) {
+   public Desserte() {
+      this.gareHoraires = new ArrayList<>();
+      this.regime = new Regime();
+   }
+
+   public Desserte clone() {
+      Desserte res = new Desserte();
+      List<GareHoraire> resGareHoraires = new ArrayList<>();
+      if (this.regime != null) {
+         res.setRegime(this.regime.clone());
+      } else {
+         res.setRegime(null);
+      }
+      if (this.gareHoraires != null) {
+         for (GareHoraire gareHoraire : this.gareHoraires) {
             resGareHoraires.add(gareHoraire.clone());
-        }
-        res.setGareHoraires(resGareHoraires);
-        return res;        
-    }
+         }
+         res.setGareHoraires(resGareHoraires);
 
-    public Desserte(List<GareHoraire> gareHoraires, Regime regime) {
-        super();
-        this.gareHoraires = gareHoraires;
-        this.regime = regime;
-    }
+      } else {
+         res.setGareHoraires(null);
+      }
+      return res;
+   }
 
-    @Override
-    public boolean equals(Object obj) {
-        Desserte desserte = (Desserte) obj;
-        if (ListUtils.compareLists(desserte.getGareHoraires(), this.gareHoraires)) {
-            return true;
-        }
-        return false;
-    }
+   public Desserte(List<GareHoraire> gareHoraires, Regime regime) {
+      super();
+      this.gareHoraires = gareHoraires;
+      this.regime = regime;
+   }
 
-    public List<GareHoraire> getGareHoraires() {
-        return this.gareHoraires;
-    }
+   @Override
+   public boolean equals(Object obj) {
+      Desserte desserte = (Desserte) obj;
+      if (ListUtils.compareLists(desserte.getGareHoraires(), this.gareHoraires)) {
+         return true;
+      }
+      return false;
+   }
 
-    public void setGareHoraires(List<GareHoraire> gareHoraires) {
-        this.gareHoraires = gareHoraires;
-    }
+   public List<GareHoraire> getGareHoraires() {
+      return this.gareHoraires;
+   }
 
-    public Regime getRegime() {
-        return this.regime;
-    }
+   public void setGareHoraires(List<GareHoraire> gareHoraires) {
+      this.gareHoraires = gareHoraires;
+   }
 
-    public void setRegime(Regime regime) {
-        this.regime = regime;
-    }
+   public Regime getRegime() {
+      return this.regime;
+   }
+
+   public void setRegime(Regime regime) {
+      this.regime = regime;
+   }
 
 }

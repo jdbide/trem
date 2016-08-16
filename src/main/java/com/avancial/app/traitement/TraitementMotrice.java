@@ -19,7 +19,6 @@ import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
@@ -45,10 +44,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
    @Inject
    private RefTablesMotriceRegimeService tablesMotriceRegimeService;
 
-   @Inject
+ 
    private TraiteMotriceRegimeFactory    traiteMotriceRegimeFactory;
    
-   @Inject
    private MapPlansDeTransport mapPlansDeTransport;
 
    @Inject
@@ -216,6 +214,18 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 
    public void setJeuDonneeEntity(JeuDonneeEntity jeuDonneeEntity) {
       this.jeuDonneeEntity = jeuDonneeEntity;
+   }
+
+   public void setMap(MapPlansDeTransport mapPlansDeTransport) {
+      this.mapPlansDeTransport = mapPlansDeTransport;
+      
+   }
+
+   /**
+    * @param traiteMotriceRegimeFactory the traiteMotriceRegimeFactory to set
+    */
+   public void setTraiteMotriceRegimeFactory(TraiteMotriceRegimeFactory traiteMotriceRegimeFactory) {
+      this.traiteMotriceRegimeFactory = traiteMotriceRegimeFactory;
    }
 
 }
