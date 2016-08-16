@@ -16,10 +16,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  */
 public abstract class ASocleExportExcelService extends ASocleGenerateFile {
-   protected int[]      linePreEntete    = null;
-   protected int[]      lineEntete       = null;
+   protected int[]      firstLinePreEntete    = null;
+   protected int[]      firstLineEntete       = null;
    protected int[]      firstLineContent = null;
-   protected int[]      lineHide         = null;
+   protected int[]      firstLineHide         = null;
    protected int[]      numberColumnMax  = null;
    protected String[]   nameSheet        = null;
    protected boolean[]  lockSheet        = null;
@@ -29,14 +29,15 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
 
    protected ExcelTools excelTools       = null;
 
-   private String       nameCurrentSheet;
-   private int          numCurrentSheet  = 0;
+   protected String       nameCurrentSheet;
+   protected int          numCurrentSheet  = 0;
    protected int        ligne            = 0;
 
    /**
+    * @throws Exception 
     * 
     */
-   public ASocleExportExcelService() {
+   public ASocleExportExcelService() throws Exception {
       super();
       this.init();
    }
@@ -44,8 +45,9 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
    /**
     * 
     * @param xlsx
+    * @throws Exception 
     */
-   public ASocleExportExcelService(boolean xlsx) {
+   public ASocleExportExcelService(boolean xlsx) throws Exception {
       super();
       this.xlsx = xlsx;
       this.init();
@@ -56,8 +58,9 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
     * @param xlsx
     * @param fileName
     * @param filePath
+    * @throws Exception 
     */
-   public ASocleExportExcelService(boolean xlsx, String fileName, String filePath) {
+   public ASocleExportExcelService(boolean xlsx, String fileName, String filePath) throws Exception {
       super(fileName, filePath, (xlsx ? "xlsx" : "xls"));
       this.xlsx = xlsx;
       this.init();
@@ -176,19 +179,22 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
    /**
     * Les valeur par defaut pour les attributs
     */
-   private void init() {
-      this.linePreEntete    = new int [1];
-      this.lineEntete       = new int [1];
+   private void init() throws Exception {
+      firstLinePreEntete    =  new int [1];
+      firstLineEntete       =  new int [1];
+      firstLineHide         =  new int [1];
+      
       this.firstLineContent = new int [1];
-      this.lineHide         = new int [1];
       this.numberColumnMax  = new int [1];
       this.nameSheet        = new String [1];
       this.lockSheet        = new boolean [1];
       
-      this.linePreEntete[0] = 0;
-      this.lineEntete[0] = 4;
+      this.firstLinePreEntete[0] = 0;
+      
+      this.firstLineEntete[0] = 4;
+      
       this.firstLineContent[0] = 5;
-      this.lineHide[0] = -1;
+      this.firstLineHide[0] = -1;
       this.numberColumnMax[0] = 0;
       this.nameSheet[0] = "template";
       this.lockSheet[0] = false;

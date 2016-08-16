@@ -16,11 +16,11 @@ public abstract class ASocleGenerateFile extends ASocleExportService {
    /**
     * 
     */
-   public ASocleGenerateFile() {
+   public ASocleGenerateFile()  throws Exception  {
       super();
    }
 
-   public ASocleGenerateFile(String fileName, String filePath) {
+   public ASocleGenerateFile(String fileName, String filePath)  throws Exception  {
       super(fileName, filePath);
    }
 
@@ -29,7 +29,7 @@ public abstract class ASocleGenerateFile extends ASocleExportService {
     * @param exportFileExtension
     * @param contentType
     */
-   public ASocleGenerateFile(String fileName, String filePath, String fileExtension) {
+   public ASocleGenerateFile(String fileName, String filePath, String fileExtension)  throws Exception  {
       super(fileName, filePath, fileExtension);
    }
 
