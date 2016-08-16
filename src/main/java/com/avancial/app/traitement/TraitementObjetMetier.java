@@ -38,9 +38,10 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
    public void executeTraitement() throws Exception {
       /* Creation du plan de transport */
       PlanTransport planTransport = this.mapPlansDeTransport.get(1).get();
-
-      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t WHERE t.jeuDonnee.compagnieEnvironnement.idCompagnieEnvironnement = ?", MotriceTrainTrancheEntity.class);
-      query.setParameter(1, 1);
+      
+      
+      Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t JOIN t.jeuDonnee j JOIN j.compagnieEnvironnement c WHERE c.nomTechniqueCompagnieEnvironnement = ?", MotriceTrainTrancheEntity.class);
+      query.setParameter(1, "ES_PROD");
       
       List<MotriceTrainTrancheEntity> trainsTranches = query.getResultList();
       Train train = new Train();

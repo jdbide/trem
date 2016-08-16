@@ -44,7 +44,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
    @Inject
    private RefTablesMotriceRegimeService tablesMotriceRegimeService;
 
- 
+   @Inject
    private TraiteMotriceRegimeFactory    traiteMotriceRegimeFactory;
    
    private MapPlansDeTransport mapPlansDeTransport;
