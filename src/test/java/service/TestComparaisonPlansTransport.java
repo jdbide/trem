@@ -47,37 +47,20 @@ import junit.framework.Assert;
 
 @RunWith(Arquillian.class)
 public class TestComparaisonPlansTransport {
-    @Deployment
-    public static WebArchive createDeployment() {
-        File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity()
-                .as(File.class);
+   @Deployment
+   public static WebArchive createDeployment() {
+      File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity().as(File.class);
 
-        WebArchive jar = ShrinkWrap.create(WebArchive.class)
-                 .addPackage(MotriceRegimeEntity.class.getPackage())
-                 .addPackage(ITraiteMotriceRegime.class.getPackage())
-                 .addPackage(ALogBean.class.getPackage())
-                 .addPackage(ATraitement.class.getPackage())
-                 .addPackage(CodeSat.class.getPackage())
-                 .addPackage(IhmPageDataBean.class.getPackage())
-                 .addClass(JeuDonneeService.class)
-                 .addClass(TraiteObjetMetierRegimeFactory.class)
-                 .addClass(MapPlansDeTransport.class)
-                 .addClass(TraitementObjetMetier.class)
-                 .addClass(RefTablesMotriceRegimeService.class)
-                 .addClass(TraiteMotriceRegimeFactory.class)
-                 .addClass(MapPlansDeTransport.class)
-                 .addClass(TraitementMotrice.class)
-                 .addPackage(Socle_PUSocle.class.getPackage())
-                 .addPackage(EntityManagerProducerSocle.class.getPackage())
-                 .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
-                 .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
-                 .addAsManifestResource("META-INF/context.xml", "context.xml");
+      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(MotriceRegimeEntity.class.getPackage()).addPackage(ITraiteMotriceRegime.class.getPackage()).addPackage(ALogBean.class.getPackage()).addPackage(ATraitement.class.getPackage()).addPackage(CodeSat.class.getPackage())
+            .addPackage(IhmPageDataBean.class.getPackage()).addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class).addClass(TraitementObjetMetier.class).addClass(RefTablesMotriceRegimeService.class)
+            .addClass(TraiteMotriceRegimeFactory.class).addClass(MapPlansDeTransport.class).addClass(TraitementMotrice.class).addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml")
+            .addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml").addAsManifestResource("META-INF/context.xml", "context.xml");
 
-        System.out.println(jar.toString(true));
+      System.out.println(jar.toString(true));
 
-        return jar;
-    }
-    
+      return jar;
+   }
+
    @Inject
    @Socle_PUSocle
    EntityManager         em;
@@ -95,39 +78,35 @@ public class TestComparaisonPlansTransport {
    public void testComparaison() throws Exception {
       try {
          this.em.clear();
-         
+
          JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
          jeuDonneeEntity.setIdJeuDonnees(2);
-         
+
          Query query = this.em.createQuery("SELECT t FROM CompagnieEnvironnementEntity t where t.idCompagnieEnvironnement = 1");
          CompagnieEnvironnementEntity compagnieEnvironnement = ((CompagnieEnvironnementEntity) query.getSingleResult());
-         
-         
+
          jeuDonneeEntity.setCompagnieEnvironnement(compagnieEnvironnement);
          this.traitementMotrice.setJeuDonneeEntity(jeuDonneeEntity);
-         
+
          try {
-            this.traitementMotrice.setMap(this.mapPlansDeTransport);
-            this.traitementMotrice.execute();
-            this.traitementObjetMetier.setMap(this.mapPlansDeTransport);
+            this.traitementObjetMetier.setMapPlansDeTransport(this.mapPlansDeTransport);
+            this.traitementObjetMetier.setEnvironnementCompagnie(compagnieEnvironnement.getNomTechniqueCompagnieEnvironnement());
             this.traitementObjetMetier.execute();
             List<IComparaisonPlanTransport> expected = new ArrayList<>();
 
-            for (Train train : this.mapPlansDeTransport.get(1).get().getTrains()) {
+            for (Train train : this.mapPlansDeTransport.get(2).get().getTrains()) {
                for (Tranche tranche : train.getTranches()) {
                   ComparaisonPlanTransport<IPlanTransport> cpt = new ComparaisonPlanTransport<>();
-                  cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+                  cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
                   cpt.setNumeroTrain(train.getNumeroTrain());
                   cpt.setNumeroTranche(tranche.getNumeroTranche());
                   expected.add(cpt);
                }
             }
-            
 
             IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
             try {
-                Assert.assertTrue("Compare UNCHANGED PlanTransport",
-                        ListUtils.compareLists(expected, comparePlanTransport.compare(this.mapPlansDeTransport.get(1).get(), this.mapPlansDeTransport.get(2).get())));
+               Assert.assertTrue("Compare NEW PlanTransport", ListUtils.compareLists(expected, comparePlanTransport.compare(this.mapPlansDeTransport.get(1).get(), this.mapPlansDeTransport.get(2).get())));
             } catch (Throwable e1) {
                throw e1;
             }
@@ -139,5 +118,5 @@ public class TestComparaisonPlansTransport {
          e.printStackTrace();
       }
    }
-      
+
 }
