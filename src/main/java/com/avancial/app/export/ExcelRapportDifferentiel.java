@@ -3,6 +3,13 @@
  */
 package com.avancial.app.export;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
+import com.avancial.app.utilitaire.MapPlansDeTransport;
+
 /**
  * @author hamza.laterem
  *
@@ -26,11 +33,15 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
    public static String [] ENTETE_SHEET_MODIFY={"Train","Tranche","Field","Field Value Regime (if applicable)","Previous Field Value","New Field Value"};
    public static String [] ENTETE_SHEET_REGIMESPLIT={"Train","Tranche","Field","Regime","Value"};
    public static String [] ENTETE_SHEET_UNCHANGED_DELETE={"Train","Tranche","Régime Tranche"};
+   
+   protected List<IComparaisonPlanTransport> datas;
+   protected MapPlansDeTransport   mapPlansDeTransport;
 
    /**
     * 
     */
    public ExcelRapportDifferentiel() throws Exception {
+      this.datas = new ArrayList<>();
    }
 
    /**
@@ -39,6 +50,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     */
    public ExcelRapportDifferentiel(boolean xlsx) throws Exception {
       super(xlsx);
+      this.datas = new ArrayList<>();
    }
 
    /**
@@ -49,6 +61,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     */
    public ExcelRapportDifferentiel(boolean xlsx, String fileName, String filePath) throws Exception {
       super(xlsx, fileName, filePath);
+      this.datas = new ArrayList<>();
    }
 
    /*
@@ -102,8 +115,27 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     */
    @Override
    protected void chargeData() {
-      // TODO Auto-generated method stub
+      List<IComparaisonPlanTransport> datasOrder = new ArrayList<>();
+      
+      for (int i = 0; i < nameSheet.length; i++) {
+         datasOrder.addAll(this.orderByTypeComparaisonPlanTransport(nameSheet[i]));
+      }
+      
+      this.datas.clear();
+      this.datas.addAll(datasOrder);
+   }
 
+   
+
+   private List<IComparaisonPlanTransport> orderByTypeComparaisonPlanTransport(String typeComparaison) {
+      List<IComparaisonPlanTransport> datasOrder = new ArrayList<>();
+
+      for (IComparaisonPlanTransport comparaison : this.datas) {
+         if (((ComparaisonPlanTransport) comparaison).getTypeComparaisonPlanTransport().toString().equals(typeComparaison))
+            datasOrder.add(comparaison);
+      }
+      
+      return datasOrder;
    }
 
    /*
@@ -231,39 +263,98 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     */
    @Override
    protected void generateContentBySheet() {
-      // TODO Auto-generated method stub
+      this.ligne = this.firstLineContent[this.numCurrentSheet];
+      
+      if (this.nameCurrentSheet.equals(SHEET_NEW))
+         this.generateContentForSheetNew();
+      if (this.nameCurrentSheet.equals(SHEET_MODIFY))
+         this.generateContentForSheetModify();
+      if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT))
+         this.generateContentForSheetRegimeSplit();
+      if (this.nameCurrentSheet.equals(SHEET_DELETE))
+         this.generateContentForSheetDelete();
+      if (this.nameCurrentSheet.equals(SHEET_UNCHANGED))
+         this.generateContentForSheetUnchanged();
+   }
+
+   private void generateContentForSheetUnchanged() {
+      for (IComparaisonPlanTransport comparaison : this.datas) {
+         ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
+         if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_UNCHANGED)) {
+            this.excelTools.createRow(this.ligne++);
+            
+            
+            
+         }
+      }
+   }
+
+   private void generateContentForSheetDelete() {
+      for (IComparaisonPlanTransport comparaison : this.datas) {
+         ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
+         if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_DELETE)) {
+            
+         }
+      }
+      
+   }
+
+   private void generateContentForSheetRegimeSplit() {
+      for (IComparaisonPlanTransport comparaison : this.datas) {
+         ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
+         if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_REGIMESPLIT)) {
+            
+         }
+      }
+      
+   }
+
+   private void generateContentForSheetModify() {
+      for (IComparaisonPlanTransport comparaison : this.datas) {
+         ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
+         if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_MODIFY)) {
+            
+         }
+      }
+      
+   }
+
+   private void generateContentForSheetNew() {
+      for (IComparaisonPlanTransport comparaison : this.datas) {
+         ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
+         if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_NEW)) {
+            
+         }
+      }
+      
    }
 
    /**
-    * C'est un import spécial : par rapport a la données (Train, tranche) on ecrit sur le bon sheet Donc j'ai overridé la méthode generateAsXls pour gérer le this.generateContentBySheet séparément
+    * @return the datas
     */
-   @Override
-   protected void generateAsXls() throws Exception {
-      try {
-         this.excelTools = new ExcelTools(this.classeurXls);
+   public List<IComparaisonPlanTransport> getDatas() {
+      return datas;
+   }
 
-         for (int i = 0; i < nameSheet.length; i++) {
-            if (this.nameSheet[i] != null) {
-               this.nameCurrentSheet = this.nameSheet[i];
-               this.numCurrentSheet = i;
-               this.excelTools.createSheet(this.nameSheet[i]);
-               this.excelTools.createRow(0);
-               this.generateHideLineBySheet();
-               this.generatePreEnteteBySheet();
-               this.generateEnteteBySheet();
-               // this.generateContentBySheet();
-               this.excelTools.ajutementCell(this.numberColumnMax[i]);
-               this.excelTools.lockSheet(this.lockSheet[i]);
-            }
-         }
+   /**
+    * @param datas the datas to set
+    */
+   public void setDatas(List<IComparaisonPlanTransport> datas) {
+      this.datas = datas;
+   }
 
-         this.generateContentBySheet();
-      } catch (Exception e) {
-         /* FIXME : Afficher un msg d'erreur */
-         e.printStackTrace();
-         System.err.println("Erreur au niveau de la fonctio generateAsXls de la classe ASocleExportService");
-         throw e;
-      }
+   /**
+    * @return the mapPlansDeTransport
+    */
+   public MapPlansDeTransport getMapPlansDeTransport() {
+      return mapPlansDeTransport;
+   }
+
+   /**
+    * @param mapPlansDeTransport the mapPlansDeTransport to set
+    */
+   public void setMapPlansDeTransport(MapPlansDeTransport mapPlansDeTransport) {
+      this.mapPlansDeTransport = mapPlansDeTransport;
    }
 
 }
