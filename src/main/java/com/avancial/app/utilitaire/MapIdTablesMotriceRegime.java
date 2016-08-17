@@ -41,16 +41,18 @@ public class MapIdTablesMotriceRegime extends HashMap<Class<?>, AtomicLong> {
 
 	/**
 	 * Calcule la valeur de l'auto incrément.
+	 * 
 	 * @return le prochain id à insérer
 	 */
 	private long getNewIdRegime(Class<?> entity) {
-		Long lastId = this.entityManager.createNamedQuery(new StringBuilder(entity.getSimpleName()).append(".getLastId").toString(), Long.class)
+		Long lastId = this.entityManager
+				.createNamedQuery(new StringBuilder(entity.getSimpleName()).append(".getLastId").toString(), Long.class)
 				.getSingleResult();
 
 		if (lastId == null) {
 			return 1;
 		} else {
-			return lastId.longValue()+1;
+			return lastId.longValue() + 1;
 		}
 	}
 

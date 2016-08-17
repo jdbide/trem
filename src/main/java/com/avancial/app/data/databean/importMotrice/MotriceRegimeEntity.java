@@ -24,7 +24,7 @@ import org.hibernate.annotations.ForeignKey;
         @NamedQuery(name = "MotriceRegimeEntity.getLastId", query = "SELECT MAX( idMotriceRegime ) FROM MotriceRegimeEntity")})
 public class MotriceRegimeEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegime;
 
