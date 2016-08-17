@@ -121,7 +121,6 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       } catch (Throwable ex) {
          if (jeuDonneeDataBean != null) {
             jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-            jeuDonneeDataBean.setActifJeuDonnees(false);
          }
       } finally {
          if (jeuDonneeDataBean != null) {
@@ -164,7 +163,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
     * @return the idTask
     */
    public Long getIdTask() {
-      return idTask;
+      return this.idTask;
    }
 
    /**

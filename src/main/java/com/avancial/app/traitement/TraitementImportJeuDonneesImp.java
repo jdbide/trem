@@ -127,7 +127,6 @@ public class TraitementImportJeuDonneesImp extends ATraitementLogDetail implemen
       } catch (Throwable ex) {
          if (jeuDonneeDataBean != null) {
             jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-            jeuDonneeDataBean.setActifJeuDonnees(false);
          }
       } finally {
          if (jeuDonneeDataBean != null) {
