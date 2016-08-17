@@ -23,5 +23,18 @@ public class MapPlansDeTransport extends HashMap<Integer, AtomicReference<PlanTr
       this.put(1, new AtomicReference<PlanTransport>(new PlanTransport()));
       this.put(2, new AtomicReference<PlanTransport>(new PlanTransport()));
    }
+   
+   public void setPlanTransportActive(PlanTransport PTActive) {
+      this.get(1).set(PTActive);
+   }
+   
+   public void setPlanTransportDraft(PlanTransport PTDraft) {
+      this.get(2).set(PTDraft);
+   }
+   
+   public void setMapPlansDeTransport(PlanTransport PTDraft, PlanTransport PTActive) {
+      this.setPlanTransportActive(PTActive);
+      this.setPlanTransportDraft(PTDraft);
+   }
 
 }

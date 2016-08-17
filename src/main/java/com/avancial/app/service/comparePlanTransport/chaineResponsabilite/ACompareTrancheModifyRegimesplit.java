@@ -69,6 +69,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
                 /* On compare les attributs de nouveau et ancien deux à deux */
                 List<IComparaisonPlanTransport> resComparaison = comparePlanTransport.compare(sousRegimeTrancheAncien,
                         sousRegimeTrancheNouveau);
+                //res.addAll(resComparaison);
 
                 /*
                  * Si on trouve un attribut modifié entre ancien et nouveau, on
