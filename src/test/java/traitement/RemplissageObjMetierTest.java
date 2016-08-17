@@ -51,7 +51,8 @@ public class RemplissageObjMetierTest {
       try {
          this.em.clear();
          try {
-            this.traitementObjetMetier.setMap(this.mapPlansDeTransport);
+            this.traitementObjetMetier.setMapPlansDeTransport(this.mapPlansDeTransport);
+            this.traitementObjetMetier.setEnvironnementCompagnie("ES_PROD");
             this.traitementObjetMetier.execute();
          } catch (Throwable ex) {
             throw ex;
