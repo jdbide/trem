@@ -8,7 +8,7 @@ public class Tranche extends ASousRegimeTranche {
     private Regime regime;
 
     /**
-     * Map contenant tout les types de regime d'un tranche
+     * Map contenant tout les types de regime d'une tranche
      */
     private MapTranche attributs;
 

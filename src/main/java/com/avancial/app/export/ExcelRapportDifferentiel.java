@@ -6,8 +6,12 @@ package com.avancial.app.export;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 /**
@@ -15,27 +19,23 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
  *
  */
 public class ExcelRapportDifferentiel extends ASocleExportExcelService {
-   public static int    NUMBER_SHEET       = 5;
-   public static String REPORT_FOR         = "Report for:";
-   public static String DATE_IMPORT_DRAFT  = "Draft dataset loaded on:";
-   public static String DATE_IMPORT_ACTIVE = "Compared with dataset imported on:";
-   public static String SHEET_NEW          = "NEW";
-   public static String SHEET_DELETE       = "DELETE";
-   public static String SHEET_REGIMESPLIT  = "REGIMESPLIT";
-   public static String SHEET_MODIFY       = "MODIFY";
-   public static String SHEET_UNCHANGED    = "UNCHANGED";
-   public static String [] ENTETE_SHEET_NEW={
-         "Train","Tranche","Régime Tranche","Company","Tranche Status","Valid for RR",
-         "Regime_Dessertes","Dessertes","Regime OD Tranche","OD Tranche","Regime Distrib",
-         "IndicDistrib","Regime Compo","Classes","Compo","RameCodes","RM Code","Regime_CodeSAT","CodeSAT",
-         "Regime_FareProfileCode","FareProfileCode","Regime Eqp_Type","Eqp_Type","Regime Services",
-         "Services by Class & OD","Regime_Meal","Meal Type","Regime_Specif","Specificities","Regime_Restrictions","Restrictions"};
-   public static String [] ENTETE_SHEET_MODIFY={"Train","Tranche","Field","Field Value Regime (if applicable)","Previous Field Value","New Field Value"};
-   public static String [] ENTETE_SHEET_REGIMESPLIT={"Train","Tranche","Field","Regime","Value"};
-   public static String [] ENTETE_SHEET_UNCHANGED_DELETE={"Train","Tranche","Régime Tranche"};
-   
+   public static int                         NUMBER_SHEET                  = 5;
+   public static String                      REPORT_FOR                    = "Report for:";
+   public static String                      DATE_IMPORT_DRAFT             = "Draft dataset loaded on:";
+   public static String                      DATE_IMPORT_ACTIVE            = "Compared with dataset imported on:";
+   public static String                      SHEET_NEW                     = "NEW";
+   public static String                      SHEET_DELETE                  = "DELETE";
+   public static String                      SHEET_REGIMESPLIT             = "REGIMESPLIT";
+   public static String                      SHEET_MODIFY                  = "MODIFY";
+   public static String                      SHEET_UNCHANGED               = "UNCHANGED";
+   public static String[]                    ENTETE_SHEET_NEW              = { "Train", "Tranche", "Régime Tranche", "Company", "Tranche Status", "Valid for RR", "Regime_Dessertes", "Dessertes", "Regime OD Tranche", "OD Tranche", "Regime Distrib", "IndicDistrib", "Regime Compo", "Classes", "Compo",
+         "RameCodes", "RM Code", "Regime_CodeSAT", "CodeSAT", "Regime_FareProfileCode", "FareProfileCode", "Regime Eqp_Type", "Eqp_Type", "Regime Services", "Services by Class & OD", "Regime_Meal", "Meal Type", "Regime_Specif", "Specificities", "Regime_Restrictions", "Restrictions" };
+   public static String[]                    ENTETE_SHEET_MODIFY           = { "Train", "Tranche", "Field", "Field Value Regime (if applicable)", "Previous Field Value", "New Field Value" };
+   public static String[]                    ENTETE_SHEET_REGIMESPLIT      = { "Train", "Tranche", "Field", "Regime", "Value" };
+   public static String[]                    ENTETE_SHEET_UNCHANGED_DELETE = { "Train", "Tranche", "Régime Tranche" };
+
    protected List<IComparaisonPlanTransport> datas;
-   protected MapPlansDeTransport   mapPlansDeTransport;
+   protected MapPlansDeTransport             mapPlansDeTransport;
 
    /**
     * 
@@ -116,16 +116,14 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
    @Override
    protected void chargeData() {
       List<IComparaisonPlanTransport> datasOrder = new ArrayList<>();
-      
+
       for (int i = 0; i < nameSheet.length; i++) {
          datasOrder.addAll(this.orderByTypeComparaisonPlanTransport(nameSheet[i]));
       }
-      
+
       this.datas.clear();
       this.datas.addAll(datasOrder);
    }
-
-   
 
    private List<IComparaisonPlanTransport> orderByTypeComparaisonPlanTransport(String typeComparaison) {
       List<IComparaisonPlanTransport> datasOrder = new ArrayList<>();
@@ -134,7 +132,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
          if (((ComparaisonPlanTransport) comparaison).getTypeComparaisonPlanTransport().toString().equals(typeComparaison))
             datasOrder.add(comparaison);
       }
-      
+
       return datasOrder;
    }
 
@@ -178,72 +176,59 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
    protected void generateEnteteBySheet() {
       this.ligne = this.firstLineEntete[this.numCurrentSheet];
       this.excelTools.createRow(this.ligne++);
-      
+
       if (this.nameCurrentSheet.equals(SHEET_NEW))
          this.generateEnteteForSheetNew();
       if (this.nameCurrentSheet.equals(SHEET_MODIFY))
          this.generateEnteteForSheetModify();
       if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT))
          this.generateEnteteForSheetRegimeSplit();
-      if (this.nameCurrentSheet.equals(SHEET_DELETE))
-         this.generateEnteteForSheetDelete();
-      if (this.nameCurrentSheet.equals(SHEET_UNCHANGED))
-         this.generateEnteteForSheetUnchanged();
-
+      if (this.nameCurrentSheet.equals(SHEET_DELETE) || this.nameCurrentSheet.equals(SHEET_UNCHANGED))
+         this.generateEnteteForSheetDeleteOrUnchanged(this.nameCurrentSheet);
    }
 
-   private void generateEnteteForSheetUnchanged() {      
+   private void generateEnteteForSheetDeleteOrUnchanged(String nameCurrentSheet) {
       // Gestion de la premiere ligne
-      this.excelTools.createCellTexteWithStyle(1, "Identical Data", this.excelTools.styleEnteteGris);
-      this.excelTools.addMergedRegion(this.ligne-1, this.ligne-1, 1, ENTETE_SHEET_UNCHANGED_DELETE.length);
+      this.excelTools.createCellTexteWithStyle(1, nameCurrentSheet.equals(SHEET_UNCHANGED) ? "Identical Data" : "Removed Entries", this.excelTools.styleEnteteGris);
+      this.excelTools.addMergedRegion(this.ligne - 1, this.ligne - 1, 1, ENTETE_SHEET_UNCHANGED_DELETE.length);
       this.excelTools.createRow(this.ligne++);
       // Gestion de la deuxieme ligne
       for (int i = 0; i < ENTETE_SHEET_UNCHANGED_DELETE.length; i++) {
-         this.excelTools.createCellTexteWithStyle(i+1, ENTETE_SHEET_UNCHANGED_DELETE[i], this.excelTools.styleEnteteGris);
+         this.excelTools.createCellTexteWithStyle(i + 1, ENTETE_SHEET_UNCHANGED_DELETE[i], this.excelTools.styleEnteteGris);
       }
-   }
-
-   private void generateEnteteForSheetDelete() {
-      // Gestion de la premiere ligne
-      this.excelTools.createCellTexteWithStyle(1, "Removed Entries", this.excelTools.styleEnteteGris);
-      this.excelTools.addMergedRegion(this.ligne-1, this.ligne-1, 1, ENTETE_SHEET_UNCHANGED_DELETE.length);
-      this.excelTools.createRow(this.ligne++);
-      // Gestion de la deuxieme ligne
-      for (int i = 0; i < ENTETE_SHEET_UNCHANGED_DELETE.length; i++) {
-         this.excelTools.createCellTexteWithStyle(i+1, ENTETE_SHEET_UNCHANGED_DELETE[i], this.excelTools.styleEnteteGris);
-      }
+      
    }
 
    private void generateEnteteForSheetRegimeSplit() {
       // Gestion de la premiere ligne
       this.excelTools.createCellTexteWithStyle(1, "Modified Entries", this.excelTools.styleEnteteGris);
-      this.excelTools.addMergedRegion(this.ligne-1, this.ligne-1, 1, ENTETE_SHEET_REGIMESPLIT.length);
+      this.excelTools.addMergedRegion(this.ligne - 1, this.ligne - 1, 1, ENTETE_SHEET_REGIMESPLIT.length);
       this.excelTools.createRow(this.ligne++);
       // Gestion de la deuxieme ligne
       for (int i = 0; i < ENTETE_SHEET_REGIMESPLIT.length; i++) {
-         this.excelTools.createCellTexteWithStyle(i+1, ENTETE_SHEET_REGIMESPLIT[i], this.excelTools.styleEnteteGris);
+         this.excelTools.createCellTexteWithStyle(i + 1, ENTETE_SHEET_REGIMESPLIT[i], this.excelTools.styleEnteteGris);
       }
    }
 
    private void generateEnteteForSheetModify() {
       // Gestion de la premiere ligne
       this.excelTools.createCellTexteWithStyle(1, "Modified Entries", this.excelTools.styleEnteteGris);
-      this.excelTools.addMergedRegion(this.ligne-1, this.ligne-1, 1, ENTETE_SHEET_MODIFY.length);
+      this.excelTools.addMergedRegion(this.ligne - 1, this.ligne - 1, 1, ENTETE_SHEET_MODIFY.length);
       this.excelTools.createRow(this.ligne++);
       // Gestion de la deuxieme ligne
       for (int i = 0; i < ENTETE_SHEET_MODIFY.length; i++) {
-         this.excelTools.createCellTexteWithStyle(i+1, ENTETE_SHEET_MODIFY[i], this.excelTools.styleEnteteGris);
+         this.excelTools.createCellTexteWithStyle(i + 1, ENTETE_SHEET_MODIFY[i], this.excelTools.styleEnteteGris);
       }
    }
 
    private void generateEnteteForSheetNew() {
       // Gestion de la premiere ligne
       this.excelTools.createCellTexteWithStyle(1, "New Entries", this.excelTools.styleEnteteGris);
-      this.excelTools.addMergedRegion(this.ligne-1, this.ligne-1, 1, ENTETE_SHEET_NEW.length);
+      this.excelTools.addMergedRegion(this.ligne - 1, this.ligne - 1, 1, ENTETE_SHEET_NEW.length);
       this.excelTools.createRow(this.ligne++);
       // Gestion de la deuxieme ligne
       for (int i = 0; i < ENTETE_SHEET_NEW.length; i++) {
-         this.excelTools.createCellTexteWithStyle(i+1, ENTETE_SHEET_NEW[i], this.excelTools.styleEnteteGris);
+         this.excelTools.createCellTexteWithStyle(i + 1, ENTETE_SHEET_NEW[i], this.excelTools.styleEnteteGris);
       }
    }
 
@@ -264,69 +249,104 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
    @Override
    protected void generateContentBySheet() {
       this.ligne = this.firstLineContent[this.numCurrentSheet];
-      
+
       if (this.nameCurrentSheet.equals(SHEET_NEW))
          this.generateContentForSheetNew();
       if (this.nameCurrentSheet.equals(SHEET_MODIFY))
          this.generateContentForSheetModify();
       if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT))
          this.generateContentForSheetRegimeSplit();
-      if (this.nameCurrentSheet.equals(SHEET_DELETE))
-         this.generateContentForSheetDelete();
-      if (this.nameCurrentSheet.equals(SHEET_UNCHANGED))
-         this.generateContentForSheetUnchanged();
+      if (this.nameCurrentSheet.equals(SHEET_UNCHANGED) || this.nameCurrentSheet.equals(SHEET_DELETE))
+         this.generateContentForSheetUnchangedOrDelete(this.nameCurrentSheet);
    }
 
-   private void generateContentForSheetUnchanged() {
+   // "Train","Tranche","Régime Tranche"
+   private void generateContentForSheetUnchangedOrDelete(String nameCurrentSheet) {
       for (IComparaisonPlanTransport comparaison : this.datas) {
          ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
-         if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_UNCHANGED)) {
+         if (data.getTypeComparaisonPlanTransport().toString().equals(nameCurrentSheet)) {
             this.excelTools.createRow(this.ligne++);
-            
-            
-            
+            this.excelTools.createCellTexte(1, data.getNumeroTrain());
+            this.excelTools.createCellTexte(2, data.getNumeroTranche());
+            this.excelTools.createCellTexte(3, mapPlansDeTransport.get(1).get()
+                  .getTrainByNumeroTrain(data.getNumeroTrain())
+                  .getTrancheByNumeroTranche(data.getNumeroTranche())
+                  .getRegime().getCodeRegime());
          }
       }
-   }
-
-   private void generateContentForSheetDelete() {
-      for (IComparaisonPlanTransport comparaison : this.datas) {
-         ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
-         if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_DELETE)) {
-            
-         }
-      }
-      
    }
 
    private void generateContentForSheetRegimeSplit() {
-      for (IComparaisonPlanTransport comparaison : this.datas) {
-         ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
+      int debutRowTrain = 0;
+      
+      //for (IComparaisonPlanTransport comparaison : this.datas) {
+      ComparaisonPlanTransport data = null;
+      int idSousRegimeTranche = -1;
+      
+      for (int i = 0; i < this.datas.size(); i++) {
+         data = ((ComparaisonPlanTransport) this.datas.get(i));
+
          if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_REGIMESPLIT)) {
             
+            debutRowTrain = this.ligne;
+            // Creation d'une nouvelle ligne pour un train
+            this.excelTools.createRow(this.ligne++);
+            
+            boolean isfirst = true; 
+            for (int j = i; j < this.datas.size(); j++) {
+               // Si le même Type && le meme n° train meme n° tranche et même class du nouveau field
+               if (((ComparaisonPlanTransport) this.datas.get(j)).getTypeComparaisonPlanTransport().toString().equals(SHEET_REGIMESPLIT) &&
+                     ((ComparaisonPlanTransport) this.datas.get(j)).getNumeroTrain().equals(data.getNumeroTrain()) &&
+                     ((ComparaisonPlanTransport) this.datas.get(j)).getNumeroTranche().equals(data.getNumeroTranche()) &&
+                     ((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField().getClass().toString().equals(data.getNouveauField().getClass().toString())){
+                  if (data.getNouveauField().getClass().getName().toString().equals("com.avancial.app.data.objetsMetier.PlanTransport.FareProfile")){
+                     if (!isfirst)
+                        this.excelTools.createRow(this.ligne++);
+                     this.excelTools.createCellTexte(1, data.getNumeroTrain());
+                     this.excelTools.createCellTexte(2, data.getNumeroTranche());
+                     this.excelTools.createCellTexte(3, data.getNouveauField().getClass().getSimpleName());
+                           
+                     this.excelTools.createCellTexte(4, ((FareProfile) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     this.excelTools.createCellTexte(5, ((FareProfile) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getFareProfileCode());
+                     isfirst = false;
+                  }
+                     
+               } else {
+                  i = j - 1;
+               }
+            }
+ 
+            // Merge la colonne train par nombre de ligne / Tranche / Field / Regine et Value
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1);
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2);
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3);
          }
       }
-      
+
+   }
+
+   private void generateContentSheetRegimeSplitByField(ComparaisonPlanTransport data) {
+      Tranche tranche = mapPlansDeTransport.get(1).get().getTrainByNumeroTrain(data.getNumeroTrain()).getTrancheByNumeroTranche(data.getNumeroTranche());
    }
 
    private void generateContentForSheetModify() {
       for (IComparaisonPlanTransport comparaison : this.datas) {
          ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
          if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_MODIFY)) {
-            
+
          }
       }
-      
+
    }
 
    private void generateContentForSheetNew() {
       for (IComparaisonPlanTransport comparaison : this.datas) {
          ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
          if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_NEW)) {
-            
+
          }
       }
-      
+
    }
 
    /**
@@ -337,7 +357,8 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
    }
 
    /**
-    * @param datas the datas to set
+    * @param datas
+    *           the datas to set
     */
    public void setDatas(List<IComparaisonPlanTransport> datas) {
       this.datas = datas;
@@ -351,7 +372,8 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
    }
 
    /**
-    * @param mapPlansDeTransport the mapPlansDeTransport to set
+    * @param mapPlansDeTransport
+    *           the mapPlansDeTransport to set
     */
    public void setMapPlansDeTransport(MapPlansDeTransport mapPlansDeTransport) {
       this.mapPlansDeTransport = mapPlansDeTransport;

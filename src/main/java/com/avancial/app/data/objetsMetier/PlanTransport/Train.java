@@ -27,6 +27,20 @@ public class Train implements IPlanTransport {
       this.validePourRR = false;
    }
 
+   /**
+    * Getter trache par numero de tranche
+    * @param numeroTranche
+    * @return
+    */
+   public Tranche getTrancheByNumeroTranche(String numeroTranche) {
+      for (Tranche tranche : tranches) {
+         if (tranche.getNumeroTranche().equals(numeroTranche))
+            return tranche;
+      }
+
+      return null;
+   }
+
    public Train clone() {
       Train res = new Train();
       List<Tranche> resTranches = new ArrayList<>();

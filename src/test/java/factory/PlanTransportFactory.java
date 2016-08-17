@@ -65,16 +65,16 @@ public class PlanTransportFactory {
       
       
       Regime regimeTranche = new Regime("0", new Date(), new Date());
-      Regime regime1 = new Regime("1", date1, date2);
-      Regime regime2 = new Regime("2", date1, date3);
-      Regime regime3 = new Regime("2", date3, date2);
+      Regime regime1 = new Regime("Mo-We; From 01/06/2016 to 10/12/2016", date1, date2);
+      Regime regime2 = new Regime("Mo-Th; From 01/06/2016 to 10/12/2016", date1, date3);
+      Regime regime3 = new Regime("Fr; From 01/06/2016 to 10/12/2016", date3, date2);
       
       CodeSat codeSat1 = new CodeSat("1", regime1);
       CodeSat codeSat2 = new CodeSat("2", regime1);
       
-      FareProfile fareProfile1 = new FareProfile("1", regime1);
-      FareProfile fareProfile2 = new FareProfile("1", regime2);
-      FareProfile fareProfile3 = new FareProfile("1", regime3);
+      FareProfile fareProfile1 = new FareProfile("GBSPX ( / - 11:05) \n GBASF (11:18 - 11:20) \n FRPNO (14:16 - /)", regime1);
+      FareProfile fareProfile2 = new FareProfile("GBSPX ( / - 11:05) \n FRPNO (14:16 - /)", regime2);
+      FareProfile fareProfile3 = new FareProfile("GBSPX ( / - 11:05) \n GBASF (11:18 - 11:20) \n FRPNO (14:16 - /)", regime3);
       
       Repas repas1 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
       Repas repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
@@ -128,6 +128,8 @@ public class PlanTransportFactory {
       train_active_delete.setNumeroTrain("3");
       Tranche tranche_train_active_delete = new Tranche();
       tranche_train_active_delete.setNumeroTranche("6");
+      Regime regime_tranche_train_active_delete = new Regime("Sa-Fr; From 01/06/2016 to 10/12/2016", date1, date2);
+      tranche_train_active_delete.setRegime(regime_tranche_train_active_delete);
       train_active_delete.getTranches().add(tranche_train_active_delete);
       
       listTrain_active.add(train_active_delete);
@@ -137,6 +139,8 @@ public class PlanTransportFactory {
       train_commun.setNumeroTrain("4");
       Tranche tranche_train_commune = new Tranche();
       tranche_train_commune.setNumeroTranche("8");
+      Regime regime_tranche_train_commun = new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2);
+      tranche_train_commune.setRegime(regime_tranche_train_commun);
       train_commun.getTranches().add(tranche_train_commune);
       
       listTrain_draft.add(train_commun);

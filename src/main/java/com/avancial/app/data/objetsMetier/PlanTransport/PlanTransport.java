@@ -156,5 +156,19 @@ public class PlanTransport implements IPlanTransport {
       }
       return res;
    }
+   
+   /**
+    * Getter train par numero de train
+    * @param numeroTrain
+    * @return
+    */
+   public Train getTrainByNumeroTrain (String numeroTrain) {
+      for (Train train : trains) {
+         if (train.getNumeroTrain().equals(numeroTrain))
+            return train;
+      }
+      
+      return null;
+   }
 
 }
