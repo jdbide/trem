@@ -52,21 +52,19 @@ drop table if exists tremas_motrice_ref_serviceclass;
 
 drop table if exists tremas_motrice_ref_ramecode;
 
-create table tremas_jeu_donnees (
-        idJeuDonnees integer not null auto_increment,
-        actifJeuDonnees bit not null,
-        commentaireJeuDonnees longtext not null,
-        company varchar(2) not null,
-        dateCreateJeuDonnees datetime not null,
-        dateLastUpdateJeuDonnees datetime not null,
-        environment varchar(255) not null,
-        idUtilisateurCreateJeuDonnees integer not null,
-        idUtilisateurLastUpdateJeuDonnees integer not null,
-        libelleJeuDonnees varchar(50) not null,
-        nomTechniqueJeuDonnees varchar(50) not null,
-        ordreJeuDonnees integer not null,
-        statusJeuDonnees bit not null,
-        primary key (idJeuDonnees)
+drop table if exists tremas_ref_tables_motrice_regime;
+
+CREATE TABLE `tremas_jeu_donnees` (
+  `idJeuDonnees` int(11) NOT NULL AUTO_INCREMENT,
+  `dateCreateJeuDonnees` datetime NOT NULL,
+  `dateLastUpdateJeuDonnees` datetime NOT NULL,
+  `idUtilisateurCreateJeuDonnees` int(11) NOT NULL,
+  `idUtilisateurLastUpdateJeuDonnees` int(11) NOT NULL,
+  `statusJeuDonnees` enum('LASTACTIVE','ACTIVE','DRAFT','IMPORT') COLLATE utf8_bin NOT NULL DEFAULT 'IMPORT',
+  `idCompagnieEnvironnement` int(11) NOT NULL,
+  PRIMARY KEY (`idJeuDonnees`),
+  KEY `FK_5vhkn0pvaeq2jmf5ss6875tue` (`idCompagnieEnvironnement`),
+  CONSTRAINT `FK_5vhkn0pvaeq2jmf5ss6875tue` FOREIGN KEY (`idCompagnieEnvironnement`) REFERENCES `tremas_compagnie_environnement` (`idCompagnieEnvironnement`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_ref_regime_type (
