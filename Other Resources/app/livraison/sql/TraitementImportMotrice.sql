@@ -895,3 +895,17 @@ INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,num
 INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','42001H','3','009','42H');
 INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','42001H','4','009','42H');
 INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','42001H','5','009','42H');
+
+INSERT INTO tremas_motrice_ref_regime_type VALUES(1, "Regime train tranche");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(2, "Regime stop");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(3, "Regime service");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(4, "Regime specificity");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(5, "Regime restriction");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(6, "Regime satcode");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(7, "Regime fareprofile");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(8, "Regime eqptype");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(9, "Regime mealtype");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(10, "Regime distribution");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(11, "Regime composition");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(12, "Regime OD");
+
