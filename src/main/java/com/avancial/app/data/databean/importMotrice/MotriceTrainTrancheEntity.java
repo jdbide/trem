@@ -4,6 +4,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedNativeQuery;
@@ -18,13 +20,16 @@ import com.avancial.app.data.databean.JeuDonneeEntity;
 @Entity
 @Table(name = "tremas_motrice_traintranche")
 @NamedQueries({@NamedQuery(name = "MotriceTrainTranche.getAll", query = "SELECT t FROM MotriceTrainTrancheEntity t"),
-   @NamedQuery(name = "MotriceTrainTranche.deleteAll", query = "DELETE FROM MotriceTrainTrancheEntity"),
-   @NamedQuery(name = "MotriceTrainTranche.selectByJeuDonnee", query = "SELECT t FROM MotriceTrainTrancheEntity t WHERE t.jeuDonnee = :jeuDonnee")})
+        @NamedQuery(name = "MotriceTrainTranche.deleteAll", query = "DELETE FROM MotriceTrainTrancheEntity"),
+        @NamedQuery(name = "MotriceTrainTranche.selectByJeuDonnee",
+                query = "SELECT t FROM MotriceTrainTrancheEntity t WHERE t.jeuDonnee = :jeuDonnee"),
+        @NamedQuery(name = "MotriceTrainTranche.getLastId",
+                query = "SELECT MAX( t.idMotriceTrainTranche ) FROM MotriceTrainTrancheEntity t")})
 
 @NamedNativeQuery(name = "selectMotriceTrainTranche",
         query = "SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, NOT ISNULL(train.TRA1_NUM_TRAIN) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_TRCH_NUM")
 public class MotriceTrainTrancheEntity {
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceTrainTranche;
 
@@ -93,12 +98,12 @@ public class MotriceTrainTrancheEntity {
         this.jeuDonnee = jeuDonnee;
     }
 
-	public List<MotriceRegimeEntity> getMotriceRegimeEntities() {
-		return this.motriceRegimeEntities;
-	}
+    public List<MotriceRegimeEntity> getMotriceRegimeEntities() {
+        return this.motriceRegimeEntities;
+    }
 
-	public void setMotriceRegimeEntities(List<MotriceRegimeEntity> motriceRegimeEntities) {
-		this.motriceRegimeEntities = motriceRegimeEntities;
-	}
+    public void setMotriceRegimeEntities(List<MotriceRegimeEntity> motriceRegimeEntities) {
+        this.motriceRegimeEntities = motriceRegimeEntities;
+    }
 
 }

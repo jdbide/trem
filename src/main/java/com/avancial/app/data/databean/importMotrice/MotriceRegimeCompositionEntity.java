@@ -1,7 +1,6 @@
 package com.avancial.app.data.databean.importMotrice;
 
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,9 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
@@ -23,7 +20,8 @@ import org.hibernate.annotations.ForeignKey;
 @NamedQueries({
         @NamedQuery(name = "MotriceRegimeComposition.getAll", query = "SELECT t FROM MotriceRegimeCompositionEntity t"),
         @NamedQuery(name = "MotriceRegimeComposition.deleteAll", query = "DELETE FROM MotriceRegimeCompositionEntity"),
-        @NamedQuery(name = "MotriceRegimeComposition.getByRegime", query = "SELECT t FROM MotriceRegimeCompositionEntity t WHERE t.motriceRegime = :regime")})
+        @NamedQuery(name = "MotriceRegimeComposition.getByRegime", query = "SELECT t FROM MotriceRegimeCompositionEntity t WHERE t.motriceRegime = :regime"),
+        @NamedQuery(name = "MotriceRegimeCompositionEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeComposition ) FROM MotriceRegimeCompositionEntity t")})
 public class MotriceRegimeCompositionEntity {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

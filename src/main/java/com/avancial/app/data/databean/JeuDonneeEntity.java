@@ -30,6 +30,7 @@ public class JeuDonneeEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastUpdateJeuDonnees;
 
+
     private int idUtilisateurCreateJeuDonnees;
 
     private int idUtilisateurLastUpdateJeuDonnees;

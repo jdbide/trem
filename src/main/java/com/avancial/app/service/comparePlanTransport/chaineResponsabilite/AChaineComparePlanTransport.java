@@ -24,7 +24,7 @@ public abstract class AChaineComparePlanTransport implements IChaineComparePlanT
             IPlanTransport comparableNouveau) throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         if (this.successeur != null) {
-            res = this.successeur.compare(comparableAncien, comparableNouveau);
+            res.addAll(this.successeur.compare(comparableAncien, comparableNouveau));
         }
         return res;
     }

@@ -28,13 +28,13 @@ import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeService;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeSpecificity;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeStop;
 
-public class TraiteObjetMetierRegimeFactory implements Serializable{
+public class TraiteObjetMetierRegimeFactory implements Serializable {
 
    /**
     * 
     */
-   private static final long serialVersionUID = 1L;
-   private Map<Long, ITraiteObjetMetier> map = new HashMap<>();
+   private static final long             serialVersionUID = 1L;
+   private Map<Long, ITraiteObjetMetier> map              = new HashMap<>();
 
    /**
     * Constructeur

@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
@@ -65,8 +64,6 @@ public class JeuDonneeService implements Serializable {
       jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
       jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(-1);
       jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(-1);
-      jeuDonneeDataBean.setActifJeuDonnees(true);
-      jeuDonneeDataBean.setCommentaireJeuDonnees("");
       jeuDonneeDataBean.setCompagnieEnvironnement(compagnieEnvironnement);
       
       return jeuDonneeDataBean;
@@ -74,7 +71,6 @@ public class JeuDonneeService implements Serializable {
    
    public void desactiveJeuDonnee(JeuDonneeEntity jeuDonnee) {
       jeuDonnee.setDateLastUpdateJeuDonnees(new Date());
-      jeuDonnee.setActifJeuDonnees(false);
       this.update(jeuDonnee);
    }
 

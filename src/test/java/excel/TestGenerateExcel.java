@@ -4,6 +4,8 @@
 package excel;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,9 +18,19 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.export.ExcelRapportDifferentiel;
+import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
+import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.utilitaire.FileUtils;
+import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
+import com.avancial.socle.utils.ListUtils;
+
+import factory.PlanTransportFactory;
 
 /**
  * @author hamza.laterem
@@ -55,8 +67,80 @@ public class TestGenerateExcel {
    }
    
    @Test
+   public void TestPlanTransportFactory() {
+      MapPlansDeTransport   mapPlansDeTransport = PlanTransportFactory.createDataForCompare();
+      Assert.assertNotNull(mapPlansDeTransport);
+      
+     
+      //Delete
+      ComparaisonPlanTransport<IPlanTransport> comparaisonDelete = new ComparaisonPlanTransport<>();
+      comparaisonDelete.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
+      comparaisonDelete.setNumeroTrain("3");
+      comparaisonDelete.setNumeroTranche("6");
+      // New
+      ComparaisonPlanTransport<IPlanTransport> comparaisonNew = new ComparaisonPlanTransport<>();
+      comparaisonDelete.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
+      comparaisonDelete.setNumeroTrain("5");
+      comparaisonDelete.setNumeroTranche("10");
+      
+      //Unchanged
+      ComparaisonPlanTransport<IPlanTransport> comparaisonUnchanged = new ComparaisonPlanTransport<>();
+      comparaisonUnchanged.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+      comparaisonUnchanged.setNumeroTrain("4");
+      comparaisonUnchanged.setNumeroTranche("8");
+      
+      //Modify
+      ComparaisonPlanTransport<IPlanTransport> comparaisonModify = new ComparaisonPlanTransport<>();
+      comparaisonModify.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
+      comparaisonModify.setNumeroTrain("2");
+      comparaisonModify.setNumeroTranche("4");
+      
+      //
+      ComparaisonPlanTransport<IPlanTransport> comparaisonRegimSplit = new ComparaisonPlanTransport<>();
+      comparaisonRegimSplit.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
+      comparaisonRegimSplit.setNumeroTrain("2");
+      comparaisonRegimSplit.setNumeroTranche("4");
+      
+      //
+//      ComparaisonPlanTransport<IPlanTransport> comparaisonDelete2 = new ComparaisonPlanTransport<>();
+//      comparaisonDelete2.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
+//      comparaisonDelete2.setNumeroTrain("2");
+//      comparaisonDelete2.setNumeroTranche("4");
+      
+      //
+//      ComparaisonPlanTransport<IPlanTransport> comparaisonUnchanged2 = new ComparaisonPlanTransport<>();
+//      comparaisonUnchanged2.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+//      comparaisonUnchanged2.setNumeroTrain("2");
+//      comparaisonUnchanged2.setNumeroTranche("4");
+//      
+      List<IComparaisonPlanTransport> expected = new ArrayList<>();
+      expected.add(comparaisonDelete);
+      expected.add(comparaisonNew);
+      expected.add(comparaisonUnchanged);
+      expected.add(comparaisonModify);
+      expected.add(comparaisonRegimSplit);
+//      expected.add(comparaisonDelete2);
+//      expected.add(comparaisonUnchanged2);
+      try {
+         IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
+         List<IComparaisonPlanTransport> compare = new ArrayList<>();
+         compare = comparePlanTransport.compare(mapPlansDeTransport.get(1).get(), mapPlansDeTransport.get(2).get());
+         Assert.assertTrue("Compare",
+               ListUtils.compareLists(expected, compare));
+      } catch (Exception ex) {
+         System.err.println("====== Erreur dans le test");
+      }      
+   }
+   
+   @Test
    public void TestGenerateExcelDonneesParDefautEtInject() {
       try {
+         MapPlansDeTransport   mapPlansDeTransport = PlanTransportFactory.createDataForCompare();
+         IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
+         
+         this.excelRapportDifferentiel.setDatas(comparePlanTransport.compare(mapPlansDeTransport.get(1).get(), mapPlansDeTransport.get(2).get()));
+         this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
+         
          this.excelRapportDifferentiel.generate();
          if (!FileUtils.existFile("D:/was_tmp/tremas/export.xls")) {
             Assert.assertTrue(false);
@@ -75,10 +159,16 @@ public class TestGenerateExcel {
    @Test
    public void TestGenerateExcelLocalAvecParamsAndInject() {
       try {
+         MapPlansDeTransport   mapPlansDeTransport = PlanTransportFactory.createDataForCompare();
+         IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
+
          // Ajout des params
          this.excelRapportDifferentiel.setFileName("Test_TestGenerateExcelLocalAvecParamsAndInject");
          this.excelRapportDifferentiel.setFilePath("D:/was_tmp/tremas/export/");
          this.excelRapportDifferentiel.setXlsx(true);
+         
+         this.excelRapportDifferentiel.setDatas(comparePlanTransport.compare(mapPlansDeTransport.get(1).get(), mapPlansDeTransport.get(2).get()));
+         this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
          
          this.excelRapportDifferentiel.generate();
          if (!FileUtils.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {

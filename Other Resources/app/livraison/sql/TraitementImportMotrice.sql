@@ -52,21 +52,19 @@ drop table if exists tremas_motrice_ref_serviceclass;
 
 drop table if exists tremas_motrice_ref_ramecode;
 
-create table tremas_jeu_donnees (
-        idJeuDonnees integer not null auto_increment,
-        actifJeuDonnees bit not null,
-        commentaireJeuDonnees longtext not null,
-        company varchar(2) not null,
-        dateCreateJeuDonnees datetime not null,
-        dateLastUpdateJeuDonnees datetime not null,
-        environment varchar(255) not null,
-        idUtilisateurCreateJeuDonnees integer not null,
-        idUtilisateurLastUpdateJeuDonnees integer not null,
-        libelleJeuDonnees varchar(50) not null,
-        nomTechniqueJeuDonnees varchar(50) not null,
-        ordreJeuDonnees integer not null,
-        statusJeuDonnees bit not null,
-        primary key (idJeuDonnees)
+drop table if exists tremas_ref_tables_motrice_regime;
+
+CREATE TABLE `tremas_jeu_donnees` (
+  `idJeuDonnees` int(11) NOT NULL AUTO_INCREMENT,
+  `dateCreateJeuDonnees` datetime NOT NULL,
+  `dateLastUpdateJeuDonnees` datetime NOT NULL,
+  `idUtilisateurCreateJeuDonnees` int(11) NOT NULL,
+  `idUtilisateurLastUpdateJeuDonnees` int(11) NOT NULL,
+  `statusJeuDonnees` enum('LASTACTIVE','ACTIVE','DRAFT','IMPORT') COLLATE utf8_bin NOT NULL DEFAULT 'IMPORT',
+  `idCompagnieEnvironnement` int(11) NOT NULL,
+  PRIMARY KEY (`idJeuDonnees`),
+  KEY `FK_5vhkn0pvaeq2jmf5ss6875tue` (`idCompagnieEnvironnement`),
+  CONSTRAINT `FK_5vhkn0pvaeq2jmf5ss6875tue` FOREIGN KEY (`idCompagnieEnvironnement`) REFERENCES `tremas_compagnie_environnement` (`idCompagnieEnvironnement`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_ref_regime_type (
@@ -897,3 +895,17 @@ INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,num
 INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','42001H','3','009','42H');
 INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','42001H','4','009','42H');
 INSERT INTO tremas_ref_rame_classe(classeRefRameClasse,codeRameRefRameClasse,numCompRefRameClasse,numResaRefRameClasse,rameCodeRefRameClasse) VALUES ('H    ','42001H','5','009','42H');
+
+INSERT INTO tremas_motrice_ref_regime_type VALUES(1, "Regime train tranche");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(2, "Regime stop");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(3, "Regime service");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(4, "Regime specificity");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(5, "Regime restriction");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(6, "Regime satcode");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(7, "Regime fareprofile");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(8, "Regime eqptype");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(9, "Regime mealtype");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(10, "Regime distribution");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(11, "Regime composition");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(12, "Regime OD");
+

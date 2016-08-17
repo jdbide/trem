@@ -1,7 +1,7 @@
 package com.avancial.app.service;
 
-import java.sql.SQLException;
 import java.util.StringTokenizer;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -140,7 +140,7 @@ public class MultipleInsertRequestGenerator implements IMultipleInsertRequestGen
         return res;
     }
 
-    public int executeRequest() throws SQLException {
+    public int executeRequest() throws Exception {
         /* On récupère la requête */
         String req = this.getRequest();
 

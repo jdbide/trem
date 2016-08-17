@@ -53,7 +53,7 @@ public class TestRegimeSpecificty {
    @Test
    public void testRegimeDistribution() throws Exception {
       this.em.clear();
-      MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime();
+      MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime(this.em);
       this.em.getTransaction().begin();
       /* On commence par les tables motrice_regime_xxx_xxx */
       this.executeDeleteAll(MotriceRegimeCompositionCoachEntity.class);

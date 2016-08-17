@@ -30,7 +30,11 @@ public class Tranche extends ASousRegimeTranche {
         }     
         return tranche;
     }
-
+    @Override
+    public boolean equals(Object obj) {
+       Tranche tranche = (Tranche) obj;
+       return this.numeroTranche.equals(tranche.getNumeroTranche());
+    }
     /**
      * 
      * @param key
