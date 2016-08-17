@@ -1,6 +1,7 @@
 package traitement;
 
 import java.io.File;
+import java.util.Date;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -74,14 +75,21 @@ public class TraitementMotriceTest {
             
             this.traitementMotrice.setMap(this.mapPlansDeTransport);
             
-            JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
-            jeuDonneeEntity.setIdJeuDonnees(2);
-            
             Query query = this.entityManagerSocle.createQuery("SELECT t FROM CompagnieEnvironnementEntity t where t.idCompagnieEnvironnement = 1");
             CompagnieEnvironnementEntity compagnieEnvironnement = ((CompagnieEnvironnementEntity) query.getSingleResult());
             
-            
+            JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
+//            jeuDonneeEntity.setIdJeuDonnees(2);
+            jeuDonneeEntity.setDateCreateJeuDonnees(new Date());
+            jeuDonneeEntity.setDateLastUpdateJeuDonnees(new Date());
+            jeuDonneeEntity.setIdUtilisateurCreateJeuDonnees(-1);
+            jeuDonneeEntity.setIdUtilisateurLastUpdateJeuDonnees(-1);
             jeuDonneeEntity.setCompagnieEnvironnement(compagnieEnvironnement);
+            
+            this.entityManagerSocle.getTransaction().begin();
+            this.entityManagerSocle.persist(jeuDonneeEntity);
+            this.entityManagerSocle.getTransaction().commit();
+            
             this.traitementMotrice.setJeuDonneeEntity(jeuDonneeEntity);
 
             try {

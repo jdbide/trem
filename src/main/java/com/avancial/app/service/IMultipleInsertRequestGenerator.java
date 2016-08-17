@@ -1,7 +1,5 @@
 package com.avancial.app.service;
 
-import java.sql.SQLException;
-
 /**
  * Génère une requête pour l'insertion de plusieurs éléments dans une table.
  * 
@@ -43,7 +41,7 @@ public interface IMultipleInsertRequestGenerator {
      * Exécute la requête d'insertion
      * 
      * @return Nombre d'éléments insérés
-     * @throws SQLException
+     * @throws Exception 
      */
-    public int executeRequest() throws SQLException;
+    public int executeRequest() throws Exception;
 }

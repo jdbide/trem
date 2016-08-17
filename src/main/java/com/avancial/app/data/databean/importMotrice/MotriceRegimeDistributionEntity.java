@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -20,7 +19,10 @@ import org.hibernate.annotations.ForeignKey;
         @NamedQuery(name = "MotriceRegimeDistribution.getAll",
                 query = "SELECT t FROM MotriceRegimeDistributionEntity t"),
         @NamedQuery(name = "MotriceRegimeDistribution.deleteAll",
-                query = "DELETE FROM MotriceRegimeDistributionEntity")})
+                query = "DELETE FROM MotriceRegimeDistributionEntity"),
+        @NamedQuery(name = "MotriceRegimeDistribution.deleteByRegime",
+                query = "DELETE FROM MotriceRegimeDistributionEntity WHERE motriceRegime = :regime"),
+        @NamedQuery(name = "MotriceRegimeDistributionEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeDistribution ) FROM MotriceRegimeDistributionEntity t")})
 public class MotriceRegimeDistributionEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

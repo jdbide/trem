@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -18,12 +17,14 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "tremas_motrice_regime_mealtype")
 @NamedQueries({
         @NamedQuery(name = "MotriceRegimeMealTypeEntity.getAll", query = "SELECT t FROM MotriceRegimeMealTypeEntity t"),
-        @NamedQuery(name = "MotriceRegimeMealType.deleteAll", query = "DELETE FROM MotriceRegimeMealTypeEntity")})
+        @NamedQuery(name = "MotriceRegimeMealType.deleteAll", query = "DELETE FROM MotriceRegimeMealTypeEntity"),
+        @NamedQuery(name = "MotriceRegimeMealType.deleteByRegime", query = "DELETE FROM MotriceRegimeMealTypeEntity WHERE motriceRegime = :regime"),
+        @NamedQuery(name = "MotriceRegimeMealTypeEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeMealType ) FROM MotriceRegimeMealTypeEntity t")})
 public class MotriceRegimeMealTypeEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long idMotriceRegimeMealTypeEntity;
+    private Long idMotriceRegimeMealType;
     @Column(length = 1, nullable = false)
     private String mealTypeMotriceRegimeMealType;
     @Column(length = 8, nullable = false)
@@ -35,21 +36,6 @@ public class MotriceRegimeMealTypeEntity {
     @JoinColumn(name = "idMotriceRegime")
     @ForeignKey(name = "FK_motrice_regime_mealtype_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;
-
-    /**
-     * @return the idMotriceRegimeMealTypeEntity
-     */
-    public Long getIdMotriceRegimeMealTypeEntity() {
-        return this.idMotriceRegimeMealTypeEntity;
-    }
-
-    /**
-     * @param idMotriceRegimeMealTypeEntity
-     *            the idMotriceRegimeMealTypeEntity to set
-     */
-    public void setIdMotriceRegimeMealTypeEntity(Long idMotriceRegimeMealTypeEntity) {
-        this.idMotriceRegimeMealTypeEntity = idMotriceRegimeMealTypeEntity;
-    }
 
     /**
      * @return the mealTypeMotriceRegimeMealType
@@ -110,5 +96,13 @@ public class MotriceRegimeMealTypeEntity {
     public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
         this.motriceRegime = motriceRegime;
     }
+
+	public Long getIdMotriceRegimeMealType() {
+		return this.idMotriceRegimeMealType;
+	}
+
+	public void setIdMotriceRegimeMealType(Long idMotriceRegimeMealType) {
+		this.idMotriceRegimeMealType = idMotriceRegimeMealType;
+	}
 
 }

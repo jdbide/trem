@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -18,7 +17,9 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "tremas_motrice_regime_fareprofile")
 @NamedQueries({
         @NamedQuery(name = "MotriceRegimeFareProfile.getAll", query = "SELECT t FROM MotriceRegimeFareProfileEntity t"),
-        @NamedQuery(name = "MotriceRegimeFareProfile.deleteAll", query = "DELETE FROM MotriceRegimeFareProfileEntity")})
+        @NamedQuery(name = "MotriceRegimeFareProfile.deleteAll", query = "DELETE FROM MotriceRegimeFareProfileEntity"),
+        @NamedQuery(name = "MotriceRegimeFareProfile.deleteByRegime", query = "DELETE FROM MotriceRegimeFareProfileEntity WHERE motriceRegime = :regime"),
+        @NamedQuery(name = "MotriceRegimeFareProfileEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeFareProfile ) FROM MotriceRegimeFareProfileEntity t")})
 public class MotriceRegimeFareProfileEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

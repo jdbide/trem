@@ -4,97 +4,119 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
 /**
  * The persistent class for the tremas_jeu_donnees database table.
  * 
  */
 @Entity
-@Table(name="tremas_jeu_donnees")
-@NamedQuery(name="JeuDonneeEntity.getAll", query="SELECT t FROM JeuDonneeEntity t")
+@Table(name = "tremas_jeu_donnees")
+@NamedQueries({@NamedQuery(name = "JeuDonneeEntity.getAll", query = "SELECT t FROM JeuDonneeEntity t"),
+        @NamedQuery(name = "JeuDonneeEntity.getById", query = "SELECT t FROM JeuDonneeEntity t WHERE t.idJeuDonnees = :idJeuDonnees")})
 public class JeuDonneeEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idJeuDonnees;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idJeuDonnees;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateCreateJeuDonnees;
+    private Boolean actifJeuDonnees;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateLastUpdateJeuDonnees;
+    // @Lob
+    private String commentaireJeuDonnees;
 
-   private int idUtilisateurCreateJeuDonnees;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreateJeuDonnees;
 
-	private int idUtilisateurLastUpdateJeuDonnees;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateLastUpdateJeuDonnees;
 
-	@Column(length = 11, columnDefinition = "varchar(11) default 'IMPORT'")
-	@Enumerated(EnumType.STRING)
-	private Status statusJeuDonnees = Status.IMPORT;
 
-	//uni-directional many-to-one association to TremasCompagnieEnvironnement
-	@ManyToOne
-	@JoinColumn(name="idCompagnieEnvironnement")
-	private CompagnieEnvironnementEntity compagnieEnvironnement;
+    private int idUtilisateurCreateJeuDonnees;
 
-	public JeuDonneeEntity() {
-	}
+    private int idUtilisateurLastUpdateJeuDonnees;
 
-	public int getIdJeuDonnees() {
-		return this.idJeuDonnees;
-	}
+    @Column(length = 11, columnDefinition = "varchar(11) default 'IMPORT'")
+    @Enumerated(EnumType.STRING)
+    private Status statusJeuDonnees = Status.IMPORT;
 
-	public void setIdJeuDonnees(int idJeuDonnees) {
-		this.idJeuDonnees = idJeuDonnees;
-	}
+    // uni-directional many-to-one association to TremasCompagnieEnvironnement
+    @ManyToOne
+    @JoinColumn(name = "idCompagnieEnvironnement")
+    private CompagnieEnvironnementEntity compagnieEnvironnement;
 
-	public Date getDateCreateJeuDonnees() {
-		return this.dateCreateJeuDonnees;
-	}
+    public JeuDonneeEntity() {
+    }
 
-	public void setDateCreateJeuDonnees(Date dateCreateJeuDonnees) {
-		this.dateCreateJeuDonnees = dateCreateJeuDonnees;
-	}
+    public int getIdJeuDonnees() {
+        return this.idJeuDonnees;
+    }
 
-	public Date getDateLastUpdateJeuDonnees() {
-		return this.dateLastUpdateJeuDonnees;
-	}
+    public void setIdJeuDonnees(int idJeuDonnees) {
+        this.idJeuDonnees = idJeuDonnees;
+    }
 
-	public void setDateLastUpdateJeuDonnees(Date dateLastUpdateJeuDonnees) {
-		this.dateLastUpdateJeuDonnees = dateLastUpdateJeuDonnees;
-	}	
+    public Boolean getActifJeuDonnees() {
+        return this.actifJeuDonnees;
+    }
 
-	public int getIdUtilisateurCreateJeuDonnees() {
-		return this.idUtilisateurCreateJeuDonnees;
-	}
+    public void setActifJeuDonnees(Boolean actifJeuDonnees) {
+        this.actifJeuDonnees = actifJeuDonnees;
+    }
 
-	public void setIdUtilisateurCreateJeuDonnees(int idUtilisateurCreateJeuDonnees) {
-		this.idUtilisateurCreateJeuDonnees = idUtilisateurCreateJeuDonnees;
-	}
+    public String getCommentaireJeuDonnees() {
+        return this.commentaireJeuDonnees;
+    }
 
-	public int getIdUtilisateurLastUpdateJeuDonnees() {
-		return this.idUtilisateurLastUpdateJeuDonnees;
-	}
+    public void setCommentaireJeuDonnees(String commentaireJeuDonnees) {
+        this.commentaireJeuDonnees = commentaireJeuDonnees;
+    }
 
-	public void setIdUtilisateurLastUpdateJeuDonnees(int idUtilisateurLastUpdateJeuDonnees) {
-		this.idUtilisateurLastUpdateJeuDonnees = idUtilisateurLastUpdateJeuDonnees;
-	}
-	
-	public Status getStatusJeuDonnees() {
-		return this.statusJeuDonnees;
-	}
+    public Date getDateCreateJeuDonnees() {
+        return this.dateCreateJeuDonnees;
+    }
 
-	public void setStatusJeuDonnees(Status statusJeuDonnees) {
-		this.statusJeuDonnees = statusJeuDonnees;
-	}
+    public void setDateCreateJeuDonnees(Date dateCreateJeuDonnees) {
+        this.dateCreateJeuDonnees = dateCreateJeuDonnees;
+    }
 
-	public CompagnieEnvironnementEntity getCompagnieEnvironnement() {
-		return this.compagnieEnvironnement;
-	}
+    public Date getDateLastUpdateJeuDonnees() {
+        return this.dateLastUpdateJeuDonnees;
+    }
 
-	public void setCompagnieEnvironnement(CompagnieEnvironnementEntity compagnieEnvironnement) {
-		this.compagnieEnvironnement = compagnieEnvironnement;
-	}
+    public void setDateLastUpdateJeuDonnees(Date dateLastUpdateJeuDonnees) {
+        this.dateLastUpdateJeuDonnees = dateLastUpdateJeuDonnees;
+    }
+
+    public int getIdUtilisateurCreateJeuDonnees() {
+        return this.idUtilisateurCreateJeuDonnees;
+    }
+
+    public void setIdUtilisateurCreateJeuDonnees(int idUtilisateurCreateJeuDonnees) {
+        this.idUtilisateurCreateJeuDonnees = idUtilisateurCreateJeuDonnees;
+    }
+
+    public int getIdUtilisateurLastUpdateJeuDonnees() {
+        return this.idUtilisateurLastUpdateJeuDonnees;
+    }
+
+    public void setIdUtilisateurLastUpdateJeuDonnees(int idUtilisateurLastUpdateJeuDonnees) {
+        this.idUtilisateurLastUpdateJeuDonnees = idUtilisateurLastUpdateJeuDonnees;
+    }
+
+    public Status getStatusJeuDonnees() {
+        return this.statusJeuDonnees;
+    }
+
+    public void setStatusJeuDonnees(Status statusJeuDonnees) {
+        this.statusJeuDonnees = statusJeuDonnees;
+    }
+
+    public CompagnieEnvironnementEntity getCompagnieEnvironnement() {
+        return this.compagnieEnvironnement;
+    }
+
+    public void setCompagnieEnvironnement(CompagnieEnvironnementEntity compagnieEnvironnement) {
+        this.compagnieEnvironnement = compagnieEnvironnement;
+    }
 
 }

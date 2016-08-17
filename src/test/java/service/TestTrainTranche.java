@@ -89,7 +89,7 @@ public class TestTrainTranche {
 		List<Object[]> trainsTranches = query.getResultList();
 		long cpt = 1034;
 		MotriceTrainTrancheEntity motriceTrainTrancheEntity;
-		MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime();
+		MapIdTablesMotriceRegime mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime(this.em);
 		MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(
 				this.em.unwrap(Session.class), 250);
 
