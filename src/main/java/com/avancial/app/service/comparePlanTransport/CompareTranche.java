@@ -15,8 +15,9 @@ public class CompareTranche extends AComparePlanTransport {
 
         chaineCompareTrancheUnchanged.setSuccesseur(chaineCompareTrancheModify);
         chaineCompareTrancheModify.setSuccesseur(chaineCompareTrancheRegimesplit);
+        //chaineCompareTrancheRegimesplit.setSuccesseur(chaineCompareTrancheUnchanged);
         
-        this.chaineComparePlanTransport = chaineCompareTrancheModify;
+        this.chaineComparePlanTransport = chaineCompareTrancheUnchanged;//chaineCompareTrancheModify
     }
 
 }
