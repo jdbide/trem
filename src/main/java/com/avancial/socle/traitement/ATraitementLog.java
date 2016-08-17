@@ -29,15 +29,15 @@ public abstract class ATraitementLog extends ATraitement {
 
    @Override
    public void execute() {
-//      this.startLogging();
+      this.startLogging();
       try {
          this.executeTraitement();
-//         this.logBean.setMessageTraitement("Le traitement s'est terminé sans erreur.");
+         this.logBean.setMessageTraitement("Le traitement s'est terminé sans erreur.");
       } catch (Exception e) {
-//         this.logBean.setExceptionTraitement(e.getMessage());
-//         this.logBean.setMessageTraitement("Le traitement s'est terminé avec des erreurs.");
+         this.logBean.setExceptionTraitement(e.getMessage());
+         this.logBean.setMessageTraitement("Le traitement s'est terminé avec des erreurs.");
       } finally {
-//         this.stopLogging();
+         this.stopLogging();
       }
    }
 
