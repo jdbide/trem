@@ -19,7 +19,8 @@ import org.hibernate.annotations.ForeignKey;
 @Entity
 @Table(name = "tremas_motrice_regime")
 @NamedQueries({@NamedQuery(name = "MotriceRegime.getAll", query = "SELECT t FROM MotriceRegimeEntity t"),
-        @NamedQuery(name = "MotriceRegime.deleteAll", query = "DELETE FROM MotriceRegimeEntity")})
+        @NamedQuery(name = "MotriceRegime.deleteAll", query = "DELETE FROM MotriceRegimeEntity"),
+        @NamedQuery(name = "MotriceRegime.getByTrainTranche", query = "SELECT t FROM MotriceRegimeEntity t WHERE t.motriceTrainTranche = :trainTranche")})
 public class MotriceRegimeEntity {
 
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
