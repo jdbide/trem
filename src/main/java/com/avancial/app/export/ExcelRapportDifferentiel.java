@@ -290,32 +290,31 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                // Si le même Type && le meme n° train meme n° tranche et même class du nouveau field
                if (((ComparaisonPlanTransport) this.datas.get(j)).getTypeComparaisonPlanTransport().toString().equals(SHEET_REGIMESPLIT) && ((ComparaisonPlanTransport) this.datas.get(j)).getNumeroTrain().equals(data.getNumeroTrain())
                      && ((ComparaisonPlanTransport) this.datas.get(j)).getNumeroTranche().equals(data.getNumeroTranche()) && ((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField().getClass().toString().equals(data.getNouveauField().getClass().toString())) {
-
+                  if (!isfirst)
+                     this.excelTools.createRow(this.ligne++);
+                  
                   this.excelTools.createCellTexte(1, data.getNumeroTrain());
                   this.excelTools.createCellTexte(2, data.getNumeroTranche());
 
-                  if (!isfirst)
-                     this.excelTools.createRow(this.ligne++);
-
-                  if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.FareProfile)) {
+                  if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.FareProfile.toString())) {
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((FareProfile) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
                      this.excelTools.createCellTexte(5, ((FareProfile) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getFareProfileCode());
-                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.CodeSat)) {
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.CodeSat.toString())) {
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((CodeSat) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
                      this.excelTools.createCellTexte(5, ((CodeSat) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getCodeSat());
-                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Desserte)) {
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Desserte.toString())) {
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((Desserte) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
                      for (GareHoraire gareHoraire : ((Desserte) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getGareHoraires()) {
                         this.excelTools.createCellTexte(5, (gareHoraire.getGare().getCodeGare() + "(" + ((gareHoraire.getHoraire().getHoraireDebut() != null) ? gareHoraire.getHoraire().getHoraireDebut().toString() : "/") + ")\n"));
                      }
-                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Distribution)) {
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Distribution.toString())) {
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((Distribution) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
                      this.excelTools.createCellTexte(5, ((Distribution) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getIndiceDistribution());
-                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.OrigineDestination)) {
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.OrigineDestination.toString())) {
                      
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((OrigineDestination) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
@@ -324,13 +323,13 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                       */
                      //this.excelTools.createCellTexte(5, ((OrigineDestination) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).);
                   
-                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Repas)) {
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Repas.toString())) {
                      
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((Repas) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
                      this.excelTools.createCellTexte(5, ((Repas) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getTypeRepas().toString());
                   
-                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Restriction)) {
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Restriction.toString())) {
                      
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
@@ -340,7 +339,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                            "to" +
                            ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getDestination().toString());
                   
-                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.ServiceABord)) {
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.ServiceABord.toString())) {
                      
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
@@ -348,13 +347,13 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                            ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getClasse().toString() + " - " +
                            ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getOrigine().getCodeGare() + " to " +
                            ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getDestination().getCodeGare());
-                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.TypeEquipement)) {
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.TypeEquipement.toString())) {
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((TypeEquipement) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
                      this.excelTools.createCellTexte(5, ((TypeEquipement) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getTypeEquipement());
                   } 
                   
-                  else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Specification)) {
+                  else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Specification.toString())) {
                      
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((Specification) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
@@ -376,7 +375,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                      }
 
                      this.excelTools.createCellTexte(5,valueSpecification);
-                  }  else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Composition)) {
+                  }  else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Composition.toString())) {
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((Composition) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
                      
@@ -402,9 +401,9 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             }
 
             // Merge la colonne train par nombre de ligne / Tranche / Field / Regine et Value
-            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1);
-            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2);
-            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3);
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1, this.excelTools.styleBorder);
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2, this.excelTools.styleBorder);
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3, this.excelTools.styleBorder);
          }
       }
 
@@ -413,27 +412,27 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
    private String getFieldName(String simpleName) {
       String res = "";
 
-      if (simpleName.equals(APP_Field.CodeSat))
+      if (simpleName.equals(APP_Field.CodeSat.toString()))
          res = "CodeSat";
-      if (simpleName.equals(APP_Field.Desserte))
+      if (simpleName.equals(APP_Field.Desserte.toString()))
          res = "Stop";
-      if (simpleName.equals(APP_Field.Distribution))
+      if (simpleName.equals(APP_Field.Distribution.toString()))
          res = "Distribution";
-      if (simpleName.equals(APP_Field.FareProfile))
+      if (simpleName.equals(APP_Field.FareProfile.toString()))
          res = "FareProfile";
-      if (simpleName.equals(APP_Field.OrigineDestination))
+      if (simpleName.equals(APP_Field.OrigineDestination.toString()))
          res = "OrigineDestination";
-      if (simpleName.equals(APP_Field.Repas))
+      if (simpleName.equals(APP_Field.Repas.toString()))
          res = "MealType";
-      if (simpleName.equals(APP_Field.Restriction))
+      if (simpleName.equals(APP_Field.Restriction.toString()))
          res = "Restriction";
-      if (simpleName.equals(APP_Field.ServiceABord))
+      if (simpleName.equals(APP_Field.ServiceABord.toString()))
          res = "Services";
-      if (simpleName.equals(APP_Field.Specification))
+      if (simpleName.equals(APP_Field.Specification.toString()))
          res = "Specification";
-      if (simpleName.equals(APP_Field.TypeEquipement))
+      if (simpleName.equals(APP_Field.TypeEquipement.toString()))
          res = "TypeEquipement";
-      if (simpleName.equals(APP_Field.Composition))
+      if (simpleName.equals(APP_Field.Composition.toString()))
          res = "Composition";
 
       return res;

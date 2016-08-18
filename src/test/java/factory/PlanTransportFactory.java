@@ -72,9 +72,9 @@ public class PlanTransportFactory {
       CodeSat codeSat1 = new CodeSat("1", regime1);
       CodeSat codeSat2 = new CodeSat("2", regime1);
       
-      FareProfile fareProfile1 = new FareProfile("GBSPX ( / - 11:05) \n GBASF (11:18 - 11:20) \n FRPNO (14:16 - /)", regime1);
-      FareProfile fareProfile2 = new FareProfile("GBSPX ( / - 11:05) \n FRPNO (14:16 - /)", regime2);
-      FareProfile fareProfile3 = new FareProfile("GBSPX ( / - 11:05) \n GBASF (11:18 - 11:20) \n FRPNO (14:16 - /)", regime3);
+      FareProfile fareProfile1 = new FareProfile("G45", regime1);
+      FareProfile fareProfile2 = new FareProfile("E87", regime2);
+      FareProfile fareProfile3 = new FareProfile("S54", regime3);
       
       Repas repas1 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
       Repas repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);

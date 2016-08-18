@@ -13,12 +13,9 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.data.Task;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
-import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.service.CompagnieEnvironnementService;
-import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.traitement.TraitementImportDb2Motrice;
 import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;

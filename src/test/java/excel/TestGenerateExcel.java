@@ -71,7 +71,7 @@ public class TestGenerateExcel {
     * @return 
     * 
     */
-   @Test
+   //@Test
    public void TestInject() {
       Assert.assertNotNull(this.excelRapportDifferentiel);
       System.out.println(this.excelRapportDifferentiel.getClass());
@@ -162,7 +162,7 @@ public class TestGenerateExcel {
       }      
    }
    
-  //@Test
+  @Test
    public void TestGenerateExcelDonneesParDefautEtInject() {
       try {
          MapPlansDeTransport   mapPlansDeTransport = PlanTransportFactory.createDataForCompare();

@@ -43,6 +43,7 @@ public class ExcelTools {
    public CellStyle styleSousTitre            = null;
    public CellStyle styleHide                 = null;
    public CellStyle styleWarning              = null;
+   public CellStyle styleBorder               = null;
 
    public Font      fontCellVideWithMergin    = null;
    public Font      fontEntete                = null;
@@ -180,6 +181,27 @@ public class ExcelTools {
     * @param lastCol
     */
    public void addMergedRegion(int firstRow, int lastRow, int firstCol, int lastCol) {
+      this.sheet.addMergedRegion(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
+   }
+   
+   /**
+    * Fusionner les cellules (FirstRow, LastRow, FirtCol, LastCol)
+    * 
+    * @param firstRow
+    * @param lastRow
+    * @param firstCol
+    * @param lastCol
+    */
+   public void addMergedRegion(int firstRow, int lastRow, int firstCol, int lastCol, CellStyle style) {
+      for (int i = firstRow; i <= lastRow; i++) {
+         Row r = this.sheet.getRow(i);
+         for (int j = firstCol; j <= lastCol; j++) {
+            Cell c = r.getCell(j);
+            c.setCellStyle(style);
+            
+         }
+      }
+
       this.sheet.addMergedRegion(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
    }
 
@@ -889,6 +911,13 @@ public class ExcelTools {
       this.styleTexte.setBorderRight(CellStyle.BORDER_THIN);
       this.styleTexte.setBorderTop(CellStyle.BORDER_THIN);
       this.styleTexte.setFillBackgroundColor(HSSFColor.RED.index);
+      
+      
+      this.styleBorder = this.classeur.createCellStyle();
+      this.styleBorder.setBorderBottom(CellStyle.BORDER_THIN);
+      this.styleBorder.setBorderLeft(CellStyle.BORDER_THIN);
+      this.styleBorder.setBorderRight(CellStyle.BORDER_THIN);
+      this.styleBorder.setBorderTop(CellStyle.BORDER_THIN);
 
       this.stylePourcent = this.classeur.createCellStyle();
       this.stylePourcent.setAlignment(CellStyle.ALIGN_RIGHT);
