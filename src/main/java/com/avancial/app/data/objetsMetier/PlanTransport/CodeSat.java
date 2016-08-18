@@ -1,7 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
 public class CodeSat extends ASousRegimeTranche {
-
     private String codeSat;
 
     private Regime regime;

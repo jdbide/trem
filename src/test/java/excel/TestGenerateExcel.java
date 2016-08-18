@@ -18,17 +18,27 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
+import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
+import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
+import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
+import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
+import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
+import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
+import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.export.ExcelRapportDifferentiel;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.utilitaire.FileUtils;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
-import com.avancial.socle.utils.ListUtils;
 
 import factory.PlanTransportFactory;
 
@@ -61,7 +71,7 @@ public class TestGenerateExcel {
     * @return 
     * 
     */
-   //@Test
+   @Test
    public void TestInject() {
       Assert.assertNotNull(this.excelRapportDifferentiel);
       System.out.println(this.excelRapportDifferentiel.getClass());
@@ -69,7 +79,20 @@ public class TestGenerateExcel {
       System.out.println(this.excelRapportDifferentiel.getClass().getPackage());
       System.out.println(this.excelRapportDifferentiel.getClass().getSimpleName());
       System.out.println(this.excelRapportDifferentiel.getClass().getCanonicalName());
-
+      
+      
+      System.out.println("<==== OBJECT METIERS ====>");
+      System.out.println(CodeSat.class.getSimpleName());
+      System.out.println(Composition.class.getSimpleName());
+      System.out.println(Desserte.class.getSimpleName());
+      System.out.println(Distribution.class.getSimpleName());
+      System.out.println(FareProfile.class.getSimpleName());
+      System.out.println(OrigineDestination.class.getSimpleName());
+      System.out.println(Repas.class.getSimpleName());
+      System.out.println(Restriction.class.getSimpleName());
+      System.out.println(ServiceABord.class.getSimpleName());
+      System.out.println(Specification.class.getSimpleName());
+      System.out.println(TypeEquipement.class.getSimpleName());
    }
    
    //@Test
@@ -139,7 +162,7 @@ public class TestGenerateExcel {
       }      
    }
    
-   @Test
+  //@Test
    public void TestGenerateExcelDonneesParDefautEtInject() {
       try {
          MapPlansDeTransport   mapPlansDeTransport = PlanTransportFactory.createDataForCompare();
@@ -147,7 +170,7 @@ public class TestGenerateExcel {
          
          this.excelRapportDifferentiel.setDatas(comparePlanTransport.compare(mapPlansDeTransport.get(1).get(), mapPlansDeTransport.get(2).get()));
          this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
-         
+
          this.excelRapportDifferentiel.generate();
          if (!FileUtils.existFile("D:/was_tmp/tremas/export.xls")) {
             Assert.assertTrue(false);

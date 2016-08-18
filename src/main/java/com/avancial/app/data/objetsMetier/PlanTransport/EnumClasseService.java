@@ -1,7 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.jboss.weld.exceptions.IllegalArgumentException;
 

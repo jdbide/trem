@@ -6,12 +6,8 @@ package com.avancial.app.export;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.*;
+import com.avancial.app.resources.constants.APP_Field;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 /**
@@ -196,7 +192,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
       for (int i = 0; i < ENTETE_SHEET_UNCHANGED_DELETE.length; i++) {
          this.excelTools.createCellTexteWithStyle(i + 1, ENTETE_SHEET_UNCHANGED_DELETE[i], this.excelTools.styleEnteteGris);
       }
-      
+
    }
 
    private void generateEnteteForSheetRegimeSplit() {
@@ -268,54 +264,143 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             this.excelTools.createRow(this.ligne++);
             this.excelTools.createCellTexte(1, data.getNumeroTrain());
             this.excelTools.createCellTexte(2, data.getNumeroTranche());
-            this.excelTools.createCellTexte(3, mapPlansDeTransport.get(1).get()
-                  .getTrainByNumeroTrain(data.getNumeroTrain())
-                  .getTrancheByNumeroTranche(data.getNumeroTranche())
-                  .getRegime().getCodeRegime());
+            this.excelTools.createCellTexte(3, mapPlansDeTransport.get(1).get().getTrainByNumeroTrain(data.getNumeroTrain()).getTrancheByNumeroTranche(data.getNumeroTranche()).getRegime().getCodeRegime());
          }
       }
    }
 
    private void generateContentForSheetRegimeSplit() {
       int debutRowTrain = 0;
-      
-      //for (IComparaisonPlanTransport comparaison : this.datas) {
+
+      // for (IComparaisonPlanTransport comparaison : this.datas) {
       ComparaisonPlanTransport data = null;
       int idSousRegimeTranche = -1;
-      
+
       for (int i = 0; i < this.datas.size(); i++) {
          data = ((ComparaisonPlanTransport) this.datas.get(i));
 
          if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_REGIMESPLIT)) {
-            
+
             debutRowTrain = this.ligne;
             // Creation d'une nouvelle ligne pour un train
             this.excelTools.createRow(this.ligne++);
-            
-            boolean isfirst = true; 
+
+            Boolean isfirst = true;
             for (int j = i; j < this.datas.size(); j++) {
                // Si le même Type && le meme n° train meme n° tranche et même class du nouveau field
-               if (((ComparaisonPlanTransport) this.datas.get(j)).getTypeComparaisonPlanTransport().toString().equals(SHEET_REGIMESPLIT) &&
-                     ((ComparaisonPlanTransport) this.datas.get(j)).getNumeroTrain().equals(data.getNumeroTrain()) &&
-                     ((ComparaisonPlanTransport) this.datas.get(j)).getNumeroTranche().equals(data.getNumeroTranche()) &&
-                     ((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField().getClass().toString().equals(data.getNouveauField().getClass().toString())){
-                  if (data.getNouveauField().getClass().getName().toString().equals("com.avancial.app.data.objetsMetier.PlanTransport.FareProfile")){
-                     if (!isfirst)
-                        this.excelTools.createRow(this.ligne++);
-                     this.excelTools.createCellTexte(1, data.getNumeroTrain());
-                     this.excelTools.createCellTexte(2, data.getNumeroTranche());
-                     this.excelTools.createCellTexte(3, data.getNouveauField().getClass().getSimpleName());
-                           
+               if (((ComparaisonPlanTransport) this.datas.get(j)).getTypeComparaisonPlanTransport().toString().equals(SHEET_REGIMESPLIT) && ((ComparaisonPlanTransport) this.datas.get(j)).getNumeroTrain().equals(data.getNumeroTrain())
+                     && ((ComparaisonPlanTransport) this.datas.get(j)).getNumeroTranche().equals(data.getNumeroTranche()) && ((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField().getClass().toString().equals(data.getNouveauField().getClass().toString())) {
+
+                  this.excelTools.createCellTexte(1, data.getNumeroTrain());
+                  this.excelTools.createCellTexte(2, data.getNumeroTranche());
+
+                  if (!isfirst)
+                     this.excelTools.createRow(this.ligne++);
+
+                  if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.FareProfile)) {
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((FareProfile) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
                      this.excelTools.createCellTexte(5, ((FareProfile) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getFareProfileCode());
-                     isfirst = false;
-                  }
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.CodeSat)) {
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((CodeSat) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     this.excelTools.createCellTexte(5, ((CodeSat) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getCodeSat());
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Desserte)) {
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((Desserte) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     for (GareHoraire gareHoraire : ((Desserte) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getGareHoraires()) {
+                        this.excelTools.createCellTexte(5, (gareHoraire.getGare().getCodeGare() + "(" + ((gareHoraire.getHoraire().getHoraireDebut() != null) ? gareHoraire.getHoraire().getHoraireDebut().toString() : "/") + ")\n"));
+                     }
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Distribution)) {
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((Distribution) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     this.excelTools.createCellTexte(5, ((Distribution) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getIndiceDistribution());
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.OrigineDestination)) {
                      
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((OrigineDestination) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     /**
+                      * TODO OrigineDestination
+                      */
+                     //this.excelTools.createCellTexte(5, ((OrigineDestination) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).);
+                  
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Repas)) {
+                     
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((Repas) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     this.excelTools.createCellTexte(5, ((Repas) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getTypeRepas().toString());
+                  
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Restriction)) {
+                     
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     this.excelTools.createCellTexte(5, ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getType().toString() + 
+                           " from " + 
+                           ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getOrigine().getCodeGare() + 
+                           "to" +
+                           ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getDestination().toString());
+                  
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.ServiceABord)) {
+                     
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     this.excelTools.createCellTexte(5, ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getCodeService() + " - " +
+                           ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getClasse().toString() + " - " +
+                           ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getOrigine().getCodeGare() + " to " +
+                           ((ServiceABord) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getDestination().getCodeGare());
+                  } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.TypeEquipement)) {
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((TypeEquipement) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     this.excelTools.createCellTexte(5, ((TypeEquipement) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getTypeEquipement());
+                  } 
+                  
+                  else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Specification)) {
+                     
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((Specification) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     
+                     String valueSpecification = "";
+                     
+                     for (Compartiment compartiment : ((Specification) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getVoiture().getCompartiments()) {
+                        for (Siege siege : compartiment.getSieges()) {
+                           valueSpecification += "Coach " + ((Specification) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getVoiture().getNumeroVoiture() + " ,";
+                           valueSpecification +=" Seat " + siege.getNumeroSiege() + ", " + ((Specification) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getEtat().toString();
+                           valueSpecification +="\n";
+                        } 
+                        
+                        if (compartiment.getNumeroCompartiment() != null) {
+                           valueSpecification += "Coach " + ((Specification) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getVoiture().getNumeroVoiture() + " ,";
+                           valueSpecification +=" Compartment " + compartiment.getNumeroCompartiment() + ", " + ((Specification) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getEtat().toString();
+                           valueSpecification +="\n";
+                        } 
+                     }
+
+                     this.excelTools.createCellTexte(5,valueSpecification);
+                  }  else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.Composition)) {
+                     this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
+                     this.excelTools.createCellTexte(4, ((Composition) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
+                     
+                     String valueComposition = "";
+                     for (int h = 0; h < (((Composition) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getVoitures()).size(); h++) {
+                        valueComposition += (((Composition) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getVoitures()).get(h).getNumeroVoiture(); 
+                        if (h < (((Composition) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getVoitures()).size() - 1)
+                           valueComposition += ", ";
+                     }
+                     
+                     valueComposition += " = ";
+                     valueComposition += ((Composition) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getCodeRame() + ",";
+                     valueComposition += valueComposition += ((Composition) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getCodeClasse() + ",";
+                     valueComposition += valueComposition += ((Composition) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getCodeDiag();
+                     
+                     this.excelTools.createCellTexte(5, valueComposition);
+                  }
+
+                  isfirst = false;
                } else {
                   i = j - 1;
                }
             }
- 
+
             // Merge la colonne train par nombre de ligne / Tranche / Field / Regine et Value
             this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1);
             this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2);
@@ -323,6 +408,35 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
          }
       }
 
+   }
+
+   private String getFieldName(String simpleName) {
+      String res = "";
+
+      if (simpleName.equals(APP_Field.CodeSat))
+         res = "CodeSat";
+      if (simpleName.equals(APP_Field.Desserte))
+         res = "Stop";
+      if (simpleName.equals(APP_Field.Distribution))
+         res = "Distribution";
+      if (simpleName.equals(APP_Field.FareProfile))
+         res = "FareProfile";
+      if (simpleName.equals(APP_Field.OrigineDestination))
+         res = "OrigineDestination";
+      if (simpleName.equals(APP_Field.Repas))
+         res = "MealType";
+      if (simpleName.equals(APP_Field.Restriction))
+         res = "Restriction";
+      if (simpleName.equals(APP_Field.ServiceABord))
+         res = "Services";
+      if (simpleName.equals(APP_Field.Specification))
+         res = "Specification";
+      if (simpleName.equals(APP_Field.TypeEquipement))
+         res = "TypeEquipement";
+      if (simpleName.equals(APP_Field.Composition))
+         res = "Composition";
+
+      return res;
    }
 
    private void generateContentSheetRegimeSplitByField(ComparaisonPlanTransport data) {
