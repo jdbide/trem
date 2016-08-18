@@ -15,10 +15,14 @@ import com.avancial.socle.traitement.ATraitementImportDataBase;
 public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
 
     protected String schema;
+    
+    public TraitementImportDb2Motrice() {
+      super();
+  }
 
-    public TraitementImportDb2Motrice(EntityManager entityManagerSocle, EntityManager entityManagerExterne,
+    public TraitementImportDb2Motrice(EntityManager entityManagerExterne,
             String schema) {
-        super(entityManagerSocle, entityManagerExterne);
+        super(entityManagerExterne);
         this.schema = schema;
     }
 
@@ -28,7 +32,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
     @Override
     @SuppressWarnings({"unchecked"})
     protected List<String> recuperationTablesExport() {
-        Query query = this.entityManagerSocle.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
+        Query query = this.em.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
         List<RefTablesMotriceEntity> entities = query.getResultList();
 
         List<String> result = new ArrayList<String>();
@@ -44,7 +48,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
     @SuppressWarnings("unchecked")
     @Override
     protected List<String> recuperationTablesImport() {
-        Query query = this.entityManagerSocle.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
+        Query query = this.em.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
         List<RefTablesMotriceEntity> entities = query.getResultList();
 
         List<String> result = new ArrayList<String>();
@@ -57,7 +61,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
     @SuppressWarnings("unchecked")
     @Override
     protected void clearTable() {
-        Query query = this.entityManagerSocle.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
+        Query query = this.em.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
         List<RefTablesMotriceEntity> listTables = query.getResultList();
         String libelleTableMotrice;
         SQLQuery delete;
@@ -157,5 +161,19 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
         }
 
     }
+
+   /**
+    * @return the schema
+    */
+   public String getSchema() {
+      return schema;
+   }
+
+   /**
+    * @param schema the schema to set
+    */
+   public void setSchema(String schema) {
+      this.schema = schema;
+   }
 
 }

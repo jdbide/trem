@@ -30,6 +30,8 @@ public class DatasourceEntity implements Serializable {
 	private String nomTechniqueDataSource;
 
 	private String url;
+	
+	private String schema;
 
 	public DatasourceEntity() {
 	}
@@ -89,5 +91,19 @@ public class DatasourceEntity implements Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+   /**
+    * @return the schema
+    */
+   public String getSchema() {
+      return schema;
+   }
+
+   /**
+    * @param schema the schema to set
+    */
+   public void setSchema(String schema) {
+      this.schema = schema;
+   }
 
 }

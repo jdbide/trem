@@ -64,7 +64,7 @@ public abstract class ATraitementLog extends ATraitement {
     */
    protected void saveLog() {
       this.em.getTransaction().begin();
-      this.em.persist(this.logBean);
+      this.em.merge(this.logBean);
       this.em.flush();
       this.em.getTransaction().commit();
 

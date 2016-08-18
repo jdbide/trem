@@ -1,13 +1,10 @@
 package data.model.databean;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -16,7 +13,9 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.avancial.app.data.Task;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
+import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneeService;
@@ -35,7 +34,8 @@ public class TestImport {
         WebArchive jar = ShrinkWrap.create(WebArchive.class)
                  .addPackage(IhmPageDataBean.class.getPackage())
                  .addPackage(CompagnieEnvironnementEntity.class.getPackage())
-                .addClass(JeuDonneeService.class)
+                //.addClass(JeuDonneeService.class)
+                 .addClass(TraitementImportDb2Motrice.class)
                 .addClass(CompagnieEnvironnementService.class)
                 .addPackage(Socle_PUSocle.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())
@@ -48,46 +48,46 @@ public class TestImport {
 
         return jar;
     }
-    
-    @Inject
-    @Socle_PUSocle
-    EntityManager entityManagerSocle;
 
     EntityManager entityManagerDb2;
     
-    @Inject CompagnieEnvironnementService compagnieEnvironnementService;
+    @Inject
+    private CompagnieEnvironnementService compagnieEnvironnementService;
+    
+    @Inject
+    private TraitementImportDb2Motrice traitement;
+
     
     
     @Test
     public void testImportTMDVOIT() {
         try {
-            this.entityManagerSocle.clear();
-
             String userDb2 = "ejmt013";
 
             String passwdDb2 = "Isab1000";
-//            Connection connSocle = DriverManager.getConnection(urlSocle, userSocle, passwdSocle);
-////            Connection connDb2 = DriverManager.getConnection(urlDb2, userDb2, passwdDb2);
-//            System.out.println("Connexions effective !");
-            CompagnieEnvironnementEntity compagnieEnvironnementEntity = null;
+            
+            CompagnieEnvironnementEntity compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(1);
+                        
             try {
-               // Récupération de l'environnement sélectionné
-               compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(1);
-            }catch (Throwable ex) {
+               // Instanciation EntityManagerFactory avec les bonnes données de la dataSource de l'environnement               
+               System.err.println("------> Connexion avec la BDD externe");
+               this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(compagnieEnvironnementEntity, userDb2, passwdDb2).createEntityManager();
+            } catch (Throwable ex) {
+               System.err.println("------> Echec de connexion avec la base de données externe Db2");
                throw ex;
-           }
-
-            try {
-                this.entityManagerDb2 = EntityManagerFactoryProviderDb2
-                        .getInstance(compagnieEnvironnementEntity,userDb2, passwdDb2)
-                        .createEntityManager();
-            }
-            catch (Throwable ex) {
-                throw ex;
             }
             
-            TraitementImportDb2Motrice traitementImportDb2Motrice = new TraitementImportDb2Motrice(this.entityManagerSocle, this.entityManagerDb2, "F$MDRP2");
-            traitementImportDb2Motrice.execute();
+            this.traitement.setEntityManagerExterne(this.entityManagerDb2);
+            this.traitement.setSchema(compagnieEnvironnementEntity.getDatasource().getSchema());
+            try {
+               // Thread.sleep(10000);
+               System.out.println("------> Import brut");
+               traitement.execute();
+            } catch (SecurityException e) {
+               System.err.println("------> Echec de l'import");
+               e.printStackTrace();
+               throw e;
+            }
 
         }
         catch (Exception e) {

@@ -13,8 +13,6 @@ import org.hibernate.Session;
  */
 public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
 
-   protected EntityManager entityManagerSocle;
-
    protected EntityManager entityManagerExterne;
 
    protected Session       sessionSocle;
@@ -66,16 +64,19 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * @param donnees
     */
    protected abstract void insertData(String table, List<String> columns, List<Object[]> donnees);
-
-   public ATraitementImportDataBase(EntityManager entityManagerSocle, EntityManager entityManagerExterne) {
+   
+   public ATraitementImportDataBase() {
       super();
-      this.entityManagerSocle = entityManagerSocle;
+   }
+
+   public ATraitementImportDataBase(EntityManager entityManagerExterne) {
+      super();
       this.entityManagerExterne = entityManagerExterne;
-      this.sessionSocle = this.entityManagerSocle.unwrap(Session.class);
    }
 
    @Override
    protected void executeTraitement() {
+      this.initSessiont();
       List<String> columns = null;
       List<Object[]> donnees = null;
       List<String> tablesExport = this.recuperationTablesExport();
@@ -92,5 +93,23 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
             e.printStackTrace();
          }
       }
+   }
+
+   private void initSessiont() {
+      this.sessionSocle = this.em.unwrap(Session.class);
+   }
+
+   /**
+    * @return the entityManagerExterne
+    */
+   public EntityManager getEntityManagerExterne() {
+      return entityManagerExterne;
+   }
+
+   /**
+    * @param entityManagerExterne the entityManagerExterne to set
+    */
+   public void setEntityManagerExterne(EntityManager entityManagerExterne) {
+      this.entityManagerExterne = entityManagerExterne;
    }
 }

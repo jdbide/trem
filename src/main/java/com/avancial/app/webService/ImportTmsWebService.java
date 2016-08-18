@@ -27,7 +27,6 @@ import com.avancial.app.data.Task;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.service.ImportTmsService;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
-import com.avancial.app.traitement.TraitementImportJeuDonneesImp;
 import com.avancial.app.webService.bean.ResponseBean;
 
 /**
@@ -47,9 +46,6 @@ public class ImportTmsWebService {
 
    @Inject
    private TraitementImportJeuDonnees traitementImportJeuDonnees;
-
-   @Inject
-   private TraitementImportJeuDonneesImp traitementImportJeuDonneesImp;
 
    @Inject
    private ImportTmsService importTmsService;
@@ -162,7 +158,7 @@ public class ImportTmsWebService {
                      ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
                      // this will implicitly bind a new RequestContext to your current thread
                      ctxCtrl.startContext(SessionScoped.class);
-                     TraitementImportJeuDonneesImp globalResultHolder = BeanProvider.getContextualReference(TraitementImportJeuDonneesImp.class);
+                     TraitementImportJeuDonnees globalResultHolder = BeanProvider.getContextualReference(TraitementImportJeuDonnees.class);
                      globalResultHolder.setImportJeuDonneesDto(importTmsDto);
                      globalResultHolder.setIdTask(Thread.currentThread().getId());
                      globalResultHolder.execute();
