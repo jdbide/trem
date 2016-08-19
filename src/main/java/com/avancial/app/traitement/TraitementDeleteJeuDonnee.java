@@ -27,11 +27,12 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail {
    @Override
    protected void executeTraitement() throws Exception {
       try {
+         this.log("Debut de la suppression du Draft");
          this.jeuDonnee = this.em.createNamedQuery("JeuDonneeEntity.getByEnvironnementStatus", JeuDonneeEntity.class).setParameter("nomTechniqueCompagnieEnvironnement", compagnieEnvironnement).setParameter("statusJeuDonnees", Status.DRAFT).getSingleResult();
          this.em.getTransaction().begin();
 
          /*
-          * Recupere la liste des regimes lier a notre jeu de donnees
+          * Recupere la liste des regimes lies a notre jeu de donnees
           */
          TypedQuery<MotriceRegimeEntity> queryRegimes = this.em.createNamedQuery("MotriceRegime.getByIdJeuDonnees", MotriceRegimeEntity.class).setParameter("idJeuDonnees", this.jeuDonnee.getIdJeuDonnees());
          List<MotriceRegimeEntity> regimes = queryRegimes.getResultList();
@@ -64,6 +65,7 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail {
          this.em.createNamedQuery("JeuDonneeEntity.deleteById").setParameter("id", jeuDonnee.getIdJeuDonnees()).executeUpdate();
 
          this.em.getTransaction().commit();
+         this.log("Fin de la suppression du Draft");
       } catch (Exception e) {
          e.printStackTrace();
       }

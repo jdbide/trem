@@ -36,5 +36,13 @@ public class MapPlansDeTransport extends HashMap<Integer, AtomicReference<PlanTr
       this.setPlanTransportActive(PTActive);
       this.setPlanTransportDraft(PTDraft);
    }
+   
+   public PlanTransport getPlanTransportActive() {
+      return this.get(1).get();
+   }
 
+   public PlanTransport getPlanTransportDraft() {
+      return this.get(2).get();
+   }
+   
 }
