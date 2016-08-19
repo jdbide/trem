@@ -17,14 +17,16 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name = "tremas_motrice_regime_stop")
 @NamedQueries({@NamedQuery(name = "MotriceRegimeStop.getAll", query = "SELECT t FROM MotriceRegimeStopEntity t"),
         @NamedQuery(name = "MotriceRegimeStop.deleteAll", query = "DELETE FROM MotriceRegimeStopEntity"),
-        @NamedQuery(name = "MotriceRegimeStop.deleteByRegime", query = "DELETE FROM MotriceRegimeStopEntity WHERE motriceRegime = :regime"),
-        @NamedQuery(name = "MotriceRegimeStopEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeStop ) FROM MotriceRegimeStopEntity t")})
+        @NamedQuery(name = "MotriceRegimeStop.deleteByRegimes",
+                query = "DELETE FROM MotriceRegimeStopEntity t WHERE t.motriceRegime IN (:regimes)"),
+        @NamedQuery(name = "MotriceRegimeStopEntity.getLastId",
+                query = "SELECT MAX( t.idMotriceRegimeStop ) FROM MotriceRegimeStopEntity t")})
 public class MotriceRegimeStopEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegimeStop;
-    
+
     @Column(length = 4, nullable = false)
     private String arrivalHourMotriceRegimeStop;
     @Column(length = 4, nullable = false)

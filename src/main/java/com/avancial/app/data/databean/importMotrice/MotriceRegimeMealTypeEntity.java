@@ -18,8 +18,10 @@ import org.hibernate.annotations.ForeignKey;
 @NamedQueries({
         @NamedQuery(name = "MotriceRegimeMealTypeEntity.getAll", query = "SELECT t FROM MotriceRegimeMealTypeEntity t"),
         @NamedQuery(name = "MotriceRegimeMealType.deleteAll", query = "DELETE FROM MotriceRegimeMealTypeEntity"),
-        @NamedQuery(name = "MotriceRegimeMealType.deleteByRegime", query = "DELETE FROM MotriceRegimeMealTypeEntity WHERE motriceRegime = :regime"),
-        @NamedQuery(name = "MotriceRegimeMealTypeEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeMealType ) FROM MotriceRegimeMealTypeEntity t")})
+        @NamedQuery(name = "MotriceRegimeMealType.deleteByRegimes",
+                query = "DELETE FROM MotriceRegimeMealTypeEntity t WHERE t.motriceRegime IN (:regimes)"),
+        @NamedQuery(name = "MotriceRegimeMealTypeEntity.getLastId",
+                query = "SELECT MAX( t.idMotriceRegimeMealType ) FROM MotriceRegimeMealTypeEntity t")})
 public class MotriceRegimeMealTypeEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -97,12 +99,12 @@ public class MotriceRegimeMealTypeEntity {
         this.motriceRegime = motriceRegime;
     }
 
-	public Long getIdMotriceRegimeMealType() {
-		return this.idMotriceRegimeMealType;
-	}
+    public Long getIdMotriceRegimeMealType() {
+        return this.idMotriceRegimeMealType;
+    }
 
-	public void setIdMotriceRegimeMealType(Long idMotriceRegimeMealType) {
-		this.idMotriceRegimeMealType = idMotriceRegimeMealType;
-	}
+    public void setIdMotriceRegimeMealType(Long idMotriceRegimeMealType) {
+        this.idMotriceRegimeMealType = idMotriceRegimeMealType;
+    }
 
 }
