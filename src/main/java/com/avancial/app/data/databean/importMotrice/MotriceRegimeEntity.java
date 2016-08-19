@@ -16,12 +16,18 @@ import org.hibernate.annotations.ForeignKey;
 @Entity
 @Table(name = "tremas_motrice_regime")
 @NamedQueries({@NamedQuery(name = "MotriceRegime.getAll", query = "SELECT t FROM MotriceRegimeEntity t"),
+        @NamedQuery(name = "MotriceRegime.getByIdJeuDonnees",
+                query = "SELECT c FROM MotriceRegimeEntity c WHERE c.motriceTrainTranche IN (SELECT b FROM MotriceTrainTrancheEntity b WHERE b.jeuDonnee IN (SELECT a FROM JeuDonneeEntity a WHERE a.idJeuDonnees = :idJeuDonnees))"),
         @NamedQuery(name = "MotriceRegime.deleteAll", query = "DELETE FROM MotriceRegimeEntity"),
-        @NamedQuery(name = "MotriceRegime.getByTrainTranche", query = "SELECT t FROM MotriceRegimeEntity t WHERE t.motriceTrainTranche = :trainTranche"),
-        @NamedQuery(name = "MotriceRegimeEntity.getLastId", query = "SELECT MAX( t.idMotriceRegime ) FROM MotriceRegimeEntity t")})
+        @NamedQuery(name = "MotriceRegime.deleteById",
+                query = "DELETE FROM MotriceRegimeEntity WHERE idMotriceRegime = :id"),
+        @NamedQuery(name = "MotriceRegime.deleteByTrainTranche",
+                query = "DELETE FROM MotriceRegimeEntity t WHERE t.motriceTrainTranche IN (:trainTranches)"),
+        @NamedQuery(name = "MotriceRegimeEntity.getLastId",
+                query = "SELECT MAX( t.idMotriceRegime ) FROM MotriceRegimeEntity t")})
 public class MotriceRegimeEntity {
 
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long idMotriceRegime;
 
@@ -297,19 +303,19 @@ public class MotriceRegimeEntity {
         this.motriceRegimeMealType = motriceRegimeMealType;
     }
 
-   /**
-    * @return the motriceRegimeOD
-    */
-   public List<MotriceRegimeODEntity> getMotriceRegimeOD() {
-      return motriceRegimeOD;
-   }
+    /**
+     * @return the motriceRegimeOD
+     */
+    public List<MotriceRegimeODEntity> getMotriceRegimeOD() {
+        return motriceRegimeOD;
+    }
 
-   /**
-    * @param motriceRegimeOD
-    *           the motriceRegimeOD to set
-    */
-   public void setMotriceRegimeOD(List<MotriceRegimeODEntity> motriceRegimeOD) {
-      this.motriceRegimeOD = motriceRegimeOD;
-   }
-    
+    /**
+     * @param motriceRegimeOD
+     *            the motriceRegimeOD to set
+     */
+    public void setMotriceRegimeOD(List<MotriceRegimeODEntity> motriceRegimeOD) {
+        this.motriceRegimeOD = motriceRegimeOD;
+    }
+
 }

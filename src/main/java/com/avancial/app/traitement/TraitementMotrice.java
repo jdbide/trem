@@ -52,9 +52,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 	@Inject
 	private MapPlansDeTransport mapPlansDeTransport;
 
-	@Inject
-	@Socle_PUSocle
-	protected EntityManager entityManager;
+//	@Inject
+//	@Socle_PUSocle
+//	protected EntityManager entityManager;
 
 	@Inject
 	public TraitementMotrice() {
@@ -71,7 +71,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			// récupération des id pour l'insertion des régimes
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime = null;
 			try {
-				mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime(this.entityManager);
+				mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime(this.em);
 				mapIdTablesMotriceRegime.initMapIdTablesMotriceRegime(MotriceRegimeCompositionCoachEntity.class);
 				for (RefTablesMotriceRegimeEntity refTablesMotriceRegimeEntity : motriceRegimeEntities) {
 					Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(
@@ -86,10 +86,10 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			}
 
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(
-					this.entityManager.unwrap(Session.class), 250);
+					this.em.unwrap(Session.class), 250);
 			this.log("Debut du vidage des tables d'import");
 			/* Vidage de toutes les tables d'import */
-			this.entityManager.getTransaction().begin();
+			this.em.getTransaction().begin();
 			/* On commence par les tables motrice_regime_xxx_xxx */
 //			this.executeDeleteAll(MotriceRegimeCompositionCoachEntity.class);
 
@@ -109,7 +109,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			// this.em.getTransaction().commit();
 			this.log("Debut de recuperation des train-tranche");
 			/* Récupération des train-tranche */
-			Query query = this.entityManager.createNativeQuery(
+			Query query = this.em.createNativeQuery(
 					"SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche, categorie.CATH_REGI AS regime FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_TRCH_NUM");
 
 			List<Object[]> trainsTranches = query.getResultList();
@@ -136,8 +136,8 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 				motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche((String) record[3]);
 
 				// this.em.getTransaction().begin();
-				this.entityManager.persist(motriceTrainTrancheEntity);
-				this.entityManager.flush();
+				this.em.persist(motriceTrainTrancheEntity);
+				this.em.flush();
 
 				System.out
 						.println("TRAITEMENT DU TRAIN-TRANCHE " + motriceTrainTrancheEntity.getIdMotriceTrainTranche());
@@ -152,13 +152,13 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 				motriceRegimeEntity.setMotriceTrainTranche(motriceTrainTrancheEntity);
 
 				// this.em.getTransaction().begin();
-				this.entityManager.persist(motriceRegimeEntity);
-				this.entityManager.getTransaction().commit();
+				this.em.persist(motriceRegimeEntity);
+				this.em.getTransaction().commit();
 				
 //				mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class).incrementAndGet();
 
 				System.out.println("Insertion dans la table tremas_motrice_regime du regime train-tranche associe");
-				this.entityManager.getTransaction().begin();
+				this.em.getTransaction().begin();
 				if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
 					train = new Train(new ArrayList<Tranche>(),
 							motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
@@ -229,8 +229,8 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			this.log("Debut d'insertion dans la table tremas_motrice_regime_composition_coach");
 			this.executeRequestGenerator(MotriceRegimeCompositionCoachEntity.class, mapGeneratorTablesMotriceRegime);
 
-			this.entityManager.getTransaction().commit();
-			this.entityManager.close();
+			this.em.getTransaction().commit();
+			this.em.close();
 
 			this.log("Fin d'insertion dans la table tremas_motrice_regime_composition_coach");
 		}
@@ -270,7 +270,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 	 *            Entité correspondant à la table que l'on veut vider
 	 */
 	private void executeDeleteAll(Class<?> entity) {
-		this.entityManager.createNamedQuery(
+		this.em.createNamedQuery(
 				GetEntiteService.getNomFromEntiteTableMotriceRegime(entity.getSimpleName()) + ".deleteAll")
 				.executeUpdate();
 	}

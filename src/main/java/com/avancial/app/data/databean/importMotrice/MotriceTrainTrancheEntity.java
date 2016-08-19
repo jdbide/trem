@@ -21,8 +21,12 @@ import com.avancial.app.data.databean.JeuDonneeEntity;
 @Table(name = "tremas_motrice_traintranche")
 @NamedQueries({@NamedQuery(name = "MotriceTrainTranche.getAll", query = "SELECT t FROM MotriceTrainTrancheEntity t"),
         @NamedQuery(name = "MotriceTrainTranche.deleteAll", query = "DELETE FROM MotriceTrainTrancheEntity"),
-        @NamedQuery(name = "MotriceTrainTranche.selectByJeuDonnee",
-                query = "SELECT t FROM MotriceTrainTrancheEntity t WHERE t.jeuDonnee = :jeuDonnee"),
+        @NamedQuery(name = "MotriceTrainTranche.deleteById",
+                query = "DELETE FROM MotriceTrainTrancheEntity WHERE idMotriceTrainTranche = :id"),
+        @NamedQuery(name = "MotriceTrainTranche.deleteByJeuDonnees",
+                query = "DELETE FROM MotriceTrainTrancheEntity t WHERE t.jeuDonnee = :jeuDonnees"),
+        @NamedQuery(name = "MotriceTrainTranche.getByJeuDonnees",
+                query = "SELECT t FROM MotriceTrainTrancheEntity t WHERE t.jeuDonnee = :jeuDonnees"),
         @NamedQuery(name = "MotriceTrainTranche.getLastId",
                 query = "SELECT MAX( t.idMotriceTrainTranche ) FROM MotriceTrainTrancheEntity t")})
 

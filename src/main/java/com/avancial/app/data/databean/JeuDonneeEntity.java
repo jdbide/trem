@@ -11,7 +11,9 @@ import java.util.Date;
 @Entity
 @Table(name = "tremas_jeu_donnees")
 @NamedQueries({@NamedQuery(name = "JeuDonneeEntity.getAll", query = "SELECT t FROM JeuDonneeEntity t"),
-        @NamedQuery(name = "JeuDonneeEntity.getById", query = "SELECT t FROM JeuDonneeEntity t WHERE t.idJeuDonnees = :idJeuDonnees")})
+        @NamedQuery(name = "JeuDonneeEntity.deleteById", query = "DELETE FROM JeuDonneeEntity WHERE idJeuDonnees = :id"),
+        @NamedQuery(name = "JeuDonneeEntity.getById",
+                query = "SELECT t FROM JeuDonneeEntity t WHERE t.idJeuDonnees = :idJeuDonnees")})
 public class JeuDonneeEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -29,7 +31,6 @@ public class JeuDonneeEntity implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLastUpdateJeuDonnees;
-
 
     private int idUtilisateurCreateJeuDonnees;
 
