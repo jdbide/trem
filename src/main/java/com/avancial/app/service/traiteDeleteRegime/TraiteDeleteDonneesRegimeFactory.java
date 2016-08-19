@@ -1,4 +1,4 @@
-package com.avancial.app.traitement;
+package com.avancial.app.service.traiteDeleteRegime;
 
 import java.io.Serializable;
 import java.util.ArrayList;

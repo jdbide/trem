@@ -64,10 +64,17 @@ public abstract class ATraitementLog extends ATraitement {
     */
    protected void saveLog() {
       this.em.getTransaction().begin();
-      this.em.merge(this.logBean);
+      this.em.persist(this.logBean);
       this.em.flush();
       this.em.getTransaction().commit();
 
+   }
+   
+   protected void updateLog() {
+      this.em.getTransaction().begin();
+      this.em.merge(this.logBean);
+      this.em.flush();
+      this.em.getTransaction().commit();
    }
 
    /**
@@ -75,7 +82,7 @@ public abstract class ATraitementLog extends ATraitement {
     */
    private void stopLogging() {
       this.logBean.setDateFinLogTraitement(new Date());
-      this.saveLog();
+      this.updateLog();
    }
 
 }

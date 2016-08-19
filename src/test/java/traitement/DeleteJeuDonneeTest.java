@@ -9,7 +9,9 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.avancial.app.traitement.TraiteDeleteDonneesRegimeFactory;
+
+import com.avancial.app.data.databean.Status;
+import com.avancial.app.service.traiteDeleteRegime.TraiteDeleteDonneesRegimeFactory;
 import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
@@ -38,8 +40,10 @@ public class DeleteJeuDonneeTest {
     TraitementDeleteJeuDonnee test;
 
     @Test
-    public void testDeleteDraft() throws Exception {
-        this.test.execute();
+   public void testDeleteDraft() throws Exception {
+      this.test.setCompagnieEnvironnement("ES_PROD");
+      this.test.setStatus(Status.DRAFT);
+      this.test.execute();
 
     }
 }

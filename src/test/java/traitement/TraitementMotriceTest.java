@@ -58,51 +58,22 @@ public class TraitementMotriceTest {
         return jar;
     }
 
-    @Inject
-    @Socle_PUSocle
-    EntityManager entityManagerSocle;
-    
-    @Inject
-    MapPlansDeTransport   mapPlansDeTransport;
-    
-    @Inject
-    TraitementMotrice traitementMotrice;
+   @Inject
+   MapPlansDeTransport mapPlansDeTransport;
 
-    @Test
-    public void main() {
-        try {
-            this.entityManagerSocle.clear();
-            
-            this.traitementMotrice.setMap(this.mapPlansDeTransport);
-            
-            Query query = this.entityManagerSocle.createQuery("SELECT t FROM CompagnieEnvironnementEntity t where t.idCompagnieEnvironnement = 1");
-            CompagnieEnvironnementEntity compagnieEnvironnement = ((CompagnieEnvironnementEntity) query.getSingleResult());
-            
-            JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
-//            jeuDonneeEntity.setIdJeuDonnees(2);
-            jeuDonneeEntity.setDateCreateJeuDonnees(new Date());
-            jeuDonneeEntity.setDateLastUpdateJeuDonnees(new Date());
-            jeuDonneeEntity.setIdUtilisateurCreateJeuDonnees(-1);
-            jeuDonneeEntity.setIdUtilisateurLastUpdateJeuDonnees(-1);
-            jeuDonneeEntity.setCompagnieEnvironnement(compagnieEnvironnement);
-            
-            this.entityManagerSocle.getTransaction().begin();
-            this.entityManagerSocle.persist(jeuDonneeEntity);
-            this.entityManagerSocle.getTransaction().commit();
-            
-            this.traitementMotrice.setJeuDonneeEntity(jeuDonneeEntity);
+   @Inject
+   TraitementMotrice   traitementMotrice;
 
-            try {
-                this.traitementMotrice.execute();
-            }
-            catch (Throwable ex) {
-                throw ex;
-            }
+   @Test
+   public void main() {
 
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+      try {
+         this.traitementMotrice.setMap(this.mapPlansDeTransport);
+         this.traitementMotrice.execute();
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
     }
 
 }
