@@ -63,8 +63,8 @@ CREATE TABLE `tremas_jeu_donnees` (
   `statusJeuDonnees` enum('LASTACTIVE','ACTIVE','DRAFT','IMPORT') COLLATE utf8_bin NOT NULL DEFAULT 'IMPORT',
   `idCompagnieEnvironnement` int(11) NOT NULL,
   PRIMARY KEY (`idJeuDonnees`),
-  KEY `FK_5vhkn0pvaeq2jmf5ss6875tue` (`idCompagnieEnvironnement`),
-  CONSTRAINT `FK_5vhkn0pvaeq2jmf5ss6875tue` FOREIGN KEY (`idCompagnieEnvironnement`) REFERENCES `tremas_compagnie_environnement` (`idCompagnieEnvironnement`)
+  KEY `FK_jeu_donnees_idCompagnieEnvironnement` (`idCompagnieEnvironnement`),
+  CONSTRAINT `FK_jeu_donnees_idCompagnieEnvironnement` FOREIGN KEY (`idCompagnieEnvironnement`) REFERENCES `tremas_compagnie_environnement` (`idCompagnieEnvironnement`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_ref_regime_type (
