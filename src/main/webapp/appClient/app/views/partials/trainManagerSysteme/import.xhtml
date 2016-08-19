@@ -67,8 +67,8 @@
 
 					<!-- End ACTIVE -->
 					<!-- Start Draft -->
-					<td ng-if="startImport != $index">{{t+$index}}/07/2016 - 18:00{{data.dateImportJeuDonneesBrouillon}}</td>
-					<td ng-if="startImport != $index">Administrateur{{data.importJeuDonneesBrouillonBy}}</td>
+					<td ng-if="startImport != $index">{{data.dateImportJeuDonneesBrouillon}}</td>
+					<td ng-if="startImport != $index">{{data.importJeuDonneesBrouillonBy}}</td>
 					<td ng-if="startImport != $index" class="text-center">
 						<a 
 							a-disabled="(Status.DRAFT != data.statusJeudonneeBrouillon)"

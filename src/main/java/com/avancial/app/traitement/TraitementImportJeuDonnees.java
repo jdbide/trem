@@ -15,7 +15,6 @@ import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneeService;
-import com.avancial.app.utilitaire.SchemaMotrice;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 @SessionScoped

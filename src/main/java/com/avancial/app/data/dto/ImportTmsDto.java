@@ -47,14 +47,14 @@ public class ImportTmsDto implements Serializable{
    }
    
    @JsonIgnore
-   public void mergeByJeuDonneesBrouillon (JeuDonneeEntity jeuDonneeEntityBrouillon, String NameImportJeuDonneesBrouillonBy) {
+   public void mergeByJeuDonneesBrouillon (JeuDonneeEntity jeuDonneeEntityBrouillon, String nameImportJeuDonneesBrouillonBy) {
       this.setIdCompagnieEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getIdCompagnieEnvironnement());
       this.setLibelleCompagnie(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getLibelleCompagnie());
       this.setLibelleEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getLibelleEnvironnement());
       this.setIdJeuDonneeBrouillon(jeuDonneeEntityBrouillon.getIdJeuDonnees());
       // TODO a modifier avec la date fin d'import brouillon
       this.setDateImportJeuDonneesBrouillon(jeuDonneeEntityBrouillon.getDateCreateJeuDonnees());
-      this.setImportJeuDonneesBrouillonBy(NameImportJeuDonneesBrouillonBy);
+      this.setImportJeuDonneesBrouillonBy(nameImportJeuDonneesBrouillonBy);
       // TODO
       this.setPathValidateJeuDonneesBrouillon("TODO");
       

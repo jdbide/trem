@@ -1,5 +1,6 @@
 package com.avancial.app.traitement;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -12,9 +13,13 @@ import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapTraitementImportBrut;
 import com.avancial.socle.traitement.ATraitementImportDataBase;
 
-public class TraitementImportDb2Motrice extends ATraitementImportDataBase {
+public class TraitementImportDb2Motrice extends ATraitementImportDataBase implements Serializable {
 
-    protected String schema;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected String schema;
     
     public TraitementImportDb2Motrice() {
       super();

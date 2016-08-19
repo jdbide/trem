@@ -63,7 +63,7 @@ public class ImportTmsWebService {
    @Produces({ MediaType.APPLICATION_JSON })
    public Response getImportTms() throws Exception {
       JSONArray jsonArray = new JSONArray();
-      jsonArray.addAll(importTmsService.getAllImportTmsActif());
+      jsonArray.addAll(this.importTmsService.getAllImportTmsActif());
       return Response.status(200).entity(jsonArray).build();
    }
 

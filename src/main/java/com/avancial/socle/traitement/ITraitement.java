@@ -7,7 +7,7 @@ package com.avancial.socle.traitement;
  * @author bruno.legloahec
  *
  */
-interface ITraitement {
+public interface ITraitement {
 
    /**
     * Méthode appellée pour executer le traitement

@@ -91,19 +91,19 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			/* Vidage de toutes les tables d'import */
 			this.entityManager.getTransaction().begin();
 			/* On commence par les tables motrice_regime_xxx_xxx */
-			this.executeDeleteAll(MotriceRegimeCompositionCoachEntity.class);
+//			this.executeDeleteAll(MotriceRegimeCompositionCoachEntity.class);
 
 			/* On fait ensuite les tables motrice_regime_xxx */
-			for (Class<?> entity : mapIdTablesMotriceRegime.keySet()) {
-				if (!entity.equals(MotriceRegimeEntity.class)) {
-					this.executeDeleteAll(entity);
-				}
-			}
+//			for (Class<?> entity : mapIdTablesMotriceRegime.keySet()) {
+//				if (!entity.equals(MotriceRegimeEntity.class)) {
+//					this.executeDeleteAll(entity);
+//				}
+//			}
 			/* Puis motrice_regime */
-			this.executeDeleteAll(MotriceRegimeEntity.class);
+//			this.executeDeleteAll(MotriceRegimeEntity.class);
 
 			/* Et enfin motrice_traintranche */
-			this.executeDeleteAll(MotriceTrainTrancheEntity.class);
+//			this.executeDeleteAll(MotriceTrainTrancheEntity.class);
 			// this.em.getTransaction().commit();
 			this.log("Fin du vidage des tables d'import");
 			// this.em.getTransaction().commit();
