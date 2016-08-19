@@ -2,7 +2,6 @@ package com.avancial.app.service;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -92,16 +91,23 @@ public class JeuDonneeService implements Serializable {
 		}
 	}
 
-	public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement, Status statusJeuDonnees) {
+	public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement,
+			Status statusJeuDonnees) {
 		Query query = this.em.createQuery(
 				"SELECT t FROM JeuDonneeEntity t WHERE t.compagnieEnvironnement = :compagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees",
 				JeuDonneeEntity.class);
 		query.setParameter("compagnieEnvironnement", compagnieEnvironnement);
 		query.setParameter("statusJeuDonnees", statusJeuDonnees);
+		
+		JeuDonneeEntity jeuDonneeEntity = null;
+		
+		try {
+			jeuDonneeEntity = (JeuDonneeEntity) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		List<Object> object = query.getResultList();
-
-		return (JeuDonneeEntity) object;
+		return jeuDonneeEntity;
 	}
 
 }

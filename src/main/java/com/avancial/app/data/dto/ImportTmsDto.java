@@ -48,32 +48,31 @@ public class ImportTmsDto implements Serializable{
    
    @JsonIgnore
    public void mergeByJeuDonneesBrouillon (JeuDonneeEntity jeuDonneeEntityBrouillon, String nameImportJeuDonneesBrouillonBy) {
-      this.setIdCompagnieEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getIdCompagnieEnvironnement());
-      this.setLibelleCompagnie(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getLibelleCompagnie());
-      this.setLibelleEnvironnement(jeuDonneeEntityBrouillon.getCompagnieEnvironnement().getLibelleEnvironnement());
       this.setIdJeuDonneeBrouillon(jeuDonneeEntityBrouillon.getIdJeuDonnees());
-      // TODO a modifier avec la date fin d'import brouillon
+
       this.setDateImportJeuDonneesBrouillon(jeuDonneeEntityBrouillon.getDateCreateJeuDonnees());
       this.setImportJeuDonneesBrouillonBy(nameImportJeuDonneesBrouillonBy);
-      // TODO
+
       this.setPathValidateJeuDonneesBrouillon("TODO");
-      
       this.setStatusJeudonneeBrouillon(jeuDonneeEntityBrouillon.getStatusJeuDonnees());
    }
    
    @JsonIgnore
    public void mergeByJeuDonneesActif (JeuDonneeEntity jeuDonneeEntityActif, String nameValidateJeuDonneeBy) {
       this.setIdJeuDonneesActif(jeuDonneeEntityActif.getIdJeuDonnees());
-      this.setDateImportJeuDonneesActif(new Date());
+      
+      this.setDateImportJeuDonneesActif(jeuDonneeEntityActif.getDateCreateJeuDonnees());
       this.setImportJeuDonneesActifBy(nameValidateJeuDonneeBy);
-      this.setDateValidateJeuDonneesActif(new Date());
+      
+      this.setDateValidateJeuDonneesActif(jeuDonneeEntityActif.getDateLastUpdateJeuDonnees());
       this.setValidateJeuDonneesActifBy(nameValidateJeuDonneeBy);
-      this.setPathValidateJeuDonneesActif("TODO");  
-      this.setStatusJeudonneeBrouillon(jeuDonneeEntityActif.getStatusJeuDonnees());
+      
+      this.setPathValidateJeuDonneesActif("TODO");
+      this.setStatusJeudonneeActif(jeuDonneeEntityActif.getStatusJeuDonnees());
    }
    
    /**
-    * TODO à supprimer
+    * 
     * @param compagnieEnvironnementEntity
     */
    @JsonIgnore
@@ -87,7 +86,7 @@ public class ImportTmsDto implements Serializable{
     * @return the idCompagnieEnvironnement
     */
    public int getIdCompagnieEnvironnement() {
-      return idCompagnieEnvironnement;
+      return this.idCompagnieEnvironnement;
    }
 
    /**
@@ -101,7 +100,7 @@ public class ImportTmsDto implements Serializable{
     * @return the libelleCompagnie
     */
    public String getLibelleCompagnie() {
-      return libelleCompagnie;
+      return this.libelleCompagnie;
    }
 
    /**
@@ -115,7 +114,7 @@ public class ImportTmsDto implements Serializable{
     * @return the libelleEnvironnement
     */
    public String getLibelleEnvironnement() {
-      return libelleEnvironnement;
+      return this.libelleEnvironnement;
    }
 
    /**
@@ -129,7 +128,7 @@ public class ImportTmsDto implements Serializable{
     * @return the idJeuDonneesActif
     */
    public int getIdJeuDonneesActif() {
-      return idJeuDonneesActif;
+      return this.idJeuDonneesActif;
    }
 
    /**
@@ -143,7 +142,7 @@ public class ImportTmsDto implements Serializable{
     * @return the dateImportJeuDonneesActif
     */
    public Date getDateImportJeuDonneesActif() {
-      return dateImportJeuDonneesActif;
+      return this.dateImportJeuDonneesActif;
    }
 
    /**
@@ -157,7 +156,7 @@ public class ImportTmsDto implements Serializable{
     * @return the importJeuDonneesActifBy
     */
    public String getImportJeuDonneesActifBy() {
-      return importJeuDonneesActifBy;
+      return this.importJeuDonneesActifBy;
    }
 
    /**
@@ -171,7 +170,7 @@ public class ImportTmsDto implements Serializable{
     * @return the dateValidateJeuDonneesActif
     */
    public Date getDateValidateJeuDonneesActif() {
-      return dateValidateJeuDonneesActif;
+      return this.dateValidateJeuDonneesActif;
    }
 
    /**
@@ -185,7 +184,7 @@ public class ImportTmsDto implements Serializable{
     * @return the validateJeuDonneesActifBy
     */
    public String getValidateJeuDonneesActifBy() {
-      return validateJeuDonneesActifBy;
+      return this.validateJeuDonneesActifBy;
    }
 
    /**
@@ -199,7 +198,7 @@ public class ImportTmsDto implements Serializable{
     * @return the pathValidateJeuDonneesActif
     */
    public String getPathValidateJeuDonneesActif() {
-      return pathValidateJeuDonneesActif;
+      return this.pathValidateJeuDonneesActif;
    }
 
    /**
@@ -213,7 +212,7 @@ public class ImportTmsDto implements Serializable{
     * @return the idJeuDonneeBrouillon
     */
    public int getIdJeuDonneeBrouillon() {
-      return idJeuDonneeBrouillon;
+      return this.idJeuDonneeBrouillon;
    }
 
    /**
@@ -227,7 +226,7 @@ public class ImportTmsDto implements Serializable{
     * @return the dateImportJeuDonneesBrouillon
     */
    public Date getDateImportJeuDonneesBrouillon() {
-      return dateImportJeuDonneesBrouillon;
+      return this.dateImportJeuDonneesBrouillon;
    }
 
    /**
@@ -241,7 +240,7 @@ public class ImportTmsDto implements Serializable{
     * @return the importJeuDonneesBrouillonBy
     */
    public String getImportJeuDonneesBrouillonBy() {
-      return importJeuDonneesBrouillonBy;
+      return this.importJeuDonneesBrouillonBy;
    }
 
    /**
@@ -255,7 +254,7 @@ public class ImportTmsDto implements Serializable{
     * @return the pathValidateJeuDonneesBrouillon
     */
    public String getPathValidateJeuDonneesBrouillon() {
-      return pathValidateJeuDonneesBrouillon;
+      return this.pathValidateJeuDonneesBrouillon;
    }
 
    /**
@@ -269,7 +268,7 @@ public class ImportTmsDto implements Serializable{
     * @return the statusJeudonneeActif
     */
    public Status getStatusJeudonneeActif() {
-      return statusJeudonneeActif;
+      return this.statusJeudonneeActif;
    }
 
    /**
@@ -283,7 +282,7 @@ public class ImportTmsDto implements Serializable{
     * @return the statusJeudonneeBrouillon
     */
    public Status getStatusJeudonneeBrouillon() {
-      return statusJeudonneeBrouillon;
+      return this.statusJeudonneeBrouillon;
    }
 
    /**
@@ -297,7 +296,7 @@ public class ImportTmsDto implements Serializable{
     * @return the username
     */
    public String getUsername() {
-      return username;
+      return this.username;
    }
 
    /**
@@ -311,7 +310,7 @@ public class ImportTmsDto implements Serializable{
     * @return the password
     */
    public String getPassword() {
-      return password;
+      return this.password;
    }
 
    /**

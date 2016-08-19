@@ -41,13 +41,22 @@ public class ImportTmsService implements Serializable {
 
 		for (CompagnieEnvironnementEntity compagnieEnvironnementEntity : this.compagnieEnvironnementService
 				.getAllCompagnieEnvironnementActif()) {
+			newImportTmsDto = new ImportTmsDto();
+			newImportTmsDto.mergeByCompagnieEnvironnement(compagnieEnvironnementEntity);
+			
 			// id = id && status = act && draft
 			jeuDonneeEntityDraft = this.jeuDonneeService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.DRAFT);
 			jeuDonneeEntityActif = this.jeuDonneeService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.ACTIVE);
 
-			newImportTmsDto = new ImportTmsDto();
-			newImportTmsDto.mergeByJeuDonneesBrouillon(jeuDonneeEntityDraft, "");
-			newImportTmsDto.mergeByJeuDonneesActif(jeuDonneeEntityActif, "");
+			
+			
+			if(jeuDonneeEntityDraft != null) {
+				newImportTmsDto.mergeByJeuDonneesBrouillon((JeuDonneeEntity) jeuDonneeEntityDraft, "toto");
+			}
+			
+			if(jeuDonneeEntityActif != null) {
+				newImportTmsDto.mergeByJeuDonneesActif((JeuDonneeEntity) jeuDonneeEntityActif, "titi");
+			}
 
 			listImportTmsDto.add(newImportTmsDto);
 		}

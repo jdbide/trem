@@ -56,9 +56,9 @@
 					<td>{{data.libelleCompagnie}}</td>
 					<td>{{data.libelleEnvironnement}}</td>
 					<!-- Start ACTIVE -->
-					<td>{{data.dateImportJeuDonneesActif}}</td>
+					<td class="text-center">{{data.dateImportJeuDonneesActif | date:'dd/MM/yyyy HH:mm'}}</td>
 					<td>{{data.importJeuDonneesActifBy}}</td>
-					<td>{{data.dateValidateJeuDonneesActif}}</td>
+					<td class="text-center">{{data.dateValidateJeuDonneesActif | date:'dd/MM/yyyy HH:mm'}}</td>
 					<td>{{data.validateJeuDonneesActifBy}}</td>
 					<td class="text-center"><a
 						a-disabled="(Status.ACTIVE != data.statusJeudonneeActif)" 
@@ -67,9 +67,10 @@
 
 					<!-- End ACTIVE -->
 					<!-- Start Draft -->
-					<td ng-if="startImport != $index">{{data.dateImportJeuDonneesBrouillon}}</td>
+					<td ng-if="startImport != $index" class="text-center">{{data.dateImportJeuDonneesBrouillon | date:'dd/MM/yyyy HH:mm'}}</td>
 					<td ng-if="startImport != $index">{{data.importJeuDonneesBrouillonBy}}</td>
 					<td ng-if="startImport != $index" class="text-center">
+					
 						<a 
 							a-disabled="(Status.DRAFT != data.statusJeudonneeBrouillon)"
 							href="{{urlDownloadFile+data.idJeuDonneeBrouillon}}"
