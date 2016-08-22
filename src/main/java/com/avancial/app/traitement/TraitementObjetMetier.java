@@ -1,21 +1,11 @@
 package com.avancial.app.traitement;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
-import javax.persistence.Query;
 
 import com.avancial.app.data.databean.Status;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.Train;
-import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.traiteObjetMetier.CreationObjetMetier;
-import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.traitement.ATraitementLogDetail;

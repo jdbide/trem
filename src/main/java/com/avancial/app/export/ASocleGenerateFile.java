@@ -6,13 +6,18 @@ package com.avancial.app.export;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import com.avancial.app.utilitaire.FileUtils;
+import com.avancial.app.utilitaire.FileUtil;
 
 /**
  * @author hamza.laterem
  *
  */
 public abstract class ASocleGenerateFile extends ASocleExportService {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+
    /**
     * 
     */
@@ -74,8 +79,8 @@ public abstract class ASocleGenerateFile extends ASocleExportService {
 
    private void createFolder() throws Exception {
       try {
-         if (!FileUtils.existFile(this.filePath)) {
-            FileUtils.mkDirs(this.filePath);
+         if (!FileUtil.existFile(this.filePath)) {
+            FileUtil.mkDirs(this.filePath);
          }
       } catch (Exception e) {
          e.printStackTrace();

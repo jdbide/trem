@@ -3,8 +3,10 @@ package com.avancial.app.utilitaire;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import com.avancial.socle.utils.Convertisseur;
-import utils.transcodage.UtilsTranscodageRegime;
+import com.avancial.socle.utils.transcodageregimemotrice.UtilsTranscodageRegime;
+
 /**
  * transcode les regime
  * @author gabriel.gagnier

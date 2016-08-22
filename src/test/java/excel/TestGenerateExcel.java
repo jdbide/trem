@@ -36,7 +36,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.export.ExcelRapportDifferentiel;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
-import com.avancial.app.utilitaire.FileUtils;
+import com.avancial.app.utilitaire.FileUtil;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 
@@ -54,7 +54,7 @@ public class TestGenerateExcel {
 
       WebArchive jar = ShrinkWrap.create(WebArchive.class)
             .addPackage(ExcelRapportDifferentiel.class.getPackage())
-            .addClass(FileUtils.class)
+            .addClass(FileUtil.class)
             // .addAsManifestResource("arquillian.xml")
             .addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
             // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -172,7 +172,7 @@ public class TestGenerateExcel {
          this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
 
          this.excelRapportDifferentiel.generate();
-         if (!FileUtils.existFile("D:/was_tmp/tremas/export.xls")) {
+         if (!FileUtil.existFile("D:/was_tmp/tremas/export.xls")) {
             Assert.assertTrue(false);
          } else
             Assert.assertTrue(true);
@@ -201,7 +201,7 @@ public class TestGenerateExcel {
          this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
          
          this.excelRapportDifferentiel.generate();
-         if (!FileUtils.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {
+         if (!FileUtil.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {
             Assert.assertTrue(false);
          } else
             Assert.assertTrue(true);

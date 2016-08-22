@@ -15,6 +15,10 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
  *
  */
 public class ExcelRapportDifferentiel extends ASocleExportExcelService {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    public static int                         NUMBER_SHEET                  = 5;
    public static String                      REPORT_FOR                    = "Report for:";
    public static String                      DATE_IMPORT_DRAFT             = "Draft dataset loaded on:";
@@ -667,16 +671,17 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                this.excelTools.createCellTexte(14, composition.getCodeClasse());
 
                String nouvelleComposition = "";
-               for (int h = 0; h < (((Composition) data.getNouveauField()).getVoitures()).size(); h++) {
-                  nouvelleComposition += (((Composition) data.getNouveauField()).getVoitures()).get(h).getNumeroVoiture(); 
-                  if (h < (((Composition) data.getNouveauField()).getVoitures()).size() - 1)
+               
+               for (int h = 0; h < composition.getVoitures().size(); h++) {
+                  nouvelleComposition += composition.getVoitures().get(h).getNumeroVoiture(); 
+                  if (h < composition.getVoitures().size() - 1)
                      nouvelleComposition += ", ";
                }
 
                nouvelleComposition += " = ";
-               nouvelleComposition += ((Composition) data.getNouveauField()).getCodeRame() + ",";
-               nouvelleComposition += ((Composition) data.getNouveauField()).getCodeClasse() + ",";
-               nouvelleComposition += ((Composition) data.getNouveauField()).getCodeDiag();
+               nouvelleComposition += composition.getCodeRame() + ",";
+               nouvelleComposition += composition.getCodeClasse() + ",";
+               nouvelleComposition += composition.getCodeDiag();
                this.excelTools.createCellTexte(15, nouvelleComposition);
                this.excelTools.createCellTexte(16, composition.getCodeRame());
                this.excelTools.createCellTexte(17, composition.getCodeRm());
@@ -767,7 +772,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                   this.excelTools.createRow(this.ligne++);
                
                this.excelTools.createCellTexte(30, restriction.getRegime().getCodeRegime());
-               String nouvelleValue = restriction.getType().toString() + " from " + restriction.getOrigine().getCodeGare() + "to" + restriction.getDestination().toString();
+               String nouvelleValue = (restriction.getType() != null ? restriction.getType().toString() : "")  + " from " + (restriction.getOrigine() != null ? restriction.getOrigine().getCodeGare() : "") + "to" + (restriction.getOrigine() != null ? restriction.getOrigine().getCodeGare() : "");
                this.excelTools.createCellTexte(31, nouvelleValue);
             }
             

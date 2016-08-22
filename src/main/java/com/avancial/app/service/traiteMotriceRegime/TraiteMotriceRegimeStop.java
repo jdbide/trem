@@ -22,16 +22,14 @@ import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
 /**
- * Classe qui récupère les données liées au régime desserte.
- * Chargement du generator pour l'exécution ultérieure des requêtes.
- * Chargement des objets métier pour comparaison ultérieure.
+ * Classe qui récupère les données liées au régime desserte. Chargement du generator pour l'exécution ultérieure des requêtes. Chargement des objets métier pour comparaison ultérieure.
  * 
  * @author sebastien.benede
  *
  */
 public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
 
-	@Override
+   @Override
 	public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity,
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche) {
@@ -65,6 +63,7 @@ public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
 		}
 
 		List<Object[]> dessertes = queryRDesserte.getResultList();
+		Desserte stops = null;
 		for (Object[] desserte : dessertes) {
 			if (!oldRegime.equals(desserte[3])) {// si le régime traité est
 													// différent du précédent
@@ -72,19 +71,25 @@ public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
 													// entrée
 				mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(),
 						desserte[3], 2, motriceTrainTrancheEntity.getIdMotriceTrainTranche());
+				if (stops != null) {
+				   listeDessertes.add(stops);
+				}
+				
+				stops = new Desserte(new ArrayList<GareHoraire>(), new Regime((String) desserte[3]));
 			}
 			// insertion du régime desserte lié au régime
 			mapGeneratorTablesMotriceRegime.get(MotriceRegimeStopEntity.class).addValue(idRegimeStop.getAndIncrement(),
 					desserte[0], desserte[1], desserte[2], idRegime.get());
+			stops.getGareHoraires().add(new GareHoraire(new Gare((String) desserte[2]), new Horaire(null, null)));
 
 			oldRegime = (String) desserte[3];
 
 			// ajout dans l'objet métier pour comparaison
-			garesHoraires.add(new GareHoraire(new Gare((String) desserte[2]), new Horaire(null, null)));
+			//if ()
 		}
 
 		// ajout des dessertes dans l'objet métier
-		listeDessertes.add(new Desserte(garesHoraires, new Regime(oldRegime)));
+		//listeDessertes.add(new Desserte(garesHoraires, new Regime(oldRegime)));
 		atomicTranche.get().addAttributsField(listeDessertes);
 
 	}

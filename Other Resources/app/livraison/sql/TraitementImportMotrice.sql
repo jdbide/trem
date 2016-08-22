@@ -54,6 +54,52 @@ drop table if exists tremas_motrice_ref_ramecode;
 
 drop table if exists tremas_ref_tables_motrice_regime;
 
+-- ----------------------------
+-- Table structure for `tremas_datasource`
+-- ----------------------------
+DROP TABLE IF EXISTS `tremas_datasource`;
+CREATE TABLE `tremas_datasource` (
+  `idDatasource` int(11) NOT NULL AUTO_INCREMENT,
+  `nomTechniqueDataSource` varchar(50) NOT NULL,
+  `libelleDataSource` varchar(255) NOT NULL,
+  `commentaireDataSource` text NOT NULL,
+  `driverClassName` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `actifDatasource` tinyint(1) NOT NULL,
+  `schema` varchar(50) NOT NULL,
+  PRIMARY KEY (`idDatasource`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tremas_datasource
+-- ----------------------------
+INSERT INTO `tremas_datasource` VALUES ('1', 'ES_DB_PROD', 'Eurostar db production', ' ', 'com.ibm.db2.jcc.DB2Driver', 'jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRP2');
+INSERT INTO `tremas_datasource` VALUES ('2', 'ES_DB_REC', 'Eurostart db recette', ' ', 'com.ibm.db2.jcc.DB2Driver', ' jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRO2');
+INSERT INTO `tremas_datasource` VALUES ('3', 'TH_DB_PROD', 'Thalys db production', ' ', 'com.ibm.db2.jcc.DB2Driver', ' jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRP3');
+INSERT INTO `tremas_datasource` VALUES ('4', 'TH_DB_REC', 'Thalys db recette', ' ', 'com.ibm.db2.jcc.DB2Driver', ' jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRO3');
+
+DROP TABLE IF EXISTS `tremas_compagnie_environnement`;
+CREATE TABLE `tremas_compagnie_environnement` (
+  `idCompagnieEnvironnement` int(11) NOT NULL AUTO_INCREMENT,
+  `libelleCompagnie` varchar(50) NOT NULL,
+  `libelleEnvironnement` varchar(50) NOT NULL,
+  `nomTechniqueCompagnieEnvironnement` varchar(50) NOT NULL,
+  `actifCompagnieEnvironnement` tinyint(1) NOT NULL,
+  `ordreCompagnieEnvironnement` int(11) NOT NULL,
+  `commentaireCompagnieEnvironnement` text NOT NULL,
+  `idUtilisateurCreateCompagnieEnvironnement` int(11) NOT NULL,
+  `dateCreateCompagnieEnvironnement` datetime NOT NULL,
+  `idUtilisateurLastUpdateCompagnieEnvironnement` int(11) NOT NULL,
+  `dateLastUpdateCompagnieEnvironnement` datetime NOT NULL,
+  `idDataSource` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idCompagnieEnvironnement`),
+  UNIQUE KEY `indImportDonnees_nomTechnique` (`nomTechniqueCompagnieEnvironnement`) USING BTREE,
+  UNIQUE KEY `indImportDonnees_libelleCompagnie_libelleEnvironnement` (`libelleCompagnie`,`libelleEnvironnement`) USING BTREE,
+  KEY `tremas_compagnie_environnement_fkDatasource` (`idDataSource`),
+  CONSTRAINT `tremas_compagnie_environnement_fkDatasource` FOREIGN KEY (`idDataSource`) REFERENCES `tremas_datasource` (`idDatasource`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+
 CREATE TABLE `tremas_jeu_donnees` (
   `idJeuDonnees` int(11) NOT NULL AUTO_INCREMENT,
   `dateCreateJeuDonnees` datetime NOT NULL,
