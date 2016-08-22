@@ -692,6 +692,12 @@ public class ExcelTools {
 
       return sb.toString();
    }
+   
+   public void test (int l, int c, String s) {
+      Cell cl = this.sheet.getRow(l).getCell(c);
+      
+      cl.setCellValue(s);
+   }
 
    /**
     * Getter classeur

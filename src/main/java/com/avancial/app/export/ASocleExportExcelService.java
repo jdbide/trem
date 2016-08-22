@@ -93,8 +93,9 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
 
    /**
     * Generation du contenu
+    * @throws Exception 
     */
-   protected abstract void generateContentBySheet();
+   protected abstract void generateContentBySheet() throws Exception;
 
    @Override
    protected void generateFile() throws Exception {

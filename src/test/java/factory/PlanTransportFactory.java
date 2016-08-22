@@ -9,10 +9,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
+import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
+import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
+import com.avancial.app.data.objetsMetier.PlanTransport.GareHoraire;
 import com.avancial.app.data.objetsMetier.PlanTransport.Horaire;
 import com.avancial.app.data.objetsMetier.PlanTransport.MapTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
@@ -152,9 +155,60 @@ public class PlanTransportFactory {
       train_draft_5.setNumeroTrain("5");
       Tranche tranche_train_draft_5 = new Tranche();
       tranche_train_draft_5.setNumeroTranche("10");
+      
+      //
+      Desserte des = new Desserte();
+      des.setRegime(new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
+      Gare g = new Gare("GBSPX");
+      Horaire h = new Horaire();
+      GareHoraire gh1 = new GareHoraire(g, h);
+      Gare g2 = new Gare("GBEBB");
+      GareHoraire gh2 = new GareHoraire(g2, h);
+      List<GareHoraire> lGh = new ArrayList<>();
+      lGh.add(gh1);
+      lGh.add(gh2);
+      des.setGareHoraires(lGh);
+      
+      Desserte des2 = new Desserte();
+      des2.setRegime(new Regime("Mo-AZ; From 01/06/2016 to 10/12/2016", date1, date2));
+      Gare g3 = new Gare("GARE3");
+      
+      GareHoraire gh3 = new GareHoraire(g3, h);
+      Gare g4 = new Gare("GARE4");
+      GareHoraire gh4 = new GareHoraire(g4, h);
+      List<GareHoraire> lGh2 = new ArrayList<>();
+      lGh2.add(gh3);
+      lGh2.add(gh4);
+      des2.setGareHoraires(lGh2);
+      
+      List<Desserte> listDes = new ArrayList<>();
+      listDes.add(des);
+      listDes.add(des2);
+     
+      
+      MapTranche mapTranche5 = new MapTranche();
+      mapTranche5.put(fareProfile2.getClass(), listFareProfile2);
+      mapTranche5.put(repas2.getClass(), listRepas1);
+      mapTranche5.put(des.getClass(), listDes);
+      
+      
+      // mapTranche5.put();
+      
+      
+      tranche_train_draft_5.getAttributs().putAll(mapTranche5);
       train_draft_5.getTranches().add(tranche_train_draft_5);
       
       listTrain_draft.add(train_draft_5);
+      
+      
+   // Cas New : Train Draft n°6
+      Train train_draft_6 = new Train();
+      train_draft_6.setNumeroTrain("6");
+      Tranche tranche_train_draft_6 = new Tranche();
+      tranche_train_draft_6.setNumeroTranche("12");
+      train_draft_6.getTranches().add(tranche_train_draft_6);
+      
+      listTrain_draft.add(train_draft_6);
       
       PlanTransport pt_draft = new PlanTransport(EnumCompagnies.ES, listTrain_draft);
       PlanTransport pt_active = new PlanTransport(EnumCompagnies.ES, listTrain_active);
