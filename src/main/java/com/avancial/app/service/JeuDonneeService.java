@@ -91,6 +91,12 @@ public class JeuDonneeService implements Serializable {
 		}
 	}
 
+	/**
+	 * Charge un jeu de données en fonction du compagnie/environnement et du status.
+	 * @param compagnieEnvironnement
+	 * @param statusJeuDonnees
+	 * @return jeu de données
+	 */
 	public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement,
 			Status statusJeuDonnees) {
 		Query query = this.em.createQuery(
@@ -104,10 +110,22 @@ public class JeuDonneeService implements Serializable {
 		try {
 			jeuDonneeEntity = (JeuDonneeEntity) query.getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 		return jeuDonneeEntity;
+	}
+
+	/**
+	 * Charge un jeu de données par son id.
+	 * @param idJeuDonnees
+	 * @return
+	 */
+	public JeuDonneeEntity getById(int idJeuDonnees) {
+		Query query = this.em.createNamedQuery("JeuDonneeEntity.getById", JeuDonneeEntity.class);
+		query.setParameter("idJeuDonnees", idJeuDonnees);
+		
+		return (JeuDonneeEntity) query.getSingleResult();
 	}
 
 }

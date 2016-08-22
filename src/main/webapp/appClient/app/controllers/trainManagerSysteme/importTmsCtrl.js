@@ -153,6 +153,7 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", '$i
 	$scope.startModalValidateImportTms = function (data) {
 		$scope.currentDataValidate = data;
 		$scope.validateImportTms = !$scope.validateImportTms;
+		$window.location.reload();
 	}
 
 	/**
