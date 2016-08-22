@@ -25,6 +25,7 @@ public class ImportTmsDto implements Serializable {
 	private int idCompagnieEnvironnement;
 	private String libelleCompagnie;
 	private String libelleEnvironnement;
+	private String nomTechniqueCompagnieEnvironnement;
 
 	private int idJeuDonneesActif;
 	private Date dateImportJeuDonneesActif;
@@ -82,9 +83,11 @@ public class ImportTmsDto implements Serializable {
 		this.setIdCompagnieEnvironnement(compagnieEnvironnementEntity.getIdCompagnieEnvironnement());
 		this.setLibelleCompagnie(compagnieEnvironnementEntity.getLibelleCompagnie());
 		this.setLibelleEnvironnement(compagnieEnvironnementEntity.getLibelleEnvironnement());
+		this.setNomTechniqueCompagnieEnvironnement(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
 	}
 
-	/**
+
+   /**
 	 * @return the idCompagnieEnvironnement
 	 */
 	public int getIdCompagnieEnvironnement() {
@@ -338,5 +341,19 @@ public class ImportTmsDto implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+   /**
+    * @return the nomTechniqueCompagnieEnvironnement
+    */
+   public String getNomTechniqueCompagnieEnvironnement() {
+      return nomTechniqueCompagnieEnvironnement;
+   }
+
+   /**
+    * @param nomTechniqueCompagnieEnvironnement the nomTechniqueCompagnieEnvironnement to set
+    */
+   public void setNomTechniqueCompagnieEnvironnement(String nomTechniqueCompagnieEnvironnement) {
+      this.nomTechniqueCompagnieEnvironnement = nomTechniqueCompagnieEnvironnement;
+   }
 
 }

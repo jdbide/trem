@@ -26,6 +26,7 @@ import org.json.simple.JSONArray;
 import com.avancial.app.data.Task;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.service.ImportTmsService;
+import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
 import com.avancial.app.webService.bean.ResponseBean;
 
@@ -46,6 +47,9 @@ public class ImportTmsWebService {
 
 	@Inject
 	private ImportTmsService importTmsService;
+	
+	@Inject
+	private TraitementDeleteJeuDonnee traitementDeleteJeuDonnee;
 
 	public ImportTmsWebService() {
 		// TODO Auto-generated constructor stub
@@ -84,13 +88,12 @@ public class ImportTmsWebService {
 		responseBean.setMessage("Erreur de suppression");
 
 		try {
-			if (this.importTmsService.deleteDraft(importTmsDto)) {
-				responseBean.setStatus(true);
-				responseBean.setMessage("Suppression avec succès");
-			}
-
-		} catch (Exception e) {
-			// e.printStackTrace();
+		   this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(importTmsDto.getNomTechniqueCompagnieEnvironnement());
+		   this.traitementDeleteJeuDonnee.execute();
+			responseBean.setStatus(true);
+			responseBean.setMessage("Suppression avec succès");
+		} catch (Throwable e) {
+			e.printStackTrace();
 		} finally {
 			return Response.status(200).entity(responseBean).build();
 		}
