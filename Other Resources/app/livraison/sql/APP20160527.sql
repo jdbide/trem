@@ -477,16 +477,3 @@ INSERT INTO `tremas_ref_tables_motrice` VALUES ('23', 'TMDPCDD', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('24', 'TMDTYVO', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('25', 'TMDSAT1', '1', '10');
 INSERT INTO `tremas_ref_tables_motrice` VALUES ('26', 'TMDKPRO', '1', '10');
-
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('1', 'Regime train tranche');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('2', 'Regime desserte');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('3', 'Regime service');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('4', 'Regime specificities');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('5', 'Regime restriction');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('6', 'Regime code sat');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('7', 'Regime fare profile');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('8', 'Regime equipement type');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('9', 'Regime meal type');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('10', 'Regime distribution');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('11', 'Regime composition');
-INSERT INTO `tremas_motrice_ref_regime_type` VALUES('12', 'Regime od');

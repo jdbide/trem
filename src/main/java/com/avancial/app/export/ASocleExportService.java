@@ -4,6 +4,7 @@
 package com.avancial.app.export;
 
 import java.io.OutputStream;
+import java.io.Serializable;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -12,7 +13,11 @@ import javax.ws.rs.core.Response.ResponseBuilder;
  * @author hamza.laterem
  *
  */
-public abstract class ASocleExportService {
+public abstract class ASocleExportService implements Serializable {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    protected String          fileName        = "export";
    protected String          fileExtension   = "";
    protected String          filePath        = "D:/was_tmp/tremas/";

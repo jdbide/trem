@@ -14,10 +14,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.io.FileUtils;
 
 
 
-public class FileUtils extends org.apache.commons.io.FileUtils
+public class FileUtil extends FileUtils
 {
 	public static void copyFileAndDeleteWhiteSpacesLines (File fin ,File fout) throws IOException{
 

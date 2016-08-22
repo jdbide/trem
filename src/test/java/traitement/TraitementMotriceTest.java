@@ -63,12 +63,33 @@ public class TraitementMotriceTest {
 
    @Inject
    TraitementMotrice   traitementMotrice;
+   
+   @Inject
+   @Socle_PUSocle
+   EntityManager em;
 
    @Test
    public void main() {
 
       try {
+       Query query = this.em.createQuery("SELECT t FROM CompagnieEnvironnementEntity t where t.idCompagnieEnvironnement = 1");
+       
+       CompagnieEnvironnementEntity compagnieEnvironnement = ((CompagnieEnvironnementEntity) query.getSingleResult());
+       
+       JeuDonneeEntity jeuDonneeEntity = new JeuDonneeEntity();
+       
+       jeuDonneeEntity.setDateCreateJeuDonnees(new Date());
+       jeuDonneeEntity.setDateLastUpdateJeuDonnees(new Date());
+       jeuDonneeEntity.setIdUtilisateurCreateJeuDonnees(-1);
+       jeuDonneeEntity.setIdUtilisateurLastUpdateJeuDonnees(-1);
+       jeuDonneeEntity.setCompagnieEnvironnement(compagnieEnvironnement);
+       
+       this.em.getTransaction().begin();
+       this.em.persist(jeuDonneeEntity);
+       this.em.getTransaction().commit();
+         
          this.traitementMotrice.setMap(this.mapPlansDeTransport);
+         this.traitementMotrice.setJeuDonneeEntity(jeuDonneeEntity);
          this.traitementMotrice.execute();
 
       } catch (Exception e) {
