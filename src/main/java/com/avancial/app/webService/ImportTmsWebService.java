@@ -110,6 +110,7 @@ public class ImportTmsWebService {
 		ResponseBean responseBean = new ResponseBean();
 
 		if (this.importTmsService.validateDraft(importTmsDto)) {
+			responseBean.setData(importTmsDto);
 			responseBean.setStatus(true);
 			responseBean.setMessage("Validation draft OK");
 		} else {

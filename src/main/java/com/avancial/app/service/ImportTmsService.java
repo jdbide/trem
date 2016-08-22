@@ -98,6 +98,16 @@ public class ImportTmsService implements Serializable {
 		jeuDonneeEntityDraft.setIdUtilisateurLastUpdateJeuDonnees(-1);	
 		this.jeuDonneeService.update(jeuDonneeEntityDraft);
 		
+		importTmsDto.setStatusJeudonneeActif(jeuDonneeEntityDraft.getStatusJeuDonnees());
+		importTmsDto.setDateValidateJeuDonneesActif(jeuDonneeEntityDraft.getDateLastUpdateJeuDonnees());
+		importTmsDto.setValidateJeuDonneesActifBy("tata");
+		importTmsDto.setDateImportJeuDonneesActif(jeuDonneeEntityDraft.getDateCreateJeuDonnees());
+		importTmsDto.setStatusJeudonneeBrouillon(null);
+		importTmsDto.setDateImportJeuDonneesBrouillon(null);
+		importTmsDto.setIdJeuDonneeBrouillon(0);
+		importTmsDto.setImportJeuDonneesBrouillonBy(null);
+		importTmsDto.setPathValidateJeuDonneesBrouillon(null);
+		
 		return true;
 	}
 
