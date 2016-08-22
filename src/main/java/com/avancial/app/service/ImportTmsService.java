@@ -56,11 +56,11 @@ public class ImportTmsService implements Serializable {
 					.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.ACTIVE);
 
 			if (jeuDonneeEntityDraft != null) {
-				newImportTmsDto.mergeByJeuDonneesBrouillon((JeuDonneeEntity) jeuDonneeEntityDraft, "toto");//TODO récupérer le user à partir de son id en base
+				newImportTmsDto.mergeByJeuDonneesBrouillon((JeuDonneeEntity) jeuDonneeEntityDraft, "");//TODO récupérer le user à partir de son id en base
 			}
 
 			if (jeuDonneeEntityActif != null) {
-				newImportTmsDto.mergeByJeuDonneesActif((JeuDonneeEntity) jeuDonneeEntityActif, "titi");//TODO récupérer le user à partir de son id en base
+				newImportTmsDto.mergeByJeuDonneesActif((JeuDonneeEntity) jeuDonneeEntityActif, "");//TODO récupérer le user à partir de son id en base
 			}
 
 			listImportTmsDto.add(newImportTmsDto);
