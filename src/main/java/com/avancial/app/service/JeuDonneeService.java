@@ -2,12 +2,10 @@ package com.avancial.app.service;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
+import javax.persistence.TypedQuery;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
@@ -79,7 +77,8 @@ public class JeuDonneeService implements Serializable {
 		this.update(jeuDonnee);
 	}
 
-	public int deleteById(int idJeuDonnee) {
+	@SuppressWarnings("finally")
+    public int deleteById(int idJeuDonnee) {
 		int deleteEntity = 0;
 		try {
 			String hqlDelete = "delete JeuDonneEntity jd where jd.idJeuDonnee = :idJeudonnee";
@@ -99,7 +98,7 @@ public class JeuDonneeService implements Serializable {
 	 */
 	public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement,
 			Status statusJeuDonnees) {
-		Query query = this.em.createQuery(
+		TypedQuery<JeuDonneeEntity> query = this.em.createQuery(
 				"SELECT t FROM JeuDonneeEntity t WHERE t.compagnieEnvironnement = :compagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees",
 				JeuDonneeEntity.class);
 		query.setParameter("compagnieEnvironnement", compagnieEnvironnement);
@@ -108,7 +107,8 @@ public class JeuDonneeService implements Serializable {
 		JeuDonneeEntity jeuDonneeEntity = null;
 		
 		try {
-			jeuDonneeEntity = (JeuDonneeEntity) query.getSingleResult();
+		    if (!query.getResultList().isEmpty())
+		        jeuDonneeEntity = query.getSingleResult();
 		} catch (Exception e) {
 //			e.printStackTrace();
 		}

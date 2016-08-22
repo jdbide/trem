@@ -84,6 +84,16 @@ public class Train implements IPlanTransport {
    public boolean isValidForRR() {
       return this.validePourRR;
    }
+   
+   /**
+    * @return the validForRR
+    */
+   public String writeIsValidForRR() {
+      if (this.validePourRR)
+         return "Yes";
+      
+      return "No";
+   }
 
    /**
     * @param validForRR

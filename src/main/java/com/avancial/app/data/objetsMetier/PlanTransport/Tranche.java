@@ -1,5 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tranche extends ASousRegimeTranche {
@@ -53,6 +54,22 @@ public class Tranche extends ASousRegimeTranche {
         if (value.size() > 0) {
             this.attributs.put((Class<ASousRegimeTranche>) value.get(0).getClass(), value);
         }
+    }
+    
+    /**
+     * 
+     * 
+     * @param value
+    * @throws ClassNotFoundException 
+     */
+    public List<? extends ASousRegimeTranche> getByAttributsField(String sousRegime) throws ClassNotFoundException {
+       List<ASousRegimeTranche> res = new ArrayList<>();
+       Class<?> classSousRegime =  Class.forName("com.avancial.app.data.objetsMetier.PlanTransport."+sousRegime);
+       
+       if (this.attributs.containsKey(classSousRegime))
+          res.addAll(this.attributs.get(classSousRegime));
+
+        return res;
     }
 
     /**
