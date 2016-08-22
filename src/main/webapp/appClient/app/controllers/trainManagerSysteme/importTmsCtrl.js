@@ -207,7 +207,7 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", '$i
 		/*Aprés reponse du webService*/
 		importTmsService.executeValidateDraft($scope.currentDataValidate).then(function() {
 			$scope.reponse = importTmsService.getReponse();
-			mergeElementArra($scope.datas, $scope.currentDataValidate, $scope.reponse.data);
+			mergeElementArray($scope.datas, $scope.currentDataValidate, $scope.reponse.data);
 			$scope.currentDataValidate = null;
 		}, function() {
 			$scope.reponse = importTmsService.getReponse();

@@ -10,314 +10,333 @@ import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 
 /**
- * Ce Bean représente les données à afficher sur la page import du module Train Management System.
+ * Ce Bean représente les données à afficher sur la page import du module Train
+ * Management System.
  * 
  * @author hamza.laterem
  *
  */
-public class ImportTmsDto implements Serializable{
+public class ImportTmsDto implements Serializable {
 
-   /**
-    * 
-    */
-   private static final long serialVersionUID = 1L;
-   private int idCompagnieEnvironnement;
-   private String libelleCompagnie;
-   private String libelleEnvironnement;
-   
-   private int idJeuDonneesActif;   
-   private Date dateImportJeuDonneesActif;
-   private String importJeuDonneesActifBy;
-   private Date dateValidateJeuDonneesActif;
-   private String validateJeuDonneesActifBy;
-   private String pathValidateJeuDonneesActif;
-   private Status statusJeudonneeActif;
-   
-   private int idJeuDonneeBrouillon;
-   private Date dateImportJeuDonneesBrouillon;
-   private String importJeuDonneesBrouillonBy;
-   private String pathValidateJeuDonneesBrouillon;
-   private Status statusJeudonneeBrouillon;
-   
-   private String username;
-   private String password;
-   
-   public ImportTmsDto() {
-      // TODO Auto-generated constructor stub
-   }
-   
-   @JsonIgnore
-   public void mergeByJeuDonneesBrouillon (JeuDonneeEntity jeuDonneeEntityBrouillon, String nameImportJeuDonneesBrouillonBy) {
-      this.setIdJeuDonneeBrouillon(jeuDonneeEntityBrouillon.getIdJeuDonnees());
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
+	private int idCompagnieEnvironnement;
+	private String libelleCompagnie;
+	private String libelleEnvironnement;
 
-      this.setDateImportJeuDonneesBrouillon(jeuDonneeEntityBrouillon.getDateCreateJeuDonnees());
-      this.setImportJeuDonneesBrouillonBy(nameImportJeuDonneesBrouillonBy);
+	private int idJeuDonneesActif;
+	private Date dateImportJeuDonneesActif;
+	private String importJeuDonneesActifBy;
+	private Date dateValidateJeuDonneesActif;
+	private String validateJeuDonneesActifBy;
+	private String pathValidateJeuDonneesActif;
+	private Status statusJeudonneeActif;
 
-      this.setPathValidateJeuDonneesBrouillon("TODO");
-      this.setStatusJeudonneeBrouillon(jeuDonneeEntityBrouillon.getStatusJeuDonnees());
-   }
-   
-   @JsonIgnore
-   public void mergeByJeuDonneesActif (JeuDonneeEntity jeuDonneeEntityActif, String nameValidateJeuDonneeBy) {
-      this.setIdJeuDonneesActif(jeuDonneeEntityActif.getIdJeuDonnees());
-      
-      this.setDateImportJeuDonneesActif(jeuDonneeEntityActif.getDateCreateJeuDonnees());
-      this.setImportJeuDonneesActifBy(nameValidateJeuDonneeBy);
-      
-      this.setDateValidateJeuDonneesActif(jeuDonneeEntityActif.getDateLastUpdateJeuDonnees());
-      this.setValidateJeuDonneesActifBy(nameValidateJeuDonneeBy);
-      
-      this.setPathValidateJeuDonneesActif("TODO");
-      this.setStatusJeudonneeActif(jeuDonneeEntityActif.getStatusJeuDonnees());
-   }
-   
-   /**
-    * 
-    * @param compagnieEnvironnementEntity
-    */
-   @JsonIgnore
-   public void mergeByCompagnieEnvironnement (CompagnieEnvironnementEntity compagnieEnvironnementEntity) {
-      this.setIdCompagnieEnvironnement(compagnieEnvironnementEntity.getIdCompagnieEnvironnement());
-      this.setLibelleCompagnie(compagnieEnvironnementEntity.getLibelleCompagnie());
-      this.setLibelleEnvironnement(compagnieEnvironnementEntity.getLibelleEnvironnement());
-   }
+	private int idJeuDonneeBrouillon;
+	private Date dateImportJeuDonneesBrouillon;
+	private String importJeuDonneesBrouillonBy;
+	private String pathValidateJeuDonneesBrouillon;
+	private Status statusJeudonneeBrouillon;
 
-   /**
-    * @return the idCompagnieEnvironnement
-    */
-   public int getIdCompagnieEnvironnement() {
-      return this.idCompagnieEnvironnement;
-   }
+	private String username;
+	private String password;
 
-   /**
-    * @param idCompagnieEnvironnement the idCompagnieEnvironnement to set
-    */
-   public void setIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
-      this.idCompagnieEnvironnement = idCompagnieEnvironnement;
-   }
+	public ImportTmsDto() {
+		// TODO Auto-generated constructor stub
+	}
 
-   /**
-    * @return the libelleCompagnie
-    */
-   public String getLibelleCompagnie() {
-      return this.libelleCompagnie;
-   }
+	@JsonIgnore
+	public void mergeByJeuDonneesBrouillon(JeuDonneeEntity jeuDonneeEntityBrouillon,
+			String nameImportJeuDonneesBrouillonBy) {
+		this.setIdJeuDonneeBrouillon(jeuDonneeEntityBrouillon.getIdJeuDonnees());
 
-   /**
-    * @param libelleCompagnie the libelleCompagnie to set
-    */
-   public void setLibelleCompagnie(String libelleCompagnie) {
-      this.libelleCompagnie = libelleCompagnie;
-   }
+		this.setDateImportJeuDonneesBrouillon(jeuDonneeEntityBrouillon.getDateCreateJeuDonnees());
+		this.setImportJeuDonneesBrouillonBy(nameImportJeuDonneesBrouillonBy);
 
-   /**
-    * @return the libelleEnvironnement
-    */
-   public String getLibelleEnvironnement() {
-      return this.libelleEnvironnement;
-   }
+		this.setPathValidateJeuDonneesBrouillon("TODO");
+		this.setStatusJeudonneeBrouillon(jeuDonneeEntityBrouillon.getStatusJeuDonnees());
+	}
 
-   /**
-    * @param libelleEnvironnement the libelleEnvironnement to set
-    */
-   public void setLibelleEnvironnement(String libelleEnvironnement) {
-      this.libelleEnvironnement = libelleEnvironnement;
-   }
+	@JsonIgnore
+	public void mergeByJeuDonneesActif(JeuDonneeEntity jeuDonneeEntityActif, String nameValidateJeuDonneeBy) {
+		this.setIdJeuDonneesActif(jeuDonneeEntityActif.getIdJeuDonnees());
 
-   /**
-    * @return the idJeuDonneesActif
-    */
-   public int getIdJeuDonneesActif() {
-      return this.idJeuDonneesActif;
-   }
+		this.setDateImportJeuDonneesActif(jeuDonneeEntityActif.getDateCreateJeuDonnees());
+		this.setImportJeuDonneesActifBy(nameValidateJeuDonneeBy);
 
-   /**
-    * @param idJeuDonneesActif the idJeuDonneesActif to set
-    */
-   public void setIdJeuDonneesActif(int idJeuDonneesActif) {
-      this.idJeuDonneesActif = idJeuDonneesActif;
-   }
+		this.setDateValidateJeuDonneesActif(jeuDonneeEntityActif.getDateLastUpdateJeuDonnees());
+		this.setValidateJeuDonneesActifBy(nameValidateJeuDonneeBy);
 
-   /**
-    * @return the dateImportJeuDonneesActif
-    */
-   public Date getDateImportJeuDonneesActif() {
-      return this.dateImportJeuDonneesActif;
-   }
+		this.setPathValidateJeuDonneesActif("TODO");
+		this.setStatusJeudonneeActif(jeuDonneeEntityActif.getStatusJeuDonnees());
+	}
 
-   /**
-    * @param dateImportJeuDonneesActif the dateImportJeuDonneesActif to set
-    */
-   public void setDateImportJeuDonneesActif(Date dateImportJeuDonneesActif) {
-      this.dateImportJeuDonneesActif = dateImportJeuDonneesActif;
-   }
+	/**
+	 * 
+	 * @param compagnieEnvironnementEntity
+	 */
+	@JsonIgnore
+	public void mergeByCompagnieEnvironnement(CompagnieEnvironnementEntity compagnieEnvironnementEntity) {
+		this.setIdCompagnieEnvironnement(compagnieEnvironnementEntity.getIdCompagnieEnvironnement());
+		this.setLibelleCompagnie(compagnieEnvironnementEntity.getLibelleCompagnie());
+		this.setLibelleEnvironnement(compagnieEnvironnementEntity.getLibelleEnvironnement());
+	}
 
-   /**
-    * @return the importJeuDonneesActifBy
-    */
-   public String getImportJeuDonneesActifBy() {
-      return this.importJeuDonneesActifBy;
-   }
+	/**
+	 * @return the idCompagnieEnvironnement
+	 */
+	public int getIdCompagnieEnvironnement() {
+		return this.idCompagnieEnvironnement;
+	}
 
-   /**
-    * @param importJeuDonneesActifBy the importJeuDonneesActifBy to set
-    */
-   public void setImportJeuDonneesActifBy(String importJeuDonneesActifBy) {
-      this.importJeuDonneesActifBy = importJeuDonneesActifBy;
-   }
+	/**
+	 * @param idCompagnieEnvironnement
+	 *            the idCompagnieEnvironnement to set
+	 */
+	public void setIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
+		this.idCompagnieEnvironnement = idCompagnieEnvironnement;
+	}
 
-   /**
-    * @return the dateValidateJeuDonneesActif
-    */
-   public Date getDateValidateJeuDonneesActif() {
-      return this.dateValidateJeuDonneesActif;
-   }
+	/**
+	 * @return the libelleCompagnie
+	 */
+	public String getLibelleCompagnie() {
+		return this.libelleCompagnie;
+	}
 
-   /**
-    * @param dateValidateJeuDonneesActif the dateValidateJeuDonneesActif to set
-    */
-   public void setDateValidateJeuDonneesActif(Date dateValidateJeuDonneesActif) {
-      this.dateValidateJeuDonneesActif = dateValidateJeuDonneesActif;
-   }
+	/**
+	 * @param libelleCompagnie
+	 *            the libelleCompagnie to set
+	 */
+	public void setLibelleCompagnie(String libelleCompagnie) {
+		this.libelleCompagnie = libelleCompagnie;
+	}
 
-   /**
-    * @return the validateJeuDonneesActifBy
-    */
-   public String getValidateJeuDonneesActifBy() {
-      return this.validateJeuDonneesActifBy;
-   }
+	/**
+	 * @return the libelleEnvironnement
+	 */
+	public String getLibelleEnvironnement() {
+		return this.libelleEnvironnement;
+	}
 
-   /**
-    * @param validateJeuDonneesActifBy the validateJeuDonneesActifBy to set
-    */
-   public void setValidateJeuDonneesActifBy(String validateJeuDonneesActifBy) {
-      this.validateJeuDonneesActifBy = validateJeuDonneesActifBy;
-   }
+	/**
+	 * @param libelleEnvironnement
+	 *            the libelleEnvironnement to set
+	 */
+	public void setLibelleEnvironnement(String libelleEnvironnement) {
+		this.libelleEnvironnement = libelleEnvironnement;
+	}
 
-   /**
-    * @return the pathValidateJeuDonneesActif
-    */
-   public String getPathValidateJeuDonneesActif() {
-      return this.pathValidateJeuDonneesActif;
-   }
+	/**
+	 * @return the idJeuDonneesActif
+	 */
+	public int getIdJeuDonneesActif() {
+		return this.idJeuDonneesActif;
+	}
 
-   /**
-    * @param pathValidateJeuDonneesActif the pathValidateJeuDonneesActif to set
-    */
-   public void setPathValidateJeuDonneesActif(String pathValidateJeuDonneesActif) {
-      this.pathValidateJeuDonneesActif = pathValidateJeuDonneesActif;
-   }
+	/**
+	 * @param idJeuDonneesActif
+	 *            the idJeuDonneesActif to set
+	 */
+	public void setIdJeuDonneesActif(int idJeuDonneesActif) {
+		this.idJeuDonneesActif = idJeuDonneesActif;
+	}
 
-   /**
-    * @return the idJeuDonneeBrouillon
-    */
-   public int getIdJeuDonneeBrouillon() {
-      return this.idJeuDonneeBrouillon;
-   }
+	/**
+	 * @return the dateImportJeuDonneesActif
+	 */
+	public Date getDateImportJeuDonneesActif() {
+		return this.dateImportJeuDonneesActif;
+	}
 
-   /**
-    * @param idJeuDonneeBrouillon the idJeuDonneeBrouillon to set
-    */
-   public void setIdJeuDonneeBrouillon(int idJeuDonneeBrouillon) {
-      this.idJeuDonneeBrouillon = idJeuDonneeBrouillon;
-   }
+	/**
+	 * @param dateImportJeuDonneesActif
+	 *            the dateImportJeuDonneesActif to set
+	 */
+	public void setDateImportJeuDonneesActif(Date dateImportJeuDonneesActif) {
+		this.dateImportJeuDonneesActif = dateImportJeuDonneesActif;
+	}
 
-   /**
-    * @return the dateImportJeuDonneesBrouillon
-    */
-   public Date getDateImportJeuDonneesBrouillon() {
-      return this.dateImportJeuDonneesBrouillon;
-   }
+	/**
+	 * @return the importJeuDonneesActifBy
+	 */
+	public String getImportJeuDonneesActifBy() {
+		return this.importJeuDonneesActifBy;
+	}
 
-   /**
-    * @param dateImportJeuDonneesBrouillon the dateImportJeuDonneesBrouillon to set
-    */
-   public void setDateImportJeuDonneesBrouillon(Date dateImportJeuDonneesBrouillon) {
-      this.dateImportJeuDonneesBrouillon = dateImportJeuDonneesBrouillon;
-   }
+	/**
+	 * @param importJeuDonneesActifBy
+	 *            the importJeuDonneesActifBy to set
+	 */
+	public void setImportJeuDonneesActifBy(String importJeuDonneesActifBy) {
+		this.importJeuDonneesActifBy = importJeuDonneesActifBy;
+	}
 
-   /**
-    * @return the importJeuDonneesBrouillonBy
-    */
-   public String getImportJeuDonneesBrouillonBy() {
-      return this.importJeuDonneesBrouillonBy;
-   }
+	/**
+	 * @return the dateValidateJeuDonneesActif
+	 */
+	public Date getDateValidateJeuDonneesActif() {
+		return this.dateValidateJeuDonneesActif;
+	}
 
-   /**
-    * @param importJeuDonneesBrouillonBy the importJeuDonneesBrouillonBy to set
-    */
-   public void setImportJeuDonneesBrouillonBy(String importJeuDonneesBrouillonBy) {
-      this.importJeuDonneesBrouillonBy = importJeuDonneesBrouillonBy;
-   }
+	/**
+	 * @param dateValidateJeuDonneesActif
+	 *            the dateValidateJeuDonneesActif to set
+	 */
+	public void setDateValidateJeuDonneesActif(Date dateValidateJeuDonneesActif) {
+		this.dateValidateJeuDonneesActif = dateValidateJeuDonneesActif;
+	}
 
-   /**
-    * @return the pathValidateJeuDonneesBrouillon
-    */
-   public String getPathValidateJeuDonneesBrouillon() {
-      return this.pathValidateJeuDonneesBrouillon;
-   }
+	/**
+	 * @return the validateJeuDonneesActifBy
+	 */
+	public String getValidateJeuDonneesActifBy() {
+		return this.validateJeuDonneesActifBy;
+	}
 
-   /**
-    * @param pathValidateJeuDonneesBrouillon the pathValidateJeuDonneesBrouillon to set
-    */
-   public void setPathValidateJeuDonneesBrouillon(String pathValidateJeuDonneesBrouillon) {
-      this.pathValidateJeuDonneesBrouillon = pathValidateJeuDonneesBrouillon;
-   }   
+	/**
+	 * @param validateJeuDonneesActifBy
+	 *            the validateJeuDonneesActifBy to set
+	 */
+	public void setValidateJeuDonneesActifBy(String validateJeuDonneesActifBy) {
+		this.validateJeuDonneesActifBy = validateJeuDonneesActifBy;
+	}
 
-   /**
-    * @return the statusJeudonneeActif
-    */
-   public Status getStatusJeudonneeActif() {
-      return this.statusJeudonneeActif;
-   }
+	/**
+	 * @return the pathValidateJeuDonneesActif
+	 */
+	public String getPathValidateJeuDonneesActif() {
+		return this.pathValidateJeuDonneesActif;
+	}
 
-   /**
-    * @param statusJeudonneeActif the statusJeudonneeActif to set
-    */
-   public void setStatusJeudonneeActif(Status statusJeudonneeActif) {
-      this.statusJeudonneeActif = statusJeudonneeActif;
-   }
+	/**
+	 * @param pathValidateJeuDonneesActif
+	 *            the pathValidateJeuDonneesActif to set
+	 */
+	public void setPathValidateJeuDonneesActif(String pathValidateJeuDonneesActif) {
+		this.pathValidateJeuDonneesActif = pathValidateJeuDonneesActif;
+	}
 
-   /**
-    * @return the statusJeudonneeBrouillon
-    */
-   public Status getStatusJeudonneeBrouillon() {
-      return this.statusJeudonneeBrouillon;
-   }
+	/**
+	 * @return the idJeuDonneeBrouillon
+	 */
+	public int getIdJeuDonneeBrouillon() {
+		return this.idJeuDonneeBrouillon;
+	}
 
-   /**
-    * @param statusJeudonneeBrouillon the statusJeudonneeBrouillon to set
-    */
-   public void setStatusJeudonneeBrouillon(Status statusJeudonneeBrouillon) {
-      this.statusJeudonneeBrouillon = statusJeudonneeBrouillon;
-   }
+	/**
+	 * @param idJeuDonneeBrouillon
+	 *            the idJeuDonneeBrouillon to set
+	 */
+	public void setIdJeuDonneeBrouillon(int idJeuDonneeBrouillon) {
+		this.idJeuDonneeBrouillon = idJeuDonneeBrouillon;
+	}
 
-   /**
-    * @return the username
-    */
-   public String getUsername() {
-      return this.username;
-   }
+	/**
+	 * @return the dateImportJeuDonneesBrouillon
+	 */
+	public Date getDateImportJeuDonneesBrouillon() {
+		return this.dateImportJeuDonneesBrouillon;
+	}
 
-   /**
-    * @param username the username to set
-    */
-   public void setUsername(String username) {
-      this.username = username;
-   }
+	/**
+	 * @param dateImportJeuDonneesBrouillon
+	 *            the dateImportJeuDonneesBrouillon to set
+	 */
+	public void setDateImportJeuDonneesBrouillon(Date dateImportJeuDonneesBrouillon) {
+		this.dateImportJeuDonneesBrouillon = dateImportJeuDonneesBrouillon;
+	}
 
-   /**
-    * @return the password
-    */
-   public String getPassword() {
-      return this.password;
-   }
+	/**
+	 * @return the importJeuDonneesBrouillonBy
+	 */
+	public String getImportJeuDonneesBrouillonBy() {
+		return this.importJeuDonneesBrouillonBy;
+	}
 
-   /**
-    * @param password the password to set
-    */
-   public void setPassword(String password) {
-      this.password = password;
-   }
+	/**
+	 * @param importJeuDonneesBrouillonBy
+	 *            the importJeuDonneesBrouillonBy to set
+	 */
+	public void setImportJeuDonneesBrouillonBy(String importJeuDonneesBrouillonBy) {
+		this.importJeuDonneesBrouillonBy = importJeuDonneesBrouillonBy;
+	}
+
+	/**
+	 * @return the pathValidateJeuDonneesBrouillon
+	 */
+	public String getPathValidateJeuDonneesBrouillon() {
+		return this.pathValidateJeuDonneesBrouillon;
+	}
+
+	/**
+	 * @param pathValidateJeuDonneesBrouillon
+	 *            the pathValidateJeuDonneesBrouillon to set
+	 */
+	public void setPathValidateJeuDonneesBrouillon(String pathValidateJeuDonneesBrouillon) {
+		this.pathValidateJeuDonneesBrouillon = pathValidateJeuDonneesBrouillon;
+	}
+
+	/**
+	 * @return the statusJeudonneeActif
+	 */
+	public Status getStatusJeudonneeActif() {
+		return this.statusJeudonneeActif;
+	}
+
+	/**
+	 * @param statusJeudonneeActif
+	 *            the statusJeudonneeActif to set
+	 */
+	public void setStatusJeudonneeActif(Status statusJeudonneeActif) {
+		this.statusJeudonneeActif = statusJeudonneeActif;
+	}
+
+	/**
+	 * @return the statusJeudonneeBrouillon
+	 */
+	public Status getStatusJeudonneeBrouillon() {
+		return this.statusJeudonneeBrouillon;
+	}
+
+	/**
+	 * @param statusJeudonneeBrouillon
+	 *            the statusJeudonneeBrouillon to set
+	 */
+	public void setStatusJeudonneeBrouillon(Status statusJeudonneeBrouillon) {
+		this.statusJeudonneeBrouillon = statusJeudonneeBrouillon;
+	}
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return this.username;
+	}
+
+	/**
+	 * @param username
+	 *            the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return this.password;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 }

@@ -2,6 +2,7 @@ package com.avancial.app.service;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -76,6 +77,38 @@ public class ImportTmsService implements Serializable {
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+
+	/**
+	 * Validation d'un jeu de données
+	 * @param importTmsDto
+	 */
+	public boolean validateDraft(ImportTmsDto importTmsDto) {
+		// on passe le status de ACTIVE à LASTACTIVE
+		JeuDonneeEntity jeuDonneeEntityActif = this.jeuDonneeService.getById(importTmsDto.getIdJeuDonneesActif());
+		jeuDonneeEntityActif.setStatusJeuDonnees(Status.LASTACTIVE);
+		jeuDonneeEntityActif.setDateLastUpdateJeuDonnees(new Date());
+		jeuDonneeEntityActif.setIdUtilisateurLastUpdateJeuDonnees(-1);	
+		this.jeuDonneeService.update(jeuDonneeEntityActif);
+		
+		// on passe le status de DRAFT à ACTIVE 
+		JeuDonneeEntity jeuDonneeEntityDraft = this.jeuDonneeService.getById(importTmsDto.getIdJeuDonneeBrouillon());
+		jeuDonneeEntityDraft.setStatusJeuDonnees(Status.ACTIVE);
+		jeuDonneeEntityDraft.setDateLastUpdateJeuDonnees(new Date());
+		jeuDonneeEntityDraft.setIdUtilisateurLastUpdateJeuDonnees(-1);	
+		this.jeuDonneeService.update(jeuDonneeEntityDraft);
+		
+		importTmsDto.setStatusJeudonneeActif(jeuDonneeEntityDraft.getStatusJeuDonnees());
+		importTmsDto.setDateValidateJeuDonneesActif(jeuDonneeEntityDraft.getDateLastUpdateJeuDonnees());
+		importTmsDto.setValidateJeuDonneesActifBy("tata");
+		importTmsDto.setDateImportJeuDonneesActif(jeuDonneeEntityDraft.getDateCreateJeuDonnees());
+		importTmsDto.setStatusJeudonneeBrouillon(null);
+		importTmsDto.setDateImportJeuDonneesBrouillon(null);
+		importTmsDto.setIdJeuDonneeBrouillon(0);
+		importTmsDto.setImportJeuDonneesBrouillonBy(null);
+		importTmsDto.setPathValidateJeuDonneesBrouillon(null);
+		
+		return true;
 	}
 
 }

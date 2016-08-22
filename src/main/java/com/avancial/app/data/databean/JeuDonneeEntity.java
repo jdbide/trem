@@ -42,11 +42,9 @@ public class JeuDonneeEntity implements Serializable {
 	// @Lob
 	private String commentaireJeuDonnees;
 
-	@Column(name = "dateCreateJeuDonnees", columnDefinition="DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreateJeuDonnees;
 
-	@Column(name = "dateLastUpdateJeuDonnees", columnDefinition="DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateLastUpdateJeuDonnees;
 

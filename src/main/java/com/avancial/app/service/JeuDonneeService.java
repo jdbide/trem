@@ -2,10 +2,13 @@ package com.avancial.app.service;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
@@ -90,6 +93,12 @@ public class JeuDonneeService implements Serializable {
 		}
 	}
 
+	/**
+	 * Charge un jeu de données en fonction du compagnie/environnement et du status.
+	 * @param compagnieEnvironnement
+	 * @param statusJeuDonnees
+	 * @return jeu de données
+	 */
 	public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement,
 			Status statusJeuDonnees) {
 		TypedQuery<JeuDonneeEntity> query = this.em.createQuery(
@@ -104,10 +113,22 @@ public class JeuDonneeService implements Serializable {
 		    if (!query.getResultList().isEmpty())
 		        jeuDonneeEntity = query.getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 		return jeuDonneeEntity;
+	}
+
+	/**
+	 * Charge un jeu de données par son id.
+	 * @param idJeuDonnees
+	 * @return
+	 */
+	public JeuDonneeEntity getById(int idJeuDonnees) {
+		Query query = this.em.createNamedQuery("JeuDonneeEntity.getById", JeuDonneeEntity.class);
+		query.setParameter("idJeuDonnees", idJeuDonnees);
+		
+		return (JeuDonneeEntity) query.getSingleResult();
 	}
 
 }
