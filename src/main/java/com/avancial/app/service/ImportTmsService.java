@@ -12,7 +12,6 @@ import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.dto.ImportTmsDto;
-import com.avancial.socle.session.Session;
 
 @SessionScoped
 public class ImportTmsService implements Serializable {
@@ -26,9 +25,6 @@ public class ImportTmsService implements Serializable {
 
 	@Inject
 	private JeuDonneeService jeuDonneeService;
-
-	@Inject
-	private Session session;
 
 	public ImportTmsService() {
 		// TODO Auto-generated constructor stub
@@ -48,19 +44,19 @@ public class ImportTmsService implements Serializable {
 				.getAllCompagnieEnvironnementActif()) {
 			newImportTmsDto = new ImportTmsDto();
 			newImportTmsDto.mergeByCompagnieEnvironnement(compagnieEnvironnementEntity);
-
+			
 			// id = id && status = act && draft
-			jeuDonneeEntityDraft = this.jeuDonneeService
-					.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.DRAFT);
-			jeuDonneeEntityActif = this.jeuDonneeService
-					.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.ACTIVE);
+			jeuDonneeEntityDraft = this.jeuDonneeService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.DRAFT);
+			jeuDonneeEntityActif = this.jeuDonneeService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.ACTIVE);
 
-			if (jeuDonneeEntityDraft != null) {
-				newImportTmsDto.mergeByJeuDonneesBrouillon((JeuDonneeEntity) jeuDonneeEntityDraft, "toto");//TODO récupérer le user à partir de son id en base
+			
+			
+			if(jeuDonneeEntityDraft != null) {
+				newImportTmsDto.mergeByJeuDonneesBrouillon((JeuDonneeEntity) jeuDonneeEntityDraft, "toto");
 			}
-
-			if (jeuDonneeEntityActif != null) {
-				newImportTmsDto.mergeByJeuDonneesActif((JeuDonneeEntity) jeuDonneeEntityActif, "titi");//TODO récupérer le user à partir de son id en base
+			
+			if(jeuDonneeEntityActif != null) {
+				newImportTmsDto.mergeByJeuDonneesActif((JeuDonneeEntity) jeuDonneeEntityActif, "titi");
 			}
 
 			listImportTmsDto.add(newImportTmsDto);
@@ -85,7 +81,6 @@ public class ImportTmsService implements Serializable {
 
 	/**
 	 * Validation d'un jeu de données
-	 * 
 	 * @param importTmsDto
 	 */
 	public boolean validateDraft(ImportTmsDto importTmsDto) {
@@ -93,27 +88,26 @@ public class ImportTmsService implements Serializable {
 		JeuDonneeEntity jeuDonneeEntityActif = this.jeuDonneeService.getById(importTmsDto.getIdJeuDonneesActif());
 		jeuDonneeEntityActif.setStatusJeuDonnees(Status.LASTACTIVE);
 		jeuDonneeEntityActif.setDateLastUpdateJeuDonnees(new Date());
-		jeuDonneeEntityActif.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
+		jeuDonneeEntityActif.setIdUtilisateurLastUpdateJeuDonnees(-1);	
 		this.jeuDonneeService.update(jeuDonneeEntityActif);
-
-		// on passe le status de DRAFT à ACTIVE
+		
+		// on passe le status de DRAFT à ACTIVE 
 		JeuDonneeEntity jeuDonneeEntityDraft = this.jeuDonneeService.getById(importTmsDto.getIdJeuDonneeBrouillon());
 		jeuDonneeEntityDraft.setStatusJeuDonnees(Status.ACTIVE);
 		jeuDonneeEntityDraft.setDateLastUpdateJeuDonnees(new Date());
-		jeuDonneeEntityDraft.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
+		jeuDonneeEntityDraft.setIdUtilisateurLastUpdateJeuDonnees(-1);	
 		this.jeuDonneeService.update(jeuDonneeEntityDraft);
-
+		
 		importTmsDto.setStatusJeudonneeActif(jeuDonneeEntityDraft.getStatusJeuDonnees());
 		importTmsDto.setDateValidateJeuDonneesActif(jeuDonneeEntityDraft.getDateLastUpdateJeuDonnees());
-		importTmsDto.setValidateJeuDonneesActifBy(new StringBuilder().append(this.session.getUser().getPrenomUser())
-				.append(" ").append(this.session.getUser().getNomUser()).toString().trim());
+		importTmsDto.setValidateJeuDonneesActifBy("tata");
 		importTmsDto.setDateImportJeuDonneesActif(jeuDonneeEntityDraft.getDateCreateJeuDonnees());
 		importTmsDto.setStatusJeudonneeBrouillon(null);
 		importTmsDto.setDateImportJeuDonneesBrouillon(null);
 		importTmsDto.setIdJeuDonneeBrouillon(0);
 		importTmsDto.setImportJeuDonneesBrouillonBy(null);
 		importTmsDto.setPathValidateJeuDonneesBrouillon(null);
-
+		
 		return true;
 	}
 
