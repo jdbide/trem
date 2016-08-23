@@ -109,6 +109,7 @@ public class ImportTmsWebService {
 	@PUT
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("validateDraft")
 	public Response validateDraft(ImportTmsDto importTmsDto) throws Exception {
 		ResponseBean responseBean = new ResponseBean();
 
@@ -194,28 +195,6 @@ public class ImportTmsWebService {
 			}
 
 			responseBuilder = Response.ok((Object) responseBean);
-		} catch (Exception e) {
-			e.printStackTrace();
-			responseBuilder = Response.status(400);
-		} finally {
-			return responseBuilder.build();
-		}
-	}
-
-	@POST
-	@Path("progressImport")
-	@Produces({ MediaType.APPLICATION_JSON })
-	@Consumes({ MediaType.APPLICATION_JSON })
-	public Response progressImport(Long idTask) throws Exception {
-		ResponseBuilder responseBuilder = null;
-		try {
-			ResponseBean responseBean = new ResponseBean();
-			responseBean.setData(Task.getReponseTask(idTask));
-
-			if (Task.getReponseTask(idTask) != null && Task.getReponseTask(idTask).getEndTraitement())
-				Task.removeTask(idTask);
-
-			responseBuilder = Response.ok(responseBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 			responseBuilder = Response.status(400);

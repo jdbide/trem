@@ -105,7 +105,7 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
     	loadingService.show();
 
         var deffered  = $q.defer();
-        var promissJsonFactory = jsonFactory.putJson("webService/app/importTms", currentData);
+        var promissJsonFactory = jsonFactory.putJson("webService/app/importTms/validateDraft", currentData);
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	reponse.status = data.status;
@@ -126,7 +126,7 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
     self.getProgressImport = function (idTask) {
     	//var deffered  = $q.defer();
     	
-        var promissJsonFactory = jsonFactory.postJson("webService/app/importTms/progressImport", idTask);
+        var promissJsonFactory = jsonFactory.postJson("webService/app/progressImport", idTask);
         return promissJsonFactory;
     }
     
