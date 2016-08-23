@@ -85,8 +85,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 		JeuDonneeEntity jeuDonneeDataBean = null;
 		try {
 			try {
-				Task.setMsgTask(this.idTask, "Récupération de l'environnement 1%");
-				System.out.println("------> Récupération de l'environnement 1%");
+				Task.setMsgTask(this.idTask, "Récupération de l'environnement");
+				System.out.println("------> Récupération de l'environnement");
 				// Récupération de l'environnement sélectionné
 				compagnieEnvironnementEntity = this.compagnieEnvironnementService
 						.getCompagnieEnvironnementById(this.importTmsDto.getIdCompagnieEnvironnement());
@@ -101,8 +101,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 			try {
 				// Instanciation EntityManagerFactory avec les bonnes données de
 				// la dataSource de l'environnement
-				Task.setMsgTask(this.idTask, "Connexion à Motrice 5%");
-				System.err.println("------> Connexion à Motrice 5%");
+				Task.setMsgTask(this.idTask, "Connexion à Motrice");
+				System.err.println("------> Connexion à Motrice");
 				this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(compagnieEnvironnementEntity,
 						this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
 			} catch (Throwable ex) {
@@ -113,8 +113,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 				throw ex;
 			}
 
-			Task.setMsgTask(this.idTask, "Importation des données 7%");
-			System.out.println("------> Nettoyage et importation des données 7%");
+			Task.setMsgTask(this.idTask, "Importation des données");
+			System.out.println("------> Nettoyage et importation des données");
 			// vider puis importer les tables
 			this.traitement.setEntityManagerExterne(this.entityManagerDb2);
 			this.traitement.setSchema(compagnieEnvironnementEntity.getDatasource().getSchema());
@@ -139,8 +139,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 			this.jeuDonneeService.save(jeuDonneeDataBean);
 			this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
 			this.traitementMotrice.setMap(this.mapPlansDeTransport);
-			Task.setMsgTask(this.idTask, "Création du draft 15%");
-			System.out.println("------> traitementMotrice 15%");
+			Task.setMsgTask(this.idTask, "Création du draft");
+			System.out.println("------> traitementMotrice");
 			try {
 				// Thread.sleep(10000);
 				this.traitementMotrice.execute();
@@ -152,8 +152,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 				throw e;
 			}
 
-			Task.setMsgTask(this.idTask, "Création du Plan de transport 45%");
-			System.out.println("------> traitementObjetMetier 45%");
+			Task.setMsgTask(this.idTask, "Création du Plan de transport");
+			System.out.println("------> traitementObjetMetier");
 
 			this.traitementObjetMetier
 					.setEnvironnementCompagnie(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
@@ -170,8 +170,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 				throw e;
 			}
 
-			Task.setMsgTask(this.idTask, "Comparaison des Plans de transport 80%");
-			System.out.println("------> comparePlanTransport 80%");
+			Task.setMsgTask(this.idTask, "Comparaison des Plans de transport");
+			System.out.println("------> comparePlanTransport");
 
 			IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
 			List<IComparaisonPlanTransport> listCompare = null;
@@ -187,8 +187,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 				throw e;
 			}
 
-			Task.setMsgTask(this.idTask, "Création du fichier Excel 90%");
-			System.out.println("------> excelRapportDifferentiel 90%");
+			Task.setMsgTask(this.idTask, "Création du fichier Excel");
+			System.out.println("------> excelRapportDifferentiel");
 
 			this.excelRapportDifferentiel.setFileName("RapportDiff-" + jeuDonneeDataBean.getIdJeuDonnees());
 			this.excelRapportDifferentiel.setFilePath("D:/was_tmp/tremas/export/");
@@ -206,8 +206,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 				throw e;
 			}
 
-			Task.setMsgTask(this.idTask, "Finalisation 99%");
-			System.out.println("------> Données integrés 99%");
+			Task.setMsgTask(this.idTask, "Finalisation");
+			System.out.println("------> Données integrés");
 			jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
 			jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
 
@@ -218,8 +218,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 			ex.printStackTrace();
 		} finally {
 			if (jeuDonneeDataBean != null) {
-				Task.setMsgTask(this.idTask, "Mise à jour du jeu de données 100%");
-				System.out.println("------> Mise à jour du jeu de données 100%");
+				Task.setMsgTask(this.idTask, "Mise à jour du jeu de données");
+				System.out.println("------> Mise à jour du jeu de données");
 				this.jeuDonneeService.update(jeuDonneeDataBean);
 			}
 		}
