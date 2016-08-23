@@ -77,9 +77,9 @@ public class ImportTmsWebService {
 	 * @throws Exception
 	 */
 	@DELETE
+	@Path("{nomTechniqueCompagnieEnvironnement}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	@Consumes({ MediaType.APPLICATION_JSON })
-	public Response deleteDraft(ImportTmsDto importTmsDto) throws Exception {
+	public Response deleteDraft(@PathParam("nomTechniqueCompagnieEnvironnement") String nomTechniqueCompagnieEnvironnement) throws Exception {
 		/*
 		 * TODO Traitement pour la supression d'un jeu de données
 		 */
@@ -88,7 +88,7 @@ public class ImportTmsWebService {
 		responseBean.setMessage("Erreur de suppression");
 
 		try {
-		   this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(importTmsDto.getNomTechniqueCompagnieEnvironnement());
+		   this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(nomTechniqueCompagnieEnvironnement);
 		   this.traitementDeleteJeuDonnee.execute();
 			responseBean.setStatus(true);
 			responseBean.setMessage("Suppression avec succès");
