@@ -79,30 +79,29 @@
 					</td>
 					<td ng-if="startImport != $index" class="text-center">
 						<button class="btn btn-circle btn-default" type="button"
-							
+							ng-disabled="(disabledButton)"
 							ng-click="startModalValidateImportTms(data)">
 							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 						</button>
 					</td>
 					<td ng-if="startImport != $index" class="text-center">
 						<button class="btn btn-default" type="button"
-							
+							ng-disabled="(disabledButton)"
 							ng-click="startModalDeleteImportTms(data)">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</button>
 					</td>
 
-					<td ng-if="startImport == $index" class="box box-solid" COLSPAN=5>
+					<td ng-if="startImport == $index" class="box box-solid" style="width: 0;" COLSPAN=5>
 						<div class="overlay">
                 			<div class="box-body text-center">
                   				{{progressImport.lastMsg}}
 							</div>
-                			<i class="fa fa-refresh fa-spin" style="left: 80%; !important"></i>
+                			<i class="fa fa-refresh fa-spin" style="left: 90%; !important"></i>
                 		</div>
 					</td>
 					<!-- End DRAFT -->
 					<td class="text-center">
-						<!-- TODO  ajout a la condition s'il na pas d'autre importe des autres environnement -->
 						<button class="btn btn-circle btn-primary" type="button"
 							ng-disabled="(disabledButton) || (Status.IMPORT == data.statusJeudonneeBrouillon)"
 							ng-click="authentificateExternDb(data)">
