@@ -25,244 +25,242 @@ import com.avancial.socle.traitement.ATraitementLogDetail;
 
 @SessionScoped
 public class TraitementImportJeuDonnees extends ATraitementLogDetail implements Serializable {
-   /**
-    * 
-    */
-   private static final long             serialVersionUID = 1L;
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
 
-   EntityManager                         entityManagerDb2;
+	EntityManager entityManagerDb2;
 
-   @Inject
-   private CompagnieEnvironnementService compagnieEnvironnementService;
+	@Inject
+	private CompagnieEnvironnementService compagnieEnvironnementService;
 
-   @Inject
-   private JeuDonneeService              jeuDonneeService;
+	@Inject
+	private JeuDonneeService jeuDonneeService;
 
-   private ImportTmsDto                  importTmsDto;
+	private ImportTmsDto importTmsDto;
 
-   @Inject
-   private TraitementMotrice             traitementMotrice;
-   
-   @Inject
-   private TraitementImportDb2Motrice traitement;
-   
-   @Inject
-   private TraitementObjetMetier traitementObjetMetier;
-   
-   @Inject
-   private ExcelRapportDifferentiel excelRapportDifferentiel;
-   
-   /**
-    * Map représente les deux plans de transport(Active & Draft)
-    */
-   private MapPlansDeTransport           mapPlansDeTransport;
+	@Inject
+	private TraitementMotrice traitementMotrice;
 
-   /**
-    * Id du currentThread
-    */
-   private Long                          idTask;
+	@Inject
+	private TraitementImportDb2Motrice traitement;
 
-   /**
-   * 
-   */
-   public TraitementImportJeuDonnees() {
-      super();
-      
-      this.mapPlansDeTransport = new MapPlansDeTransport();
-   }
+	@Inject
+	private TraitementObjetMetier traitementObjetMetier;
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.avancial.socle.traitement.ATraitement#executeTraitement()
-    */
-   @Override
-   protected void executeTraitement() {
-      CompagnieEnvironnementEntity compagnieEnvironnementEntity = null;
-      JeuDonneeEntity jeuDonneeDataBean = null;
-      try {
-         try {
-            Task.setMsgTask(this.idTask, "Récupération des données interne 1%");
-            System.out.println("------> Récupération des données interne 1%");
-            // Récupération de l'environnement sélectionné
-            compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(this.importTmsDto.getIdCompagnieEnvironnement());
-         } catch (Throwable ex) {
-            this.logBean.setExceptionTraitement(ex.getMessage());
-            this.logBean.setMessageTraitement("L'environnement sélectionné n'existe pas");
-            Task.finishKoTask(this.idTask, "L'environnement sélectionné n'existe pas");
-            System.err.println("------> L'environnement sélectionné n'existe pas");
-            throw ex;
-         }
+	@Inject
+	private ExcelRapportDifferentiel excelRapportDifferentiel;
 
-         try {
-            // Instanciation EntityManagerFactory avec les bonnes données de la dataSource de l'environnement
-            Task.setMsgTask(this.idTask, "Connexion avec la BDD externe 5%");
-            System.err.println("------> Connexion avec la BDD externe 5%");
-            this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(compagnieEnvironnementEntity, this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
-         } catch (Throwable ex) {
-            this.logBean.setExceptionTraitement(ex.getMessage());
-            this.logBean.setMessageTraitement("Echec de connexion avec la base de données externe Db2");
-            Task.finishKoTask(this.idTask, "Echec de connexion avec la base de données externe Db2");
-            System.err.println("------> Echec de connexion avec la base de données externe Db2");
-            throw ex;
-         }
+	/**
+	 * Map représente les deux plans de transport(Active & Draft)
+	 */
+	private MapPlansDeTransport mapPlansDeTransport;
 
-         Task.setMsgTask(this.idTask, "Nettoyage des données et importation des données 7%");
-         System.out.println("------> Nettoyage des données et importation des données 7%");
-         // vider puis importer les tables
-         this.traitement.setEntityManagerExterne(this.entityManagerDb2);
-         this.traitement.setSchema(compagnieEnvironnementEntity.getDatasource().getSchema());
-         try {
-            // Thread.sleep(10000);
-            traitement.execute();
-         } catch (SecurityException e) {
-            this.log("Echec de l'import");
-            Task.finishKoTask(this.idTask, "Echec de l'import");
-            System.err.println("------> Echec de l'import");
-            e.printStackTrace();
-            throw e;
-         }
+	/**
+	 * Id du currentThread
+	 */
+	private Long idTask;
 
-         /* Insertion dans les tables du modèle motrice */
-      // Instanciation et sauvegarde du nouveau jeu de données
-         jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(compagnieEnvironnementEntity);
-         this.jeuDonneeService.save(jeuDonneeDataBean);
-         this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
-         this.traitementMotrice.setMap(this.mapPlansDeTransport);
-         Task.setMsgTask(this.idTask, "traitementMotrice 15%");
-         System.out.println("------> traitementMotrice 15%");
-         try {
-            //Thread.sleep(10000);
-            this.traitementMotrice.execute();
-         } catch (Throwable e) {
-            this.log("Echec du traitement motrice.");
-            Task.finishKoTask(this.idTask, "Echec du traitement motrice.");
-            System.err.println("------> Echec du traitement motrice");
-            e.printStackTrace();
-            throw e;
-         }
-         
+	/**
+	* 
+	*/
+	public TraitementImportJeuDonnees() {
+		super();
 
-         Task.setMsgTask(this.idTask, "traitementObjetMetier 45%");
-         System.out.println("------> traitementObjetMetier 45%");
-         
-         this.traitementObjetMetier.setEnvironnementCompagnie(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
-         this.traitementObjetMetier.setMapPlansDeTransport(this.mapPlansDeTransport);
-         
-         try {
-            //Thread.sleep(10000);
-            this.traitementObjetMetier.execute();
-         } catch (Throwable e) {
-            this.log("Echec du traitementObjetMetier.");
-            Task.finishKoTask(this.idTask, "Echec du traitementObjetMetier.");
-            System.err.println("------> Echec du traitementObjetMetier");
-            e.printStackTrace();
-            throw e;
-         }
-         
-         
-         Task.setMsgTask(this.idTask, "comparePlanTransport 80%");
-         System.out.println("------> comparePlanTransport 80%");
+		this.mapPlansDeTransport = new MapPlansDeTransport();
+	}
 
-         IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
-         List<IComparaisonPlanTransport> listCompare = null;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.avancial.socle.traitement.ATraitement#executeTraitement()
+	 */
+	@Override
+	protected void executeTraitement() {
+		CompagnieEnvironnementEntity compagnieEnvironnementEntity = null;
+		JeuDonneeEntity jeuDonneeDataBean = null;
+		try {
+			try {
+				Task.setMsgTask(this.idTask, "Récupération de l'environnement 1%");
+				System.out.println("------> Récupération de l'environnement 1%");
+				// Récupération de l'environnement sélectionné
+				compagnieEnvironnementEntity = this.compagnieEnvironnementService
+						.getCompagnieEnvironnementById(this.importTmsDto.getIdCompagnieEnvironnement());
+			} catch (Throwable ex) {
+				this.logBean.setExceptionTraitement(ex.getMessage());
+				this.logBean.setMessageTraitement("L'environnement sélectionné n'existe pas");
+				Task.finishKoTask(this.idTask, "L'environnement sélectionné n'existe pas");
+				System.err.println("------> L'environnement sélectionné n'existe pas");
+				throw ex;
+			}
 
-         try {
-            listCompare = comparePlanTransport.compare(mapPlansDeTransport.getPlanTransportActive(), mapPlansDeTransport.getPlanTransportDraft());
-         } catch (Throwable e) {
-            this.log("Echec comparePlanTransport.");
-            Task.finishKoTask(this.idTask, "Echec comparePlanTransport.");
-            System.err.println("------> Echec comparePlanTransport");
-            e.printStackTrace();
-            throw e;
-         }
-         
-         
-         Task.setMsgTask(this.idTask, "excelRapportDifferentiel 90%");
-         System.out.println("------> excelRapportDifferentiel 90%");
+			try {
+				// Instanciation EntityManagerFactory avec les bonnes données de
+				// la dataSource de l'environnement
+				Task.setMsgTask(this.idTask, "Connexion à Motrice 5%");
+				System.err.println("------> Connexion à Motrice 5%");
+				this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(compagnieEnvironnementEntity,
+						this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
+			} catch (Throwable ex) {
+				this.logBean.setExceptionTraitement(ex.getMessage());
+				this.logBean.setMessageTraitement("Echec de connexion avec la base de données externe Db2");
+				Task.finishKoTask(this.idTask, "Echec de connexion avec la base de données externe Db2");
+				System.err.println("------> Echec de connexion avec la base de données externe Db2");
+				throw ex;
+			}
 
-         this.excelRapportDifferentiel.setFileName("RapportDiff-" + jeuDonneeDataBean.getIdJeuDonnees());
-         this.excelRapportDifferentiel.setFilePath("D:/was_tmp/tremas/export/");
-         this.excelRapportDifferentiel.setXlsx(true);
-         this.excelRapportDifferentiel.setDatas(listCompare);
-         this.excelRapportDifferentiel.setMapPlansDeTransport(this.mapPlansDeTransport);
+			Task.setMsgTask(this.idTask, "Importation des données 7%");
+			System.out.println("------> Nettoyage et importation des données 7%");
+			// vider puis importer les tables
+			this.traitement.setEntityManagerExterne(this.entityManagerDb2);
+			this.traitement.setSchema(compagnieEnvironnementEntity.getDatasource().getSchema());
+			try {
+				// Thread.sleep(10000);
+				this.traitement.execute();
+			} catch (SecurityException e) {
+				this.log("Echec de l'import");
+				Task.finishKoTask(this.idTask, "Echec de l'import");
+				System.err.println("------> Echec de l'import");
+				e.printStackTrace();
+				throw e;
+			}
 
-         try {
-            this.excelRapportDifferentiel.generate();
-         } catch (Throwable e) {
-            this.log("Echec excelRapportDifferentiel");
-            Task.finishKoTask(this.idTask, "Echec excelRapportDifferentiel");
-            System.err.println("------> Echec excelRapportDifferentiel");
-            e.printStackTrace();
-            throw e;
-         }
-         
-         
-         
-         
-         
+			/* Insertion dans les tables du modèle motrice */
+			// Instanciation et sauvegarde du nouveau jeu de données
+			jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(compagnieEnvironnementEntity);
+			this.jeuDonneeService.save(jeuDonneeDataBean);
+			this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
+			this.traitementMotrice.setMap(this.mapPlansDeTransport);
+			Task.setMsgTask(this.idTask, "Création du draft 15%");
+			System.out.println("------> traitementMotrice 15%");
+			try {
+				// Thread.sleep(10000);
+				this.traitementMotrice.execute();
+			} catch (Throwable e) {
+				this.log("Echec du traitement motrice.");
+				Task.finishKoTask(this.idTask, "Echec du traitement motrice.");
+				System.err.println("------> Echec du traitement motrice");
+				e.printStackTrace();
+				throw e;
+			}
 
-         Task.setMsgTask(this.idTask, "Données integrés 99%");
-         System.out.println("------> Données integrés 99%");
-         jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-         jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
-         
-      } catch (Throwable ex) {
-         if (jeuDonneeDataBean != null) {
-            jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-         }
-         ex.printStackTrace();
-      } finally {
-         if (jeuDonneeDataBean != null) {
-            Task.setMsgTask(this.idTask, "Mise à jour du jeu de données 100%");
-            System.out.println("------> Mise à jour du jeu de données 100%");
-            this.jeuDonneeService.update(jeuDonneeDataBean);
-         }
-      }
-   }
+			Task.setMsgTask(this.idTask, "Création du Plan de transport 45%");
+			System.out.println("------> traitementObjetMetier 45%");
 
-   /**
-    * @return the importJeuDonneesDto
-    */
-   public ImportTmsDto getImportJeuDonneesDto() {
-      return this.importTmsDto;
-   }
+			this.traitementObjetMetier
+					.setEnvironnementCompagnie(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
+			this.traitementObjetMetier.setMapPlansDeTransport(this.mapPlansDeTransport);
 
-   /**
-    * @param importJeuDonneesDto
-    *           the importJeuDonneesDto to set
-    */
-   public void setImportJeuDonneesDto(ImportTmsDto importTmsDto) {
-      this.importTmsDto = importTmsDto;
-   }
+			try {
+				// Thread.sleep(10000);
+				this.traitementObjetMetier.execute();
+			} catch (Throwable e) {
+				this.log("Echec du traitementObjetMetier.");
+				Task.finishKoTask(this.idTask, "Echec du traitementObjetMetier.");
+				System.err.println("------> Echec du traitementObjetMetier");
+				e.printStackTrace();
+				throw e;
+			}
 
-   /**
-    * @return the idTask
-    */
-   public Long getIdTask() {
-      return idTask;
-   }
+			Task.setMsgTask(this.idTask, "Comparaison des Plans de transport 80%");
+			System.out.println("------> comparePlanTransport 80%");
 
-   /**
-    * @param idTask
-    *           the idTask to set
-    */
-   public void setIdTask(Long idTask) {
-      this.idTask = idTask;
-   }
+			IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
+			List<IComparaisonPlanTransport> listCompare = null;
 
-   /**
-    * @return the excelRapportDifferentiel
-    */
-   public ExcelRapportDifferentiel getExcelRapportDifferentiel() {
-      return excelRapportDifferentiel;
-   }
+			try {
+				listCompare = comparePlanTransport.compare(this.mapPlansDeTransport.getPlanTransportActive(),
+						this.mapPlansDeTransport.getPlanTransportDraft());
+			} catch (Throwable e) {
+				this.log("Echec comparePlanTransport.");
+				Task.finishKoTask(this.idTask, "Echec comparePlanTransport.");
+				System.err.println("------> Echec comparePlanTransport");
+				e.printStackTrace();
+				throw e;
+			}
 
-   /**
-    * @param excelRapportDifferentiel the excelRapportDifferentiel to set
-    */
-   public void setExcelRapportDifferentiel(ExcelRapportDifferentiel excelRapportDifferentiel) {
-      this.excelRapportDifferentiel = excelRapportDifferentiel;
-   }
+			Task.setMsgTask(this.idTask, "Création du fichier Excel 90%");
+			System.out.println("------> excelRapportDifferentiel 90%");
+
+			this.excelRapportDifferentiel.setFileName("RapportDiff-" + jeuDonneeDataBean.getIdJeuDonnees());
+			this.excelRapportDifferentiel.setFilePath("D:/was_tmp/tremas/export/");
+			this.excelRapportDifferentiel.setXlsx(true);
+			this.excelRapportDifferentiel.setDatas(listCompare);
+			this.excelRapportDifferentiel.setMapPlansDeTransport(this.mapPlansDeTransport);
+
+			try {
+				this.excelRapportDifferentiel.generate();
+			} catch (Throwable e) {
+				this.log("Echec excelRapportDifferentiel");
+				Task.finishKoTask(this.idTask, "Echec excelRapportDifferentiel");
+				System.err.println("------> Echec excelRapportDifferentiel");
+				e.printStackTrace();
+				throw e;
+			}
+
+			Task.setMsgTask(this.idTask, "Finalisation 99%");
+			System.out.println("------> Données integrés 99%");
+			jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
+			jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
+
+		} catch (Throwable ex) {
+			if (jeuDonneeDataBean != null) {
+				jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
+			}
+			ex.printStackTrace();
+		} finally {
+			if (jeuDonneeDataBean != null) {
+				Task.setMsgTask(this.idTask, "Mise à jour du jeu de données 100%");
+				System.out.println("------> Mise à jour du jeu de données 100%");
+				this.jeuDonneeService.update(jeuDonneeDataBean);
+			}
+		}
+	}
+
+	/**
+	 * @return the importJeuDonneesDto
+	 */
+	public ImportTmsDto getImportJeuDonneesDto() {
+		return this.importTmsDto;
+	}
+
+	/**
+	 * @param importJeuDonneesDto
+	 *            the importJeuDonneesDto to set
+	 */
+	public void setImportJeuDonneesDto(ImportTmsDto importTmsDto) {
+		this.importTmsDto = importTmsDto;
+	}
+
+	/**
+	 * @return the idTask
+	 */
+	public Long getIdTask() {
+		return this.idTask;
+	}
+
+	/**
+	 * @param idTask
+	 *            the idTask to set
+	 */
+	public void setIdTask(Long idTask) {
+		this.idTask = idTask;
+	}
+
+	/**
+	 * @return the excelRapportDifferentiel
+	 */
+	public ExcelRapportDifferentiel getExcelRapportDifferentiel() {
+		return this.excelRapportDifferentiel;
+	}
+
+	/**
+	 * @param excelRapportDifferentiel
+	 *            the excelRapportDifferentiel to set
+	 */
+	public void setExcelRapportDifferentiel(ExcelRapportDifferentiel excelRapportDifferentiel) {
+		this.excelRapportDifferentiel = excelRapportDifferentiel;
+	}
 
 }
