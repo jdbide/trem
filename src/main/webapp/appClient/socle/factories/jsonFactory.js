@@ -47,15 +47,15 @@ socle_app.factory('jsonFactory',['$http', 'envService',function($http, envServic
         
     };
     
-    jsonFactory.deleteJson = function (nameWebservice, data) {
+    jsonFactory.deleteJson = function (nameWebservice/*, data*/) {
         return $http({
                 method: "delete",
                 url: envService.read('apiUrl')+nameWebservice,
                 async: false,
                 dataType: 'json',
                 crossDomain: false,
-                contentType:"application/json; charset=utf-8",
-                data: data             
+                contentType:"application/json; charset=utf-8"
+                //data: data             
         });
         
     };

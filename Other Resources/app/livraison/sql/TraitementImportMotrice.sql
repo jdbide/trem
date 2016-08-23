@@ -99,6 +99,14 @@ CREATE TABLE `tremas_compagnie_environnement` (
   CONSTRAINT `tremas_compagnie_environnement_fkDatasource` FOREIGN KEY (`idDataSource`) REFERENCES `tremas_datasource` (`idDatasource`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
+-- ----------------------------
+-- Records of tremas_compagnie_environnement
+-- ----------------------------
+INSERT INTO `tremas_compagnie_environnement` VALUES ('1', 'Eurostar', 'Production', 'ES_PROD', '1', '0', ' ', '-1', '2016-07-25 17:16:36', '-1', '2016-07-25 17:16:41', '1');
+INSERT INTO `tremas_compagnie_environnement` VALUES ('2', 'Thalys', 'Production', 'TH_PROD', '1', '1', ' ', '-1', '2016-07-25 17:17:29', '-1', '2016-07-25 17:17:33', '3');
+INSERT INTO `tremas_compagnie_environnement` VALUES ('3', 'Eurostar', 'Recette', 'ES_REC', '1', '2', ' ', '-1', '2016-07-25 17:18:07', '-1', '2016-07-25 17:18:11', '2');
+INSERT INTO `tremas_compagnie_environnement` VALUES ('4', 'Thalys', 'Recette', 'TH_REC', '1', '3', ' ', '-1', '2016-07-25 17:19:38', '-1', '2016-07-25 17:19:43', '4');
+
 
 CREATE TABLE `tremas_jeu_donnees` (
   `idJeuDonnees` int(11) NOT NULL AUTO_INCREMENT,
