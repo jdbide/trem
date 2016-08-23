@@ -3,6 +3,7 @@
  */
 package com.avancial.app.export;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -44,6 +45,8 @@ public class ExcelTools {
    public CellStyle styleHide                 = null;
    public CellStyle styleWarning              = null;
    public CellStyle styleBorder               = null;
+   public CellStyle styleBorderNotRight       = null;
+   public CellStyle styleBorderNotLeft        = null;
 
    public Font      fontCellVideWithMergin    = null;
    public Font      fontEntete                = null;
@@ -924,6 +927,24 @@ public class ExcelTools {
       this.styleBorder.setBorderLeft(CellStyle.BORDER_THIN);
       this.styleBorder.setBorderRight(CellStyle.BORDER_THIN);
       this.styleBorder.setBorderTop(CellStyle.BORDER_THIN);
+      this.styleBorder.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+      this.styleBorder.setAlignment(CellStyle.ALIGN_CENTER);
+      
+      
+      
+      this.styleBorderNotRight = this.classeur.createCellStyle();
+      this.styleBorderNotRight.setBorderBottom(CellStyle.BORDER_THIN);
+      this.styleBorderNotRight.setBorderLeft(CellStyle.BORDER_THIN);
+      //this.styleBorderNotRight.setBorderRight(CellStyle.BORDER_THIN);
+      this.styleBorderNotRight.setBorderTop(CellStyle.BORDER_THIN);
+      this.styleBorderNotRight.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+
+      this.styleBorderNotLeft = this.classeur.createCellStyle();
+      this.styleBorderNotLeft.setBorderBottom(CellStyle.BORDER_THIN);
+      //this.styleBorderNotLeft.setBorderLeft(CellStyle.BORDER_THIN);
+      this.styleBorderNotLeft.setBorderRight(CellStyle.BORDER_THIN);
+      this.styleBorderNotLeft.setBorderTop(CellStyle.BORDER_THIN);
+      this.styleBorderNotLeft.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 
       this.stylePourcent = this.classeur.createCellStyle();
       this.stylePourcent.setAlignment(CellStyle.ALIGN_RIGHT);
@@ -964,4 +985,17 @@ public class ExcelTools {
       this.styleWarning = this.classeur.createCellStyle();
       this.styleWarning.setFont(this.fontWarning);
    }
+
+   public void createCellTexteByLigne(int colonne, String value, int line) {
+      this.cell = this.sheet.getRow(line).createCell(colonne);
+      this.cell.setCellStyle(styleTexte);
+      this.cell.setCellValue(value);
+   }
+   
+   public void createCellTexteByLigneAndStyle(int colonne, String value, int line, CellStyle style) {
+      this.cell = this.sheet.getRow(line).createCell(colonne);
+      this.cell.setCellStyle(style);
+      this.cell.setCellValue(value);      
+   }
+
 }

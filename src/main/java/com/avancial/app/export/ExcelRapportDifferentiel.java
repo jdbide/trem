@@ -6,6 +6,8 @@ package com.avancial.app.export;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.CellStyle;
+
 import com.avancial.app.data.objetsMetier.PlanTransport.*;
 import com.avancial.app.resources.constants.APP_Field;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
@@ -610,179 +612,259 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
       int debutRowTrain = 0;
       boolean isFirst = true;
       
+      this.excelTools.createRow(this.ligne++);
+      
       for (IComparaisonPlanTransport comparaison : this.datas) {
          isFirst = true;
          ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
+         
          if (data.getTypeComparaisonPlanTransport().toString().equals(SHEET_NEW)) {
+
             Train currentTrain = ((PlanTransport) this.mapPlansDeTransport.get(2).get()).getTrainByNumeroTrain(data.getNumeroTrain());
             Tranche currentTranche = currentTrain.getTrancheByNumeroTranche(data.getNumeroTranche());
-            
-            this.excelTools.createRow(this.ligne++);
-            for (int col = 1; col <= ENTETE_SHEET_NEW.length; col++) {
-               this.excelTools.createCellVideWithStyle(col, this.excelTools.styleBorder);
-            }
-            
-            debutRowTrain = this.ligne;
-            
+
+            debutRowTrain = this.ligne-1;
             this.writeTrainTrancheForSheetNew(data, currentTrain, currentTranche);
+
+            //this.writeTrainTrancheForSheetNew(data, currentTrain, currentTranche);
             // Dessertes
             List<Desserte> dessertes = (List<Desserte>) currentTranche.getByAttributsField(APP_Field.Desserte.toString());
+
             for (Desserte desserte : dessertes) {
                if (!isFirst)
                   this.excelTools.createRow(this.ligne++);
 
                this.writeTrainTrancheForSheetNew(data, currentTrain, currentTranche);
-               this.excelTools.createCellTexte(7, desserte.getRegime().getCodeRegime());
+               this.excelTools.createCellTexteWithStyle(7, desserte.getRegime().getCodeRegime(), this.excelTools.styleBorderNotRight);
+               
+               String gareHorair = "";
                for (GareHoraire gareHoraire : desserte.getGareHoraires()) {
-                  this.excelTools.createCellTexte(8, (gareHoraire.getGare().getCodeGare() + " (" + ((gareHoraire.getHoraire().getHoraireDebut() != null) ? 
-                        gareHoraire.getHoraire().getHoraireDebut().getHours() + ":" + gareHoraire.getHoraire().getHoraireDebut().getMinutes() : "/") + ")\n"));
-                  
-//                  if (!desserte.getGareHoraires().get(desserte.getGareHoraires().size() - 1).equals(gareHoraire))
-                     this.excelTools.createRow(this.ligne++);
+
+                  gareHorair += gareHoraire.getGare().getCodeGare() +
+                        " (" +
+                        ((gareHoraire.getHoraire().getHoraireDebut() != null) ? gareHoraire.getHoraire().getHoraireDebut().getHours() + ":" + gareHoraire.getHoraire().getHoraireDebut().getMinutes() : "/") +
+                        " - " +
+                        ((gareHoraire.getHoraire().getHoraireFin() != null) ? gareHoraire.getHoraire().getHoraireFin().getHours() + ":" + gareHoraire.getHoraire().getHoraireFin().getMinutes() : "/") +
+                        ")\n";
                }
+
+               this.excelTools.createCellTexteWithStyle(8, gareHorair, this.excelTools.styleBorderNotLeft);
+//               this.excelTools.createRow(this.ligne++);
+               isFirst = false;
             }
 
-            //OD
+//            //OD
             List<OrigineDestination> ods = (List<OrigineDestination>) currentTranche.getByAttributsField(APP_Field.OrigineDestination.toString());
+            int line = debutRowTrain;
+            isFirst = true;
+            String oldRegime = "";
+            int firstLine = line;
+            boolean lastData = false;
+            
             for (OrigineDestination od : ods) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
+               if (!oldRegime.equals(od.getRegime().getCodeRegime())) {
+                  oldRegime = od.getRegime().getCodeRegime();
+                  if (!isFirst) {
+                     this.excelTools.addMergedRegion(firstLine, line-1, 9, 9, this.excelTools.styleBorderNotRight);
+                     firstLine = line;
+                  }
+               }
                
-               this.excelTools.createCellTexte(9, od.getRegime().getCodeRegime());
-               this.excelTools.createCellTexte(10, od.getOrigine().getCodeGare() + " - " + od.getDestination().getCodeGare());
+               if (!isFirst && (line >= this.ligne)) {
+                  this.excelTools.createRow(line);
+                  this.writeTrainTrancheForSheetNew(data, currentTrain, currentTranche, line);
+               }
+
+               this.excelTools.createCellTexteByLigneAndStyle(9, od.getRegime().getCodeRegime(), line, this.excelTools.styleBorderNotRight);
+               this.excelTools.createCellTexteByLigneAndStyle(10, od.getOrigine().getCodeGare() + " - " + od.getDestination().getCodeGare(), line, this.excelTools.styleBorderNotLeft);
+               
+               line++;
+               isFirst = false;
             }
             
-            //distri
+            if (this.ligne <= line)
+               this.ligne = line;
+            
+          //distri
             List<Distribution> distributions = (List<Distribution>) currentTranche.getByAttributsField(APP_Field.Distribution.toString());
-            for (Distribution distribution : distributions) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               this.excelTools.createCellTexte(11, distribution.getRegime().getCodeRegime());
-               this.excelTools.createCellTexte(12, distribution.getIndiceDistribution());
-            }
-            // compos
-            List<Composition> compositions = (List<Composition>) currentTranche.getByAttributsField(APP_Field.Composition.toString());
-            for (Composition composition : compositions) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               this.excelTools.createCellTexte(13, composition.getRegime().getCodeRegime());
-               this.excelTools.createCellTexte(14, composition.getCodeClasse());
+            line = debutRowTrain;
+            isFirst = true;
+            oldRegime = "";
+            firstLine = line;
+            lastData = false;
 
-               String nouvelleComposition = "";
+           
+           for (Distribution distribution : distributions) {
+              if (!oldRegime.equals(distribution.getRegime().getCodeRegime())) {
+                 oldRegime = distribution.getRegime().getCodeRegime();
+                 if (!isFirst) {
+                    this.excelTools.addMergedRegion(firstLine, line-1, 11, 11, this.excelTools.styleBorderNotRight);
+                    firstLine = line;
+                 }
+              } else if (distributions.lastIndexOf(distribution) == (distributions.size() - 1)) {
+                 lastData = true;
+              }
+              
+              if (!isFirst && (line >= this.ligne)){
+                 this.excelTools.createRow(line);
+                 this.writeTrainTrancheForSheetNew(data, currentTrain, currentTranche, line);
+              }
+                 
                
-               for (int h = 0; h < composition.getVoitures().size(); h++) {
-                  nouvelleComposition += composition.getVoitures().get(h).getNumeroVoiture(); 
-                  if (h < composition.getVoitures().size() - 1)
-                     nouvelleComposition += ", ";
-               }
-
-               nouvelleComposition += " = ";
-               nouvelleComposition += composition.getCodeRame() + ",";
-               nouvelleComposition += composition.getCodeClasse() + ",";
-               nouvelleComposition += composition.getCodeDiag();
-               this.excelTools.createCellTexte(15, nouvelleComposition);
-               this.excelTools.createCellTexte(16, composition.getCodeRame());
-               this.excelTools.createCellTexte(17, composition.getCodeRm());
-            }
-            
-         // CodeSat
-            List<CodeSat> codeSats = (List<CodeSat>) currentTranche.getByAttributsField(APP_Field.CodeSat.toString());
-            for (CodeSat codeSat : codeSats) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               this.excelTools.createCellTexte(18, codeSat.getRegime().getCodeRegime());
-               this.excelTools.createCellTexte(19, codeSat.getCodeSat());
-            }
-         // FareProfile
-            List<FareProfile> fareProfiles = (List<FareProfile>) currentTranche.getByAttributsField(APP_Field.FareProfile.toString());
-            for (FareProfile fareProfile : fareProfiles) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               this.excelTools.createCellTexte(20, fareProfile.getRegime().getCodeRegime());
-               this.excelTools.createCellTexte(21, fareProfile.getFareProfileCode());
-            }
-            
-         // TypeEquipement
-            List<TypeEquipement> typeEquipements = (List<TypeEquipement>) currentTranche.getByAttributsField(APP_Field.TypeEquipement.toString());
-            for (TypeEquipement typeEquipement : typeEquipements) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               this.excelTools.createCellTexte(22, typeEquipement.getRegime().getCodeRegime());
-               this.excelTools.createCellTexte(23, typeEquipement.getTypeEquipement());
-            }
-            
-         // Service
-            List<ServiceABord> services = (List<ServiceABord>) currentTranche.getByAttributsField(APP_Field.ServiceABord.toString());
-            for (ServiceABord service : services) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               String value = service.getCodeService() + " - " + service.getClasse().toString() + " - " + service.getOrigine().getCodeGare() + " to " + service.getDestination().getCodeGare();
-
-               this.excelTools.createCellTexte(24, service.getRegime().getCodeRegime());
-               this.excelTools.createCellTexte(25, value);
-               
-            }
-            
-         // repas
-            List<Repas> listRepas = (List<Repas>) currentTranche.getByAttributsField(APP_Field.Repas.toString());
-            for (Repas repas : listRepas) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               this.excelTools.createCellTexte(26, repas.getRegime().getCodeRegime());
-               this.excelTools.createCellTexte(27, repas.getTypeRepas().toString());
-            }
-            
-            //Specif
-            List<Specification> specifs = (List<Specification>) currentTranche.getByAttributsField(APP_Field.Specification.toString());
-            for (Specification specif : specifs) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               this.excelTools.createCellTexte(28, specif.getRegime().getCodeRegime());
-               
-               String nouvelleSpecification = "";
-               for (Compartiment compartiment : specif.getVoiture().getCompartiments()) {
-                  for (Siege siege : compartiment.getSieges()) {
-                     nouvelleSpecification += "Coach " + specif.getVoiture().getNumeroVoiture() + " ,";
-                     nouvelleSpecification +=" Seat " + siege.getNumeroSiege() + ", " + specif.getEtat().toString();
-                     nouvelleSpecification +="\n";
-                  } 
-                  
-                  if (compartiment.getNumeroCompartiment() != null) {
-                     nouvelleSpecification += "Coach " + specif.getVoiture().getNumeroVoiture() + " ,";
-                     nouvelleSpecification +=" Compartment " + compartiment.getNumeroCompartiment() + ", " + specif.getEtat().toString();
-                     nouvelleSpecification +="\n";
-                  } 
-               }
-               
-               this.excelTools.createCellTexte(29, nouvelleSpecification);
-            }
-            
-            //Restriction
-            List<Restriction> restrictions = (List<Restriction>) currentTranche.getByAttributsField(APP_Field.Restriction.toString());
-            for (Restriction restriction : restrictions) {
-               if (!isFirst)
-                  this.excelTools.createRow(this.ligne++);
-               
-               this.excelTools.createCellTexte(30, restriction.getRegime().getCodeRegime());
-               String nouvelleValue = (restriction.getType() != null ? restriction.getType().toString() : "")  + " from " + (restriction.getOrigine() != null ? restriction.getOrigine().getCodeGare() : "") + "to" + (restriction.getOrigine() != null ? restriction.getOrigine().getCodeGare() : "");
-               this.excelTools.createCellTexte(31, nouvelleValue);
-            }
+              this.excelTools.createCellTexteByLigneAndStyle(11, distribution.getRegime().getCodeRegime(), line, this.excelTools.styleBorderNotRight);
+              this.excelTools.createCellTexteByLigneAndStyle(12, distribution.getIndiceDistribution(), line, this.excelTools.styleBorderNotLeft);
+              
+              line++;
+              isFirst = false;
+              if (lastData) {
+                 this.excelTools.addMergedRegion(firstLine, line-1, 11, 11, this.excelTools.styleBorderNotRight);
+              }
+           }
+           
+           if (this.ligne <= line)
+              this.ligne = line;
+           
+//            // compos
+//            List<Composition> compositions = (List<Composition>) currentTranche.getByAttributsField(APP_Field.Composition.toString());
+//            for (Composition composition : compositions) {
+//               if (!isFirst)
+//                  this.excelTools.createRow(this.ligne++);
+//               
+//               this.excelTools.createCellTexte(13, composition.getRegime().getCodeRegime());
+//               this.excelTools.createCellTexte(14, composition.getCodeClasse());
+//
+//               String nouvelleComposition = "";
+//               
+//               for (int h = 0; h < composition.getVoitures().size(); h++) {
+//                  nouvelleComposition += composition.getVoitures().get(h).getNumeroVoiture(); 
+//                  if (h < composition.getVoitures().size() - 1)
+//                     nouvelleComposition += ", ";
+//               }
+//
+//               nouvelleComposition += " = ";
+//               nouvelleComposition += composition.getCodeRame() + ",";
+//               nouvelleComposition += composition.getCodeClasse() + ",";
+//               nouvelleComposition += composition.getCodeDiag();
+//               this.excelTools.createCellTexte(15, nouvelleComposition);
+//               this.excelTools.createCellTexte(16, composition.getCodeRame());
+//               this.excelTools.createCellTexte(17, composition.getCodeRm());
+//            }
+//            
+//         // CodeSat
+//            List<CodeSat> codeSats = (List<CodeSat>) currentTranche.getByAttributsField(APP_Field.CodeSat.toString());
+//            for (CodeSat codeSat : codeSats) {
+//               if (!isFirst)
+//                  this.excelTools.createRow(this.ligne++);
+//               
+//               this.excelTools.createCellTexte(18, codeSat.getRegime().getCodeRegime());
+//               this.excelTools.createCellTexte(19, codeSat.getCodeSat());
+//            }
+//         // FareProfile
+//            List<FareProfile> fareProfiles = (List<FareProfile>) currentTranche.getByAttributsField(APP_Field.FareProfile.toString());
+//            for (FareProfile fareProfile : fareProfiles) {
+//               if (!isFirst)
+//                  this.excelTools.createRow(this.ligne++);
+//               
+//               this.excelTools.createCellTexte(20, fareProfile.getRegime().getCodeRegime());
+//               this.excelTools.createCellTexte(21, fareProfile.getFareProfileCode());
+//            }
+//            
+//         // TypeEquipement
+//            List<TypeEquipement> typeEquipements = (List<TypeEquipement>) currentTranche.getByAttributsField(APP_Field.TypeEquipement.toString());
+//            for (TypeEquipement typeEquipement : typeEquipements) {
+//               if (!isFirst)
+//                  this.excelTools.createRow(this.ligne++);
+//               
+//               this.excelTools.createCellTexte(22, typeEquipement.getRegime().getCodeRegime());
+//               this.excelTools.createCellTexte(23, typeEquipement.getTypeEquipement());
+//            }
+//            
+//         // Service
+//            List<ServiceABord> services = (List<ServiceABord>) currentTranche.getByAttributsField(APP_Field.ServiceABord.toString());
+//            for (ServiceABord service : services) {
+//               if (!isFirst)
+//                  this.excelTools.createRow(this.ligne++);
+//               
+//               String value = service.getCodeService() + " - " + service.getClasse().toString() + " - " + service.getOrigine().getCodeGare() + " to " + service.getDestination().getCodeGare();
+//
+//               this.excelTools.createCellTexte(24, service.getRegime().getCodeRegime());
+//               this.excelTools.createCellTexte(25, value);
+//               
+//            }
+//            
+//         // repas
+//            List<Repas> listRepas = (List<Repas>) currentTranche.getByAttributsField(APP_Field.Repas.toString());
+//            for (Repas repas : listRepas) {
+//               if (!isFirst)
+//                  this.excelTools.createRow(this.ligne++);
+//               
+//               this.excelTools.createCellTexte(26, repas.getRegime().getCodeRegime());
+//               this.excelTools.createCellTexte(27, repas.getTypeRepas().toString());
+//            }
+//            
+//            //Specif
+//            List<Specification> specifs = (List<Specification>) currentTranche.getByAttributsField(APP_Field.Specification.toString());
+//            for (Specification specif : specifs) {
+//               if (!isFirst)
+//                  this.excelTools.createRow(this.ligne++);
+//               
+//               this.excelTools.createCellTexte(28, specif.getRegime().getCodeRegime());
+//               
+//               String nouvelleSpecification = "";
+//               for (Compartiment compartiment : specif.getVoiture().getCompartiments()) {
+//                  for (Siege siege : compartiment.getSieges()) {
+//                     nouvelleSpecification += "Coach " + specif.getVoiture().getNumeroVoiture() + " ,";
+//                     nouvelleSpecification +=" Seat " + siege.getNumeroSiege() + ", " + specif.getEtat().toString();
+//                     nouvelleSpecification +="\n";
+//                  } 
+//                  
+//                  if (compartiment.getNumeroCompartiment() != null) {
+//                     nouvelleSpecification += "Coach " + specif.getVoiture().getNumeroVoiture() + " ,";
+//                     nouvelleSpecification +=" Compartment " + compartiment.getNumeroCompartiment() + ", " + specif.getEtat().toString();
+//                     nouvelleSpecification +="\n";
+//                  } 
+//               }
+//               
+//               this.excelTools.createCellTexte(29, nouvelleSpecification);
+//            }
+//            
+//            //Restriction
+//            List<Restriction> restrictions = (List<Restriction>) currentTranche.getByAttributsField(APP_Field.Restriction.toString());
+//            for (Restriction restriction : restrictions) {
+//               if (!isFirst)
+//                  this.excelTools.createRow(this.ligne++);
+//               
+//               this.excelTools.createCellTexte(30, restriction.getRegime().getCodeRegime());
+//               String nouvelleValue = (restriction.getType() != null ? restriction.getType().toString() : "")  + " from " + (restriction.getOrigine() != null ? restriction.getOrigine().getCodeGare() : "") + "to" + (restriction.getOrigine() != null ? restriction.getOrigine().getCodeGare() : "");
+//               this.excelTools.createCellTexte(31, nouvelleValue);
+//            }
             
             isFirst = false;
+           this.writeTrainTrancheForSheetNewWithMerge(data, currentTrain, currentTranche, debutRowTrain);
+           this.excelTools.createRow(this.ligne++);
          }
       }
 
    }
    
    public void writeTrainTrancheForSheetNew(ComparaisonPlanTransport data, Train currentTrain, Tranche currentTranche) {
+      for (int col = 7; col <= ENTETE_SHEET_NEW.length; col++) {
+         if (col == 7)
+            this.excelTools.createCellTexteWithStyle(col, "", this.excelTools.styleBorderNotRight);
+         else if (col == 8)
+            this.excelTools.createCellTexteWithStyle(col, "", this.excelTools.styleBorderNotLeft);
+         else if (col == 9)
+            this.excelTools.createCellTexteWithStyle(col, "", this.excelTools.styleBorderNotRight);
+         else if (col == 10)
+            this.excelTools.createCellTexteWithStyle(col, "", this.excelTools.styleBorderNotLeft);
+         else if (col == 11)
+            this.excelTools.createCellTexteWithStyle(col, "", this.excelTools.styleBorderNotRight);
+         else if (col == 12)
+            this.excelTools.createCellTexteWithStyle(col, "", this.excelTools.styleBorderNotLeft);
+         else
+            this.excelTools.createCellVideWithStyle(col, this.excelTools.styleBorder);
+      }
+      
       this.excelTools.createCellTexte(1, data.getNumeroTrain());
       this.excelTools.createCellTexte(2, data.getNumeroTranche());
       this.excelTools.createCellTexte(3, currentTranche.getRegime().getCodeRegime());
@@ -790,7 +872,45 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
       this.excelTools.createCellTexte(5, currentTranche.getTrancheStatut().toString());
       this.excelTools.createCellTexte(6, currentTrain.writeIsValidForRR());
    }
+   
+   public void writeTrainTrancheForSheetNew(ComparaisonPlanTransport data, Train currentTrain, Tranche currentTranche, int line) {
+      for (int col = 7; col <= ENTETE_SHEET_NEW.length; col++) {
+         if (col == 7)
+            this.excelTools.createCellTexteByLigneAndStyle(col, "", line, this.excelTools.styleBorderNotRight);
+         else if (col == 8)
+            this.excelTools.createCellTexteByLigneAndStyle(col, "", line, this.excelTools.styleBorderNotLeft);
+         else if (col == 9)
+            this.excelTools.createCellTexteByLigneAndStyle(col, "", line, this.excelTools.styleBorderNotRight);
+         else if (col == 10)
+            this.excelTools.createCellTexteByLigneAndStyle(col, "", line, this.excelTools.styleBorderNotLeft);
+         else if (col == 11)
+            this.excelTools.createCellTexteByLigneAndStyle(col, "", line, this.excelTools.styleBorderNotRight);
+         else if (col == 12)
+            this.excelTools.createCellTexteByLigneAndStyle(col, "", line, this.excelTools.styleBorderNotLeft);
+         else
+            this.excelTools.createCellTexteByLigneAndStyle(col, "", line, this.excelTools.styleBorder);
+      }
+      
+      this.excelTools.createCellTexteByLigneAndStyle(1, data.getNumeroTrain(), line, this.excelTools.styleTexte);
 
+      this.excelTools.createCellTexteByLigneAndStyle(2, data.getNumeroTranche(), line, this.excelTools.styleTexte);
+
+      this.excelTools.createCellTexteByLigneAndStyle(3, currentTranche.getRegime().getCodeRegime(), line, this.excelTools.styleTexte);
+
+      this.excelTools.createCellTexteByLigneAndStyle(4, ((PlanTransport) this.mapPlansDeTransport.get(1).get()).getCompagnie().toString(), line, this.excelTools.styleTexte);
+
+      this.excelTools.createCellTexteByLigneAndStyle(5, currentTranche.getTrancheStatut().toString(), line, this.excelTools.styleTexte);
+
+      this.excelTools.createCellTexteByLigneAndStyle(6, currentTrain.writeIsValidForRR(), line, this.excelTools.styleTexte);
+   }
+
+   public void writeTrainTrancheForSheetNewWithMerge(ComparaisonPlanTransport data, Train currentTrain, Tranche currentTranche, int firstRow) {
+      for (int i = 1; i < 7; i++) {
+         this.excelTools.addMergedRegion(firstRow, this.ligne-1, i, i, this.excelTools.styleBorder);
+         
+         //this.excelTools.addMergedRegion(firstRow, this.ligne-1, i, i);
+      }
+   }
    /**
     * @return the datas
     */
