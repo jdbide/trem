@@ -1,5 +1,6 @@
 package com.avancial.app.traitement;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,7 +14,12 @@ import com.avancial.app.service.traiteDeleteRegime.ITraiteDeleteDonnees;
 import com.avancial.app.service.traiteDeleteRegime.TraiteDeleteDonneesRegimeFactory;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
-public class TraitementDeleteJeuDonnee extends ATraitementLogDetail {
+public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private TraiteDeleteDonneesRegimeFactory facto;
@@ -22,7 +28,7 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail {
 
 	private String compagnieEnvironnement;
 
-	private Status status;
+	private Status status = Status.DRAFT;
 
 	@Override
 	protected void executeTraitement() throws Exception {
@@ -30,7 +36,7 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail {
 			this.log("Debut de la suppression du Draft");
 			this.jeuDonnee = this.em.createNamedQuery("JeuDonneeEntity.getByEnvironnementStatus", JeuDonneeEntity.class)
 					.setParameter("nomTechniqueCompagnieEnvironnement", this.compagnieEnvironnement)
-					.setParameter("statusJeuDonnees", Status.DRAFT).getSingleResult();
+					.setParameter("statusJeuDonnees", this.status).getSingleResult();
 			this.em.getTransaction().begin();
 
 			/*

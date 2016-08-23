@@ -51,6 +51,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
 	@Inject
 	private ExcelRapportDifferentiel excelRapportDifferentiel;
+	
+	@Inject
+	private TraitementDeleteJeuDonnee traitementDeleteJeuDonnee;
 
 	/**
 	 * Map représente les deux plans de transport(Active & Draft)
@@ -125,6 +128,10 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 				e.printStackTrace();
 				throw e;
 			}
+			
+			this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
+			this.traitementDeleteJeuDonnee.setStatus(Status.DRAFT);
+			this.traitementDeleteJeuDonnee.execute();
 
 			/* Insertion dans les tables du modèle motrice */
 			// Instanciation et sauvegarde du nouveau jeu de données

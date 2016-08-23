@@ -45,7 +45,7 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
     * @return the mapPlansDeTransport
     */
    public MapPlansDeTransport getMapPlansDeTransport() {
-      return mapPlansDeTransport;
+      return this.mapPlansDeTransport;
    }
 
    /**
@@ -60,7 +60,7 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
     * @return the environnementCompagnie
     */
    public String getEnvironnementCompagnie() {
-      return environnementCompagnie;
+      return this.environnementCompagnie;
    }
 
    /**

@@ -122,8 +122,9 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", '$i
             	else if ($scope.progressImport == null || $scope.progressImport.endTraitement == true && $scope.progressImport.traitementOk == true) {
             		endImportByData();
             		$scope.reponse.status = true;
-            		$scope.reponse.message = "Fin de l'import avec succès";
+            		$scope.reponse.message = "Import terminé avec succès";
             		$interval.cancel(myInterval);
+            		constructor();
             	}
             })
             .error(function (data, status, headers, config) {
@@ -164,7 +165,7 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", '$i
 			$scope.currentData.username = null;
 			$scope.currentData.password = null;
 			
-			$scope.authError = "Veuillez inserer vos identifiants !";
+			$scope.authError = "Veuillez saisir vos identifiants !";
 		} else {
 			$scope.authentificationDb = !$scope.authentificationDb;
 			startImportByData();
@@ -175,6 +176,7 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", '$i
 				
 				if (reponse.status) {
 					startCheckProgressImport(reponse.data);
+					mergeElementArray($scope.datas, $scope.currentData, $scope.reponse.data);
 				} else {
 					// Erreur
 					endImportByData();
