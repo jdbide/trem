@@ -193,7 +193,13 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", '$i
 		/*Aprés reponse du webService*/
 		importTmsService.executeDeleteDraft($scope.currentDataDelete).then(function() {
 			$scope.reponse = importTmsService.getReponse();
-			$scope.currentDataDelete = null;
+			if ($scope.reponse.status) {
+				$scope.currentDataDelete.dateImportJeuDonneesBrouillon = null;
+				$scope.currentDataDelete.importJeuDonneesBrouillonBy = null;
+				$scope.currentDataDelete.statusJeudonneeBrouillon = null;
+				$scope.currentDataDelete.idJeuDonneeBrouillon = null;
+			}
+
 		}, function() {
 			$scope.reponse = importTmsService.getReponse();
 			$scope.currentDataDelete = null;
