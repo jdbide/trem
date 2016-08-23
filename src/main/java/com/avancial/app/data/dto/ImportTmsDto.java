@@ -61,14 +61,14 @@ public class ImportTmsDto implements Serializable {
 	}
 
 	@JsonIgnore
-	public void mergeByJeuDonneesActif(JeuDonneeEntity jeuDonneeEntityActif, String nameValidateJeuDonneeBy) {
+	public void mergeByJeuDonneesActif(JeuDonneeEntity jeuDonneeEntityActif, String nameImportJeuDonneesBy, String nameValidateJeuDonneesBy) {
 		this.setIdJeuDonneesActif(jeuDonneeEntityActif.getIdJeuDonnees());
 
 		this.setDateImportJeuDonneesActif(jeuDonneeEntityActif.getDateCreateJeuDonnees());
-		this.setImportJeuDonneesActifBy(nameValidateJeuDonneeBy);
+		this.setImportJeuDonneesActifBy(nameImportJeuDonneesBy);
 
 		this.setDateValidateJeuDonneesActif(jeuDonneeEntityActif.getDateLastUpdateJeuDonnees());
-		this.setValidateJeuDonneesActifBy(nameValidateJeuDonneeBy);
+		this.setValidateJeuDonneesActifBy(nameValidateJeuDonneesBy);
 
 		this.setPathValidateJeuDonneesActif("TODO");
 		this.setStatusJeudonneeActif(jeuDonneeEntityActif.getStatusJeuDonnees());
