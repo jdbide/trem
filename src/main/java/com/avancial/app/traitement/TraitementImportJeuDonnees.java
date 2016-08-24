@@ -64,6 +64,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 	 * Id du currentThread
 	 */
 	private Long idTask;
+	
+	private int idUtilisateur;
 
 	/**
 	* 
@@ -136,6 +138,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 			/* Insertion dans les tables du modèle motrice */
 			// Instanciation et sauvegarde du nouveau jeu de données
 			jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(compagnieEnvironnementEntity);
+			jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
+			jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
 			this.jeuDonneeService.save(jeuDonneeDataBean);
 			this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
 			this.traitementMotrice.setMap(this.mapPlansDeTransport);
@@ -268,6 +272,14 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 	 */
 	public void setExcelRapportDifferentiel(ExcelRapportDifferentiel excelRapportDifferentiel) {
 		this.excelRapportDifferentiel = excelRapportDifferentiel;
+	}
+
+	public int getIdUtilisateur() {
+		return this.idUtilisateur;
+	}
+
+	public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
 	}
 
 }

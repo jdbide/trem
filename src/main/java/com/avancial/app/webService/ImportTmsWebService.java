@@ -29,6 +29,7 @@ import com.avancial.app.service.ImportTmsService;
 import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
 import com.avancial.app.webService.bean.ResponseBean;
+import com.avancial.socle.session.Session;
 
 /**
  * WebService qui gère la page Import du module Train Manager System Les action
@@ -50,6 +51,9 @@ public class ImportTmsWebService {
 	
 	@Inject
 	private TraitementDeleteJeuDonnee traitementDeleteJeuDonnee;
+	
+	@Inject
+	private Session session;
 
 	public ImportTmsWebService() {
 		// TODO Auto-generated constructor stub
@@ -158,7 +162,8 @@ public class ImportTmsWebService {
 		ResponseBuilder responseBuilder = null;
 		final ResponseBean responseBean = new ResponseBean();
 		Long idNewThread;
-
+		System.out.println("id "+this.session.getUser().getIdUser().intValue());
+		final int id = this.session.getUser().getIdUser().intValue();
 		try {
 			// un seul traitement à la fois
 			if (!Task.isActiveTask()) {
@@ -175,6 +180,7 @@ public class ImportTmsWebService {
 									.getContextualReference(TraitementImportJeuDonnees.class);
 							globalResultHolder.setImportJeuDonneesDto(importTmsDto);
 							globalResultHolder.setIdTask(Thread.currentThread().getId());
+							globalResultHolder.setIdUtilisateur(id);
 							globalResultHolder.execute();
 							Task.finishOkTask(Thread.currentThread().getId());
 						} catch (Exception e) {
