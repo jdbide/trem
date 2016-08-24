@@ -8,10 +8,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.xmlbeans.impl.jam.mutable.MParameter;
+
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
+import com.avancial.app.data.objetsMetier.PlanTransport.Compartiment;
+import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
 import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumClasseService;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumEtatSpecification;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
@@ -23,8 +29,14 @@ import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
+import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
+import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
+import com.avancial.app.data.objetsMetier.PlanTransport.Siege;
+import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
+import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 /**
@@ -85,6 +97,7 @@ public class PlanTransportFactory {
       Repas repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
       
       listCodeSat1.add(codeSat1);
+      listCodeSat1.add(codeSat2);
       listCodeSat2.add(codeSat2);
 
       listFareProfile1.add(fareProfile1);
@@ -92,6 +105,7 @@ public class PlanTransportFactory {
       listFareProfile2.add(fareProfile3);
 
       listRepas1.add(repas1);
+      listRepas1.add(repas2);
       listRepas2.add(repas2);
       
       MapTranche mapTranche1 = new MapTranche();
@@ -220,12 +234,176 @@ public class PlanTransportFactory {
       listDistri.add(d2);
       listDistri.add(d3);
       
+      
+      /**
+       * Regime Compo
+       */
+      
+      List<Voiture> voitures = new ArrayList<>();
+      
+      Voiture v1 = new Voiture("001", new ArrayList<Compartiment>());
+      Voiture v2 = new Voiture("003", new ArrayList<Compartiment>());
+      Voiture v3 = new Voiture("003", new ArrayList<Compartiment>());
+      
+      voitures.add(v1);
+      voitures.add(v2);
+      voitures.add(v3);
+      
+      Composition compo1 = new Composition("A", "ESA", "15001H", "C01", voitures, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
+      
+      List<Voiture> voitures2 = new ArrayList<>();
+      
+      Voiture v4 = new Voiture("004", new ArrayList<Compartiment>());
+      Voiture v5 = new Voiture("005", new ArrayList<Compartiment>());
+      Voiture v6 = new Voiture("006", new ArrayList<Compartiment>());
+      
+      voitures2.add(v4);
+      voitures2.add(v5);
+      voitures2.add(v6);
+      
+      Composition compo2 = new Composition("H", "ESH", "16001J", "C01", voitures2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
+      
+      Composition compo4 = new Composition("A", "ESA", "11001J", "C01", voitures2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
+      
+      List<Voiture> voitures3 = new ArrayList<>();
+      
+      Voiture v7 = new Voiture("007", new ArrayList<Compartiment>());
+      Voiture v8 = new Voiture("008", new ArrayList<Compartiment>());
+      Voiture v9 = new Voiture("009", new ArrayList<Compartiment>());
+      
+      voitures3.add(v7);
+      voitures3.add(v8);
+      voitures3.add(v9);
+      
+      Composition compo3 = new Composition("B", "DKT", "15001K", "D031", voitures3, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      
+      
+      List<Composition> listCompo = new ArrayList<>();
+      listCompo.add(compo1);
+      listCompo.add(compo2);
+      listCompo.add(compo4);
+      listCompo.add(compo3);
+      
+      /**
+       * Regime CodeSat
+       */
+      /**
+       * FareProfile
+       */
+      /**
+       * TypeEquipement
+       */
+      TypeEquipement te1 = new TypeEquipement("TGT",  new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      TypeEquipement te2 = new TypeEquipement("TGR",  new Regime("Mo-EA; From 01/06/2016 to 10/12/2016", date1, date2));
+      TypeEquipement te3 = new TypeEquipement("TIT",  new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2));
+      TypeEquipement te4 = new TypeEquipement("TBT",  new Regime("Mo-RA; From 01/06/2016 to 10/12/2016", date1, date2));
+      TypeEquipement te5 = new TypeEquipement("TNT",  new Regime("Mo-TA; From 01/06/2016 to 10/12/2016", date1, date2));
+
+      List<TypeEquipement> listTe = new ArrayList<>();
+      listTe.add(te1);
+      listTe.add(te2);
+      listTe.add(te3);
+      listTe.add(te4);
+      listTe.add(te5);
+      
+      /**
+       * ServiceAbord
+       */
+      ServiceABord sab1 = new ServiceABord("NY", EnumClasseService.Premiere, g, g2, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      ServiceABord sab2 = new ServiceABord("NE", EnumClasseService.Premiere, g, g2, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      ServiceABord sab3 = new ServiceABord("BAR", EnumClasseService.Toute, g3, g, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      ServiceABord sab4 = new ServiceABord("AH", EnumClasseService.Premiere, g4, g3, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      ServiceABord sab5 = new ServiceABord("IT", EnumClasseService.Premiere, g, g2, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2));
+      ServiceABord sab6 = new ServiceABord("DZ", EnumClasseService.Toute, g2, g3, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2));
+      ServiceABord sab7 = new ServiceABord("FR", EnumClasseService.Toute, g3, g4, new Regime("Mo-TA; From 01/06/2016 to 10/12/2016", date1, date2));
+      
+      List<ServiceABord> listServiceABord = new ArrayList<>();
+      listServiceABord.add(sab1);
+      listServiceABord.add(sab2);
+      listServiceABord.add(sab3);
+      listServiceABord.add(sab4);
+      listServiceABord.add(sab5);
+      listServiceABord.add(sab6);
+      listServiceABord.add(sab7);
+      
+      /**
+       * Specificities
+       */
+      Siege s1 = new Siege("011");
+      Siege s2 = new Siege("012");
+      Siege s3 = new Siege("013");
+      Siege s4 = new Siege("014");
+      Siege s5 = new Siege("015");
+      Siege s6 = new Siege("020");
+      Siege s7 = new Siege("021");
+      
+      List<Siege> listS1 = new ArrayList<>();
+      
+      listS1.add(s1);
+      listS1.add(s2);
+      listS1.add(s3);
+      listS1.add(s4);
+      listS1.add(s5);
+      listS1.add(s6);
+      listS1.add(s7);
+      
+      
+      Compartiment  c1 = new Compartiment(null, listS1);
+      Compartiment  c2 = new Compartiment("018", null);
+      
+      List<Compartiment> listCompart = new ArrayList<>();
+      List<Compartiment> listCompart2 = new ArrayList<>();
+      listCompart.add(c1);
+      listCompart2.add(c2);
+      
+      v1.setCompartiments(listCompart);
+      v2.setCompartiments(listCompart2);
+      
+      
+      Specification sp1 = new Specification(v1, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      Specification sp2 = new Specification(v2, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date2, date3));
+      Specification sp3 = new Specification(v3, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date3));
+      
+      Specification sp4 = new Specification(v3, EnumEtatSpecification.fermer, new Regime("Mo-ZE; From 01/06/2016 to 10/12/2016", date1, date3));
+      
+      List<Specification> lsp = new ArrayList<>();
+      lsp.add(sp1);
+      lsp.add(sp2);
+      lsp.add(sp3);
+      lsp.add(sp4);
+      
+      /**
+       * Regime Restriction
+       */
+      Restriction restr1 = new Restriction(g, g2, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      Restriction restr2 = new Restriction(null, g, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      Restriction restr3 = new Restriction(g, null, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      Restriction restr4 = new Restriction(g, null, null, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2));
+      
+      
+      List<Restriction> restrictions = new ArrayList<>();
+      
+      restrictions.add(restr1);
+      restrictions.add(restr2);
+      restrictions.add(restr3);
+      restrictions.add(restr4);
+
+      
+      
       MapTranche mapTranche5 = new MapTranche();
       mapTranche5.put(fareProfile2.getClass(), listFareProfile2);
       mapTranche5.put(repas2.getClass(), listRepas1);
       mapTranche5.put(des.getClass(), listDes);
       mapTranche5.put(od1.getClass(), listOd);
       mapTranche5.put(d1.getClass(), listDistri);
+      mapTranche5.put(compo2.getClass(), listCompo);
+      mapTranche5.put(codeSat1.getClass(), listCodeSat1);
+      mapTranche5.put(te5.getClass(), listTe);
+      mapTranche5.put(sab1.getClass(), listServiceABord);
+      mapTranche5.put(repas1.getClass(), listRepas1);
+      mapTranche5.put(sp1.getClass(), lsp);
+      mapTranche5.put(restr1.getClass(), restrictions);
+      
       
       
       // mapTranche5.put();
@@ -246,7 +424,7 @@ public class PlanTransportFactory {
       
       MapTranche mapTranche51 = new MapTranche();
       mapTranche51.put(fareProfile2.getClass(), listFareProfile2);
-      mapTranche51.put(repas2.getClass(), listRepas1);
+      mapTranche51.put(repas2.getClass(), listRepas2);
       mapTranche51.put(des.getClass(), listDes);
       mapTranche51.put(od1.getClass(), listOd);
       mapTranche51.put(d1.getClass(), listDistri);

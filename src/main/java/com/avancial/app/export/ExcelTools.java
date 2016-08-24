@@ -47,6 +47,7 @@ public class ExcelTools {
    public CellStyle styleBorder               = null;
    public CellStyle styleBorderNotRight       = null;
    public CellStyle styleBorderNotLeft        = null;
+   public CellStyle styleBorderNotLeftNotRight= null;
 
    public Font      fontCellVideWithMergin    = null;
    public Font      fontEntete                = null;
@@ -945,6 +946,13 @@ public class ExcelTools {
       this.styleBorderNotLeft.setBorderRight(CellStyle.BORDER_THIN);
       this.styleBorderNotLeft.setBorderTop(CellStyle.BORDER_THIN);
       this.styleBorderNotLeft.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+      
+      this.styleBorderNotLeftNotRight =  this.classeur.createCellStyle();
+      this.styleBorderNotLeftNotRight.setBorderBottom(CellStyle.BORDER_THIN);
+//      this.styleBorderNotLeftNotRight.setBorderLeft(CellStyle.BORDER_THIN);
+      //this.styleBorderNotLeftNotRight.setBorderRight(CellStyle.BORDER_THIN);
+      this.styleBorderNotLeftNotRight.setBorderTop(CellStyle.BORDER_THIN);
+      this.styleBorderNotLeftNotRight.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 
       this.stylePourcent = this.classeur.createCellStyle();
       this.stylePourcent.setAlignment(CellStyle.ALIGN_RIGHT);

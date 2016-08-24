@@ -51,7 +51,15 @@ public class Restriction extends ASousRegimeTranche {
    @Override
    public boolean equals(Object obj) {
       Restriction restriction = (Restriction) obj;
-      return this.getOrigine().equals(restriction.getOrigine()) && this.getDestination().equals(restriction.getDestination()) && this.getType().equals(restriction.getType());
+      if (this.getOrigine() != null && this.getDestination() != null && restriction.getOrigine() != null && restriction.getDestination() != null) {
+         return this.getOrigine().equals(restriction.getOrigine()) && this.getDestination().equals(restriction.getDestination()) && this.getType().equals(restriction.getType());
+      } else if (this.getOrigine() != null && restriction.getOrigine() != null) {
+         return this.getOrigine().equals(restriction.getOrigine());
+      } else if (this.getDestination() != null && restriction.getDestination() != null) {
+         return this.getDestination().equals(restriction.getDestination());
+      }
+
+      return false;
    }
 
    /**
