@@ -32,59 +32,57 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
 
 	@Override
 	protected void executeTraitement() throws Exception {
-		try {
-			this.log("Debut de la suppression du Draft");
-			this.jeuDonnee = this.em.createNamedQuery("JeuDonneeEntity.getByEnvironnementStatus", JeuDonneeEntity.class)
-					.setParameter("nomTechniqueCompagnieEnvironnement", this.compagnieEnvironnement)
-					.setParameter("statusJeuDonnees", this.status).getSingleResult();
-			this.em.getTransaction().begin();
+		this.logBean.setLibelleLogTraitement("TraitementDeleteJeuDonnee");
+		this.log("Debut de la suppression du Draft");
+		this.jeuDonnee = this.em.createNamedQuery("JeuDonneeEntity.getByEnvironnementStatus", JeuDonneeEntity.class)
+				.setParameter("nomTechniqueCompagnieEnvironnement", this.compagnieEnvironnement)
+				.setParameter("statusJeuDonnees", this.status).getSingleResult();
+		this.em.getTransaction().begin();
 
-			/*
-			 * Recupere la liste des regimes lies a notre jeu de donnees
-			 */
-			TypedQuery<MotriceRegimeEntity> queryRegimes = this.em
-					.createNamedQuery("MotriceRegime.getByIdJeuDonnees", MotriceRegimeEntity.class)
-					.setParameter("idJeuDonnees", this.jeuDonnee.getIdJeuDonnees());
-			List<MotriceRegimeEntity> regimes = queryRegimes.getResultList();
+		/*
+		 * Recupere la liste des regimes lies a notre jeu de donnees
+		 */
+		TypedQuery<MotriceRegimeEntity> queryRegimes = this.em
+				.createNamedQuery("MotriceRegime.getByIdJeuDonnees", MotriceRegimeEntity.class)
+				.setParameter("idJeuDonnees", this.jeuDonnee.getIdJeuDonnees());
+		List<MotriceRegimeEntity> regimes = queryRegimes.getResultList();
 
-			/*
-			 * Pour chaque type de Regime, delete les donnees lier aux regimes
-			 * trouver precedement
-			 */
-			for (ITraiteDeleteDonnees donneesRegime : this.facto.getDonneesRegime()) {
-				donneesRegime.execute(regimes, this.em);
-			}
-
-			/*
-			 * Recupere la liste des trains tranches lier au jeu de donnees
-			 */
-			TypedQuery<MotriceTrainTrancheEntity> queryTrainTranches = this.em
-					.createNamedQuery("MotriceTrainTranche.getByJeuDonnees", MotriceTrainTrancheEntity.class)
-					.setParameter("jeuDonnees", this.jeuDonnee);
-			List<MotriceTrainTrancheEntity> trainTranches = queryTrainTranches.getResultList();
-			/*
-			 * delete les regimes lier au train tranche trouver precedement
-			 */
-			this.em.createNamedQuery("MotriceRegime.deleteByTrainTranche").setParameter("trainTranches", trainTranches)
-					.executeUpdate();
-
-			/*
-			 * delete les trains tranches lier au jeu de donnees
-			 */
-			this.em.createNamedQuery("MotriceTrainTranche.deleteByJeuDonnees")
-					.setParameter("jeuDonnees", this.jeuDonnee).executeUpdate();
-
-			/*
-			 * delete le jeu de donnees
-			 */
-			this.em.createNamedQuery("JeuDonneeEntity.deleteById").setParameter("id", this.jeuDonnee.getIdJeuDonnees())
-					.executeUpdate();
-
-			this.em.getTransaction().commit();
-			this.log("Fin de la suppression du Draft");
-		} catch (Exception e) {
-			e.printStackTrace();
+		/*
+		 * Pour chaque type de Regime, delete les donnees lier aux regimes
+		 * trouver precedement
+		 */
+		for (ITraiteDeleteDonnees donneesRegime : this.facto.getDonneesRegime()) {
+			donneesRegime.execute(regimes, this.em);
 		}
+
+		/*
+		 * Recupere la liste des trains tranches lier au jeu de donnees
+		 */
+		TypedQuery<MotriceTrainTrancheEntity> queryTrainTranches = this.em
+				.createNamedQuery("MotriceTrainTranche.getByJeuDonnees", MotriceTrainTrancheEntity.class)
+				.setParameter("jeuDonnees", this.jeuDonnee);
+		List<MotriceTrainTrancheEntity> trainTranches = queryTrainTranches.getResultList();
+		/*
+		 * delete les regimes lier au train tranche trouver precedement
+		 */
+		this.em.createNamedQuery("MotriceRegime.deleteByTrainTranche").setParameter("trainTranches", trainTranches)
+				.executeUpdate();
+
+		/*
+		 * delete les trains tranches lier au jeu de donnees
+		 */
+		this.em.createNamedQuery("MotriceTrainTranche.deleteByJeuDonnees")
+				.setParameter("jeuDonnees", this.jeuDonnee).executeUpdate();
+
+		/*
+		 * delete le jeu de donnees
+		 */
+		this.em.createNamedQuery("JeuDonneeEntity.deleteById").setParameter("id", this.jeuDonnee.getIdJeuDonnees())
+				.executeUpdate();
+
+		this.em.getTransaction().commit();
+		this.log("Fin de la suppression du Draft");
+	
 	}
 
 	/**

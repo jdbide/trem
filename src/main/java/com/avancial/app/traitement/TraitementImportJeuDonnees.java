@@ -83,6 +83,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 	 */
 	@Override
 	protected void executeTraitement() {
+		this.logBean.setLibelleLogTraitement("TraitementImportJeuDonnees");
 		CompagnieEnvironnementEntity compagnieEnvironnementEntity = null;
 		JeuDonneeEntity jeuDonneeDataBean = null;
 		try {
