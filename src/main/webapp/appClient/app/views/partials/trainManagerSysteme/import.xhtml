@@ -79,14 +79,14 @@
 					</td>
 					<td ng-if="startImport != $index" class="text-center">
 						<button class="btn btn-circle btn-default" type="button"
-							ng-disabled="(disabledButton)"
+							ng-disabled="(disabledButton) || (data.idJeuDonneeBrouillon <= 0)"
 							ng-click="startModalValidateImportTms(data)">
 							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 						</button>
 					</td>
 					<td ng-if="startImport != $index" class="text-center">
 						<button class="btn btn-default" type="button"
-							ng-disabled="(disabledButton)"
+							ng-disabled="(disabledButton) || (data.idJeuDonneeBrouillon <= 0)"
 							ng-click="startModalDeleteImportTms(data)">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</button>

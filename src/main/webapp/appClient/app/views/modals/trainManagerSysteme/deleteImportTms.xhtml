@@ -3,18 +3,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                 <h4 class="modal-title">Suppression des données du jeu données en brouillon</h4>
+                 <h4 class="modal-title">Delete Draft Dataset</h4>
             </div>
             <div class="modal-body">
-                <p>Vous êtes sur le point de supprimer les données du jeu données en brouillon de :</p>
+                <p>You are about to delete the current draft dataset for :</p>
                 </br>
                 <p>&nbsp;&nbsp;{{currentDataDelete.libelleCompagnie}} - {{currentDataDelete.libelleEnvironnement}}</p>
                 </br>
-                <p>Ces données et le rapport correspondant ne seront pas conservés.</p>
-                <p>L'ensemble de données actif restera tel quel</p>
+                <p>This data and the corresponding report will not be kept.</p>
+                <p>Active dataset will remain as is.</p>
             </div>
             <div class="modal-footer">                
-                <button class="btn btn-danger" ng-click="executeDeleteDraft()">Suppimer</button>
+                <button class="btn btn-danger" ng-click="executeDeleteDraft()">DELETE DRAFT</button>
             </div>
         </div>
     </div>

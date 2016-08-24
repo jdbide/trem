@@ -3,21 +3,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                 <h4 class="modal-title">{{ title }}</h4>
+                 <h4 class="modal-title">Validate Draft Dataset</h4>
             </div>
             <div class="modal-body">
-                <p>Vous êtes sur le point de valider le jeu de données brouillon actuel pour</p>
+                <p>You are about to validate the current draft dataset for :</p>
                 </br>
                 <p>&nbsp;&nbsp;{{currentDataValidate.libelleCompagnie}} - {{currentDataValidate.libelleEnvironnement}}</p>
                 </br>
-                <p>Les données validées remplaceront les données actives le :</p>
+                <p>This dataset will replace the current active data validated :</p>
                 </br>
-                <p>&nbsp;&nbsp;{{currentData.dateValidateJeuDonneesActif}}</p>
+                <p>&nbsp;&nbsp;{{currentDataValidate.dateValidateJeuDonneesActif | date:'dd/MM/yyyy HH:mm'}}</p>
                 </br>
-                <p>Ces données seront visible à tous les utilisateurs et jeu de données sera considéré comme le nouveau point de référence.</p>
+                <p>This data will be visible to all users and considered as the new point of reference.</p>
             </div>
             <div class="modal-footer">                
-                <button class="btn btn-primary" ng-click="executeValidateDraft()">Valider</button>
+                <button class="btn btn-primary" ng-click="executeValidateDraft()">VALIDATE DRAFT</button>
             </div>
         </div>
     </div>

@@ -81,7 +81,7 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
     	loadingService.show();    	
     	
         var deffered  = $q.defer();
-        var promissJsonFactory = jsonFactory.deleteJson("webService/app/importTms/"+currentData.idCompagnieEnvironnement);
+        var promissJsonFactory = jsonFactory.deleteJson("webService/app/importTms/"+currentData.nomTechniqueCompagnieEnvironnement);
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	reponse.status = data.status;

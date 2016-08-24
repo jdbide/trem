@@ -9,7 +9,7 @@
 				<div class="login-box-body">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<p class="login-box-msg">Veuillez saisir vos identifiants Motrice</p>
+					<p class="login-box-msg">Motrice login</p>
 					
 					<div ng-show="authError != null" class="alert alert-danger alert-dismissable">
                     	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
@@ -20,24 +20,24 @@
 					
 					<form ng-submit="executeImport()">
 						<div class="form-group has-feedback">
-							<input type="text" class="form-control" placeholder="Identifiant" ng-model="currentData.username" name="username">
+							<input type="text" class="form-control" placeholder="User" ng-model="currentData.username" name="username">
 							<span class="glyphicon glyphicon-user form-control-feedback"></span>
 						</div>
 						<div class="form-group has-feedback">
 							<input type="password" class="form-control"
-								placeholder="Mot de passe" ng-model="currentData.password" name="password"> <span
+								placeholder="Password" ng-model="currentData.password" name="password"> <span
 								class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
 						<div class="row">
 							<div class="col-xs-8">
 								<div class="checkbox icheck">
-									<label> <input type="checkbox"> Remember Me
+									<label> <input type="checkbox"> Remember me
 									</label>
 								</div>
 							</div>
 							<!-- /.col -->
 							<div class="col-xs-4">
-								<button type="submit" class="btn btn-primary btn-block btn-flat">Démarrer</button>
+								<button type="submit" class="btn btn-primary btn-block btn-flat">IMPORT NEW DRAFT</button>
 							</div>
 							<!-- /.col -->
 						</div>
