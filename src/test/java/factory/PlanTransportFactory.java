@@ -218,7 +218,7 @@ public class PlanTransportFactory {
       List<Distribution> listDistri = new ArrayList<>();
       listDistri.add(d1);
       listDistri.add(d2);
-      //listDistri.add(d2);
+      listDistri.add(d3);
       
       MapTranche mapTranche5 = new MapTranche();
       mapTranche5.put(fareProfile2.getClass(), listFareProfile2);
@@ -242,6 +242,16 @@ public class PlanTransportFactory {
       train_draft_6.setNumeroTrain("6");
       Tranche tranche_train_draft_6 = new Tranche();
       tranche_train_draft_6.setNumeroTranche("12");
+     
+      
+      MapTranche mapTranche51 = new MapTranche();
+      mapTranche51.put(fareProfile2.getClass(), listFareProfile2);
+      mapTranche51.put(repas2.getClass(), listRepas1);
+      mapTranche51.put(des.getClass(), listDes);
+      mapTranche51.put(od1.getClass(), listOd);
+      mapTranche51.put(d1.getClass(), listDistri);
+      
+      tranche_train_draft_6.getAttributs().putAll(mapTranche51);
       train_draft_6.getTranches().add(tranche_train_draft_6);
       
       listTrain_draft.add(train_draft_6);

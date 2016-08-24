@@ -130,10 +130,12 @@ public class ImportTmsWebService {
 	@Produces("application/vnd.ms-excel")
 	public Response downloadFileByIdJeuDonnees(@PathParam("idJeuDonnee") Integer idJeuDonnee) throws Exception {
 		ResponseBuilder responseBuilder = null;
+		String path = "E:/app/tremas/data/export/RapportDiff-"+idJeuDonnee;
 		try {
-			File fileDownload = new File("D:/Utilisateurs/hamza.laterem/Pictures/test.xlsx");
+		   
+			File fileDownload = new File(path);
 			responseBuilder = Response.ok((Object) fileDownload);
-			responseBuilder.header("Content-Disposition", "attachment; filename=\"hamza.xlsx\"");
+			responseBuilder.header("Content-Disposition", "attachment; filename=\"RapportDiff-"+idJeuDonnee+".xlsx\"");
 
 		} catch (Exception e) {
 			e.printStackTrace();
