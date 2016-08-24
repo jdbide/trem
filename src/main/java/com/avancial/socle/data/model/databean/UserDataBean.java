@@ -334,6 +334,6 @@ public class UserDataBean extends AbstractDataBean {
     }
 
     public String getNomComplet() {
-        return this.nomUser.toUpperCase() + " " + this.prenomUser;
+        return new StringBuilder().append(this.prenomUser).append(" ").append(this.nomUser).toString();
     }
 }
