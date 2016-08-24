@@ -178,7 +178,11 @@ public class ImportTmsWebService {
 							globalResultHolder.setImportJeuDonneesDto(importTmsDto);
 							globalResultHolder.setIdTask(Thread.currentThread().getId());
 							globalResultHolder.execute();
-							Task.finishOkTask(Thread.currentThread().getId());
+							
+							if(!Task.getReponseTask(Thread.currentThread().getId()).getEndTraitement())
+							{
+								Task.finishOkTask(Thread.currentThread().getId());
+							}
 						} catch (Exception e) {
 							Task.finishKoTask(Thread.currentThread().getId(), "Echec de l'import");
 						}
