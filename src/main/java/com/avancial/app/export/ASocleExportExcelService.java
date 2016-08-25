@@ -118,7 +118,7 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
                this.generatePreEnteteBySheet();
                this.generateEnteteBySheet();
                this.generateContentBySheet();
-               this.excelTools.ajutementCell(this.numberColumnMax[i]);
+               //this.excelTools.ajutementCell(this.numberColumnMax[i]);
                this.excelTools.lockSheet(this.lockSheet[i]);
             }
          }

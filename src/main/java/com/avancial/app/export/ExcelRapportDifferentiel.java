@@ -630,6 +630,9 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
       
       this.excelTools.createRow(this.ligne++);
       
+      int sizeAllCompa = this.datas.size();
+      int cntTraiTranche = 1;
+      
       for (IComparaisonPlanTransport comparaison : this.datas) {
          isFirst = true;
          ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
@@ -1085,11 +1088,11 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                if (!restr.equals(""))
                   restr += "\n";
                
-               if (restriction.getOrigine() != null && restriction.getDestination() != null) {
+               if (restriction.getOrigine() != null && !restriction.getOrigine().getCodeGare().trim().equals("") && restriction.getDestination() != null && !restriction.getDestination().getCodeGare().trim().equals("")) {
                   restr += "On_Forbidden from " + restriction.getOrigine().getCodeGare() + " to " + restriction.getDestination().getCodeGare();
-               } else if (restriction.getOrigine() != null) {
+               } else if (restriction.getOrigine() != null && !restriction.getOrigine().getCodeGare().trim().equals("")) {
                   restr += "On_Forbidden at " + restriction.getOrigine().getCodeGare();
-               } else if (restriction.getDestination() != null) {
+               } else if (restriction.getDestination() != null && !restriction.getDestination().getCodeGare().trim().equals("")) {
                   restr += "Off_Forbidden at " + restriction.getDestination().getCodeGare();
                }
                
@@ -1110,7 +1113,8 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
            isFirst = false;
            this.writeTrainTrancheForSheetNewWithMerge(data, currentTrain, currentTranche, debutRowTrain);
            this.excelTools.createRow(this.ligne++);
-           System.out.println("******************************************* FIN D'UN TRAIN TRANCHE ************************************************************");
+           System.out.println("******************************************* FIN D'UN TRAIN TRANCHE " + currentTrain.getNumeroTrain() + ", " + currentTranche.getNumeroTranche() + " => " +  ((cntTraiTranche/sizeAllCompa)*100) + " % ************************************************************");
+           cntTraiTranche++;
          }
       }
 
