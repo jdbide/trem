@@ -626,7 +626,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
 
    private void generateContentForSheetNew() throws ClassNotFoundException {
       int debutRowTrain = 0;
-      boolean isFirst = true;
+      boolean isFirst = true;      
       
       this.excelTools.createRow(this.ligne++);
       
@@ -670,6 +670,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             }
 
 //            //OD
+            System.out.println("Regime OD");
             List<OrigineDestination> ods = (List<OrigineDestination>) currentTranche.getByAttributsField(APP_Field.OrigineDestination.toString());
             int line = debutRowTrain;
             isFirst = true;
@@ -702,6 +703,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                this.ligne = line;
             
           //distri
+            System.out.println("Regime Distri");
             List<Distribution> distributions = (List<Distribution>) currentTranche.getByAttributsField(APP_Field.Distribution.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -741,6 +743,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
               this.ligne = line;
            
             // compos
+           System.out.println("Regime Compo");
             List<Composition> compositions = (List<Composition>) currentTranche.getByAttributsField(APP_Field.Composition.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -825,6 +828,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                this.ligne = line;
             
          // CodeSat
+            System.out.println("Regime CodeSAT");
             List<CodeSat> codeSats = (List<CodeSat>) currentTranche.getByAttributsField(APP_Field.CodeSat.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -851,6 +855,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                this.ligne = line;
 
          // FareProfile
+            System.out.println("Regime Fare");
             List<FareProfile> fareProfiles = (List<FareProfile>) currentTranche.getByAttributsField(APP_Field.FareProfile.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -877,6 +882,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                this.ligne = line;
             
          // TypeEquipement
+            System.out.println("Regime Eqp");
             List<TypeEquipement> typeEquipements = (List<TypeEquipement>) currentTranche.getByAttributsField(APP_Field.TypeEquipement.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -904,6 +910,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             /**
              * ServiceABord
              */
+            System.out.println("Regime Service");
             List<ServiceABord> services = (List<ServiceABord>) currentTranche.getByAttributsField(APP_Field.ServiceABord.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -954,6 +961,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             if (this.ligne <= line)
                this.ligne = line;
          // repas
+            System.out.println("Regime Meal");
             List<Repas> listRepas = (List<Repas>) currentTranche.getByAttributsField(APP_Field.Repas.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -981,6 +989,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
 
             
             //Specif
+            System.out.println("Regime Specif");
             List<Specification> specifs = (ArrayList<Specification>) currentTranche.getByAttributsField(APP_Field.Specification.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -1040,7 +1049,10 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             
             if (this.ligne <= line)
                this.ligne = line;
-            
+            /**
+             * Restriction
+             */
+            System.out.println("Regime Restriction");
             List<Restriction> restrictions = (List<Restriction>) currentTranche.getByAttributsField(APP_Field.Restriction.toString());
             line = debutRowTrain;
             isFirst = true;
@@ -1098,6 +1110,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
            isFirst = false;
            this.writeTrainTrancheForSheetNewWithMerge(data, currentTrain, currentTranche, debutRowTrain);
            this.excelTools.createRow(this.ligne++);
+           System.out.println("******************************************* FIN D'UN TRAIN TRANCHE ************************************************************");
          }
       }
 

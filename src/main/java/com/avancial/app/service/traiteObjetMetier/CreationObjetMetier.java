@@ -30,6 +30,7 @@ public class CreationObjetMetier {
 
       /* Remplissage de la liste des trains */
       for (MotriceTrainTrancheEntity resTrainTranche : trainsTranches) {
+         System.out.println("Remplissage du train " + resTrainTranche.getTrainNumberMotriceTrainTranche() + " , tranche " + resTrainTranche.getTrancheNumberMotriceTrainTranche());
          if (!resTrainTranche.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
             train = new Train(new ArrayList<Tranche>(), resTrainTranche.getTrainNumberMotriceTrainTranche(), resTrainTranche.getValidForRRMotriceTrainTranche());
          }
