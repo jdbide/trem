@@ -1106,9 +1106,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             cntTraiTranche++;
          }
 
-         ((SXSSFSheet) this.excelTools.getSheet()).setRandomAccessWindowSize(this.ligne - 2);// flushRows();
-         ((SXSSFSheet) this.excelTools.getSheet()).setRandomAccessWindowSize(-1);// flushRows();
-         // ((SXSSFSheet) this.excelTools.getSheet()).flushRows(-1);
+         ((SXSSFSheet) this.excelTools.getSheet()).flushRows(1);
       }
 
    }
