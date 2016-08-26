@@ -145,6 +145,27 @@ public class ImportTmsWebService {
 			return responseBuilder.build();
 		}
 	}
+	
+	@GET
+   @Path("downloadFileLog")
+   @Produces("text/plain")
+   public Response downloadFileLog() throws Exception {
+      ResponseBuilder responseBuilder = null;
+      String path = "E:\\app\\tremas\\data\\log4j.log";
+      try {
+         
+         File fileDownload = new File(path);
+         responseBuilder = Response.ok((Object) fileDownload);
+         responseBuilder.header("Content-Disposition", "attachment; filename=\"log4j.log\"");
+
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBuilder = Response.status(400);
+
+      } finally {
+         return responseBuilder.build();
+      }
+   }
 
 	/**
 	 * exécuter un import d'un nouveau jeux de données
