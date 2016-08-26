@@ -21,40 +21,45 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * recupere la liste des tables a exporter
     * 
     * @return
+    * @throws Exception 
     */
-   protected abstract List<String> recuperationTablesExport();
+   protected abstract List<String> recuperationTablesExport() throws Exception;
 
    /**
     * recupere la liste des tables dans lesquel va se faire l'import
     * 
     * @return
+    * @throws Exception 
     */
-   protected abstract List<String> recuperationTablesImport();
+   protected abstract List<String> recuperationTablesImport() throws Exception;
 
    /**
     * vide les tables dans lesquel on va faire l'import
     * 
     * @return
+    * @throws Exception 
     */
-   protected abstract void clearTable();
+   protected abstract void clearTable() throws Exception;
 
    /**
     * renvoie la list des champs de la table (sauf l'id)
     * 
     * @param table
     * @return
+    * @throws Exception 
     * @throws SecurityException
     * @throws ClassNotFoundException
     */
-   protected abstract List<String> getColumnsName(String table);
+   protected abstract List<String> getColumnsName(String table) throws Exception;
 
    /**
     * renvoie les données contenue dans la table
     * 
     * @param table
     * @return
+    * @throws Exception 
     */
-   protected abstract List<Object[]> getData(String table);
+   protected abstract List<Object[]> getData(String table) throws Exception;
 
    /**
     * insert les données dans la table
@@ -63,7 +68,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * @param columns
     * @param donnees
     */
-   protected abstract void insertData(String table, List<String> columns, List<Object[]> donnees);
+   protected abstract void insertData(String table, List<String> columns, List<Object[]> donnees) throws Exception ;
    
    public ATraitementImportDataBase() {
       super();
@@ -75,7 +80,8 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
    }
 
    @Override
-   protected void executeTraitement() {
+   protected void executeTraitement() throws Exception  {
+      logger.info("Start executeTraitement");
       this.initSessiont();
       List<String> columns = null;
       List<Object[]> donnees = null;
@@ -91,8 +97,15 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
          } catch (SecurityException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            logger.error("ATraitementImportDataBase : executeTraitement -> ", e);
+            throw e;
+         } catch (Exception e) {
+            logger.error("ATraitementImportDataBase : executeTraitement -> ", e);
+            throw e;
          }
       }
+      
+      logger.info("End executeTraitement");
    }
 
    private void initSessiont() {

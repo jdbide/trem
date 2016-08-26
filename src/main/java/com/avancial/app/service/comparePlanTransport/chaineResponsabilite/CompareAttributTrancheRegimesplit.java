@@ -21,7 +21,6 @@ public class CompareAttributTrancheRegimesplit extends AChaineComparePlanTranspo
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
         List<IComparaisonPlanTransport> res = new ArrayList<>();
-        System.out.println("CompareAttributTrancheRegimesplit");
         ASousRegimeTranche attributAncien = (ASousRegimeTranche) comparableAncien;
         ASousRegimeTranche attributNouveau = (ASousRegimeTranche) comparableNouveau;
 

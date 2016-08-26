@@ -11,7 +11,6 @@ public class CompareTrainDelete extends ACompareTrainNewDelete {
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        System.out.println("CompareTrainDelete");
         Train trainAncien = (Train) comparableAncien;
         Train trainNouveau = (Train) comparableNouveau;
 

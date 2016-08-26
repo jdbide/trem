@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
 import org.hibernate.SQLQuery;
 import com.avancial.app.data.databean.RefTablesMotriceEntity;
 import com.avancial.app.utilitaire.GetEntiteService;
@@ -19,10 +21,13 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+		
 	protected String schema;
     
     public TraitementImportDb2Motrice() {
       super();
+      
+      this.logger = Logger.getLogger(TraitementImportDb2Motrice.class);
   }
 
     public TraitementImportDb2Motrice(EntityManager entityManagerExterne,
@@ -36,7 +41,8 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
      */
     @Override
     @SuppressWarnings({"unchecked"})
-    protected List<String> recuperationTablesExport() {
+    protected List<String> recuperationTablesExport()  throws Exception {
+       logger.info("Start recuperationTablesExport");
         Query query = this.em.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
         List<RefTablesMotriceEntity> entities = query.getResultList();
 
@@ -44,6 +50,8 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
         for (RefTablesMotriceEntity entite : entities) {
             result.add(this.schema + "." + entite.getLibelleTablesMotrice());
         }
+        
+        logger.info("End recuperationTablesExport");
         return result;
     }
 
@@ -52,7 +60,8 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
      */
     @SuppressWarnings("unchecked")
     @Override
-    protected List<String> recuperationTablesImport() {
+    protected List<String> recuperationTablesImport() throws Exception  {
+       logger.info("Start recuperationTablesImport");
         Query query = this.em.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
         List<RefTablesMotriceEntity> entities = query.getResultList();
 
@@ -60,12 +69,15 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
         for (RefTablesMotriceEntity entite : entities) {
             result.add(entite.getLibelleTablesMotrice());
         }
+        
+        logger.info("End recuperationTablesImport");
         return result;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void clearTable() {
+    protected void clearTable() throws Exception {
+       logger.info("Start clearTable");
         Query query = this.em.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
         List<RefTablesMotriceEntity> listTables = query.getResultList();
         String libelleTableMotrice;
@@ -77,13 +89,16 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
             delete.executeUpdate();
             this.sessionSocle.clear();
         }
+        
+        logger.info("End clearTable");
     }
 
     /**
      * @see ATraitementImportDataBase
      */
     @Override
-    protected List<String> getColumnsName(String table) {
+    protected List<String> getColumnsName(String table) throws Exception {
+       logger.info("Start getColumnsName");
         List<String> res = new ArrayList<>();
         try {
             for (Field field : GetEntiteService.getClasseEntiteImportFromTableMotrice(table).getDeclaredFields())
@@ -91,9 +106,13 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
                     res.add(field.getName());
         }
         catch (SecurityException | ClassNotFoundException e) {
+           logger.error("getColumnsName -> ", e);
             // TODO Auto-generated catch block
             e.printStackTrace();
+            throw e;
         }
+        
+        logger.info("End getColumnsName");
         return res;
     }
 
@@ -102,8 +121,11 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
      */
     @SuppressWarnings("unchecked")
     @Override
-    protected List<Object[]> getData(String table) {
+    protected List<Object[]> getData(String table) throws Exception {
+       logger.info("Start getData");
         Query query = this.entityManagerExterne.createNativeQuery("select * from " + table);
+
+        logger.info("End getData");
         return query.getResultList();
     }
 
@@ -111,7 +133,8 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
      * @see ATraitementImportDataBase
      */
     @Override
-    protected void insertData(String table, List<String> columns, List<Object[]> donnees) {
+    protected void insertData(String table, List<String> columns, List<Object[]> donnees) throws Exception {
+       logger.info("Start insertData");
         MapTraitementImportBrut mapTraitementImportBrut = new MapTraitementImportBrut();
         int count = 0;
         org.hibernate.Query query;
@@ -162,9 +185,12 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
         }
         catch (ParseException e) {
             this.log("echec de l'import du au traitement des données brut");
+            logger.error("echec de l'import du au traitement des données brut -> ", e);
+            // TODO Auto-generated catch block
             e.printStackTrace();
+            throw e;
         }
-
+        logger.info("End insertData");
     }
 
    /**

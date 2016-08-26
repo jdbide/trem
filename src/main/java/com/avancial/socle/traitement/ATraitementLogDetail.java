@@ -15,7 +15,7 @@ public abstract class ATraitementLogDetail extends ATraitementLog {
 
    LogTraitementDetailDataBean logDetailBean;
 
-   public void log(String message) {
+   public void log(String message) throws Exception {
       try {
          this.logDetailBean = new LogTraitementDetailDataBean();
          this.logDetailBean.setDateLogTraitementDetail(new Date());
@@ -27,6 +27,8 @@ public abstract class ATraitementLogDetail extends ATraitementLog {
          this.em.getTransaction().commit();
       } catch (Exception e) {
          e.printStackTrace();
+         logger.error("ATraitementLogDetail : log -> ", e);
+         throw e;
       }
       
    }
