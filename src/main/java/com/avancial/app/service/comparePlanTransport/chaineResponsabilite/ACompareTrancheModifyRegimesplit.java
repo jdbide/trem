@@ -92,6 +92,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
                         itSousRegimeTrancheAncien.remove();
                     }
                     itSousRegimeTrancheNouveau.remove();
+                    break;
                 }
                 else {
                     this.attributRestant = true;
