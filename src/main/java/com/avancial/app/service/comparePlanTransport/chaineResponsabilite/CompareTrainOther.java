@@ -24,7 +24,6 @@ public class CompareTrainOther extends AChaineComparePlanTransport {
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        System.out.println("CompareTrainOther");
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         Train trainAncien = (Train) comparableAncien;
         Train trainNouveau = (Train) comparableNouveau;

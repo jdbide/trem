@@ -28,7 +28,8 @@ public class Tranche extends ASousRegimeTranche {
            tranche.setAttributs(this.attributs.clone());
         } else {
            tranche.setAttributs(null);
-        }     
+        }
+        tranche.setRegime(this.regime.clone());
         return tranche;
     }
     @Override

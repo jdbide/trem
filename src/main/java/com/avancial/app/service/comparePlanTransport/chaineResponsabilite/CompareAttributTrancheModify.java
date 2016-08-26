@@ -20,7 +20,6 @@ public class CompareAttributTrancheModify extends AChaineComparePlanTransport {
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        System.out.println("CompareAttributTrancheModify");
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         ASousRegimeTranche attributAncien = (ASousRegimeTranche) comparableAncien;
         ASousRegimeTranche attributNouveau = (ASousRegimeTranche) comparableNouveau;

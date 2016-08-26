@@ -219,15 +219,16 @@ public class TestGenerateExcel {
    }
    
    @Test
-   public void TestGenerateExcelLocalAvecParamsAndInject() {
+   public void TestGenerateExcelLocalAvecParamsAndInject2() {
       try {
          MapPlansDeTransport   mapPlansDeTransport = new MapPlansDeTransport();
-         this.traitementObjetMetier.setMapPlansDeTransport(mapPlansDeTransport);
-         this.traitementObjetMetier.setEnvironnementCompagnie("ES_PROD");
+         mapPlansDeTransport.putAll(PlanTransportFactory.createDataForCompare());
+//         this.traitementObjetMetier.setMapPlansDeTransport(mapPlansDeTransport);
+//         this.traitementObjetMetier.setEnvironnementCompagnie("ES_PROD");
          
-         this.traitementObjetMetier.execute();
-         mapPlansDeTransport.setPlanTransportDraft(mapPlansDeTransport.getPlanTransportActive());
-         mapPlansDeTransport.setPlanTransportActive(new PlanTransport());
+//         this.traitementObjetMetier.execute();
+//         mapPlansDeTransport.setPlanTransportDraft(mapPlansDeTransport.getPlanTransportActive());
+//         mapPlansDeTransport.setPlanTransportActive(new PlanTransport());
          
          IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
          
@@ -240,8 +241,6 @@ public class TestGenerateExcel {
          this.excelRapportDifferentiel.setFilePath("D:/was_tmp/tremas/export/");
          this.excelRapportDifferentiel.setXlsx(true);
          
-         this.excelRapportDifferentiel.setDatas(comparePlanTransport.compare(mapPlansDeTransport.get(1).get(), mapPlansDeTransport.get(2).get()));
-         this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
          
          this.excelRapportDifferentiel.generate();
          if (!FileUtil.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {
