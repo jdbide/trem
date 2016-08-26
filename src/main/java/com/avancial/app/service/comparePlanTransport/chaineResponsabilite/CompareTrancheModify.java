@@ -12,7 +12,6 @@ public class CompareTrancheModify extends ACompareTrancheModifyRegimesplit {
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        System.out.println("CompareTrancheModify");
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         Tranche trancheAncien = (Tranche) comparableAncien;
         Tranche trancheNouveau = (Tranche) comparableNouveau;

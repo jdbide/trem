@@ -150,18 +150,48 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 			   logger.error("Echec de l'import", ex);
 			}
 			
+            Task.setMsgTask(this.idTask, "Suppression des données temporaires");
 			this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
+            this.traitementDeleteJeuDonnee.setStatus(Status.IMPORT);
+            System.out.println("------> Suppression des données temporaires");
+            try {
+                // Thread.sleep(10000);
+                this.traitementDeleteJeuDonnee.execute();
+            } catch (Exception e) {
+                this.log("Echec de la suppression des données temporaires");
+                Task.finishKoTask(this.idTask, "Echec de la suppression des données temporaires");
+                System.err.println("------> Echec de la suppression des données temporaires");
+                e.printStackTrace();
+                throw e;
+            }
+
+            Task.setMsgTask(this.idTask, "Suppression de l'éventuel Draft");
 			this.traitementDeleteJeuDonnee.setStatus(Status.DRAFT);
+            System.out.println("------> Suppression de l'éventuel Draft");
+            try {
+                // Thread.sleep(10000);
 			this.traitementDeleteJeuDonnee.execute();
+            } catch (Exception e) {
+                this.log("Echec de la suppression du Draft");
+                Task.finishKoTask(this.idTask, "Echec de la suppression du Draft");
+                System.err.println("------> Echec de la suppression du Draft");
+                e.printStackTrace();
+                throw e;
+            }
 
 			/* Insertion dans les tables du modèle motrice */
 			// Instanciation et sauvegarde du nouveau jeu de données
+            Task.setMsgTask(this.idTask, "Sauvegarde jeu de données");
 			jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(compagnieEnvironnementEntity);
 			jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
 			jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
 			
 			this.jeuDonneeService.save(jeuDonneeDataBean);
+
 			logger.info("Save jeu donnée, " + jeuDonneeDataBean.getIdJeuDonnees());
+
+            Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
+
 			this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
 			this.traitementMotrice.setMap(this.mapPlansDeTransport);
 			Task.setMsgTask(this.idTask, "Création du draft");

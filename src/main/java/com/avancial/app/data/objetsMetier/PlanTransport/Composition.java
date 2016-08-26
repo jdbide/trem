@@ -23,6 +23,7 @@ public class Composition extends ASousRegimeTranche {
         this.codeDiag = "";
         this.codeRame = "";
         this.codeRm = "";
+        this.regime = new Regime();
     }
 
     public Composition clone() {
@@ -40,6 +41,7 @@ public class Composition extends ASousRegimeTranche {
         } else {
            res.setVoitures(null);
         }
+        res.setRegime(this.regime);
         
         return res;
 
