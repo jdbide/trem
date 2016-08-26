@@ -68,7 +68,7 @@ public class TraiteMotriceRegimeMealType implements ITraiteMotriceRegime {
 					idRegime);
 			try {
 				listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas((String) record[0]),
-						new Horaire(formatter.parse((String) record[1]), formatter.parse((String) record[1])),
+						new Horaire(formatter.parse((String) record[1]), formatter.parse((String) record[2])),
 						new Regime((String) record[3])));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
