@@ -13,7 +13,6 @@ public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
     @Override
     public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        System.out.println("CompareTrancheUnchanged");
         List<IComparaisonPlanTransport> res = new ArrayList<>();
 
         /* On récupère les résultats du ou des successeurs */

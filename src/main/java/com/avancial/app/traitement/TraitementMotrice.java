@@ -119,7 +119,6 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 
 				System.out
 						.println("TRAITEMENT DU TRAIN-TRANCHE " + motriceTrainTrancheEntity.getIdMotriceTrainTranche());
-				System.out.println("Insertion dans la table tremas_motrice_train_tranche");
 
 				/* Insertion du régime lié au train-tranche */
 				cptRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
@@ -132,7 +131,6 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 				this.em.persist(motriceRegimeEntity);
 				this.em.getTransaction().commit();
 
-				System.out.println("Insertion dans la table tremas_motrice_regime du regime train-tranche associe");
 				if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
 					train = new Train(new ArrayList<Tranche>(),
 							motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
@@ -153,14 +151,10 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 								refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
 						ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory
 								.getTraiteMotriceRegime(entity);
-						System.out.println("Debut du traitement de "
-								+ refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
 
 						traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime,
 								mapGeneratorTablesMotriceRegime, this.em, atomicTranche);
 
-						System.out.println("Fin du traitement de "
-								+ refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
 					} catch (Exception e) {
 						System.err.println("Erreur dans la récupération de l'entité motrice régime : "
 								+ refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime()
@@ -175,23 +169,17 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			/* Insertion dans les tables */
 			/* On commence par la table tremas_motrice_regime */
 			this.log("Debut d'insertion dans la table tremas_motrice_regime");
-			System.out.println("Debut d'insertion dans la table tremas_motrice_regime");
 			this.executeRequestGenerator(MotriceRegimeEntity.class, mapGeneratorTablesMotriceRegime);
 			this.log("Fin d'insertion dans la table tremas_motrice_regime");
-			System.out.println("Fin d'insertion dans la table tremas_motrice_regime");
 			/* Ensuite on insère dans les tables motrice_regime */
 			for (RefTablesMotriceRegimeEntity refTablesMotriceRegimeEntity : motriceRegimeEntities) {
 				try {
 					this.log("Debut d'insertion pour "
 							+ refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
-					System.out.println("Debut d'insertion pour "
-							+ refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
 					Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(
 							refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
 					this.executeRequestGenerator(entity, mapGeneratorTablesMotriceRegime);
 					this.log("Fin d'insertion pour " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
-					System.out.println(
-							"Fin d'insertion pour " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
 				} catch (Exception e) {
 					System.err.println("Erreur dans la récupération de l'entité motrice régime : "
 							+ refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
