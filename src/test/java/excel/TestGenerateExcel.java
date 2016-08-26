@@ -28,17 +28,23 @@ import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
+import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.export.ExcelRapportDifferentiel;
+import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
+import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
+import com.avancial.app.traitement.TraitementObjetMetier;
 import com.avancial.app.utilitaire.FileUtil;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
+import com.avancial.socle.data.model.databean.IhmPageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 import factory.PlanTransportFactory;
 
@@ -54,7 +60,17 @@ public class TestGenerateExcel {
 
       WebArchive jar = ShrinkWrap.create(WebArchive.class)
             .addPackage(ExcelRapportDifferentiel.class.getPackage())
+            .addClass(JeuDonneeService.class)
+            .addClass(TraiteObjetMetierRegimeFactory.class)
             .addClass(FileUtil.class)
+            .addPackage(CodeSat.class.getPackage())
+            .addPackage(IhmPageDataBean.class.getPackage())
+            .addClass(JeuDonneeService.class)
+            .addClass(TraiteObjetMetierRegimeFactory.class)
+            .addClass(MapPlansDeTransport.class)
+            .addClass(TraitementObjetMetier.class)
+            .addPackage(Socle_PUSocle.class.getPackage())
+            .addPackage(EntityManagerProducerSocle.class.getPackage())
             // .addAsManifestResource("arquillian.xml")
             .addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")
             // .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
@@ -67,6 +83,10 @@ public class TestGenerateExcel {
    
    @Inject
    ExcelRapportDifferentiel excelRapportDifferentiel;
+   
+   @Inject
+   TraitementObjetMetier traitementObjetMetier;
+   
    /**
     * @return 
     * 
@@ -162,14 +182,26 @@ public class TestGenerateExcel {
       }      
    }
    
-  @Test
+  //@Test
    public void TestGenerateExcelDonneesParDefautEtInject() {
       try {
-         MapPlansDeTransport   mapPlansDeTransport = PlanTransportFactory.createDataForCompare();
+         MapPlansDeTransport   mapPlansDeTransport = new MapPlansDeTransport();
+         this.traitementObjetMetier.setMapPlansDeTransport(mapPlansDeTransport);
+         this.traitementObjetMetier.setEnvironnementCompagnie("ES_PROD");
+         
+         this.traitementObjetMetier.execute();
+         mapPlansDeTransport.setPlanTransportDraft(mapPlansDeTransport.getPlanTransportActive());
+         mapPlansDeTransport.setPlanTransportActive(new PlanTransport());
+         
          IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
          
-         this.excelRapportDifferentiel.setDatas(comparePlanTransport.compare(mapPlansDeTransport.get(1).get(), mapPlansDeTransport.get(2).get()));
+         this.excelRapportDifferentiel.setDatas(comparePlanTransport.compare(mapPlansDeTransport.getPlanTransportActive(), mapPlansDeTransport.getPlanTransportDraft()));
          this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
+         
+         mapPlansDeTransport.getPlanTransportActive();
+         mapPlansDeTransport.getPlanTransportDraft();
+         
+         
 
          this.excelRapportDifferentiel.generate();
          if (!FileUtil.existFile("D:/was_tmp/tremas/export.xls")) {
@@ -186,19 +218,29 @@ public class TestGenerateExcel {
       Assert.assertNotNull(this.excelRapportDifferentiel);
    }
    
-   //@Test
-   public void TestGenerateExcelLocalAvecParamsAndInject() {
+   @Test
+   public void TestGenerateExcelLocalAvecParamsAndInject2() {
       try {
-         MapPlansDeTransport   mapPlansDeTransport = PlanTransportFactory.createDataForCompare();
+         MapPlansDeTransport   mapPlansDeTransport = new MapPlansDeTransport();
+         mapPlansDeTransport.putAll(PlanTransportFactory.createDataForCompare());
+//         this.traitementObjetMetier.setMapPlansDeTransport(mapPlansDeTransport);
+//         this.traitementObjetMetier.setEnvironnementCompagnie("ES_PROD");
+         
+//         this.traitementObjetMetier.execute();
+//         mapPlansDeTransport.setPlanTransportDraft(mapPlansDeTransport.getPlanTransportActive());
+//         mapPlansDeTransport.setPlanTransportActive(new PlanTransport());
+         
          IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
+         
+         this.excelRapportDifferentiel.setDatas(comparePlanTransport.compare(mapPlansDeTransport.getPlanTransportActive(), mapPlansDeTransport.getPlanTransportDraft()));
+         this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
+         
 
          // Ajout des params
          this.excelRapportDifferentiel.setFileName("Test_TestGenerateExcelLocalAvecParamsAndInject");
          this.excelRapportDifferentiel.setFilePath("D:/was_tmp/tremas/export/");
          this.excelRapportDifferentiel.setXlsx(true);
          
-         this.excelRapportDifferentiel.setDatas(comparePlanTransport.compare(mapPlansDeTransport.get(1).get(), mapPlansDeTransport.get(2).get()));
-         this.excelRapportDifferentiel.setMapPlansDeTransport(mapPlansDeTransport);
          
          this.excelRapportDifferentiel.generate();
          if (!FileUtil.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {

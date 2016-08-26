@@ -118,7 +118,7 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
                this.generatePreEnteteBySheet();
                this.generateEnteteBySheet();
                this.generateContentBySheet();
-               this.excelTools.ajutementCell(this.numberColumnMax[i]);
+               //this.excelTools.ajutementCell(this.numberColumnMax[i]);
                this.excelTools.lockSheet(this.lockSheet[i]);
             }
          }
@@ -153,7 +153,7 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
             FileInputStream inputStream = new FileInputStream("template.xlsx");
             XSSFWorkbook wb_template = new XSSFWorkbook(inputStream);
             inputStream.close();
-            this.classeurXls = new SXSSFWorkbook(wb_template);
+            this.classeurXls = new SXSSFWorkbook(wb_template, -1);
             ((SXSSFWorkbook) this.classeurXls).setCompressTempFiles(true);
          } else {
             HSSFWorkbook wb = new HSSFWorkbook();
