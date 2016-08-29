@@ -88,8 +88,6 @@ public class TestJeuDeDonnees {
 //         this.entityManager.getTransaction().commit();
          
          JeuDonneeEntity tremasJD = new JeuDonneeEntity();
-         tremasJD.setActifJeuDonnees(true);
-         tremasJD.setCommentaireJeuDonnees("");
          tremasJD.setCompagnieEnvironnement(compagnieEnvironnement);
          tremasJD.setDateCreateJeuDonnees(new Date());
          tremasJD.setDateLastUpdateJeuDonnees(new Date());

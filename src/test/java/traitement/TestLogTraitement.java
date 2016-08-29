@@ -48,7 +48,13 @@ public class TestLogTraitement {
    @Test
    public void testLogTraitementPersistence() {
 
-      this.traitement.execute();
+      try {
+        this.traitement.execute();
+    }
+    catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
    }
 
 }
