@@ -7,7 +7,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 public class TraiteDeleteRegimeTrainTranche implements ITraiteDeleteDonnees {
 
     @Override
-    public void execute(List<MotriceRegimeEntity> regimes, EntityManager entityManager) {
+    public void execute(List<MotriceRegimeEntity> regimes, EntityManager entityManager) throws Exception {
         // TODO Auto-generated method stub
         
     }

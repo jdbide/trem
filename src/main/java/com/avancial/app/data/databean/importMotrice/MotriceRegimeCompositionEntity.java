@@ -1,6 +1,7 @@
 package com.avancial.app.data.databean.importMotrice;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,12 +14,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_composition")
 @NamedQueries({
         @NamedQuery(name = "MotriceRegimeComposition.getAll", query = "SELECT t FROM MotriceRegimeCompositionEntity t"),
+        @NamedQuery(name = "MotriceRegimeComposition.getByRegimes", query = "SELECT d FROM MotriceRegimeCompositionEntity d WHERE d.motriceRegime IN (:regimes)"),
         @NamedQuery(name = "MotriceRegimeComposition.deleteAll", query = "DELETE FROM MotriceRegimeCompositionEntity"),
         @NamedQuery(name = "MotriceRegimeComposition.deleteByRegimes",
                 query = "DELETE FROM MotriceRegimeCompositionEntity t WHERE t.motriceRegime IN (:regimes)"),

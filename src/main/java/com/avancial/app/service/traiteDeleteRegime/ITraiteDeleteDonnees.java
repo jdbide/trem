@@ -6,6 +6,6 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 
 public interface ITraiteDeleteDonnees {
 
-    void execute(List<MotriceRegimeEntity> regimes, EntityManager entityManager);
+    void execute(List<MotriceRegimeEntity> regimes, EntityManager entityManager) throws Exception;
 
 }

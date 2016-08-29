@@ -37,11 +37,6 @@ public class JeuDonneeEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idJeuDonnees;
 
-	private Boolean actifJeuDonnees;
-
-	// @Lob
-	private String commentaireJeuDonnees;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreateJeuDonnees;
 
@@ -70,22 +65,6 @@ public class JeuDonneeEntity implements Serializable {
 
 	public void setIdJeuDonnees(int idJeuDonnees) {
 		this.idJeuDonnees = idJeuDonnees;
-	}
-
-	public Boolean getActifJeuDonnees() {
-		return this.actifJeuDonnees;
-	}
-
-	public void setActifJeuDonnees(Boolean actifJeuDonnees) {
-		this.actifJeuDonnees = actifJeuDonnees;
-	}
-
-	public String getCommentaireJeuDonnees() {
-		return this.commentaireJeuDonnees;
-	}
-
-	public void setCommentaireJeuDonnees(String commentaireJeuDonnees) {
-		this.commentaireJeuDonnees = commentaireJeuDonnees;
 	}
 
 	public Date getDateCreateJeuDonnees() {
