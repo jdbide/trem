@@ -34,7 +34,7 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
 						+ "tyvo.TYVO_DIAV_COD AS diagCodeMotriceRegimeComposition, "
 						+ "voiture.VOIT_COD_ORIG AS rameCodeMotriceRegimeComposition, "
 						+ "coderm.codeRmRefCodeRm AS rmCodeMotriceRegimeComposition, "
-						+ "LPAD(voiture.VOIT_NUM, 3, '0') AS coachNumberMotriceRegimeCompositionCoach, "
+						+ "LPAD(voiture.VOIT_NUM_RESA, 3, '0') AS coachNumberMotriceRegimeCompositionCoach, "
 						+ "voiture.VOIT_REGI_UTIL AS periodMotriceRegime " + "FROM tremas_import_tmdvoit AS voiture "
 						+ "INNER JOIN tremas_import_tmdcath AS cara ON voiture.VOIT_TRCH_COD_CIE = cara.CATH_TRCH_COD_CIE AND voiture.VOIT_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 AND voiture.VOIT_TRCH_IND_FER = cara.CATH_TRCH_IND_FER AND voiture.VOIT_TRCH_NUM = cara.CATH_TRCH_NUM "
 						+ "LEFT JOIN tremas_import_tmdrcth AS classe ON voiture.VOIT_TRCH_COD_CIE = classe.RCTH_TRCH_COD_CIE AND voiture.VOIT_TRCH_NUM_TRA1 = classe.RCTH_TRCH_NUM_TRA1 AND voiture.VOIT_TRCH_IND_FER = classe.RCTH_TRCH_IND_FER AND voiture.VOIT_TRCH_NUM = classe.RCTH_TRCH_NUM "
