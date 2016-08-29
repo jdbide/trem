@@ -37,7 +37,8 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 				.createNativeQuery("SELECT voiture.VOIT_NUM_RESA AS coachNumberMotriceRegimeSpecificity, "
 						+ "'' AS compartmentNumberMotriceRegimeSpecificity, "
 						+ "LPAD( CONCAT( sppl.SPPL_PCDD_NUM_COMP, sppl.SPPL_PCDD_NUM_PLAC ), 3, '0' ) AS seatNumberMotriceRegimeSpecificity, "
-						+ "sppl.SPPL_SPEC_COD AS stateCodeMotriceRegimeSpecificity, " + "sppl.SPPL_REGI AS regime "
+						+ "sppl.SPPL_SPEC_COD AS stateCodeMotriceRegimeSpecificity, "
+						+ "sppl.SPPL_REGI AS regime "
 						+ "FROM tremas_import_tmdvoit AS voiture "
 						+ "INNER JOIN tremas_import_tmdcath AS cara ON voiture.VOIT_TRCH_COD_CIE = cara.CATH_TRCH_COD_CIE "
 						+ "AND voiture.VOIT_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 "
@@ -48,7 +49,9 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 						+ "AND voiture.VOIT_TRCH_NUM_TRA1 = sppl.SPPL_VOIT_NUM_TRA1 "
 						+ "AND voiture.VOIT_TRCH_NUM = sppl.SPPL_VOIT_TRCH_NUM "
 						+ "AND voiture.VOIT_TRCH_IND_FER = sppl.SPPL_VOIT_IND_FER " + "WHERE cara.CATH_SSIM = ? "
-						+ "AND cara.CATH_TRCH_NUM_TRA1 = ? " + "AND sppl.SPPL_SPEC_COD = 'F'");
+						+ "AND cara.CATH_TRCH_NUM_TRA1 = ? "
+						+ "AND sppl.SPPL_SPEC_COD = 'F' "
+						+ "ORDER BY sppl.SPPL_REGI");
 		query.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
 		query.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
 
