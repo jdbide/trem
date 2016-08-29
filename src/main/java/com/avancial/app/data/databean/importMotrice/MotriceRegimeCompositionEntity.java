@@ -50,6 +50,24 @@ public class MotriceRegimeCompositionEntity {
     @ForeignKey(name = "FK_motrice_regime_composition_idMotriceRegime")
     private MotriceRegimeEntity motriceRegime;
 
+    public MotriceRegimeCompositionEntity() {
+        super();
+    }
+
+    public MotriceRegimeCompositionEntity(Long idMotriceRegimeComposition, String classCodeMotriceRegimeComposition,
+            String diagCodeMotriceRegimeComposition, String rameCodeMotriceRegimeComposition,
+            String rmCodeMotriceRegimeComposition, List<MotriceRegimeCompositionCoachEntity> carsNumbers,
+            MotriceRegimeEntity motriceRegime) {
+        super();
+        this.idMotriceRegimeComposition = idMotriceRegimeComposition;
+        this.classCodeMotriceRegimeComposition = classCodeMotriceRegimeComposition;
+        this.diagCodeMotriceRegimeComposition = diagCodeMotriceRegimeComposition;
+        this.rameCodeMotriceRegimeComposition = rameCodeMotriceRegimeComposition;
+        this.rmCodeMotriceRegimeComposition = rmCodeMotriceRegimeComposition;
+        this.carsNumbers = carsNumbers;
+        this.motriceRegime = motriceRegime;
+    }
+
     /**
      * @return the idMotriceRegimeComposition
      */

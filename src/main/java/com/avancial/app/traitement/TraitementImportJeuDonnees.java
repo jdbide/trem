@@ -114,7 +114,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 				// Instanciation EntityManagerFactory avec les bonnes données de
 				// la dataSource de l'environnement
 				Task.setMsgTask(this.idTask, "Connexion à Motrice");
-				System.err.println("------> Connexion à Motrice");
+				System.out.println("------> Connexion à Motrice");
 				logger.info("Connexion à Motrice");
 				this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(compagnieEnvironnementEntity,
 						this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();

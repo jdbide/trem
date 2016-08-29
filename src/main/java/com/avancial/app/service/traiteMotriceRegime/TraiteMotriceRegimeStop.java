@@ -75,11 +75,9 @@ public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
                                                  // entrée
                 mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(),
                         desserte[3], 2, motriceTrainTrancheEntity.getIdMotriceTrainTranche());
-                if (stops != null) {
-                    listeDessertes.add(stops);
-                }
-
                 stops = new Desserte(new ArrayList<GareHoraire>(), new Regime((String) desserte[3]));
+                listeDessertes.add(stops);
+
             }
             // insertion du régime desserte lié au régime
             mapGeneratorTablesMotriceRegime.get(MotriceRegimeStopEntity.class).addValue(idRegimeStop.getAndIncrement(),

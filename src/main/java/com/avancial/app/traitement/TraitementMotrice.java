@@ -191,8 +191,6 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			this.log("Debut d'insertion dans la table tremas_motrice_regime_composition_coach");
 			this.executeRequestGenerator(MotriceRegimeCompositionCoachEntity.class, mapGeneratorTablesMotriceRegime);
 			this.log("Fin d'insertion dans la table tremas_motrice_regime_composition_coach");
-			this.em.getTransaction().commit();
-			this.em.close();
 			this.log("Fin du traitement de l'import brut");
 		}
 
