@@ -1,6 +1,5 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
@@ -9,6 +8,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTranspor
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 /**
  * Implémentation pour les comparaisons NEW et DELETE au niveau d'un plan de
@@ -35,10 +35,10 @@ public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanT
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    protected List<IComparaisonPlanTransport> compareTrainLists(
+    protected MapComparaisonPlanTransport compareTrainLists(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, List<? extends IPlanTransport> trainsAncien,
             List<? extends IPlanTransport> trainsNouveau) throws Exception {
-        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
         ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
         /* Boucle sur les trainsNouveau */
@@ -55,7 +55,7 @@ public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanT
                     comparaisonPlanTransport.setNumeroTrain(trainNouveau.getNumeroTrain());
                     comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                     comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
-                    res.add(comparaisonPlanTransport);
+                    res.putComparaison(comparaisonPlanTransport);
                 }
 
                 /* On retire le nouveau train de la liste */

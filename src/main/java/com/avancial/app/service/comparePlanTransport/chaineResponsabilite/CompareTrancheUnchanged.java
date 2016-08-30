@@ -1,21 +1,20 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
+    public MapComparaisonPlanTransport compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
         Tranche trancheAncien = (Tranche) comparableAncien;
         Tranche trancheNouveau = (Tranche) comparableNouveau;
 
@@ -29,7 +28,7 @@ public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
         }
 
         /* On récupère les résultats du ou des successeurs */
-        res.addAll(this.successeurCompare(comparableAncien, comparableNouveau));
+        res.putAll(this.successeurCompare(comparableAncien, comparableNouveau));
 
         /*
          * Si la liste est vide, c'est qu'aucun attribut n'est modifié : la
@@ -39,7 +38,7 @@ public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
             ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonPlanTransport<>();
             comparaisonPlanTransport.setNumeroTranche(((Tranche) comparableNouveau).getNumeroTranche());
             comparaisonPlanTransport.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
-            res.add(comparaisonPlanTransport);
+            res.putComparaison(comparaisonPlanTransport);
         }
 
         return res;

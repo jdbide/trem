@@ -1,9 +1,7 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 public abstract class AChaineComparePlanTransport implements IChaineComparePlanTransport {
 
@@ -20,11 +18,11 @@ public abstract class AChaineComparePlanTransport implements IChaineComparePlanT
      * @return
      * @throws Exception
      */
-    protected List<IComparaisonPlanTransport> successeurCompare(IPlanTransport comparableAncien,
+    protected MapComparaisonPlanTransport successeurCompare(IPlanTransport comparableAncien,
             IPlanTransport comparableNouveau) throws Exception {
-        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
         if (this.successeur != null) {
-            res.addAll(this.successeur.compare(comparableAncien, comparableNouveau));
+            res.putAll(this.successeur.compare(comparableAncien, comparableNouveau));
         }
         return res;
     }
