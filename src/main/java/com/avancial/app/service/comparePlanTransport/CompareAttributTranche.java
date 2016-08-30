@@ -17,14 +17,14 @@ public class CompareAttributTranche extends AComparePlanTransport {
 
     @Override
     protected void initChaineComparePlanTransport() {
-        IChaineComparePlanTransport chaineCompareAttributTrancheRegimesplit = new CompareAttributTrancheRegimesplit();
         IChaineComparePlanTransport chaineCompareAttributTrancheModify = new CompareAttributTrancheModify();
+        IChaineComparePlanTransport chaineCompareAttributTrancheRegimesplit = new CompareAttributTrancheRegimesplit();
         IChaineComparePlanTransport chaineCompareAttributTrancheUnchanged = new CompareAttributTrancheUnchanged();
 
-        chaineCompareAttributTrancheRegimesplit.setSuccesseur(chaineCompareAttributTrancheModify);
-        chaineCompareAttributTrancheModify.setSuccesseur(chaineCompareAttributTrancheUnchanged);
+        chaineCompareAttributTrancheModify.setSuccesseur(chaineCompareAttributTrancheRegimesplit);
+        chaineCompareAttributTrancheRegimesplit.setSuccesseur(chaineCompareAttributTrancheUnchanged);
 
-        this.chaineComparePlanTransport = chaineCompareAttributTrancheRegimesplit;
+        this.chaineComparePlanTransport = chaineCompareAttributTrancheModify;
     }
 
 }

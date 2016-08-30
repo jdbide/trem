@@ -1,12 +1,10 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 /**
  * Implémentation de la comparaison MODIFY entre deux attributs de Tranche (ils
@@ -18,9 +16,9 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 public class CompareAttributTrancheModify extends AChaineComparePlanTransport {
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
+    public MapComparaisonPlanTransport compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
         ASousRegimeTranche attributAncien = (ASousRegimeTranche) comparableAncien;
         ASousRegimeTranche attributNouveau = (ASousRegimeTranche) comparableNouveau;
 
@@ -29,7 +27,7 @@ public class CompareAttributTrancheModify extends AChaineComparePlanTransport {
                     "Ne peut pas comparer deux instances de IPlanTransport de classes différentes!");
         }
         
-        ComparaisonPlanTransport<ASousRegimeTranche> comparaisonPlanTransport = new ComparaisonPlanTransport<ASousRegimeTranche>();
+        ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonPlanTransport<IPlanTransport>();
         /*
          * Deux attributs sont modifiés entre deux jeux de données s'ils ont le
          * même régime, mais des valeurs de champs différentes
@@ -42,7 +40,7 @@ public class CompareAttributTrancheModify extends AChaineComparePlanTransport {
             comparaisonPlanTransport.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
             comparaisonPlanTransport.setAncienField(attributAncien);
             comparaisonPlanTransport.setNouveauField(attributNouveau);
-            res.add(comparaisonPlanTransport);
+            res.putComparaison(comparaisonPlanTransport);
             return res;
         }
 

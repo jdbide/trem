@@ -1,14 +1,12 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.service.comparePlanTransport.CompareTrain;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 /**
  * Appelle la chaîne de comparaison entre deux trains que l'on retrouve dans
@@ -20,10 +18,10 @@ import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 public class ComparePlanTransportOther extends AChaineComparePlanTransport {
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
+    public MapComparaisonPlanTransport compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
         System.out.println("ComparePlanTransportOther");
-        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
         PlanTransport pdtAncien = (PlanTransport) comparableAncien;
         PlanTransport pdtNouveau = (PlanTransport) comparableNouveau;
 
@@ -36,14 +34,14 @@ public class ComparePlanTransportOther extends AChaineComparePlanTransport {
                 Train trainAncien = itTrainAncien.next();
                 /* Si les trains ont le même numeroTrain, on les compare */
                 if (trainNouveau.equals(trainAncien)) {
-                    res.addAll(comparePlanTransport.compare(trainAncien, trainNouveau));
+                    res.putAll(comparePlanTransport.compare(trainAncien, trainNouveau));
                     /* Comparaison entre les trains terminée */
                     itTrainAncien.remove();
                     break;
                 }
             }
         }
-        res.addAll(this.successeurCompare(comparableAncien, comparableNouveau));
+        res.putAll(this.successeurCompare(comparableAncien, comparableNouveau));
         return res;
     }
 

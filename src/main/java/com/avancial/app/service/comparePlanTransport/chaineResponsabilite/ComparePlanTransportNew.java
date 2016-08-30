@@ -1,15 +1,14 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 public class ComparePlanTransportNew extends AComparePlanTransportNewDelete {
 
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
+    public MapComparaisonPlanTransport compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
         System.out.println("ComparePlanTransportNew");
         PlanTransport pdtAncien = (PlanTransport) comparableAncien;
@@ -26,10 +25,10 @@ public class ComparePlanTransportNew extends AComparePlanTransportNewDelete {
          * Comparaison des listes de train pour détecter les nouveaux dans
          * pdtNouveau par rapport à pdtAncien
          */
-        List<IComparaisonPlanTransport> res = this.compareTrainLists(EnumTypeComparaisonPlanTransport.NEW,
+        MapComparaisonPlanTransport res = this.compareTrainLists(EnumTypeComparaisonPlanTransport.NEW,
                 copyAncien.getTrains(), copyNouveau.getTrains());
 
-        res.addAll(this.successeurCompare(copyAncien, copyNouveau));
+        res.putAll(this.successeurCompare(copyAncien, copyNouveau));
         return res;
     }
 
