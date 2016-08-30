@@ -7,10 +7,10 @@ public class PrintExcelServiceABord extends APrintExcelSousRegimeTranche {
 
    @Override
    public String printValue(ASousRegimeTranche planTransport) {
-      String classes = "";
+      this.stringBuilder.setLength(0);
       ServiceABord service = (ServiceABord) planTransport;
-      classes += service.getCodeService() + " - " + service.getClasse().toString() + " - " + service.getOrigine().getCodeGare() + " to " + service.getDestination().getCodeGare();
-      return classes;
+      this.stringBuilder.append(service.getCodeService()).append(" - ").append(service.getClasse().toString()).append(" - ").append(service.getOrigine().getCodeGare()).append(" to ").append(service.getDestination().getCodeGare());
+      return this.stringBuilder.toString();
    }
 
 }

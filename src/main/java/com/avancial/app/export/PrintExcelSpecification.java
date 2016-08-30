@@ -9,22 +9,22 @@ public class PrintExcelSpecification extends APrintExcelSousRegimeTranche {
 
    @Override
    public String printValue(ASousRegimeTranche planTransport) {
-      String spec = "";
+      this.stringBuilder.setLength(0);
       Specification specif = (Specification) planTransport;
-      spec += "Coach " + specif.getVoiture().getNumeroVoiture() + ", ";
+      this.stringBuilder.append("Coach ").append(specif.getVoiture().getNumeroVoiture()).append(", ");
       if (specif.getVoiture().getCompartiments() != null) {
          for (Compartiment compartiment : specif.getVoiture().getCompartiments()) {
             if (compartiment.getNumeroCompartiment() != null) {
-               spec += "Compartment " + compartiment.getNumeroCompartiment() + ", ";
+               this.stringBuilder.append("Compartment ").append(compartiment.getNumeroCompartiment()).append(", ");
             } else {
                for (Siege siege : compartiment.getSieges()) {
-                  spec += " Seat " + siege.getNumeroSiege() + ", ";
+                  this.stringBuilder.append(" Seat ").append(siege.getNumeroSiege()).append(", ");
                }
             }
          }
       }
-      spec += specif.getEtat().toString();
-      return spec;
+      this.stringBuilder.append(specif.getEtat().toString());
+      return this.stringBuilder.toString();
    }
 
 }
