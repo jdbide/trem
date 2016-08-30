@@ -5,7 +5,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Compartiment;
 import com.avancial.app.data.objetsMetier.PlanTransport.Siege;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 
-public class PrintExcelSousRegimeSpecification extends APrintExcelSousRegimeTranche {
+public class PrintExcelSpecification extends APrintExcelSousRegimeTranche {
 
    @Override
    public String printValue(ASousRegimeTranche planTransport) {
