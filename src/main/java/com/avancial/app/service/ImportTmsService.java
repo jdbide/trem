@@ -96,7 +96,7 @@ public class ImportTmsService implements Serializable {
 	 * 
 	 * @param importTmsDto
 	 */
-	public boolean validateDraft(ImportTmsDto importTmsDto) {
+	public boolean validateDraft(ImportTmsDto importTmsDto) throws Exception {
 		// on passe le status de ACTIVE à LASTACTIVE
 		try {
 			JeuDonneeEntity jeuDonneeEntityActif = this.jeuDonneeService.getById(importTmsDto.getIdJeuDonneesActif());
@@ -107,6 +107,7 @@ public class ImportTmsService implements Serializable {
 		} catch (Exception e) {
 			// pas de jeu de données actif
 			e.printStackTrace();
+			throw e;
 		}
 
 		// on passe le status de DRAFT à ACTIVE
@@ -131,6 +132,7 @@ public class ImportTmsService implements Serializable {
 		} catch (Exception e) {
 			// pas de jeu de données draft
 			e.printStackTrace();
+			throw e;
 		}
 
 		return true;

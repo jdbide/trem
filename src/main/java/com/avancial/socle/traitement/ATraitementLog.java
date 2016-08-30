@@ -70,21 +70,26 @@ public abstract class ATraitementLog extends ATraitement {
     * 
     */
    protected void saveLog() throws Exception  {
-      this.logger.info("Le traitement (ATraitementLog) start save log");
-      this.em.getTransaction().begin();
+      if (!this.em.getTransaction().isActive())
+         this.em.getTransaction().begin();
+
       this.em.persist(this.logBean);
       this.em.flush();
       this.em.getTransaction().commit();
-      this.logger.info("Le traitement (ATraitementLog) end save log");
+      
+      logger.info("--> Save log");
    }
    
    protected void updateLog() throws Exception  {
-      this.logger.info("Le traitement (ATraitementLog) start update log");
-      this.em.getTransaction().begin();
+      if (!this.em.getTransaction().isActive())
+         this.em.getTransaction().begin();
+
+
       this.em.merge(this.logBean);
       this.em.flush();
       this.em.getTransaction().commit();
-      this.logger.info("Le traitement (ATraitementLog) end update log");
+      
+      logger.info("Update log");
    }
 
    /**

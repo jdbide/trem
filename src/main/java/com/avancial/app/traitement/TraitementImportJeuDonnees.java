@@ -266,7 +266,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          Task.setMsgTask(this.idTask, "Création du fichier Excel");
 
          this.excelRapportDifferentiel.setFileName("RapportDiff-" + jeuDonneeDataBean.getIdJeuDonnees());
-         this.excelRapportDifferentiel.setFilePath("E:/app/tremas/data/export");
+         this.excelRapportDifferentiel.setFilePath("E:\\app\\tremas\\data\\");
          this.excelRapportDifferentiel.setXlsx(true);
          this.excelRapportDifferentiel.setDatas(listCompare);
          this.excelRapportDifferentiel.setMapPlansDeTransport(this.mapPlansDeTransport);

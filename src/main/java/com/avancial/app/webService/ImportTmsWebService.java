@@ -1,8 +1,6 @@
 package com.avancial.app.webService;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -28,13 +26,11 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
 import com.avancial.app.data.Task;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.service.ImportTmsService;
 import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
 import com.avancial.app.webService.bean.ResponseBean;
-import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 /**
@@ -75,9 +71,18 @@ public class ImportTmsWebService {
    @GET
    @Produces({ MediaType.APPLICATION_JSON })
    public Response getImportTms() throws Exception {
+      logger.info("Début (WebService : '/app/importTms' methode : GET)");
       JSONArray jsonArray = new JSONArray();
-      jsonArray.addAll(this.importTmsService.getAllImportTmsActif());
-      return Response.status(200).entity(jsonArray).build();
+      try {
+         jsonArray.addAll(this.importTmsService.getAllImportTmsActif());
+         
+         logger.info("Fin (WebService : '/app/importTms' methode : GET)");
+         
+         return Response.status(200).entity(jsonArray).build();
+      } catch (Exception ex) {
+         logger.error("Exception (WebService : '/app/importTms' methode : GET)", ex);
+         return Response.status(400).build();
+      }
    }
 
    /**
@@ -91,7 +96,7 @@ public class ImportTmsWebService {
    @Path("{nomTechniqueCompagnieEnvironnement}")
    @Produces({ MediaType.APPLICATION_JSON })
    public Response deleteDraft(@PathParam("nomTechniqueCompagnieEnvironnement") String nomTechniqueCompagnieEnvironnement) throws Exception {
-      this.logger.info("Start DeleteDrat ");
+      logger.info("Début : '/app/importTms' methode : @DELETE)");
       /*
        * TODO Traitement pour la supression d'un jeu de données
        */
@@ -102,13 +107,19 @@ public class ImportTmsWebService {
       try {
          this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(nomTechniqueCompagnieEnvironnement);
          this.traitementDeleteJeuDonnee.execute();
+         
          responseBean.setStatus(true);
          responseBean.setMessage("Suppression avec succès");
+         
+         logger.info("Fin (WebService : '/app/importTms' methode : @DELETE)");
+         
+         return Response.status(200).entity(responseBean).build();
       } catch (Throwable e) {
          e.printStackTrace();
-         this.logger.error("", e);
-      } finally {
-         return Response.status(200).entity(responseBean).build();
+         
+         logger.error("Exception (WebService : '/app/importTms' methode : @DELETE)", e);
+         
+         return Response.status(400).build();
       }
    }
 
@@ -124,35 +135,49 @@ public class ImportTmsWebService {
    @Consumes({ MediaType.APPLICATION_JSON })
    @Path("validateDraft")
    public Response validateDraft(ImportTmsDto importTmsDto) throws Exception {
+      logger.info("Début (WebService : '/app/importTms' methode : @PUT)");
       ResponseBean responseBean = new ResponseBean();
 
-      if (this.importTmsService.validateDraft(importTmsDto)) {
-         responseBean.setData(importTmsDto);
-         responseBean.setStatus(true);
-         responseBean.setMessage("Validation draft OK");
-      } else {
-         responseBean.setStatus(false);
-         responseBean.setMessage("Validation draft KO");
-      }
+      try {
+         if (this.importTmsService.validateDraft(importTmsDto)) {
+            responseBean.setData(importTmsDto);
+            responseBean.setStatus(true);
+            responseBean.setMessage("Validation draft OK");
+         } else {
+            responseBean.setStatus(false);
+            responseBean.setMessage("Validation draft KO");
+         }
 
-      return Response.status(200).entity(responseBean).build();
+         logger.info("Fin (WebService : '/app/importTms' methode : @PUT");
+         return Response.status(200).entity(responseBean).build();
+      } catch (Throwable e) {
+         logger.error("Exception (WebService : '/app/importTms' methode : @PUT)", e);
+         
+         return Response.status(400).build();
+      }
    }
 
    @GET
    @Path("downloadFile/{idJeuDonnee}")
-   @Produces("application/vnd.ms-excel")
+   @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
    public Response downloadFileByIdJeuDonnees(@PathParam("idJeuDonnee") Integer idJeuDonnee) throws Exception {
+      logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)");
+      
       ResponseBuilder responseBuilder = null;
-      String path = "E:/app/tremas/data/export/RapportDiff-" + idJeuDonnee + ".xlsx";
+      String path = "E:\\app\\tremas\\data\\RapportDiff-" + idJeuDonnee + ".xlsx";
+      
+      //String path = "D:\\was_tmp\\tremas\\export\\RapportDiff-" + idJeuDonnee + ".xlsx";
       try {
 
          File fileDownload = new File(path);
          responseBuilder = Response.ok((Object) fileDownload);
          responseBuilder.header("Content-Disposition", "attachment; filename=\"RapportDiff-" + idJeuDonnee + ".xlsx\"");
-
+         
+         logger.info("Fin (WebService : '/app/importTms' methode : @GET");
       } catch (Exception e) {
          e.printStackTrace();
          responseBuilder = Response.status(400);
+         logger.error("Exception (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)", e);
 
       } finally {
          return responseBuilder.build();
@@ -163,17 +188,19 @@ public class ImportTmsWebService {
    @Path("downloadFileLog")
    @Produces("text/plain")
    public Response downloadFileLog() throws Exception {
+      logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)");
       ResponseBuilder responseBuilder = null;
-      String path = "E:\\app\\tremas\\data\\log4j.log"; //"D:\\was_tmp\\tremas\\log\\log4j.log";
+      String path = "E:\\app\\tremas\\data\\logs\\log4j.log"; //E:\\app\\tremas\\logs\\c3p0_tomcatServer.log
       try {
 
          File fileDownload = new File(path);
          responseBuilder = Response.ok((Object) fileDownload);
          responseBuilder.header("Content-Disposition", "attachment; filename=\"log4j.log\"");
-
+         logger.info("Fin (WebService : '/app/importTms' methode : @GET");
       } catch (Exception e) {
          e.printStackTrace();
          responseBuilder = Response.status(400);
+         logger.error("Exception (WebService : '/app/importTms', Action : 'downloadFileLog', methode : @GET)", e);
 
       } finally {
          return responseBuilder.build();
@@ -191,6 +218,7 @@ public class ImportTmsWebService {
    @Produces({ MediaType.APPLICATION_JSON })
    @Consumes({ MediaType.APPLICATION_JSON })
    public Response postImportTms(final ImportTmsDto importTmsDto) throws Exception {
+      logger.info("Début (WebService : '/app/importTms', Action : 'postImportTms', methode : @POST)");
       ResponseBuilder responseBuilder = null;
       final ResponseBean responseBean = new ResponseBean();
       Long idNewThread;
@@ -227,15 +255,18 @@ public class ImportTmsWebService {
 
             responseBean.setStatus(true);
             responseBean.setMessage("Traitement start");
+
          } else {
             responseBean.setStatus(false);
             responseBean.setMessage("Un import est déjà en cours !");
          }
 
          responseBuilder = Response.ok((Object) responseBean);
+         logger.info("Fin (WebService : '/app/importTms', Action : 'postImportTms', methode : @POST)");
       } catch (Exception e) {
          e.printStackTrace();
          responseBuilder = Response.status(400);
+         logger.error("Exception (WebService : '/app/importTms', Action : 'postImportTms', methode : @POST)", e);
       } finally {
          return responseBuilder.build();
       }
