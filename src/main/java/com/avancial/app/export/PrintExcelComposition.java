@@ -9,6 +9,7 @@ public class PrintExcelComposition extends APrintExcelSousRegimeTranche {
     @Override
     public String printValue(ASousRegimeTranche sousRegimeTranche) {
         if (sousRegimeTranche.getClass().equals(Composition.class)) {
+            this.stringBuilder.setLength(0);
             Composition composition = (Composition) sousRegimeTranche;
             /* Numéros de voiture */
             for (Voiture voiture : composition.getVoitures()) {

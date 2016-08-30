@@ -13,6 +13,7 @@ public class PrintExcelDesserte extends APrintExcelSousRegimeTranche {
     @Override
     public String printValue(ASousRegimeTranche sousRegimeTranche) {
         if (sousRegimeTranche.getClass().equals(Desserte.class)) {
+            this.stringBuilder.setLength(0);
             Desserte desserte = (Desserte) sousRegimeTranche;
             /* Première gare */
             for (Iterator<GareHoraire> itGare = desserte.getGareHoraires().iterator(); itGare.hasNext();) {
