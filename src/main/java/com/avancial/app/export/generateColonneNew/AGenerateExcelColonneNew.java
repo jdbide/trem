@@ -11,7 +11,7 @@ public abstract class AGenerateExcelColonneNew implements IGenerateExcelColonneN
 
     @Override
     public void generate(List<ASousRegimeTranche> listeAttributs, int numColonne, ExcelTools excelTools) {
-        int ligneNumber = excelTools.getNumberRow();
+        int ligneNumber = excelTools.getRowNum();
         for (ASousRegimeTranche aSousRegimeTranche : listeAttributs) {
             excelTools.createCellTexteWithStyle(numColonne,
                     this.printExcelSousRegimeTranche.printRegime(aSousRegimeTranche), excelTools.styleBorderNotRight);

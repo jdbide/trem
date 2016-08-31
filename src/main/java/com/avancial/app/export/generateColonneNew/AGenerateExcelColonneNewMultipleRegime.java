@@ -8,48 +8,46 @@ import com.avancial.app.export.printSousRegimeTranche.PrintExcelSousRegimeTranch
 
 public abstract class AGenerateExcelColonneNewMultipleRegime implements IGenerateExcelColonneNew {
 
-    protected PrintExcelSousRegimeTranche printExcelSousRegimeTranche = new PrintExcelSousRegimeTranche();
-    
-    /**
-     * Contient les valeurs des attributs sur un régime
-     */
-    private StringBuilder stringBuilder = new StringBuilder();
+   protected PrintExcelSousRegimeTranche printExcelSousRegimeTranche = new PrintExcelSousRegimeTranche();
 
-    @Override
-    public void generate(List<ASousRegimeTranche> listeAttributs, int numColonne, ExcelTools excelTools) {
-        Regime regimePrec = null;
-        ASousRegimeTranche sousRegime = null;
-        int ligneNumber = excelTools.getNumberRow();
-        for (ASousRegimeTranche aSousRegimeTranche : listeAttributs) {
-            if (regimePrec == null) {
-                regimePrec = aSousRegimeTranche.getRegime();
-            }
+   /**
+    * Contient les valeurs des attributs sur un régime
+    */
+   private StringBuilder                 stringBuilder               = new StringBuilder();
 
-            sousRegime = aSousRegimeTranche;
-            if (!regimePrec.equals(aSousRegimeTranche.getRegime())) {
-                /* On remplit les colonnes de valeurs */
-                excelTools.createCellTexteWithStyle(numColonne + 1,
-                        this.printExcelSousRegimeTranche.printValue(sousRegime), excelTools.styleBorderNotLeft);
+   @Override
+   public void generate(List<ASousRegimeTranche> listeAttributs, int numColonne, ExcelTools excelTools) {
+      Regime regimePrec = null;
+      ASousRegimeTranche sousRegime = null;
+      int ligneNumber = excelTools.getRowNum();
+      for (ASousRegimeTranche aSousRegimeTranche : listeAttributs) {
+         if (regimePrec == null) {
+            regimePrec = aSousRegimeTranche.getRegime();
+            excelTools.createCellTexteWithStyle(numColonne, this.printExcelSousRegimeTranche.printRegime(aSousRegimeTranche), excelTools.styleBorderNotRight);
+         }
 
-                /* Reset des objets pour le prochain régime */
-                this.stringBuilder.setLength(0);
-                regimePrec = sousRegime.getRegime();
-                /* Colonne Regime Restriction sur une nouvelle ligne */
-                ligneNumber++;
-                excelTools.setRow(ligneNumber);
-                excelTools.createCellTexteWithStyle(numColonne,
-                        this.printExcelSousRegimeTranche.printRegime(sousRegime), excelTools.styleBorderNotRight);
-            }
+         sousRegime = aSousRegimeTranche;
+         if (!regimePrec.equals(aSousRegimeTranche.getRegime())) {
+            /* On remplit les colonnes de valeurs */
+            excelTools.createCellTexteWithStyle(numColonne + 1, this.printExcelSousRegimeTranche.printValue(sousRegime), excelTools.styleBorderNotLeft);
 
-            /* Récupération des informations de la Restriction sur ce régime */
-            if (!this.stringBuilder.toString().equals("")) {
-                this.stringBuilder.append("\n");
-            }
-            this.stringBuilder.append(this.printExcelSousRegimeTranche.printValue(sousRegime));
-        }
-        /* Valeurs pour le dernier régime */
-        excelTools.createCellTexteWithStyle(numColonne + 1, this.printExcelSousRegimeTranche.printValue(sousRegime),
-                excelTools.styleBorderNotLeft);
-    }
+            /* Reset des objets pour le prochain régime */
+            this.stringBuilder.setLength(0);
+            regimePrec = sousRegime.getRegime();
+            /* Colonne Regime Restriction sur une nouvelle ligne */
+            ligneNumber++;
+            excelTools.setRow(ligneNumber);
+            excelTools.createCellTexteWithStyle(numColonne, this.printExcelSousRegimeTranche.printRegime(sousRegime), excelTools.styleBorderNotRight);
+         }
+
+         /* Récupération des informations de la Restriction sur ce régime */
+         if (!this.stringBuilder.toString().equals("")) {
+            this.stringBuilder.append("\n");
+         }
+         this.stringBuilder.append(this.printExcelSousRegimeTranche.printValue(sousRegime));
+      }
+      /* Valeurs pour le dernier régime */
+      excelTools.createCellTexteWithStyle(numColonne + 1, this.printExcelSousRegimeTranche.printValue(sousRegime), excelTools.styleBorderNotLeft);
+   }
 
 }

@@ -20,45 +20,45 @@ import org.apache.poi.ss.util.CellReference;
  *
  */
 public class ExcelTools {
-   private Workbook classeur                  = null;
+   private Workbook classeur                   = null;
    private Sheet    sheet;
    private Row      ligneSheet;
    private Cell     cell;
 
-   public CellStyle styleNombre               = null;
-   public CellStyle styleNombreUnLock         = null;
-   public CellStyle styleNombreHide           = null;
-   public CellStyle styleNombreStandard       = null;
-   public CellStyle styleNombreStandardUnLock = null;
-   public CellStyle styleEnteteGris           = null;
-   public CellStyle styleEnteteJaune          = null;
-   public CellStyle styleTexte                = null;
-   public CellStyle stylePourcent             = null;
-   public CellStyle stylePourcentOk           = null;
-   public CellStyle stylePourcentKo           = null;
-   public CellStyle styleTexteLock            = null;
-   public CellStyle styleTexteUnLock          = null;
-   public CellStyle styleCellVideWithMergin   = null;
-   public CellStyle styleNombreStandardLock   = null;
-   public CellStyle styleTitre                = null;
-   public CellStyle styleSousTitre            = null;
-   public CellStyle styleHide                 = null;
-   public CellStyle styleWarning              = null;
-   public CellStyle styleBorder               = null;
-   public CellStyle styleBorderNotRight       = null;
-   public CellStyle styleBorderNotLeft        = null;
-   public CellStyle styleBorderNotLeftNotRight= null;
+   public CellStyle styleNombre                = null;
+   public CellStyle styleNombreUnLock          = null;
+   public CellStyle styleNombreHide            = null;
+   public CellStyle styleNombreStandard        = null;
+   public CellStyle styleNombreStandardUnLock  = null;
+   public CellStyle styleEnteteGris            = null;
+   public CellStyle styleEnteteJaune           = null;
+   public CellStyle styleTexte                 = null;
+   public CellStyle stylePourcent              = null;
+   public CellStyle stylePourcentOk            = null;
+   public CellStyle stylePourcentKo            = null;
+   public CellStyle styleTexteLock             = null;
+   public CellStyle styleTexteUnLock           = null;
+   public CellStyle styleCellVideWithMergin    = null;
+   public CellStyle styleNombreStandardLock    = null;
+   public CellStyle styleTitre                 = null;
+   public CellStyle styleSousTitre             = null;
+   public CellStyle styleHide                  = null;
+   public CellStyle styleWarning               = null;
+   public CellStyle styleBorder                = null;
+   public CellStyle styleBorderNotRight        = null;
+   public CellStyle styleBorderNotLeft         = null;
+   public CellStyle styleBorderNotLeftNotRight = null;
 
-   public Font      fontCellVideWithMergin    = null;
-   public Font      fontEntete                = null;
-   public Font      fontNombre                = null;
-   public Font      fontNombreOk              = null;
-   public Font      fontNombreKo              = null;
-   public Font      fontTexte                 = null;
-   public Font      fontTitre                 = null;
-   public Font      fontSousTitre             = null;
-   public Font      fontHide                  = null;
-   public Font      fontWarning               = null;
+   public Font      fontCellVideWithMergin     = null;
+   public Font      fontEntete                 = null;
+   public Font      fontNombre                 = null;
+   public Font      fontNombreOk               = null;
+   public Font      fontNombreKo               = null;
+   public Font      fontTexte                  = null;
+   public Font      fontTitre                  = null;
+   public Font      fontSousTitre              = null;
+   public Font      fontHide                   = null;
+   public Font      fontWarning                = null;
 
    /**
     * Constructeur sans arguments
@@ -174,6 +174,13 @@ public class ExcelTools {
     */
    public void setRow(int row) {
       this.ligneSheet = this.sheet.getRow(row);
+      if (this.ligneSheet == null) {
+         this.createRow(row);
+      }
+   }
+   
+   public int getRowNum() {
+      return this.ligneSheet.getRowNum();
    }
 
    /**
@@ -187,14 +194,15 @@ public class ExcelTools {
    public void addMergedRegion(int firstRow, int lastRow, int firstCol, int lastCol) {
       this.sheet.addMergedRegion(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
    }
-   
+
    /**
-    * Fusionner les cellules (FirstRow, LastRow, FirtCol, LastCol)
+    * Fusionner les cellules (FirstRow, LastRow, FirtCol, LastCol, Style)
     * 
     * @param firstRow
     * @param lastRow
     * @param firstCol
     * @param lastCol
+    * @param style
     */
    public void addMergedRegion(int firstRow, int lastRow, int firstCol, int lastCol, CellStyle style) {
       for (int i = firstRow; i <= lastRow; i++) {
@@ -202,12 +210,55 @@ public class ExcelTools {
          for (int j = firstCol; j <= lastCol; j++) {
             Cell c = r.getCell(j);
             c.setCellStyle(style);
-            
+
          }
       }
 
       this.sheet.addMergedRegion(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
    }
+
+   /**
+    * Fusionner les cellules (FirstRow, LastRow, FirtCol, LastCol, Value)
+    * 
+    * @param firstRow
+    * @param lastRow
+    * @param firstCol
+    * @param lastCol
+    * @param value
+    */
+   public void addMergedRegion(int firstRow, int lastRow, int firstCol, int lastCol, String value) {
+      this.setRow(firstRow);
+      for (int ligne = firstRow; ligne <= lastRow; ligne++) {
+         this.setRow(ligne);
+         for (int colonne = firstCol; colonne <= lastCol; colonne++) {
+            this.createCellTexte(colonne, value);
+         }
+      }
+      this.addMergedRegion(firstRow, lastRow, firstCol, lastCol);
+   }
+   
+   /**
+    * Fusionner les cellules (FirstRow, LastRow, FirtCol, LastCol, Value)
+    * 
+    * @param firstRow
+    * @param lastRow
+    * @param firstCol
+    * @param lastCol
+    * @param value
+    * @param style
+    */
+   public void addMergedRegion(int firstRow, int lastRow, int firstCol, int lastCol, String value, CellStyle style) {
+      this.setRow(firstRow);
+      for (int ligne = firstRow; ligne <= lastRow; ligne++) {
+         this.setRow(ligne);
+         for (int colonne = firstCol; colonne <= lastCol; colonne++) {
+            this.createCellTexteWithStyle(colonne, value, style);
+         }
+      }
+      this.addMergedRegion(firstRow, lastRow, firstCol, lastCol);
+   }
+   
+   
 
    /**
     * Création d'une cellule avec une liste DropDown
@@ -696,10 +747,10 @@ public class ExcelTools {
 
       return sb.toString();
    }
-   
-   public void test (int l, int c, String s) {
+
+   public void test(int l, int c, String s) {
       Cell cl = this.sheet.getRow(l).getCell(c);
-      
+
       cl.setCellValue(s);
    }
 
@@ -777,6 +828,10 @@ public class ExcelTools {
     */
    public void setLigneSheet(Row ligneSheet) {
       this.ligneSheet = ligneSheet;
+   }
+
+   public Cell getCell(int colonne) {
+      return this.getLigneSheet().getCell(colonne);
    }
 
    private void initStyle() {
@@ -885,13 +940,11 @@ public class ExcelTools {
       this.styleEnteteGris.setFont(this.fontEntete);
       this.styleEnteteGris.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
       this.styleEnteteGris.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
-      
+
       this.styleEnteteJaune = this.classeur.createCellStyle();
       this.styleEnteteJaune.setFont(this.fontEntete);
       this.styleEnteteJaune.setFillForegroundColor(HSSFColor.YELLOW.index);
       this.styleEnteteJaune.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
-      
-      
 
       this.styleTexteLock = this.classeur.createCellStyle();
       this.styleTexteLock.setAlignment(CellStyle.ALIGN_LEFT);
@@ -921,8 +974,7 @@ public class ExcelTools {
       this.styleTexte.setBorderRight(CellStyle.BORDER_THIN);
       this.styleTexte.setBorderTop(CellStyle.BORDER_THIN);
       this.styleTexte.setFillBackgroundColor(HSSFColor.RED.index);
-      
-      
+
       this.styleBorder = this.classeur.createCellStyle();
       this.styleBorder.setBorderBottom(CellStyle.BORDER_THIN);
       this.styleBorder.setBorderLeft(CellStyle.BORDER_THIN);
@@ -930,27 +982,25 @@ public class ExcelTools {
       this.styleBorder.setBorderTop(CellStyle.BORDER_THIN);
       this.styleBorder.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
       this.styleBorder.setAlignment(CellStyle.ALIGN_CENTER);
-      
-      
-      
+
       this.styleBorderNotRight = this.classeur.createCellStyle();
       this.styleBorderNotRight.setBorderBottom(CellStyle.BORDER_THIN);
       this.styleBorderNotRight.setBorderLeft(CellStyle.BORDER_THIN);
-      //this.styleBorderNotRight.setBorderRight(CellStyle.BORDER_THIN);
+      // this.styleBorderNotRight.setBorderRight(CellStyle.BORDER_THIN);
       this.styleBorderNotRight.setBorderTop(CellStyle.BORDER_THIN);
       this.styleBorderNotRight.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 
       this.styleBorderNotLeft = this.classeur.createCellStyle();
       this.styleBorderNotLeft.setBorderBottom(CellStyle.BORDER_THIN);
-      //this.styleBorderNotLeft.setBorderLeft(CellStyle.BORDER_THIN);
+      // this.styleBorderNotLeft.setBorderLeft(CellStyle.BORDER_THIN);
       this.styleBorderNotLeft.setBorderRight(CellStyle.BORDER_THIN);
       this.styleBorderNotLeft.setBorderTop(CellStyle.BORDER_THIN);
       this.styleBorderNotLeft.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-      
-      this.styleBorderNotLeftNotRight =  this.classeur.createCellStyle();
+
+      this.styleBorderNotLeftNotRight = this.classeur.createCellStyle();
       this.styleBorderNotLeftNotRight.setBorderBottom(CellStyle.BORDER_THIN);
-//      this.styleBorderNotLeftNotRight.setBorderLeft(CellStyle.BORDER_THIN);
-      //this.styleBorderNotLeftNotRight.setBorderRight(CellStyle.BORDER_THIN);
+      // this.styleBorderNotLeftNotRight.setBorderLeft(CellStyle.BORDER_THIN);
+      // this.styleBorderNotLeftNotRight.setBorderRight(CellStyle.BORDER_THIN);
       this.styleBorderNotLeftNotRight.setBorderTop(CellStyle.BORDER_THIN);
       this.styleBorderNotLeftNotRight.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 
@@ -999,11 +1049,11 @@ public class ExcelTools {
       this.cell.setCellStyle(styleTexte);
       this.cell.setCellValue(value);
    }
-   
+
    public void createCellTexteByLigneAndStyle(int colonne, String value, int line, CellStyle style) {
       this.cell = this.sheet.getRow(line).createCell(colonne);
       this.cell.setCellStyle(style);
-      this.cell.setCellValue(value);      
+      this.cell.setCellValue(value);
    }
 
 }

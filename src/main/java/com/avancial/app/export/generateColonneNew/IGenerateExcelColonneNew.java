@@ -12,15 +12,16 @@ import com.avancial.app.export.ExcelTools;
  */
 public interface IGenerateExcelColonneNew {
 
-    /**
-     * Génère les cellules pour les attributs en paramètre.
-     * 
-     * @param listeAttributs
-     *            Attributs à afficher
-     * @param numColonne
-     *            Colonne à laquelle commencer la génération
-     * @param excelTools
-     *            Générateur des cellules
-     */
-    public void generate(List<ASousRegimeTranche> listeAttributs, int numColonne, ExcelTools excelTools);
+   /**
+    * Génère les cellules pour les attributs en paramètre.
+    * 
+    * @param listeAttributs
+    *           Attributs à afficher
+    * @param numColonne
+    *           Colonne à laquelle commencer la génération
+    * @param excelTools
+    *           Générateur des cellules
+    */
+   public void generate(List<ASousRegimeTranche> listeAttributs, int numColonne, ExcelTools excelTools);
+
 }

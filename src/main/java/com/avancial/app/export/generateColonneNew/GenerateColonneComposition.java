@@ -3,6 +3,7 @@ package com.avancial.app.export.generateColonneNew;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
@@ -31,10 +32,12 @@ public class GenerateColonneComposition extends AGenerateExcelColonneNew {
     public void generate(List<ASousRegimeTranche> listeAttributs, int numColonne, ExcelTools excelTools) {
         Regime regimePrec = null;
         Composition composition;
-        int ligneNumber = excelTools.getNumberRow();
+        int ligneNumber = excelTools.getRowNum();
         for (ASousRegimeTranche aSousRegimeTranche : listeAttributs) {
             if (regimePrec == null) {
                 regimePrec = aSousRegimeTranche.getRegime();
+                excelTools.createCellTexteWithStyle(numColonne,
+                      this.printExcelSousRegimeTranche.printRegime(aSousRegimeTranche), excelTools.styleBorderNotRight);
             }
 
             composition = (Composition) aSousRegimeTranche;
