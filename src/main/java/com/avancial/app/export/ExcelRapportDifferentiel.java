@@ -365,8 +365,20 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
 
                      this.excelTools.createCellTexte(3, this.getFieldName(data.getNouveauField().getClass().getSimpleName()));
                      this.excelTools.createCellTexte(4, ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getRegime().getCodeRegime());
-                     this.excelTools.createCellTexte(5, ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getType().toString() + " from " + ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getOrigine().getCodeGare() + "to"
-                           + ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField())).getDestination().toString());
+                     
+                     Restriction restriction = ((Restriction) (((ComparaisonPlanTransport) this.datas.get(j)).getNouveauField()));
+                     
+                     String restr = "";
+                     
+                      if (restriction.getOrigine() != null && !restriction.getOrigine().getCodeGare().trim().equals("") && restriction.getDestination() != null && !restriction.getDestination().getCodeGare().trim().equals("")) {
+                         restr += "On_Forbidden from " + restriction.getOrigine().getCodeGare() + " to " + restriction.getDestination().getCodeGare();
+                      } else if (restriction.getOrigine() != null && !restriction.getOrigine().getCodeGare().trim().equals("")) {
+                         restr += "On_Forbidden at " + restriction.getOrigine().getCodeGare();
+                      } else if (restriction.getDestination() != null && !restriction.getDestination().getCodeGare().trim().equals("")) {
+                         restr += "Off_Forbidden at " + restriction.getDestination().getCodeGare();
+                      }
+                     
+                     this.excelTools.createCellTexte(5, restr);
 
                   } else if (data.getNouveauField().getClass().getSimpleName().equals(APP_Field.ServiceABord.toString())) {
 
