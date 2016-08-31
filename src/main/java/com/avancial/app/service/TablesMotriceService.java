@@ -1,6 +1,8 @@
 package com.avancial.app.service;
 
 import java.util.List;
+
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -13,6 +15,7 @@ import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
  * @author gabriel.gagnier
  *
  */
+@RequestScoped
 public class TablesMotriceService {
 
     @Inject
