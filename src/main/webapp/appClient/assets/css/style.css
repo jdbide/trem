@@ -12,6 +12,7 @@
     word-wrap: break-word;
 }
 
+
 .table-tremas>thead {
 	background-color:#b3b3b3;
 }
@@ -62,3 +63,13 @@ a.disabled {
     position: absolute;
     top: 50%;
 }
+
+tr td div .form-control,tr td div select{
+	height:20px;
+	font-size:12px;
+}
+tr td .btn{
+	height:25px;
+	font-size:8px;
+}
+

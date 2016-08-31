@@ -14,12 +14,6 @@ public class ListUtils {
      * @return
      */
     public static<T> boolean compareLists(List<T> l1, List<T> l2) {
-       if (l1 == null && l2 == null)
-          return true;
-       
-       if (l1 == null || l2 == null)
-          return false;
-          
         for (T object : l1) {
             if (!l2.contains(object)) {
                 return false;

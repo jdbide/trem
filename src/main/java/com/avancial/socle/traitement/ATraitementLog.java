@@ -8,8 +8,6 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import org.apache.log4j.Logger;
-
 import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
@@ -18,7 +16,7 @@ import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
  *
  */
 public abstract class ATraitementLog extends ATraitement {
-   protected static Logger logger;
+
    @Inject
    protected LogTraitementDataBean logBean;
 
@@ -30,25 +28,20 @@ public abstract class ATraitementLog extends ATraitement {
    protected EntityManager         em;
 
    @Override
-   public void execute() throws Exception  {
-      logger.info("ATraitementLog -> Start execute");
+   public final void execute() {
       this.startLogging();
       try {
          this.executeTraitement();
          this.logBean.setMessageTraitement("Le traitement s'est terminé sans erreur.");
-         this.logger.info("Le traitement (ATraitementLog) s'est terminé sans erreur.");
       } catch (Exception e) {
-         this.logger.error("Exception class : ATraitementLog -> Le traitement s'est terminé avec des erreurs.", e);
          this.logBean.setExceptionTraitement(e.getMessage());
          this.logBean.setMessageTraitement("Le traitement s'est terminé avec des erreurs.");
-         throw e;
       } finally {
          this.stopLogging();
-         logger.info("ATraitementLog -> End execute");
       }
    }
 
-   protected void showProgress(String message) throws Exception {
+   protected void showProgress(String message) {
       this.logBean.setMessageTraitement(message);
       this.saveLog();
 
@@ -57,7 +50,7 @@ public abstract class ATraitementLog extends ATraitement {
    /**
     * Initialisation du logging
     */
-   private void startLogging() throws Exception {
+   private void startLogging() {
       this.logBean.setDateDebutLogTraitement(new Date());
       this.logBean.setLibelleLogTraitement(this.libelleTraitement);
       this.logBean.setLibelleUserLogTraitement(this.userTraitement);
@@ -69,35 +62,20 @@ public abstract class ATraitementLog extends ATraitement {
    /**
     * 
     */
-   protected void saveLog() throws Exception  {
-      if (!this.em.getTransaction().isActive())
-         this.em.getTransaction().begin();
-
-      this.em.persist(this.logBean);
-      this.em.flush();
-      this.em.getTransaction().commit();
-      
-      logger.info("--> Save log");
-   }
-   
-   protected void updateLog() throws Exception  {
-      if (!this.em.getTransaction().isActive())
-         this.em.getTransaction().begin();
-
-
+   protected void saveLog() {
+      this.em.getTransaction().begin();
       this.em.merge(this.logBean);
       this.em.flush();
       this.em.getTransaction().commit();
-      
-      logger.info("Update log");
+
    }
 
    /**
     * 
     */
-   private void stopLogging() throws Exception {
+   private void stopLogging() {
       this.logBean.setDateFinLogTraitement(new Date());
-      this.updateLog();
+      this.saveLog();
    }
 
 }

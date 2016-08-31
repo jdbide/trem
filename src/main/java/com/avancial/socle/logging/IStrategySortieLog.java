@@ -1,6 +1,6 @@
 package com.avancial.socle.logging;
 
-import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.impl.ASocleException;
 
 /**
  * Pattern Strategy pour implémenter les différentes manières de logger. Ex : en base de données, sur la console, dans un fichier...

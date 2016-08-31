@@ -281,3 +281,10 @@ BloggerSans
 .panel.panel-primary.panelCRUDJobPlanif{
 	width: 1430px;
 }
+.img-Active{
+	 background-image: url("/image/check.png");
+	}
+.img-Not-Active{
+	 background-image: url("/image/fermer.png");
+	}
+}

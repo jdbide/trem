@@ -7,12 +7,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import com.avancial.socle.utils.Encrypte;
-import com.avancial.socle.utils.HashGenerationException;
 import com.avancial.socle.data.controller.dao.UserDao;
 import com.avancial.socle.data.model.databean.UserDataBean;
-import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.impl.ASocleException;
 import com.avancial.socle.resources.constants.SOCLE_constants;
+import com.avancial.socle.utils.Encrypte;
+import com.avancial.socle.utils.HashGenerationException;
 
 @Named("password")
 @RequestScoped
@@ -20,13 +20,13 @@ public class MotDePasseManagedBean {
 
    private boolean correct;
    private boolean exist;
-   private String login;
-   private String password  ; 
-   private String confirmPassWord ;
-   
+   private String  login;
+   private String  password;
+   private String  confirmPassWord;
+
    public MotDePasseManagedBean() {
-      this.correct = true; 
-      this.exist =false ;
+      this.correct = true;
+      this.exist = false;
    }
 
    public String validerLogin() {
@@ -36,24 +36,22 @@ public class MotDePasseManagedBean {
       userDataBean = userDao.getUserByLogin(this.login);
       if (userDataBean != null)
          this.exist = true;
-      if(!this.exist)
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
-               new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Votre Login est incorrect"));
-      
-      if (this.password!=null && this.exist) {
+      if (!this.exist)
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Votre Login est incorrect"));
+
+      if (this.password != null && this.exist) {
          try {
-            userDataBean.setPasswordUser(Encrypte.generateSHA1(this.password)); 
-            userDao.update(userDataBean); 
+            userDataBean.setPasswordUser(Encrypte.generateSHA1(this.password));
+            userDao.update(userDataBean);
             FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
          } catch (HashGenerationException | ASocleException | IOException e) {
-            
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
-                  new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Erreur Lors de l'enregistrement du nouveau Mot de Passe"));
+
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Erreur Lors de l'enregistrement du nouveau Mot de Passe"));
             e.printStackTrace();
          }
-         
+
       }
-         
+
       return null;
    }
 

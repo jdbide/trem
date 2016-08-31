@@ -5,8 +5,8 @@ import java.util.List;
 import javax.persistence.Query;
 
 import com.avancial.socle.data.model.databean.JobDataBean;
-import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
+import com.avancial.socle.exceptions.impl.ASocleException;
 
 /**
  * Classe DAO pour l'objet Role
@@ -15,6 +15,11 @@ import com.avancial.socle.exceptions.SocleExceptionManager;
  * 
  */
 public class JobDao extends AbstractDao {
+
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
 
    @SuppressWarnings("unchecked")
    @Override
@@ -34,7 +39,7 @@ public class JobDao extends AbstractDao {
       Query requete = this.getEntityManager().createQuery(sql).setParameter("id", id);
       return (JobDataBean) requete.getSingleResult();
    }
-   
+
    public JobDataBean getJobByName(String name) {
       String sql = "From JobDataBean where libelleJob =:name";
       Query requete = this.getEntityManager().createQuery(sql).setParameter("name", name);
@@ -49,9 +54,7 @@ public class JobDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
-         SocleExceptionManager manager = new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
    }
 
@@ -63,9 +66,7 @@ public class JobDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
-         SocleExceptionManager manager = new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
 
    }
@@ -78,9 +79,7 @@ public class JobDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
-         SocleExceptionManager manager = new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
 
    }

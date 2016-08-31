@@ -3,6 +3,7 @@
  */
 package com.avancial.socle.params;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.avancial.socle.params.beans.IParamBean;
@@ -10,10 +11,8 @@ import com.avancial.socle.params.exception.ParamCollectionNotLoadedException;
 import com.avancial.socle.params.exception.ParamNotFoundException;
 
 /**
- * Cette classe représente le point d'accès unique d'accès aux paramètres de
- * l'application.<br/>
- * Pour implémenter cette interface, il faut étendre la classe abstraite
- * AParamGetter sous la forme :
+ * Cette classe reprï¿½sente le point d'accï¿½s unique d'accï¿½s aux paramï¿½tres de l'application.<br/>
+ * Pour implï¿½menter cette interface, il faut ï¿½tendre la classe abstraite AParamGetter sous la forme :
  * <ul>
  * 
  * 
@@ -25,7 +24,7 @@ import com.avancial.socle.params.exception.ParamNotFoundException;
  *
  */
 
-public interface IParamGetter {
+public interface IParamGetter extends Serializable {
 
    public void add(IParamReader iParamReader);
 

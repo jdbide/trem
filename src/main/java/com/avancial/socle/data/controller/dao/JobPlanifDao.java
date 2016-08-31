@@ -5,8 +5,8 @@ import java.util.List;
 import javax.persistence.Query;
 
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
-import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
+import com.avancial.socle.exceptions.impl.ASocleException;
 
 /**
  * Classe DAO pour l'objet JobPlanif
@@ -51,9 +51,7 @@ public class JobPlanifDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
-         SocleExceptionManager manager = new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
    }
 
@@ -65,9 +63,7 @@ public class JobPlanifDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-
-         SocleExceptionManager manager = new SocleExceptionManager(e);
-         throw manager.getException();
+         throw SocleExceptionManager.getException(e);
       }
 
    }
@@ -80,9 +76,7 @@ public class JobPlanifDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
-         SocleExceptionManager manager = new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
 
    }

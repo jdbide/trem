@@ -21,7 +21,7 @@ public class TraitementTest extends ATraitementLog {
    }
 
    @Override
-   public void executeTraitement() throws Exception {
+   public void executeTraitement() {
       this.showProgress("Début boucle");
       for (int i = 0; i < 200000; i++) {
       }

@@ -20,7 +20,7 @@ public class TraitementDetailTest extends ATraitementLogDetail {
    }
 
    @Override
-   public void executeTraitement() throws Exception {
+   public void executeTraitement() {
       this.showProgress("Début boucle");
       this.log("Début de boucle - détail");
       for (int i = 0; i < 20000; i++) {
