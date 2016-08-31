@@ -103,9 +103,9 @@ public class MapComparaisonPlanTransport {
     }
 
     /**
-     * Récupération d'une comparaison à partir du type de comparaison et de la
-     * classe des attributs de comparaison. Pour les types de comparaison NEW,
-     * DELETE et UNCHANGED, la classe doit être à null.
+     * Récupération d'une liste de comparaisons à partir du type de comparaison
+     * et de la classe des attributs de comparaison. Pour les types de
+     * comparaison NEW, DELETE et UNCHANGED, la classe doit être à null.
      * 
      * @param typeComparaisonPlanTransport
      * @param classeAttributComparaison
@@ -113,8 +113,30 @@ public class MapComparaisonPlanTransport {
      */
     public List<ComparaisonPlanTransport<IPlanTransport>> getComparaison(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, Class<?> classeAttributComparaison) {
-        return this.mapComparaison
+        List<ComparaisonPlanTransport<IPlanTransport>> res = this.mapComparaison
                 .get(new MapComparaisonPlanTransportCle(typeComparaisonPlanTransport, classeAttributComparaison));
+        if (res == null) {
+            return new ArrayList<>();
+        }
+        return res;
+    }
+
+    /**
+     * Récupération de la liste de toutes les comparaisons d'un certain type
+     * contenues dans la map.
+     * 
+     * @param typeComparaisonPlanTransport
+     * @return
+     */
+    public List<ComparaisonPlanTransport<IPlanTransport>> getComparaison(
+            EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport) {
+        List<ComparaisonPlanTransport<IPlanTransport>> res = new ArrayList<>();
+        for (MapComparaisonPlanTransportCle cle : this.mapComparaison.keySet()) {
+            if (cle.typeComparaisonPlanTransport.equals(typeComparaisonPlanTransport)) {
+                res.addAll(this.mapComparaison.get(cle));
+            }
+        }
+        return res;
     }
 
     public void putAll(MapComparaisonPlanTransport mapComparaisonPlanTransport) {

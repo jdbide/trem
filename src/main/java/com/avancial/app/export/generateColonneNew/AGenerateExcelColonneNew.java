@@ -5,6 +5,21 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.export.ExcelTools;
 import com.avancial.app.export.printSousRegimeTranche.PrintExcelSousRegimeTranche;
 
+/**
+ * Implémentation de la génération d'une colonne sous la forme :<br>
+ * <style> table, th, td { border: 1px solid black; border-collapse:
+ * collapse;} </style>
+ * <table>
+ * <tr>
+ * <td>Régime</td>
+ * <td>Valeur</td>
+ * </tr>
+ * </table>
+ * pour les attributs qui n'ont qu'une valeur par régime.
+ * 
+ * @author heloise.guillemaud
+ *
+ */
 public abstract class AGenerateExcelColonneNew implements IGenerateExcelColonneNew {
 
     protected PrintExcelSousRegimeTranche printExcelSousRegimeTranche = new PrintExcelSousRegimeTranche();
