@@ -1,4 +1,4 @@
-package com.avancial.app.export;
+package com.avancial.app.export.printSousRegimeTranche;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
