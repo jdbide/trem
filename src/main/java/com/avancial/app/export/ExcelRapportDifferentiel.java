@@ -76,6 +76,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     protected Map<Class<?>, Integer> mapDerniereColonneNew;
     protected GenerateExcelColonneNewFactory generateExcelColonneNewFactory = new GenerateExcelColonneNewFactory();
     private PrintExcelSousRegimeTranche printExcelSousRegimeTranche = new PrintExcelSousRegimeTranche();
+    private ExcelRapportDifferentielSheetFactory rapportDifferentielSheetFactory = new ExcelRapportDifferentielSheetFactory();
 
     private void init() {
         this.datas = new MapComparaisonPlanTransport();
@@ -206,15 +207,17 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     protected void generateEnteteBySheet() {
         this.ligne = this.firstLineEntete[this.numCurrentSheet];
         this.excelTools.createRow(this.ligne++);
+        
+        this.rapportDifferentielSheetFactory.get(this.nameCurrentSheet).generateEntete(this.excelTools, this.ligne);
 
-        if (this.nameCurrentSheet.equals(SHEET_NEW))
-            this.generateEnteteForSheetNew();
-        if (this.nameCurrentSheet.equals(SHEET_MODIFY))
-            this.generateEnteteForSheetModify();
-        if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT))
-            this.generateEnteteForSheetRegimeSplit();
-        if (this.nameCurrentSheet.equals(SHEET_DELETE) || this.nameCurrentSheet.equals(SHEET_UNCHANGED))
-            this.generateEnteteForSheetDeleteOrUnchanged(this.nameCurrentSheet);
+//        if (this.nameCurrentSheet.equals(SHEET_NEW))
+//            this.generateEnteteForSheetNew();
+//        if (this.nameCurrentSheet.equals(SHEET_MODIFY))
+//            this.generateEnteteForSheetModify();
+//        if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT))
+//            this.generateEnteteForSheetRegimeSplit();
+//        if (this.nameCurrentSheet.equals(SHEET_DELETE) || this.nameCurrentSheet.equals(SHEET_UNCHANGED))
+//            this.generateEnteteForSheetDeleteOrUnchanged(this.nameCurrentSheet);
     }
 
     private void generateEnteteForSheetDeleteOrUnchanged(String nameCurrentSheet) {
@@ -288,23 +291,25 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         try {
             this.ligne = this.firstLineContent[this.numCurrentSheet];
 
-            if (this.nameCurrentSheet.equals(SHEET_NEW)) {
-                this.generateContentForSheetNew();
-            }
-            else if (this.nameCurrentSheet.equals(SHEET_MODIFY)) {
-                this.generateContentForSheetModify();
-            }
-            else if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT)) {
-                this.generateContentForSheetRegimeSplit();
-            }
-            else if (this.nameCurrentSheet.equals(SHEET_UNCHANGED)) {
-                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.UNCHANGED,
-                        this.excelTools.couleurVert);
-            }
-            else if (this.nameCurrentSheet.equals(SHEET_DELETE)) {
-                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.DELETE,
-                        this.excelTools.couleurBleu);
-            }
+            this.rapportDifferentielSheetFactory.get(this.nameCurrentSheet).generateContent(this.excelTools, this.ligne, this.datas);
+
+//            if (this.nameCurrentSheet.equals(SHEET_NEW)) {
+//                this.generateContentForSheetNew();
+//            }
+//            else if (this.nameCurrentSheet.equals(SHEET_MODIFY)) {
+//                this.generateContentForSheetModify();
+//            }
+//            else if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT)) {
+//                this.generateContentForSheetRegimeSplit();
+//            }
+//            else if (this.nameCurrentSheet.equals(SHEET_UNCHANGED)) {
+//                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.UNCHANGED,
+//                        this.excelTools.couleurVert);
+//            }
+//            else if (this.nameCurrentSheet.equals(SHEET_DELETE)) {
+//                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.DELETE,
+//                        this.excelTools.couleurBleu);
+//            }
         }
         catch (Exception e) {
             throw e;

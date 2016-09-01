@@ -1,17 +1,19 @@
 package com.avancial.app.export;
 
-public class ExcelRapportDifferentielSheetDelete {
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
-   public ExcelRapportDifferentielSheetDelete() {
-      // TODO Auto-generated constructor stub
-   }
-   
-   public void generateEntete () throws Exception {
-      
-   }
-   
-   public void generateContent () throws Exception {
-      
-   }
+public class ExcelRapportDifferentielSheetDelete extends AExcelRapportDifferentielSheetDeleteOrUnchanged {
+
+    @Override
+    public void generateEntete(ExcelTools excelTools, int ligneDebut) {
+        this.generateEnteteForSheetDeleteOrUnchanged(excelTools, ligneDebut, "Removed Entries");
+    }
+
+    @Override
+    public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons) {
+        this.generateContentForSheetUnchangedOrDelete(excelTools, ligneDebut,
+                mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.DELETE), excelTools.couleurBleu);
+    }
 
 }
