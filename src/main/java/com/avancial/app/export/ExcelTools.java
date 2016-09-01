@@ -3,6 +3,7 @@
  */
 package com.avancial.app.export;
 
+import java.awt.Color;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -13,6 +14,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 
 /**
  * @author hamza.laterem
@@ -24,29 +27,29 @@ public class ExcelTools {
     private Row ligneSheet;
     private Cell cell;
 
-    public CellStyle styleNombre = null;
-    public CellStyle styleNombreUnLock = null;
-    public CellStyle styleNombreHide = null;
-    public CellStyle styleNombreStandard = null;
-    public CellStyle styleNombreStandardUnLock = null;
-    public CellStyle styleEnteteGris = null;
-    public CellStyle styleEnteteJaune = null;
-    public CellStyle styleTexte = null;
-    public CellStyle stylePourcent = null;
-    public CellStyle stylePourcentOk = null;
-    public CellStyle stylePourcentKo = null;
-    public CellStyle styleTexteLock = null;
-    public CellStyle styleTexteUnLock = null;
-    public CellStyle styleCellVideWithMergin = null;
-    public CellStyle styleNombreStandardLock = null;
-    public CellStyle styleTitre = null;
-    public CellStyle styleSousTitre = null;
-    public CellStyle styleHide = null;
-    public CellStyle styleWarning = null;
-    public CellStyle styleBorder = null;
-    public CellStyle styleBorderNotRight = null;
-    public CellStyle styleBorderNotLeft = null;
-    public CellStyle styleBorderNotLeftNotRight = null;
+    public XSSFCellStyle styleNombre = null;
+    public XSSFCellStyle styleNombreUnLock = null;
+    public XSSFCellStyle styleNombreHide = null;
+    public XSSFCellStyle styleNombreStandard = null;
+    public XSSFCellStyle styleNombreStandardUnLock = null;
+    public XSSFCellStyle styleEnteteGris = null;
+    public XSSFCellStyle styleEnteteJaune = null;
+    public XSSFCellStyle styleTexte = null;
+    public XSSFCellStyle stylePourcent = null;
+    public XSSFCellStyle stylePourcentOk = null;
+    public XSSFCellStyle stylePourcentKo = null;
+    public XSSFCellStyle styleTexteLock = null;
+    public XSSFCellStyle styleTexteUnLock = null;
+    public XSSFCellStyle styleCellVideWithMergin = null;
+    public XSSFCellStyle styleNombreStandardLock = null;
+    public XSSFCellStyle styleTitre = null;
+    public XSSFCellStyle styleSousTitre = null;
+    public XSSFCellStyle styleHide = null;
+    public XSSFCellStyle styleWarning = null;
+    public XSSFCellStyle styleBorder = null;
+    public XSSFCellStyle styleBorderNotRight = null;
+    public XSSFCellStyle styleBorderNotLeft = null;
+    public XSSFCellStyle styleBorderNotLeftNotRight = null;
 
     public Font fontCellVideWithMergin = null;
     public Font fontEntete = null;
@@ -58,17 +61,23 @@ public class ExcelTools {
     public Font fontSousTitre = null;
     public Font fontHide = null;
     public Font fontWarning = null;
-    
-    public short colorGreen = HSSFColor.GREEN.index;
-    public short colorRed = HSSFColor.RED.index;
-    public short colorBlue = HSSFColor.BLUE.index;
-    public short colorGrey25 = HSSFColor.GREY_25_PERCENT.index;
+
+    public Color couleurVert = new Color(216, 228, 188);
+    public Color couleurRosePale = new Color(242, 220, 219);
+    public Color couleurRoseFonce = new Color(255, 204, 204);
+    public Color couleurVioletPale = new Color(228, 223, 236);
+    public Color couleurVioletFonce = new Color(217, 210, 228);
+    public Color couleurGris = new Color(217, 217, 217);
+    public Color couleurBleu = new Color(220, 230, 241);
+    public Color couleurRouge = new Color(242, 220, 219);
+    public Color couleurMarron = new Color(238, 236, 225);
+    public Color couleurJaune = new Color(255, 255, 204);
 
     /**
      * Constructeur sans arguments
      */
     public ExcelTools() {
-        // TODO Auto-generated constructor stub
+        this.init();
     }
 
     /**
@@ -78,7 +87,7 @@ public class ExcelTools {
      */
     public ExcelTools(Workbook classeur) {
         this.classeur = classeur;
-        this.initStyle();
+        this.init();
     }
 
     /**
@@ -90,7 +99,7 @@ public class ExcelTools {
     public ExcelTools(Workbook classeur, Sheet sheet) {
         this.classeur = classeur;
         this.sheet = sheet;
-        this.initStyle();
+        this.init();
     }
 
     /**
@@ -103,6 +112,10 @@ public class ExcelTools {
     public ExcelTools(Workbook classeur, String nameSheet) {
         this.classeur = classeur;
         this.sheet = this.classeur.createSheet(nameSheet);
+        this.init();
+    }
+
+    private void init() {
         this.initStyle();
     }
 
@@ -916,7 +929,7 @@ public class ExcelTools {
         this.fontWarning.setFontHeightInPoints((short) (9));
         this.fontWarning.setColor(HSSFColor.RED.index);
 
-        this.styleNombreStandard = this.classeur.createCellStyle();
+        this.styleNombreStandard = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleNombreStandard.setAlignment(CellStyle.ALIGN_CENTER);
         this.styleNombreStandard.setFont(this.fontNombre);
         this.styleNombreStandard.setDataFormat(this.classeur.createDataFormat().getFormat("# ##0"));
@@ -926,7 +939,7 @@ public class ExcelTools {
         this.styleNombreStandard.setBorderRight(CellStyle.BORDER_THIN);
         this.styleNombreStandard.setBorderTop(CellStyle.BORDER_THIN);
 
-        this.styleNombreStandardUnLock = this.classeur.createCellStyle();
+        this.styleNombreStandardUnLock = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleNombreStandardUnLock.setAlignment(CellStyle.ALIGN_CENTER);
         this.styleNombreStandardUnLock.setFont(this.fontNombre);
         this.styleNombreStandardUnLock.setDataFormat(this.classeur.createDataFormat().getFormat("# ##0"));
@@ -937,7 +950,7 @@ public class ExcelTools {
         this.styleNombreStandardUnLock.setBorderTop(CellStyle.BORDER_THIN);
         this.styleNombreStandardUnLock.setLocked(false);
 
-        this.styleNombreStandardLock = this.classeur.createCellStyle();
+        this.styleNombreStandardLock = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleNombreStandardLock.setAlignment(CellStyle.ALIGN_CENTER);
         this.styleNombreStandardLock.setFont(this.fontNombre);
         this.styleNombreStandardLock.setDataFormat(this.classeur.createDataFormat().getFormat("# ##0"));
@@ -948,7 +961,7 @@ public class ExcelTools {
         this.styleNombreStandardLock.setBorderTop(CellStyle.BORDER_THIN);
         this.styleNombreStandardLock.setLocked(true);
 
-        this.styleNombre = this.classeur.createCellStyle();
+        this.styleNombre = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleNombre.setAlignment(CellStyle.ALIGN_RIGHT);
         this.styleNombre.setFont(this.fontNombre);
         this.styleNombre.setDataFormat(this.classeur.createDataFormat().getFormat("### ### ##0.00"));
@@ -958,7 +971,7 @@ public class ExcelTools {
         this.styleNombre.setBorderRight(CellStyle.BORDER_THIN);
         this.styleNombre.setBorderTop(CellStyle.BORDER_THIN);
 
-        this.styleNombreUnLock = this.classeur.createCellStyle();
+        this.styleNombreUnLock = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleNombreUnLock.setAlignment(CellStyle.ALIGN_RIGHT);
         this.styleNombreUnLock.setFont(this.fontNombre);
         this.styleNombreUnLock.setDataFormat(this.classeur.createDataFormat().getFormat("### ### ##0.00"));
@@ -969,22 +982,22 @@ public class ExcelTools {
         this.styleNombreUnLock.setBorderTop(CellStyle.BORDER_THIN);
         this.styleNombreUnLock.setLocked(false);
 
-        this.styleNombreHide = this.classeur.createCellStyle();
+        this.styleNombreHide = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleNombreHide.setDataFormat(this.classeur.createDataFormat().getFormat("### ### ##0.00"));
         this.styleNombreHide.setLocked(true);
         this.styleNombreHide.setHidden(true);
 
-        this.styleEnteteGris = this.classeur.createCellStyle();
+        this.styleEnteteGris = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleEnteteGris.setFont(this.fontEntete);
-        this.styleEnteteGris.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+        this.styleEnteteGris.setFillForegroundColor(new XSSFColor(this.couleurGris));
         this.styleEnteteGris.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
 
-        this.styleEnteteJaune = this.classeur.createCellStyle();
+        this.styleEnteteJaune = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleEnteteJaune.setFont(this.fontEntete);
-        this.styleEnteteJaune.setFillForegroundColor(HSSFColor.YELLOW.index);
+        this.styleEnteteJaune.setFillForegroundColor(new XSSFColor(this.couleurJaune));
         this.styleEnteteJaune.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
 
-        this.styleTexteLock = this.classeur.createCellStyle();
+        this.styleTexteLock = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleTexteLock.setAlignment(CellStyle.ALIGN_LEFT);
         this.styleTexteLock.setFont(this.fontTexte);
         this.styleTexteLock.setBorderBottom(CellStyle.BORDER_THIN);
@@ -994,7 +1007,7 @@ public class ExcelTools {
         this.styleTexteLock.setFillBackgroundColor(HSSFColor.RED.index);
         this.styleTexteLock.setLocked(true);
 
-        this.styleTexteUnLock = this.classeur.createCellStyle();
+        this.styleTexteUnLock = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleTexteUnLock.setAlignment(CellStyle.ALIGN_LEFT);
         this.styleTexteUnLock.setFont(this.fontTexte);
         this.styleTexteUnLock.setBorderBottom(CellStyle.BORDER_THIN);
@@ -1004,7 +1017,7 @@ public class ExcelTools {
         this.styleTexteUnLock.setFillBackgroundColor(HSSFColor.RED.index);
         this.styleTexteUnLock.setLocked(false);
 
-        this.styleTexte = this.classeur.createCellStyle();
+        this.styleTexte = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleTexte.setAlignment(CellStyle.ALIGN_LEFT);
         this.styleTexte.setFont(this.fontTexte);
         this.styleTexte.setBorderBottom(CellStyle.BORDER_THIN);
@@ -1013,36 +1026,39 @@ public class ExcelTools {
         this.styleTexte.setBorderTop(CellStyle.BORDER_THIN);
         this.styleTexte.setFillBackgroundColor(HSSFColor.RED.index);
 
-        this.styleBorder = this.classeur.createCellStyle();
+        this.styleBorder = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleBorder.setBorderBottom(CellStyle.BORDER_THIN);
         this.styleBorder.setBorderLeft(CellStyle.BORDER_THIN);
         this.styleBorder.setBorderRight(CellStyle.BORDER_THIN);
         this.styleBorder.setBorderTop(CellStyle.BORDER_THIN);
-        this.styleBorder.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-        this.styleBorder.setAlignment(CellStyle.ALIGN_CENTER);
+        this.styleBorder.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+        this.styleBorder.setAlignment(CellStyle.ALIGN_LEFT);
 
-        this.styleBorderNotRight = this.classeur.createCellStyle();
+        this.styleBorderNotRight = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleBorderNotRight.setBorderBottom(CellStyle.BORDER_THIN);
         this.styleBorderNotRight.setBorderLeft(CellStyle.BORDER_THIN);
         // this.styleBorderNotRight.setBorderRight(CellStyle.BORDER_THIN);
         this.styleBorderNotRight.setBorderTop(CellStyle.BORDER_THIN);
-        this.styleBorderNotRight.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        this.styleBorderNotRight.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+        this.styleBorderNotRight.setAlignment(CellStyle.ALIGN_LEFT);
 
-        this.styleBorderNotLeft = this.classeur.createCellStyle();
+        this.styleBorderNotLeft = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleBorderNotLeft.setBorderBottom(CellStyle.BORDER_THIN);
         // this.styleBorderNotLeft.setBorderLeft(CellStyle.BORDER_THIN);
         this.styleBorderNotLeft.setBorderRight(CellStyle.BORDER_THIN);
         this.styleBorderNotLeft.setBorderTop(CellStyle.BORDER_THIN);
-        this.styleBorderNotLeft.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        this.styleBorderNotLeft.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+        this.styleBorderNotLeft.setAlignment(CellStyle.ALIGN_LEFT);
 
-        this.styleBorderNotLeftNotRight = this.classeur.createCellStyle();
+        this.styleBorderNotLeftNotRight = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleBorderNotLeftNotRight.setBorderBottom(CellStyle.BORDER_THIN);
         // this.styleBorderNotLeftNotRight.setBorderLeft(CellStyle.BORDER_THIN);
         // this.styleBorderNotLeftNotRight.setBorderRight(CellStyle.BORDER_THIN);
         this.styleBorderNotLeftNotRight.setBorderTop(CellStyle.BORDER_THIN);
-        this.styleBorderNotLeftNotRight.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        this.styleBorderNotLeftNotRight.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+        this.styleBorderNotLeftNotRight.setAlignment(CellStyle.ALIGN_LEFT);
 
-        this.stylePourcent = this.classeur.createCellStyle();
+        this.stylePourcent = (XSSFCellStyle) this.classeur.createCellStyle();
         this.stylePourcent.setAlignment(CellStyle.ALIGN_RIGHT);
         this.stylePourcent.setBorderBottom(CellStyle.BORDER_THIN);
         this.stylePourcent.setBorderLeft(CellStyle.BORDER_THIN);
@@ -1051,7 +1067,7 @@ public class ExcelTools {
         this.stylePourcent.setFont(this.fontNombre);
         this.stylePourcent.setDataFormat(this.classeur.createDataFormat().getFormat("##0.00%"));
 
-        this.stylePourcentOk = this.classeur.createCellStyle();
+        this.stylePourcentOk = (XSSFCellStyle) this.classeur.createCellStyle();
         this.stylePourcentOk.setAlignment(CellStyle.ALIGN_RIGHT);
         this.stylePourcentOk.setBorderBottom(CellStyle.BORDER_THIN);
         this.stylePourcentOk.setBorderLeft(CellStyle.BORDER_THIN);
@@ -1060,7 +1076,7 @@ public class ExcelTools {
         this.stylePourcentOk.setFont(this.fontNombreOk);
         this.stylePourcentOk.setDataFormat(this.classeur.createDataFormat().getFormat("##0.00%"));
 
-        this.stylePourcentKo = this.classeur.createCellStyle();
+        this.stylePourcentKo = (XSSFCellStyle) this.classeur.createCellStyle();
         this.stylePourcentKo.setAlignment(CellStyle.ALIGN_RIGHT);
         this.stylePourcentKo.setBorderBottom(CellStyle.BORDER_THIN);
         this.stylePourcentKo.setBorderLeft(CellStyle.BORDER_THIN);
@@ -1069,16 +1085,16 @@ public class ExcelTools {
         this.stylePourcentKo.setFont(this.fontNombreKo);
         this.stylePourcentKo.setDataFormat(this.classeur.createDataFormat().getFormat("##0.00%"));
 
-        this.styleTitre = this.classeur.createCellStyle();
+        this.styleTitre = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleTitre.setFont(this.fontTitre);
 
-        this.styleSousTitre = this.classeur.createCellStyle();
+        this.styleSousTitre = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleSousTitre.setFont(this.fontSousTitre);
 
-        this.styleHide = this.classeur.createCellStyle();
+        this.styleHide = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleHide.setFont(this.fontHide);
 
-        this.styleWarning = this.classeur.createCellStyle();
+        this.styleWarning = (XSSFCellStyle) this.classeur.createCellStyle();
         this.styleWarning.setFont(this.fontWarning);
     }
 
@@ -1094,10 +1110,11 @@ public class ExcelTools {
         this.cell.setCellValue(value);
     }
 
-    public CellStyle addColor(CellStyle sourceStyle, short color) {
-        CellStyle res = this.classeur.createCellStyle();
+    public XSSFCellStyle addColor(CellStyle sourceStyle, Color c) {
+        XSSFCellStyle res = (XSSFCellStyle) this.classeur.createCellStyle();
         res.cloneStyleFrom(sourceStyle);
-        res.setFillForegroundColor(color);
+        res.setFillForegroundColor(new XSSFColor(c));
+        res.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
         return res;
     }
 }

@@ -3,6 +3,7 @@
  */
 package com.avancial.app.export;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -297,10 +298,10 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                 this.generateContentForSheetRegimeSplit();
             }
             else if (this.nameCurrentSheet.equals(SHEET_UNCHANGED)) {
-                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.UNCHANGED);
+                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.UNCHANGED, this.excelTools.couleurVert);
             }
             else if (this.nameCurrentSheet.equals(SHEET_DELETE)) {
-                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.DELETE);
+                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.DELETE, this.excelTools.couleurBleu);
             }
         }
         catch (Exception e) {
@@ -311,43 +312,43 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
 
     // "Train","Tranche","Régime Tranche"
     private void generateContentForSheetUnchangedOrDelete(
-            EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport) {
+            EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, Color couleur) {
         for (ComparaisonPlanTransport<IPlanTransport> comparaison : this.datas
                 .getComparaison(typeComparaisonPlanTransport)) {
             this.excelTools.createRow(this.ligne++);
-            this.generateTrainTrancheField(comparaison);
+            this.generateTrainTrancheField(comparaison, couleur);
             this.excelTools.createCellTexte(3,
                     this.mapPlansDeTransport.get(1).get().getTrainByNumeroTrain(comparaison.getNumeroTrain())
                             .getTrancheByNumeroTranche(comparaison.getNumeroTranche()).getRegime().getCodeRegime());
         }
     }
 
-    private void generateTrainTrancheField(ComparaisonPlanTransport<IPlanTransport> comparaison) {
+    private void generateTrainTrancheField(ComparaisonPlanTransport<IPlanTransport> comparaison, Color couleur) {
         /* Numéro de train */
         this.excelTools.createCellTexteWithStyle(1, comparaison.getNumeroTrain(),
-                this.excelTools.addColor(this.excelTools.styleBorder, this.excelTools.colorGreen));
+                this.excelTools.addColor(this.excelTools.styleBorder, couleur));
         /* Numéro de tranche */
         this.excelTools.createCellTexteWithStyle(2, comparaison.getNumeroTranche(),
-                this.excelTools.addColor(this.excelTools.styleBorder, this.excelTools.colorGreen));
+                this.excelTools.addColor(this.excelTools.styleBorder, couleur));
     }
 
     private void generateLigneRegimeSplit(ComparaisonPlanTransport<IPlanTransport> comparaison, boolean valeurAncien) {
-        this.generateTrainTrancheField(comparaison);
+        this.generateTrainTrancheField(comparaison, this.excelTools.couleurVert);
 
         /* Nom du field */
         this.excelTools.createCellTexteWithStyle(3, comparaison.getAncienField().getClass().getSimpleName(),
-                this.excelTools.addColor(this.excelTools.styleBorder, this.excelTools.colorGreen));
+                this.excelTools.addColor(this.excelTools.styleBorder, this.excelTools.couleurMarron));
 
         /* Valeur Ancien */
         ASousRegimeTranche sousRegimeTranche = null;
-        short colorValue;
+        Color colorValue;
         if (valeurAncien) {
             sousRegimeTranche = (ASousRegimeTranche) comparaison.getAncienField();
-            colorValue = this.excelTools.colorBlue;
+            colorValue = this.excelTools.couleurBleu;
         }
         else {
             sousRegimeTranche = (ASousRegimeTranche) comparaison.getNouveauField();
-            colorValue = this.excelTools.colorRed;
+            colorValue = this.excelTools.couleurRouge;
         }
         this.excelTools.createCellTexteWithStyle(4, this.printExcelSousRegimeTranche.printRegime(sousRegimeTranche),
                 this.excelTools.addColor(this.excelTools.styleBorder, colorValue));
@@ -418,22 +419,26 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     }
 
     private void generateLigneModify(ComparaisonPlanTransport<IPlanTransport> comparaison) {
-        this.generateTrainTrancheField(comparaison);
+        this.generateTrainTrancheField(comparaison, this.excelTools.couleurVert);
 
         /* Nom du field */
-        this.excelTools.createCellTexte(3, comparaison.getAncienField().getClass().getSimpleName());
+        this.excelTools.createCellTexteWithStyle(3, comparaison.getAncienField().getClass().getSimpleName(),
+                this.excelTools.addColor(this.excelTools.styleBorder, this.excelTools.couleurMarron));
 
         /* Régime */
-        this.excelTools.createCellTexte(4,
-                this.printExcelSousRegimeTranche.printRegime((ASousRegimeTranche) comparaison.getAncienField()));
+        this.excelTools.createCellTexteWithStyle(4,
+                this.printExcelSousRegimeTranche.printRegime((ASousRegimeTranche) comparaison.getAncienField()),
+                this.excelTools.addColor(this.excelTools.styleBorder, this.excelTools.couleurVert));
 
         /* Valeur Ancien */
-        this.excelTools.createCellTexte(5,
-                this.printExcelSousRegimeTranche.printValue((ASousRegimeTranche) comparaison.getAncienField()));
+        this.excelTools.createCellTexteWithStyle(5,
+                this.printExcelSousRegimeTranche.printValue((ASousRegimeTranche) comparaison.getAncienField()),
+                this.excelTools.addColor(this.excelTools.styleBorder, this.excelTools.couleurBleu));
 
         /* Valeur Nouveau */
-        this.excelTools.createCellTexte(6,
-                this.printExcelSousRegimeTranche.printValue((ASousRegimeTranche) comparaison.getNouveauField()));
+        this.excelTools.createCellTexteWithStyle(6,
+                this.printExcelSousRegimeTranche.printValue((ASousRegimeTranche) comparaison.getNouveauField()),
+                this.excelTools.addColor(this.excelTools.styleBorder, this.excelTools.couleurRouge));
     }
 
     private String getFieldName(String simpleName) {
@@ -485,11 +490,11 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                  * Tranche et Field du train-tranche précédent
                  */
                 /* Colonne Train */
-                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1, this.excelTools.styleBorder);
+                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1);
                 /* Colonne Tranche */
-                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2, this.excelTools.styleBorder);
+                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2);
                 /* Colonne Field */
-                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3, this.excelTools.styleBorder);
+                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3);
 
                 /* On réinitialise les valeurs */
                 debutRowTrain = this.ligne;
