@@ -19,7 +19,7 @@ public class Specification extends ASousRegimeTranche {
 
    public Specification() {
       this.voiture = new Voiture();
-      this.etat = EnumEtatSpecification.fermer;
+      this.etat = EnumEtatSpecification.Blocked;
       this.regime = new Regime();
    }
 

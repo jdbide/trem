@@ -86,7 +86,7 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 			sieges.add(new Siege((String) seat[2]));
 			listeCompartiments.add(new Compartiment((String) seat[1], sieges));
 			listeSpecifications.add(new Specification(new Voiture((String) seat[0], listeCompartiments),
-					EnumEtatSpecification.fermer, new Regime((String) seat[4])));
+					EnumEtatSpecification.Blocked, new Regime((String) seat[4])));
 
 			oldRegime = (String) seat[4];
 		}
@@ -152,7 +152,7 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 				sieges.add(new Siege(""));
 				listeCompartiments.add(new Compartiment("", sieges));
 				listeSpecifications.add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments),
-						EnumEtatSpecification.fermer, new Regime(mapKey.getRegime())));
+						EnumEtatSpecification.Blocked, new Regime(mapKey.getRegime())));
 			} else {
 				// Cas où seuls certains compartiments d'une voiture sont fermés
 				for (String compart : mapRegimeCodeDiag.get(mapKey)) {
@@ -165,7 +165,7 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 					sieges.add(new Siege(""));
 					listeCompartiments.add(new Compartiment(compart, sieges));
 					listeSpecifications.add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments),
-							EnumEtatSpecification.fermer, new Regime(mapKey.getRegime())));
+							EnumEtatSpecification.Blocked, new Regime(mapKey.getRegime())));
 				}
 			}
 		}

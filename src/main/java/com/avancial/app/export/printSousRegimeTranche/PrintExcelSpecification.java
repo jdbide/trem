@@ -14,7 +14,7 @@ public class PrintExcelSpecification extends APrintExcelSousRegimeTranche {
       this.stringBuilder.append("Coach ").append(specif.getVoiture().getNumeroVoiture()).append(", ");
       if (specif.getVoiture().getCompartiments() != null) {
          for (Compartiment compartiment : specif.getVoiture().getCompartiments()) {
-            if (compartiment.getNumeroCompartiment() != null) {
+            if (!(compartiment.getNumeroCompartiment().trim()).equals("")) {
                this.stringBuilder.append("Compartment ").append(compartiment.getNumeroCompartiment()).append(", ");
             } else {
                for (Siege siege : compartiment.getSieges()) {
