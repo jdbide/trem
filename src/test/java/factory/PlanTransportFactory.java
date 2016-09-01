@@ -161,6 +161,10 @@ public class PlanTransportFactory {
       Regime regime_tranche_train_commun = new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2);
       tranche_train_commune.setRegime(regime_tranche_train_commun);
       train_commun.getTranches().add(tranche_train_commune);
+      Tranche tranche_train_commune_2 = new Tranche();
+      tranche_train_commune_2.setNumeroTranche("9");
+      tranche_train_commune_2.setRegime(regime_tranche_train_commun);
+      train_commun.getTranches().add(tranche_train_commune_2);
       
       listTrain_draft.add(train_commun);
       listTrain_active.add(train_commun);

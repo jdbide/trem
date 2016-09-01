@@ -2,6 +2,7 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
@@ -19,6 +20,8 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
  */
 public class CompareTrainOther extends AChaineComparePlanTransport {
 
+    private static Logger logger = Logger.getLogger(CompareTrainOther.class);
+
     @Override
     public MapComparaisonPlanTransport compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
@@ -26,11 +29,12 @@ public class CompareTrainOther extends AChaineComparePlanTransport {
         Train trainAncien = (Train) comparableAncien;
         Train trainNouveau = (Train) comparableNouveau;
         MapComparaisonPlanTransport resTrain = new MapComparaisonPlanTransport();
+        logger.info("Début comparaison Trains Other : " + trainAncien.getNumeroTrain() + " - "
+                + trainNouveau.getNumeroTrain());
 
         IComparePlanTransport comparePlanTransport = new CompareTranche();
         /* Boucle sur les tranches de trainNouveau */
         for (Tranche trancheNouveau : trainNouveau.getTranches()) {
-            resTrain.clear();
             /* Boucle sur les tranches de trainAncien */
             for (Iterator<Tranche> itTrancheAncien = (Iterator<Tranche>) trainAncien.getTranches()
                     .iterator(); itTrancheAncien.hasNext();) {
@@ -38,7 +42,12 @@ public class CompareTrainOther extends AChaineComparePlanTransport {
                 /* Si les tranches ont le même numeroTranche, on les compare */
                 if (trancheNouveau.equals(trancheAncien)) {
 
+                    logger.info("Début comparaison Tranches : " + trancheAncien.getNumeroTranche() + " - "
+                            + trancheNouveau.getNumeroTranche());
+                    resTrain.clear();
                     resTrain.putAll(comparePlanTransport.compare(trancheAncien, trancheNouveau));
+                    logger.info("Fin comparaison Tranches : " + trancheAncien.getNumeroTranche() + " - "
+                            + trancheNouveau.getNumeroTranche());
 
                     for (List<ComparaisonPlanTransport<IPlanTransport>> listComparaison : resTrain.values()) {
                         for (ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport : listComparaison) {
@@ -54,6 +63,8 @@ public class CompareTrainOther extends AChaineComparePlanTransport {
             }
         }
         res.putAll(this.successeurCompare(comparableAncien, comparableNouveau));
+        logger.info("Fin comparaison Trains Other : " + trainAncien.getNumeroTrain() + " - "
+                + trainNouveau.getNumeroTrain());
         return res;
     }
 

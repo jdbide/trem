@@ -83,25 +83,6 @@ public class MapComparaisonPlanTransport {
         this.mapComparaison.put(cle, list);
     }
 
-    public void putComparaisons(List<ComparaisonPlanTransport<IPlanTransport>> comparaisonsPlanTransport) {
-        if (comparaisonsPlanTransport.size() > 0) {
-            Class<?> classeCle = null;
-            if (comparaisonsPlanTransport.get(0).getAncienField() != null) {
-                classeCle = comparaisonsPlanTransport.get(0).getAncienField().getClass();
-            }
-
-            List<ComparaisonPlanTransport<IPlanTransport>> list = this.mapComparaison
-                    .get(new MapComparaisonPlanTransportCle(
-                            comparaisonsPlanTransport.get(0).getTypeComparaisonPlanTransport(), classeCle));
-            if (list == null) {
-                list = new ArrayList<>();
-            }
-
-            // TODO dans le RegimeSplit, ajouter "dans l'ordre"
-            list.addAll(comparaisonsPlanTransport);
-        }
-    }
-
     /**
      * Récupération d'une liste de comparaisons à partir du type de comparaison
      * et de la classe des attributs de comparaison. Pour les types de
@@ -140,7 +121,12 @@ public class MapComparaisonPlanTransport {
     }
 
     public void putAll(MapComparaisonPlanTransport mapComparaisonPlanTransport) {
-        this.mapComparaison.putAll(mapComparaisonPlanTransport.mapComparaison);
+        for (List<ComparaisonPlanTransport<IPlanTransport>> comparaisons : mapComparaisonPlanTransport.mapComparaison
+                .values()) {
+            for (ComparaisonPlanTransport<IPlanTransport> comparaison : comparaisons) {
+                this.putComparaison(comparaison);
+            }
+        }
     }
 
     public void clear() {

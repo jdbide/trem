@@ -2,6 +2,7 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
@@ -20,6 +21,8 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
  *
  */
 public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePlanTransport {
+
+    private static Logger logger = Logger.getLogger(ACompareTrancheModifyRegimesplit.class);
 
     /**
      * Indique s'il reste des attributs à tester dans les listes
@@ -80,6 +83,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
                 if (listComparaison != null && listComparaison.size() > 0) {
                     comparaisonPlanTransport = listComparaison.get(0);
                     comparaisonPlanTransport.setNumeroTranche(numeroTranche);
+                    logger.info("Attribut " + typeComparaisonPlanTransport.toString());
                     res.putComparaison(comparaisonPlanTransport);
 
                     /*

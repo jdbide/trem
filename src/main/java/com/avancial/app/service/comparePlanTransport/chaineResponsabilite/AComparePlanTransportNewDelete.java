@@ -2,6 +2,7 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
@@ -19,6 +20,8 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
  *
  */
 public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanTransport {
+
+    private static Logger logger = Logger.getLogger(AComparePlanTransportNewDelete.class);
 
     /**
      * Comparaison de deux listes de trains, et retourne la liste de tranches
@@ -55,6 +58,8 @@ public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanT
                     comparaisonPlanTransport.setNumeroTrain(trainNouveau.getNumeroTrain());
                     comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                     comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
+                    logger.info("Train-Tranche NEW ou DELETE : " + comparaisonPlanTransport.getNumeroTrain() + "-"
+                            + comparaisonPlanTransport.getNumeroTranche());
                     res.putComparaison(comparaisonPlanTransport);
                 }
 

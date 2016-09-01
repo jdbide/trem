@@ -1,5 +1,6 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
@@ -15,12 +16,15 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
  */
 public class CompareAttributTrancheRegimesplit extends AChaineComparePlanTransport {
 
+    private static Logger logger = Logger.getLogger(CompareAttributTrancheRegimesplit.class);
+
     @Override
     public MapComparaisonPlanTransport compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
         MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
         ASousRegimeTranche attributAncien = (ASousRegimeTranche) comparableAncien;
         ASousRegimeTranche attributNouveau = (ASousRegimeTranche) comparableNouveau;
+        logger.info("Début comparaison Attributs REGIMESPLIT : " + attributAncien.getClass().getSimpleName());
 
         if (!attributNouveau.getClass().equals(attributAncien.getClass())) {
             throw new Exception("Ne peut pas comparer deux instances de IPlanTransport de classes différentes!");
@@ -41,7 +45,9 @@ public class CompareAttributTrancheRegimesplit extends AChaineComparePlanTranspo
             comparaisonPlanTransport.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
             comparaisonPlanTransport.setAncienField(attributAncien);
             comparaisonPlanTransport.setNouveauField(attributNouveau);
+            logger.info("Attributs REGIMESPLIT");
             res.putComparaison(comparaisonPlanTransport);
+            logger.info("Fin comparaison Attributs REGIMESPLIT : " + attributAncien.getClass().getSimpleName());
             return res;
         }
 
@@ -49,6 +55,7 @@ public class CompareAttributTrancheRegimesplit extends AChaineComparePlanTranspo
          * Si le test de regimeSplit ne passe pas, on passe au prochain test de
          * comparaison
          */
+        logger.info("Fin comparaison Attributs REGIMESPLIT : " + attributAncien.getClass().getSimpleName());
         return this.successeurCompare(attributAncien, attributNouveau);
     }
 

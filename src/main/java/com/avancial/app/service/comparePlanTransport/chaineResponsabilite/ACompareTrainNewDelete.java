@@ -2,6 +2,7 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
@@ -18,6 +19,8 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
  *
  */
 public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport {
+
+    private static Logger logger = Logger.getLogger(ACompareTrainNewDelete.class);
 
     /**
      * Compare deux listes de tranches, et retourne la liste de tranches
@@ -58,6 +61,8 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
                 comparaisonPlanTransport.setNumeroTrain(numeroTrain);
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                 comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
+                logger.info("Train-Tranche NEW ou DELETE : " + comparaisonPlanTransport.getNumeroTrain() + "-"
+                        + comparaisonPlanTransport.getNumeroTranche());
                 res.putComparaison(comparaisonPlanTransport);
 
                 /* On la retire de la liste */
@@ -76,6 +81,8 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
                 comparaisonPlanTransport.setNumeroTrain(numeroTrain);
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                 comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
+                logger.info("Train-Tranche NEW (régime modifié) : " + comparaisonPlanTransport.getNumeroTrain() + "-"
+                        + comparaisonPlanTransport.getNumeroTranche());
                 res.putComparaison(comparaisonPlanTransport);
 
                 /*
