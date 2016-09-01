@@ -3,7 +3,7 @@
  */
 package com.avancial.socle.jobs;
 
-import com.avancial.socle.exceptions.impl.ASocleException;
+import com.avancial.socle.exceptions.ASocleException;
 
 /**
  * @author bruno.legloahec
@@ -12,8 +12,7 @@ import com.avancial.socle.exceptions.impl.ASocleException;
 public interface IJob {
    /**
     * Méthode appelée au lancement du job
-    * 
-    * @throws ASocleException
+    * @throws ASocleException 
     */
    public void executeJob() throws Exception, ASocleException;
 }

@@ -2,16 +2,16 @@
 <ul class="sidebar-menu">
   <li class="treeview ng-scope active" ng-repeat="rubrique in menu.rubriques" ng-init="indexRubrique=$index">
     <a href="">
-      <span>{{rubrique.libelle}}</span>
+      <span>{{rubrique.libelleIhmRubrique}}</span>
     </a>
     <ul class="treeview-menu menu-open" style="display: block;">
-      <li ng-repeat="chapitre in rubrique.chapitres" ng-init="indexChapitre=$index" ng-class="{active: chapitre.libelle == chapitreCourant()}">
-        <a href=""> {{chapitre.libelle}} 
+      <li ng-repeat="chapitre in rubrique.chapitres" ng-init="indexChapitre=$index" ng-class="{active: chapitre.libelleIhmChapitre == chapitreCourant()}">
+        <a href=""> {{chapitre.libelleIhmChapitre}} 
           <i class="fa fa-angle-left pull-right" ng-show="chapitre.pages.length > 0"></i>
         </a>
         <ul class="treeview-menu" ng-show="chapitre.pages.length > 0">
-          <li ng-repeat="page in chapitre.pages" ng-init="indexPage=$index" ng-class="{active: page.libelle == pageCourante()}">
-            <a href="{{page.lien}}" ng-click="setCurrentPage(indexRubrique, indexChapitre, indexPage)"> {{page.libelle}}</a>
+          <li ng-repeat="page in chapitre.pages" ng-init="indexPage=$index" ng-class="{active: page.libelleIhmPage == pageCourante()}">
+            <a href="{{page.lienIhmPage}}" ng-click="setCurrentPage(indexRubrique, indexChapitre, indexPage)"> {{page.libelleIhmPage}}</a>
           </li>
         </ul>
       </li>

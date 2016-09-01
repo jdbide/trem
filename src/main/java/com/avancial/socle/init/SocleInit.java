@@ -8,14 +8,17 @@ import java.util.logging.Level;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 import org.quartz.SchedulerException;
 
+import com.avancial.socle.resources.annotations.Role;
 import com.avancial.socle.resources.constants.SOCLE_navigation;
-import com.avancial.socle.scheduler.service.ISocleScheduler;
+import com.avancial.socle.scheduler.ISocleScheduler;
+import com.avancial.socle.security.SecurityInterceptor;
 
 /**
  * @author bruno.legloahec
@@ -27,7 +30,7 @@ import com.avancial.socle.scheduler.service.ISocleScheduler;
 public class SocleInit extends HttpServlet {
 
    @Inject
-   ISocleScheduler           socleScheduler;
+   ISocleScheduler            socleScheduler;
 
    /**
     * 
@@ -39,10 +42,11 @@ public class SocleInit extends HttpServlet {
     * 
     * @see javax.servlet.GenericServlet#init()
     */
-
+   
    @Override
    public void init() throws ServletException {
-
+	   
+	    
       super.init();
       java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
       java.util.logging.Logger.getLogger("om.sun.faces.config.ConfigureListener").setLevel(Level.SEVERE);
@@ -65,11 +69,13 @@ public class SocleInit extends HttpServlet {
     */
    private void quartzInit() throws SchedulerException {
 
-      // System.out.println("***** SCHEDULER INIT *****");
-      // this.socleScheduler.init();
-      // System.out.println("***** SCHEDULER INITIALISED *****");
-      System.out.println("*****   Chargement des jobs  *****");
-      this.socleScheduler.scheduleAllActiveJobs();
-
+      System.out.println("*****  SCHEDULER INIT  *****");
+     this.socleScheduler.init();
+      System.out.println("*****  SCHEDULER INITIALISED  *****");
+  	System.out.println("*****   JOB RELOAD  *****");
+    this.socleScheduler.reload();
+    System.out.println("*****   JOBS RELOADED  *****");
+   
+   
    }
 }

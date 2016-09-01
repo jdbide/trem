@@ -1,12 +1,11 @@
 package com.avancial.socle.logging;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.avancial.socle.exceptions.impl.ASocleException;
+import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.resources.constants.SOCLE_logSortie;
 
 /**
@@ -15,12 +14,7 @@ import com.avancial.socle.resources.constants.SOCLE_logSortie;
  * @author heloise.guillemaud
  *
  */
-public class Logger implements ILogger, Serializable {
-
-   /**
-    * 
-    */
-   private static final long                        serialVersionUID = 1L;
+public class Logger implements ILogger {
 
    /**
     * Collection des sorties vers lesquelles le Logger doit envoyer/ enregistrer le log

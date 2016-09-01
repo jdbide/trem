@@ -3,49 +3,36 @@
  */
 package com.avancial.socle.params;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-
+import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.data.model.databean.RefDirectoryDataBean;
 import com.avancial.socle.params.beans.IParamBean;
 import com.avancial.socle.params.beans.ParamBeanGeneric;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 /**
- * 
- * Lecture des paramètres répertoires en base de données
- * 
  * @author bruno
  *
  */
-
 public class ParamReaderDBDirectory extends AParamReaderDB {
 
-   @Inject
-   @Socle_PUSocle
-   private EntityManager     em;
-
    /**
-    * 
-    */
-   private static final long serialVersionUID = 1L;
-
-   /**
-    * Classe servant à lire les paramètres "Répertoire" stockés en base de données
+    * Classe servant � lire les param�tres "R�pertoire" stock�s en base de donn�es
     * 
     * @param dao
     */
-   public ParamReaderDBDirectory() {
+   public ParamReaderDBDirectory(AbstractDao dao) {
+      super(dao);
    }
 
+   /*
+    * (non-Javadoc)
+    * 
+    * @see com.avancial.socle.params.IParamReader#loadParams(java.lang.String)
+    */
    @Override
    public void loadParams(String paramsName) throws Exception {
       try {
-
          super.loadParams(paramsName);
-
-         // On récupère tous les répertoires
-         for (Object bean : this.em.createQuery("From RefDirectoryDataBean").getResultList()) {
+         for (Object bean : this.getDao().getAll()) {
 
             IParamBean iParamBean = new ParamBeanGeneric();
             iParamBean.setName(((RefDirectoryDataBean) bean).getTechnicalNameRefDirectory());

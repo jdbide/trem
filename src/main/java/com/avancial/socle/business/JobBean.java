@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import com.avancial.socle.data.controller.dao.JobDao;
 import com.avancial.socle.data.model.databean.JobDataBean;
-import com.avancial.socle.exceptions.impl.ASocleException;
+import com.avancial.socle.exceptions.ASocleException;
 
 /**
  * @author bruno.legloahec

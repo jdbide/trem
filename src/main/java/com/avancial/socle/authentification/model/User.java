@@ -42,6 +42,13 @@ public class User implements Serializable {
 
       this.userDataBean = userDataBean;
    }
+   
+   /**
+    * @return
+    */
+   public Long getIdUser() {
+      return this.userDataBean.getIdUser();
+   }
 
    /**
     * @return

@@ -32,9 +32,7 @@ public enum SOCLE_constants {
     */
    DIALOG_DEL_MESSAGES("message_del"),
 
-   EXCEPTION_DUPLICATE_ID("exception_duplicate_id"),
-   EXCEPTION_COLUMN_NOT_NULL("exception_column_not_null"),
-   EXCEPTION_FOREIGN_KEY_CONSTRAINT("exception_foreign_key_constraint"),
+   EXCEPTION_DUPICATE_ID("exception_duplicate_id"),
    EXCEPTION_UNKNOWN("exception_unknown"),
    CONNECTION_NOT_LOADED("message_collection_not_loaded"),
    PARAM_NOT_FOUND("message_param_not_found"),

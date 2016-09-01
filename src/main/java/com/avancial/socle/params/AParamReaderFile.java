@@ -11,18 +11,15 @@ import com.avancial.socle.params.beans.IParamBean;
 import com.avancial.socle.params.beans.ParamBeanGeneric;
 
 /**
- * Classe abstraite pour l'implï¿½mentation de la lecture de paramï¿½tres ï¿½ partir d'un fichier
+ * Classe abstraite pour l'implémentation de la lecture de paramètres à partir
+ * d'un fichier
  * 
  * @author bruno
  *
  */
 public abstract class AParamReaderFile extends AParamReader {
 
-   /**
-    * 
-    */
-   private static final long serialVersionUID = 1L;
-   private String            filePath;
+   private String filePath;
 
    /**
     * @param filePath

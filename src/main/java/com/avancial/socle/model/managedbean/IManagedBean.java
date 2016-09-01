@@ -3,7 +3,7 @@
  */
 package com.avancial.socle.model.managedbean;
 
-import com.avancial.socle.exceptions.impl.ASocleException;
+import com.avancial.socle.exceptions.ASocleException;
 
 /**
  * @author bruno.legloahec

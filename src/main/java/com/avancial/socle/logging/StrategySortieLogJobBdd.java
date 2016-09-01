@@ -3,7 +3,7 @@ package com.avancial.socle.logging;
 import com.avancial.socle.data.controller.dao.AbstractDao;
 import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.model.databean.LogJobDataBean;
-import com.avancial.socle.exceptions.impl.ASocleException;
+import com.avancial.socle.exceptions.ASocleException;
 
 /**
  * Implémentation du pattern Strategy pour logger un job en base de données.<br/>

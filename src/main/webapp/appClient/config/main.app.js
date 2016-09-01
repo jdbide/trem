@@ -31,8 +31,8 @@
       'm-loader',
       'ui.bootstrap',
       'myModal',
-      'environment'//,
-      //'aDisabled'
+      'environment',
+      'aDisabled'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {
@@ -41,15 +41,7 @@
     	ngTableDefaults.settings.counts = [];
     	ngTableDefaults.settings.paginationMaxBlocks = 2;
     	ngTableDefaults.settings.paginationMinBlocks = 2;
-
-    }])
-    
-//    .constant('pageAccueil', {
-//    	rubrique: "Socle Administration",
-//    	chapitre: "Accueil",
-//    	page: "Bonjour"
-//    })
-//    ;
+    }]);
     
     /**
      * Configuration de httpProvider
@@ -62,13 +54,12 @@
     
     socle_app.config(function(envServiceProvider) {
     	// set the domains and variables for each environment
-    	var appName="Socle"
 		envServiceProvider.config(
-            {            	
-            	domains: {
+            {
+                domains: {
                     development: ['http://localhost:8080', 'localhost:8080', '127.0.0.1:8080'],
                     development_b: ['http://localhost:8081', 'localhost:8081', '127.0.0.1:8081'],
-                    recette: [],
+                    recette: ['http://tremas.rec-avancial.com:8080', 'tremas.rec-avancial.com:8080'],
                     recette_client: [],
                     recette_client_secu: [],
 				    production: [],
@@ -78,20 +69,24 @@
                 
                 vars: {
                     development: {
-                        apiUrl: 'http://localhost:8080/'+appName+'/',
-                        appWebService : 'http://localhost:8080/'+appName+'/webService/app',
-                        socleWebService : 'http://localhost:8080/'+appName+'/webService/socle',
-                        loginUrl: 'http://localhost:8080/Socle/login'
+                        apiUrl: 'http://localhost:8080/tremas/',
+                        appWebService : 'http://localhost:8080/tremas/webService/app',
+                        socleWebService : 'http://localhost:8080/tremas/webService/socle',
+                        loginUrl: 'http://localhost:8080/tremas/login'
                         // antoherCustomVar: ''
                     },
                     development_b: {
-                        apiUrl: 'http://localhost:8081/Socle/',
-                        appWebService : 'http://localhost:8081/Socle/webService/app',
-                        socleWebService : 'http://localhost:8081/Socle/webService/socle',
-                        loginUrl: 'http://localhost:8081/Socle/login'
+                        apiUrl: 'http://localhost:8081/tremas/',
+                        appWebService : 'http://localhost:8081/tremas/webService/app',
+                        socleWebService : 'http://localhost:8081/tremas/webService/socle',
+                        loginUrl: 'http://localhost:8081/tremas/login'
                         // antoherCustomVar: ''
                     },
                     recette: {
+                        apiUrl: 'http://tremas.rec-avancial.com:8080/tremas/',
+                        appWebService : 'http://tremas.rec-avancial.com:8080/tremas/webService/app',
+                        socleWebService : 'http://tremas.rec-avancial.com:8080/tremas/webService/socle',
+                        loginUrl: 'http://tremas.rec-avancial.com:8080/tremas/login'
                         // antoherCustomVar: ''
                     },
                     recette_client: {

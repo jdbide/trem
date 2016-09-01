@@ -6,19 +6,17 @@ package com.avancial.socle.data.controller.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
 
 import com.avancial.socle.data.model.databean.AbstractDataBean;
+import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
-import com.avancial.socle.exceptions.impl.ASocleException;
 import com.avancial.socle.logging.ALogBean;
 import com.avancial.socle.logging.ILogger;
 import com.avancial.socle.logging.LogDaoBean;
 import com.avancial.socle.logging.Logger;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.resources.constants.SOCLE_logSortie;
 
 /**
@@ -32,33 +30,31 @@ public abstract class AbstractDao implements Serializable {
     * 
     */
    private static final long serialVersionUID = 1L;
-   @Inject
-   @Socle_PUSocle
-   EntityManager             entityManager;
-   protected ILogger         logger;
-   protected ALogBean        logBean;
+   private EntityManager     entityManager;
+   protected ILogger logger;
+   protected ALogBean logBean;
+   
 
    /**
     * Constructeur sans log
-    * 
-    * @throws Exception
+    * @throws Exception 
     */
    public AbstractDao() {
-      // this.setEntityManager(AbstractEntityManager.getInstance().getEntityManager());
+      this.setEntityManager(AbstractEntityManager.getInstance().getEntityManager());
    }
-
+   
+   
    /**
     * Constructeur definissant le log
-    * 
     * @param libelleDoa
-    * @throws Exception
+    * @throws Exception 
     */
-   public AbstractDao(String libelleDoaLog) throws Exception {
-
-      // this.setEntityManager(AbstractEntityManager.getInstance().getEntityManager());
+   public AbstractDao(String libelleDoaLog) throws Exception{
+      
+      this.setEntityManager(AbstractEntityManager.getInstance().getEntityManager());
       this.logger = new Logger();
       this.logger.activerSortie(SOCLE_logSortie.CONSOLE);
-      // TODO logger en fichier (mais pas encors implemanter)
+      //TODO logger en fichier (mais pas encors implemanter)
       this.logBean = new LogDaoBean();
       ((LogDaoBean) this.logBean).setLibelleDao(libelleDoaLog);
    }
@@ -72,9 +68,9 @@ public abstract class AbstractDao implements Serializable {
       return this.entityManager;
    }
 
-   /*
-    * protected void setEntityManager(EntityManager entityManager) { this.entityManager = entityManager; }
-    */
+   protected void setEntityManager(EntityManager entityManager) {
+      this.entityManager = entityManager;
+   }
 
    public Session getSession() {
       // if(this.getEntityManager().unwrap(Session.class)==null)
@@ -96,7 +92,9 @@ public abstract class AbstractDao implements Serializable {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         throw SocleExceptionManager.getException(e);
+         @SuppressWarnings("unused")
+         SocleExceptionManager manager = new SocleExceptionManager(e);
+         throw SocleExceptionManager.getException();
       }
    }
 
@@ -108,7 +106,9 @@ public abstract class AbstractDao implements Serializable {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         throw SocleExceptionManager.getException(e);
+         @SuppressWarnings("unused")
+         SocleExceptionManager manager = new SocleExceptionManager(e);
+         throw SocleExceptionManager.getException();
       }
 
    }
@@ -121,7 +121,9 @@ public abstract class AbstractDao implements Serializable {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         throw SocleExceptionManager.getException(e);
+         @SuppressWarnings("unused")
+         SocleExceptionManager manager = new SocleExceptionManager(e);
+         throw SocleExceptionManager.getException();
       }
 
    }

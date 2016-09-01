@@ -80,21 +80,4 @@ public final class MessageController {
       return traduction;
    }
 
-   /**
-    * Permet de gérer les traduction avec un paramètre
-    * 
-    * @param parameter
-    * @return
-    */
-   public static String getTraductionWithParams(String parameter, String param, Locale locale) {
-      String traduction = "";
-      ResourceBundle messages = ResourceBundle.getBundle(SOCLE_constants.BUNDLE_PATH.toString(), locale);
-      try {
-         traduction = MessageFormat.format(messages.getString(parameter), param);
-      } catch (MissingResourceException e) {
-         return MessageFormat.format(messages.getString(SOCLE_constants.MESSAGE_ERR_TRANSLATION_NOT_FOUND.toString()), parameter);
-      }
-      return traduction;
-   }
-
 }

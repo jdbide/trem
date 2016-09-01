@@ -9,20 +9,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+	
 	<link rel="stylesheet" type="text/css"	href="vendor/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css"	href="vendor/m-loader/css/m-loader.css" />
 	<link rel="stylesheet"	href="vendor/font-awesome/css/font-awesome.min.css" />
 	<link rel="stylesheet" href="vendor/theme/css/AdminLTE.css" />
 	<link rel="stylesheet" href="vendor/theme/css/skins/skin-blue.min.css" />
 	<link rel="stylesheet" href="vendor/ng-table/ng-table.css" />
-	<!-- iCheck -->
-    <link rel="stylesheet" href="vendor/iCheck/square/blue.css" />
+	<link rel="stylesheet" type="text/css"	href="assets/css/style.css" />
 	<!--[if lt IE 9]>
 	        <script src="vendor/html5shiv/3.7.3/html5shiv.min.js"></script>
 	        <script src="vendor/respond/1.4.2/respond.min.js"></script>
 	 	<![endif]-->
-	  <link rel="stylesheet" type="text/css"	href="assets/css/style.css" />  
-	<title>Socle</title>
+	    
+	<title>Tremas</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini" ng-app="socle_app" ng-controller="globalCtrl">
 
@@ -74,11 +74,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="vendor/bootstrap/js/ui-bootstrap-tpls-1.3.3.js"></script>
     <!-- ngStorage -->
     <script src="vendor/ngStorage/ngStorage.min.js"></script>
-	<!-- iCheck -->
-    <script src="vendor/iCheck/icheck.min.js"></script>
-    
-
-
 
     <!--  Application config angularjs -->
 	<script type="text/javascript" src="config/main.app.js"></script>
@@ -94,6 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script type="text/javascript" src="socle/directives/tableDirective.js"></script>
 	<script type="text/javascript" src="socle/directives/breadcrumbDirective.js"></script>
 	<script type="text/javascript" src="socle/directives/modelDirective.js"></script>
+	<script type="text/javascript" src="socle/directives/aDisabled.js"></script>
 
     <!-- Factories -->
 	<script type="text/javascript" src="socle/factories/jsonFactory.js"></script>
@@ -104,47 +100,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Services -->
 	<script type="text/javascript" src="socle/services/menuService.js"></script>
 	<script type="text/javascript" src="socle/services/userService.js"></script>	
-    <script type="text/javascript" src="socle/services/loadingService.js"></script>    
+
+    <script type="text/javascript" src="socle/services/loadingService.js"></script>
+    <script type="text/javascript" src="socle/services/readerFileJson.js"></script>    
     <script type="text/javascript" src="socle/services/paramService.js"></script>
-    <script type="text/javascript" src="socle/services/rubriqueService.js"></script>
-    <script type="text/javascript" src="socle/services/chapitreService.js"></script>
-    <script type="text/javascript" src="socle/services/pageService.js"></script>
-     <script type="text/javascript" src="socle/services/userInfoService.js"></script>
-    
     
     <!-- Contrôleurs -->
 	<script type="text/javascript" src="socle/controllers/globalCtrl.js"></script>
 	<script type="text/javascript" src="socle/controllers/menuCtrl.js"></script>
 	<script type="text/javascript" src="socle/controllers/pagesCtrl.js"></script>
 	<script type="text/javascript" src="socle/controllers/breadcrumbCtrl.js"></script>
-	<script type="text/javascript" src="socle/controllers/rubriqueCtrl.js"></script>
-	<script type="text/javascript" src="socle/controllers/chapitreCtrl.js"></script>
-	<script type="text/javascript" src="socle/controllers/userCtrl.js"></script>
 	<!-- Interceptor -->
 	<script type="text/javascript" src="socle/factories/socleHttpProvider.js"></script>
 	
 	<!-- app : Application config angularjs -->
 	<script type="text/javascript" src="app/config/config.route.js"></script>
+	<script type="text/javascript" src="app/config/constantes.js"></script>
 	<!-- socle_app -->
     <!-- Directives -->
     <!-- Factories -->
     <!-- Filters -->	
 
     <!-- Services -->
-	
+	<script type="text/javascript" src="app/services/importService.js"></script>
+:    <script type="text/javascript" src="app/services/tablesMotriceService.js"></script>
+    <script type="text/javascript" src="app/services/generateNgTableService.js"></script>
+    <script type="text/javascript" src="app/services/trainManagerSysteme/importTmsService.js"></script>
     
     <!-- Contrôleurs -->
-	
-	<script type="text/javascript">
-	
-	
-    	$(function () {
-    		$("input").iCheck({
-    			checkboxClass: 'icheckbox_square-blue',
-    	      	radioClass: 'iradio_square-blue',
-    	      	increaseArea: '20%' // optional
-    	     });
-	    });
-    </script>
+	<script type="text/javascript" src="app/controllers/tablesCtrl.js"></script>
+	<script type="text/javascript" src="app/controllers/trainManagerSysteme/trainTmsCtrl.js"></script>
+	<script type="text/javascript" src="app/controllers/trainManagerSysteme/importTmsCtrl.js"></script>
 </body>
 </html>

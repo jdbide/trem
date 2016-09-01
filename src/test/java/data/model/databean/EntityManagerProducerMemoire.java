@@ -7,8 +7,6 @@ import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-import com.avancial.socle.persistence.qualifiers.Socle_PUMemoire;
-
 /**
  * @author bruno.legloahec
  *

@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 import org.json.simple.JSONArray;
 
-import com.avancial.socle.ihm.menu.data.service.MenuService;
+import com.avancial.socle.service.MenuService;
 
 @Path("/socle/menu")
 @RequestScoped

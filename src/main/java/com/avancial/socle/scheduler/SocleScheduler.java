@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
@@ -33,107 +31,120 @@ import com.avancial.socle.resources.constants.SOCLE_jobs;
  */
 @ApplicationScoped
 public class SocleScheduler implements ISocleScheduler, Serializable {
-   /**
-   * 
-   */
-   private static final long       serialVersionUID = 1L;
-   private Scheduler               sched;
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
+	private Scheduler sched;
 
-   private List<JobPlanifDataBean> job              = new ArrayList<>();
+	private List<JobPlanifDataBean> job = new ArrayList<>();
+	
+	private static final String GROUP_NAME="group1"; 
 
-   private static final String     GROUP_NAME       = "group1";
+	/**
+	 * @throws SchedulerException
+	 * 
+	 */
 
-   @Inject
-   JobPlanifDao                    dao;
+	public SocleScheduler() throws SchedulerException {
+		SchedulerFactory sf = new StdSchedulerFactory();
+		this.sched = sf.getScheduler();
+	}
 
-   /**
-    * @throws SchedulerException
-    * 
-    */
+	@Override
+	public void init() throws SchedulerException {
+		this.scheduleActiveJobs();
+		this.sched.start();
+	}
 
-   public SocleScheduler() throws SchedulerException {
-      SchedulerFactory sf = new StdSchedulerFactory();
-      this.sched = sf.getScheduler();
-   }
+	@Override
+	public void reload() throws SchedulerException {
+		this.unscheduleAllJobs();
+		this.scheduleActiveJobs();
+	}
 
-   @Override
-   public void init() throws SchedulerException {
-      this.scheduleActiveJobs();
-      this.sched.start();
-   }
+	/**
+	 * Planification des jobs actifs
+	 * 
+	 * @throws SchedulerException
+	 */
+	private void scheduleActiveJobs() throws SchedulerException {
 
-   @Override
-   public void reload() throws SchedulerException {
-      this.unscheduleAllJobs();
-      this.scheduleActiveJobs();
-   }
+		for (JobPlanifDataBean jobPlanifDataBean : job) {
+			Job newjob = null;
+			JobPlanifBean bean = new JobPlanifBean(jobPlanifDataBean);
+			try {
+				System.out.println("Planification de : " + jobPlanifDataBean.getLibelleJobPlanif());
+				newjob = (Job) Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance();
+				JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), GROUP_NAME)
+						.build();
+				job.getJobDataMap().put(SOCLE_jobs.JOB_CONTEXT_ID_JOB_PLANNIF.name(), bean.getIdJobPlanif());
+				job.getJobDataMap().put(SOCLE_jobs.JOB_CONTEXT_LIBELLE_JOB_PLANNIF.name(), bean.getLibelleJobPlanif());
+				Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), GROUP_NAME)
+						.withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
+				sched.scheduleJob(job, trigger);
 
-   /**
-    * Planification des jobs actifs
-    * 
-    * @throws SchedulerException
-    */
-   private void scheduleActiveJobs() throws SchedulerException {
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
 
-      for (JobPlanifDataBean jobPlanifDataBean : job) {
-         Job newjob = null;
-         JobPlanifBean bean = new JobPlanifBean(jobPlanifDataBean);
-         try {
-            System.out.println("Planification de : " + jobPlanifDataBean.getLibelleJobPlanif());
-            newjob = (Job) Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance();
-            JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), GROUP_NAME).build();
-            job.getJobDataMap().put(SOCLE_jobs.JOB_CONTEXT_ID_JOB_PLANNIF.name(), bean.getIdJobPlanif());
-            job.getJobDataMap().put(SOCLE_jobs.JOB_CONTEXT_LIBELLE_JOB_PLANNIF.name(), bean.getLibelleJobPlanif());
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), GROUP_NAME).withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
-            sched.scheduleJob(job, trigger);
+		}
+	}
 
-         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-         }
+	/**
+	 * Supprime tous les jobs de la planification
+	 * @throws SchedulerException 
+	 */
+	private void unscheduleAllJobs() throws SchedulerException {
+		this.chargeActiveJobs();
+		
+		
+		for (JobPlanifDataBean jobPlanifDataBean : this.job) {
+			JobKey key=new JobKey(jobPlanifDataBean.getLibelleJobPlanif(),GROUP_NAME);	
+			if (this.sched.deleteJob(key));
+			System.out.println(String.format("Le job %s a été correctement déplanifié", jobPlanifDataBean.getLibelleJobPlanif()));
+		}
+	}
 
-      }
-   }
-
-   /**
-    * Supprime tous les jobs de la planification
-    * 
-    * @throws SchedulerException
-    */
-   private void unscheduleAllJobs() throws SchedulerException {
-      this.chargeActiveJobs();
-
-      for (JobPlanifDataBean jobPlanifDataBean : this.job) {
-         JobKey key = new JobKey(jobPlanifDataBean.getLibelleJobPlanif(), GROUP_NAME);
-         if (this.sched.deleteJob(key))
-            ;
-         System.out.println(String.format("Le job %s a été correctement déplanifié", jobPlanifDataBean.getLibelleJobPlanif()));
-      }
-   }
-
-   /**
-    * Charge la liste des jobs actifs à partir de la base de données
-    * 
-    * @return
-    */
-   private void chargeActiveJobs() {
-      this.job.clear();
-
-      job = dao.getAllActif();
-   }
+	/**
+	 * Charge la liste des jobs actifs à partir de la base de données
+	 * 
+	 * @return
+	 */
+	private void chargeActiveJobs() {
+		this.job.clear();
+		JobPlanifDao dao = new JobPlanifDao();
+		job = dao.getAllActif();
+	}
 
 }
 
 /*
- * @Override public void init() throws SchedulerException { JobPlanifDao dao = new JobPlanifDao(); List<JobPlanifDataBean> jobs = new ArrayList<>(); jobs = dao.getAllActif();
+ * @Override public void init() throws SchedulerException { JobPlanifDao dao =
+ * new JobPlanifDao(); List<JobPlanifDataBean> jobs = new ArrayList<>(); jobs =
+ * dao.getAllActif();
  * 
- * SchedulerFactory sf = new StdSchedulerFactory(); this.sched = sf.getScheduler();
+ * SchedulerFactory sf = new StdSchedulerFactory(); this.sched =
+ * sf.getScheduler();
  * 
- * for (JobPlanifDataBean jobPlanifDataBean : jobs) { Job newjob = null; JobPlanifBean bean = new JobPlanifBean(jobPlanifDataBean); try { System.out.println("Planification de : " + jobPlanifDataBean.getLibelleJobPlanif()); newjob = (Job)
- * Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance(); Scheduler sched = sf.getScheduler(); JobDetail job = JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(), "group1").build(); job.getJobDataMap().put(SOCLE_jobs.JOB_CONTEXT_ID_JOB_PLANNIF.name(),
- * bean.getIdJobPlanif()); job.getJobDataMap().put(SOCLE_jobs.JOB_CONTEXT_LIBELLE_JOB_PLANNIF.name(), bean.getLibelleJobPlanif()); Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())). build();
- * sched.scheduleJob(job, trigger);
+ * for (JobPlanifDataBean jobPlanifDataBean : jobs) { Job newjob = null;
+ * JobPlanifBean bean = new JobPlanifBean(jobPlanifDataBean); try {
+ * System.out.println("Planification de : " +
+ * jobPlanifDataBean.getLibelleJobPlanif()); newjob = (Job)
+ * Class.forName(jobPlanifDataBean.getJob().getClasseJob()).newInstance();
+ * Scheduler sched = sf.getScheduler(); JobDetail job =
+ * JobBuilder.newJob(newjob.getClass()).withIdentity(bean.getLibelleJobPlanif(),
+ * "group1").build();
+ * job.getJobDataMap().put(SOCLE_jobs.JOB_CONTEXT_ID_JOB_PLANNIF.name(),
+ * bean.getIdJobPlanif());
+ * job.getJobDataMap().put(SOCLE_jobs.JOB_CONTEXT_LIBELLE_JOB_PLANNIF.name(),
+ * bean.getLibelleJobPlanif()); Trigger trigger =
+ * TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(),
+ * "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).
+ * build(); sched.scheduleJob(job, trigger);
  * 
- * } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) { e.printStackTrace(); }
+ * } catch (ClassNotFoundException | InstantiationException |
+ * IllegalAccessException e) { e.printStackTrace(); }
  * 
  * }
  * 
