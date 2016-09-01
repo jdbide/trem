@@ -352,7 +352,7 @@ public class PlanTransportFactory {
       listS1.add(s7);
       
       
-      Compartiment  c1 = new Compartiment(null, listS1);
+      Compartiment  c1 = new Compartiment("010", listS1);
       Compartiment  c2 = new Compartiment("018", null);
       
       List<Compartiment> listCompart = new ArrayList<>();
@@ -364,11 +364,11 @@ public class PlanTransportFactory {
       v2.setCompartiments(listCompart2);
       
       
-      Specification sp1 = new Specification(v1, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      Specification sp2 = new Specification(v2, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date2, date3));
-      Specification sp3 = new Specification(v3, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date3));
+      Specification sp1 = new Specification(v1, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      Specification sp2 = new Specification(v2, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date2, date3));
+      Specification sp3 = new Specification(v3, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date3));
       
-      Specification sp4 = new Specification(v3, EnumEtatSpecification.fermer, new Regime("Mo-ZE; From 01/06/2016 to 10/12/2016", date1, date3));
+      Specification sp4 = new Specification(v3, EnumEtatSpecification.Blocked, new Regime("Mo-ZE; From 01/06/2016 to 10/12/2016", date1, date3));
       
       List<Specification> lsp = new ArrayList<>();
       lsp.add(sp1);
