@@ -169,7 +169,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     @Override
     protected void generatePreEnteteBySheet() {
 
-        this.ligne = firstLinePreEntete[this.numCurrentSheet];
+        this.ligne = this.firstLinePreEntete[this.numCurrentSheet];
         this.excelTools.createRow(this.ligne++);
         this.excelTools.createCellTexteWithStyle(1, REPORT_FOR, this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
@@ -284,14 +284,21 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         try {
             this.ligne = this.firstLineContent[this.numCurrentSheet];
 
-            if (this.nameCurrentSheet.equals(SHEET_NEW))
+            if (this.nameCurrentSheet.equals(SHEET_NEW)) {
                 this.generateContentForSheetNew();
-            if (this.nameCurrentSheet.equals(SHEET_MODIFY))
+            }
+            else if (this.nameCurrentSheet.equals(SHEET_MODIFY)) {
                 this.generateContentForSheetModify();
-            if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT))
+            }
+            else if (this.nameCurrentSheet.equals(SHEET_REGIMESPLIT)) {
                 this.generateContentForSheetRegimeSplit();
-            if (this.nameCurrentSheet.equals(SHEET_UNCHANGED) || this.nameCurrentSheet.equals(SHEET_DELETE))
-                this.generateContentForSheetUnchangedOrDelete(this.nameCurrentSheet);
+            }
+            else if (this.nameCurrentSheet.equals(SHEET_UNCHANGED)) {
+                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.UNCHANGED);
+            }
+            else if (this.nameCurrentSheet.equals(SHEET_DELETE)) {
+                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.DELETE);
+            }
         }
         catch (Exception e) {
             throw e;
@@ -300,20 +307,16 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     }
 
     // "Train","Tranche","Régime Tranche"
-    private void generateContentForSheetUnchangedOrDelete(String nameCurrentSheet) {
-        // for (IComparaisonPlanTransport comparaison : this.datas) {
-        // ComparaisonPlanTransport data = ((ComparaisonPlanTransport)
-        // comparaison);
-        // if
-        // (data.getTypeComparaisonPlanTransport().toString().equals(nameCurrentSheet))
-        // {
-        // this.excelTools.createRow(this.ligne++);
-        // this.excelTools.createCellTexte(1, data.getNumeroTrain());
-        // this.excelTools.createCellTexte(2, data.getNumeroTranche());
-        // this.excelTools.createCellTexte(3,
-        // mapPlansDeTransport.get(1).get().getTrainByNumeroTrain(data.getNumeroTrain()).getTrancheByNumeroTranche(data.getNumeroTranche()).getRegime().getCodeRegime());
-        // }
-        // }
+    private void generateContentForSheetUnchangedOrDelete(
+            EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport) {
+        for (ComparaisonPlanTransport<IPlanTransport> comparaison : this.datas
+                .getComparaison(typeComparaisonPlanTransport)) {
+            this.excelTools.createRow(this.ligne++);
+            this.generateTrainTrancheField(comparaison);
+            this.excelTools.createCellTexte(3,
+                    this.mapPlansDeTransport.get(1).get().getTrainByNumeroTrain(comparaison.getNumeroTrain())
+                            .getTrancheByNumeroTranche(comparaison.getNumeroTranche()).getRegime().getCodeRegime());
+        }
     }
 
     private void generateTrainTrancheField(ComparaisonPlanTransport<IPlanTransport> comparaison) {
@@ -494,8 +497,8 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             dataPrec = data;
         }
         /*
-         * Merge des cellules des colonnes Train,
-         * Tranche et Field du dernier train-tranche
+         * Merge des cellules des colonnes Train, Tranche et Field du dernier
+         * train-tranche
          */
         /* Colonne Train */
         this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1, this.excelTools.styleBorder);
@@ -735,7 +738,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
      * @return the datas
      */
     public MapComparaisonPlanTransport getDatas() {
-        return datas;
+        return this.datas;
     }
 
     /**
@@ -750,7 +753,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
      * @return the mapPlansDeTransport
      */
     public MapPlansDeTransport getMapPlansDeTransport() {
-        return mapPlansDeTransport;
+        return this.mapPlansDeTransport;
     }
 
     /**
