@@ -298,10 +298,12 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                 this.generateContentForSheetRegimeSplit();
             }
             else if (this.nameCurrentSheet.equals(SHEET_UNCHANGED)) {
-                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.UNCHANGED, this.excelTools.couleurVert);
+                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.UNCHANGED,
+                        this.excelTools.couleurVert);
             }
             else if (this.nameCurrentSheet.equals(SHEET_DELETE)) {
-                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.DELETE, this.excelTools.couleurBleu);
+                this.generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport.DELETE,
+                        this.excelTools.couleurBleu);
             }
         }
         catch (Exception e) {
@@ -311,15 +313,16 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     }
 
     // "Train","Tranche","Régime Tranche"
-    private void generateContentForSheetUnchangedOrDelete(
-            EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, Color couleur) {
+    private void generateContentForSheetUnchangedOrDelete(EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport,
+            Color couleur) {
         for (ComparaisonPlanTransport<IPlanTransport> comparaison : this.datas
                 .getComparaison(typeComparaisonPlanTransport)) {
             this.excelTools.createRow(this.ligne++);
             this.generateTrainTrancheField(comparaison, couleur);
-            this.excelTools.createCellTexte(3,
+            this.excelTools.createCellTexteWithStyle(3,
                     this.mapPlansDeTransport.get(1).get().getTrainByNumeroTrain(comparaison.getNumeroTrain())
-                            .getTrancheByNumeroTranche(comparaison.getNumeroTranche()).getRegime().getCodeRegime());
+                            .getTrancheByNumeroTranche(comparaison.getNumeroTranche()).getRegime().getCodeRegime(),
+                    this.excelTools.addColor(this.excelTools.styleBorder, couleur));
         }
     }
 
@@ -511,26 +514,20 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
              * dernier train-tranche
              */
             /* Colonne Train */
-            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1, this.excelTools.styleBorder);
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1);
             /* Colonne Tranche */
-            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2, this.excelTools.styleBorder);
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2);
             /* Colonne Field */
-            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3, this.excelTools.styleBorder);
+            this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3);
         }
     }
 
     private void generateContentForSheetNew() throws ClassNotFoundException, IOException {
         int debutRowTrain = 0;
-        boolean isFirst = true;
-
         this.excelTools.createRow(this.ligne++);
-
-        int sizeAllCompa = this.datas.size();
-        int cntTraiTranche = 1;
 
         for (IComparaisonPlanTransport comparaison : this.datas.getComparaison(EnumTypeComparaisonPlanTransport.NEW,
                 null)) {
-            isFirst = true;
             ComparaisonPlanTransport data = ((ComparaisonPlanTransport) comparaison);
 
             Train currentTrain = ((PlanTransport) this.mapPlansDeTransport.get(2).get())
@@ -572,7 +569,6 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
             this.excelTools.createRow(this.ligne++);
             ((SXSSFSheet) this.excelTools.getSheet()).flushRows(1);
 
-            cntTraiTranche++;
         }
     }
 
