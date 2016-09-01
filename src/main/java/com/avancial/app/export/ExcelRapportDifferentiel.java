@@ -421,11 +421,11 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                 this.printExcelSousRegimeTranche.printRegime((ASousRegimeTranche) comparaison.getAncienField()));
 
         /* Valeur Ancien */
-        this.excelTools.createCellTexte(4,
-                this.printExcelSousRegimeTranche.printRegime((ASousRegimeTranche) comparaison.getAncienField()));
+        this.excelTools.createCellTexte(5,
+                this.printExcelSousRegimeTranche.printValue((ASousRegimeTranche) comparaison.getAncienField()));
 
         /* Valeur Nouveau */
-        this.excelTools.createCellTexte(5,
+        this.excelTools.createCellTexte(6,
                 this.printExcelSousRegimeTranche.printValue((ASousRegimeTranche) comparaison.getNouveauField()));
     }
 
@@ -478,21 +478,31 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
                  * Tranche et Field du train-tranche précédent
                  */
                 /* Colonne Train */
-                this.excelTools.addMergedRegion(debutRowTrain, this.ligne, 1, 1, this.excelTools.styleBorder);
+                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1, this.excelTools.styleBorder);
                 /* Colonne Tranche */
-                this.excelTools.addMergedRegion(debutRowTrain, this.ligne, 2, 2, this.excelTools.styleBorder);
+                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2, this.excelTools.styleBorder);
                 /* Colonne Field */
-                this.excelTools.addMergedRegion(debutRowTrain, this.ligne, 3, 3, this.excelTools.styleBorder);
+                this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3, this.excelTools.styleBorder);
 
                 /* On réinitialise les valeurs */
                 debutRowTrain = this.ligne;
             }
 
             /* Ajout des valeurs ancien-nouveau */
-            this.generateLigneModify(data);
             this.excelTools.createRow(this.ligne++);
+            this.generateLigneModify(data);
             dataPrec = data;
         }
+        /*
+         * Merge des cellules des colonnes Train,
+         * Tranche et Field du dernier train-tranche
+         */
+        /* Colonne Train */
+        this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 1, 1, this.excelTools.styleBorder);
+        /* Colonne Tranche */
+        this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 2, 2, this.excelTools.styleBorder);
+        /* Colonne Field */
+        this.excelTools.addMergedRegion(debutRowTrain, this.ligne - 1, 3, 3, this.excelTools.styleBorder);
 
     }
 

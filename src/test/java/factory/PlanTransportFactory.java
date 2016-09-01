@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.xmlbeans.impl.jam.mutable.MParameter;
-
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Compartiment;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
@@ -88,6 +85,8 @@ public class PlanTransportFactory {
       
       CodeSat codeSat1 = new CodeSat("1", regime1);
       CodeSat codeSat2 = new CodeSat("2", regime1);
+      CodeSat codeSat3 = new CodeSat("3", regime2);
+      CodeSat codeSat4 = new CodeSat("4", regime2);
       
       FareProfile fareProfile1 = new FareProfile("G45", regime1);
       FareProfile fareProfile2 = new FareProfile("E87", regime2);
@@ -97,8 +96,9 @@ public class PlanTransportFactory {
       Repas repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
       
       listCodeSat1.add(codeSat1);
-      listCodeSat1.add(codeSat2);
+      listCodeSat1.add(codeSat3);
       listCodeSat2.add(codeSat2);
+      listCodeSat2.add(codeSat4);
 
       listFareProfile1.add(fareProfile1);
       listFareProfile2.add(fareProfile2);
