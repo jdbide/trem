@@ -25,7 +25,8 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
     }
 
     @Override
-    public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons, MapPlansDeTransport mapPlansDeTransport) {
+    public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons,
+            MapPlansDeTransport mapPlansDeTransport) {
         int debutRowTrain = ligneDebut;
 
         ComparaisonPlanTransport<IPlanTransport> dataPrec = null;
@@ -78,7 +79,7 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
         this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);
 
         /* Nom du field */
-        excelTools.createCellTexteWithStyle(3, comparaison.getAncienField().getClass().getSimpleName(),
+        excelTools.createCellTexteWithStyle(3, this.getNomField(comparaison.getAncienField().getClass()),
                 excelTools.addColor(excelTools.styleBorder, excelTools.couleurMarron));
 
         /* Régime */

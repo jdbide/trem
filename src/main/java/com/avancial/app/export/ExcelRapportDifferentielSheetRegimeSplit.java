@@ -94,7 +94,7 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
         this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);
 
         /* Nom du field */
-        excelTools.createCellTexteWithStyle(3, comparaison.getAncienField().getClass().getSimpleName(),
+        excelTools.createCellTexteWithStyle(3, this.getNomField(comparaison.getAncienField().getClass()),
                 excelTools.addColor(excelTools.styleBorder, excelTools.couleurMarron));
 
         /* Valeur Ancien */
