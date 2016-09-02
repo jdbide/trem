@@ -1,13 +1,18 @@
 package com.avancial.app.export;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.List;
+import org.apache.log4j.Logger;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AExcelRapportDifferentielSheet {
+
+    private static Logger logger = Logger.getLogger(AExcelRapportDifferentielSheetDeleteOrUnchanged.class);
 
     public static String[] ENTETE_SHEET_UNCHANGED_DELETE = {"Train", "Tranche", "Régime Tranche"};
 
@@ -26,7 +31,7 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
 
     protected int generateContentForSheetUnchangedOrDelete(ExcelTools excelTools, int ligneDebut,
             MapPlansDeTransport mapPlansDeTransport, List<ComparaisonPlanTransport<IPlanTransport>> comparaisons,
-            Color couleur) {
+            Color couleur) throws IOException {
         int ligne = ligneDebut;
         for (ComparaisonPlanTransport<IPlanTransport> comparaison : comparaisons) {
             excelTools.createRow(ligne++);
@@ -36,6 +41,10 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
                             .getTrainByNumeroTrain(comparaison.getNumeroTrain())
                             .getTrancheByNumeroTranche(comparaison.getNumeroTranche()).getRegime().getCodeRegime(),
                     excelTools.addColor(excelTools.styleBorder, couleur));
+            ((SXSSFSheet) excelTools.getSheet()).flushRows(1);
+            logger.info("Onglet " + comparaison.getTypeComparaisonPlanTransport().name() + " : " + "("
+                    + comparaison.getNumeroTrain() + "-" + comparaison.getNumeroTranche() + ") ligne "
+                    + (ligneDebut - 1) + " générée");
         }
         return ligne;
     }
