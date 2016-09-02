@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Compartiment;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
@@ -443,7 +444,7 @@ public class PlanTransportFactory {
       
       MapPlansDeTransport   mapPlansDeTransport = new MapPlansDeTransport();
       
-      mapPlansDeTransport.setMapPlansDeTransport(pt_draft, pt_active);
+      mapPlansDeTransport.setMapPlansDeTransport(new JeuDonneeEntity(), pt_draft, new JeuDonneeEntity(), pt_active);
       
       
       return mapPlansDeTransport;

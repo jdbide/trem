@@ -2,6 +2,7 @@ package com.avancial.app.export;
 
 import java.awt.Color;
 import java.util.List;
+import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
@@ -31,7 +32,8 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
             excelTools.createRow(ligne++);
             generateTrainTrancheField(excelTools, comparaison, couleur);
             excelTools.createCellTexteWithStyle(3,
-                    mapPlansDeTransport.get(1).get().getTrainByNumeroTrain(comparaison.getNumeroTrain())
+                    mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport()
+                            .getTrainByNumeroTrain(comparaison.getNumeroTrain())
                             .getTrancheByNumeroTranche(comparaison.getNumeroTranche()).getRegime().getCodeRegime(),
                     excelTools.addColor(excelTools.styleBorder, couleur));
         }

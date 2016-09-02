@@ -4,45 +4,61 @@
 package com.avancial.app.utilitaire;
 
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
-
+import com.avancial.app.data.databean.JeuDonneeEntity;
+import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 
 /**
  * @author mikael.muller
  *
  */
-public class MapPlansDeTransport extends HashMap<Integer, AtomicReference<PlanTransport>> {
-   
-   /**
+public class MapPlansDeTransport extends HashMap<Status, JeuDonneesPlanTransport> {
+
+    /**
     * 
     */
-   private static final long serialVersionUID = 1L;
-   
-   public MapPlansDeTransport() {
-      this.put(1, new AtomicReference<PlanTransport>(new PlanTransport()));
-      this.put(2, new AtomicReference<PlanTransport>(new PlanTransport()));
-   }
-   
-   public void setPlanTransportActive(PlanTransport PTActive) {
-      this.get(1).set(PTActive);
-   }
-   
-   public void setPlanTransportDraft(PlanTransport PTDraft) {
-      this.get(2).set(PTDraft);
-   }
-   
-   public void setMapPlansDeTransport(PlanTransport PTDraft, PlanTransport PTActive) {
-      this.setPlanTransportActive(PTActive);
-      this.setPlanTransportDraft(PTDraft);
-   }
-   
-   public PlanTransport getPlanTransportActive() {
-      return this.get(1).get();
-   }
+    private static final long serialVersionUID = 1L;
 
-   public PlanTransport getPlanTransportDraft() {
-      return this.get(2).get();
-   }
-   
+    public MapPlansDeTransport() {
+        this.put(Status.ACTIVE, new JeuDonneesPlanTransport());
+        this.put(Status.DRAFT, new JeuDonneesPlanTransport());
+    }
+
+    public void setPlanTransportActive(JeuDonneeEntity jdActive, PlanTransport ptActive) {
+        this.put(Status.ACTIVE, new JeuDonneesPlanTransport(jdActive, ptActive));
+    }
+
+    public void setPlanTransportDraft(JeuDonneeEntity jdDraft, PlanTransport ptDraft) {
+        this.put(Status.DRAFT, new JeuDonneesPlanTransport(jdDraft, ptDraft));
+    }
+
+    public void setPlanTransportActive(JeuDonneesPlanTransport jdptActive) {
+        this.put(Status.ACTIVE, jdptActive);
+    }
+    
+    public void setPlanTransportDraft(JeuDonneesPlanTransport jdptDraft) {
+        this.put(Status.DRAFT, jdptDraft);
+    }
+    
+    public void setMapPlansDeTransport(JeuDonneeEntity jdDraft, PlanTransport ptDraft, JeuDonneeEntity jdActive,
+            PlanTransport ptActive) {
+        this.setPlanTransportActive(jdActive, ptActive);
+        this.setPlanTransportDraft(jdDraft, ptDraft);
+    }
+
+    public PlanTransport getPlanTransportActive() {
+        return this.get(Status.ACTIVE).getPlanTransport();
+    }
+
+    public PlanTransport getPlanTransportDraft() {
+        return this.get(Status.DRAFT).getPlanTransport();
+    }
+
+    public JeuDonneeEntity getJeuDonneesActive() {
+        return this.get(Status.ACTIVE).getJeuDonneeEntity();
+    }
+
+    public JeuDonneeEntity getJeuDonneesDraft() {
+        return this.get(Status.DRAFT).getJeuDonneeEntity();
+    }
 }

@@ -1,11 +1,9 @@
 package traitement;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -16,33 +14,13 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
-import com.avancial.app.data.objetsMetier.PlanTransport.Compartiment;
-import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
-import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
-import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
-import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
-import com.avancial.app.data.objetsMetier.PlanTransport.GareHoraire;
-import com.avancial.app.data.objetsMetier.PlanTransport.MapTranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
-import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
-import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
-import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
-import com.avancial.app.data.objetsMetier.PlanTransport.Siege;
-import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
-import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
@@ -85,7 +63,7 @@ public class RemplissageObjMetierTestHibernate {
 
       /* Creation du plan de transport */
       //PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
-      PlanTransport planTransport = mapPlansDeTransport.get(1).get();
+      PlanTransport planTransport = mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport();
 
       Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t", MotriceTrainTrancheEntity.class);
 

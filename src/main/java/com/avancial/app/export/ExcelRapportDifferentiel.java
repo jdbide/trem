@@ -3,6 +3,7 @@
  */
 package com.avancial.app.export;
 
+import java.text.SimpleDateFormat;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
@@ -150,21 +151,30 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         this.excelTools.createCellTexteWithStyle(1, REPORT_FOR, this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(3, "", this.excelTools.styleEnteteJaune);
-        this.excelTools.createCellTexteWithStyle(4, "Eurostar", this.excelTools.styleEnteteJaune);
-        this.excelTools.createCellTexteWithStyle(5, "Production", this.excelTools.styleEnteteJaune);
+        this.excelTools.createCellTexteWithStyle(4,
+                this.mapPlansDeTransport.getJeuDonneesDraft().getCompagnieEnvironnement().getLibelleCompagnie(),
+                this.excelTools.styleEnteteJaune);
+        this.excelTools.createCellTexteWithStyle(5,
+                this.mapPlansDeTransport.getJeuDonneesDraft().getCompagnieEnvironnement().getLibelleEnvironnement(),
+                this.excelTools.styleEnteteJaune);
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YY - HH:mm");
         this.excelTools.createRow(this.ligne++);
         this.excelTools.createCellTexteWithStyle(1, DATE_IMPORT_DRAFT, this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(3, "", this.excelTools.styleEnteteJaune);
-        this.excelTools.createCellTexteWithStyle(4, "20/05/2016 - 17:15", this.excelTools.styleEnteteJaune);
+        this.excelTools.createCellTexteWithStyle(4,
+                formatter.format(this.mapPlansDeTransport.getJeuDonneesDraft().getDateCreateJeuDonnees()),
+                this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(5, "", this.excelTools.styleEnteteJaune);
 
         this.excelTools.createRow(this.ligne++);
         this.excelTools.createCellTexteWithStyle(1, DATE_IMPORT_ACTIVE, this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(3, "", this.excelTools.styleEnteteJaune);
-        this.excelTools.createCellTexteWithStyle(4, "19/05/2016 - 17:18", this.excelTools.styleEnteteJaune);
+        this.excelTools.createCellTexteWithStyle(4,
+                formatter.format(this.mapPlansDeTransport.getJeuDonneesActive().getDateCreateJeuDonnees()),
+                this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(5, "", this.excelTools.styleEnteteJaune);
     }
 

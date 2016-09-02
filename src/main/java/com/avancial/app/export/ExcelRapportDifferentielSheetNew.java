@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
+import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
@@ -113,7 +114,7 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
                 .getComparaison(EnumTypeComparaisonPlanTransport.NEW, null)) {
             ComparaisonPlanTransport<IPlanTransport> data = ((ComparaisonPlanTransport<IPlanTransport>) comparaison);
 
-            Train currentTrain = ((PlanTransport) mapPlansDeTransport.get(2).get())
+            Train currentTrain = mapPlansDeTransport.get(Status.DRAFT).getPlanTransport()
                     .getTrainByNumeroTrain(data.getNumeroTrain());
             Tranche currentTranche = currentTrain.getTrancheByNumeroTranche(data.getNumeroTranche());
 
@@ -137,7 +138,7 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 3, 3, currentTranche.getRegime().getCodeRegime(),
                     excelTools.addColor(excelTools.styleBorder, selectColor(excelTools, cntTraiTranche, null)));
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 4, 4,
-                    ((PlanTransport) mapPlansDeTransport.get(1).get()).getCompagnie().toString(),
+                    mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport().getCompagnie().toString(),
                     excelTools.addColor(excelTools.styleBorder, selectColor(excelTools, cntTraiTranche, null)));
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 5, 5,
                     currentTranche.getTrancheStatut().toString(),
