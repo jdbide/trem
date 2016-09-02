@@ -1,6 +1,7 @@
 package com.avancial.socle.logging;
 
 import java.util.Date;
+
 import javax.inject.Named;
 
 /**
@@ -12,8 +13,12 @@ import javax.inject.Named;
 @Named
 public class LogJobBean extends ALogBean {
 
-   public static final boolean ETAT_SUCCES = true;
-   public static final boolean ETAT_ECHEC  = false;
+   /**
+    * 
+    */
+   private static final long   serialVersionUID = 1885374089014244243L;
+   public static final boolean ETAT_SUCCES      = true;
+   public static final boolean ETAT_ECHEC       = false;
 
    protected Long              idJobPlanif;
    protected String            libelleJob;

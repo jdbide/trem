@@ -36,7 +36,7 @@ import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory
 import com.avancial.app.traitement.TraitementMotrice;
 import com.avancial.app.traitement.TraitementObjetMetier;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.logging.ALogBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -52,9 +52,9 @@ public class TestComparaisonPlansTransport {
       File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity().as(File.class);
 
       WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(MotriceRegimeEntity.class.getPackage()).addPackage(ITraiteMotriceRegime.class.getPackage()).addPackage(ALogBean.class.getPackage()).addPackage(ATraitement.class.getPackage()).addPackage(CodeSat.class.getPackage())
-            .addPackage(IhmPageDataBean.class.getPackage()).addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class).addClass(TraitementObjetMetier.class).addClass(RefTablesMotriceRegimeService.class)
-            .addClass(TraiteMotriceRegimeFactory.class).addClass(MapPlansDeTransport.class).addClass(TraitementMotrice.class).addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml")
-            .addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml").addAsManifestResource("META-INF/context.xml", "context.xml");
+            .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class).addClass(TraitementObjetMetier.class).addClass(RefTablesMotriceRegimeService.class).addClass(TraiteMotriceRegimeFactory.class)
+            .addClass(MapPlansDeTransport.class).addClass(TraitementMotrice.class).addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
+            .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml").addAsManifestResource("META-INF/context.xml", "context.xml");
 
       System.out.println(jar.toString(true));
 

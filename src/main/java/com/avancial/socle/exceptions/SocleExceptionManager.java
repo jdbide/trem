@@ -3,27 +3,46 @@
  */
 package com.avancial.socle.exceptions;
 
+import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+
+import com.avancial.socle.exceptions.finder.ASocleExceptionFinder;
+import com.avancial.socle.exceptions.finder.SocleExceptionFinderSqlColumnCannotBeNull;
+import com.avancial.socle.exceptions.finder.SocleExceptionFinderSqlDuplicateId;
+import com.avancial.socle.exceptions.finder.SocleExceptionFinderSqlForeignKeyConstraintFailure;
+import com.avancial.socle.exceptions.impl.ASocleException;
+
 /**
- * C'est le point d'entrée pour le client. Il est chargé de contruire la chaine des Exception builder.
+ * C'est le point d'entrée pour le client. Il est chargé de construire la chaine des Exception builder.
  * 
  * @author bruno.legloahec
  *
  */
-public class SocleExceptionManager {
-   protected static ASocleExceptionFinder finder = null;
-   protected Exception                    e;
+@ApplicationScoped
+public class SocleExceptionManager implements Serializable {
+   /**
+    * 
+    */
+   private static final long                                         serialVersionUID = 1L;
 
-   public SocleExceptionManager(Exception e) {
-      this.init(e);
+   protected static ASocleExceptionFinder                            finder           = null;
+
+   private static SocleExceptionFinderSqlDuplicateId                 duplicateId      = new SocleExceptionFinderSqlDuplicateId();
+   private static SocleExceptionFinderSqlColumnCannotBeNull          columnNotNull    = new SocleExceptionFinderSqlColumnCannotBeNull();
+   private static SocleExceptionFinderSqlForeignKeyConstraintFailure foreignKey       = new SocleExceptionFinderSqlForeignKeyConstraintFailure();
+
+   public SocleExceptionManager() {
    }
 
-   @SuppressWarnings("static-method")
-   protected void init(Exception e) {
-      this.e = e;
-      ASocleExceptionFinder finder = new SocleExceptionFinderSqlDuplicateId(null, e);
+   @PostConstruct
+   protected static void init() {
 
       // A laisser à la fin. Doit pointer sur le dernier finder
-      SocleExceptionManager.finder = finder;
+      columnNotNull.setNext(foreignKey);
+      duplicateId.setNext(columnNotNull);
+      SocleExceptionManager.finder = duplicateId;
    }
 
    /**
@@ -34,8 +53,10 @@ public class SocleExceptionManager {
       SocleExceptionManager.finder = finder;
    }
 
-   public static ASocleException getException() {
-      return SocleExceptionManager.finder.getSocleException();
+   public static ASocleException getException(Exception e) {
+      if (SocleExceptionManager.finder == null)
+         SocleExceptionManager.init();
+      return SocleExceptionManager.finder.getSocleException(e);
    }
 
 }

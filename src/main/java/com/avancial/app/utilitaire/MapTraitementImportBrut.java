@@ -1,8 +1,6 @@
 package com.avancial.app.utilitaire;
 
 import java.util.HashMap;
-import java.util.List;
-import org.hibernate.mapping.Map;
 
 public class MapTraitementImportBrut extends HashMap<String, ITraitementDonnees> {
     

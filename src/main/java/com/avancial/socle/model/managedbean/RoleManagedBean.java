@@ -14,14 +14,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.junit.runner.Request;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
-import com.avancial.socle.business.JobBean;
 import com.avancial.socle.data.controller.dao.RoleDao;
 import com.avancial.socle.data.model.databean.RoleDataBean;
-import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.impl.ASocleException;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
@@ -38,7 +36,6 @@ public class RoleManagedBean extends AManageBean {
    private List<RoleDataBean> selectedItems;
    private String             nomTechnique;
    private String             libelle;
-
 
    @Inject
    private RoleDataBean       selectedItem;
@@ -77,38 +74,39 @@ public class RoleManagedBean extends AManageBean {
       try {
 
          dao.save(roleDataBean);
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(),
-         new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Rôle Ajouté"));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Rï¿½le Ajoutï¿½"));
 
          RequestContext.getCurrentInstance().update(":dataTable");
          this.closeDialog = true;
          return SocleMenuManagedBean.goRole();
       } catch (ASocleException e) {
-         //RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         // RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
          e.getClientMessage();
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
-         //RequestContext.getCurrentInstance().addCallbackParam("notValid", true);
+         // RequestContext.getCurrentInstance().addCallbackParam("notValid", true);
 
       }
       return null;
    }
+
    public void updateById() throws ASocleException {
-	   ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();	   
-	   Map<String, String> parameterMap = (Map<String, String>) externalContext.getRequestParameterMap();
-	   String param = parameterMap.get("itemId");
-	   if (param != null) {
-		   Integer idRole = Integer.valueOf(param);
-		   for (RoleDataBean roleDataBean : selectedItems) {
-			   if (roleDataBean.getIdRole().equals(idRole.longValue())) {
-				   this.selectedItem = roleDataBean;
-				   break;
-			   }
-		   }
-	   } else {
-		// redirection vers la page role.xhtml
-	   }
-	   
+      ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+      Map<String, String> parameterMap = externalContext.getRequestParameterMap();
+      String param = parameterMap.get("itemId");
+      if (param != null) {
+         Integer idRole = Integer.valueOf(param);
+         for (RoleDataBean roleDataBean : selectedItems) {
+            if (roleDataBean.getIdRole().equals(idRole.longValue())) {
+               this.selectedItem = roleDataBean;
+               break;
+            }
+         }
+      } else {
+         // redirection vers la page role.xhtml
+      }
+
    }
+
    @Override
    public String update() throws ASocleException {
       super.update();
@@ -117,9 +115,8 @@ public class RoleManagedBean extends AManageBean {
          try {
             dao.update(this.selectedItem);
             this.closeDialog = true;
-            
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), 
-                  new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Rôle modifié"));
+
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Rï¿½le modifiï¿½"));
             return SocleMenuManagedBean.goRole();
 
          } catch (ASocleException e) {
@@ -137,7 +134,7 @@ public class RoleManagedBean extends AManageBean {
          RoleDao dao = new RoleDao();
          try {
             dao.delete(this.selectedItem);
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Rôle supprimé"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Rï¿½le supprimï¿½"));
             this.closeDialog = true;
          } catch (ASocleException e) {
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
@@ -215,7 +212,7 @@ public class RoleManagedBean extends AManageBean {
     * @return the roleSelected
     */
 
-
+   @Override
    public Boolean getCloseDialog() {
       return this.closeDialog;
    }
@@ -228,6 +225,5 @@ public class RoleManagedBean extends AManageBean {
    public void setSelectedItems(List<RoleDataBean> selectedItems) {
       this.selectedItems = selectedItems;
    }
-
 
 }

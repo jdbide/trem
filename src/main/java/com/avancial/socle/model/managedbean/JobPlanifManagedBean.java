@@ -34,9 +34,8 @@ import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.controller.dao.JobPlanifTypeDao;
 import com.avancial.socle.data.model.databean.JobDataBean;
 import com.avancial.socle.data.model.databean.JobPlanifTypeDataBean;
-import com.avancial.socle.data.model.databean.RoleDataBean;
-import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
+import com.avancial.socle.exceptions.impl.ASocleException;
 import com.avancial.socle.jobs.JobTest;
 import com.avancial.socle.resources.MessageController;
 import com.avancial.socle.resources.constants.SOCLE_constants;
@@ -141,7 +140,6 @@ public class JobPlanifManagedBean extends AManageBean {
             JobDetail job = JobBuilder.newJob(JobTest.class).withIdentity(bean.getLibelleJobPlanif(), "group1").build();
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(bean.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(bean.getCron())).build();
             sched.scheduleJob(job, trigger);
-           
 
          } catch (SchedulerException e) {
             e.printStackTrace();
@@ -149,30 +147,32 @@ public class JobPlanifManagedBean extends AManageBean {
          }
 
       } catch (ASocleException e) {
-    	  e.getClientMessage();
+         e.getClientMessage();
          FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_ADD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getClientMessage()));
-         
+
       }
 
       return null;
    }
+
    public void updateById() throws ASocleException {
-	   ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();	   
-	   Map<String, String> parameterMap = (Map<String, String>) externalContext.getRequestParameterMap();
-	   String param = parameterMap.get("itemId");
-	   if (param != null) {
-		   Integer idJobPlanif = Integer.valueOf(param);
-		   for (JobPlanifBean jobPlanif : selectedItems) {
-			   if (jobPlanif.getIdJobPlanif()==(idJobPlanif.longValue())) {
-				   this.selectedItem = jobPlanif;
-				   break;
-			   }
-		   }
-	   } else {
-		// redirection vers la page role.xhtml
-	   }
-	   
+      ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+      Map<String, String> parameterMap = externalContext.getRequestParameterMap();
+      String param = parameterMap.get("itemId");
+      if (param != null) {
+         Integer idJobPlanif = Integer.valueOf(param);
+         for (JobPlanifBean jobPlanif : selectedItems) {
+            if (jobPlanif.getIdJobPlanif() == (idJobPlanif.longValue())) {
+               this.selectedItem = jobPlanif;
+               break;
+            }
+         }
+      } else {
+         // redirection vers la page role.xhtml
+      }
+
    }
+
    @Override
    public String update() throws ASocleException {
       super.update();
@@ -183,27 +183,26 @@ public class JobPlanifManagedBean extends AManageBean {
 
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "", MessageController.getTraduction("p_message_update_ok")));
             this.closeDialog = true;
-            
+
             // RequestContext.getCurrentInstance().update(":dataTable");
             SchedulerFactory sf = new StdSchedulerFactory();
             Scheduler sched = sf.getScheduler();
             Trigger oldTrigger = sched.getTrigger(TriggerKey.triggerKey(this.selectedItem.getLibelleJobPlanif(), "group1"));
             // obtain a builder that would produce the trigger
-//            TriggerBuilder tb = oldTrigger.getTriggerBuilder();
-//            // update the schedule associated with the builder, and build the
-//            // new trigger
-//            // (other builder methods could be called, to change the trigger in
-//            // any
-//            // desired way)
-//            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(this.selectedItem.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(this.selectedItem.getCron())).build();
-//            sched.rescheduleJob(oldTrigger.getKey(), trigger);
+            // TriggerBuilder tb = oldTrigger.getTriggerBuilder();
+            // // update the schedule associated with the builder, and build the
+            // // new trigger
+            // // (other builder methods could be called, to change the trigger in
+            // // any
+            // // desired way)
+            // Trigger trigger = TriggerBuilder.newTrigger().withIdentity(this.selectedItem.getLibelleJobPlanif(), "group1").withSchedule(CronScheduleBuilder.cronSchedule(this.selectedItem.getCron())).build();
+            // sched.rescheduleJob(oldTrigger.getKey(), trigger);
             return SocleMenuManagedBean.goJobPlanif();
-           
 
          } catch (ASocleException e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", e.getClientMessage()));
-            
+
          } catch (SchedulerException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -228,18 +227,19 @@ public class JobPlanifManagedBean extends AManageBean {
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "", MessageController.getTraduction("p_message_delete_ko")));
          } catch (SchedulerException e) {
             e.printStackTrace();
-            SocleExceptionManager manager = new SocleExceptionManager(e);
-            throw manager.getException();
+            throw SocleExceptionManager.getException(e);
 
          }
       }
       return null;
    }
 
+   @Override
    public Boolean getCloseDialog() {
       return this.closeDialog;
    }
 
+   @Override
    public void setCloseDialog(Boolean closeDialog) {
       this.closeDialog = closeDialog;
    }

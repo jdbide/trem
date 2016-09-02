@@ -20,21 +20,13 @@
 			<property name="connection.autocommit" value="false" />
 			<property name="hibernate.generate_statistics" value="false" />
 			<property name="hibernate.use_sql_comments" value="false" />
-			<!-- Configuring Connection Pool -->		    
-<!-- 		    <property name="hibernate.c3p0.min_size" value="4" /> -->
-<!--       		<property name="hibernate.c3p0.max_size" value="100" /> -->
-<!--       		<property name="hibernate.c3p0.timeout" value="180000" /> -->
-<!--       		<property name="hibernate.c3p0.max_statements" value="50" /> -->
-<!--       		<property name="hibernate.c3p0.idle_test_period" value="2000" />  -->
 		</properties>
 	</persistence-unit>
-	
-	<!-- <persistence-unit name="PU_externe" transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<non-jta-data-source>java:comp/env/jdbc/externe</non-jta-data-source>
 
+	<persistence-unit name="PU_db2" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
-			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/externe" />
+			<!-- Hibernate properties -->
 			<property name="hibernate.id.new_generator_mappings" value="true" />
 			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.show_sql" value="true" />
@@ -42,20 +34,6 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
 			<property name="connection.autocommit" value="false" />
 		</properties>
-	</persistence-unit> -->
-	
-	<persistence-unit name="PU_db2" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>   
-        <properties>        	
-        	<!-- Hibernate properties -->
-            <property name="hibernate.id.new_generator_mappings" value="true" />
-            <property name="hibernate.archive.autodetection" value="class" />
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.format_sql" value="true" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
-            <property name="connection.autocommit" value="false" />             
-        </properties>
-    </persistence-unit>
-	
+	</persistence-unit>
 
 </persistence>

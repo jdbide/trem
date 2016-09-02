@@ -1,0 +1,52 @@
+<div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel"
+	aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- <div class="modal-header">
+                                 
+            </div> -->
+			<div class="modal-body">
+				<div class="login-box-body">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<p class="login-box-msg">Modification d'une rubrique</p>
+					
+					<div ng-if="reponse != null && reponse.status != null && !reponse.status"
+		class="alert alert-danger  alert-dismissable">
+		<button class="close" aria-hidden="true" data-dismiss="alert"
+			type="button">x</button>
+		<h4>
+			<i class="icon fa fa-check"></i> Alert!
+		</h4>
+		{{reponse.message}}
+	</div>
+					
+					
+					<form ng-submit="editRubrique(data)">
+						<div class="form-group has-feedback">
+						<input type="text" class="form-control" placeholder="lib rubrique" ng-model="selectedRow.libelle" name="libRubrique">
+							<div>
+							<div><label>Actif:</label></div>
+							<div>
+							<label>Value:
+   							<input type="checkbox" ng-model="selectedRow.actif">
+  							</label><br/>
+							</div>
+				            <input type="text" class="form-control" placeholder="ordre rubrique" ng-model="selectedRow.ordre" name="ordreRubrique">
+							
+							
+						
+					
+						<div class="col-xs-4">
+								<button type="submit" class="btn btn-primary btn-block btn-flat">Modifier</button>
+							</div>
+							<div class="col-xs-4">
+								<button type="button"  class="btn btn-primary btn-block btn-flat"  ng-click="formAddRubrique.selectedRow.$rollbackViewValue(); selectedRow=''">Clear</button>
+							</div>
+					</form>
+				</div>
+				<!-- /.login-box-body -->
+			</div>
+		</div>
+	</div>
+</div>

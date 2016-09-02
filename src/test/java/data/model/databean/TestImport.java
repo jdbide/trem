@@ -17,7 +17,7 @@ import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.traitement.TraitementImportDb2Motrice;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
@@ -29,7 +29,7 @@ public class TestImport {
                 .as(File.class);
 
         WebArchive jar = ShrinkWrap.create(WebArchive.class)
-                 .addPackage(IhmPageDataBean.class.getPackage())
+                 .addPackage(PageDataBean.class.getPackage())
                  .addPackage(CompagnieEnvironnementEntity.class.getPackage())
                 //.addClass(JeuDonneeService.class)
                  .addClass(TraitementImportDb2Motrice.class)

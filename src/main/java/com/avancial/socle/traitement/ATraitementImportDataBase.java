@@ -2,9 +2,12 @@ package com.avancial.socle.traitement;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
+
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 /**
  * 
@@ -13,15 +16,24 @@ import org.hibernate.Session;
  */
 public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
 
-   protected EntityManager entityManagerExterne;
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
 
-   protected Session       sessionSocle;
+   protected EntityManager   entityManagerExterne;
+
+   protected Session         sessionSocle;
+
+   @Inject
+   @Socle_PUSocle
+   protected EntityManager                 em;
 
    /**
     * recupere la liste des tables a exporter
     * 
     * @return
-    * @throws Exception 
+    * @throws Exception
     */
    protected abstract List<String> recuperationTablesExport() throws Exception;
 
@@ -29,7 +41,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * recupere la liste des tables dans lesquel va se faire l'import
     * 
     * @return
-    * @throws Exception 
+    * @throws Exception
     */
    protected abstract List<String> recuperationTablesImport() throws Exception;
 
@@ -37,7 +49,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * vide les tables dans lesquel on va faire l'import
     * 
     * @return
-    * @throws Exception 
+    * @throws Exception
     */
    protected abstract void clearTable() throws Exception;
 
@@ -46,7 +58,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * 
     * @param table
     * @return
-    * @throws Exception 
+    * @throws Exception
     * @throws SecurityException
     * @throws ClassNotFoundException
     */
@@ -57,7 +69,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * 
     * @param table
     * @return
-    * @throws Exception 
+    * @throws Exception
     */
    protected abstract List<Object[]> getData(String table) throws Exception;
 
@@ -68,8 +80,8 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * @param columns
     * @param donnees
     */
-   protected abstract void insertData(String table, List<String> columns, List<Object[]> donnees) throws Exception ;
-   
+   protected abstract void insertData(String table, List<String> columns, List<Object[]> donnees) throws Exception;
+
    public ATraitementImportDataBase() {
       super();
    }
@@ -80,8 +92,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
    }
 
    @Override
-   protected void executeTraitement() throws Exception  {
-      logger.info("Start executeTraitement");
+   protected void executeTraitement() throws Exception {
       this.initSessiont();
       List<String> columns = null;
       List<Object[]> donnees = null;
@@ -97,15 +108,11 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
          } catch (SecurityException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            logger.error("ATraitementImportDataBase : executeTraitement -> ", e);
             throw e;
          } catch (Exception e) {
-            logger.error("ATraitementImportDataBase : executeTraitement -> ", e);
             throw e;
          }
       }
-      
-      logger.info("End executeTraitement");
    }
 
    private void initSessiont() {
@@ -120,9 +127,25 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
    }
 
    /**
-    * @param entityManagerExterne the entityManagerExterne to set
+    * @param entityManagerExterne
+    *           the entityManagerExterne to set
     */
    public void setEntityManagerExterne(EntityManager entityManagerExterne) {
       this.entityManagerExterne = entityManagerExterne;
+   }
+
+   /**
+    * @return the em
+    */
+   public EntityManager getEm() {
+      return em;
+   }
+
+   /**
+    * @param em
+    *           the em to set
+    */
+   public void setEm(EntityManager em) {
+      this.em = em;
    }
 }

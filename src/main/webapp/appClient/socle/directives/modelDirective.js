@@ -20,7 +20,7 @@ app.directive('modal', function() {
           
       link: function postLink(scope, element, attrs) {
           scope.title = attrs.title;
-          
+
           scope.$watch(attrs.visible, function(value){
               if(value == true)
                   $(element).modal('show');

@@ -2,10 +2,10 @@ package com.avancial.socle.data.model.databean;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -14,11 +14,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "socle_ref_directory")
+@NamedQueries({ 
+   @NamedQuery(name = RefDirectoryDataBean.QUERY_GET_ALL, query = "FROM RubriqueDataBean"),
+   @NamedQuery(name = RefDirectoryDataBean.QUERY_GET_BY_NOM_TECH, query = "FROM RefDirectoryDataBean refDirectory WHERE refDirectory.technicalNameRefDirectory = :technicalName"),
+})
 public class RefDirectoryDataBean extends AbstractDataBean {
    private static final long serialVersionUID = 1L;
+   
+   public final static String     QUERY_GET_ALL               = "refDirectoryGetAll";
+   public final static String     QUERY_GET_BY_NOM_TECH       = "refDirectoryGetByNomTech";
 
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(unique = true, nullable = false)
    private int idRefDirectory;
 

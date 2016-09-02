@@ -3,19 +3,31 @@
  */
 package com.avancial.socle.params;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import com.avancial.socle.params.beans.IParamBean;
 
 /**
- * Classe abstraite pour lire des paramètres
+ * Classe abstraite pour lire des paramÃ¨tres
  * 
  * @author bruno
  *
  */
-public abstract class AParamReader implements IParamReader {
+public abstract class AParamReader implements IParamReader, Serializable {
+   /**
+    * 
+    */
+   private static final long        serialVersionUID = 1L;
    protected String                 paramsName;
    protected Collection<IParamBean> colIParamBeans;
+
+   /**
+    * Constructeur
+    */
+   public AParamReader() {
+      // Empty
+   }
 
    /**
     * get value for paramName
@@ -42,11 +54,6 @@ public abstract class AParamReader implements IParamReader {
       return this.colIParamBeans;
    }
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see com.avancial.socle.params.IParamReader#loadParams(java.lang.String)
-    */
    @Override
    public void loadParams(String paramsName) throws Exception {
       this.paramsName = paramsName;

@@ -10,10 +10,24 @@
 		maxWait="10000" />
 
 		
-	<Resource name="jdbc/socle" auth="Container" type="com.mchange.v2.c3p0.ComboPooledDataSource"
-	factory="org.apache.naming.factory.BeanFactory"
-		user="dbad_tremas" password="!tremas-12" driverClass="com.mysql.jdbc.Driver"
-		jdbcUrl="jdbc:mysql://caliban/tremas"/>
+	<Resource name="jdbc/socle" 
+		auth="Container" 
+		type="com.mchange.v2.c3p0.ComboPooledDataSource"
+		factory="org.apache.naming.factory.BeanFactory"
+		user="dbad_tremas" password="!tremas-12"
+		driverClass="com.mysql.jdbc.Driver"
+		jdbcUrl="jdbc:mysql://caliban/tremas_test"
+		minPoolSize="4" maxPoolSize="20"  
+		preferredTestQuery="select 1" idleConnectionTestPeriod="300"
+	    acquireRetryDelay="50" maxIdleTime="1200" 
+	    testConnectionOnCheckin="true"
+	    testConnectionOnCheckout="true"
+	    maxIdleTimeExcessConnections="0"
+	    checkoutTimeout="0"
+	    maxStatementsPerConnection="0"
+	    acquireRetryAttempts="15"
+	    unreturnedConnectionTimeout="5" />
+	
 
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
 		dataSourceName="jdbc/socle" userTable="socle_user" userNameCol="loginUser"

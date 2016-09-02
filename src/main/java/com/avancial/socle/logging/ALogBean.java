@@ -1,5 +1,6 @@
 package com.avancial.socle.logging;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.avancial.socle.resources.constants.SOCLE_logSeverite;
@@ -10,7 +11,12 @@ import com.avancial.socle.resources.constants.SOCLE_logSeverite;
  * @author heloise.guillemaud
  *
  */
-public abstract class ALogBean {
+public abstract class ALogBean implements Serializable {
+
+   /**
+    * 
+    */
+   private static final long   serialVersionUID = 1839343190044180029L;
 
    /**
     * Sévérité du log, sur 4 niveaux - Informatif - Attention - Erreur - Mode debug
