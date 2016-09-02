@@ -46,9 +46,6 @@ public class PlanTransport implements IPlanTransport {
       this.trains = trains;
    }
 
-   /**
-    * TODO this.compagnie = EnumCompagnies.ES;
-    */
    public PlanTransport() {
       this.compagnie = EnumCompagnies.ES;
       this.trains = new ArrayList<>();
