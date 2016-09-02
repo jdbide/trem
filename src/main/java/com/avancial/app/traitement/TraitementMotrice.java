@@ -165,6 +165,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 					}
 				}
 			}
+            this.mapPlansDeTransport.setPlanTransportDraft(this.jeuDonneeEntity, planTransport);
 			this.log("Fin de recuperation des train-tranche");
 
 			/* Insertion dans les tables */
