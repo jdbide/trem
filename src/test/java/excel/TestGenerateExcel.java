@@ -38,6 +38,7 @@ import com.avancial.app.export.ExcelRapportDifferentiel;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.traitement.TraitementObjetMetier;
 import com.avancial.app.utilitaire.FileUtil;
@@ -172,7 +173,7 @@ public class TestGenerateExcel {
 //      expected.add(comparaisonUnchanged2);
       try {
          IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
-         List<IComparaisonPlanTransport> compare = new ArrayList<>();
+         MapComparaisonPlanTransport compare = new MapComparaisonPlanTransport();
          compare = comparePlanTransport.compare(mapPlansDeTransport.get(1).get(), mapPlansDeTransport.get(2).get());
          System.out.println("");
 //         Assert.assertTrue("Compare",
@@ -221,7 +222,7 @@ public class TestGenerateExcel {
    @Test
    public void TestGenerateExcelLocalAvecParamsAndInject2() {
       try {
-         MapPlansDeTransport   mapPlansDeTransport = new MapPlansDeTransport();
+         MapPlansDeTransport mapPlansDeTransport = new MapPlansDeTransport();
          mapPlansDeTransport.putAll(PlanTransportFactory.createDataForCompare());
 //         this.traitementObjetMetier.setMapPlansDeTransport(mapPlansDeTransport);
 //         this.traitementObjetMetier.setEnvironnementCompagnie("ES_PROD");

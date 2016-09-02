@@ -28,7 +28,7 @@ public class TraiteObjetMetierRegimeSpecificity implements ITraiteObjetMetier {
          List<Siege> sieges = new ArrayList<Siege>();
          sieges.add(new Siege(regimeSpecification.getSeatNumberMotriceRegimeSpecificity()));
          compartiments.add(new Compartiment(regimeSpecification.getCompartmentNumberMotriceRegimeSpecificity(), sieges));
-         listeSpecifications.add(new Specification(new Voiture(regimeSpecification.getCoachNumberMotriceRegimeSpecificity(), compartiments), EnumEtatSpecification.fermer, new Regime(regime.getPeriodMotriceRegime())));
+         listeSpecifications.add(new Specification(new Voiture(regimeSpecification.getCoachNumberMotriceRegimeSpecificity(), compartiments), EnumEtatSpecification.Blocked, new Regime(regime.getPeriodMotriceRegime())));
 //         List<Voiture> voitures = new ArrayList<Voiture>();
       }   
       atomicTranche.get().addAttributsField(listeSpecifications);

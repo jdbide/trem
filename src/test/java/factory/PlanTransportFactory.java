@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.xmlbeans.impl.jam.mutable.MParameter;
-
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Compartiment;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
@@ -88,6 +85,8 @@ public class PlanTransportFactory {
       
       CodeSat codeSat1 = new CodeSat("1", regime1);
       CodeSat codeSat2 = new CodeSat("2", regime1);
+      CodeSat codeSat3 = new CodeSat("3", regime2);
+      CodeSat codeSat4 = new CodeSat("4", regime2);
       
       FareProfile fareProfile1 = new FareProfile("G45", regime1);
       FareProfile fareProfile2 = new FareProfile("E87", regime2);
@@ -97,8 +96,9 @@ public class PlanTransportFactory {
       Repas repas2 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(), regime1);
       
       listCodeSat1.add(codeSat1);
-      listCodeSat1.add(codeSat2);
+      listCodeSat1.add(codeSat3);
       listCodeSat2.add(codeSat2);
+      listCodeSat2.add(codeSat4);
 
       listFareProfile1.add(fareProfile1);
       listFareProfile2.add(fareProfile2);
@@ -161,6 +161,10 @@ public class PlanTransportFactory {
       Regime regime_tranche_train_commun = new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2);
       tranche_train_commune.setRegime(regime_tranche_train_commun);
       train_commun.getTranches().add(tranche_train_commune);
+      Tranche tranche_train_commune_2 = new Tranche();
+      tranche_train_commune_2.setNumeroTranche("9");
+      tranche_train_commune_2.setRegime(regime_tranche_train_commun);
+      train_commun.getTranches().add(tranche_train_commune_2);
       
       listTrain_draft.add(train_commun);
       listTrain_active.add(train_commun);
@@ -348,7 +352,7 @@ public class PlanTransportFactory {
       listS1.add(s7);
       
       
-      Compartiment  c1 = new Compartiment(null, listS1);
+      Compartiment  c1 = new Compartiment("010", listS1);
       Compartiment  c2 = new Compartiment("018", null);
       
       List<Compartiment> listCompart = new ArrayList<>();
@@ -360,11 +364,11 @@ public class PlanTransportFactory {
       v2.setCompartiments(listCompart2);
       
       
-      Specification sp1 = new Specification(v1, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      Specification sp2 = new Specification(v2, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date2, date3));
-      Specification sp3 = new Specification(v3, EnumEtatSpecification.fermer, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date3));
+      Specification sp1 = new Specification(v1, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      Specification sp2 = new Specification(v2, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date2, date3));
+      Specification sp3 = new Specification(v3, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date3));
       
-      Specification sp4 = new Specification(v3, EnumEtatSpecification.fermer, new Regime("Mo-ZE; From 01/06/2016 to 10/12/2016", date1, date3));
+      Specification sp4 = new Specification(v3, EnumEtatSpecification.Blocked, new Regime("Mo-ZE; From 01/06/2016 to 10/12/2016", date1, date3));
       
       List<Specification> lsp = new ArrayList<>();
       lsp.add(sp1);

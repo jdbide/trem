@@ -1,19 +1,21 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.List;
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 public class ComparePlanTransportNew extends AComparePlanTransportNewDelete {
 
+    private static Logger logger = Logger.getLogger(ComparePlanTransportNew.class);
+
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
+    public MapComparaisonPlanTransport compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        System.out.println("ComparePlanTransportNew");
         PlanTransport pdtAncien = (PlanTransport) comparableAncien;
         PlanTransport pdtNouveau = (PlanTransport) comparableNouveau;
+        logger.info("Début comparaison Plans de transport NEW : " + pdtAncien.getCompagnie());
 
         /*
          * Copie des plans de transport pour pouvoir les modifier pendant la
@@ -26,10 +28,11 @@ public class ComparePlanTransportNew extends AComparePlanTransportNewDelete {
          * Comparaison des listes de train pour détecter les nouveaux dans
          * pdtNouveau par rapport à pdtAncien
          */
-        List<IComparaisonPlanTransport> res = this.compareTrainLists(EnumTypeComparaisonPlanTransport.NEW,
+        MapComparaisonPlanTransport res = this.compareTrainLists(EnumTypeComparaisonPlanTransport.NEW,
                 copyAncien.getTrains(), copyNouveau.getTrains());
 
-        res.addAll(this.successeurCompare(copyAncien, copyNouveau));
+        res.putAll(this.successeurCompare(copyAncien, copyNouveau));
+        logger.info("Fin comparaison Plans de transport NEW : " + pdtAncien.getCompagnie());
         return res;
     }
 

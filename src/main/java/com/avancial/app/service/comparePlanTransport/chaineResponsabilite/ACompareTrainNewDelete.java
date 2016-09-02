@@ -1,13 +1,14 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 /**
  * Implémentation pour les comparaisons NEW et DELETE au niveau d'un train,
@@ -18,6 +19,8 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  *
  */
 public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport {
+
+    private static Logger logger = Logger.getLogger(ACompareTrainNewDelete.class);
 
     /**
      * Compare deux listes de tranches, et retourne la liste de tranches
@@ -37,11 +40,11 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    protected List<IComparaisonPlanTransport> compareTrancheLists(
+    protected MapComparaisonPlanTransport compareTrancheLists(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, String numeroTrain,
             List<? extends IPlanTransport> tranchesAncien, List<? extends IPlanTransport> tranchesNouveau)
             throws Exception {
-        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
         ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
         /* Boucle sur les tranchesNouveau */
@@ -58,7 +61,9 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
                 comparaisonPlanTransport.setNumeroTrain(numeroTrain);
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                 comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
-                res.add(comparaisonPlanTransport);
+                logger.info("Train-Tranche NEW ou DELETE : " + comparaisonPlanTransport.getNumeroTrain() + "-"
+                        + comparaisonPlanTransport.getNumeroTranche());
+                res.putComparaison(comparaisonPlanTransport);
 
                 /* On la retire de la liste */
                 itTrancheNouveau.remove();
@@ -76,7 +81,9 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
                 comparaisonPlanTransport.setNumeroTrain(numeroTrain);
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                 comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
-                res.add(comparaisonPlanTransport);
+                logger.info("Train-Tranche NEW (régime modifié) : " + comparaisonPlanTransport.getNumeroTrain() + "-"
+                        + comparaisonPlanTransport.getNumeroTranche());
+                res.putComparaison(comparaisonPlanTransport);
 
                 /*
                  * On retire de leur liste la trancheNouveau et la trancheAncien

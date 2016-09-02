@@ -1,23 +1,27 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
 
+    private static Logger logger = Logger.getLogger(CompareTrancheUnchanged.class);
+
     @Override
-    public List<IComparaisonPlanTransport> compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
+    public MapComparaisonPlanTransport compare(IPlanTransport comparableAncien, IPlanTransport comparableNouveau)
             throws Exception {
-        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
         Tranche trancheAncien = (Tranche) comparableAncien;
         Tranche trancheNouveau = (Tranche) comparableNouveau;
+        logger.info("Début comparaison Tranches UNCHANGED : " + trancheAncien.getNumeroTranche() + " - "
+                + trancheNouveau.getNumeroTranche());
 
         /*
          * On cherche les attributs unchanged entre les deux listes, et on les
@@ -25,11 +29,14 @@ public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
          */
         /* Boucle sur les listes d'attributs de trancheNouveau */
         for (Class<?> attribut : trancheNouveau.getAttributs().keySet()) {
+            logger.info("Début comparaison Attributs UNCHANGED (Tranche " + trancheAncien.getNumeroTranche() + ") : "
+                    + attribut.getSimpleName());
             this.removeUnchanged(trancheAncien.getAttributsField(attribut), trancheNouveau.getAttributsField(attribut));
         }
+        logger.info("Fin comparaison Attributs UNCHANGED (Tranche " + trancheAncien.getNumeroTranche() + ")");
 
         /* On récupère les résultats du ou des successeurs */
-        res.addAll(this.successeurCompare(comparableAncien, comparableNouveau));
+        res.putAll(this.successeurCompare(comparableAncien, comparableNouveau));
 
         /*
          * Si la liste est vide, c'est qu'aucun attribut n'est modifié : la
@@ -39,9 +46,12 @@ public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
             ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonPlanTransport<>();
             comparaisonPlanTransport.setNumeroTranche(((Tranche) comparableNouveau).getNumeroTranche());
             comparaisonPlanTransport.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
-            res.add(comparaisonPlanTransport);
+            logger.info("Tranche UNCHANGED : " + comparaisonPlanTransport.getNumeroTranche());
+            res.putComparaison(comparaisonPlanTransport);
         }
 
+        logger.info("Fin comparaison Tranches UNCHANGED : " + trancheAncien.getNumeroTranche() + " - "
+                + trancheNouveau.getNumeroTranche());
         return res;
     }
 
@@ -64,6 +74,7 @@ public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
                  */
                 if (sousRegimeTrancheNouveau.getRegime().equals(sousRegimeTrancheAncien.getRegime())
                         && sousRegimeTrancheNouveau.equals(sousRegimeTrancheAncien)) {
+                    logger.info("Attributs UNCHANGED");
                     itSousRegimeTrancheAncien.remove();
                     itSousRegimeTrancheNouveau.remove();
                     break;

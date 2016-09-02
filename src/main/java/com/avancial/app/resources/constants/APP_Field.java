@@ -4,9 +4,9 @@
 package com.avancial.app.resources.constants;
 
 /**
- * @author hamza.laterem
+ * Constantes pour les relations objet métier et le nom des fields
  *
- * Constantes pour les relation objet metier et le nom des fields
+ * @author hamza.laterem
  */
 public enum APP_Field {
    CodeSat("CodeSat"),

@@ -10,15 +10,29 @@
 		maxWait="10000" />
 
 		
-	<Resource name="jdbc/socle" auth="Container" type="com.mchange.v2.c3p0.ComboPooledDataSource"
-	factory="org.apache.naming.factory.BeanFactory"
-		user="dbad_tremas" password="!tremas-12" driverClass="com.mysql.jdbc.Driver"
-		jdbcUrl="jdbc:mysql://caliban/tremas"/>
+	<Resource name="jdbc/socle" 
+	auth="Container"
+	type="com.mchange.v2.c3p0.ComboPooledDataSource"
+	factory="org.apache.naming.factory.BeanFactory"	
+	user="dbad_tremas"
+	password="!tremas-12"
+	driverClass="com.mysql.jdbc.Driver"
+	jdbcUrl="jdbc:mysql://caliban/tremas"
+	minPoolSize="4" maxPoolSize="20"  
+	preferredTestQuery="select 1" idleConnectionTestPeriod="300"
+    acquireRetryDelay="50" maxIdleTime="1200" 
+     testConnectionOnCheckin="true"
+     maxIdleTimeExcessConnections="0"
+     checkoutTimeout="0"
+     maxStatementsPerConnection="0"
+     acquireRetryAttempts="15"
+     unreturnedConnectionTimeout="5"
+	/>
 
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
 		dataSourceName="jdbc/socle" userTable="socle_user" userNameCol="loginUser"
 		userCredCol="passwordUser" userRoleTable="socle_user" roleNameCol="tomcatRoleUser"
-		localDataSource="true" digest="sha1" maxActive="20" maxIdle="4">
+		localDataSource="true" digest="sha1">
 	</Realm>
 </Context>
 
@@ -34,8 +48,19 @@
 
 	<Resource name="jdbc/socle" auth="Container" type="com.mchange.v2.c3p0.ComboPooledDataSource"
 	factory="org.apache.naming.factory.BeanFactory"
-		user="webr_tremas" password="!tremas12" driverClass="com.mysql.jdbc.Driver"
-		jdbcUrl="jdbc:mysql://localhost/tremas_rec" />
+	user="webr_tremas" password="!tremas12" driverClass="com.mysql.jdbc.Driver"
+	jdbcUrl="jdbc:mysql://localhost/tremas_rec" 
+	minPoolSize="4" maxPoolSize="8"  
+	preferredTestQuery="select 1" idleConnectionTestPeriod="1200"
+    acquireRetryDelay="50" maxIdleTime="1200" 
+    testConnectionOnCheckin="true"
+    maxIdleTimeExcessConnections="45"
+    checkoutTimeout="50"
+    maxStatementsPerConnection="20"
+    debugUnreturnedConnectionStackTraces="false"
+    acquireRetryAttempts="15"
+    unreturnedConnectionTimeout="1"
+	/>
 
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
 		dataSourceName="jdbc/socle" userTable="socle_user" userNameCol="loginUser"

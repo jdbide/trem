@@ -1,14 +1,15 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 /**
  * Implémentation pour les comparaisons NEW et DELETE au niveau d'un plan de
@@ -19,6 +20,8 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  *
  */
 public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanTransport {
+
+    private static Logger logger = Logger.getLogger(AComparePlanTransportNewDelete.class);
 
     /**
      * Comparaison de deux listes de trains, et retourne la liste de tranches
@@ -35,10 +38,10 @@ public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanT
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    protected List<IComparaisonPlanTransport> compareTrainLists(
+    protected MapComparaisonPlanTransport compareTrainLists(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, List<? extends IPlanTransport> trainsAncien,
             List<? extends IPlanTransport> trainsNouveau) throws Exception {
-        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
         ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
         /* Boucle sur les trainsNouveau */
@@ -55,7 +58,9 @@ public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanT
                     comparaisonPlanTransport.setNumeroTrain(trainNouveau.getNumeroTrain());
                     comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                     comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
-                    res.add(comparaisonPlanTransport);
+                    logger.info("Train-Tranche NEW ou DELETE : " + comparaisonPlanTransport.getNumeroTrain() + "-"
+                            + comparaisonPlanTransport.getNumeroTranche());
+                    res.putComparaison(comparaisonPlanTransport);
                 }
 
                 /* On retire le nouveau train de la liste */

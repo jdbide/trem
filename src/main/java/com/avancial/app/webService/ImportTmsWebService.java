@@ -35,7 +35,20 @@ import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.session.Session;
 
 /**
- * WebService qui gère la page Import du module Train Manager System Les action implémentés sont les suivantes : - GET : récupération de la liste des CompagnieEnvironnement actif - POST : exécuter un import d'un nouveau jeux de données -
+ * WebService "/app/importTms" qui gère la page Import du module Train Manager System 
+ * 
+ * Les action implémentés sont les suivantes : 
+ * 
+ *    - GET :  
+ *             Récupération de la liste des CompagnieEnvironnement actif et les
+ *             les jeux données qui correspondant.<\br>
+ *    - POST : 
+ *             Import d'un nouveau jeu de données (Draft) 
+ *    - DELETE :
+ *             Suppression d'un jeu de données par nomTechniqueCompagnieEnvironnement
+ *    - PUT :
+ *             Acivation d'un jeu de données draft à la place l'ancien jd active
+ *       
  * 
  * @author hamza.laterem
  *
@@ -43,7 +56,7 @@ import com.avancial.socle.session.Session;
 @Path("/app/importTms")
 @RequestScoped
 public class ImportTmsWebService {
-   
+   // Logger log4j
    private static Logger logger = Logger.getLogger(ImportTmsWebService.class);
    
    @Context
@@ -137,7 +150,6 @@ public class ImportTmsWebService {
    @PUT
    @Produces({ MediaType.APPLICATION_JSON })
    @Consumes({ MediaType.APPLICATION_JSON })
-   @Path("validateDraft")
    public Response validateDraft(ImportTmsDto importTmsDto) throws Exception {
       logger.info("Début (WebService : '/app/importTms' methode : @PUT)");
       ResponseBean responseBean = new ResponseBean();
