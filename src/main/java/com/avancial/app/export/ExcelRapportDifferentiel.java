@@ -172,8 +172,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         this.excelTools.createCellTexteWithStyle(1, DATE_IMPORT_ACTIVE, this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(3, "", this.excelTools.styleEnteteJaune);
-        this.excelTools.createCellTexteWithStyle(4,
-                formatter.format(this.mapPlansDeTransport.getJeuDonneesActive().getDateCreateJeuDonnees()),
+        this.excelTools.createCellTexteWithStyle(4, this.mapPlansDeTransport.getJeuDonneesActive().getDateCreateJeuDonnees() != null ? formatter.format(this.mapPlansDeTransport.getJeuDonneesActive().getDateCreateJeuDonnees()) : "",
                 this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(5, "", this.excelTools.styleEnteteJaune);
     }
