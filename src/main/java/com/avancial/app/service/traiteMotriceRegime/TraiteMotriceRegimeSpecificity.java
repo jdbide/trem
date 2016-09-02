@@ -1,7 +1,9 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,8 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager,
 			AtomicReference<Tranche> atomicTranche) {
+	   
+	   Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
 		Query query = entityManager
 				.createNativeQuery("SELECT voiture.VOIT_NUM_RESA AS coachNumberMotriceRegimeSpecificity, "
@@ -85,8 +89,13 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 			sieges = new ArrayList<Siege>();
 			sieges.add(new Siege((String) seat[2]));
 			listeCompartiments.add(new Compartiment((String) seat[1], sieges));
-			listeSpecifications.add(new Specification(new Voiture((String) seat[0], listeCompartiments),
-					EnumEtatSpecification.Blocked, new Regime((String) seat[4])));
+			try {
+            listeSpecifications.add(new Specification(new Voiture((String) seat[0], listeCompartiments),
+            		EnumEtatSpecification.Blocked, new Regime((String) seat[4], debutPeriode)));
+         } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
 
 			oldRegime = (String) seat[4];
 		}
@@ -151,8 +160,13 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 				sieges = new ArrayList<Siege>();
 				sieges.add(new Siege(""));
 				listeCompartiments.add(new Compartiment("", sieges));
-				listeSpecifications.add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments),
-						EnumEtatSpecification.Blocked, new Regime(mapKey.getRegime())));
+				try {
+               listeSpecifications.add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments),
+               		EnumEtatSpecification.Blocked, new Regime(mapKey.getRegime(), debutPeriode)));
+            } catch (ParseException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+            }
 			} else {
 				// Cas où seuls certains compartiments d'une voiture sont fermés
 				for (String compart : mapRegimeCodeDiag.get(mapKey)) {
@@ -164,8 +178,13 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 					sieges = new ArrayList<Siege>();
 					sieges.add(new Siege(""));
 					listeCompartiments.add(new Compartiment(compart, sieges));
-					listeSpecifications.add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments),
-							EnumEtatSpecification.Blocked, new Regime(mapKey.getRegime())));
+					try {
+                  listeSpecifications.add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments),
+                  		EnumEtatSpecification.Blocked, new Regime(mapKey.getRegime(), debutPeriode)));
+               } catch (ParseException e) {
+                  // TODO Auto-generated catch block
+                  e.printStackTrace();
+               }
 				}
 			}
 		}

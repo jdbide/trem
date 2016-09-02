@@ -3,6 +3,7 @@ package com.avancial.app.service.traiteMotriceRegime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -38,6 +39,9 @@ public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
             AtomicReference<Tranche> atomicTranche) {
 
         /* Stop */
+       
+       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
+       
         Query queryRDesserte = entityManager.createNativeQuery(
                 "SELECT DISTINCT desserte.GADS_DEB_ARRET AS arrivalHour, desserte.GADS_FIN_ARRET AS departureHour, desserte.GADS_INPT_RR_GAR AS station, distrib.DSTR_REGI AS periodMotriceRegime "
                         + "FROM tremas_import_tmdgads AS desserte "
@@ -74,7 +78,12 @@ public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
                                                  // entrée
                 mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(),
                         desserte[3], 2, motriceTrainTrancheEntity.getIdMotriceTrainTranche());
-                stops = new Desserte(new ArrayList<GareHoraire>(), new Regime((String) desserte[3]));
+                try {
+                  stops = new Desserte(new ArrayList<GareHoraire>(), new Regime((String) desserte[3], debutPeriode));
+               } catch (ParseException e) {
+                  // TODO Auto-generated catch block
+                  e.printStackTrace();
+               }
                 listeDessertes.add(stops);
 
             }

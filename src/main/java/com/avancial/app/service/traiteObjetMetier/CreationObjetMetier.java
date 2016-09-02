@@ -42,7 +42,7 @@ public class CreationObjetMetier {
          List<MotriceRegimeEntity> regimeEntities = resTrainTranche.getMotriceRegimeEntities();
          for (MotriceRegimeEntity regime : regimeEntities) {
             ITraiteObjetMetier traiteObjetMetier = traiteObjetMetierRegimeFactory.getTraiteMotriceRegime(regime.getMotriceRefRegimeType().getIdMotriceRefRegimeType());
-            traiteObjetMetier.traite(atomicTranche, regime);
+            traiteObjetMetier.traite(atomicTranche, regime, null);
          }
 
          train.getTranches().add(atomicTranche.get());

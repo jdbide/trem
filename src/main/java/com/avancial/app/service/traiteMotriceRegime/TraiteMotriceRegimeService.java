@@ -1,6 +1,8 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -36,6 +38,8 @@ public class TraiteMotriceRegimeService implements ITraiteMotriceRegime {
 		AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
 		AtomicLong idService = mapIdTablesMotriceRegime.get(MotriceRegimeServiceEntity.class);
 		Long idTrainTranche = motriceTrainTrancheEntity.getIdMotriceTrainTranche();
+		
+		Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
 		// Sélection des régimes services
 		Query queryRService = entityManager.createNativeQuery(
@@ -66,9 +70,14 @@ public class TraiteMotriceRegimeService implements ITraiteMotriceRegime {
 			generatorService.addValue(idService.getAndIncrement(), (String) record[0], (String) record[1],
 					(String) record[2], (String) record[3], idRegime);
 			// remplissage des objets métier pour la comparaion
-			listeServices.add(new ServiceABord((String) record[0],
-					EnumClasseService.getEnumClasseService((String) record[1]), new Gare((String) record[2]),
-					new Gare((String) record[3]), new Regime((String) record[4])));
+			try {
+            listeServices.add(new ServiceABord((String) record[0],
+            		EnumClasseService.getEnumClasseService((String) record[1]), new Gare((String) record[2]),
+            		new Gare((String) record[3]), new Regime((String) record[4], debutPeriode)));
+         } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
 
 			oldRegime = (String) record[4];
 		}

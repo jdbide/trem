@@ -3,6 +3,7 @@ package com.avancial.app.service.traiteMotriceRegime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -38,6 +39,8 @@ public class TraiteMotriceRegimeMealType implements ITraiteMotriceRegime {
 		AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
 		AtomicLong idMeal = mapIdTablesMotriceRegime.get(MotriceRegimeMealTypeEntity.class);
 		Long idTrainTranche = motriceTrainTrancheEntity.getIdMotriceTrainTranche();
+		
+		Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
 		Query queryRMealType = entityManager.createNativeQuery(
 				"SELECT meal.PARE_TYRE_COD_REP AS mealTypeMotriceRegimeMealType, meal.PARE_H_DEB_SERV AS beginServiceHourRegimeMealType, meal.PARE_H_FIN_SERV AS endServiceHourMotriceRegimeMealType, meal.PARE_REGI AS motriceRegime "
@@ -69,7 +72,7 @@ public class TraiteMotriceRegimeMealType implements ITraiteMotriceRegime {
 			try {
 				listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas((String) record[0]),
 						new Horaire(formatter.parse((String) record[1]), formatter.parse((String) record[2])),
-						new Regime((String) record[3])));
+						new Regime((String) record[3], debutPeriode)));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

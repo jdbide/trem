@@ -32,6 +32,7 @@ CREATE TABLE `tremas_jeu_donnees` (
   `idJeuDonnees` int(11) NOT NULL AUTO_INCREMENT,
   `dateCreateJeuDonnees` datetime NOT NULL,
   `dateLastUpdateJeuDonnees` datetime NOT NULL,
+  `dateDebutPeriodeJeuDonnees` datetime NOT NULL,
   `idUtilisateurCreateJeuDonnees` int(11) NOT NULL,
   `idUtilisateurLastUpdateJeuDonnees` int(11) NOT NULL,
   `statusJeuDonnees` enum('LASTACTIVE','ACTIVE','DRAFT','IMPORT') COLLATE utf8_bin NOT NULL DEFAULT 'IMPORT',
