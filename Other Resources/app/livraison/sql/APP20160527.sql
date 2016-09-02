@@ -1,4 +1,4 @@
---CREATION de la base tremas
+-- CREATION de la base tremas
 
 CREATE TABLE `tremas_import_tmdavth` (
   `idTMDAVTH` bigint(20) NOT NULL AUTO_INCREMENT,

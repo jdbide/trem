@@ -3,6 +3,7 @@ package com.avancial.app.service.traiteObjetMetier;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -18,7 +19,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 public class TraiteObjetMetierRegimeMealType implements ITraiteObjetMetier {
 
    @Override
-   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime) {
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
       List<ASousRegimeTranche> listeMeal = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Repas.class);
       if (listeMeal == null) {
@@ -26,7 +27,7 @@ public class TraiteObjetMetierRegimeMealType implements ITraiteObjetMetier {
       }
       for (MotriceRegimeMealTypeEntity regimeMeal : regime.getMotriceRegimeMealType()) {
          try {
-            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(regimeMeal.getMealTypeMotriceRegimeMealType()), new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()), formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())), new Regime(regime.getPeriodMotriceRegime())));
+            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(regimeMeal.getMealTypeMotriceRegimeMealType()), new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()), formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())), new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
          } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

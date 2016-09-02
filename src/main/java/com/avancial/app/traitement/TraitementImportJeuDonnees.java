@@ -140,7 +140,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             try {
                 logger.info("Importation des données");
 
-//                this.traitement.execute();
+                this.traitement.execute();
 
                 logger.info("End Importation des données");
             }
@@ -204,6 +204,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(compagnieEnvironnementEntity);
             jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
             jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
+            jeuDonneeDataBean.setDateDebutPeriode(new Date(2015, 12, 07));
 
             this.jeuDonneeService.save(jeuDonneeDataBean);
 
@@ -277,7 +278,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             Task.setMsgTask(this.idTask, "Création du fichier Excel");
 
             this.excelRapportDifferentiel.setFileName("RapportDiff-" + jeuDonneeDataBean.getIdJeuDonnees());
-            this.excelRapportDifferentiel.setFilePath("E:\\app\\tremas\\data\\");
+            //this.excelRapportDifferentiel.setFilePath("E:\\app\\tremas\\data\\");
+            this.excelRapportDifferentiel.setFilePath("D:\\was_tmp\\tremas");
             this.excelRapportDifferentiel.setXlsx(true);
             this.excelRapportDifferentiel.setDatas(listCompare);
             this.excelRapportDifferentiel.setMapPlansDeTransport(this.mapPlansDeTransport);
