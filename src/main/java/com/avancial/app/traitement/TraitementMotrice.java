@@ -15,6 +15,7 @@ import org.hibernate.Session;
 
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.RefTablesMotriceRegimeEntity;
+import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
@@ -97,7 +98,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			motriceRefRegimeTypeEntity.setIdMotriceRefRegimeType((long) 1);
 			motriceRefRegimeTypeEntity.setLabelRegimeType("Regime train tranche");
 
-			PlanTransport planTransport = this.mapPlansDeTransport.get(2).get();
+			PlanTransport planTransport = this.mapPlansDeTransport.get(Status.DRAFT).getPlanTransport();
 			MotriceTrainTrancheEntity motriceTrainTrancheEntity;
 			MotriceRegimeEntity motriceRegimeEntity;
 			AtomicLong cptRegime;
