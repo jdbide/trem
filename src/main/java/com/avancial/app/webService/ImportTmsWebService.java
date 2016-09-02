@@ -32,6 +32,7 @@ import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
 import com.avancial.app.webService.bean.ResponseBean;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.session.Session;
 
 /**
  * WebService "/app/importTms" qui gère la page Import du module Train Manager System 
@@ -66,6 +67,9 @@ public class ImportTmsWebService {
 
    @Inject
    private TraitementDeleteJeuDonnee traitementDeleteJeuDonnee;
+   
+   @Inject
+   private Session session;
 
    @Inject
    @Socle_PUSocle
@@ -176,9 +180,9 @@ public class ImportTmsWebService {
       logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)");
       
       ResponseBuilder responseBuilder = null;
-      String path = "E:\\app\\tremas\\data\\RapportDiff-" + idJeuDonnee + ".xlsx";
+      //String path = "E:\\app\\tremas\\data\\RapportDiff-" + idJeuDonnee + ".xlsx";
       
-      //String path = "D:\\was_tmp\\tremas\\export\\RapportDiff-" + idJeuDonnee + ".xlsx";
+      String path = "D:\\was_tmp\\tremas\\export\\RapportDiff-" + idJeuDonnee + ".xlsx";
       try {
 
          File fileDownload = new File(path);
@@ -234,6 +238,7 @@ public class ImportTmsWebService {
       ResponseBuilder responseBuilder = null;
       final ResponseBean responseBean = new ResponseBean();
       Long idNewThread;
+      final Long idUtilisateur = this.session.getUser().getIdUser();
 
       try {
          // un seul traitement à la fois
@@ -250,6 +255,7 @@ public class ImportTmsWebService {
                      TraitementImportJeuDonnees globalResultHolder = BeanProvider.getContextualReference(TraitementImportJeuDonnees.class);
                      globalResultHolder.setImportJeuDonneesDto(importTmsDto);
                      globalResultHolder.setIdTask(Thread.currentThread().getId());
+                     globalResultHolder.setIdUtilisateur(idUtilisateur.intValue());
                      globalResultHolder.execute();
 
                      if (!Task.getReponseTask(Thread.currentThread().getId()).getEndTraitement()) {
