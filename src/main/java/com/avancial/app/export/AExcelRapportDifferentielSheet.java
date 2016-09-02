@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
-import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
 import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
@@ -16,6 +15,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.export.printSousRegimeTranche.PrintExcelSousRegimeTranche;
 
 public abstract class AExcelRapportDifferentielSheet implements IExcelRapportDifferentielSheet {

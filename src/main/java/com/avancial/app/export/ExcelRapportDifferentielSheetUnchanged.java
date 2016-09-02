@@ -1,6 +1,6 @@
 package com.avancial.app.export;
 
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 

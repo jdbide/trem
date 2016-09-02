@@ -1,7 +1,7 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 /**

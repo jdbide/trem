@@ -2,6 +2,9 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.socle.utils.ListUtils;
 
 public class PlanTransport implements IPlanTransport {

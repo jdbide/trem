@@ -3,12 +3,12 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.log4j.Logger;
-import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.IComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 /**

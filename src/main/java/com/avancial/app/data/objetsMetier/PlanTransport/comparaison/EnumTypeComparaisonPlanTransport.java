@@ -1,4 +1,4 @@
-package com.avancial.app.data.objetsMetier.PlanTransport;
+package com.avancial.app.data.objetsMetier.PlanTransport.comparaison;
 
 public enum EnumTypeComparaisonPlanTransport {
 

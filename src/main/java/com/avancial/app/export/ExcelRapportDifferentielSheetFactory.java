@@ -2,7 +2,7 @@ package com.avancial.app.export;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 
 public class ExcelRapportDifferentielSheetFactory {
 

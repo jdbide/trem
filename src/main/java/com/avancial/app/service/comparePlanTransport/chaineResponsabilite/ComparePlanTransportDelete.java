@@ -1,9 +1,9 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import org.apache.log4j.Logger;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
 public class ComparePlanTransportDelete extends AComparePlanTransportNewDelete {
