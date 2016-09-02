@@ -84,7 +84,7 @@ public class RemplissageObjMetierTestHibernate {
          for (MotriceRegimeEntity regime : regimeEntities) {
             System.out.println("Traitement de " + regime.getMotriceRefRegimeType().getLabelRegimeType());
             ITraiteObjetMetier traiteObjetMetier = traiteObjetMetierRegimeFactory.getTraiteMotriceRegime(regime.getMotriceRefRegimeType().getIdMotriceRefRegimeType());
-            traiteObjetMetier.traite(atomicTranche, regime);
+            traiteObjetMetier.traite(atomicTranche, regime, resTrainTranche.getJeuDonnee().getDateDebutPeriode());
          }
 
          train.getTranches().add(atomicTranche.get());

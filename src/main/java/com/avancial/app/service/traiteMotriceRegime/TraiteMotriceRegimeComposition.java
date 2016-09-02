@@ -1,6 +1,8 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,8 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
             MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager,
             AtomicReference<Tranche> atomicTranche) {
         /* Composition */
+       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
+       
         // TODO ENLEVER LA CLASSE EN DUR
         Query queryRCompo = entityManager.createNativeQuery(
                 "SELECT /*classe.classeRefRameClasse*/ 'A' AS classCodeMotriceRegimeComposition, tyvo.TYVO_DIAV_COD AS diagCodeMotriceRegimeComposition, voiture.VOIT_COD_ORIG AS rameCodeMotriceRegimeComposition, LPAD( voiture.VOIT_NUM_RESA, 3, '0' ) AS coachNumberMotriceRegimeCompositionCoach, voiture.VOIT_REGI_UTIL AS periodMotriceRegime FROM tremas_import_tmdvoit AS voiture INNER JOIN tremas_import_tmdcath AS cara ON voiture.VOIT_TRCH_COD_CIE = cara.CATH_TRCH_COD_CIE AND voiture.VOIT_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 AND voiture.VOIT_TRCH_IND_FER = cara.CATH_TRCH_IND_FER AND voiture.VOIT_TRCH_NUM = cara.CATH_TRCH_NUM LEFT JOIN tremas_ref_rame_classe AS classe ON voiture.VOIT_NUM_RESA = classe.numResaRefRameClasse AND voiture.VOIT_COD_ORIG = classe.codeRameRefRameClasse INNER JOIN tremas_import_tmdtyvo AS tyvo ON voiture.VOIT_TYVO_NUM_TYP = tyvo.TYVO_NUM_TYP WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ? ORDER BY voiture.VOIT_REGI_UTIL, classe.classeRefRameClasse, voiture.VOIT_COD_ORIG, tyvo.TYVO_DIAV_COD");
@@ -89,8 +93,13 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
                 compositions.add(compositionEntity);
 
                 voitures = new ArrayList<>();
-                listeCompositions.add(new Composition((String) compo[0], (String) compo[1], (String) compo[2], null,
-                        voitures, new Regime((String) compo[4])));
+                try {
+                  listeCompositions.add(new Composition((String) compo[0], (String) compo[1], (String) compo[2], null,
+                           voitures, new Regime((String) compo[4], debutPeriode)));
+               } catch (ParseException e) {
+                  // TODO Auto-generated catch block
+                  e.printStackTrace();
+               }
             }
             // insertion des numéros de voiture liés à la compo
             mapGeneratorTablesMotriceRegime.get(MotriceRegimeCompositionCoachEntity.class)

@@ -1,36 +1,48 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.avancial.app.utilitaire.DecodageRegime;
+import com.avancial.socle.utils.transcodageregimemotrice.JourPourRegime;
+import com.avancial.socle.utils.transcodageregimemotrice.UtilsTranscodageRegime;
 
 public class Regime {
 
-   private String codeRegime;
+   private String     codeRegime;
 
-   private Date   dateDebut;
+   private List<Date> listeJours;
 
-   private Date   dateFin;
+   private Date       dateDebut;
+
+   private Date       dateFin;
 
    public Regime() {
       this.codeRegime = "";
+      this.listeJours = new ArrayList<>();
       this.dateDebut = new Date();
       this.dateFin = new Date();
    }
 
-   public Regime(String codeRegime, Date dateDebut, Date dateFin) {
+   public Regime(String codeRegime, Date dateDebut, Date dateFin, List<Date> listeJours) {
       super();
       this.codeRegime = codeRegime;
+      this.listeJours = listeJours;
       this.dateDebut = dateDebut;
       this.dateFin = dateFin;
    }
 
-   public Regime(String codeRegime) {
+   public Regime(String regime, Date dateDebutService) throws ParseException {
       super();
       DecodageRegime decodageRegime = new DecodageRegime();
-      this.codeRegime = codeRegime;
-      this.dateDebut = decodageRegime.dateDebut(codeRegime);
-      this.dateFin = decodageRegime.dateFin(codeRegime);
+      UtilsTranscodageRegime utilsTranscodageRegime = new UtilsTranscodageRegime(regime, dateDebutService);
+      List<JourPourRegime> listeJourPourRegime = utilsTranscodageRegime.getListeJourPourRegime();
+      this.codeRegime = utilsTranscodageRegime.executeTranscodage();
+      this.listeJours = utilsTranscodageRegime.listeJourCirculeRegimeToDate(listeJourPourRegime);
+      this.dateDebut = decodageRegime.dateDebut(this.codeRegime);
+      this.dateFin = decodageRegime.dateFin(this.codeRegime);
    }
 
    public Regime clone() {
@@ -86,4 +98,20 @@ public class Regime {
    public void setDateFin(Date dateFin) {
       this.dateFin = dateFin;
    }
+
+   /**
+    * @return the listeJours
+    */
+   public List<Date> getListeJours() {
+      return this.listeJours;
+   }
+
+   /**
+    * @param listeJours
+    *           the listeJours to set
+    */
+   public void setListeJours(List<Date> listeJours) {
+      this.listeJours = listeJours;
+   }
+
 }

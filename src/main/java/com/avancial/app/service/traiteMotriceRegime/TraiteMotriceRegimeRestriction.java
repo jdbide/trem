@@ -1,6 +1,8 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -35,6 +37,8 @@ public class TraiteMotriceRegimeRestriction implements ITraiteMotriceRegime {
 		AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
 		AtomicLong idRestriction = mapIdTablesMotriceRegime.get(MotriceRegimeRestrictionEntity.class);
 		Long idTrainTranche = motriceTrainTrancheEntity.getIdMotriceTrainTranche();
+		
+		Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
 		Query queryRRestriction = entityManager.createNativeQuery(
 				"SELECT restr.CDDS_INPT_RR_MONT AS origineMotriceRegimeRestriction, restr.CDDS_INPT_RR_DESC AS destinationMotriceRegimeRestriction, cdem.CDEM_REGI AS motriceRegime "
@@ -64,8 +68,13 @@ public class TraiteMotriceRegimeRestriction implements ITraiteMotriceRegime {
 			}
 			generatorRestriction.addValue(idRestriction.getAndIncrement(), "Champ inutile", (String) record[0],
 					(String) record[1], idRegime);
-			listeRestrictions.add(new Restriction(new Gare((String) record[0]), new Gare((String) record[1]), null,
-					new Regime((String) record[2])));
+			try {
+            listeRestrictions.add(new Restriction(new Gare((String) record[0]), new Gare((String) record[1]), null,
+            		new Regime((String) record[2], debutPeriode)));
+         } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
 			oldRegime = (String) record[2];
 		}
 		atomicTranche.get().addAttributsField(listeRestrictions);

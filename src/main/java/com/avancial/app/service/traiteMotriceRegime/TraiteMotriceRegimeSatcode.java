@@ -1,6 +1,8 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -26,6 +28,9 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager,
 			AtomicReference<Tranche> atomicTranche) {
 		/* SatCode */
+	   
+	   Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
+	   
 		Query queryRSatCode = entityManager
 				.createNativeQuery("SELECT satcode.SAT1_COD_SAT AS satcode, regimesat.TATH_REGI AS periodMotriceRegime "
 						+ "FROM tremas_import_tmdtath AS regimesat "
@@ -58,7 +63,12 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
 			// insertion du régime code sat lié au régime
 			mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class)
 					.addValue(idRegimeSatcode.getAndIncrement(), satcode[0], idRegime.get());
-			listeCodeSat.add(new CodeSat((String) satcode[0], new Regime((String) satcode[1])));
+			try {
+            listeCodeSat.add(new CodeSat((String) satcode[0], new Regime((String) satcode[1], debutPeriode)));
+         } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
 			oldRegime = (String) satcode[1];
 
 		}

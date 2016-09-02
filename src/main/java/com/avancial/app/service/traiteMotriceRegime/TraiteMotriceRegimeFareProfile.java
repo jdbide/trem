@@ -1,6 +1,8 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -26,6 +28,9 @@ public class TraiteMotriceRegimeFareProfile implements ITraiteMotriceRegime {
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager,
 			AtomicReference<Tranche> atomicTranche) {
 		/* SatCode */
+	   
+	   Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
+	   
 		Query query = entityManager.createNativeQuery(
 				"SELECT IFNULL( satcode.SAT1_COD_SAT, regimeprofil.TATH_CD_VAL ) AS fareprofil, regimeprofil.TATH_REGI AS periodMotriceRegime "
 						+ "FROM tremas_import_tmdtath AS regimeprofil "
@@ -60,7 +65,12 @@ public class TraiteMotriceRegimeFareProfile implements ITraiteMotriceRegime {
 			mapGeneratorTablesMotriceRegime.get(MotriceRegimeFareProfileEntity.class)
 					.addValue(idRegimeFareprofil.getAndIncrement(), fareprofil[0], idRegime.get());
 			
-			listeFareProfile.add(new FareProfile((String) fareprofil[0], new Regime((String) fareprofil[1])));
+			try {
+            listeFareProfile.add(new FareProfile((String) fareprofil[0], new Regime((String) fareprofil[1], debutPeriode)));
+         } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
 			
 			oldRegime = (String) fareprofil[1];
 		}

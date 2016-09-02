@@ -20,7 +20,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 public class TraiteObjetMetierRegimeStop implements ITraiteObjetMetier {
 
    @Override
-   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime) {
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
       SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
       String heureArrivee, heureDepart;
       List<ASousRegimeTranche> listeDessertes = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Desserte.class);
@@ -52,7 +52,12 @@ public class TraiteObjetMetierRegimeStop implements ITraiteObjetMetier {
          garesHoraires.add(new GareHoraire(new Gare(regimeDesserte.getStationMotriceRegimeStop()), new Horaire(horaireDebut, horaireFin)));
 
       }
-      listeDessertes.add(new Desserte(garesHoraires, new Regime(regime.getPeriodMotriceRegime())));
+      try {
+         listeDessertes.add(new Desserte(garesHoraires, new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      } catch (ParseException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
       atomicTranche.get().addAttributsField(listeDessertes);
    }
 
