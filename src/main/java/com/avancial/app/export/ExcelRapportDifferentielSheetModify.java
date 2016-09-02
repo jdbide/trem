@@ -5,6 +5,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ComparaisonPlanTransport
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
+import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferentielSheet {
 
@@ -24,7 +25,7 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
     }
 
     @Override
-    public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons) {
+    public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons, MapPlansDeTransport mapPlansDeTransport) {
         int debutRowTrain = ligneDebut;
 
         ComparaisonPlanTransport<IPlanTransport> dataPrec = null;

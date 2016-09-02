@@ -185,7 +185,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         try {
             this.ligne = this.firstLineContent[this.numCurrentSheet];
 
-            this.rapportDifferentielSheetFactory.get(this.nameCurrentSheet).generateContent(this.excelTools, this.ligne, this.datas);
+            this.rapportDifferentielSheetFactory.get(this.nameCurrentSheet).generateContent(this.excelTools, this.ligne, this.datas, this.mapPlansDeTransport);
 
 //            if (this.nameCurrentSheet.equals(SHEET_NEW)) {
 //                this.generateContentForSheetNew();
