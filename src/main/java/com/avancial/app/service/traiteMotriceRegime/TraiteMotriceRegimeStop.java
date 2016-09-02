@@ -43,7 +43,7 @@ public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
        Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
        
         Query queryRDesserte = entityManager.createNativeQuery(
-                "SELECT desserte.GADS_DEB_ARRET AS arrivalHour, desserte.GADS_FIN_ARRET AS departureHour, desserte.GADS_INPT_RR_GAR AS station, distrib.DSTR_REGI AS periodMotriceRegime "
+                "SELECT DISTINCT desserte.GADS_DEB_ARRET AS arrivalHour, desserte.GADS_FIN_ARRET AS departureHour, desserte.GADS_INPT_RR_GAR AS station, distrib.DSTR_REGI AS periodMotriceRegime "
                         + "FROM tremas_import_tmdgads AS desserte "
                         + "INNER JOIN tremas_import_tmddstr AS distrib ON desserte.GADS_DSTR_COD_CIE = distrib.DSTR_TRA1_COD_CIE "
                         + "AND desserte.GADS_DSTR_NUM_TRA1 = distrib.DSTR_TRA1_NUM_TRA1 "
@@ -52,7 +52,6 @@ public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
                         + "INNER JOIN tremas_import_tmdcath AS cat ON desserte.GADS_DSTR_COD_CIE = cat.CATH_CIRR_COD_CIE "
                         + "AND desserte.GADS_DSTR_NUM_TRA1 = cat.CATH_TRCH_NUM_TRA1 "
                         + "AND desserte.GADS_DSTR_IND_FER = cat.CATH_TRCH_IND_FER "
-                        // + "AND desserte.GADS_DSTR_NUM = cat.CATH_NUM "
                         + "WHERE cat.CATH_SSIM = ? " + "AND cat.CATH_TRCH_NUM_TRA1 = ?"
                         + " ORDER BY distrib.DSTR_REGI");
         queryRDesserte.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
