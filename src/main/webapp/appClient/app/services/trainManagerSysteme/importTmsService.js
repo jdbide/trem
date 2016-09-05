@@ -105,7 +105,7 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
     	loadingService.show();
 
         var deffered  = $q.defer();
-        var promissJsonFactory = jsonFactory.putJson("webService/app/importTms/validateDraft", currentData);
+        var promissJsonFactory = jsonFactory.putJson("webService/app/importTms/", currentData);
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	reponse.status = data.status;
