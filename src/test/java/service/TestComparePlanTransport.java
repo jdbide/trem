@@ -108,7 +108,7 @@ public class TestComparePlanTransport {
     public void testClone() {
         MapTranche mapTranche = new MapTranche();
         List<ASousRegimeTranche> l = new ArrayList<>();
-        Regime regime = new Regime("0", new Date(), new Date());
+        Regime regime = new Regime("0", new Date(), new Date(), new ArrayList<Date>());
         ASousRegimeTranche codeSat = new CodeSat("1", regime);
         l.add(codeSat);
         mapTranche.put(CodeSat.class, l);
@@ -140,10 +140,10 @@ public class TestComparePlanTransport {
         cal.add(Calendar.DATE, -15);
         Date date3 = cal.getTime();
 
-        Regime regimeTranche = new Regime("0", new Date(), new Date());
-        Regime regime1 = new Regime("1", date1, date2);
-        Regime regime2 = new Regime("2", date1, date3);
-        Regime regime3 = new Regime("2", date3, date2);
+        Regime regimeTranche = new Regime("0", new Date(), new Date(), new ArrayList<Date>());
+        Regime regime1 = new Regime("1", date1, date2, new ArrayList<Date>());
+        Regime regime2 = new Regime("2", date1, date3, new ArrayList<Date>());
+        Regime regime3 = new Regime("2", date3, date2, new ArrayList<Date>());
         CodeSat codeSat1 = new CodeSat("1", regime1);
         CodeSat codeSat2 = new CodeSat("2", regime1);
         FareProfile fareProfile1 = new FareProfile("1", regime1);
@@ -229,10 +229,10 @@ public class TestComparePlanTransport {
         cal.add(Calendar.DATE, -15);
         Date date3 = cal.getTime();
 
-        Regime regimeTranche = new Regime("0", new Date(), new Date());
-        Regime regime1 = new Regime("1", date1, date2);
-        Regime regime2 = new Regime("2", date1, date3);
-        Regime regime3 = new Regime("2", date3, date2);
+        Regime regimeTranche = new Regime("0", new Date(), new Date(), new ArrayList<Date>());
+        Regime regime1 = new Regime("1", date1, date2, new ArrayList<Date>());
+        Regime regime2 = new Regime("2", date1, date3, new ArrayList<Date>());
+        Regime regime3 = new Regime("2", date3, date2, new ArrayList<Date>());
         Horaire horaire = new Horaire();
         Repas repas1 = new Repas(EnumTypeRepas.Dejeuner, horaire, regime1);
         Repas repas2 = new Repas(EnumTypeRepas.Dejeuner, horaire, regime2);

@@ -79,10 +79,10 @@ public class PlanTransportFactory {
       Date date3 = cal.getTime();
       
       
-      Regime regimeTranche = new Regime("0", new Date(), new Date());
-      Regime regime1 = new Regime("Mo-We; From 01/06/2016 to 10/12/2016", date1, date2);
-      Regime regime2 = new Regime("Mo-Th; From 01/06/2016 to 10/12/2016", date1, date3);
-      Regime regime3 = new Regime("Fr; From 01/06/2016 to 10/12/2016", date3, date2);
+      Regime regimeTranche = new Regime("0", new Date(), new Date(), new ArrayList<Date>());
+      Regime regime1 = new Regime("Mo-We; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>());
+      Regime regime2 = new Regime("Mo-Th; From 01/06/2016 to 10/12/2016", date1, date3, new ArrayList<Date>());
+      Regime regime3 = new Regime("Fr; From 01/06/2016 to 10/12/2016", date3, date2, new ArrayList<Date>());
       
       CodeSat codeSat1 = new CodeSat("1", regime1);
       CodeSat codeSat2 = new CodeSat("2", regime1);
@@ -148,7 +148,7 @@ public class PlanTransportFactory {
       train_active_delete.setNumeroTrain("3");
       Tranche tranche_train_active_delete = new Tranche();
       tranche_train_active_delete.setNumeroTranche("6");
-      Regime regime_tranche_train_active_delete = new Regime("Sa-Fr; From 01/06/2016 to 10/12/2016", date1, date2);
+      Regime regime_tranche_train_active_delete = new Regime("Sa-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>());
       tranche_train_active_delete.setRegime(regime_tranche_train_active_delete);
       train_active_delete.getTranches().add(tranche_train_active_delete);
       
@@ -159,7 +159,7 @@ public class PlanTransportFactory {
       train_commun.setNumeroTrain("4");
       Tranche tranche_train_commune = new Tranche();
       tranche_train_commune.setNumeroTranche("8");
-      Regime regime_tranche_train_commun = new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2);
+      Regime regime_tranche_train_commun = new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>());
       tranche_train_commune.setRegime(regime_tranche_train_commun);
       train_commun.getTranches().add(tranche_train_commune);
       Tranche tranche_train_commune_2 = new Tranche();
@@ -176,15 +176,15 @@ public class PlanTransportFactory {
       train_draft_5.setNumeroTrain("5");
       Tranche tranche_train_draft_5 = new Tranche();
       tranche_train_draft_5.setNumeroTranche("10");
-      tranche_train_draft_5.setRegime(new Regime("Mo-We; From 01/06/2016 to 10/12/2016", date1, date2));
+      tranche_train_draft_5.setRegime(new Regime("Mo-We; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       /**
        * Init Dessert
        */
       Desserte des = new Desserte();
-      des.setRegime(new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
+      des.setRegime(new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       Desserte des2 = new Desserte();
-      des2.setRegime(new Regime("Mo-AZ; From 01/06/2016 to 10/12/2016", date1, date2));
+      des2.setRegime(new Regime("Mo-AZ; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       Gare g = new Gare("GBSPX");
       Gare g2 = new Gare("GBEBB");
@@ -218,9 +218,9 @@ public class PlanTransportFactory {
       /**
        * Init Od
        */
-      OrigineDestination od1 = new OrigineDestination(g, g2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
-      OrigineDestination od2 = new OrigineDestination(g3, g2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
-      OrigineDestination od3 = new OrigineDestination(g2, g4, new Regime("Mo-AZ; From 01/06/2016 to 10/12/2016", date1, date2));
+      OrigineDestination od1 = new OrigineDestination(g, g2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      OrigineDestination od2 = new OrigineDestination(g3, g2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      OrigineDestination od3 = new OrigineDestination(g2, g4, new Regime("Mo-AZ; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       List<OrigineDestination> listOd = new ArrayList<>();
       listOd.add(od1);
@@ -230,9 +230,9 @@ public class PlanTransportFactory {
       /**
        * Regime Distrib
        */
-      Distribution d1 =  new Distribution("C", new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
-      Distribution d2 =  new Distribution("B", new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
-      Distribution d3 =  new Distribution("D", new Regime("Mo-AZ; From 01/06/2016 to 10/12/2016", date1, date2));
+      Distribution d1 =  new Distribution("C", new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      Distribution d2 =  new Distribution("B", new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      Distribution d3 =  new Distribution("D", new Regime("Mo-AZ; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       List<Distribution> listDistri = new ArrayList<>();
       listDistri.add(d1);
@@ -254,7 +254,7 @@ public class PlanTransportFactory {
       voitures.add(v2);
       voitures.add(v3);
       
-      Composition compo1 = new Composition("A", "ESA", "15001H", "C01", voitures, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
+      Composition compo1 = new Composition("A", "ESA", "15001H", "C01", voitures, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       List<Voiture> voitures2 = new ArrayList<>();
       
@@ -266,9 +266,9 @@ public class PlanTransportFactory {
       voitures2.add(v5);
       voitures2.add(v6);
       
-      Composition compo2 = new Composition("H", "ESH", "16001J", "C01", voitures2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
+      Composition compo2 = new Composition("H", "ESH", "16001J", "C01", voitures2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
-      Composition compo4 = new Composition("A", "ESA", "11001J", "C01", voitures2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2));
+      Composition compo4 = new Composition("A", "ESA", "11001J", "C01", voitures2, new Regime("Mo-Fr; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       List<Voiture> voitures3 = new ArrayList<>();
       
@@ -280,7 +280,7 @@ public class PlanTransportFactory {
       voitures3.add(v8);
       voitures3.add(v9);
       
-      Composition compo3 = new Composition("B", "DKT", "15001K", "D031", voitures3, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
+      Composition compo3 = new Composition("B", "DKT", "15001K", "D031", voitures3, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       
       List<Composition> listCompo = new ArrayList<>();
@@ -298,11 +298,11 @@ public class PlanTransportFactory {
       /**
        * TypeEquipement
        */
-      TypeEquipement te1 = new TypeEquipement("TGT",  new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      TypeEquipement te2 = new TypeEquipement("TGR",  new Regime("Mo-EA; From 01/06/2016 to 10/12/2016", date1, date2));
-      TypeEquipement te3 = new TypeEquipement("TIT",  new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2));
-      TypeEquipement te4 = new TypeEquipement("TBT",  new Regime("Mo-RA; From 01/06/2016 to 10/12/2016", date1, date2));
-      TypeEquipement te5 = new TypeEquipement("TNT",  new Regime("Mo-TA; From 01/06/2016 to 10/12/2016", date1, date2));
+      TypeEquipement te1 = new TypeEquipement("TGT",  new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      TypeEquipement te2 = new TypeEquipement("TGR",  new Regime("Mo-EA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      TypeEquipement te3 = new TypeEquipement("TIT",  new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      TypeEquipement te4 = new TypeEquipement("TBT",  new Regime("Mo-RA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      TypeEquipement te5 = new TypeEquipement("TNT",  new Regime("Mo-TA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
 
       List<TypeEquipement> listTe = new ArrayList<>();
       listTe.add(te1);
@@ -314,13 +314,13 @@ public class PlanTransportFactory {
       /**
        * ServiceAbord
        */
-      ServiceABord sab1 = new ServiceABord("NY", EnumClasseService.Premiere, g, g2, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      ServiceABord sab2 = new ServiceABord("NE", EnumClasseService.Premiere, g, g2, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      ServiceABord sab3 = new ServiceABord("BAR", EnumClasseService.Toute, g3, g, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      ServiceABord sab4 = new ServiceABord("AH", EnumClasseService.Premiere, g4, g3, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      ServiceABord sab5 = new ServiceABord("IT", EnumClasseService.Premiere, g, g2, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2));
-      ServiceABord sab6 = new ServiceABord("DZ", EnumClasseService.Toute, g2, g3, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2));
-      ServiceABord sab7 = new ServiceABord("FR", EnumClasseService.Toute, g3, g4, new Regime("Mo-TA; From 01/06/2016 to 10/12/2016", date1, date2));
+      ServiceABord sab1 = new ServiceABord("NY", EnumClasseService.Premiere, g, g2, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      ServiceABord sab2 = new ServiceABord("NE", EnumClasseService.Premiere, g, g2, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      ServiceABord sab3 = new ServiceABord("BAR", EnumClasseService.Toute, g3, g, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      ServiceABord sab4 = new ServiceABord("AH", EnumClasseService.Premiere, g4, g3, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      ServiceABord sab5 = new ServiceABord("IT", EnumClasseService.Premiere, g, g2, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      ServiceABord sab6 = new ServiceABord("DZ", EnumClasseService.Toute, g2, g3, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      ServiceABord sab7 = new ServiceABord("FR", EnumClasseService.Toute, g3, g4, new Regime("Mo-TA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       List<ServiceABord> listServiceABord = new ArrayList<>();
       listServiceABord.add(sab1);
@@ -365,11 +365,11 @@ public class PlanTransportFactory {
       v2.setCompartiments(listCompart2);
       
       
-      Specification sp1 = new Specification(v1, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      Specification sp2 = new Specification(v2, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date2, date3));
-      Specification sp3 = new Specification(v3, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date3));
+      Specification sp1 = new Specification(v1, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      Specification sp2 = new Specification(v2, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date2, date3, new ArrayList<Date>()));
+      Specification sp3 = new Specification(v3, EnumEtatSpecification.Blocked, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date3, new ArrayList<Date>()));
       
-      Specification sp4 = new Specification(v3, EnumEtatSpecification.Blocked, new Regime("Mo-ZE; From 01/06/2016 to 10/12/2016", date1, date3));
+      Specification sp4 = new Specification(v3, EnumEtatSpecification.Blocked, new Regime("Mo-ZE; From 01/06/2016 to 10/12/2016", date1, date3, new ArrayList<Date>()));
       
       List<Specification> lsp = new ArrayList<>();
       lsp.add(sp1);
@@ -380,10 +380,10 @@ public class PlanTransportFactory {
       /**
        * Regime Restriction
        */
-      Restriction restr1 = new Restriction(g, g2, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      Restriction restr2 = new Restriction(null, g, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      Restriction restr3 = new Restriction(g, null, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2));
-      Restriction restr4 = new Restriction(g, null, null, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2));
+      Restriction restr1 = new Restriction(g, g2, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      Restriction restr2 = new Restriction(null, g, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      Restriction restr3 = new Restriction(g, null, null, new Regime("Mo-ZA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
+      Restriction restr4 = new Restriction(g, null, null, new Regime("Mo-AA; From 01/06/2016 to 10/12/2016", date1, date2, new ArrayList<Date>()));
       
       
       List<Restriction> restrictions = new ArrayList<>();

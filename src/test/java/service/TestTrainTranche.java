@@ -6,6 +6,7 @@ package service;
 import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -138,7 +139,7 @@ public class TestTrainTranche {
 			}
 			AtomicReference<Tranche> atomicTranche = new AtomicReference<Tranche>(new Tranche());
 			atomicTranche.get().setNumeroTranche(motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
-			atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime()));
+			atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime(), new Date()));
 
 //			List<MotriceRegimeEntity> regimeEntities = motriceTrainTrancheEntity.getMotriceRegimeEntities();
 //			for (MotriceRegimeEntity regime : regimeEntities) {
