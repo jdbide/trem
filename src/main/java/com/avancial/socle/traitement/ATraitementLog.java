@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 
 import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 /**
  * @author bruno.legloahec
@@ -21,7 +20,7 @@ public abstract class ATraitementLog extends ATraitement {
     * 
     */
    private static final long       serialVersionUID = 1L;
-   private static final String PERSISTENCE_UNIT_NAME = "PU_socle";
+   protected static final String PERSISTENCE_UNIT_NAME = "PU_socle";
    @Inject
    protected LogTraitementDataBean logBean;
 
@@ -45,7 +44,13 @@ public abstract class ATraitementLog extends ATraitement {
          this.logBean.setMessageTraitement("Le traitement s'est terminé avec des erreurs.");
       } finally {
          this.stopLogging();
+         this.closeEmLog();
       }
+   }
+
+   private void closeEmLog() {
+      // TODO Auto-generated method stub
+      
    }
 
    protected void showProgress(String message) throws Exception {
@@ -73,7 +78,6 @@ public abstract class ATraitementLog extends ATraitement {
       this.emLog.getTransaction().begin();
       try {
          this.emLog.persist(this.logBean);
-         this.emLog.flush();
          this.emLog.getTransaction().commit();
       } catch (Exception ex) {
          ex.printStackTrace();
@@ -89,7 +93,6 @@ public abstract class ATraitementLog extends ATraitement {
       this.emLog.getTransaction().begin();
       try {
          this.emLog.merge(this.logBean);
-         this.emLog.flush();
          this.emLog.getTransaction().commit();
       } catch (Exception ex) {
          ex.printStackTrace();

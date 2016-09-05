@@ -16,17 +16,25 @@
 		factory="org.apache.naming.factory.BeanFactory"
 		user="dbad_tremas" password="!tremas-12"
 		driverClass="com.mysql.jdbc.Driver"
-		jdbcUrl="jdbc:mysql://caliban/tremas_test"
-		minPoolSize="4" maxPoolSize="20"  
-		preferredTestQuery="select 1" idleConnectionTestPeriod="300"
-	    acquireRetryDelay="50" maxIdleTime="1200" 
-	    testConnectionOnCheckin="true"
-	    testConnectionOnCheckout="true"
-	    maxIdleTimeExcessConnections="0"
-	    checkoutTimeout="0"
+		jdbcUrl="jdbc:mysql://caliban/tremas"
+		  
+		preferredTestQuery="select 1" 		
+		idleConnectionTestPeriod="300"
+		
+	    acquireRetryDelay="50"
+	    
+	    minPoolSize="4" 
+		maxPoolSize="20" 
+	    maxIdleTime="1200" 
+	    maxIdleTimeExcessConnections="20"
 	    maxStatementsPerConnection="0"
-	    acquireRetryAttempts="15"
-	    unreturnedConnectionTimeout="5" />
+	    
+	    checkoutTimeout="18000"
+	    
+	    acquireRetryAttempts="20"
+	    unreturnedConnectionTimeout="180" 
+	    debugUnreturnedConnectionStackTraces="true
+	    "/>
 	
 
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
@@ -36,7 +44,11 @@
 	</Realm>
 </Context>
 
-<!-- 	<Resource name="jdbc/externe" auth="Container" type="javax.sql.DataSource"
+<!-- 
+testConnectionOnCheckin="true"
+	    testConnectionOnCheckout="true"
+	    
+	    	<Resource name="jdbc/externe" auth="Container" type="javax.sql.DataSource"
 		username="ejmt013" password="fatima05" driverClassName="com.ibm.db2.jcc.DB2Driver"
 		url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;"
 		maxActive="8" maxIdle="4" maxWait="10000" /> -->

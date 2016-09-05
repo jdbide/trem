@@ -21,8 +21,6 @@ public abstract class ATraitementLogDetail extends ATraitementLog {
 
    LogTraitementDetailDataBean logDetailBean;
    
-   private static final String PERSISTENCE_UNIT_NAME = "PU_socle";
-
    public void log(String message) throws Exception {
       try {
          this.logDetailBean = new LogTraitementDetailDataBean();
@@ -31,12 +29,13 @@ public abstract class ATraitementLogDetail extends ATraitementLog {
          this.logDetailBean.setMessageTraitementDetail(message);
          
          
-         this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+         this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(ATraitementLog.PERSISTENCE_UNIT_NAME).createEntityManager();
          this.emLog.getTransaction().begin();
+         
          try {
             this.emLog.persist(this.logDetailBean);
-            this.emLog.flush();
             this.emLog.getTransaction().commit();
+            
          } catch (Exception ex) {
             ex.printStackTrace();
             this.emLog.getTransaction().rollback();

@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -16,7 +15,6 @@ import org.hibernate.SQLQuery;
 import com.avancial.app.data.databean.RefTablesMotriceEntity;
 import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapTraitementImportBrut;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementImportDataBase;
 
 public class TraitementImportDb2Motrice extends ATraitementImportDataBase implements Serializable {
@@ -83,10 +81,10 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
    @Override
    protected void clearTable() throws Exception {
       logger.info("Start clear Table");
-      //this.em.clear();
-//      if (!this.em.getTransaction().isActive()) {
-//         this.em.getTransaction().begin();
-//      }
+      // this.em.clear();
+      // if (!this.em.getTransaction().isActive()) {
+      // this.em.getTransaction().begin();
+      // }
       Query query = this.em.createNamedQuery("TablesMotrice.getAll", RefTablesMotriceEntity.class);
       List<RefTablesMotriceEntity> listTables = query.getResultList();
       String libelleTableMotrice;
@@ -96,6 +94,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
          delete = this.sessionSocle.createSQLQuery("DELETE FROM " + GetEntiteService.getTableImportFromNomTable(libelleTableMotrice));
          delete.executeUpdate();
          logger.info("Supression des données de la table " + GetEntiteService.getTableImportFromNomTable(libelleTableMotrice));
+         this.sessionSocle.flush();
          this.sessionSocle.clear();
       }
 
@@ -107,7 +106,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
     */
    @Override
    protected List<String> getColumnsName(String table) throws Exception {
-      logger.info("Start get Columns Name");
+      logger.info("Start get Columns Name => " + table);
       List<String> res = new ArrayList<>();
       try {
          for (Field field : GetEntiteService.getClasseEntiteImportFromTableMotrice(table).getDeclaredFields()) {
@@ -122,7 +121,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
          throw e;
       }
 
-      logger.info("End get Columns Name");
+      logger.info("End get Columns Name => " + table);
       return res;
    }
 
@@ -132,10 +131,10 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
    @SuppressWarnings("unchecked")
    @Override
    protected List<Object[]> getData(String table) throws Exception {
-      logger.info("Start get Data");
+      logger.info("Start get Data => " + table);
       Query query = this.entityManagerExterne.createNativeQuery("select * from " + table);
 
-      logger.info("End get Data");
+      logger.info("End get Data => " + table);
       return query.getResultList();
    }
 
@@ -144,7 +143,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
     */
    @Override
    protected void insertData(String table, List<String> columns, List<Object[]> donnees) throws Exception {
-      logger.info("Start insertion des données dans les tables bruts");
+      logger.info("Start insertion des données dans les tables bruts => " + table);
       MapTraitementImportBrut mapTraitementImportBrut = new MapTraitementImportBrut();
       int count = 0;
       org.hibernate.Query query;
@@ -186,7 +185,6 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
             }
          }
          if (sqlValues.length() > 0) {
-            this.sessionSocle.beginTransaction();
             query = this.sessionSocle.createSQLQuery(sqlQuery.toString() + sqlValues.toString());
             query.executeUpdate();
             this.sessionSocle.flush();
@@ -198,7 +196,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
          e.printStackTrace();
          throw e;
       }
-      logger.info("End insertion des données dans les tables bruts");
+      logger.info("End insertion des données dans les tables bruts => " + table);
    }
 
    /**

@@ -102,10 +102,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          try {
             Task.setMsgTask(this.idTask, "Récupération de l'environnement");
             logger.info("Start Récupération de l'environnement");
-
             // Récupération de l'environnement sélectionné
             compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(this.importTmsDto.getIdCompagnieEnvironnement());
-
+            System.out.println("===>  Récupération de l'environnement");
             logger.info("End Récupération de l'environnement");
          } catch (Throwable ex) {
             this.logBean.setExceptionTraitement(ex.getMessage());
@@ -121,7 +120,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             logger.info("Connexion à Motrice");
 
             this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(compagnieEnvironnementEntity, this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
-
+            System.out.println("===>  Connexion à Motrice");
             logger.info("End Connexion à Motrice");
          } catch (Throwable ex) {
             this.logBean.setExceptionTraitement(ex.getMessage());
@@ -139,11 +138,21 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          try {
             logger.info("Importation des données");
             this.traitement.execute();
+            this.entityManagerDb2.close();
+            EntityManagerFactoryProviderDb2.closeInstance();
+            System.out.println("===>  Importation des données");
             logger.info("End Importation des données");
-         } catch (Throwable e) {
+         } catch (SecurityException se) {
+            this.log("Echec de l'import");
+            Task.finishKoTask(this.idTask, "Echec de l'import");
+            logger.error("Echec de l'import", se);
+            System.err.println("===>  Importation des données");
+            throw se;
+         } catch (Exception e) {
             this.log("Echec de l'import");
             Task.finishKoTask(this.idTask, "Echec de l'import");
             logger.error("Echec de l'import", e);
+            System.err.println("===>  Importation des données");
             throw e;
          }
 
@@ -154,6 +163,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             this.traitementDeleteJeuDonnee.setStatus(Status.IMPORT);
             //this.traitementDeleteJeuDonnee.setEm(this.em);
             this.traitementDeleteJeuDonnee.execute();
+            System.out.println("===>  Suppression des données temporaires");
             logger.info("End Suppression des données temporaires");
          } catch (Exception e) {
             this.log("Echec de la suppression des données temporaires");
@@ -167,7 +177,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             logger.info("Start Suppression de l'éventuel Draft");
             this.traitementDeleteJeuDonnee.setStatus(Status.DRAFT);
             this.traitementDeleteJeuDonnee.execute();
-
+            System.out.println("===>  Suppression de l'éventuel Draft");
             logger.info("End Suppression de l'éventuel Draft");
          } catch (Exception e) {
             this.log("Echec de la suppression du Draft");
@@ -194,6 +204,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             this.traitementMotrice.setMap(this.mapPlansDeTransport);
             //this.traitementMotrice.setEm(this.em);
             this.traitementMotrice.execute();
+            System.out.println("===>  Traitement Motrice");
             logger.info("End traitementMotrice");
          } catch (Throwable e) {
             this.log("Echec du traitement motrice.");
@@ -209,6 +220,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             this.traitementObjetMetier.setMapPlansDeTransport(this.mapPlansDeTransport);
             //this.traitementObjetMetier.setEm(this.em);
             this.traitementObjetMetier.execute();
+            System.out.println("===>  Traitement Objet Metier");
             logger.info("End TraitementObjetMetier");
          } catch (Throwable e) {
             this.log("Echec du traitementObjetMetier.");
@@ -223,6 +235,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          try {
             logger.info("Start Compare Plan Transport");
             listCompare = comparePlanTransport.compare(this.mapPlansDeTransport.getPlanTransportActive(), this.mapPlansDeTransport.getPlanTransportDraft());
+            System.out.println("===>  Compare Plan Transport");
             logger.info("End Compare Plan Transport");
          } catch (Throwable e) {
             this.log("Echec comparePlanTransport.");
@@ -240,6 +253,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          try {
             logger.info("Start Excel Rapport Differentiel");
             this.excelRapportDifferentiel.generate();
+            System.out.println("===>  Excel Rapport Differentiel");
             logger.info("End Excel Rapport Differentiel");
          } catch (Throwable e) {
             this.log("Echec excelRapportDifferentiel");

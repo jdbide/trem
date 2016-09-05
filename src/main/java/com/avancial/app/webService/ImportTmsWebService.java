@@ -202,7 +202,7 @@ public class ImportTmsWebService {
    public Response downloadFileLog() throws Exception {
       logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)");
       ResponseBuilder responseBuilder = null;
-      String path = "E:\\app\\tremas\\data\\logs\\log4j.log"; //E:\\app\\tremas\\logs\\c3p0_tomcatServer.log
+      String path = "D:\\was_tmp\\tremas\\log\\log4j.log";//"E:\\app\\tremas\\data\\logs\\log4j.log"; //E:\\app\\tremas\\logs\\c3p0_tomcatServer.log
       try {
 
          File fileDownload = new File(path);
