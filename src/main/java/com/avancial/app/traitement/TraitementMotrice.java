@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -104,6 +105,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 			AtomicLong cptRegime;
 			Train train = new Train();
 			String lastTrainNumber = "";
+			Date debutPeriode = this.jeuDonneeEntity.getDateDebutPeriode();
 
 			this.log("Debut recuperation des trains tranches");
 			for (Object[] record : trainsTranches) {
@@ -139,7 +141,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 				}
 				AtomicReference<Tranche> atomicTranche = new AtomicReference<>(new Tranche());
 				atomicTranche.get().setNumeroTranche(motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
-				atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime()));
+				atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime(), debutPeriode));
 
 				train.getTranches().add(atomicTranche.get());
 				planTransport.getTrains().add(train);

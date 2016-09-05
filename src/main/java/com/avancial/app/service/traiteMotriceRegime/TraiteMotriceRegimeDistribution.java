@@ -1,6 +1,8 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -26,6 +28,8 @@ public class TraiteMotriceRegimeDistribution implements ITraiteMotriceRegime {
 			MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
 			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager,
 			AtomicReference<Tranche> atomicTranche) {
+	   
+	   Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
 		IMultipleInsertRequestGenerator generatorRegime = mapGeneratorTablesMotriceRegime
 				.get(MotriceRegimeEntity.class);
@@ -61,7 +65,12 @@ public class TraiteMotriceRegimeDistribution implements ITraiteMotriceRegime {
 			}
 			generatorDistribution.addValue(idDistribution.getAndIncrement(), (String) record[0], idRegime);
 
-			listeDistributions.add(new Distribution((String) record[0], new Regime((String) record[1])));
+			try {
+            listeDistributions.add(new Distribution((String) record[0], new Regime((String) record[1], debutPeriode)));
+         } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
 
 			regime = (String) record[1];
 		}

@@ -68,6 +68,7 @@ public class JeuDonneeService implements Serializable {
 		JeuDonneeEntity jeuDonneeDataBean = new JeuDonneeEntity();
 		jeuDonneeDataBean.setDateCreateJeuDonnees(new Date());
 		jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
+		jeuDonneeDataBean.setDateDebutPeriode(new Date());
 		jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(-1);
 		jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(-1);
 		jeuDonneeDataBean.setCompagnieEnvironnement(compagnieEnvironnement);

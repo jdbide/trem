@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import com.avancial.app.data.databean.Status;
@@ -19,7 +20,6 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
-import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
@@ -40,6 +40,8 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
  *
  */
 public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferentielSheet {
+
+    private static Logger logger = Logger.getLogger(ExcelRapportDifferentielSheetNew.class);
 
     public static String[] ENTETE_SHEET_NEW = {"Train", "Tranche", "Régime Tranche", "Company", "Tranche Status",
             "Valid for RR", "Regime_Dessertes", "Dessertes", "Regime OD Tranche", "OD Tranche", "Regime Distrib",
@@ -130,6 +132,9 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
             }
 
             ligneDebut = excelTools.getSheet().getLastRowNum() + 1;
+            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "("
+                    + data.getNumeroTrain() + "-" + data.getNumeroTranche() + ") ligne "
+                    + (ligneDebut - 1) + " générée");
 
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 1, 1, currentTrain.getNumeroTrain(),
                     excelTools.addColor(excelTools.styleBorder, selectColor(excelTools, cntTraiTranche, null)));

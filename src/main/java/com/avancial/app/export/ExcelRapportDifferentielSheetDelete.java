@@ -1,5 +1,6 @@
 package com.avancial.app.export;
 
+import java.io.IOException;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
@@ -13,7 +14,7 @@ public class ExcelRapportDifferentielSheetDelete extends AExcelRapportDifferenti
 
     @Override
     public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons,
-            MapPlansDeTransport mapPlansDeTransport) {
+            MapPlansDeTransport mapPlansDeTransport) throws IOException {
         this.generateContentForSheetUnchangedOrDelete(excelTools, ligneDebut, mapPlansDeTransport,
                 mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.DELETE), excelTools.couleurBleu);
     }

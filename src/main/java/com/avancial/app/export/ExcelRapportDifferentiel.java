@@ -4,6 +4,9 @@
 package com.avancial.app.export;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.apache.log4j.Logger;
+import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
@@ -12,6 +15,8 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
  *
  */
 public class ExcelRapportDifferentiel extends ASocleExportExcelService {
+
+    private static Logger logger = Logger.getLogger(ExcelRapportDifferentiel.class);
     /**
     * 
     */
@@ -109,7 +114,9 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         this.ligne = this.firstLineEntete[this.numCurrentSheet];
         this.excelTools.createRow(this.ligne++);
 
+        logger.info("Début génération entête onglet " + this.nameCurrentSheet);
         this.rapportDifferentielSheetFactory.get(this.nameCurrentSheet).generateEntete(this.excelTools, this.ligne);
+        logger.info("Fin génération entête onglet " + this.nameCurrentSheet);
     }
 
     /*
@@ -123,8 +130,10 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         try {
             this.ligne = this.firstLineContent[this.numCurrentSheet];
 
+            logger.info("Début génération contenu onglet " + this.nameCurrentSheet);
             this.rapportDifferentielSheetFactory.get(this.nameCurrentSheet).generateContent(this.excelTools, this.ligne,
                     this.datas, this.mapPlansDeTransport);
+            logger.info("Fin génération contenu onglet " + this.nameCurrentSheet);
         }
         catch (Exception e) {
             throw e;
@@ -151,11 +160,13 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         this.excelTools.createCellTexteWithStyle(1, REPORT_FOR, this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(3, "", this.excelTools.styleEnteteJaune);
+        CompagnieEnvironnementEntity compagnieEnvironnement = this.mapPlansDeTransport.getJeuDonneesDraft()
+                .getCompagnieEnvironnement();
         this.excelTools.createCellTexteWithStyle(4,
-                this.mapPlansDeTransport.getJeuDonneesDraft().getCompagnieEnvironnement().getLibelleCompagnie(),
+                compagnieEnvironnement == null ? "" : compagnieEnvironnement.getLibelleCompagnie(),
                 this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(5,
-                this.mapPlansDeTransport.getJeuDonneesDraft().getCompagnieEnvironnement().getLibelleEnvironnement(),
+                compagnieEnvironnement == null ? "" : compagnieEnvironnement.getLibelleEnvironnement(),
                 this.excelTools.styleEnteteJaune);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YY - HH:mm");
@@ -163,8 +174,10 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         this.excelTools.createCellTexteWithStyle(1, DATE_IMPORT_DRAFT, this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(3, "", this.excelTools.styleEnteteJaune);
+        Date dateImport = this.mapPlansDeTransport.getJeuDonneesDraft().getDateCreateJeuDonnees();
         this.excelTools.createCellTexteWithStyle(4,
-                formatter.format(this.mapPlansDeTransport.getJeuDonneesDraft().getDateCreateJeuDonnees()),
+                dateImport == null ? ""
+                        : formatter.format(this.mapPlansDeTransport.getJeuDonneesDraft().getDateCreateJeuDonnees()),
                 this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(5, "", this.excelTools.styleEnteteJaune);
 
@@ -172,8 +185,10 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
         this.excelTools.createCellTexteWithStyle(1, DATE_IMPORT_ACTIVE, this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(3, "", this.excelTools.styleEnteteJaune);
+        dateImport = this.mapPlansDeTransport.getJeuDonneesActive().getDateCreateJeuDonnees();
         this.excelTools.createCellTexteWithStyle(4,
-                formatter.format(this.mapPlansDeTransport.getJeuDonneesActive().getDateCreateJeuDonnees()),
+                dateImport == null ? ""
+                        : formatter.format(this.mapPlansDeTransport.getJeuDonneesActive().getDateCreateJeuDonnees()),
                 this.excelTools.styleEnteteJaune);
         this.excelTools.createCellTexteWithStyle(5, "", this.excelTools.styleEnteteJaune);
     }

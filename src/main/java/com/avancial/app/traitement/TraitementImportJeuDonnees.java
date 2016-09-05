@@ -209,6 +209,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
             jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(compagnieEnvironnementEntity);
             jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
             jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
+            jeuDonneeDataBean.setDateDebutPeriode(new Date(2015, 12, 07));
 
             this.jeuDonneeService.save(jeuDonneeDataBean);
 

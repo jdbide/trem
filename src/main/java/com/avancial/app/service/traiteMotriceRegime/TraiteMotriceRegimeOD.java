@@ -1,6 +1,8 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -29,6 +31,8 @@ public class TraiteMotriceRegimeOD implements ITraiteMotriceRegime {
       AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
       AtomicLong idOD = mapIdTablesMotriceRegime.get(MotriceRegimeODEntity.class);
       Long idTrainTranche = motriceTrainTrancheEntity.getIdMotriceTrainTranche();
+      
+      Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
       Query queryRODTranche = entityManager.createNativeQuery(
             "SELECT tranche.TRCH_INPT_RR_ORIG AS oriMotriceRegimeOD, tranche.TRCH_INPT_RR_DEST AS destMotriceRegimeOD, tranche.TRCH_REGI_VAL AS motriceRegime " + "FROM tremas_import_tmdtrch AS tranche " + "INNER JOIN tremas_import_tmdcath AS cath ON cath.CATH_TRCH_COD_CIE = tranche.TRCH_TRA1_COD_CIE "
@@ -49,7 +53,12 @@ public class TraiteMotriceRegimeOD implements ITraiteMotriceRegime {
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[2], 12, idTrainTranche);
          }
          generatorOD.addValue(idOD.getAndIncrement(), (String) record[0], (String) record[1], idRegime);
-         listeOD.add(new OrigineDestination(new Gare((String) record[0]), new Gare((String) record[1]), new Regime((String) record[2])));
+         try {
+            listeOD.add(new OrigineDestination(new Gare((String) record[0]), new Gare((String) record[1]), new Regime((String) record[2], debutPeriode)));
+         } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
          regime = (String) record[2];
       }
       atomicTranche.get().addAttributsField(listeOD);

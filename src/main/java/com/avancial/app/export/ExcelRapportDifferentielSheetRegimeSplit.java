@@ -1,8 +1,11 @@
 package com.avancial.app.export;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
@@ -11,6 +14,8 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDifferentielSheet {
+
+    private static Logger logger = Logger.getLogger(ExcelRapportDifferentielSheetRegimeSplit.class);
 
     public static String[] ENTETE_SHEET_REGIMESPLIT = {"Train", "Tranche", "Field", "Regime", "Value"};
 
@@ -27,7 +32,8 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
     }
 
     @Override
-    public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons, MapPlansDeTransport mapPlansDeTransport) {
+    public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons,
+            MapPlansDeTransport mapPlansDeTransport) throws IOException {
         int debutRowTrain = ligneDebut;
 
         ComparaisonPlanTransport<IPlanTransport> dataPrec = null;
@@ -69,11 +75,16 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
                 excelTools.createRow(ligneDebut++);
                 this.generateLigneRegimeSplit(excelTools, data, true);
                 listeAncienAttribut.add((ASousRegimeTranche) data.getAncienField());
+                ((SXSSFSheet) excelTools.getSheet()).flushRows(1);
             }
             /* Ajout de la valeur "nouveau" */
             excelTools.createRow(ligneDebut++);
             this.generateLigneRegimeSplit(excelTools, data, false);
             dataPrec = data;
+            ((SXSSFSheet) excelTools.getSheet()).flushRows(1);
+            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "("
+                    + data.getNumeroTrain() + "-" + data.getNumeroTranche() + ") ligne "
+                    + (ligneDebut - 1) + " générée");
         }
         if (dataPrec != null) {
             /*
@@ -86,6 +97,9 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 2, 2);
             /* Colonne Field */
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 3, 3);
+            logger.info("Onglet " + dataPrec.getTypeComparaisonPlanTransport().name() + " : " + "("
+                    + dataPrec.getNumeroTrain() + "-" + dataPrec.getNumeroTranche() + ") ligne "
+                    + (ligneDebut - 1) + " générée");
         }
     }
 
