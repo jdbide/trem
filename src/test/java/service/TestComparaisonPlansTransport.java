@@ -3,9 +3,11 @@ package service;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -13,6 +15,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
@@ -33,12 +36,13 @@ import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory
 import com.avancial.app.traitement.TraitementMotrice;
 import com.avancial.app.traitement.TraitementObjetMetier;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.logging.ALogBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitement;
 import com.avancial.socle.utils.ListUtils;
+
 import junit.framework.Assert;
 
 @RunWith(Arquillian.class)
@@ -51,7 +55,7 @@ public class TestComparaisonPlansTransport {
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(MotriceRegimeEntity.class.getPackage())
                 .addPackage(ITraiteMotriceRegime.class.getPackage()).addPackage(ALogBean.class.getPackage())
                 .addPackage(ATraitement.class.getPackage()).addPackage(CodeSat.class.getPackage())
-                .addPackage(IhmPageDataBean.class.getPackage()).addClass(JeuDonneeService.class)
+                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class)
                 .addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class)
                 .addClass(TraitementObjetMetier.class).addClass(RefTablesMotriceRegimeService.class)
                 .addClass(TraiteMotriceRegimeFactory.class).addClass(MapPlansDeTransport.class)

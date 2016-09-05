@@ -18,7 +18,7 @@ import org.primefaces.context.RequestContext;
 
 import com.avancial.socle.business.JobBean;
 import com.avancial.socle.data.controller.dao.JobDao;
-import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.impl.ASocleException;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
@@ -46,7 +46,6 @@ public class JobManagedBean extends AManageBean {
    public JobManagedBean() {
       this.selectItems = new ArrayList<>();
       this.reload();
-   
 
    }
 
@@ -60,7 +59,6 @@ public class JobManagedBean extends AManageBean {
       this.nomTechnique = "";
       this.classe = "";
    }
-   
 
    /**
     * @return
@@ -68,46 +66,45 @@ public class JobManagedBean extends AManageBean {
     */
    @Override
    public String add() throws ASocleException {
-	  
-	  super.add();
+
+      super.add();
       JobBean bean = new JobBean();
       bean.setLibelleJob(this.libelle);
       bean.setNomTechniqueJob(this.nomTechnique);
       bean.setClasseJob(this.classe);
-      
 
       try {
          bean.save();
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Job a été créé."));
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Le Job a ï¿½tï¿½ crï¿½ï¿½."));
          RequestContext.getCurrentInstance().update(":dataTable");
          this.closeDialog = true;
          return SocleMenuManagedBean.goJob();
       } catch (ASocleException e) {
-//         RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         // RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
          e.getClientMessage();
-         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage())); 
-         //RequestContext.getCurrentInstance().addCallbackParam("notValid", true); 
-         //throw e;
+         FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+         // RequestContext.getCurrentInstance().addCallbackParam("notValid", true);
+         // throw e;
       }
       return null;
    }
-   
+
    public void updateById() throws ASocleException {
-	   ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();	   
-	   Map<String, String> parameterMap = (Map<String, String>) externalContext.getRequestParameterMap();
-	   String param = parameterMap.get("itemId");
-	   if (param != null) {
-		   Integer idJob = Integer.valueOf(param);
-		   for (JobBean jobBean : selectItems) {
-			   if (jobBean.getIdJob().equals(idJob.longValue())) {
-				   this.selectedItem = jobBean;
-				   break;
-			   }
-		   }
-	   } else {
-		   // redirection vers la page job.xhtml
-	   }
-	   
+      ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+      Map<String, String> parameterMap = externalContext.getRequestParameterMap();
+      String param = parameterMap.get("itemId");
+      if (param != null) {
+         Integer idJob = Integer.valueOf(param);
+         for (JobBean jobBean : selectItems) {
+            if (jobBean.getIdJob().equals(idJob.longValue())) {
+               this.selectedItem = jobBean;
+               break;
+            }
+         }
+      } else {
+         // redirection vers la page job.xhtml
+      }
+
    }
 
    @Override
@@ -119,16 +116,16 @@ public class JobManagedBean extends AManageBean {
 
             this.selectedItem.update();
 
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement modifié"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement modifiï¿½"));
             this.closeDialog = true;
             return SocleMenuManagedBean.goJob();
          } catch (ASocleException e) {
             e.printStackTrace();
-//            RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
+            // RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
             e.getClientMessage();
-//            RequestContext.getCurrentInstance().addCallbackParam("notValid", true); 
+            // RequestContext.getCurrentInstance().addCallbackParam("notValid", true);
             FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_UPD_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", e.getClientMessage()));
-//            throw e;
+            // throw e;
          }
       }
       return null;
@@ -141,11 +138,11 @@ public class JobManagedBean extends AManageBean {
          JobDao dao = new JobDao();
          try {
             this.selectedItem.delete();
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimé"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.PAGE_ID_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "message", "Enregistrement supprimï¿½"));
             this.closeDialog = true;
             this.reload();
          } catch (ASocleException e) {
-            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacé"));
+            FacesContext.getCurrentInstance().addMessage(SOCLE_constants.DIALOG_DEL_MESSAGES.toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "message", "Enregistrement non effacï¿½"));
             throw e;
          }
       }
@@ -197,10 +194,12 @@ public class JobManagedBean extends AManageBean {
       }
    }
 
+   @Override
    public Boolean getCloseDialog() {
       return this.closeDialog;
    }
 
+   @Override
    public void setCloseDialog(Boolean closeDialog) {
       this.closeDialog = closeDialog;
    }

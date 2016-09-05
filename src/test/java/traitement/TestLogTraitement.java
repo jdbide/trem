@@ -15,7 +15,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.traitement.ATraitement;
 
@@ -30,7 +30,7 @@ public class TestLogTraitement {
    public static WebArchive createDeployment() {
       File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity().as(File.class);
 
-      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(IhmPageDataBean.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addPackage(ATraitement.class.getPackage())
+      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(PageDataBean.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addPackage(ATraitement.class.getPackage())
             // .addClass(PhraseBuilder.class)
             // .addAsManifestResource("arquillian.xml")
             .addPackage(TraitementDetailTest.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml")

@@ -25,7 +25,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
 import com.avancial.app.service.JeuDonneeService;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.utils.Convertisseur;
@@ -42,7 +42,7 @@ public class TestTranscodage {
         File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity()
                 .as(File.class);
 
-        WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(IhmPageDataBean.class.getPackage())
+        WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(PageDataBean.class.getPackage())
                 // .addPackage(IhmPageDao.class.getPackage())
 
                 .addClass(JeuDonneeService.class).addPackage(Socle_PUSocle.class.getPackage())

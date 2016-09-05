@@ -16,12 +16,10 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.data.databean.DatasourceEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRegimeDistributionEntity;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
-import com.avancial.socle.data.model.databean.IhmChapitreDataBean;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
-import com.avancial.socle.data.model.databean.IhmRubriqueDataBean;
+import com.avancial.socle.ihm.menu.model.databean.ChapitreDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.RubriqueDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
@@ -37,11 +35,8 @@ public class TestIhmPageDataBean {
 		File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity()
 				.as(File.class);
 
-		WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(IhmPageDataBean.class.getPackage())
-				// .addPackage(IhmPageDao.class.getPackage())
-
-				// .addClass(PhraseBuilder.class)
-				// .addAsManifestResource("arquillian.xml")
+		WebArchive jar = ShrinkWrap.create(WebArchive.class)
+		      .addPackage(PageDataBean.class.getPackage())
 				.addPackage(EntityManagerProducerSocle.class.getPackage())
 				.addPackage(EntityManagerFactoryProviderDb2.class.getPackage())
 				.addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
@@ -54,14 +49,14 @@ public class TestIhmPageDataBean {
 		return jar;
 	}
 
-	@Inject
-	IhmPageDataBean page;
-
-	@Inject
-	IhmChapitreDataBean chapitre;
-
-	@Inject
-	IhmRubriqueDataBean rubrique;
+//	@Inject
+//	PageDataBean page;
+//
+//	@Inject
+//	ChapitreDataBean chapitre;
+//
+//	@Inject
+//	RubriqueDataBean rubrique;
 
 	// @Inject
 	// IhmPageDao dao;
@@ -74,10 +69,26 @@ public class TestIhmPageDataBean {
 	@Socle_PUSocle
 	EntityManager em;
 
-	EntityManager emDb2;
+//	EntityManager emDb2;
 
 	@Test
 	public void testGetId() {
+	   try {
+	      this.em.getTransaction().begin();
+	      this.em.createNamedQuery(RubriqueDataBean.QUERY_DELETE_BY_ID).setParameter("id", Long.parseLong("5")).executeUpdate();
+	      this.em.getTransaction().commit();
+	   } catch (Throwable ex) {
+	      this.em.getTransaction().rollback();
+	   }
+	   
+	   try {
+	      this.em.getTransaction().begin();
+	      this.em.createNamedQuery(RubriqueDataBean.QUERY_DELETE_BY_ID).setParameter("id", Long.parseLong("6")).executeUpdate();
+	      this.em.getTransaction().commit();
+	   } catch (Throwable ex) {
+	      this.em.getTransaction().rollback();
+         throw ex;
+	   }
 //		DatasourceEntity test = new DatasourceEntity();
 //
 //		test.setActifDatasource(true);

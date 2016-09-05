@@ -3,7 +3,6 @@ package com.avancial.app.webService;
 import java.io.File;
 
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
@@ -27,11 +26,13 @@ import org.json.simple.JSONArray;
 
 import com.avancial.app.data.Task;
 import com.avancial.app.data.dto.ImportTmsDto;
+import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.service.ImportTmsService;
 import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
 import com.avancial.app.webService.bean.ResponseBean;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.RefDirectoryService;
 import com.avancial.socle.session.Session;
 
 /**
@@ -68,8 +69,15 @@ public class ImportTmsWebService {
    @Inject
    private TraitementDeleteJeuDonnee traitementDeleteJeuDonnee;
    
+   // A ne pas supprimer svp
+   @Inject
+   private TraitementImportJeuDonnees traitementImportJeuDonnees;
+   
    @Inject
    private Session session;
+   
+   @Inject
+   private RefDirectoryService           refDirectoryService;
 
    @Inject
    @Socle_PUSocle
@@ -96,7 +104,7 @@ public class ImportTmsWebService {
          logger.info("Fin (WebService : '/app/importTms' methode : GET)");
          
          return Response.status(200).entity(jsonArray).build();
-      } catch (Exception ex) {
+      } catch (Throwable ex) {
          logger.error("Exception (WebService : '/app/importTms' methode : GET)", ex);
          return Response.status(400).build();
       }
@@ -181,8 +189,8 @@ public class ImportTmsWebService {
       
       ResponseBuilder responseBuilder = null;
       //String path = "E:\\app\\tremas\\data\\RapportDiff-" + idJeuDonnee + ".xlsx";
-      
-      String path = "D:\\was_tmp\\tremas\\export\\RapportDiff-" + idJeuDonnee + ".xlsx";
+      String path = refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory() + "RapportDiff-"+idJeuDonnee+".xlsx";
+
       try {
 
          File fileDownload = new File(path);
@@ -206,7 +214,7 @@ public class ImportTmsWebService {
    public Response downloadFileLog() throws Exception {
       logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)");
       ResponseBuilder responseBuilder = null;
-      String path = "E:\\app\\tremas\\data\\logs\\log4j.log"; //E:\\app\\tremas\\logs\\c3p0_tomcatServer.log
+      String path = "D:\\was_tmp\\tremas\\log\\log4j.log";//"E:\\app\\tremas\\data\\logs\\log4j.log"; //E:\\app\\tremas\\logs\\c3p0_tomcatServer.log
       try {
 
          File fileDownload = new File(path);
@@ -251,7 +259,8 @@ public class ImportTmsWebService {
                      ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
                      // this will implicitly bind a new RequestContext to
                      // your current thread
-                     ctxCtrl.startContext(SessionScoped.class);
+                     ctxCtrl.startContext(RequestScoped.class);
+                     
                      TraitementImportJeuDonnees globalResultHolder = BeanProvider.getContextualReference(TraitementImportJeuDonnees.class);
                      globalResultHolder.setImportJeuDonneesDto(importTmsDto);
                      globalResultHolder.setIdTask(Thread.currentThread().getId());

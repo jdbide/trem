@@ -1,6 +1,7 @@
 package traitement;
 
 import java.io.File;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -17,7 +18,7 @@ import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.traitement.TraitementObjetMetier;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
@@ -27,7 +28,7 @@ public class RemplissageObjMetierTest {
    public static WebArchive createDeployment() {
       File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity().as(File.class);
 
-      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(CodeSat.class.getPackage()).addPackage(IhmPageDataBean.class.getPackage()).addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class).addClass(TraitementObjetMetier.class)
+      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(CodeSat.class.getPackage()).addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class).addClass(TraitementObjetMetier.class)
             .addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
             .addAsManifestResource("META-INF/context.xml", "context.xml");
 

@@ -3,9 +3,8 @@ package com.avancial.socle.data.controller.dao;
 import java.util.List;
 
 import com.avancial.socle.data.model.databean.User2RoleDataBean;
-import com.avancial.socle.data.model.databean.UserDataBean;
-import com.avancial.socle.exceptions.ASocleException;
 import com.avancial.socle.exceptions.SocleExceptionManager;
+import com.avancial.socle.exceptions.impl.ASocleException;
 
 /**
  * 
@@ -22,20 +21,16 @@ public class User2RoleDao extends AbstractDao {
    public List<User2RoleDataBean> getUser2RoleByIdUser(long idUser) {
       return this.getEntityManager().createQuery("FROM User2RoleDataBean WHERE idUser = :idUser").setParameter("idUser", idUser).getResultList();
    }
-   
-  
 
    public void save(User2RoleDataBean bean) throws ASocleException {
       try {
          this.getEntityManager().getTransaction().begin();
-         this.getEntityManager().persist(bean)           ;
-         this.getEntityManager().flush()                 ;
+         this.getEntityManager().persist(bean);
+         this.getEntityManager().flush();
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-        @SuppressWarnings("unused")
-      SocleExceptionManager manager=new SocleExceptionManager(e);
-        throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
    }
 
@@ -47,9 +42,7 @@ public class User2RoleDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
-      SocleExceptionManager manager=new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
 
    }
@@ -62,9 +55,7 @@ public class User2RoleDao extends AbstractDao {
          this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
-         @SuppressWarnings("unused")
-      SocleExceptionManager manager=new SocleExceptionManager(e);
-         throw SocleExceptionManager.getException();
+         throw SocleExceptionManager.getException(e);
       }
    }
 }

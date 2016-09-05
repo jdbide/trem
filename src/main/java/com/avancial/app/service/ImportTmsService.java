@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
@@ -14,143 +16,142 @@ import com.avancial.socle.data.controller.dao.UserDao;
 import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.session.Session;
 
-@SessionScoped
+@RequestScoped
 public class ImportTmsService implements Serializable {
-	/**
-	* 
-	*/
-	private static final long serialVersionUID = 1L;
+   /**
+   * 
+   */
+   private static final long             serialVersionUID = 1L;
 
-	@Inject
-	private CompagnieEnvironnementService compagnieEnvironnementService;
+   @Inject
+   private CompagnieEnvironnementService compagnieEnvironnementService;
 
-	@Inject
-	private JeuDonneeService jeuDonneeService;
+   @Inject
+   private JeuDonneeService              jeuDonneeService;
 
-	@Inject
-	private Session session;
+   @Inject
+   private Session                       session;
 
-	public ImportTmsService() {
-		// TODO Auto-generated constructor stub
-	}
+   @Inject
+   private UserDao                       userDao;
 
-	/**
-	 * TODO Recuperation des jeu de données
-	 * 
-	 * @return
-	 */
-	public List<ImportTmsDto> getAllImportTmsActif() {
-		List<ImportTmsDto> listImportTmsDto = new ArrayList<ImportTmsDto>();
-		JeuDonneeEntity jeuDonneeEntityDraft, jeuDonneeEntityActif;
-		ImportTmsDto newImportTmsDto;
+   public ImportTmsService() {
+   }
 
-		for (CompagnieEnvironnementEntity compagnieEnvironnementEntity : this.compagnieEnvironnementService
-				.getAllCompagnieEnvironnementActif()) {
-			newImportTmsDto = new ImportTmsDto();
-			newImportTmsDto.mergeByCompagnieEnvironnement(compagnieEnvironnementEntity);
+   /**
+    * TODO Recuperation des jeu de données
+    * 
+    * @return
+    */
+   public List<ImportTmsDto> getAllImportTmsActif() {
+      List<ImportTmsDto> listImportTmsDto = new ArrayList<ImportTmsDto>();
+      JeuDonneeEntity jeuDonneeEntityDraft, jeuDonneeEntityActif;
+      ImportTmsDto newImportTmsDto;
 
-			// id = id && status = act && draft
-			jeuDonneeEntityDraft = this.jeuDonneeService
-					.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.DRAFT);
-			jeuDonneeEntityActif = this.jeuDonneeService
-					.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.ACTIVE);
+      try {
+         for (CompagnieEnvironnementEntity compagnieEnvironnementEntity : this.compagnieEnvironnementService.getAllCompagnieEnvironnementActif()) {
+            newImportTmsDto = new ImportTmsDto();
+            newImportTmsDto.mergeByCompagnieEnvironnement(compagnieEnvironnementEntity);
 
-			UserDao userDao = new UserDao();
-			UserDataBean user;
-			if (jeuDonneeEntityDraft != null) {
-				user = userDao.getUserById((long) jeuDonneeEntityDraft.getIdUtilisateurCreateJeuDonnees());
-				newImportTmsDto.mergeByJeuDonneesBrouillon(jeuDonneeEntityDraft,
-						user == null ? "/" : user.getNomComplet());
-			}
+            // id = id && status = act && draft
+            jeuDonneeEntityDraft = this.jeuDonneeService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.DRAFT);
+            jeuDonneeEntityActif = this.jeuDonneeService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.ACTIVE);
 
-			if (jeuDonneeEntityActif != null) {
-				user = userDao.getUserById((long) jeuDonneeEntityActif.getIdUtilisateurCreateJeuDonnees());
-				String importBy = user == null ? "/" : user.getNomComplet();
-				user = userDao.getUserById((long) jeuDonneeEntityActif.getIdUtilisateurLastUpdateJeuDonnees());
-				String validateBy = user == null ? "/" : user.getNomComplet();
-				newImportTmsDto.mergeByJeuDonneesActif(jeuDonneeEntityActif, importBy, validateBy);
-			}
+            UserDataBean user;
+            if (jeuDonneeEntityDraft != null) {
+               user = this.userDao.getUserById((long) jeuDonneeEntityDraft.getIdUtilisateurCreateJeuDonnees());
+               newImportTmsDto.mergeByJeuDonneesBrouillon(jeuDonneeEntityDraft, user == null ? "/" : user.getNomComplet());
+            }
 
-			listImportTmsDto.add(newImportTmsDto);
-		}
+            if (jeuDonneeEntityActif != null) {
+               user = this.userDao.getUserById((long) jeuDonneeEntityActif.getIdUtilisateurCreateJeuDonnees());
+               String importBy = user == null ? "/" : user.getNomComplet();
+               user = this.userDao.getUserById((long) jeuDonneeEntityActif.getIdUtilisateurLastUpdateJeuDonnees());
+               String validateBy = user == null ? "/" : user.getNomComplet();
+               newImportTmsDto.mergeByJeuDonneesActif(jeuDonneeEntityActif, importBy, validateBy);
+            }
 
-		return listImportTmsDto;
-	}
+            listImportTmsDto.add(newImportTmsDto);
+         }
+      } catch (Throwable ex) {
+         ex.printStackTrace();
+         throw ex;
+      } finally {
+         return listImportTmsDto;
+      }
+   }
 
-	/**
-	 * Suppression d'un jeu de données en brouillon
-	 * 
-	 * @param importTmsDto
-	 * @return
-	 */
-	public Boolean deleteDraft(ImportTmsDto importTmsDto) {
-		try {
-			return (this.jeuDonneeService.deleteById(importTmsDto.getIdJeuDonneeBrouillon()) > 0) ? true : false;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
+   /**
+    * Suppression d'un jeu de données en brouillon
+    * 
+    * @param importTmsDto
+    * @return
+    */
+   public Boolean deleteDraft(ImportTmsDto importTmsDto) {
+      try {
+         return (this.jeuDonneeService.deleteById(importTmsDto.getIdJeuDonneeBrouillon()) > 0) ? true : false;
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+   }
 
-	/**
-	 * Validation d'un jeu de données
-	 * 
-	 * @param importTmsDto
-	 */
-	public boolean validateDraft(ImportTmsDto importTmsDto) throws Exception {
+   /**
+    * Validation d'un jeu de données
+    * 
+    * @param importTmsDto
+    */
+   public boolean validateDraft(ImportTmsDto importTmsDto) throws Exception {
 
-		try {
-			JeuDonneeEntity jeuDonneeEntityLastActive = this.jeuDonneeService
-					.getJeuDonneeParIdCompagnieEtStatus(this.compagnieEnvironnementService.getCompagnieEnvironnementById(
-							importTmsDto.getIdCompagnieEnvironnement()), Status.LASTACTIVE);
-			jeuDonneeEntityLastActive.setStatusJeuDonnees(Status.IMPORT);
-			jeuDonneeEntityLastActive.setDateLastUpdateJeuDonnees(new Date());
-			jeuDonneeEntityLastActive.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
-			this.jeuDonneeService.update(jeuDonneeEntityLastActive);
-		} catch (Exception e) {
-			// pas de jeu de données last active
-			e.printStackTrace();
-		}
+      try {
+         JeuDonneeEntity jeuDonneeEntityLastActive = this.jeuDonneeService.getJeuDonneeParIdCompagnieEtStatus(this.compagnieEnvironnementService.getCompagnieEnvironnementById(importTmsDto.getIdCompagnieEnvironnement()), Status.LASTACTIVE);
+         jeuDonneeEntityLastActive.setStatusJeuDonnees(Status.IMPORT);
+         jeuDonneeEntityLastActive.setDateLastUpdateJeuDonnees(new Date());
+         jeuDonneeEntityLastActive.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
+         this.jeuDonneeService.update(jeuDonneeEntityLastActive);
+      } catch (Exception e) {
+         // pas de jeu de données last active
+         e.printStackTrace();
+      }
 
-		// on passe le status de ACTIVE à LASTACTIVE
-		try {
-			JeuDonneeEntity jeuDonneeEntityActif = this.jeuDonneeService.getById(importTmsDto.getIdJeuDonneesActif());
-			jeuDonneeEntityActif.setStatusJeuDonnees(Status.LASTACTIVE);
-			jeuDonneeEntityActif.setDateLastUpdateJeuDonnees(new Date());
-			jeuDonneeEntityActif.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
-			this.jeuDonneeService.update(jeuDonneeEntityActif);
-		} catch (Exception e) {
-			// pas de jeu de données actif
-			e.printStackTrace();
-		}
+      // on passe le status de ACTIVE à LASTACTIVE
+      try {
+         JeuDonneeEntity jeuDonneeEntityActif = this.jeuDonneeService.getById(importTmsDto.getIdJeuDonneesActif());
+         jeuDonneeEntityActif.setStatusJeuDonnees(Status.LASTACTIVE);
+         jeuDonneeEntityActif.setDateLastUpdateJeuDonnees(new Date());
+         jeuDonneeEntityActif.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
+         this.jeuDonneeService.update(jeuDonneeEntityActif);
+      } catch (Exception e) {
+         // pas de jeu de données actif
+         e.printStackTrace();
+      }
 
-		// on passe le status de DRAFT à ACTIVE
-		try {
-			JeuDonneeEntity jeuDonneeEntityDraft = this.jeuDonneeService
-					.getById(importTmsDto.getIdJeuDonneeBrouillon());
-			jeuDonneeEntityDraft.setStatusJeuDonnees(Status.ACTIVE);
-			jeuDonneeEntityDraft.setDateLastUpdateJeuDonnees(new Date());
-			jeuDonneeEntityDraft.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
-			this.jeuDonneeService.update(jeuDonneeEntityDraft);
+      // on passe le status de DRAFT à ACTIVE
+      try {
+         JeuDonneeEntity jeuDonneeEntityDraft = this.jeuDonneeService.getById(importTmsDto.getIdJeuDonneeBrouillon());
+         jeuDonneeEntityDraft.setStatusJeuDonnees(Status.ACTIVE);
+         jeuDonneeEntityDraft.setDateLastUpdateJeuDonnees(new Date());
+         jeuDonneeEntityDraft.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
+         this.jeuDonneeService.update(jeuDonneeEntityDraft);
 
-			importTmsDto.setStatusJeudonneeActif(jeuDonneeEntityDraft.getStatusJeuDonnees());
-			importTmsDto.setDateValidateJeuDonneesActif(jeuDonneeEntityDraft.getDateLastUpdateJeuDonnees());
-			importTmsDto.setValidateJeuDonneesActifBy(new StringBuilder().append(this.session.getUser().getPrenomUser())
-					.append(" ").append(this.session.getUser().getNomUser()).toString());
-			importTmsDto.setDateImportJeuDonneesActif(jeuDonneeEntityDraft.getDateCreateJeuDonnees());
-			importTmsDto.setImportJeuDonneesActifBy(importTmsDto.getImportJeuDonneesBrouillonBy());
-			importTmsDto.setStatusJeudonneeBrouillon(null);
-			importTmsDto.setDateImportJeuDonneesBrouillon(null);
-			importTmsDto.setIdJeuDonneesActif(importTmsDto.getIdJeuDonneeBrouillon());
-			importTmsDto.setIdJeuDonneeBrouillon(0);
-			importTmsDto.setImportJeuDonneesBrouillonBy(null);
-			importTmsDto.setPathValidateJeuDonneesBrouillon(null);
-		} catch (Exception e) {
-			// pas de jeu de données draft
-			e.printStackTrace();
-			throw e;
-		}
+         importTmsDto.setStatusJeudonneeActif(jeuDonneeEntityDraft.getStatusJeuDonnees());
+         importTmsDto.setDateValidateJeuDonneesActif(jeuDonneeEntityDraft.getDateLastUpdateJeuDonnees());
+         importTmsDto.setValidateJeuDonneesActifBy(new StringBuilder().append(this.session.getUser().getPrenomUser()).append(" ").append(this.session.getUser().getNomUser()).toString());
+         importTmsDto.setDateImportJeuDonneesActif(jeuDonneeEntityDraft.getDateCreateJeuDonnees());
+         importTmsDto.setImportJeuDonneesActifBy(importTmsDto.getImportJeuDonneesBrouillonBy());
+         importTmsDto.setStatusJeudonneeBrouillon(null);
+         importTmsDto.setDateImportJeuDonneesBrouillon(null);
+         importTmsDto.setIdJeuDonneesActif(importTmsDto.getIdJeuDonneeBrouillon());
+         importTmsDto.setIdJeuDonneeBrouillon(0);
+         importTmsDto.setImportJeuDonneesBrouillonBy(null);
+         importTmsDto.setPathValidateJeuDonneesBrouillon(null);
+      } catch (Exception e) {
+         // pas de jeu de données draft
+         e.printStackTrace();
+         throw e;
+      }
 
-		return true;
-	}
+      return true;
+   }
 
 }

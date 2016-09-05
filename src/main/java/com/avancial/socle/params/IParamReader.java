@@ -8,7 +8,7 @@ import java.util.Collection;
 import com.avancial.socle.params.beans.IParamBean;
 
 /**
- * Interface de chargement et de récupération de paramètres
+ * Interface de chargement et de rï¿½cupï¿½ration de paramï¿½tres
  * 
  * 
  * @author bruno
@@ -17,19 +17,19 @@ import com.avancial.socle.params.beans.IParamBean;
 public interface IParamReader {
 
    /**
-    * Permet de récupérer l'ensemble des paramètres
+    * Permet de rÃ©cupÃ©rer l'ensemble des paramÃ¨tres
     * 
-    * @return une collection contenant l'ensemble des paramètres
+    * @return une collection contenant l'ensemble des paramï¿½tres
     */
    public Collection<IParamBean> getParams();
 
    /**
-    * @return le nom des paramètres
+    * @return le nom des paramÃ¨tres
     */
    public String getParamsName();
 
    /**
-    * Permet de charger les paramètres en mémoire
+    * Permet de charger les paramÃ¨tres en mÃ©moire
     * 
     * @param paramsName
     * @throws Exception

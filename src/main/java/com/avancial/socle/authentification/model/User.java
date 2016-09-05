@@ -44,6 +44,7 @@ public class User implements Serializable {
    }
    
    /**
+    * Id utilisateur
     * @return
     */
    public Long getIdUser() {

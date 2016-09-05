@@ -12,10 +12,11 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotriceBrut.ImportTMDAVTREntity;
 import com.avancial.app.utilitaire.GetEntiteService;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 
 @RunWith(Arquillian.class)
 public class TestGetEntiteService {
@@ -24,7 +25,7 @@ public class TestGetEntiteService {
         File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity()
                 .as(File.class);
 
-        WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(IhmPageDataBean.class.getPackage())
+        WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(PageDataBean.class.getPackage())
                 // .addPackage(IhmPageDao.class.getPackage())
 
                 .addClass(GetEntiteService.class)

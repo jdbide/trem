@@ -39,7 +39,7 @@ import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
@@ -54,7 +54,7 @@ public class TestTrainTranche {
 		File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity()
 				.as(File.class);
 
-		WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(IhmPageDataBean.class.getPackage())
+		WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(PageDataBean.class.getPackage())
 				.addClass(JeuDonneeService.class).addPackage(Socle_PUSocle.class.getPackage())
 				.addPackage(EntityManagerProducerSocle.class.getPackage())
 				.addPackage(EntityManagerProducerSocle.class.getPackage())

@@ -38,7 +38,7 @@
 	<property name="source.other_resources" location="${source}/Other Resources/" />
 	<property name="dest.other_resources" location="Other Resources" />
 
-	<property name="source.other.resources.socle" location="${source}/Other Resources/socle/" />
+	<property name="source.other_resources.socle" location="${source}/Other Resources/socle/" />
 	<property name="dest.other_resources.socle" location="Other Resources/socle" />
 
 	
@@ -74,10 +74,10 @@
 	<target name="doc socle copy">
 		<delete dir="${dest.other_resources.socle}" quiet="true" failonerror="false">
 		</delete>
-		<mkdir dir="${dest.other_resources}" />
+		<mkdir dir="${dest.other_resources.socle}" />
 		<echo>Copie de la documentation</echo>
 		<copy todir="${dest.other_resources.socle}" verbose="true" overwrite="true">
-			<fileset dir="${source.other_resources}">
+			<fileset dir="${source.other_resources.socle}">
 			</fileset>
 		</copy>
 	</target>
@@ -97,6 +97,9 @@
 		</antcall>
 
 		<antcall target="js socle copy">
+		</antcall>
+		
+		<antcall target="doc socle copy">
 		</antcall>
 
 		<antcall target="commun">

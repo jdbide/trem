@@ -19,8 +19,8 @@ socle_app.controller('menuCtrl', [ '$scope', 'menuService',
 	
 	$scope.setCurrentPage = function(indexRubrique, indexChapitre, indexPage) {
 		menuService.setCheminCourant(
-				$scope.menu.rubriques[indexRubrique].libelleIhmRubrique, 
-				$scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].libelleIhmChapitre, 
+				$scope.menu.rubriques[indexRubrique].libelle, 
+				$scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].libelle, 
 				$scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].pages[indexPage].libelleIhmPage
 		);
 		menuService.savePageLien($scope.menu.rubriques[indexRubrique].chapitres[indexChapitre].pages[indexPage].lienIhmPage);
