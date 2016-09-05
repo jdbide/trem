@@ -6,8 +6,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import com.avancial.app.utilitaire.GetDataTableColumns;
 import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -21,40 +23,36 @@ import com.avancial.socle.table.ColumnTable;
  */
 @RequestScoped
 public class TablesImportService {
-    @Inject
-    @Socle_PUSocle
-    private EntityManager em;
+   @Inject
+   @Socle_PUSocle
+   private EntityManager em;
 
-    /**
-     * Renvoie les données contenues dans la table entityName (exemple:
-     * "TMDAVTR") en JSON
-     * 
-     * @param entityName
-     * @return
-     * @throws ClassNotFoundException
-     */
-    public JSONObject getDataTable(String entityName) throws ClassNotFoundException {
-        Class<?> entity = null;
+   /**
+    * Renvoie les données contenues dans la table entityName (exemple: "TMDAVTR") en JSON
+    * 
+    * @param entityName
+    * @return
+    * @throws ClassNotFoundException
+    */
+   public JSONObject getDataTable(String entityName) throws ClassNotFoundException {
+      Class<?> entity = null;
 
-        try {
-            entity = GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName);
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+      try {
+         entity = GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName);
+      } catch (ClassNotFoundException e) {
+         e.printStackTrace();
+      }
 
-        List<ColumnTable> columns = GetDataTableColumns.getColumns(entity);
+      List<ColumnTable> columns = GetDataTableColumns.getColumns(entity);
 
-        Query query = this.em.createNamedQuery(
-                GetEntiteService.getNomEntiteImportFromNomEntiteMotrice(entityName) + ".getAll",
-                GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName));
-        List<Object> tmdavtrDataBeans = query.getResultList();
-        JSONArray datas = new JSONArray();
-        datas.addAll(tmdavtrDataBeans);
+      Query query = this.em.createNamedQuery(GetEntiteService.getNomEntiteImportFromNomEntiteMotrice(entityName) + ".getAll", GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName));
+      List<Object> tmdavtrDataBeans = query.getResultList();
+      JSONArray datas = new JSONArray();
+      datas.addAll(tmdavtrDataBeans);
 
-        JSONObject retour = new JSONObject();
-        retour.put("cols", columns);
-        retour.put("dataset", datas);
-        return retour;
-    }
+      JSONObject retour = new JSONObject();
+      retour.put("cols", columns);
+      retour.put("dataset", datas);
+      return retour;
+   }
 }

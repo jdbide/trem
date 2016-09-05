@@ -22,7 +22,7 @@ import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.traitement.TraitementMotrice;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.logging.ALogBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -41,7 +41,7 @@ public class TraitementMotriceTest {
               .addPackage(MotriceRegimeEntity.class.getPackage())
               .addPackage(JeuDonneeEntity.class.getPackage())
               .addPackage(ITraiteMotriceRegime.class.getPackage())
-              .addPackage(IhmPageDataBean.class.getPackage())
+              .addPackage(PageDataBean.class.getPackage())
               .addClass(RefTablesMotriceRegimeService.class)
               .addPackage(ALogBean.class.getPackage())
               .addPackage(ATraitement.class.getPackage())

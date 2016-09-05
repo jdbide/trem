@@ -23,7 +23,7 @@ import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.service.JeuDonneeService;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
@@ -38,7 +38,7 @@ public class TestJeuDeDonnees {
       File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity().as(File.class);
 
       WebArchive jar = ShrinkWrap.create(WebArchive.class)
-            .addPackage(IhmPageDataBean.class.getPackage())
+            .addPackage(PageDataBean.class.getPackage())
             .addPackage(JeuDonneeEntity.class.getPackage())
             // .addPackage(IhmPageDao.class.getPackage())
 

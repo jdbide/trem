@@ -13,7 +13,7 @@ import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.controller.dao.JobPlanifTypeDao;
 import com.avancial.socle.data.model.databean.JobDataBean;
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
-import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.impl.ASocleException;
 
 /**
  * @author bruno.legloahec

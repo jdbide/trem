@@ -10,7 +10,7 @@
 	<property name="lecteur" value="d:" />
 
 
-	<property name="source" location="${lecteur}\Users/${user.name}/Desktop/socle/" />
+	<property name="source" location="${lecteur}\Utilisateurs/${user.name}/Desktop/socle/" />
 	<property name="dest" location="." />
 
 	<property name="source.main" location="${source}/src/main" />

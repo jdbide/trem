@@ -4,9 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -14,6 +16,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -25,7 +28,7 @@ import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
@@ -37,7 +40,7 @@ public class RemplissageObjMetierTestHibernate {
 
       WebArchive jar = ShrinkWrap.create(WebArchive.class)
             .addPackage(CodeSat.class.getPackage())
-            .addPackage(IhmPageDataBean.class.getPackage())
+            .addPackage(PageDataBean.class.getPackage())
             .addClass(JeuDonneeService.class)
             .addPackage(Socle_PUSocle.class.getPackage())
             .addPackage(EntityManagerProducerSocle.class.getPackage())

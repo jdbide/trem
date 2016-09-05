@@ -3,19 +3,19 @@
  */
 package com.avancial.socle.params;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.avancial.socle.data.controller.dao.RefDirectoryDao;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import com.avancial.socle.params.beans.IParamBean;
 import com.avancial.socle.params.exception.ParamCollectionNotLoadedException;
 import com.avancial.socle.params.exception.ParamNotFoundException;
-import com.avancial.socle.resources.constants.SOCLE_constants;
+import com.avancial.socle.params.qualifiers.SOCLE_PARAMS_app_properties_reader;
+import com.avancial.socle.params.qualifiers.SOCLE_PARAMS_socle_properties_reader;
 import com.avancial.socle.resources.constants.SOCLE_params;
 
 /**
@@ -26,8 +26,23 @@ import com.avancial.socle.resources.constants.SOCLE_params;
  *
  */
 public abstract class AParamGetter implements IParamGetter {
+   /**
+    * 
+    */
+   private static final long                    serialVersionUID = 1L;
    private Map<String, Map<String, IParamBean>> mapParamBean;
    private String                               pathToWebInf;
+
+   @Inject
+   private ParamReaderDBDirectory               paramDb;
+
+   @Inject
+   @SOCLE_PARAMS_socle_properties_reader
+   private IParamReader                         socle;
+
+   @Inject
+   @SOCLE_PARAMS_app_properties_reader
+   private IParamReader                         app;
 
    /**
     * Constructeur
@@ -36,19 +51,24 @@ public abstract class AParamGetter implements IParamGetter {
     */
    public AParamGetter() throws Exception {
       this.mapParamBean = new HashMap<>();
-      this.initPathToWebInf();
+      // this.initPathToWebInf();
+
+   }
+
+   @PostConstruct
+   public void init() throws Exception {
 
       // On instancie les Paramètres du socle
-      ParamReaderFileGeneric socle = new ParamReaderFileGeneric(this.pathToWebInf + SOCLE_constants.SOCLE_PROPERTIES_PATH.toString());
+      // ParamReaderFileGeneric socle = new ParamReaderFileGeneric(this.pathToWebInf + SOCLE_constants.SOCLE_PROPERTIES_PATH.toString());
       socle.loadParams(SOCLE_params.PARAMS_SOCLE.getValue());
       this.add(socle);
 
-      AParamReaderDB paramDb = new ParamReaderDBDirectory(new RefDirectoryDao());
+      // AParamReaderDB paramDb = new ParamReaderDBDirectory();
       paramDb.loadParams(SOCLE_params.PARAM_DIRECTORIES.getValue());
       this.add(paramDb);
 
       // On instancie les Paramètres de l'appli
-      ParamReaderFileGeneric app = new ParamReaderFileGeneric(this.getPathToWebInf() + SOCLE_constants.APP_PROPERTIES_PATH.toString());
+      // ParamReaderFileGeneric app = new ParamReaderFileGeneric(this.getPathToWebInf() + SOCLE_constants.APP_PROPERTIES_PATH.toString());
       app.loadParams(SOCLE_params.PARAMS_APP.getValue());
       this.add(app);
    }
@@ -66,24 +86,6 @@ public abstract class AParamGetter implements IParamGetter {
          mapParamBeanTmp.put(iParamBean.getName(), iParamBean);
       }
       this.mapParamBean.put(iParamReader.getParamsName(), mapParamBeanTmp);
-
-   }
-
-   /**
-    * Permet de récupérer le chemin d'accès au répertoire web-inf. Utilisé pour atteindre les fichiers de paramètres (.properties)
-    * 
-    * @throws URISyntaxException
-    */
-   private void initPathToWebInf() throws URISyntaxException {
-      String path = "";
-      // String WEBINF = "target";
-      String WEBINF = "WEB-INF";
-      URL url = AParamGetter.class.getResource("AParamGetter.class");
-
-      String className = url.getFile();
-
-      path = new URI(className.substring(0, className.indexOf(WEBINF) + WEBINF.length())).getPath();
-      this.pathToWebInf = path;
 
    }
 

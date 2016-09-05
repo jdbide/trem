@@ -5,7 +5,7 @@ package com.avancial.socle.model.managedbean;
 
 import java.io.Serializable;
 
-import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.impl.ASocleException;
 
 /**
  * @author bruno.legloahec

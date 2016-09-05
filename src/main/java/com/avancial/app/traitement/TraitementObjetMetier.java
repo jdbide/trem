@@ -3,11 +3,13 @@ package com.avancial.app.traitement;
 import java.io.Serializable;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.service.traiteObjetMetier.CreationObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 public class TraitementObjetMetier extends ATraitementLogDetail implements Serializable {
@@ -21,6 +23,10 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
 	private MapPlansDeTransport mapPlansDeTransport;
 
 	private String environnementCompagnie;
+	
+   @Inject
+   @Socle_PUSocle
+   private EntityManager                 em;
 
 	@Inject
 	public TraitementObjetMetier() {
@@ -73,5 +79,9 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
 	public void setEnvironnementCompagnie(String environnementCompagnie) {
 		this.environnementCompagnie = environnementCompagnie;
 	}
+
+   public void setEm(EntityManager em) {
+      this.em = em;
+   }
 
 }

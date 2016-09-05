@@ -5,6 +5,7 @@ package com.avancial.app.service;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -17,10 +18,12 @@ import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 /**
  * @author sebastien.benede Classe qui gère toutes les requêtes dans les tables d'import.
  */
+@RequestScoped
 public class ImportMotriceService {
    @Inject
    @Socle_PUSocle
    private EntityManager    em;
+
    @Inject
    private GetEntiteService getEntiteService;
 

@@ -6,7 +6,9 @@ package excel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -15,6 +17,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
@@ -42,9 +45,10 @@ import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory
 import com.avancial.app.traitement.TraitementObjetMetier;
 import com.avancial.app.utilitaire.FileUtil;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.data.model.databean.IhmPageDataBean;
+import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+
 import factory.PlanTransportFactory;
 
 /**
@@ -61,7 +65,7 @@ public class TestGenerateExcel {
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(ExcelRapportDifferentiel.class.getPackage())
                 .addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class)
                 .addClass(FileUtil.class).addPackage(CodeSat.class.getPackage())
-                .addPackage(IhmPageDataBean.class.getPackage()).addClass(JeuDonneeService.class)
+                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class)
                 .addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class)
                 .addClass(TraitementObjetMetier.class).addPackage(Socle_PUSocle.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())

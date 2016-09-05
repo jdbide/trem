@@ -64,12 +64,12 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
     	var rubrique, chapitre, page;
     	var pageTrouvee = false;
     	for (var i = 0; i < menu.length; i++) {
-    		rubrique = menu[i].libelleIhmRubrique;
+    		rubrique = menu[i].libelle;
     		for (var j = 0; j < menu[i].chapitres.length; j++) {
-    			chapitre = menu[i].chapitres[j].libelleIhmChapitre;
+    			chapitre = menu[i].chapitres[j].libelle;
     			for (var k = 0; k < menu[i].chapitres[j].pages.length; k++) {
-    				page = menu[i].chapitres[j].pages[k].libelleIhmPage;
-    				if (menu[i].chapitres[j].pages[k].lienIhmPage === lienPage) {
+    				page = menu[i].chapitres[j].pages[k].libelle;
+    				if (menu[i].chapitres[j].pages[k].lien === lienPage) {
     					pageTrouvee = true;
     					break;
     				}
@@ -82,7 +82,7 @@ socle_app.service('menuService', ['jsonFactory', '$q', function(jsonFactory, $q)
     			break;
     		}
     	}
-    	if (rubrique && chapitre && page) {
+    	if (rubrique && chapitre && page && pageTrouvee) {
     		this.setCheminCourant(rubrique, chapitre, page);
     	}
     }

@@ -1,6 +1,6 @@
 package com.avancial.socle.logging;
 
-import com.avancial.socle.exceptions.ASocleException;
+import com.avancial.socle.exceptions.impl.ASocleException;
 import com.avancial.socle.resources.constants.SOCLE_logSortie;
 
 /**

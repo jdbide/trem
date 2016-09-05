@@ -6,6 +6,7 @@ package com.avancial.socle.traitement;
 import java.util.Date;
 
 import com.avancial.socle.data.model.databean.LogTraitementDetailDataBean;
+import com.avancial.socle.persistence.EntityManagerFactoryProvider;
 
 /**
  * @author bruno.legloahec
@@ -13,24 +14,39 @@ import com.avancial.socle.data.model.databean.LogTraitementDetailDataBean;
  */
 public abstract class ATraitementLogDetail extends ATraitementLog {
 
-   LogTraitementDetailDataBean logDetailBean;
+   /**
+    * 
+    */
+   private static final long   serialVersionUID = 1L;
 
+   LogTraitementDetailDataBean logDetailBean;
+   
    public void log(String message) throws Exception {
       try {
          this.logDetailBean = new LogTraitementDetailDataBean();
          this.logDetailBean.setDateLogTraitementDetail(new Date());
          this.logDetailBean.setLogTraitementDataBean(this.logBean);
          this.logDetailBean.setMessageTraitementDetail(message);
-         this.em.getTransaction().begin();
-         this.em.persist(this.logDetailBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         
+         
+         this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(ATraitementLog.PERSISTENCE_UNIT_NAME).createEntityManager();
+         this.emLog.getTransaction().begin();
+         
+         try {
+            this.emLog.persist(this.logDetailBean);
+            this.emLog.getTransaction().commit();
+            
+         } catch (Exception ex) {
+            ex.printStackTrace();
+            this.emLog.getTransaction().rollback();
+         } finally {
+            this.emLog.close();
+         }
+
       } catch (Exception e) {
          e.printStackTrace();
-         logger.error("ATraitementLogDetail : log -> ", e);
          throw e;
       }
-      
    }
 
 }

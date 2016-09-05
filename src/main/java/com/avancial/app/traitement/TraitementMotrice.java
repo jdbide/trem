@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.hibernate.Session;
@@ -33,6 +34,7 @@ import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 public class TraitementMotrice extends ATraitementLogDetail implements Serializable {
@@ -50,6 +52,10 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 	private TraiteMotriceRegimeFactory traiteMotriceRegimeFactory;
 
 	private MapPlansDeTransport mapPlansDeTransport;
+
+   @Inject
+   @Socle_PUSocle
+   private EntityManager                 em;
 
 	@Inject
 	public TraitementMotrice() {
@@ -81,6 +87,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 				mapIdTablesMotriceRegime.initMapIdTablesMotriceRegime(MotriceRegimeEntity.class);
 			} catch (Exception e) {
 				System.err.println("Impossible de récupérer les id des régimes");
+				this.log("Impossible de récupérer les id des régimes");
 				e.printStackTrace();
 				throw e;
 			}
@@ -247,5 +254,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 		this.mapPlansDeTransport = mapPlansDeTransport;
 
 	}
+
+   public void setEm(EntityManager em) {
+      this.em = em;
+   }
 
 }
