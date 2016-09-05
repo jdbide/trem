@@ -3,7 +3,7 @@ package com.avancial.app.traitement;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -26,7 +26,7 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.service.RefDirectoryService;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
-@SessionScoped
+@RequestScoped
 public class TraitementImportJeuDonnees extends ATraitementLogDetail implements Serializable {
    /**
    * 
