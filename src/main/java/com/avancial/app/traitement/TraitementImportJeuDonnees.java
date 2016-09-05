@@ -115,19 +115,19 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.generateRapportDiff();
 
          Task.setMsgTask(this.idTask, "Finalisation");
-         jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-         jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
+         this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
+         this.jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
       } catch (Throwable ex) {
-         if (jeuDonneeDataBean != null) {
-            jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
+         if (this.jeuDonneeDataBean != null) {
+            this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
          }
 
          logger.error("Exception du traitement import jeu donnees", ex);
       } finally {
-         if (jeuDonneeDataBean != null) {
+         if (this.jeuDonneeDataBean != null) {
             Task.setMsgTask(this.idTask, "Mise à jour du jeu de données");
             logger.info("Start Mise à jour du jeu de données");
-            this.jeuDonneeService.update(jeuDonneeDataBean);
+            this.jeuDonneeService.update(this.jeuDonneeDataBean);
             logger.info("End Mise à jour du jeu de données");
          }
       }
@@ -136,8 +136,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private void generateRapportDiff() throws Exception {
       Task.setMsgTask(this.idTask, "Création du rapport différentiel");
 
-      this.excelRapportDifferentiel.setFileName("RapportDiff-" + jeuDonneeDataBean.getIdJeuDonnees());
-      this.excelRapportDifferentiel.setFilePath(refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory());
+      this.excelRapportDifferentiel.setFileName("RapportDiff-" + this.jeuDonneeDataBean.getIdJeuDonnees());
+      this.excelRapportDifferentiel.setFilePath(this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory());
       this.excelRapportDifferentiel.setXlsx(true);
       this.excelRapportDifferentiel.setDatas(this.listCompare);
       this.excelRapportDifferentiel.setMapPlansDeTransport(this.mapPlansDeTransport);
@@ -172,7 +172,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
    private void createPlanTransport() throws Exception {
       Task.setMsgTask(this.idTask, "Création du Plan de transport");
-      this.traitementObjetMetier.setEnvironnementCompagnie(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
+      this.traitementObjetMetier.setEnvironnementCompagnie(this.compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
       this.traitementObjetMetier.setMapPlansDeTransport(this.mapPlansDeTransport);
 
       try {
@@ -188,7 +188,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    }
 
    private void createDraft() throws Exception {
-      this.traitementMotrice.setJeuDonneeEntity(jeuDonneeDataBean);
+      this.traitementMotrice.setJeuDonneeEntity(this.jeuDonneeDataBean);
       this.traitementMotrice.setMap(this.mapPlansDeTransport);
       Task.setMsgTask(this.idTask, "Création du draft");
 
@@ -208,13 +208,13 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       /* Insertion dans les tables du modèle motrice */
       // Instanciation et sauvegarde du nouveau jeu de données
       Task.setMsgTask(this.idTask, "Sauvegarde jeu de données");
-      jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(compagnieEnvironnementEntity);
-      jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
-      jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
+      this.jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(this.compagnieEnvironnementEntity);
+      this.jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
+      this.jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
       // FIXME
-      jeuDonneeDataBean.setDateDebutPeriode(new Date(2015, 12, 07));
-      this.jeuDonneeService.save(jeuDonneeDataBean);
-      logger.info("Save jeu donnée, " + jeuDonneeDataBean.getIdJeuDonnees());
+      this.jeuDonneeDataBean.setDateDebutPeriode(new Date(2015, 12, 07));
+      this.jeuDonneeService.save(this.jeuDonneeDataBean);
+      logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
       Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
    }
 
@@ -235,7 +235,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
    private void deleteDataWithStatusImport() throws Exception {
       Task.setMsgTask(this.idTask, "Suppression des données temporaires");
-      this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
+      this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(this.compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
       this.traitementDeleteJeuDonnee.setStatus(Status.IMPORT);
 
       try {
@@ -254,7 +254,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       Task.setMsgTask(this.idTask, "Importation des données");
       // vider puis importer les tables
       this.traitement.setEntityManagerExterne(this.entityManagerDb2);
-      this.traitement.setSchema(compagnieEnvironnementEntity.getDatasource().getSchema());
+      this.traitement.setSchema(this.compagnieEnvironnementEntity.getDatasource().getSchema());
       try {
          logger.info("Importation des données");
          this.traitement.execute();
@@ -278,7 +278,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       try {
          Task.setMsgTask(this.idTask, "Connexion à Motrice");
          logger.info("Connexion à Motrice");
-         this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(compagnieEnvironnementEntity, this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
+         this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(this.compagnieEnvironnementEntity, this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
          logger.info("End Connexion à Motrice");
       } catch (Throwable ex) {
          this.logBean.setExceptionTraitement(ex.getMessage());
