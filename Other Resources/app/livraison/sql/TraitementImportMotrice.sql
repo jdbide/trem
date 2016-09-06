@@ -242,12 +242,12 @@ create table tremas_motrice_regime_fareprofile (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_regime_mealtype (
-    idMotriceRegimeMealTypeEntity bigint not null auto_increment,
+    idMotriceRegimeMealType bigint not null auto_increment,
     beginServiceHourRegimeMealType varchar(8) not null,
     endServiceHourMotriceRegimeMealType varchar(8) not null,
     mealTypeMotriceRegimeMealType varchar(1) not null,
     idMotriceRegime bigint,
-    primary key (idMotriceRegimeMealTypeEntity)
+    primary key (idMotriceRegimeMealType)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_regime_od (
