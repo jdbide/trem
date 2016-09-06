@@ -63,7 +63,7 @@ public class TestImport {
 
             String passwdDb2 = "Isab1000";
             
-            CompagnieEnvironnementEntity compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(1);
+            CompagnieEnvironnementEntity compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(3);
                         
             try {
                // Instanciation EntityManagerFactory avec les bonnes données de la dataSource de l'environnement               
