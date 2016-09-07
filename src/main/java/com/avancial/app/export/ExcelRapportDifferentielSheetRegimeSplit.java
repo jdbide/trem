@@ -17,6 +17,9 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
 
     private static Logger logger = Logger.getLogger(ExcelRapportDifferentielSheetRegimeSplit.class);
 
+    /**
+     * Colonnes du tableau pour la feuille REGIMESPLIT
+     */
     public static String[] ENTETE_SHEET_REGIMESPLIT = {"Train", "Tranche", "Field", "Regime", "Value"};
 
     @Override
@@ -82,9 +85,8 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
             this.generateLigneRegimeSplit(excelTools, data, false);
             dataPrec = data;
             ((SXSSFSheet) excelTools.getSheet()).flushRows(1);
-            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "("
-                    + data.getNumeroTrain() + "-" + data.getNumeroTranche() + ") ligne "
-                    + (ligneDebut - 1) + " générée");
+            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "(" + data.getNumeroTrain()
+                    + "-" + data.getNumeroTranche() + ") ligne " + (ligneDebut - 1) + " générée");
         }
         if (dataPrec != null) {
             /*
@@ -98,11 +100,22 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
             /* Colonne Field */
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 3, 3);
             logger.info("Onglet " + dataPrec.getTypeComparaisonPlanTransport().name() + " : " + "("
-                    + dataPrec.getNumeroTrain() + "-" + dataPrec.getNumeroTranche() + ") ligne "
-                    + (ligneDebut - 1) + " générée");
+                    + dataPrec.getNumeroTrain() + "-" + dataPrec.getNumeroTranche() + ") ligne " + (ligneDebut - 1)
+                    + " générée");
         }
     }
 
+    /**
+     * Génération d'une ligne de la feuille REGIMESPLIT
+     * 
+     * @param excelTools
+     *            Générateur de cellules
+     * @param comparaison
+     *            Comparaison de type REGIMESPLIT à afficher sur la ligne
+     * @param valeurAncien
+     *            Indique s'il faut afficher une ligne en plus pour la valeur de
+     *            l'attribut "ancien", en plus de celle de l'attribut "nouveau"
+     */
     private void generateLigneRegimeSplit(ExcelTools excelTools, ComparaisonPlanTransport<IPlanTransport> comparaison,
             boolean valeurAncien) {
         this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);

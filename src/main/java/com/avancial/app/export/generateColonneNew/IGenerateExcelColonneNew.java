@@ -5,7 +5,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.export.ExcelTools;
 
 /**
- * Génération d'une colonne du rapport différentiel dans le feuille NEW
+ * Génération d'une colonne du rapport différentiel dans la feuille NEW
  * 
  * @author heloise.guillemaud
  *
