@@ -22,7 +22,7 @@ public class GetEntiteService {
      *         {@code "TMDAVTR" retourne "TMDAVTREntity"}
      */
     public static String getNomEntiteFromTableMotrice(String nomTableMotrice) {
-        return nomTableMotrice.toUpperCase() + "Entity";
+        return getTableImportMotrice(nomTableMotrice).toUpperCase() + "Entity";
     }
 
     /**
@@ -36,7 +36,7 @@ public class GetEntiteService {
      *         {@code "TMDAVTR" retourne "ImportTMDAVTREntity"}
      */
     public static String getNomEntiteImportFromTableMotrice(String nomTableMotrice) {
-        return "Import" + getNomEntiteFromTableMotrice(nomTableMotrice);
+        return "Import" + getNomEntiteFromTableMotrice(getTableImportMotrice(nomTableMotrice));
     }
 
     /**
@@ -49,7 +49,7 @@ public class GetEntiteService {
      *         {@code "TMDAVTR" retourne "ImportTMDAVTR"}
      */
     public static String getNomTableImportFromTableMotrice(String nomTableMotrice) {
-        return "Import" + nomTableMotrice.toUpperCase();
+        return "Import" + getTableImportMotrice(nomTableMotrice).toUpperCase();
     }
 
     /**
@@ -77,7 +77,8 @@ public class GetEntiteService {
      *         {@link com.avancial.app.data.databean.motrice.TMDAVTREntity}
      */
     public static Class<?> getClasseEntiteFromTableMotrice(String nomTableMotrice) throws ClassNotFoundException {
-        return Class.forName("com.avancial.app.data.databean.motrice." + getNomEntiteFromTableMotrice(nomTableMotrice));
+        return Class.forName("com.avancial.app.data.databean.motrice."
+                + getNomEntiteFromTableMotrice(getTableImportMotrice(nomTableMotrice)));
     }
 
     /**
@@ -93,7 +94,7 @@ public class GetEntiteService {
      */
     public static Class<?> getClasseEntiteImportFromTableMotrice(String nomTableMotrice) throws ClassNotFoundException {
         return Class.forName("com.avancial.app.data.databean.importMotriceBrut."
-                + getNomEntiteImportFromTableMotrice(nomTableMotrice));
+                + getNomEntiteImportFromTableMotrice(getTableImportMotrice(nomTableMotrice)));
     }
 
     /**
@@ -156,7 +157,7 @@ public class GetEntiteService {
      *         {@code "TMDAVTREntity" retourne "ImportTMDAVTREntity"}
      */
     public static String getNomEntiteImportFromNomEntiteMotrice(String nomClasseEntiteMotrice) {
-        return "Import" + nomClasseEntiteMotrice;
+        return "Import" + getTableImportMotrice(nomClasseEntiteMotrice);
     }
 
     /**
@@ -220,7 +221,68 @@ public class GetEntiteService {
      *         {@code "TMDAVTR" retourne "tremas_import_tmdavtr"}
      */
     public static String getTableImportFromNomTable(String table) {
-        return "tremas_import_" + table.toLowerCase();
+        return "tremas_import_" + getTableImportMotrice(table).toLowerCase();
+    }
+
+    /**
+     * Retourne le nom de la table motrice de vue à partir de nom de la table
+     * DB2.
+     * 
+     * @param table
+     *            Nom de la table motrice dans DB2
+     * @return La chaîne spécifiée<br>
+     *         Exemple:<br>
+     *         {@code "TMDAVTR" retourne "VMDAVTR0"}
+     */
+    public static String getTableView(String table) {
+        return "V" + table.substring(1) + "0";
+    }
+
+    /**
+     * Retourne le nom de la table motrice DB2 à partir de nom de la table de
+     * vue
+     * 
+     * @param table
+     *            Nom de la table motrice de vue dans DB2
+     * @return La chaîne spécifiée<br>
+     *         Exemple:<br>
+     *         {@code "VMDAVTR0" retourne "TMDAVTR"}
+     */
+    public static String getTableFromView(String table) {
+        return "T" + table.substring(1, table.length() - 1);
+    }
+
+    /**
+     * Détermine si le nom de la table motrice donnée en paramètre correspond à
+     * une vue ou non
+     * 
+     * @param nomTableMotrice
+     *            Nom de la table motrice dans DB2
+     * @return {@code True} si c'est une vue, {@code False} sinon<br>
+     *         Exemple:<br>
+     *         {@code "TMDAVTR" retourne false}<br>
+     *         {@code "VMDAVTR0" retourne true}
+     */
+    public static boolean isTableView(String nomTableMotrice) {
+        return nomTableMotrice.toLowerCase().startsWith("v");
+    }
+
+    /**
+     * Retourne le nom de la table motrice de données à partir indifféremment de
+     * son nom ou de celui de sa vue.
+     * 
+     * @param nomTableMotrice
+     *            Nom de la table motrice DB2, ou d'une vue
+     * @return Le nom de la table motrice<br>
+     *         Exemple:<br>
+     *         {@code "TMDAVTR" retourne le même "TMDAVTR"}
+     *         {@code "VMDAVTR0" retourne "TMDAVTR"}
+     */
+    public static String getTableImportMotrice(String nomTableMotrice) {
+        if (isTableView(nomTableMotrice)) {
+            return getTableFromView(nomTableMotrice);
+        }
+        return nomTableMotrice;
     }
 
 }

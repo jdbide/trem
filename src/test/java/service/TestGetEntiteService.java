@@ -63,6 +63,12 @@ public class TestGetEntiteService {
         Assert.assertEquals(GetEntiteService.getNomTableImportFromTableMotrice("TMDAVTR"), "ImportTMDAVTR");
         
         Assert.assertEquals("MotriceRegimeCompositionCoach", GetEntiteService.getNomFromEntiteTableMotriceRegime(MotriceRegimeCompositionCoachEntity.class.getSimpleName()));
+        
+        Assert.assertEquals("TMDAVTR", GetEntiteService.getTableFromView("VMDAVTR0"));
+        Assert.assertEquals("VMDAVTR0", GetEntiteService.getTableView("TMDAVTR"));
+        
+        Assert.assertTrue(GetEntiteService.isTableView("VMDAVTR0"));
+        Assert.assertFalse(GetEntiteService.isTableView("TMDAVTR"));
     }
 
 }
