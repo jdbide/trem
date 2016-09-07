@@ -57,7 +57,7 @@ testConnectionOnCheckin="true"
 		checkoutTimeout="18000"
 		acquireRetryAttempts="20"
 		unreturnedConnectionTimeout="180" 
-		debugUnreturnedConnectionStackTraces="true
+		debugUnreturnedConnectionStackTraces="true"
 	/>
 
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
