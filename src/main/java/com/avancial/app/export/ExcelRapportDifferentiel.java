@@ -11,6 +11,8 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 /**
+ * Génération du rapport différentiel
+ * 
  * @author hamza.laterem
  *
  */
@@ -21,7 +23,13 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     * 
     */
     private static final long serialVersionUID = 1L;
+
+    /**
+     * Nombre de feuilles (sheets) dans le fichier Excel
+     */
     public static int NUMBER_SHEET = 5;
+
+    /* Libellés */
     public static String REPORT_FOR = "Report for:";
     public static String DATE_IMPORT_DRAFT = "Draft dataset loaded on:";
     public static String DATE_IMPORT_ACTIVE = "Compared with dataset imported on:";
@@ -31,8 +39,18 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
     public static String SHEET_MODIFY = "MODIFY";
     public static String SHEET_UNCHANGED = "UNCHANGED";
 
+    /**
+     * Map contenant toutes les données de comparaison à afficher dans le
+     * rapport
+     */
     protected MapComparaisonPlanTransport datas = new MapComparaisonPlanTransport();
+    /**
+     * Map contenant les plans de transport comparés pour le rapport
+     */
     protected MapPlansDeTransport mapPlansDeTransport;
+    /**
+     * Factory pour les générateurs des feuilles Excel du rapport
+     */
     private ExcelRapportDifferentielSheetFactory rapportDifferentielSheetFactory = new ExcelRapportDifferentielSheetFactory();
 
     /**

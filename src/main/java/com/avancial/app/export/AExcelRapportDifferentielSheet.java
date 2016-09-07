@@ -20,10 +20,20 @@ import com.avancial.app.export.printSousRegimeTranche.PrintExcelSousRegimeTranch
 
 public abstract class AExcelRapportDifferentielSheet implements IExcelRapportDifferentielSheet {
 
+    /**
+     * Objet pour imprimer les valeurs des champs dans les cellules Excel
+     */
     protected PrintExcelSousRegimeTranche printExcelSousRegimeTranche = new PrintExcelSousRegimeTranche();
 
+    /**
+     * Map entre une classe héritant de {@code ASousRegimeTranche} et le nom du
+     * field correspondant à afficher dans le rapport Excel
+     */
     private Map<Class<?>, String> mapNomField = new HashMap<>();
 
+    /**
+     * Constructeur qui remplit la map
+     */
     public AExcelRapportDifferentielSheet() {
         this.mapNomField.put(CodeSat.class, "CodeSat");
         this.mapNomField.put(Desserte.class, "Stop");
@@ -38,6 +48,17 @@ public abstract class AExcelRapportDifferentielSheet implements IExcelRapportDif
         this.mapNomField.put(Composition.class, "Composition");
     }
 
+    /**
+     * Génère les cases Train et Tranche pour une
+     * {@code ComparaisonPlanTransport}
+     * 
+     * @param excelTools
+     *            Générateur de cellules Excel
+     * @param comparaison
+     *            Comparaison à afficher
+     * @param couleur
+     *            Couleur de fond de la cellule
+     */
     protected void generateTrainTrancheField(ExcelTools excelTools,
             ComparaisonPlanTransport<IPlanTransport> comparaison, Color couleur) {
         /* Numéro de train */

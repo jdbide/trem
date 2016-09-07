@@ -120,6 +120,13 @@ public class MapComparaisonPlanTransport {
         return res;
     }
 
+    /**
+     * Ajout dans la map de toutes les données présentes dans celle en
+     * paramètre.
+     * 
+     * @param mapComparaisonPlanTransport
+     *            Map dont on veut importer les données
+     */
     public void putAll(MapComparaisonPlanTransport mapComparaisonPlanTransport) {
         for (List<ComparaisonPlanTransport<IPlanTransport>> comparaisons : mapComparaisonPlanTransport.mapComparaison
                 .values()) {
@@ -129,14 +136,26 @@ public class MapComparaisonPlanTransport {
         }
     }
 
+    /**
+     * Enlève tous les mappings de la map.
+     */
     public void clear() {
         this.mapComparaison.clear();
     }
 
+    /**
+     * 
+     * @return Une collection de toutes les valeurs contenues dans la map
+     */
     public Collection<List<ComparaisonPlanTransport<IPlanTransport>>> values() {
         return this.mapComparaison.values();
     }
 
+    /**
+     * 
+     * @return Le nombre de paires clé-valeur dans la map, soit le nombre de
+     *         types de comparaison différents présents dans la map
+     */
     public int size() {
         return this.mapComparaison.size();
     }

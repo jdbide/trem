@@ -14,6 +14,9 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
 
     private static Logger logger = Logger.getLogger(ExcelRapportDifferentielSheetModify.class);
 
+    /**
+     * Colonnes du tableau pour la feuille MODIFY
+     */
     public static String[] ENTETE_SHEET_MODIFY = {"Train", "Tranche", "Field", "Field Value Regime (if applicable)",
             "Previous Field Value", "New Field Value"};
 
@@ -66,9 +69,8 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
             this.generateLigneModify(excelTools, data);
             dataPrec = data;
             ((SXSSFSheet) excelTools.getSheet()).flushRows(1);
-            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "("
-                    + data.getNumeroTrain() + "-" + data.getNumeroTranche() + ") ligne "
-                    + (ligneDebut - 1) + " générée");
+            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "(" + data.getNumeroTrain()
+                    + "-" + data.getNumeroTranche() + ") ligne " + (ligneDebut - 1) + " générée");
         }
         if (dataPrec != null) {
             /*
@@ -82,11 +84,19 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
             /* Colonne Field */
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 3, 3);
             logger.info("Onglet " + dataPrec.getTypeComparaisonPlanTransport().name() + " : " + "("
-                    + dataPrec.getNumeroTrain() + "-" + dataPrec.getNumeroTranche() + ") ligne "
-                    + (ligneDebut - 1) + " générée");
+                    + dataPrec.getNumeroTrain() + "-" + dataPrec.getNumeroTranche() + ") ligne " + (ligneDebut - 1)
+                    + " générée");
         }
     }
 
+    /**
+     * Génération d'une ligne de la feuille MODIFY
+     * 
+     * @param excelTools
+     *            Générateur de cellules
+     * @param comparaison
+     *            Comparaison de type MODIFY à afficher sur la ligne
+     */
     private void generateLigneModify(ExcelTools excelTools, ComparaisonPlanTransport<IPlanTransport> comparaison) {
         this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);
 

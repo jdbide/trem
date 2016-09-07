@@ -4,6 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 
+/**
+ * Factory qui retourne l'implémentation de
+ * {@link IExcelRapportDifferentielSheet} à partir du type de comparaison
+ * {@link EnumTypeComparaisonPlanTransport}
+ * 
+ * @author heloise.guillemaud
+ *
+ */
 public class ExcelRapportDifferentielSheetFactory {
 
     private Map<String, IExcelRapportDifferentielSheet> map = new HashMap<>();

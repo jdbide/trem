@@ -213,12 +213,11 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       this.jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
       this.jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
       // FIXME
-      Calendar cal = Calendar.getInstance();
-      cal.set(Calendar.YEAR, 2015);
-      cal.set(Calendar.MONTH, 11);
-      cal.set(Calendar.DAY_OF_MONTH, 7);
-      
-      this.jeuDonneeDataBean.setDateDebutPeriode(cal.getTime());
+      Calendar calendar = Calendar.getInstance();
+      calendar.set(Calendar.YEAR, 2015);
+      calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+      calendar.set(Calendar.DAY_OF_MONTH, 7);
+      this.jeuDonneeDataBean.setDateDebutPeriode(calendar.getTime());
       this.jeuDonneeService.save(this.jeuDonneeDataBean);
       logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
       Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
