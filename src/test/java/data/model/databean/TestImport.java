@@ -61,7 +61,7 @@ public class TestImport {
         try {
             String userDb2 = "ejmt013";
 
-            String passwdDb2 = "Isab1000";
+            String passwdDb2 = "xa08de09";
             
             CompagnieEnvironnementEntity compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(3);
                         
