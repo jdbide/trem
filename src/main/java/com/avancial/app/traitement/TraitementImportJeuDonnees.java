@@ -1,6 +1,7 @@
 package com.avancial.app.traitement;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.enterprise.context.RequestScoped;
@@ -211,7 +212,11 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       this.jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
       this.jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
       // FIXME
-      this.jeuDonneeDataBean.setDateDebutPeriode(new Date(2015, 12, 07));
+      Calendar calendar = Calendar.getInstance();
+      calendar.set(Calendar.YEAR, 2015);
+      calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+      calendar.set(Calendar.DAY_OF_MONTH, 7);
+      this.jeuDonneeDataBean.setDateDebutPeriode(calendar.getTime());
       this.jeuDonneeService.save(this.jeuDonneeDataBean);
       logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
       Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");

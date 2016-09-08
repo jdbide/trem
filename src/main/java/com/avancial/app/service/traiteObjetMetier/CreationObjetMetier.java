@@ -6,6 +6,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
+
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
@@ -16,8 +19,9 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.utilitaire.JeuDonneesPlanTransport;
 
 public class CreationObjetMetier {
+	private static Logger logger = Logger.getLogger(CreationObjetMetier.class);
 
-   public JeuDonneesPlanTransport creationPlanTransport(String environnementCompagnie, Status status, EntityManager entityManager, TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory) throws Exception {
+	public JeuDonneesPlanTransport creationPlanTransport(String environnementCompagnie, Status status, EntityManager entityManager, TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory) throws Exception {
       PlanTransport planTransport = new PlanTransport();
 
       Query query = entityManager.createQuery("SELECT t FROM MotriceTrainTrancheEntity t JOIN t.jeuDonnee j JOIN j.compagnieEnvironnement c WHERE c.nomTechniqueCompagnieEnvironnement = ? AND j.statusJeuDonnees = ?", MotriceTrainTrancheEntity.class);
@@ -42,7 +46,7 @@ public class CreationObjetMetier {
          List<MotriceRegimeEntity> regimeEntities = resTrainTranche.getMotriceRegimeEntities();
          for (MotriceRegimeEntity regime : regimeEntities) {
             ITraiteObjetMetier traiteObjetMetier = traiteObjetMetierRegimeFactory.getTraiteMotriceRegime(regime.getMotriceRefRegimeType().getIdMotriceRefRegimeType());
-            traiteObjetMetier.traite(atomicTranche, regime, null);
+            traiteObjetMetier.traite(atomicTranche, regime, resTrainTranche.getJeuDonnee().getDateDebutPeriode());
          }
 
          train.getTranches().add(atomicTranche.get());

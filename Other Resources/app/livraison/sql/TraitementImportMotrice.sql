@@ -197,7 +197,7 @@ create table tremas_motrice_ref_ramecode(
 
 create table tremas_motrice_regime (
     idMotriceRegime bigint not null auto_increment,
-    periodMotriceRegime varchar(255) not null,
+    periodMotriceRegime varchar(2000) not null,
     idMotriceRefRegimeType bigint,
     idMotriceTrainTranche bigint,
     primary key (idMotriceRegime)

@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import org.apache.log4j.Logger;
+
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.service.traiteObjetMetier.CreationObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
@@ -24,6 +26,8 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
 
 	private String environnementCompagnie;
 	
+	private static Logger                 logger                       = Logger.getLogger(TraitementObjetMetier.class);
+	
    @Inject
    @Socle_PUSocle
    private EntityManager                 em;
@@ -34,25 +38,29 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
 	}
 
 	public void executeTraitement() throws Exception {
-	   try {
-	      this.logBean.setLibelleLogTraitement("TraitementObjetMetier");
-	      CreationObjetMetier creationObjetMetier = new CreationObjetMetier();
-	      /* Creation du plan de transport du Dataset actif */
-	      System.out.println("Creation du plan de transport ACTIF");
-	      this.log("Debut de la creation du plan de transport du JdD Actif");
-	      this.mapPlansDeTransport.setPlanTransportActive(creationObjetMetier.creationPlanTransport(
-	            this.environnementCompagnie, Status.ACTIVE, this.em, this.traiteObjetMetierRegimeFactory));
-	      this.log("Fin de la creation du plan de transport du JdD Actif");
-	      /* Creation du plan de transport du Dataset draft */
-	      // System.out.println("Creation du plan de transport DRAFT");
-	      // this.mapPlansDeTransport.setPlanTransportDraft(creationObjetMetier.creationPlanTransport(this.environnementCompagnie,
-	      // Status.DRAFT, this.em, this.traiteObjetMetierRegimeFactory));
-	   } catch (Exception ex) {
-	      throw ex;
-	   } finally {
-         this.em.clear();
-         this.em.close();
-      }
+		this.logBean.setLibelleLogTraitement("TraitementObjetMetier");
+		CreationObjetMetier creationObjetMetier = new CreationObjetMetier();
+		
+		try {
+			/* Creation du plan de transport du Dataset actif */
+			System.out.println("Creation du plan de transport ACTIF");
+			logger.info("Creation du plan de transport ACTIF");
+			this.log("Debut de la creation du plan de transport du JdD Actif");
+			this.mapPlansDeTransport.setPlanTransportActive(creationObjetMetier.creationPlanTransport(
+					this.environnementCompagnie, Status.ACTIVE, this.em, this.traiteObjetMetierRegimeFactory));
+			this.log("Fin de la creation du plan de transport du JdD Actif");
+			logger.info("Fin de la Creation du plan de transport ACTIF");
+			/* Creation du plan de transport du Dataset draft */
+			// System.out.println("Creation du plan de transport DRAFT");
+			// this.mapPlansDeTransport.setPlanTransportDraft(creationObjetMetier.creationPlanTransport(this.environnementCompagnie,
+			// Status.DRAFT, this.em, this.traiteObjetMetierRegimeFactory));
+		} catch(Exception ex) {
+			logger.error("Exception Creation du plan de transport ACTIF", ex);
+			throw ex;
+		} finally {
+			this.em.clear();
+			this.em.close();
+		}
 	}
 
 	/**

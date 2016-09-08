@@ -13,9 +13,22 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
 public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AExcelRapportDifferentielSheet {
 
     private static Logger logger = Logger.getLogger(AExcelRapportDifferentielSheetDeleteOrUnchanged.class);
-
+    /**
+     * Colonnes du tableau pour les feuilles DELETE ou UNCHANGED
+     */
     public static String[] ENTETE_SHEET_UNCHANGED_DELETE = {"Train", "Tranche", "Régime Tranche"};
 
+    /**
+     * Génération des entêtes pour les onglets DELETE ou UNCHANGED
+     * 
+     * @param excelTools
+     *            Générateur de cellules
+     * @param ligneDebut
+     *            Ligne à laquelle la génération doit commencer
+     * @param enteteTitre
+     *            Titre du tableau
+     * @return Ligne à laquelle la génération a terminé
+     */
     protected int generateEnteteForSheetDeleteOrUnchanged(ExcelTools excelTools, int ligneDebut, String enteteTitre) {
         int ligne = ligneDebut;
         // Gestion de la premiere ligne
@@ -29,6 +42,24 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
         return ligne;
     }
 
+    /**
+     * Génération du tableau pour les onglets DELETE ou UNCHANGED
+     * 
+     * @param excelTools
+     *            Générateur de cellules Excel
+     * @param ligneDebut
+     *            Ligne à laquelle la génération doit commencer
+     * @param mapPlansDeTransport
+     *            Map contenant les plans de transport comparés pour la
+     *            génération du rapport différentiel
+     * @param comparaisons
+     *            Liste des comparaisons DELETE ou UNCHANGED à afficher dans le
+     *            tableau
+     * @param couleur
+     *            Couleur des cases générées
+     * @return Ligne à laquelle la génération a terminé
+     * @throws IOException
+     */
     protected int generateContentForSheetUnchangedOrDelete(ExcelTools excelTools, int ligneDebut,
             MapPlansDeTransport mapPlansDeTransport, List<ComparaisonPlanTransport<IPlanTransport>> comparaisons,
             Color couleur) throws IOException {

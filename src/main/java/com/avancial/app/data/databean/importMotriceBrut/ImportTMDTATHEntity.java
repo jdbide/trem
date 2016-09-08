@@ -22,10 +22,10 @@ public class ImportTMDTATHEntity {
    private String TATH_CD_VAL;
    private String TATH_INPT_RR_D;
    private String TATH_INPT_RR_F;
-   private String TATH_PRIX_HORS_SYS;
    private String TATH_REGI;
    private String TATH_USER;
    private String TATH_DHDO;
+   private String TATH_PRIX_HORS_SYS;
 
    /**
     * @return the idTMDTATH

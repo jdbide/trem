@@ -8,4 +8,5 @@ import java.text.ParseException;
  */
 public interface ITraitementDonnees {
     public String execute(String donnee) throws ParseException;
+    public String execute2(Object objects) throws ParseException;
 }

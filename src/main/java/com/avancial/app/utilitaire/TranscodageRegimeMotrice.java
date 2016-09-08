@@ -49,4 +49,10 @@ public class TranscodageRegimeMotrice implements ITraitementDonnees{
     public static void setDateDebutService(Date dateDebutService) throws ParseException {
         TranscodageRegimeMotrice.dateDebutService = dateDebutService;
     }
+
+	@Override
+	public String execute2(Object object) throws ParseException {
+		// TODO Auto-generated method stub
+		return this.execute(object.toString());
+	}
 }

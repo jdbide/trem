@@ -26,4 +26,10 @@ public class DateSetterRegimeMotrice implements ITraitementDonnees {
         DateSetterRegimeMotrice.app = app;
     }
 
+	@Override
+	public String execute2(Object object) throws ParseException {
+		// TODO Auto-generated method stub
+		return this.execute(object.toString());
+	}
+
 }

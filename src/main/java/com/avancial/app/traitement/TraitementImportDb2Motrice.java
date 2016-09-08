@@ -110,7 +110,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
       List<String> res = new ArrayList<>();
       try {
          for (Field field : GetEntiteService.getClasseEntiteImportFromTableMotrice(table).getDeclaredFields()) {
-            if (!field.getName().equals("id" + table)) {
+            if (!field.getName().substring(0, 2).equals("id")) {
                res.add(field.getName());
             }
          }
@@ -170,8 +170,11 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
                // verifier si la cellule doit etre traiter
                if (!mapTraitementImportBrut.containsKey(columns.get(i)))
                   sqlValues.append("'").append(objects[i].toString().replaceAll("'", "''")).append("'");
-               else
-                  sqlValues.append("'").append(mapTraitementImportBrut.get(columns.get(i)).execute(objects[i].toString()).replaceAll("'", "''")).append("'");
+               else {
+            	   sqlValues.append("'").append(mapTraitementImportBrut.get(columns.get(i)).execute2(objects[i]).replaceAll("'", "''")).append("'");
+               }
+                  
+               
                if (i != objects.length - 1)
                   sqlValues.append(",");
             }

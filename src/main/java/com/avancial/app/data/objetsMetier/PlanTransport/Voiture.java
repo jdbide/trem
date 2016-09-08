@@ -39,7 +39,16 @@ public class Voiture {
    @Override
    public boolean equals(Object obj) {
       Voiture voiture = (Voiture) obj;
-      return this.getNumeroVoiture().equals(voiture.getNumeroVoiture()) && ListUtils.compareLists(this.getCompartiments(), voiture.getCompartiments());
+      
+      if(this.getCompartiments() != null && voiture.getCompartiments() != null) {
+    	  return this.getNumeroVoiture().equals(voiture.getNumeroVoiture()) && ListUtils.compareLists(this.getCompartiments(), voiture.getCompartiments());
+      }
+      else if(this.getCompartiments() == null && voiture.getCompartiments() == null) {
+    	  return true;
+      }
+      else
+    	  return false;
+      
    }
 
    public String getNumeroVoiture() {

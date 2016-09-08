@@ -43,6 +43,9 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
 
     private static Logger logger = Logger.getLogger(ExcelRapportDifferentielSheetNew.class);
 
+    /**
+     * Colonnes du tableau pour la feuille NEW
+     */
     public static String[] ENTETE_SHEET_NEW = {"Train", "Tranche", "Régime Tranche", "Company", "Tranche Status",
             "Valid for RR", "Regime_Dessertes", "Dessertes", "Regime OD Tranche", "OD Tranche", "Regime Distrib",
             "IndicDistrib", "Regime Compo", "Classes", "Compo", "RameCodes", "RM Code", "Regime_CodeSAT", "CodeSAT",
@@ -53,8 +56,19 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
             Distribution.class, FareProfile.class, OrigineDestination.class, Repas.class, Restriction.class,
             ServiceABord.class, Specification.class, TypeEquipement.class};
 
+    /**
+     * Map liant la classe représentant un field au numéro de la première
+     * colonne à laquelle il est affiché
+     */
     private Map<Class<?>, Integer> mapPremiereColonneNew;
+    /**
+     * Map liant la classe représentant un field au numéro de la dernière
+     * colonne à laquelle il est affiché
+     */
     private Map<Class<?>, Integer> mapDerniereColonneNew;
+    /**
+     * Factory pour les générateurs de colonne de la feuille NEW
+     */
     private GenerateExcelColonneNewFactory generateExcelColonneNewFactory = new GenerateExcelColonneNewFactory();
 
     public ExcelRapportDifferentielSheetNew() {
@@ -62,6 +76,9 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
         this.initMapDerniereColonne();
     }
 
+    /**
+     * Remplissage de la map mapPremiereColonneNew
+     */
     private void initMapPremiereColonne() {
         this.mapPremiereColonneNew = new HashMap<>();
         this.mapPremiereColonneNew.put(Desserte.class, 7);
@@ -77,6 +94,9 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
         this.mapPremiereColonneNew.put(Restriction.class, 30);
     }
 
+    /**
+     * Remplissage de la map mapDerniereColonneNew
+     */
     private void initMapDerniereColonne() {
         this.mapDerniereColonneNew = new HashMap<>();
         this.mapDerniereColonneNew.put(Desserte.class, 8);
@@ -132,9 +152,8 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
             }
 
             ligneDebut = excelTools.getSheet().getLastRowNum() + 1;
-            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "("
-                    + data.getNumeroTrain() + "-" + data.getNumeroTranche() + ") ligne "
-                    + (ligneDebut - 1) + " générée");
+            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "(" + data.getNumeroTrain()
+                    + "-" + data.getNumeroTranche() + ") ligne " + (ligneDebut - 1) + " générée");
 
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 1, 1, currentTrain.getNumeroTrain(),
                     excelTools.addColor(excelTools.styleBorder, selectColor(excelTools, cntTraiTranche, null)));
@@ -177,7 +196,10 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
      * @param derniereLigne
      *            Derniere ligne pour un train-tranche
      * @param currentTrain
+     *            Indice du train correspondant à la ligne en cours de
+     *            traitement
      * @param classe
+     *            Classe correspondant au field en cours de traitement
      * 
      */
     private void postTraitement(ExcelTools excelTools, int premiereColonne, int derniereColonne, int premiereLigne,
@@ -212,6 +234,18 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
         }
     }
 
+    /**
+     * Retourne la couleur d'affichage d'une case de la feuille NEW.
+     * 
+     * @param excelTools
+     *            Générateur de cellules
+     * @param cntTraiTranche
+     *            Indice du train correspondant à la ligne à générer
+     * @param classe
+     *            Classe correspondant à la colonne à générer
+     * @return Les couleurs alternent entre le rose et le violet sur les lignes,
+     *         et entre le pale et le foncé sur les colonnes.
+     */
     private Color selectColor(ExcelTools excelTools, int cntTraiTranche, Class<?> classe) {
         Color color = excelTools.couleurBlanc;
         if (cntTraiTranche % 2 == 0) {
