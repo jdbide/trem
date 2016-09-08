@@ -106,10 +106,6 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
             donnees = this.getData(tablesExport.get(i));
 
             this.insertData(tablesImport.get(i), columns, donnees);
-         } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            throw e;
          } catch (Exception e) {
             e.printStackTrace();
             throw e;

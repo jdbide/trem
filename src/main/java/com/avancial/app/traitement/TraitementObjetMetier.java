@@ -31,23 +31,28 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
 	@Inject
 	public TraitementObjetMetier() {
 		super();
-
 	}
 
 	public void executeTraitement() throws Exception {
-		this.logBean.setLibelleLogTraitement("TraitementObjetMetier");
-		CreationObjetMetier creationObjetMetier = new CreationObjetMetier();
-		/* Creation du plan de transport du Dataset actif */
-		System.out.println("Creation du plan de transport ACTIF");
-		this.log("Debut de la creation du plan de transport du JdD Actif");
-		this.mapPlansDeTransport.setPlanTransportActive(creationObjetMetier.creationPlanTransport(
-				this.environnementCompagnie, Status.ACTIVE, this.em, this.traiteObjetMetierRegimeFactory));
-		this.log("Fin de la creation du plan de transport du JdD Actif");
-		/* Creation du plan de transport du Dataset draft */
-		// System.out.println("Creation du plan de transport DRAFT");
-		// this.mapPlansDeTransport.setPlanTransportDraft(creationObjetMetier.creationPlanTransport(this.environnementCompagnie,
-		// Status.DRAFT, this.em, this.traiteObjetMetierRegimeFactory));
-
+	   try {
+	      this.logBean.setLibelleLogTraitement("TraitementObjetMetier");
+	      CreationObjetMetier creationObjetMetier = new CreationObjetMetier();
+	      /* Creation du plan de transport du Dataset actif */
+	      System.out.println("Creation du plan de transport ACTIF");
+	      this.log("Debut de la creation du plan de transport du JdD Actif");
+	      this.mapPlansDeTransport.setPlanTransportActive(creationObjetMetier.creationPlanTransport(
+	            this.environnementCompagnie, Status.ACTIVE, this.em, this.traiteObjetMetierRegimeFactory));
+	      this.log("Fin de la creation du plan de transport du JdD Actif");
+	      /* Creation du plan de transport du Dataset draft */
+	      // System.out.println("Creation du plan de transport DRAFT");
+	      // this.mapPlansDeTransport.setPlanTransportDraft(creationObjetMetier.creationPlanTransport(this.environnementCompagnie,
+	      // Status.DRAFT, this.em, this.traiteObjetMetierRegimeFactory));
+	   } catch (Exception ex) {
+	      throw ex;
+	   } finally {
+         this.em.clear();
+         this.em.close();
+      }
 	}
 
 	/**

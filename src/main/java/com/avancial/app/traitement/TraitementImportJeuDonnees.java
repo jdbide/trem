@@ -106,8 +106,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.getCompagnieEnvironnement();
          this.connexionDb2();
          this.importData();
-         this.deleteDataWithStatusImport();
-         this.deleteDataWithStatusDraft();
+         this.deleteDataWithStatusImportDraft();
          this.saveJeuDonnees();
          this.createDraft();
          this.createPlanTransport();
@@ -218,25 +217,11 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
    }
 
-   private void deleteDataWithStatusDraft() throws Exception {
-      Task.setMsgTask(this.idTask, "Suppression du draft existant");
-      this.traitementDeleteJeuDonnee.setStatus(Status.DRAFT);
-      try {
-         logger.info("Start Suppression de l'éventuel Draft");
-         this.traitementDeleteJeuDonnee.execute();
-         logger.info("End Suppression de l'éventuel Draft");
-      } catch (Exception e) {
-         this.log("Echec de la suppression du Draft");
-         Task.finishKoTask(this.idTask, "Echec de la suppression du Draft");
-         logger.error("Echec de la suppression du Draft", e);
-         throw e;
-      }
-   }
-
-   private void deleteDataWithStatusImport() throws Exception {
+   private void deleteDataWithStatusImportDraft() throws Exception {
       Task.setMsgTask(this.idTask, "Suppression des données temporaires");
       this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(this.compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
-      this.traitementDeleteJeuDonnee.setStatus(Status.IMPORT);
+      this.traitementDeleteJeuDonnee.addStatus(Status.IMPORT);
+      this.traitementDeleteJeuDonnee.addStatus(Status.DRAFT);
 
       try {
          logger.info("Start Suppression des données temporaires");
@@ -248,6 +233,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          logger.error("Echec de la suppression des données temporaires", e);
          throw e;
       }
+      
    }
 
    private void importData() throws Exception {
@@ -255,22 +241,18 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       // vider puis importer les tables
       this.traitement.setEntityManagerExterne(this.entityManagerDb2);
       this.traitement.setSchema(this.compagnieEnvironnementEntity.getDatasource().getSchema());
+      logger.info("Importation des données");
       try {
-         logger.info("Importation des données");
          this.traitement.execute();
-         this.entityManagerDb2.close();
-         EntityManagerFactoryProviderDb2.closeInstance();
-         logger.info("End Importation des données");
-      } catch (SecurityException e) {
-         this.log("Echec de l'import");
-         Task.finishKoTask(this.idTask, "Echec de l'import");
-         logger.error("Echec de l'import", e);
-         throw e;
       } catch (Throwable ex) {
          this.log("Echec de l'import");
          Task.finishKoTask(this.idTask, "Echec de l'import");
          logger.error("Echec de l'import", ex);
          throw ex;
+      } finally {
+         this.entityManagerDb2.close();
+         EntityManagerFactoryProviderDb2.closeInstance();
+         logger.info("End Importation des données");
       }
    }
 

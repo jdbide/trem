@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--DEV sur Caliban
+<!--DEV sur Caliban-->
 <Context antiJARLocking="true" path="/appSocle">
 	<Resource name="BeanManager" auth="Container"
 		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
@@ -28,8 +28,8 @@
 	    checkoutTimeout="18000"
 	    acquireRetryAttempts="20"
 	    unreturnedConnectionTimeout="180" 
-	    debugUnreturnedConnectionStackTraces="true
-	"/>
+	    debugUnreturnedConnectionStackTraces="true"
+	/>
 
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
 		dataSourceName="jdbc/socle" userTable="socle_user" userNameCol="loginUser"
@@ -37,7 +37,7 @@
 		localDataSource="true" digest="sha1" maxActive="20" maxIdle="4">
 	</Realm>
 </Context>
--->
+
 <!-- 
 testConnectionOnCheckin="true"
 	    testConnectionOnCheckout="true"
@@ -47,7 +47,7 @@ testConnectionOnCheckin="true"
 		url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;"
 		maxActive="8" maxIdle="4" maxWait="10000" /> -->
 
-<!-- RECETTE sur mensa -->
+<!-- RECETTE sur mensa 
 <Context antiJARLocking="true" path="/">
 	<Resource name="BeanManager" auth="Container"
 		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
@@ -70,7 +70,7 @@ testConnectionOnCheckin="true"
 		checkoutTimeout="18000"
 		acquireRetryAttempts="20"
 		unreturnedConnectionTimeout="180" 
-		debugUnreturnedConnectionStackTraces="true
+		debugUnreturnedConnectionStackTraces="true"
 	/>
 
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
@@ -79,28 +79,5 @@ testConnectionOnCheckin="true"
 		localDataSource="true" digest="sha1">
 	</Realm>
 </Context>
-
-<!-- <Resource name="jdbc/externe" auth="Container" type="javax.sql.DataSource"
-		username="ejmt013" password="fatima05" driverClassName="com.ibm.db2.jcc.DB2Driver"
-		url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;"
-		maxActive="8" maxIdle="4" maxWait="10000" /> -->
-
-<!--DEV en local <Context antiJARLocking="true" path="/"> <Resource name="BeanManager" 
-	auth="Container" type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" 
-	/> <Resource name="jdbc/socle" auth="Container" type="javax.sql.DataSource" 
-	username="webd_socle" password="!socle12" driverClassName="com.mysql.jdbc.Driver" 
-	url="jdbc:mysql://localhost/socle" maxActive="8" maxIdle="4" /> <Realm className="org.apache.catalina.realm.DataSourceRealm" 
-	dataSourceName="jdbc/socle" userTable="socle_user" userNameCol="loginUser" 
-	userCredCol="passwordUser" userRoleTable="socle_user" roleNameCol="tomcatRoleUser" 
-	localDataSource="true" digest="sha1"> </Realm> </Context> -->
-
-<!-- RECETTE sur Lapetus <Context antiJARLocking="true" path="/"> <Resource 
-	name="BeanManager" auth="Container" type="javax.enterprise.inject.spi.BeanManager" 
-	factory="org.jboss.weld.resources.ManagerObjectFactory" /> <Resource name="jdbc/socle" 
-	auth="Container" type="javax.sql.DataSource" username="webr_gev" password="!gev12" 
-	driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/gev_rec" 
-	maxActive="8" maxIdle="4" /> <Realm className="org.apache.catalina.realm.DataSourceRealm" 
-	dataSourceName="jdbc/socle" userTable="gev_user" userNameCol="loginUser" 
-	userCredCol="passwordUser" userRoleTable="gev_user" roleNameCol="tomcatRoleUser" 
-	localDataSource="true" digest="sha1"> </Realm> </Context> -->
+-->
 

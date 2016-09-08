@@ -1,6 +1,7 @@
 package com.avancial.app.traitement;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,11 +37,11 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
    private String                           compagnieEnvironnement;
 
    // status Enum Status(IMPORT, DRAFT, ACTIVE, LASTACTIVE)
-   private Status                           status           = Status.DRAFT;
+   private List<Status>                     status;
 
    @Inject
    @Socle_PUSocle
-   private EntityManager                 em;
+   private EntityManager                    em;
 
    /**
     * Contructeur
@@ -51,33 +52,44 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
       super();
       // initialisation du logger (log4j)
       logger = Logger.getLogger(TraiteDeleteDonneesRegimeFactory.class);
+      this.status = new ArrayList<>();
    }
 
    @Override
    protected void executeTraitement() throws Exception {
-      try {
-         // Start initialisation des loggers
-         this.logBean.setLibelleLogTraitement("Traitement Delete JeuDonnee");
-         this.log("Debut du traitement pour la suppression du " + this.status.toString());
-         logger.info("Debut du traitement : Suppression des données temporaires " + this.status.toString());
-         // end initialiastion des loggers
+      this.logBean.setLibelleLogTraitement("Traitement Delete JeuDonnee");
+      logger.info("Début Traitement Delete JeuDonnee");
+      for (Status st : this.status) {
+         try {
+            
+            this.log("Debut du traitement pour la suppression du " + st.toString());
+            logger.info("Debut du traitement : Suppression des données temporaires " + st.toString());
+            // end initialiastion des loggers
 
-         // Récuperation de la listeJeuDonnees ()
-         List<JeuDonneeEntity> listJeuxDonnees = this.em.createNamedQuery("JeuDonneeEntity.getByEnvironnementStatus", JeuDonneeEntity.class).setParameter("nomTechniqueCompagnieEnvironnement", this.compagnieEnvironnement).setParameter("statusJeuDonnees", this.status).getResultList();
+            // Récuperation de la listeJeuDonnees ()
+            List<JeuDonneeEntity> listJeuxDonnees = this.em.createNamedQuery("JeuDonneeEntity.getByEnvironnementStatus", JeuDonneeEntity.class)
+                  .setParameter("nomTechniqueCompagnieEnvironnement", this.compagnieEnvironnement)
+                  .setParameter("statusJeuDonnees", st).getResultList();
 
-         for (JeuDonneeEntity jeuDonneeEntity : listJeuxDonnees) {
-            this.deleteJeuDonnees(jeuDonneeEntity);
+            for (JeuDonneeEntity jeuDonneeEntity : listJeuxDonnees) {
+               this.deleteJeuDonnees(jeuDonneeEntity);
+            }
+
+            this.log("Fin du traitement : Suppression des données temporaires " + st.toString());
+
+         } catch (Exception ex) {
+            this.em.getTransaction().rollback();
+            this.log("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)");
+            logger.error("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)", ex);
+
+            throw ex;
+         } finally {
+            this.em.clear();
+            this.em.close();
          }
-
-         this.log("Fin du traitement : Suppression des données temporaires " + this.status.toString());
-
-      } catch (Exception ex) {
-         this.em.getTransaction().rollback();
-         this.log("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)");
-         logger.error("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)", ex);
-
-         throw ex;
       }
+
+      logger.info("Début Traitement Delete JeuDonnee");
    }
 
    private void deleteJeuDonnees(JeuDonneeEntity jeuDonneeEntity) throws Exception {
@@ -103,9 +115,9 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
       TypedQuery<MotriceTrainTrancheEntity> queryTrainTranches = this.em.createNamedQuery("MotriceTrainTranche.getByJeuDonnees", MotriceTrainTrancheEntity.class).setParameter("jeuDonnees", jeuDonneeEntity);
 
       List<MotriceTrainTrancheEntity> trainTranches = queryTrainTranches.getResultList();
-//      for (MotriceTrainTrancheEntity motriceTrainTrancheEntity : trainTranches) {
-//         logger.warn(motriceTrainTrancheEntity.toString());
-//      }
+      // for (MotriceTrainTrancheEntity motriceTrainTrancheEntity : trainTranches) {
+      // logger.warn(motriceTrainTrancheEntity.toString());
+      // }
 
       // delete les regimes lier au train tranche trouver precedement
       if (trainTranches != null && !trainTranches.isEmpty()) {
@@ -143,12 +155,16 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
       this.compagnieEnvironnement = compagnieEnvironnement;
    }
 
-   public Status getStatus() {
+   public List<Status> getStatus() {
       return this.status;
    }
 
-   public void setStatus(Status status) {
+   public void setStatus(List<Status> status) {
       this.status = status;
+   }
+
+   public void addStatus(Status status) {
+      this.status.add(status);
    }
 
    public void setEm(EntityManager em) {
