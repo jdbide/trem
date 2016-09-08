@@ -45,6 +45,7 @@ public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
         if (res.size() == 0) {
             ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonPlanTransport<>();
             comparaisonPlanTransport.setNumeroTranche(((Tranche) comparableNouveau).getNumeroTranche());
+            comparaisonPlanTransport.setTrancheStatut(((Tranche) comparableNouveau).getTrancheStatut());
             comparaisonPlanTransport.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
             logger.info("Tranche UNCHANGED : " + comparaisonPlanTransport.getNumeroTranche());
             res.putComparaison(comparaisonPlanTransport);

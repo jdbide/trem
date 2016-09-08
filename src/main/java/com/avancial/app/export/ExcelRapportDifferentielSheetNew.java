@@ -138,7 +138,7 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
 
             Train currentTrain = mapPlansDeTransport.get(Status.DRAFT).getPlanTransport()
                     .getTrainByNumeroTrain(data.getNumeroTrain());
-            Tranche currentTranche = currentTrain.getTrancheByNumeroTranche(data.getNumeroTranche());
+            Tranche currentTranche = currentTrain.getTrancheByNumeroTrancheAndStatus(data.getNumeroTranche(), data.getStatutTranche());
 
             debutRowTrain = ligneDebut - 1;
 

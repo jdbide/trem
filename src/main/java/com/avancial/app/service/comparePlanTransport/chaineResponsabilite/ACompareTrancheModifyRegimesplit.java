@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
@@ -41,6 +42,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
      *            Type de comparaison cherché (MODIFY ou REGIMESPLIT)
      * @param numeroTranche
      *            Numéro de la tranche à laquelle les attributs appartiennent
+     * @param trancheStatut TODO
      * @param attributsFieldAncien
      *            Liste d'attributs dans la tranche la moins récente
      * @param attributsFieldNouveau
@@ -52,7 +54,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
     @SuppressWarnings("unchecked")
     protected MapComparaisonPlanTransport compareAttributLists(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, String numeroTranche,
-            List<? extends IPlanTransport> attributsFieldAncien, List<? extends IPlanTransport> attributsFieldNouveau)
+            EnumTrancheStatut trancheStatut, List<? extends IPlanTransport> attributsFieldAncien, List<? extends IPlanTransport> attributsFieldNouveau)
             throws Exception {
         MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
@@ -83,6 +85,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
                 if (listComparaison != null && listComparaison.size() > 0) {
                     comparaisonPlanTransport = listComparaison.get(0);
                     comparaisonPlanTransport.setNumeroTranche(numeroTranche);
+                    comparaisonPlanTransport.setTrancheStatut(trancheStatut);
                     logger.info("Attribut " + typeComparaisonPlanTransport.toString());
                     res.putComparaison(comparaisonPlanTransport);
 

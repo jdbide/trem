@@ -38,9 +38,10 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
 						+ "AND regimesat.TATH_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 "
 						+ "AND regimesat.TATH_TRCH_IND_FER = cara.CATH_TRCH_IND_FER "
 						+ "INNER JOIN tremas_import_tmdsat1 AS satcode ON regimesat.TATH_CD_VAL = satcode.SAT1_COD_SAT "
-						+ "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ?");
+						+ "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ? AND cara.CATH_ETAT_TRCH = ? " + "ORDER BY periodMotriceRegime");
 		queryRSatCode.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
 		queryRSatCode.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+		queryRSatCode.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
 		List<Object[]> listeSatcode = queryRSatCode.getResultList();
 		AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);

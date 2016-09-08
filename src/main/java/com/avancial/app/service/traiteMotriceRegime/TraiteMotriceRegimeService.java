@@ -49,9 +49,10 @@ public class TraiteMotriceRegimeService implements ITraiteMotriceRegime {
 						+ "AND service.SVTH_TRCH_NUM_TRA1 = cath.CATH_TRCH_NUM_TRA1 "
 						+ "AND service.SVTH_TRCH_IND_FER = cath.CATH_TRCH_IND_FER "
 						+ "AND service.SVTH_TRCH_NUM = cath.CATH_TRCH_NUM " + "WHERE cath.CATH_SSIM = ? "
-						+ "AND service.SVTH_TRCH_NUM_TRA1 = ? " + "ORDER BY motriceRegime");
+						+ "AND service.SVTH_TRCH_NUM_TRA1 = ? AND cath.CATH_ETAT_TRCH = ? " + "ORDER BY motriceRegime");
 		queryRService.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
 		queryRService.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+		queryRService.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
 		List<Object[]> rService = queryRService.getResultList();
 		String oldRegime = "";

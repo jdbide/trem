@@ -36,9 +36,10 @@ public class TraiteMotriceRegimeEqpType implements ITraiteMotriceRegime {
       
       Query queryREqpType = entityManager
             .createNativeQuery("SELECT categorie.CATR_TYEQ_COD AS eqpTypeMotriceRegimeEqpType, categorie.CATR_REGI AS motriceRegime " + "FROM tremas_import_tmdcatr AS categorie " + "INNER JOIN tremas_import_tmdcath AS cath ON categorie.CATR_TRA1_COD_CIE = cath.CATH_TRCH_COD_CIE "
-                  + "AND categorie.CATR_TRA1_NUM_TRA1 = cath.CATH_TRCH_NUM_TRA1 " + "AND categorie.CATR_TRA1_IND_FER = cath.CATH_TRCH_IND_FER " + "WHERE cath.CATH_SSIM = ? " + "AND categorie.CATR_TRA1_NUM_TRA1 = ? " + "ORDER BY motriceRegime ");
+                  + "AND categorie.CATR_TRA1_NUM_TRA1 = cath.CATH_TRCH_NUM_TRA1 " + "AND categorie.CATR_TRA1_IND_FER = cath.CATH_TRCH_IND_FER " + "WHERE cath.CATH_SSIM = ? " + "AND categorie.CATR_TRA1_NUM_TRA1 = ? AND cath.CATH_ETAT_TRCH = ? " + "ORDER BY motriceRegime ");
       queryREqpType.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
       queryREqpType.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+      queryREqpType.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
       List<Object[]> rEqpType = queryREqpType.getResultList();
       String regime = "";

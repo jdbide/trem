@@ -1,5 +1,6 @@
 package com.avancial.app.data.objetsMetier.PlanTransport.comparaison;
 
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 
 public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComparaisonPlanTransport {
@@ -7,6 +8,8 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
     private String numeroTrain;
 
     private String numeroTranche;
+    
+    private EnumTrancheStatut statutTranche;
 
     private T ancienField;
 
@@ -17,6 +20,7 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
     public ComparaisonPlanTransport() {
         this.numeroTrain = "";
         this.numeroTranche = "";
+        this.statutTranche = EnumTrancheStatut.Fermer;
         this.ancienField = null;
         this.nouveauField = null;
         this.typeComparaisonPlanTransport = EnumTypeComparaisonPlanTransport.UNCHANGED;
@@ -27,6 +31,7 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
         ComparaisonPlanTransport<T> comparaison = (ComparaisonPlanTransport<T>) obj;
         return this.numeroTrain.equals(comparaison.getNumeroTrain())
                 && this.numeroTranche.equals(comparaison.getNumeroTranche())
+                && this.statutTranche.equals(comparaison.getStatutTranche())
                 && this.fieldEquals(this.ancienField, comparaison.getAncienField())
                 && this.fieldEquals(this.nouveauField, comparaison.getNouveauField());
     }
@@ -61,6 +66,14 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
 
     public void setNumeroTranche(String numeroTranche) {
         this.numeroTranche = numeroTranche;
+    }
+
+    public EnumTrancheStatut getStatutTranche() {
+        return this.statutTranche;
+    }
+
+    public void setTrancheStatut(EnumTrancheStatut statutTranche) {
+        this.statutTranche = statutTranche;
     }
 
     public T getAncienField() {

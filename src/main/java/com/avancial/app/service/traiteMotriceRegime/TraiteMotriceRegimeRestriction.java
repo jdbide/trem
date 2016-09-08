@@ -49,9 +49,10 @@ public class TraiteMotriceRegimeRestriction implements ITraiteMotriceRegime {
 						+ "AND restr.CDDS_CDEM_NUM_COND = cdem.CDEM_NUM_CONDITION "
 						+ "INNER JOIN tremas_import_tmdcath AS cath ON restr.CDDS_CDEM_COD_CIE = cath.CATH_TRCH_COD_CIE "
 						+ "AND restr.CDDS_CDEM_IND_FER = cath.CATH_TRCH_IND_FER " + "WHERE cath.CATH_SSIM = ? "
-						+ "AND restr.CDDS_CDEM_NUM_TRA1 = ? " + "ORDER BY motriceRegime");
+						+ "AND restr.CDDS_CDEM_NUM_TRA1 = ? AND cath.CATH_ETAT_TRCH = ? " + "ORDER BY motriceRegime");
 		queryRRestriction.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
 		queryRRestriction.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+		queryRRestriction.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
 		List<Object[]> rEqpType = queryRRestriction.getResultList();
 		String oldRegime = "";

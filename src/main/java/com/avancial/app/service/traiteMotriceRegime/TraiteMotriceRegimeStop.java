@@ -52,10 +52,11 @@ public class TraiteMotriceRegimeStop implements ITraiteMotriceRegime {
                         + "INNER JOIN tremas_import_tmdcath AS cat ON desserte.GADS_DSTR_COD_CIE = cat.CATH_CIRR_COD_CIE "
                         + "AND desserte.GADS_DSTR_NUM_TRA1 = cat.CATH_TRCH_NUM_TRA1 "
                         + "AND desserte.GADS_DSTR_IND_FER = cat.CATH_TRCH_IND_FER "
-                        + "WHERE cat.CATH_SSIM = ? " + "AND cat.CATH_TRCH_NUM_TRA1 = ?"
+                        + "WHERE cat.CATH_SSIM = ? " + "AND cat.CATH_TRCH_NUM_TRA1 = ? AND cat.CATH_ETAT_TRCH = ?"
                         + " ORDER BY distrib.DSTR_REGI");
         queryRDesserte.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
         queryRDesserte.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+        queryRDesserte.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
         AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
         AtomicLong idRegimeStop = mapIdTablesMotriceRegime.get(MotriceRegimeStopEntity.class);

@@ -45,10 +45,11 @@ public class TraiteMotriceRegimeDistribution implements ITraiteMotriceRegime {
 						+ "INNER JOIN tremas_import_tmdcath AS cath ON distrib.DTRC_TRCH_COD_CIE = cath.CATH_TRCH_COD_CIE "
 						+ "AND distrib.DTRC_TRCH_NUM_TRA1 = cath.CATH_TRCH_NUM_TRA1 "
 						+ "AND distrib.DTRC_TRCH_IND_FER = cath.CATH_TRCH_IND_FER "
-						+ "AND distrib.DTRC_TRCH_NUM = cath.CATH_TRCH_NUM " + "WHERE cath.CATH_SSIM = ? "
-						+ "AND distrib.DTRC_TRCH_NUM_TRA1 = ? " + "ORDER BY motriceRegime");
+						+ "AND distrib.DTRC_TRCH_NUM = cath.CATH_TRCH_NUM " + "WHERE cath.CATH_SSIM = ?"
+						+ "AND distrib.DTRC_TRCH_NUM_TRA1 = ? AND cath.CATH_ETAT_TRCH = ? " + "ORDER BY motriceRegime");
 		queryRDistribution.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
 		queryRDistribution.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+		queryRDistribution.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
 		List<Object[]> rDistribution = queryRDistribution.getResultList();
 		String regime = "";
