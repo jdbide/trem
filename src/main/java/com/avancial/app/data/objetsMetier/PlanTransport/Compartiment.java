@@ -40,10 +40,15 @@ public class Compartiment {
    @Override
    public boolean equals(Object obj) {
       Compartiment compartiment = (Compartiment) obj;
-      if (compartiment.getNumeroCompartiment().equals(this.numeroCompartiment) && ListUtils.compareLists(compartiment.getSieges(), this.sieges)) {
+      
+      if(compartiment.getSieges() != null && this.sieges != null) {
+    	  return compartiment.getNumeroCompartiment().equals(this.numeroCompartiment) && ListUtils.compareLists(compartiment.getSieges(), this.sieges);
+      }
+      else if (compartiment.getSieges() == null && this.sieges == null) {
          return true;
       }
-      return false;
+      else
+    	  return false;
    }
 
    public String getNumeroCompartiment() {
