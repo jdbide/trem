@@ -119,7 +119,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             this.em.flush();
 
             System.out
-                  .println("TRAITEMENT DU TRAIN-TRANCHE " + motriceTrainTrancheEntity.getIdMotriceTrainTranche());
+                  .println("Traitement du train-tranche " + motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche() 
+                  + "-" + motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche()
+                  + " statut " + motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
             /* Insertion du régime lié au train-tranche */
             cptRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
@@ -136,13 +138,13 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
                train = new Train(new ArrayList<Tranche>(),
                      motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
                      motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
+               planTransport.getTrains().add(train);
             }
             AtomicReference<Tranche> atomicTranche = new AtomicReference<>(new Tranche());
             atomicTranche.get().setNumeroTranche(motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
             atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime(), debutPeriode));
 
             train.getTranches().add(atomicTranche.get());
-            planTransport.getTrains().add(train);
             lastTrainNumber = motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche();
 
             /* Initialisation des données du train-tranche */
