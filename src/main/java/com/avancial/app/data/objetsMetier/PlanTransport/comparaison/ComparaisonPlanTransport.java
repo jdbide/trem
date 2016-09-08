@@ -10,6 +10,8 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
     private String numeroTranche;
     
     private EnumTrancheStatut statutTranche;
+    
+    private String regimeTranche;
 
     private T ancienField;
 
@@ -74,6 +76,14 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
 
     public void setTrancheStatut(EnumTrancheStatut statutTranche) {
         this.statutTranche = statutTranche;
+    }
+
+    public String getRegimeTranche() {
+        return this.regimeTranche;
+    }
+
+    public void setRegimeTranche(String regimeTranche) {
+        this.regimeTranche = regimeTranche;
     }
 
     public T getAncienField() {

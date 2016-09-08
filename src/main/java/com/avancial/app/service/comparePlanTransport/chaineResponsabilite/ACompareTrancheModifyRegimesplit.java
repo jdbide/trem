@@ -43,6 +43,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
      * @param numeroTranche
      *            Numéro de la tranche à laquelle les attributs appartiennent
      * @param trancheStatut TODO
+     * @param regimeTranche TODO
      * @param attributsFieldAncien
      *            Liste d'attributs dans la tranche la moins récente
      * @param attributsFieldNouveau
@@ -54,7 +55,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
     @SuppressWarnings("unchecked")
     protected MapComparaisonPlanTransport compareAttributLists(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, String numeroTranche,
-            EnumTrancheStatut trancheStatut, List<? extends IPlanTransport> attributsFieldAncien, List<? extends IPlanTransport> attributsFieldNouveau)
+            EnumTrancheStatut trancheStatut, String regimeTranche, List<? extends IPlanTransport> attributsFieldAncien, List<? extends IPlanTransport> attributsFieldNouveau)
             throws Exception {
         MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
@@ -86,6 +87,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
                     comparaisonPlanTransport = listComparaison.get(0);
                     comparaisonPlanTransport.setNumeroTranche(numeroTranche);
                     comparaisonPlanTransport.setTrancheStatut(trancheStatut);
+                    comparaisonPlanTransport.setRegimeTranche(regimeTranche);
                     logger.info("Attribut " + typeComparaisonPlanTransport.toString());
                     res.putComparaison(comparaisonPlanTransport);
 
