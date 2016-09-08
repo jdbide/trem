@@ -52,7 +52,7 @@ CREATE TABLE `tremas_import_tmdcath` (
   `CATH_EN_RESA` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `CATH_ETAT_TRCH` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `CATH_NUM` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `CATH_REGI` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `CATH_REGI` varchar(2000) COLLATE utf8_bin DEFAULT NULL,
   `CATH_SSIM` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `CATH_TRCH_COD_CIE` varchar(2) COLLATE utf8_bin DEFAULT NULL,
   `CATH_TRCH_IND_FER` varchar(1) COLLATE utf8_bin DEFAULT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE `tremas_import_tmdcatr` (
   `CATR_NUM` varchar(255) DEFAULT NULL,
   `CATR_PARITE` varchar(255) DEFAULT NULL,
   `CATR_READ_COD` varchar(255) DEFAULT NULL,
-  `CATR_REGI` varchar(255) DEFAULT NULL,
+  `CATR_REGI` varchar(2000) DEFAULT NULL,
   `CATR_TRA1_COD_CIE` varchar(255) DEFAULT NULL,
   `CATR_TRA1_IND_FER` varchar(255) DEFAULT NULL,
   `CATR_TRA1_NUM_TRA1` varchar(255) DEFAULT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE `tremas_import_tmdcdem` (
   `CDEM_DHDO` varchar(255) DEFAULT NULL,
   `CDEM_LIBS_TYCO_COD` varchar(255) DEFAULT NULL,
   `CDEM_NUM_CONDITION` varchar(255) DEFAULT NULL,
-  `CDEM_REGI` varchar(255) DEFAULT NULL,
+  `CDEM_REGI` varchar(2000) DEFAULT NULL,
   `CDEM_TRA1_COD_CIE` varchar(255) DEFAULT NULL,
   `CDEM_TRA1_IND_FER` varchar(255) DEFAULT NULL,
   `CDEM_TRA1_NUM_TRA1` varchar(255) DEFAULT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE `tremas_import_tmddstr` (
   `DSTR_TRA1_NUM_TRA1` varchar(255) DEFAULT NULL,
   `DSTR_TRA1_IND_FER` varchar(255) DEFAULT NULL,
   `DSTR_NUM` decimal(10,0) DEFAULT NULL,
-  `DSTR_REGI` varchar(255) DEFAULT NULL,
+  `DSTR_REGI` varchar(2000) DEFAULT NULL,
   `DSTR_ETAT_TRA1` varchar(255) DEFAULT NULL,
   `DSTR_COD_MISSION` varchar(255) DEFAULT NULL,
   `DSTR_TYP_DES` varchar(255) DEFAULT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE `tremas_import_tmddtrc` (
   `DTRC_TRCH_IND_FER` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `DTRC_TRCH_NUM` decimal(10,0) DEFAULT NULL,
   `DTRC_CODE` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `DTRC_REGI` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `DTRC_REGI` varchar(2000) COLLATE utf8_bin DEFAULT NULL,
   `DTRC_DHDO` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `DTRC_USER` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`idTMDDTRC`)
@@ -154,7 +154,7 @@ CREATE TABLE `tremas_import_tmdetvo` (
   `idTMDETVO` bigint(20) NOT NULL AUTO_INCREMENT,
   `ETVO_DHDO` varchar(255) DEFAULT NULL, 
   `ETVO_NUM` varchar(255) DEFAULT NULL,
-  `ETVO_REGI` varchar(255) DEFAULT NULL,
+  `ETVO_REGI` varchar(2000) DEFAULT NULL,
   `ETVO_USER` varchar(255) DEFAULT NULL,
   `ETVO_VOIT_COD_CIE` varchar(255) DEFAULT NULL,
   `ETVO_VOIT_IND_FER` varchar(255) DEFAULT NULL,
@@ -215,7 +215,7 @@ CREATE TABLE `tremas_import_tmdpare` (
   `PARE_IND_VOIT_REST` varchar(255) DEFAULT NULL,
   `PARE_NB_REPAS` varchar(255) DEFAULT NULL,
   `PARE_NUM_REST` varchar(255) DEFAULT NULL,
-  `PARE_REGI` varchar(255) DEFAULT NULL,
+  `PARE_REGI` varchar(2000) DEFAULT NULL,
   `PARE_RESP_VOIT_NUM` varchar(255) DEFAULT NULL,
   `PARE_SVTH_COD_CIE` varchar(255) DEFAULT NULL,
   `PARE_SVTH_IND_FER` varchar(255) DEFAULT NULL,
@@ -235,7 +235,7 @@ CREATE TABLE `tremas_import_tmdrame` (
   `RAME_NUM` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `RAME_NUM_PREM_VOIT` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `RAME_RAMC_COD` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `RAME_REGI` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `RAME_REGI` varchar(2000) COLLATE utf8_bin DEFAULT NULL,
   `RAME_TRCH_COD_CIE` varchar(2) COLLATE utf8_bin DEFAULT NULL,
   `RAME_TRCH_IND_FER` varchar(1) COLLATE utf8_bin DEFAULT NULL,
   `RAME_TRCH_NUM` varchar(255) COLLATE utf8_bin DEFAULT NULL,
@@ -251,7 +251,7 @@ CREATE TABLE `tremas_import_tmdrcth` (
   `RCTH_DHDO` varchar(255) DEFAULT NULL,
   `RCTH_INPT_RR_D` varchar(255) DEFAULT NULL,
   `RCTH_INPT_RR_F` varchar(255) DEFAULT NULL,
-  `RCTH_REGI` varchar(255) DEFAULT NULL,
+  `RCTH_REGI` varchar(2000) DEFAULT NULL,
   `RCTH_RESA_TYP` varchar(255) DEFAULT NULL,
   `RCTH_TRCH_COD_CIE` varchar(255) DEFAULT NULL,
   `RCTH_TRCH_IND_FER` varchar(255) DEFAULT NULL,
@@ -265,7 +265,7 @@ CREATE TABLE `tremas_import_tmdspco` (
   `idTMDSPCO` bigint(20) NOT NULL AUTO_INCREMENT,
   `SPCO_COMP_NUM` varchar(255) DEFAULT NULL,
   `SPCO_DHDO` varchar(255) DEFAULT NULL,
-  `SPCO_REGI` varchar(255) DEFAULT NULL,
+  `SPCO_REGI` varchar(2000) DEFAULT NULL,
   `SPCO_SPEC_COD` varchar(255) DEFAULT NULL,
   `SPCO_USER` varchar(255) DEFAULT NULL,
   `SPCO_VOIT_COD_CIE` varchar(255) DEFAULT NULL,
@@ -281,7 +281,7 @@ CREATE TABLE `tremas_import_tmdsppl` (
   `SPPL_DHDO` varchar(255) DEFAULT NULL,
   `SPPL_PCDD_NUM_COMP` varchar(255) DEFAULT NULL,
   `SPPL_PCDD_NUM_PLAC` varchar(255) DEFAULT NULL,
-  `SPPL_REGI` varchar(255) DEFAULT NULL,
+  `SPPL_REGI` varchar(2000) DEFAULT NULL,
   `SPPL_SPEC_COD` varchar(255) DEFAULT NULL,
   `SPPL_USER` varchar(255) DEFAULT NULL,
   `SPPL_VOIT_COD_CIE` varchar(255) DEFAULT NULL,
@@ -301,7 +301,7 @@ CREATE TABLE `tremas_import_tmdsvth` (
   `SVTH_INPT_RR_F` varchar(255) DEFAULT NULL,
   `SVTH_LIBS_SERV_COD` varchar(255) DEFAULT NULL,
   `SVTH_NUM` varchar(255) DEFAULT NULL,
-  `SVTH_REGI` varchar(255) DEFAULT NULL,
+  `SVTH_REGI` varchar(2000) DEFAULT NULL,
   `SVTH_TRCH_COD_CIE` varchar(255) DEFAULT NULL,
   `SVTH_TRCH_IND_FER` varchar(255) DEFAULT NULL,
   `SVTH_TRCH_NUM` varchar(255) DEFAULT NULL,
@@ -318,7 +318,7 @@ CREATE TABLE `tremas_import_tmdtath` (
   `TATH_INPT_RR_D` varchar(255) DEFAULT NULL,
   `TATH_INPT_RR_F` varchar(255) DEFAULT NULL,
   `TATH_PRIX_HORS_SYS` varchar(255) DEFAULT NULL,
-  `TATH_REGI` varchar(255) DEFAULT NULL,
+  `TATH_REGI` varchar(2000) DEFAULT NULL,
   `TATH_TRCH_COD_CIE` varchar(255) DEFAULT NULL,
   `TATH_TRCH_IND_FER` varchar(255) DEFAULT NULL,
   `TATH_TRCH_NUM` varchar(255) DEFAULT NULL,
@@ -343,9 +343,9 @@ CREATE TABLE `tremas_import_tmdtra1` (
   `TRA1_NAT_MOD_THOR` varchar(255) DEFAULT NULL,
   `TRA1_NOM_TRAIN` varchar(255) DEFAULT NULL,
   `TRA1_NUM_TRAIN` varchar(255) DEFAULT NULL,
-  `TRA1_REGI_NON_EXTR` varchar(255) DEFAULT NULL,
-  `TRA1_REGI_VAL` varchar(255) DEFAULT NULL,
-  `TRA1_REGI_VAL_TRTH` varchar(255) DEFAULT NULL,
+  `TRA1_REGI_NON_EXTR` varchar(2000) DEFAULT NULL,
+  `TRA1_REGI_VAL` varchar(2000) DEFAULT NULL,
+  `TRA1_REGI_VAL_TRTH` varchar(2000) DEFAULT NULL,
   `TRA1_USER` varchar(255) DEFAULT NULL,
   `TRA1_COMMENTAIRE` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idTMDTRA1`)
@@ -362,8 +362,8 @@ CREATE TABLE `tremas_import_tmdtrch` (
   `TRCH_INPT_RR_ORIG` varchar(255) DEFAULT NULL,
   `TRCH_LIBS_SEMA_COD` varchar(255) DEFAULT NULL,
   `TRCH_NUM` varchar(255) DEFAULT NULL,
-  `TRCH_REGI_VAL` varchar(255) DEFAULT NULL,
-  `TRCH_REGI_VAL_DC` varchar(255) DEFAULT NULL,
+  `TRCH_REGI_VAL` varchar(2000) DEFAULT NULL,
+  `TRCH_REGI_VAL_DC` varchar(2000) DEFAULT NULL,
   `TRCH_TRA1_COD_CIE` varchar(255) DEFAULT NULL,
   `TRCH_TRA1_IND_FER` varchar(255) DEFAULT NULL,
   `TRCH_TRA1_NUM_TRA1` varchar(255) DEFAULT NULL,
@@ -382,7 +382,7 @@ CREATE TABLE `tremas_import_tmdvoit` (
   `VOIT_NUM_ORIG` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `VOIT_NUM_RESA` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `VOIT_NUM_VOIT` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `VOIT_REGI_UTIL` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `VOIT_REGI_UTIL` varchar(2000) COLLATE utf8_bin DEFAULT NULL,
   `VOIT_ROUL_NUM` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `VOIT_SENS_ORIG` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `VOIT_TRCH_COD_CIE` varchar(2) COLLATE utf8_bin DEFAULT NULL,
@@ -451,29 +451,29 @@ CREATE TABLE `tremas_ref_tables_motrice` (
 -- ----------------------------
 -- Records of tremas_ref_tables_motrice
 -- ----------------------------
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('1', 'TMDAVTR', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('2', 'TMDAVTH', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('3', 'TMDCATH', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('4', 'TMDCATR', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('5', 'TMDCDCL', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('6', 'TMDCDDS', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('7', 'TMDCDEM', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('8', 'TMDDSTR', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('9', 'TMDETVO', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('10', 'TMDGADS', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('11', 'TMDKAPP', '1', '1');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('12', 'TMDPARE', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('13', 'TMDRAME', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('14', 'TMDRCTH', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('15', 'TMDSPCO', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('16', 'TMDSPPL', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('17', 'TMDSVTH', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('18', 'TMDTATH', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('19', 'TMDTRA1', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('20', 'TMDTRCH', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('21', 'TMDVOIT', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('22', 'TMDDTRC', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('23', 'TMDPCDD', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('24', 'TMDTYVO', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('25', 'TMDSAT1', '1', '10');
-INSERT INTO `tremas_ref_tables_motrice` VALUES ('26', 'TMDKPRO', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('1', 'VMDAVTR0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('2', 'VMDAVTH0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('3', 'VMDCATH0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('4', 'VMDCATR0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('5', 'VMDCDCL0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('6', 'VMDCDDS0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('7', 'VMDCDEM0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('8', 'VMDDSTR0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('9', 'VMDETVO0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('10', 'VMDGADS0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('11', 'VMDKAPP0', '1', '1');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('12', 'VMDPARE0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('13', 'VMDRAME0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('14', 'VMDRCTH0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('15', 'VMDSPCO0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('16', 'VMDSPPL0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('17', 'VMDSVTH0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('18', 'VMDTATH0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('19', 'VMDTRA10', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('20', 'VMDTRCH0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('21', 'VMDVOIT0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('22', 'VMDDTRC0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('23', 'VMDPCDD0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('24', 'VMDTYVO0', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('25', 'VMDSAT10', '1', '10');
+INSERT INTO `tremas_ref_tables_motrice` VALUES ('26', 'VMDKPRO0', '1', '10');

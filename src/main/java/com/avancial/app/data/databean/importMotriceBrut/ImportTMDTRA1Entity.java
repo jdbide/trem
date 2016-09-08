@@ -29,10 +29,10 @@ public class ImportTMDTRA1Entity {
    private String TRA1_IND_ECOLE;
    private String TRA1_REGI_VAL;
    private String TRA1_REGI_VAL_TRTH;
-   private String TRA1_USER;
-   private String TRA1_DHDO;
    private String TRA1_REGI_NON_EXTR;
    private String TRA1_COMMENTAIRE;
+   private String TRA1_USER;
+   private String TRA1_DHDO;
 
    public Long getIdTMDTRA1() {
       return this.idTMDTRA1;

@@ -110,7 +110,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
       List<String> res = new ArrayList<>();
       try {
          for (Field field : GetEntiteService.getClasseEntiteImportFromTableMotrice(table).getDeclaredFields()) {
-            if (!field.getName().equals("id" + table)) {
+            if (!field.getName().substring(0, 2).equals("id")) {
                res.add(field.getName());
             }
          }
