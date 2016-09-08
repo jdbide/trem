@@ -10,13 +10,15 @@ import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
 
+import com.avancial.app.data.Task;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.resources.constants.APP_Const;
 import com.avancial.app.service.traiteDeleteRegime.ITraiteDeleteDonnees;
 import com.avancial.app.service.traiteDeleteRegime.TraiteDeleteDonneesRegimeFactory;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.persistence.EntityManagerFactoryProvider;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 // Traitement : Delete jeu donnee (@ApiExtern : TraitementLogDetail @TODO trouver une sol)
@@ -39,9 +41,14 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
    // status Enum Status(IMPORT, DRAFT, ACTIVE, LASTACTIVE)
    private List<Status>                     status;
 
-   @Inject
-   @Socle_PUSocle
+   // @Inject
+   // @Socle_PUSocle
    private EntityManager                    em;
+
+   /**
+    * Id du currentThread
+    */
+   protected Long                           idTask           = null;
 
    /**
     * Contructeur
@@ -59,17 +66,16 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
    protected void executeTraitement() throws Exception {
       this.logBean.setLibelleLogTraitement("Traitement Delete JeuDonnee");
       logger.info("Début Traitement Delete JeuDonnee");
+      this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       for (Status st : this.status) {
          try {
-            
+
             this.log("Debut du traitement pour la suppression du " + st.toString());
             logger.info("Debut du traitement : Suppression des données temporaires " + st.toString());
             // end initialiastion des loggers
 
             // Récuperation de la listeJeuDonnees ()
-            List<JeuDonneeEntity> listJeuxDonnees = this.em.createNamedQuery("JeuDonneeEntity.getByEnvironnementStatus", JeuDonneeEntity.class)
-                  .setParameter("nomTechniqueCompagnieEnvironnement", this.compagnieEnvironnement)
-                  .setParameter("statusJeuDonnees", st).getResultList();
+            List<JeuDonneeEntity> listJeuxDonnees = this.em.createNamedQuery("JeuDonneeEntity.getByEnvironnementStatus", JeuDonneeEntity.class).setParameter("nomTechniqueCompagnieEnvironnement", this.compagnieEnvironnement).setParameter("statusJeuDonnees", st).getResultList();
 
             for (JeuDonneeEntity jeuDonneeEntity : listJeuxDonnees) {
                this.deleteJeuDonnees(jeuDonneeEntity);
@@ -81,12 +87,21 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
             this.em.getTransaction().rollback();
             this.log("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)");
             logger.error("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)", ex);
+            if (this.idTask != null) {
+               Task.finishKoTask(this.idTask, "Echec de Suppression des données temporaires : veuillez reessayer ulterieurement");
+               this.em.clear();
+               // this.em.close();
+               Thread.currentThread().interrupt();
+               throw (new InterruptedException());
+            }
 
             throw ex;
-         } finally {
-            this.em.clear();
-            this.em.close();
          }
+      }
+
+      if (this.em != null && this.em.isOpen()) {
+         this.em.clear();
+         this.em.close();
       }
 
       logger.info("Début Traitement Delete JeuDonnee");
@@ -169,6 +184,21 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
 
    public void setEm(EntityManager em) {
       this.em = em;
+   }
+
+   /**
+    * @return the idTask
+    */
+   public Long getIdTask() {
+      return idTask;
+   }
+
+   /**
+    * @param idTask
+    *           the idTask to set
+    */
+   public void setIdTask(Long idTask) {
+      this.idTask = idTask;
    }
 
 }

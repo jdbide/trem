@@ -20,6 +20,7 @@ public abstract class ATraitement implements ITraitement, Serializable {
     * Méthode contenant le code du traitement à implémenter
     * 
     * @throws Exception
+    * @throws Throwable 
     */
    protected abstract void executeTraitement() throws Exception;
 }

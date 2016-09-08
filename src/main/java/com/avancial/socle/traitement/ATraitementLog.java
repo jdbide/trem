@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import com.avancial.app.resources.constants.APP_Const;
 import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
 
@@ -20,7 +21,7 @@ public abstract class ATraitementLog extends ATraitement {
     * 
     */
    private static final long       serialVersionUID = 1L;
-   protected static final String PERSISTENCE_UNIT_NAME = "PU_socle";
+
    @Inject
    protected LogTraitementDataBean logBean;
 
@@ -39,6 +40,10 @@ public abstract class ATraitementLog extends ATraitement {
       try {
          this.executeTraitement();
          this.logBean.setMessageTraitement("Le traitement s'est terminé sans erreur.");
+      } catch (InterruptedException ex) {
+         this.logBean.setMessageTraitement("Le traitement s'est terminé avec des erreurs.");
+         Thread.currentThread().interrupt(); // Très important de réinterrompre
+         throw ex;
       } catch (Exception e) {
          this.logBean.setExceptionTraitement(e.getMessage());
          this.logBean.setMessageTraitement("Le traitement s'est terminé avec des erreurs.");
@@ -50,7 +55,7 @@ public abstract class ATraitementLog extends ATraitement {
 
    private void closeEmLog() {
       // TODO Auto-generated method stub
-      
+
    }
 
    protected void showProgress(String message) throws Exception {
@@ -74,7 +79,7 @@ public abstract class ATraitementLog extends ATraitement {
    }
 
    protected void saveLog() throws Exception {
-      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       this.emLog.getTransaction().begin();
       try {
          this.emLog.persist(this.logBean);
@@ -85,11 +90,11 @@ public abstract class ATraitementLog extends ATraitement {
       } finally {
          this.emLog.close();
       }
-      
+
    }
 
    protected void updateLog() throws Exception {
-      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       this.emLog.getTransaction().begin();
       try {
          this.emLog.merge(this.logBean);
@@ -98,7 +103,7 @@ public abstract class ATraitementLog extends ATraitement {
          ex.printStackTrace();
          this.emLog.getTransaction().rollback();
       } finally {
-         this.emLog.close();
+         this.emLog.clear();
       }
    }
 

@@ -30,6 +30,11 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
             MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
             MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager,
             AtomicReference<Tranche> atomicTranche) {
+       try {
+          
+       } catch (Exception ex) {
+          
+       }
         /* Composition */
        Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
        

@@ -92,8 +92,10 @@ public class TraitementImportWebService {
                      if (!Task.getReponseTask(Thread.currentThread().getId()).getEndTraitement()) {
                         Task.finishOkTask(Thread.currentThread().getId());
                      }
+                  } catch (InterruptedException ex) {
+                     Thread.currentThread().interrupt(); // Très important de réinterrompre
                   } catch (Exception e) {
-                     Task.finishKoTask(Thread.currentThread().getId(), "Echec de l'import");
+                     Thread.currentThread().interrupt(); // Très important de réinterrompre
                   }
                }
             };

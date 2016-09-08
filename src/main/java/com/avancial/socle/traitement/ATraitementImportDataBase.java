@@ -2,12 +2,14 @@ package com.avancial.socle.traitement;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.app.data.Task;
+import com.avancial.app.resources.constants.APP_Const;
+import com.avancial.socle.persistence.EntityManagerFactoryProvider;
 
 /**
  * 
@@ -21,13 +23,20 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     */
    private static final long serialVersionUID = 1L;
 
+   private static Logger     logger           = Logger.getLogger(ATraitementImportDataBase.class);
+
    protected EntityManager   entityManagerExterne;
 
    protected Session         sessionSocle;
 
-   @Inject
-   @Socle_PUSocle
+//   @Inject
+//   @Socle_PUSocle
    protected EntityManager                 em;
+
+   /**
+    * Id du currentThread
+    */
+   protected Long                          idTask = null;
 
    /**
     * recupere la liste des tables a exporter
@@ -93,35 +102,51 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
 
    @Override
    protected void executeTraitement() throws Exception {
-      this.initSessiont();
-      List<String> columns = null;
-      List<Object[]> donnees = null;
-      List<String> tablesExport = this.recuperationTablesExport();
-      List<String> tablesImport = this.recuperationTablesImport();
-      this.clearTable();
-      // Start transt
-      for (int i = 0; i < tablesImport.size(); i++) {
-         try {
-            columns = this.getColumnsName(tablesImport.get(i));
-            donnees = this.getData(tablesExport.get(i));
+      logger.info("Début de l'exécution de ATraitementImportDataBase");
+      try {
+         this.initSessiont();
+         List<String> columns = null;
+         List<Object[]> donnees = null;
+         List<String> tablesExport = this.recuperationTablesExport();
+         List<String> tablesImport = this.recuperationTablesImport();
+         this.clearTable();
+         // Start transt
+         for (int i = 0; i < tablesImport.size(); i++) {
+            try {
+               columns = this.getColumnsName(tablesImport.get(i));
+               donnees = this.getData(tablesExport.get(i));
 
-            this.insertData(tablesImport.get(i), columns, donnees);
-         } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+               this.insertData(tablesImport.get(i), columns, donnees);
+            } catch (Exception e) {
+               e.printStackTrace();
+               throw e;
+            }
          }
+
+         this.endSession();
+         logger.info("Fin de l'exécution de ATraitementImportDataBase");
+      } catch (Throwable th) {
+         logger.error("Fin de l'exécution de ATraitementImportDataBase avec EXCEPTION", th);
+         if (this.idTask != null) {
+            Task.finishKoTask(this.idTask, "Echec d'import : veuillez reessayer ulterieurement");
+            this.endSession();
+            Thread.currentThread().interrupt();
+            throw (new InterruptedException());
+         }
+         
+         throw th;
       }
-      // end transt
-      this.endSession();
    }
 
    private void endSession() {
-      this.sessionSocle.clear();
-      this.sessionSocle.close();
-      
+      if (this.sessionSocle != null && this.sessionSocle.isOpen()) {
+         this.sessionSocle.clear();
+         this.sessionSocle.close();
+      }
    }
 
    private void initSessiont() {
+      this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       this.sessionSocle = this.em.unwrap(Session.class);
    }
 
@@ -153,5 +178,19 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     */
    public void setEm(EntityManager em) {
       this.em = em;
+   }
+
+   /**
+    * @return the idTask
+    */
+   public Long getIdTask() {
+      return idTask;
+   }
+
+   /**
+    * @param idTask the idTask to set
+    */
+   public void setIdTask(Long idTask) {
+      this.idTask = idTask;
    }
 }

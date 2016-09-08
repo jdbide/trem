@@ -106,7 +106,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
     */
    @Override
    protected List<String> getColumnsName(String table) throws Exception {
-      logger.info("Start get Columns Name => " + table);
+      logger.info("Start <getColumnsName> => " + table);
       List<String> res = new ArrayList<>();
       try {
          for (Field field : GetEntiteService.getClasseEntiteImportFromTableMotrice(table).getDeclaredFields()) {
@@ -115,13 +115,13 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
             }
          }
       } catch (SecurityException | ClassNotFoundException e) {
-         logger.error("get Columns Name -> ", e);
+         logger.error("Exception <getColumnsName> ", e);
          // TODO Auto-generated catch block
          e.printStackTrace();
          throw e;
       }
 
-      logger.info("End get Columns Name => " + table);
+      logger.info("End <getColumnsName> => " + table);
       return res;
    }
 
@@ -131,10 +131,10 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
    @SuppressWarnings("unchecked")
    @Override
    protected List<Object[]> getData(String table) throws Exception {
-      logger.info("Start get Data => " + table);
+      logger.info("Start <getData> => " + table);
       Query query = this.entityManagerExterne.createNativeQuery("select * from " + table);
 
-      logger.info("End get Data => " + table);
+      logger.info("End <getData> => " + table);
       return query.getResultList();
    }
 

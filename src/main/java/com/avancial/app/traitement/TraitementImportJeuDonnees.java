@@ -97,7 +97,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
     * @see com.avancial.socle.traitement.ATraitement#executeTraitement()
     */
    @Override
-   protected void executeTraitement() {
+   protected void executeTraitement() throws Exception {
       logger.info("Début du traitement : TraitementImportJeuDonnees");
 
       this.logBean.setLibelleLogTraitement("TraitementImportJeuDonnees");
@@ -117,19 +117,21 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          Task.setMsgTask(this.idTask, "Finalisation");
          this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
          this.jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
+         try {
+            this.jeuDonneeService.update(this.jeuDonneeDataBean);
+         } catch (Exception ex) {
+            Task.finishKoTask(this.idTask, "Echec de mise à jour du jeu données : veuillez reessayer ulterieurement");
+            throw ex;
+         }
       } catch (Throwable ex) {
          if (this.jeuDonneeDataBean != null) {
+            this.jeuDonneeDataBean.setStatusJeuDonnees(Status.IMPORT);
             this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
+            this.jeuDonneeService.update(this.jeuDonneeDataBean);
          }
 
-         logger.error("Exception du traitement import jeu donnees", ex);
-      } finally {
-         if (this.jeuDonneeDataBean != null) {
-            Task.setMsgTask(this.idTask, "Mise à jour du jeu de données");
-            logger.info("Start Mise à jour du jeu de données");
-            this.jeuDonneeService.update(this.jeuDonneeDataBean);
-            logger.info("End Mise à jour du jeu de données");
-         }
+         Thread.currentThread().interrupt();
+         throw (new InterruptedException());
       }
    }
 
@@ -148,8 +150,11 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          logger.info("End Excel Rapport Differentiel");
       } catch (Throwable e) {
          this.log("Echec excelRapportDifferentiel");
-         Task.finishKoTask(this.idTask, "Echec excelRapportDifferentiel");
          logger.error("Echec excelRapportDifferentiel.", e);
+         if (this.idTask != null) {
+            Task.finishKoTask(this.idTask, "Echec de création du rapport différentiel : veuillez reessayer ulterieurement");
+         }
+         
          throw e;
       }
    }
@@ -164,8 +169,11 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          logger.info("End Compare Plan Transport");
       } catch (Throwable e) {
          this.log("Echec comparePlanTransport.");
-         Task.finishKoTask(this.idTask, "Echec comparePlanTransport.");
          logger.error("Echec comparePlanTransport.", e);
+         if (this.idTask != null) {
+            Task.finishKoTask(this.idTask, "Echec de la comparaison des plan de transport : veuillez reessayer ulterieurement");
+         }
+         
          throw e;
       }
    }
@@ -174,6 +182,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       Task.setMsgTask(this.idTask, "Création du Plan de transport");
       this.traitementObjetMetier.setEnvironnementCompagnie(this.compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
       this.traitementObjetMetier.setMapPlansDeTransport(this.mapPlansDeTransport);
+      this.traitementObjetMetier.setIdTask(this.idTask);
 
       try {
          logger.info("Start TraitementObjetMetier");
@@ -190,36 +199,45 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private void createDraft() throws Exception {
       this.traitementMotrice.setJeuDonneeEntity(this.jeuDonneeDataBean);
       this.traitementMotrice.setMap(this.mapPlansDeTransport);
+      this.traitementMotrice.setIdTask(this.idTask);
       Task.setMsgTask(this.idTask, "Création du draft");
 
       try {
-         logger.info("Start Traitement Motrice");
+         logger.info("Start Traitement Motrice <création du draft>");
          this.traitementMotrice.execute();
          logger.info("End traitementMotrice");
       } catch (Throwable e) {
          this.log("Echec du traitement motrice.");
          Task.finishKoTask(this.idTask, "Echec du traitement motrice.");
-         logger.error("Echec du traitement motrice.", e);
+         logger.error("Echec du traitement motrice <création du draft>.", e);
          throw e;
       }
    }
 
    private void saveJeuDonnees() throws Exception {
-      /* Insertion dans les tables du modèle motrice */
-      // Instanciation et sauvegarde du nouveau jeu de données
-      Task.setMsgTask(this.idTask, "Sauvegarde jeu de données");
-      this.jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(this.compagnieEnvironnementEntity);
-      this.jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
-      this.jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
-      // FIXME
-      Calendar calendar = Calendar.getInstance();
-      calendar.set(Calendar.YEAR, 2015);
-      calendar.set(Calendar.MONTH, Calendar.DECEMBER);
-      calendar.set(Calendar.DAY_OF_MONTH, 7);
-      this.jeuDonneeDataBean.setDateDebutPeriode(calendar.getTime());
-      this.jeuDonneeService.save(this.jeuDonneeDataBean);
-      logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
-      Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
+      try {
+         /* Insertion dans les tables du modèle motrice */
+         // Instanciation et sauvegarde du nouveau jeu de données
+         Task.setMsgTask(this.idTask, "Sauvegarde jeu de données");
+         this.jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(this.compagnieEnvironnementEntity);
+         this.jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
+         this.jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
+         // FIXME
+         Calendar calendar = Calendar.getInstance();
+         calendar.set(Calendar.YEAR, 2015);
+         calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+         calendar.set(Calendar.DAY_OF_MONTH, 7);
+         this.jeuDonneeDataBean.setDateDebutPeriode(calendar.getTime());
+         this.jeuDonneeService.save(this.jeuDonneeDataBean);
+         logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
+         Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
+      } catch (Exception ex) {
+         this.logBean.setExceptionTraitement(ex.getMessage());
+         this.logBean.setMessageTraitement("Echec de la sauvegarde du jeu données");
+         logger.error("Echec de la sauvegarde du jeu données", ex);
+         Task.finishKoTask(this.idTask, "Echec de la sauvegarde du jeu données");
+         throw ex;
+      }
    }
 
    private void deleteDataWithStatusImportDraft() throws Exception {
@@ -227,6 +245,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(this.compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
       this.traitementDeleteJeuDonnee.addStatus(Status.IMPORT);
       this.traitementDeleteJeuDonnee.addStatus(Status.DRAFT);
+      this.traitementDeleteJeuDonnee.setIdTask(this.idTask);
 
       try {
          logger.info("Start Suppression des données temporaires");
@@ -237,15 +256,14 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          Task.finishKoTask(this.idTask, "Echec de la suppression des données temporaires");
          logger.error("Echec de la suppression des données temporaires", e);
          throw e;
-      }
-      
-   }
+      }}
 
    private void importData() throws Exception {
       Task.setMsgTask(this.idTask, "Importation des données");
       // vider puis importer les tables
       this.traitement.setEntityManagerExterne(this.entityManagerDb2);
       this.traitement.setSchema(this.compagnieEnvironnementEntity.getDatasource().getSchema());
+      this.traitement.setIdTask(this.idTask);
       logger.info("Importation des données");
       try {
          this.traitement.execute();
@@ -269,9 +287,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          logger.info("End Connexion à Motrice");
       } catch (Throwable ex) {
          this.logBean.setExceptionTraitement(ex.getMessage());
-         this.logBean.setMessageTraitement("Echec de connexion avec la base de données externe Db2");
-         logger.error("Echec de connexion avec la base de données externe Db2", ex);
-         Task.finishKoTask(this.idTask, "Echec de connexion avec la base de données externe Db2");
+         this.logBean.setMessageTraitement("Echec de connexion avec la base de données externe Motrice");
+         logger.error("Echec de connexion avec la base de données externe Motrice", ex);
+         Task.finishKoTask(this.idTask, "Echec de connexion avec la base de données externe Motrice");
          throw ex;
       }
    }
