@@ -30,11 +30,12 @@ public class Train implements IPlanTransport {
    /**
     * Getter trache par numero de tranche
     * @param numeroTranche
+ * @param statutTranche TODO
     * @return
     */
-   public Tranche getTrancheByNumeroTranche(String numeroTranche) {
-      for (Tranche tranche : tranches) {
-         if (tranche.getNumeroTranche().equals(numeroTranche))
+   public Tranche getTrancheByNumeroTrancheAndStatus(String numeroTranche, EnumTrancheStatut statutTranche) {
+      for (Tranche tranche : this.tranches) {
+         if (tranche.getNumeroTranche().equals(numeroTranche) && tranche.getTrancheStatut().equals(statutTranche))
             return tranche;
       }
 

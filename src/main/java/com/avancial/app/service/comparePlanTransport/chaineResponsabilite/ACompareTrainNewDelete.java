@@ -60,6 +60,7 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
                 comparaisonPlanTransport = new ComparaisonPlanTransport<>();
                 comparaisonPlanTransport.setNumeroTrain(numeroTrain);
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
+                comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());
                 comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
                 logger.info("Train-Tranche NEW ou DELETE : " + comparaisonPlanTransport.getNumeroTrain() + "-"
                         + comparaisonPlanTransport.getNumeroTranche());

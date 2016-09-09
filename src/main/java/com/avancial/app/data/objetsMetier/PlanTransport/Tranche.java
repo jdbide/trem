@@ -35,7 +35,7 @@ public class Tranche extends ASousRegimeTranche {
     @Override
     public boolean equals(Object obj) {
        Tranche tranche = (Tranche) obj;
-       return this.numeroTranche.equals(tranche.getNumeroTranche());
+       return this.numeroTranche.equals(tranche.getNumeroTranche()) && this.trancheStatut.equals(tranche.getTrancheStatut());
     }
     /**
      * 

@@ -53,11 +53,12 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
 						+ "AND voiture.VOIT_TRCH_NUM_TRA1 = sppl.SPPL_VOIT_NUM_TRA1 "
 						+ "AND voiture.VOIT_TRCH_NUM = sppl.SPPL_VOIT_TRCH_NUM "
 						+ "AND voiture.VOIT_TRCH_IND_FER = sppl.SPPL_VOIT_IND_FER " + "WHERE cara.CATH_SSIM = ? "
-						+ "AND cara.CATH_TRCH_NUM_TRA1 = ? "
+						+ "AND cara.CATH_TRCH_NUM_TRA1 = ? AND cara.CATH_ETAT_TRCH = ? "
 						+ "AND sppl.SPPL_SPEC_COD = 'F' "
 						+ "ORDER BY sppl.SPPL_REGI");
 		query.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
 		query.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+		query.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
 		List<Object[]> listeSeat = query.getResultList();
 		AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);

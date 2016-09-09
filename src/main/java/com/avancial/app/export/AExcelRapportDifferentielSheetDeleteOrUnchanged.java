@@ -70,7 +70,7 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
             excelTools.createCellTexteWithStyle(3,
                     mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport()
                             .getTrainByNumeroTrain(comparaison.getNumeroTrain())
-                            .getTrancheByNumeroTranche(comparaison.getNumeroTranche()).getRegime().getCodeRegime(),
+                            .getTrancheByNumeroTrancheAndStatus(comparaison.getNumeroTranche(), comparaison.getStatutTranche()).getRegime().getCodeRegime(),
                     excelTools.addColor(excelTools.styleBorder, couleur));
             ((SXSSFSheet) excelTools.getSheet()).flushRows(1);
             logger.info("Onglet " + comparaison.getTypeComparaisonPlanTransport().name() + " : " + "("

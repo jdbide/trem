@@ -84,9 +84,15 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
             this.log("Fin du traitement : Suppression des données temporaires " + st.toString());
 
          } catch (Exception ex) {
-            this.em.getTransaction().rollback();
-            this.log("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)");
             logger.error("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)", ex);
+            this.log("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee)");
+
+            try {
+               this.em.getTransaction().rollback();
+            } catch (Exception e) {
+               logger.error("Exception au niveau du traitement pour la suppression du jeu données (TraitementDeleteJeuDonnee) : echec du rollback", ex);
+            }
+
             if (this.idTask != null) {
                Task.finishKoTask(this.idTask, "Echec de Suppression des données temporaires : veuillez reessayer ulterieurement");
                this.em.clear();
