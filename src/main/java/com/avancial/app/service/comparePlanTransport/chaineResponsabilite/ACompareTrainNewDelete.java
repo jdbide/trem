@@ -47,20 +47,22 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
         MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
         ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
+        Tranche trancheNouveau, trancheAncien;
         /* Boucle sur les tranchesNouveau */
         for (Iterator<Tranche> itTrancheNouveau = (Iterator<Tranche>) tranchesNouveau.iterator(); itTrancheNouveau
                 .hasNext();) {
-            Tranche trancheNouveau = itTrancheNouveau.next();
+            trancheNouveau = itTrancheNouveau.next();
 
             /* Vérifie si trancheNouveau existe dans ancien */
-            int index = tranchesAncien.indexOf(trancheNouveau);
+            trancheAncien = this.findTrancheAvecRegime(trancheNouveau, (List<Tranche>) tranchesAncien);
             /* Si trancheNouveau n'est pas dans ancien */
-            if (index < 0) {
+            if (trancheAncien == null) {
                 /* C'est une nouvelle tranche */
                 comparaisonPlanTransport = new ComparaisonPlanTransport<>();
                 comparaisonPlanTransport.setNumeroTrain(numeroTrain);
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                 comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());
+                comparaisonPlanTransport.setRegimeTranche(trancheNouveau.getRegime().getCodeRegime());
                 comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
                 logger.info("Train-Tranche NEW ou DELETE : " + comparaisonPlanTransport.getNumeroTrain() + "-"
                         + comparaisonPlanTransport.getNumeroTranche());
@@ -75,7 +77,7 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
              * nouveau
              */
             else if (typeComparaisonPlanTransport.equals(EnumTypeComparaisonPlanTransport.NEW)
-                    && ((Tranche) tranchesAncien.get(index)).getRegime().getDateFin()
+                    && trancheAncien.getRegime().getDateFin()
                             .before(trancheNouveau.getRegime().getDateFin())) {
                 /* C'est une nouvelle tranche */
                 comparaisonPlanTransport = new ComparaisonPlanTransport<>();
@@ -90,9 +92,34 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
                  * On retire de leur liste la trancheNouveau et la trancheAncien
                  */
                 itTrancheNouveau.remove();
-                tranchesAncien.remove(index);
+                tranchesAncien.remove(trancheAncien);
             }
 
+        }
+        return res;
+    }
+
+    /**
+     * Cherche dans une liste une tranche égale à celle passée en paramètre, en
+     * comparant le numéro de tranche, le statut, et si possible le régime;<br>
+     * s'il y a une tranche exactement égale elle est retournée, sinon on
+     * retourne la dernière équivalence sur le numéro de tranche et le statut.
+     * 
+     * @param trancheToFind
+     *            Tranche dont on veut trouver un équivalent
+     * @param tranches
+     *            Liste de tranches dans laquelle chercher un équivalent
+     * @return La tranche trouvée, ou {@code null} s'il n'y a aucune équivalence
+     */
+    private Tranche findTrancheAvecRegime(Tranche trancheToFind, List<Tranche> tranches) {
+        Tranche res = null;
+        for (Tranche tranche : tranches) {
+            if (tranche.equals(trancheToFind)) {
+                res = tranche;
+                if (tranche.getRegime().getCodeRegime().equals(trancheToFind.getRegime().getCodeRegime())) {
+                    return tranche;
+                }
+            }
         }
         return res;
     }

@@ -39,8 +39,12 @@ public class CompareTrainOther extends AChaineComparePlanTransport {
             for (Iterator<Tranche> itTrancheAncien = (Iterator<Tranche>) trainAncien.getTranches()
                     .iterator(); itTrancheAncien.hasNext();) {
                 Tranche trancheAncien = itTrancheAncien.next();
-                /* Si les tranches ont le même numeroTranche, on les compare */
-                if (trancheNouveau.equals(trancheAncien)) {
+                /*
+                 * Si les tranches ont le même numeroTranche, le même statut et
+                 * le même régime, on les compare
+                 */
+                if (trancheNouveau.equals(trancheAncien) && trancheNouveau.getRegime().getCodeRegime()
+                        .equals(trancheAncien.getRegime().getCodeRegime())) {
 
                     logger.info("Début comparaison Tranches : " + trancheAncien.getNumeroTranche() + " - "
                             + trancheNouveau.getNumeroTranche());

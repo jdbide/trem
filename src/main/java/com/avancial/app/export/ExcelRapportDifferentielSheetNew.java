@@ -138,7 +138,7 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
 
             Train currentTrain = mapPlansDeTransport.get(Status.DRAFT).getPlanTransport()
                     .getTrainByNumeroTrain(data.getNumeroTrain());
-            Tranche currentTranche = currentTrain.getTrancheByNumeroTrancheAndStatus(data.getNumeroTranche(), data.getStatutTranche());
+            Tranche currentTranche = currentTrain.getTrancheByNumeroTrancheAndStatusAndRegime(data.getNumeroTranche(), data.getStatutTranche(), data.getRegimeTranche());
 
             debutRowTrain = ligneDebut - 1;
 
@@ -152,7 +152,7 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
             }
 
             ligneDebut = excelTools.getSheet().getLastRowNum() + 1;
-            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : " + "(" + data.getNumeroTrain()
+            logger.info("Onglet " + data.getTypeComparaisonPlanTransport().name() + " : (" + data.getNumeroTrain()
                     + "-" + data.getNumeroTranche() + ") ligne " + (ligneDebut - 1) + " générée");
 
             excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 1, 1, currentTrain.getNumeroTrain(),

@@ -25,7 +25,7 @@ public class CompareTrancheRegimesplit extends ACompareTrancheModifyRegimesplit 
                     + attribut.getSimpleName());
             res.putAll(this.compareAttributLists(EnumTypeComparaisonPlanTransport.REGIMESPLIT,
                     trancheNouveau.getNumeroTranche(), trancheNouveau.getTrancheStatut(),
-                    trancheAncien.getAttributsField(attribut), trancheNouveau.getAttributsField(attribut)));
+                    trancheNouveau.getRegime().getCodeRegime(), trancheAncien.getAttributsField(attribut), trancheNouveau.getAttributsField(attribut)));
         }
         logger.info("Fin comparaison Attributs REGIMESPLIT (Tranche " + trancheAncien.getNumeroTranche() + ")");
 
