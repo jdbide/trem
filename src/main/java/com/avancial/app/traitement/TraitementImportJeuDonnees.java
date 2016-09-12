@@ -1,7 +1,7 @@
 package com.avancial.app.traitement;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.enterprise.context.RequestScoped;
@@ -14,11 +14,13 @@ import com.avancial.app.data.Task;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.importMotriceBrut.ImportTMDKAPPEntity;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.export.ExcelRapportDifferentiel;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.service.CompagnieEnvironnementService;
+import com.avancial.app.service.ImportKappService;
 import com.avancial.app.service.JeuDonneeService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
@@ -43,6 +45,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
    @Inject
    private JeuDonneeService              jeuDonneeService;
+   
+   @Inject
+   private ImportKappService importKappService;
 
    @Inject
    private RefDirectoryService           refDirectoryService;
@@ -53,7 +58,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private TraitementMotrice             traitementMotrice;
 
    @Inject
-   private TraitementImportDb2Motrice    traitement;
+   private TraitementImportDb2Motrice    traitementImportDb2Motrice;
 
    @Inject
    private TraitementObjetMetier         traitementObjetMetier;
@@ -222,12 +227,12 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(this.compagnieEnvironnementEntity);
          this.jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
          this.jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
-         // FIXME
-         Calendar calendar = Calendar.getInstance();
-         calendar.set(Calendar.YEAR, 2015);
-         calendar.set(Calendar.MONTH, Calendar.DECEMBER);
-         calendar.set(Calendar.DAY_OF_MONTH, 7);
-         this.jeuDonneeDataBean.setDateDebutPeriode(calendar.getTime());
+         /* Récupération de la date de référence pour le jeu de données */
+         ImportTMDKAPPEntity kappEntity = this.importKappService.getKht();
+         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+         Date dateOri = formatter.parse(kappEntity.getKAPP_ORI());
+         this.jeuDonneeDataBean.setDateDebutPeriode(dateOri);
+         
          this.jeuDonneeService.save(this.jeuDonneeDataBean);
          logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
          Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
@@ -261,12 +266,12 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private void importData() throws Exception {
       Task.setMsgTask(this.idTask, "Importation des données");
       // vider puis importer les tables
-      this.traitement.setEntityManagerExterne(this.entityManagerDb2);
-      this.traitement.setSchema(this.compagnieEnvironnementEntity.getDatasource().getSchema());
-      this.traitement.setIdTask(this.idTask);
+      this.traitementImportDb2Motrice.setEntityManagerExterne(this.entityManagerDb2);
+      this.traitementImportDb2Motrice.setSchema(this.compagnieEnvironnementEntity.getDatasource().getSchema());
+      this.traitementImportDb2Motrice.setIdTask(this.idTask);
       logger.info("Importation des données");
       try {
-         this.traitement.execute();
+         this.traitementImportDb2Motrice.execute();
       } catch (Throwable ex) {
          this.log("Echec de l'import");
          Task.finishKoTask(this.idTask, "Echec de l'import");
