@@ -32,11 +32,11 @@ public abstract class AbstractDao implements Serializable {
     * 
     */
    private static final long serialVersionUID = 1L;
-   
+
    @Inject
    @Socle_PUSocle
    EntityManager             entityManager;
-   
+
    protected ILogger         logger;
    protected ALogBean        logBean;
 
@@ -128,4 +128,16 @@ public abstract class AbstractDao implements Serializable {
 
    }
 
+   /*
+    * (non-Javadoc)
+    * 
+    * @see java.lang.Object#finalize()
+    */
+   @Override
+   protected void finalize() throws Throwable {
+      if (this.entityManager != null)
+         if (this.entityManager.isOpen())
+            this.entityManager.close();
+      super.finalize();
+   }
 }
