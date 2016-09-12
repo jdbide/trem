@@ -38,7 +38,7 @@ public class PageDataBean extends Page implements Serializable {
 
    private static final long  serialVersionUID            = 1L;
 
-   @OneToMany(fetch = FetchType.LAZY)
+   @OneToMany(fetch = FetchType.EAGER)
    @JoinTable(name = "socle_ihm_role2page",
          joinColumns = @JoinColumn(name = "idIhmPage"),
          inverseJoinColumns = @JoinColumn(name = "idRole"))

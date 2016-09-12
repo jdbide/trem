@@ -34,6 +34,7 @@ public class ChapitreService implements Serializable {
    public List<ChapitreDataBean> getAll() {
       @SuppressWarnings("unchecked")
       List<ChapitreDataBean> liste = em.createNamedQuery(ChapitreDataBean.QUERY_GET_ALL).getResultList();
+      this.em.close();
       return liste;
    }
 

@@ -112,6 +112,7 @@ public class MenuService {
          if (rubrique.getChapitres().isEmpty())
             userMenus.remove(rubrique);
       } // Fin boucle rubriques
+      this.em.close();
       return userMenus;
    }
 

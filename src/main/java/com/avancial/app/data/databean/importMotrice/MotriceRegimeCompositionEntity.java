@@ -19,154 +19,159 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_composition")
-@NamedQueries({
-        @NamedQuery(name = "MotriceRegimeComposition.getAll", query = "SELECT t FROM MotriceRegimeCompositionEntity t"),
-        @NamedQuery(name = "MotriceRegimeComposition.getByRegimes", query = "SELECT d FROM MotriceRegimeCompositionEntity d WHERE d.motriceRegime IN (:regimes)"),
-        @NamedQuery(name = "MotriceRegimeComposition.deleteAll", query = "DELETE FROM MotriceRegimeCompositionEntity"),
-        @NamedQuery(name = "MotriceRegimeComposition.deleteByRegimes",
-                query = "DELETE FROM MotriceRegimeCompositionEntity t WHERE t.motriceRegime IN (:regimes)"),
-        @NamedQuery(name = "MotriceRegimeCompositionEntity.getLastId",
-                query = "SELECT MAX( t.idMotriceRegimeComposition ) FROM MotriceRegimeCompositionEntity t")})
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeComposition.getAll",
+      query = "SELECT t FROM MotriceRegimeCompositionEntity t"),
+      @NamedQuery(name = "MotriceRegimeComposition.getByRegimes",
+            query = "SELECT d FROM MotriceRegimeCompositionEntity d WHERE d.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeComposition.deleteAll",
+            query = "DELETE FROM MotriceRegimeCompositionEntity"),
+      @NamedQuery(name = "MotriceRegimeComposition.deleteByRegimes",
+            query = "DELETE FROM MotriceRegimeCompositionEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeCompositionEntity.getLastId",
+            query = "SELECT MAX( t.idMotriceRegimeComposition ) FROM MotriceRegimeCompositionEntity t") })
 public class MotriceRegimeCompositionEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long idMotriceRegimeComposition;
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id
+   private Long                                      idMotriceRegimeComposition;
 
-    @Column(length = 1, nullable = false)
-    private String classCodeMotriceRegimeComposition;
+   @Column(length = 1,
+         nullable = false)
+   private String                                    classCodeMotriceRegimeComposition;
 
-    @Column(length = 3, nullable = false)
-    private String diagCodeMotriceRegimeComposition;
+   @Column(length = 3,
+         nullable = false)
+   private String                                    diagCodeMotriceRegimeComposition;
 
-    @Column(length = 6, nullable = false)
-    private String rameCodeMotriceRegimeComposition;
+   @Column(length = 6,
+         nullable = false)
+   private String                                    rameCodeMotriceRegimeComposition;
 
-    @Column(length = 3, nullable = false)
-    private String rmCodeMotriceRegimeComposition;
+   @Column(length = 3,
+         nullable = false)
+   private String                                    rmCodeMotriceRegimeComposition;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegimeComposition")
-    private List<MotriceRegimeCompositionCoachEntity> carsNumbers;
+   @OneToMany(fetch = FetchType.EAGER,
+         mappedBy = "motriceRegimeComposition")
+   private List<MotriceRegimeCompositionCoachEntity> carsNumbers;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idMotriceRegime")
-    @ForeignKey(name = "FK_motrice_regime_composition_idMotriceRegime")
-    private MotriceRegimeEntity motriceRegime;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRegime")
+   @ForeignKey(name = "FK_motrice_regime_composition_idMotriceRegime")
+   private MotriceRegimeEntity                       motriceRegime;
 
-    public MotriceRegimeCompositionEntity() {
-        super();
-    }
+   public MotriceRegimeCompositionEntity() {
+      super();
+   }
 
-    public MotriceRegimeCompositionEntity(Long idMotriceRegimeComposition, String classCodeMotriceRegimeComposition,
-            String diagCodeMotriceRegimeComposition, String rameCodeMotriceRegimeComposition,
-            String rmCodeMotriceRegimeComposition, List<MotriceRegimeCompositionCoachEntity> carsNumbers,
-            MotriceRegimeEntity motriceRegime) {
-        super();
-        this.idMotriceRegimeComposition = idMotriceRegimeComposition;
-        this.classCodeMotriceRegimeComposition = classCodeMotriceRegimeComposition;
-        this.diagCodeMotriceRegimeComposition = diagCodeMotriceRegimeComposition;
-        this.rameCodeMotriceRegimeComposition = rameCodeMotriceRegimeComposition;
-        this.rmCodeMotriceRegimeComposition = rmCodeMotriceRegimeComposition;
-        this.carsNumbers = carsNumbers;
-        this.motriceRegime = motriceRegime;
-    }
+   public MotriceRegimeCompositionEntity(Long idMotriceRegimeComposition, String classCodeMotriceRegimeComposition, String diagCodeMotriceRegimeComposition, String rameCodeMotriceRegimeComposition, String rmCodeMotriceRegimeComposition, List<MotriceRegimeCompositionCoachEntity> carsNumbers,
+         MotriceRegimeEntity motriceRegime) {
+      super();
+      this.idMotriceRegimeComposition = idMotriceRegimeComposition;
+      this.classCodeMotriceRegimeComposition = classCodeMotriceRegimeComposition;
+      this.diagCodeMotriceRegimeComposition = diagCodeMotriceRegimeComposition;
+      this.rameCodeMotriceRegimeComposition = rameCodeMotriceRegimeComposition;
+      this.rmCodeMotriceRegimeComposition = rmCodeMotriceRegimeComposition;
+      this.carsNumbers = carsNumbers;
+      this.motriceRegime = motriceRegime;
+   }
 
-    /**
-     * @return the idMotriceRegimeComposition
-     */
-    public Long getIdMotriceRegimeComposition() {
-        return this.idMotriceRegimeComposition;
-    }
+   /**
+    * @return the idMotriceRegimeComposition
+    */
+   public Long getIdMotriceRegimeComposition() {
+      return this.idMotriceRegimeComposition;
+   }
 
-    /**
-     * @param idMotriceRegimeComposition
-     *            the idMotriceRegimeComposition to set
-     */
-    public void setIdMotriceRegimeComposition(Long idMotriceRegimeComposition) {
-        this.idMotriceRegimeComposition = idMotriceRegimeComposition;
-    }
+   /**
+    * @param idMotriceRegimeComposition
+    *           the idMotriceRegimeComposition to set
+    */
+   public void setIdMotriceRegimeComposition(Long idMotriceRegimeComposition) {
+      this.idMotriceRegimeComposition = idMotriceRegimeComposition;
+   }
 
-    /**
-     * @return the rmCodeMotriceRegimeComposition
-     */
-    public String getRmCodeMotriceRegimeComposition() {
-        return this.rmCodeMotriceRegimeComposition;
-    }
+   /**
+    * @return the rmCodeMotriceRegimeComposition
+    */
+   public String getRmCodeMotriceRegimeComposition() {
+      return this.rmCodeMotriceRegimeComposition;
+   }
 
-    /**
-     * @param rmCodeMotriceRegimeComposition
-     *            the rmCodeMotriceRegimeComposition to set
-     */
-    public void setRmCodeMotriceRegimeComposition(String rmCodeMotriceRegimeComposition) {
-        this.rmCodeMotriceRegimeComposition = rmCodeMotriceRegimeComposition;
-    }
+   /**
+    * @param rmCodeMotriceRegimeComposition
+    *           the rmCodeMotriceRegimeComposition to set
+    */
+   public void setRmCodeMotriceRegimeComposition(String rmCodeMotriceRegimeComposition) {
+      this.rmCodeMotriceRegimeComposition = rmCodeMotriceRegimeComposition;
+   }
 
-    /**
-     * @return the rameCodeMotriceRegimeComposition
-     */
-    public String getRameCodeMotriceRegimeComposition() {
-        return this.rameCodeMotriceRegimeComposition;
-    }
+   /**
+    * @return the rameCodeMotriceRegimeComposition
+    */
+   public String getRameCodeMotriceRegimeComposition() {
+      return this.rameCodeMotriceRegimeComposition;
+   }
 
-    /**
-     * @param rameCodeMotriceRegimeComposition
-     *            the rameCodeMotriceRegimeComposition to set
-     */
-    public void setRameCodeMotriceRegimeComposition(String rameCodeMotriceRegimeComposition) {
-        this.rameCodeMotriceRegimeComposition = rameCodeMotriceRegimeComposition;
-    }
+   /**
+    * @param rameCodeMotriceRegimeComposition
+    *           the rameCodeMotriceRegimeComposition to set
+    */
+   public void setRameCodeMotriceRegimeComposition(String rameCodeMotriceRegimeComposition) {
+      this.rameCodeMotriceRegimeComposition = rameCodeMotriceRegimeComposition;
+   }
 
-    /**
-     * @return the classCodeMotriceRegimeComposition
-     */
-    public String getClassCodeMotriceRegimeComposition() {
-        return this.classCodeMotriceRegimeComposition;
-    }
+   /**
+    * @return the classCodeMotriceRegimeComposition
+    */
+   public String getClassCodeMotriceRegimeComposition() {
+      return this.classCodeMotriceRegimeComposition;
+   }
 
-    /**
-     * @param classCodeMotriceRegimeComposition
-     *            the classCodeMotriceRegimeComposition to set
-     */
-    public void setClassCodeMotriceRegimeComposition(String classCodeMotriceRegimeComposition) {
-        this.classCodeMotriceRegimeComposition = classCodeMotriceRegimeComposition;
-    }
+   /**
+    * @param classCodeMotriceRegimeComposition
+    *           the classCodeMotriceRegimeComposition to set
+    */
+   public void setClassCodeMotriceRegimeComposition(String classCodeMotriceRegimeComposition) {
+      this.classCodeMotriceRegimeComposition = classCodeMotriceRegimeComposition;
+   }
 
-    /**
-     * @return the carsNumbers
-     */
-    public List<MotriceRegimeCompositionCoachEntity> getCarsNumbers() {
-        return this.carsNumbers;
-    }
+   /**
+    * @return the carsNumbers
+    */
+   public List<MotriceRegimeCompositionCoachEntity> getCarsNumbers() {
+      return this.carsNumbers;
+   }
 
-    /**
-     * @param carsNumbers
-     *            the carsNumbers to set
-     */
-    public void setCarsNumbers(List<MotriceRegimeCompositionCoachEntity> carsNumbers) {
-        this.carsNumbers = carsNumbers;
-    }
+   /**
+    * @param carsNumbers
+    *           the carsNumbers to set
+    */
+   public void setCarsNumbers(List<MotriceRegimeCompositionCoachEntity> carsNumbers) {
+      this.carsNumbers = carsNumbers;
+   }
 
-    /**
-     * @return the motriceRegime
-     */
-    public MotriceRegimeEntity getMotriceRegime() {
-        return this.motriceRegime;
-    }
+   /**
+    * @return the motriceRegime
+    */
+   public MotriceRegimeEntity getMotriceRegime() {
+      return this.motriceRegime;
+   }
 
-    /**
-     * @param motriceRegime
-     *            the motriceRegime to set
-     */
-    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
-        this.motriceRegime = motriceRegime;
-    }
+   /**
+    * @param motriceRegime
+    *           the motriceRegime to set
+    */
+   public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
+      this.motriceRegime = motriceRegime;
+   }
 
-    public String getDiagCodeMotriceRegimeComposition() {
-        return this.diagCodeMotriceRegimeComposition;
-    }
+   public String getDiagCodeMotriceRegimeComposition() {
+      return this.diagCodeMotriceRegimeComposition;
+   }
 
-    public void setDiagCodeMotriceRegimeComposition(String diagCodeMotriceRegimeComposition) {
-        this.diagCodeMotriceRegimeComposition = diagCodeMotriceRegimeComposition;
-    }
+   public void setDiagCodeMotriceRegimeComposition(String diagCodeMotriceRegimeComposition) {
+      this.diagCodeMotriceRegimeComposition = diagCodeMotriceRegimeComposition;
+   }
 
 }

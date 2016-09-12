@@ -40,7 +40,7 @@ public class ChapitreDataBean extends Chapitre implements Serializable {
    @Column(name = "idIhmRubrique")
    private long               idRubrique;
 
-   @OneToMany(fetch = FetchType.LAZY)
+   @OneToMany(fetch = FetchType.EAGER)
    @JoinColumn(name = "idIhmChapitre")
    private List<PageDataBean> pages;
 

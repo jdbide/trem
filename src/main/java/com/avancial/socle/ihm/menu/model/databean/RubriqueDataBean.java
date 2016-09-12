@@ -34,7 +34,7 @@ public class RubriqueDataBean extends Rubrique implements Serializable {
 
    private static final long      serialVersionUID            = 1L;
 
-   @OneToMany(fetch = FetchType.LAZY)
+   @OneToMany(fetch = FetchType.EAGER)
    @JoinColumn(name = "idIhmRubrique")
    private List<ChapitreDataBean> chapitres;
 

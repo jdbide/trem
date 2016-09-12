@@ -54,7 +54,7 @@ public abstract class ATraitementLog extends ATraitement {
    }
 
    private void closeEmLog() {
-      // TODO Auto-generated method stub
+      this.emLog.close();
 
    }
 

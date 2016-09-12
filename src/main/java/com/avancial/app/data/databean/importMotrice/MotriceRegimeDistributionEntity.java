@@ -11,54 +11,55 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_distribution")
-@NamedQueries({
-        @NamedQuery(name = "MotriceRegimeDistribution.getAll",
-                query = "SELECT t FROM MotriceRegimeDistributionEntity t"),
-        @NamedQuery(name = "MotriceRegimeDistribution.deleteAll",
-                query = "DELETE FROM MotriceRegimeDistributionEntity"),
-        @NamedQuery(name = "MotriceRegimeDistribution.deleteByRegimes",
-                query = "DELETE FROM MotriceRegimeDistributionEntity t WHERE t.motriceRegime IN (:regimes)"),
-        @NamedQuery(name = "MotriceRegimeDistributionEntity.getLastId",
-                query = "SELECT MAX( t.idMotriceRegimeDistribution ) FROM MotriceRegimeDistributionEntity t")})
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeDistribution.getAll",
+      query = "SELECT t FROM MotriceRegimeDistributionEntity t"),
+      @NamedQuery(name = "MotriceRegimeDistribution.deleteAll",
+            query = "DELETE FROM MotriceRegimeDistributionEntity"),
+      @NamedQuery(name = "MotriceRegimeDistribution.deleteByRegimes",
+            query = "DELETE FROM MotriceRegimeDistributionEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeDistributionEntity.getLastId",
+            query = "SELECT MAX( t.idMotriceRegimeDistribution ) FROM MotriceRegimeDistributionEntity t") })
 public class MotriceRegimeDistributionEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long idMotriceRegimeDistribution;
-    @Column(length = 1, nullable = false)
-    private String distribIndexMotriceRegimeDistribution;
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id
+   private Long                idMotriceRegimeDistribution;
+   @Column(length = 1,
+         nullable = false)
+   private String              distribIndexMotriceRegimeDistribution;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idMotriceRegime")
-    @ForeignKey(name = "FK_motrice_regime_distribution_idMotriceRegime")
-    private MotriceRegimeEntity motriceRegime;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRegime")
+   @ForeignKey(name = "FK_motrice_regime_distribution_idMotriceRegime")
+   private MotriceRegimeEntity motriceRegime;
 
-    public Long getIdMotriceRegimeDistribution() {
-        return this.idMotriceRegimeDistribution;
-    }
+   public Long getIdMotriceRegimeDistribution() {
+      return this.idMotriceRegimeDistribution;
+   }
 
-    public void setIdMotriceRegimeDistribution(Long idMotriceRegimeDistribution) {
-        this.idMotriceRegimeDistribution = idMotriceRegimeDistribution;
-    }
+   public void setIdMotriceRegimeDistribution(Long idMotriceRegimeDistribution) {
+      this.idMotriceRegimeDistribution = idMotriceRegimeDistribution;
+   }
 
-    public String getDistribIndexMotriceRegimeDistribution() {
-        return this.distribIndexMotriceRegimeDistribution;
-    }
+   public String getDistribIndexMotriceRegimeDistribution() {
+      return this.distribIndexMotriceRegimeDistribution;
+   }
 
-    public void setDistribIndexMotriceRegimeDistribution(String distribIndexMotriceRegimeDistribution) {
-        this.distribIndexMotriceRegimeDistribution = distribIndexMotriceRegimeDistribution;
-    }
+   public void setDistribIndexMotriceRegimeDistribution(String distribIndexMotriceRegimeDistribution) {
+      this.distribIndexMotriceRegimeDistribution = distribIndexMotriceRegimeDistribution;
+   }
 
-    public MotriceRegimeEntity getMotriceRegime() {
-        return this.motriceRegime;
-    }
+   public MotriceRegimeEntity getMotriceRegime() {
+      return this.motriceRegime;
+   }
 
-    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
-        this.motriceRegime = motriceRegime;
-    }
+   public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
+      this.motriceRegime = motriceRegime;
+   }
 
 }

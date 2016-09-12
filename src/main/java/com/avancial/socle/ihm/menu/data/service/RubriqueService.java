@@ -33,6 +33,7 @@ public class RubriqueService implements Serializable {
    public List<RubriqueDataBean> getAll() {
       @SuppressWarnings("unchecked")
       List<RubriqueDataBean> listRubrique = em.createNamedQuery(RubriqueDataBean.QUERY_GET_ALL).getResultList();
+      this.em.close();
       return listRubrique;
    }
 

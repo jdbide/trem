@@ -40,7 +40,7 @@ public abstract class ATraitementLogDetail extends ATraitementLog {
          this.emLog.getTransaction().rollback();
       } finally {
          this.emLog.clear();
-         //this.emLog.close();
+         this.emLog.close();
       }
    }
 

@@ -11,51 +11,55 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_eqptype")
-@NamedQueries({@NamedQuery(name = "MotriceRegimeEqpType.getAll", query = "SELECT t FROM MotriceRegimeEqpTypeEntity t"),
-        @NamedQuery(name = "MotriceRegimeEqpType.deleteAll", query = "DELETE FROM MotriceRegimeEqpTypeEntity"),
-        @NamedQuery(name = "MotriceRegimeEqpType.deleteByRegimes",
-                query = "DELETE FROM MotriceRegimeEqpTypeEntity t WHERE t.motriceRegime IN (:regimes)"),
-        @NamedQuery(name = "MotriceRegimeEqpTypeEntity.getLastId",
-                query = "SELECT MAX( t.idMotriceRegimeEqpType ) FROM MotriceRegimeEqpTypeEntity t")})
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeEqpType.getAll",
+      query = "SELECT t FROM MotriceRegimeEqpTypeEntity t"),
+      @NamedQuery(name = "MotriceRegimeEqpType.deleteAll",
+            query = "DELETE FROM MotriceRegimeEqpTypeEntity"),
+      @NamedQuery(name = "MotriceRegimeEqpType.deleteByRegimes",
+            query = "DELETE FROM MotriceRegimeEqpTypeEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeEqpTypeEntity.getLastId",
+            query = "SELECT MAX( t.idMotriceRegimeEqpType ) FROM MotriceRegimeEqpTypeEntity t") })
 public class MotriceRegimeEqpTypeEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long idMotriceRegimeEqpType;
-    @Column(length = 3, nullable = false)
-    private String eqpTypeMotriceRegimeEqpType;
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id
+   private Long                idMotriceRegimeEqpType;
+   @Column(length = 3,
+         nullable = false)
+   private String              eqpTypeMotriceRegimeEqpType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idMotriceRegime")
-    @ForeignKey(name = "FK_motrice_regime_eqptype_idMotriceRegime")
-    private MotriceRegimeEntity motriceRegime;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRegime")
+   @ForeignKey(name = "FK_motrice_regime_eqptype_idMotriceRegime")
+   private MotriceRegimeEntity motriceRegime;
 
-    public Long getIdMotriceRegimeEqpType() {
-        return this.idMotriceRegimeEqpType;
-    }
+   public Long getIdMotriceRegimeEqpType() {
+      return this.idMotriceRegimeEqpType;
+   }
 
-    public void setIdMotriceRegimeEqpType(Long idMotriceRegimeEqpType) {
-        this.idMotriceRegimeEqpType = idMotriceRegimeEqpType;
-    }
+   public void setIdMotriceRegimeEqpType(Long idMotriceRegimeEqpType) {
+      this.idMotriceRegimeEqpType = idMotriceRegimeEqpType;
+   }
 
-    public String getEqpTypeRegimeEqpType() {
-        return this.eqpTypeMotriceRegimeEqpType;
-    }
+   public String getEqpTypeRegimeEqpType() {
+      return this.eqpTypeMotriceRegimeEqpType;
+   }
 
-    public void setEqpTypeRegimeEqpType(String eqpTypeRegimeEqpType) {
-        this.eqpTypeMotriceRegimeEqpType = eqpTypeRegimeEqpType;
-    }
+   public void setEqpTypeRegimeEqpType(String eqpTypeRegimeEqpType) {
+      this.eqpTypeMotriceRegimeEqpType = eqpTypeRegimeEqpType;
+   }
 
-    public MotriceRegimeEntity getMotriceRegime() {
-        return this.motriceRegime;
-    }
+   public MotriceRegimeEntity getMotriceRegime() {
+      return this.motriceRegime;
+   }
 
-    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
-        this.motriceRegime = motriceRegime;
-    }
+   public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
+      this.motriceRegime = motriceRegime;
+   }
 
 }

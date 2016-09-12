@@ -33,6 +33,7 @@ public class PageService implements Serializable {
    public List<PageDataBean> getAll() {
       @SuppressWarnings("unchecked")
       List<PageDataBean> liste = em.createNamedQuery(PageDataBean.QUERY_GET_ALL).getResultList();
+      this.em.close();
       return liste;
    }
 
