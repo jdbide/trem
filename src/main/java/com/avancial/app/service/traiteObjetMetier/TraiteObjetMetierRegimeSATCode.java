@@ -15,23 +15,16 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
 public class TraiteObjetMetierRegimeSATCode implements ITraiteObjetMetier {
 
-	@Override
-	public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
-		List<ASousRegimeTranche> listeCodeSat = (List<ASousRegimeTranche>) atomicTranche.get()
-				.getAttributsField(CodeSat.class);
-		if (listeCodeSat == null) {
-			listeCodeSat = new ArrayList<ASousRegimeTranche>();
-		}
-		for (MotriceRegimeSatcodeEntity regimeCodeSat : regime.getMotriceRegimeSatcode()) {
-			try {
-            listeCodeSat.add(new CodeSat(regimeCodeSat.getSatCodeMotriceRegimeSatcode(),
-            		new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
-         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
-		}
-		atomicTranche.get().addAttributsField(listeCodeSat);
-	}
+   @Override
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
+      List<ASousRegimeTranche> listeCodeSat = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(CodeSat.class);
+      if (listeCodeSat == null) {
+         listeCodeSat = new ArrayList<ASousRegimeTranche>();
+      }
+      for (MotriceRegimeSatcodeEntity regimeCodeSat : regime.getMotriceRegimeSatcode()) {
+         listeCodeSat.add(new CodeSat(regimeCodeSat.getSatCodeMotriceRegimeSatcode(), new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      }
+      atomicTranche.get().addAttributsField(listeCodeSat);
+   }
 
 }

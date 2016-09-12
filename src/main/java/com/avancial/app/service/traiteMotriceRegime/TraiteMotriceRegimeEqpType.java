@@ -24,7 +24,9 @@ import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 public class TraiteMotriceRegimeEqpType implements ITraiteMotriceRegime {
 
    @Override
-   public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche) {
+   public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
+         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
+         throws ParseException {
 
       IMultipleInsertRequestGenerator generatorRegime = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class);
       IMultipleInsertRequestGenerator generatorEqpType = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEqpTypeEntity.class);
@@ -33,10 +35,13 @@ public class TraiteMotriceRegimeEqpType implements ITraiteMotriceRegime {
       Long idTrainTranche = motriceTrainTrancheEntity.getIdMotriceTrainTranche();
 
       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
-      
+
       Query queryREqpType = entityManager
-            .createNativeQuery("SELECT categorie.CATR_TYEQ_COD AS eqpTypeMotriceRegimeEqpType, categorie.CATR_REGI AS motriceRegime " + "FROM tremas_import_tmdcatr AS categorie " + "INNER JOIN tremas_import_tmdcath AS cath ON categorie.CATR_TRA1_COD_CIE = cath.CATH_TRCH_COD_CIE "
-                  + "AND categorie.CATR_TRA1_NUM_TRA1 = cath.CATH_TRCH_NUM_TRA1 " + "AND categorie.CATR_TRA1_IND_FER = cath.CATH_TRCH_IND_FER " + "WHERE cath.CATH_SSIM = ? " + "AND categorie.CATR_TRA1_NUM_TRA1 = ? AND cath.CATH_ETAT_TRCH = ? " + "ORDER BY motriceRegime ");
+            .createNativeQuery("SELECT categorie.CATR_TYEQ_COD AS eqpTypeMotriceRegimeEqpType, categorie.CATR_REGI AS motriceRegime "
+                  + "FROM tremas_import_tmdcatr AS categorie "
+                  + "INNER JOIN tremas_import_tmdcath AS cath ON categorie.CATR_TRA1_COD_CIE = cath.CATH_TRCH_COD_CIE "
+                  + "AND categorie.CATR_TRA1_NUM_TRA1 = cath.CATH_TRCH_NUM_TRA1 " + "AND categorie.CATR_TRA1_IND_FER = cath.CATH_TRCH_IND_FER "
+                  + "WHERE cath.CATH_SSIM = ? " + "AND categorie.CATR_TRA1_NUM_TRA1 = ? AND cath.CATH_ETAT_TRCH = ? " + "ORDER BY motriceRegime ");
       queryREqpType.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
       queryREqpType.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
       queryREqpType.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
@@ -51,17 +56,12 @@ public class TraiteMotriceRegimeEqpType implements ITraiteMotriceRegime {
 
       for (Object[] record : rEqpType) {
          if (!regime.equals((String) record[1])) {
-            generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 8, idTrainTranche);    
+            generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 8, idTrainTranche);
          }
          generatorEqpType.addValue(idEqpType.getAndIncrement(), (String) record[0], idRegime);
-         
-         try {
-            listeTypeEquipement.add(new TypeEquipement((String) record[0], new Regime((String) record[1], debutPeriode)));
-         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
-         
+
+         listeTypeEquipement.add(new TypeEquipement((String) record[0], new Regime((String) record[1], debutPeriode)));
+
          regime = (String) record[1];
       }
       atomicTranche.get().addAttributsField(listeTypeEquipement);

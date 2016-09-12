@@ -19,19 +19,17 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 public class TraiteObjetMetierRegimeMealType implements ITraiteObjetMetier {
 
    @Override
-   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
       List<ASousRegimeTranche> listeMeal = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Repas.class);
       if (listeMeal == null) {
          listeMeal = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeMealTypeEntity regimeMeal : regime.getMotriceRegimeMealType()) {
-         try {
-            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(regimeMeal.getMealTypeMotriceRegimeMealType()), new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()), formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())), new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
-         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
+         listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(regimeMeal.getMealTypeMotriceRegimeMealType()),
+               new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()),
+                     formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())),
+               new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
       }
       atomicTranche.get().addAttributsField(listeMeal);
 

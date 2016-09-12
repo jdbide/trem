@@ -16,30 +16,22 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
 
 public class TraiteObjetMetierRegimeComposition implements ITraiteObjetMetier {
 
-    @Override
-    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
-        List<ASousRegimeTranche> listeCompositions = (List<ASousRegimeTranche>) atomicTranche.get()
-                .getAttributsField(Composition.class);
-        if (listeCompositions == null) {
-            listeCompositions = new ArrayList<ASousRegimeTranche>();
-        }
-        for (MotriceRegimeCompositionEntity regimeComposition : regime.getMotriceRegimeComposition()) {
-            List<Voiture> voitures = new ArrayList<Voiture>();
-            for (MotriceRegimeCompositionCoachEntity voiture : regimeComposition.getCarsNumbers()) {
-                voitures.add(new Voiture(voiture.getCoachNumberMotriceRegimeCompositionCoach(), null));
-            }
-            try {
-               listeCompositions.add(new Composition(regimeComposition.getClassCodeMotriceRegimeComposition(),
-                       regimeComposition.getDiagCodeMotriceRegimeComposition(),
-                       regimeComposition.getRameCodeMotriceRegimeComposition(),
-                       regimeComposition.getRmCodeMotriceRegimeComposition(), voitures,
-                       new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
-            } catch (ParseException e) {
-               // TODO Auto-generated catch block
-               e.printStackTrace();
-            }
-        }
-        atomicTranche.get().addAttributsField(listeCompositions);
-    }
+   @Override
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
+      List<ASousRegimeTranche> listeCompositions = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Composition.class);
+      if (listeCompositions == null) {
+         listeCompositions = new ArrayList<ASousRegimeTranche>();
+      }
+      for (MotriceRegimeCompositionEntity regimeComposition : regime.getMotriceRegimeComposition()) {
+         List<Voiture> voitures = new ArrayList<Voiture>();
+         for (MotriceRegimeCompositionCoachEntity voiture : regimeComposition.getCarsNumbers()) {
+            voitures.add(new Voiture(voiture.getCoachNumberMotriceRegimeCompositionCoach(), null));
+         }
+         listeCompositions.add(new Composition(regimeComposition.getClassCodeMotriceRegimeComposition(),
+               regimeComposition.getDiagCodeMotriceRegimeComposition(), regimeComposition.getRameCodeMotriceRegimeComposition(),
+               regimeComposition.getRmCodeMotriceRegimeComposition(), voitures, new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      }
+      atomicTranche.get().addAttributsField(listeCompositions);
+   }
 
 }

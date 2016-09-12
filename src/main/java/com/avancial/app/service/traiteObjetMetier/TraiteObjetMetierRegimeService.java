@@ -17,26 +17,19 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
 public class TraiteObjetMetierRegimeService implements ITraiteObjetMetier {
 
-	@Override
-	public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
-		List<ASousRegimeTranche> listeServices = (List<ASousRegimeTranche>) atomicTranche.get()
-				.getAttributsField(ServiceABord.class);
-		if (listeServices == null) {
-			listeServices = new ArrayList<ASousRegimeTranche>();
-		}
-		for (MotriceRegimeServiceEntity regimeService : regime.getMotriceRegimeServices()) {
-			try {
-            listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(),
-            		EnumClasseService.getEnumClasseService(regimeService.getClassMotriceRegimeService()),
-            		new Gare(regimeService.getOrigMotriceRegimeService()),
-            		new Gare(regimeService.getDestMotriceRegimeService()),
-            		new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
-         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
-		}
-		atomicTranche.get().addAttributsField(listeServices);
-	}
+   @Override
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
+      List<ASousRegimeTranche> listeServices = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(ServiceABord.class);
+      if (listeServices == null) {
+         listeServices = new ArrayList<ASousRegimeTranche>();
+      }
+      for (MotriceRegimeServiceEntity regimeService : regime.getMotriceRegimeServices()) {
+         listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(),
+               EnumClasseService.getEnumClasseService(regimeService.getClassMotriceRegimeService()),
+               new Gare(regimeService.getOrigMotriceRegimeService()), new Gare(regimeService.getDestMotriceRegimeService()),
+               new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      }
+      atomicTranche.get().addAttributsField(listeServices);
+   }
 
 }
