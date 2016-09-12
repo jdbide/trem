@@ -1,6 +1,9 @@
 package traitement;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -42,7 +45,9 @@ public class DeleteJeuDonneeTest {
     @Test
    public void testDeleteDraft() throws Exception {
       this.test.setCompagnieEnvironnement("ES_PROD");
-      this.test.setStatus(Status.DRAFT);
+      List<Status> status = new ArrayList<>();
+      status.add(Status.DRAFT);
+      this.test.setStatus(status);
       this.test.execute();
 
     }
