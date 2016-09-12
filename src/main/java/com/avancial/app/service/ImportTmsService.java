@@ -41,17 +41,6 @@ public class ImportTmsService implements Serializable {
    }
 
    /**
-    * On ferme l'entityManager
-    */
-   @Override
-   protected void finalize() throws Throwable {
-      if (this.em != null)
-         if (this.em.isOpen())
-            this.em.close();
-      super.finalize();
-   }
-
-   /**
     * TODO Recuperation des jeu de données
     * 
     * @return
@@ -93,6 +82,7 @@ public class ImportTmsService implements Serializable {
          ex.printStackTrace();
          throw ex;
       } finally {
+         this.em.close();
          return listImportTmsDto;
       }
    }
