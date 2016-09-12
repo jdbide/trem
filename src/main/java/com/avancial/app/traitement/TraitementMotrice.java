@@ -29,7 +29,6 @@ import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.resources.constants.APP_Const;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
@@ -38,7 +37,7 @@ import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.persistence.EntityManagerFactoryProvider;
+import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 public class TraitementMotrice extends ATraitementLogDetail implements Serializable {
@@ -59,8 +58,8 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 
    private MapPlansDeTransport           mapPlansDeTransport;
 
-   // @Inject
-   // @Socle_PUSocle
+   @Inject
+   @Socle_PUSocle
    private EntityManager                 em;
 
    /**
@@ -81,7 +80,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
       this.log("Debut du traitement de l'import brut");
 
       try {
-         this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+         // this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
          if (this.jeuDonneeEntity == null)
             return;
 
@@ -128,10 +127,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             this.em.persist(motriceTrainTrancheEntity);
             this.em.flush();
 
-            System.out
-                  .println("Traitement du train-tranche " + motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche() 
-                  + "-" + motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche()
-                  + " statut " + motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
+            System.out.println("Traitement du train-tranche " + motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche() + "-" + motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche() + " statut " + motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
             /* Insertion du régime lié au train-tranche */
             cptRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
@@ -145,9 +141,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             this.em.getTransaction().commit();
 
             if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
-               train = new Train(new ArrayList<Tranche>(),
-                     motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
-                     motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
+               train = new Train(new ArrayList<Tranche>(), motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(), motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
                planTransport.getTrains().add(train);
             }
 
@@ -165,9 +159,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
                   ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory.getTraiteMotriceRegime(entity);
                   traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em, atomicTranche);
                } catch (ParseException e) {
-                   System.err.println("Erreur dans la lecture d'un régime de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
-                   e.printStackTrace();
-                   throw e;
+                  System.err.println("Erreur dans la lecture d'un régime de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
+                  e.printStackTrace();
+                  throw e;
                } catch (Exception e) {
                   System.err.println("Erreur dans la récupération de l'entité motrice régime : " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime() + " ou de son traitement");
                   e.printStackTrace();
@@ -212,7 +206,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             Task.finishKoTask(this.idTask, "Echec de création du draft : veuillez reessayer ulterieurement");
             if (this.em != null && this.em.isOpen()) {
                this.em.clear();
-               //this.em.close();
+               this.em.close();
             }
 
             Thread.currentThread().interrupt();

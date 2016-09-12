@@ -99,6 +99,8 @@ public abstract class AbstractDao implements Serializable {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException(e);
+      } finally {
+         this.entityManager.close();
       }
    }
 
@@ -111,6 +113,8 @@ public abstract class AbstractDao implements Serializable {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException(e);
+      } finally {
+         this.entityManager.close();
       }
 
    }
@@ -124,6 +128,8 @@ public abstract class AbstractDao implements Serializable {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException(e);
+      } finally {
+         this.entityManager.close();
       }
 
    }
@@ -137,7 +143,7 @@ public abstract class AbstractDao implements Serializable {
    protected void finalize() throws Throwable {
       if (this.entityManager != null)
          if (this.entityManager.isOpen())
-            this.entityManager.close();
-      super.finalize();
+
+            super.finalize();
    }
 }
