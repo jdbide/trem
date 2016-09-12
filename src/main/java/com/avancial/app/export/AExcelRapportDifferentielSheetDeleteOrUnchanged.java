@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
-import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
@@ -73,7 +72,7 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
             ((SXSSFSheet) excelTools.getSheet()).flushRows(1);
             logger.info("Onglet " + comparaison.getTypeComparaisonPlanTransport().name() + " : " + "("
                     + comparaison.getNumeroTrain() + "-" + comparaison.getNumeroTranche() + ") ligne "
-                    + (ligneDebut - 1) + " générée");
+                    + (ligne - 1) + " générée");
         }
         return ligne;
     }

@@ -120,7 +120,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          try {
             this.jeuDonneeService.update(this.jeuDonneeDataBean);
          } catch (Exception ex) {
-            Task.finishKoTask(this.idTask, "Echec de mise à jour du jeu données : veuillez reessayer ulterieurement");
+            Task.finishKoTask(this.idTask, "Echec de mise à jour du jeu de données : veuillez réessayer ultérieurement");
             throw ex;
          }
       } catch (Throwable ex) {
@@ -152,7 +152,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.log("Echec excelRapportDifferentiel");
          logger.error("Echec excelRapportDifferentiel.", e);
          if (this.idTask != null) {
-            Task.finishKoTask(this.idTask, "Echec de création du rapport différentiel : veuillez reessayer ulterieurement");
+            Task.finishKoTask(this.idTask, "Echec de création du rapport différentiel : veuillez réessayer ultérieurement");
          }
          
          throw e;
@@ -171,7 +171,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.log("Echec comparePlanTransport.");
          logger.error("Echec comparePlanTransport.", e);
          if (this.idTask != null) {
-            Task.finishKoTask(this.idTask, "Echec de la comparaison des plan de transport : veuillez reessayer ulterieurement");
+            Task.finishKoTask(this.idTask, "Echec de la comparaison des plans de transport : veuillez réessayer ultérieurement");
          }
          
          throw e;
