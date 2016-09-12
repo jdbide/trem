@@ -16,18 +16,14 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 public class TraiteObjetMetierRegimeFareProfile implements ITraiteObjetMetier {
 
    @Override
-   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
       List<ASousRegimeTranche> listeFareProfile = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(FareProfile.class);
       if (listeFareProfile == null) {
          listeFareProfile = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeFareProfileEntity regimeFareProfile : regime.getMotriceRegimeFareProfile()) {
-         try {
-            listeFareProfile.add(new FareProfile(regimeFareProfile.getFareProfileCodeMotriceRegimeFareProfile(), new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
-         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
+         listeFareProfile.add(new FareProfile(regimeFareProfile.getFareProfileCodeMotriceRegimeFareProfile(),
+               new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
       }
       atomicTranche.get().addAttributsField(listeFareProfile);
    }

@@ -20,7 +20,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
 public class TraiteObjetMetierRegimeSpecificity implements ITraiteObjetMetier {
 
    @Override
-   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
       List<ASousRegimeTranche> listeSpecifications = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Specification.class);
       if (listeSpecifications == null) {
          listeSpecifications = new ArrayList<ASousRegimeTranche>();
@@ -30,14 +30,9 @@ public class TraiteObjetMetierRegimeSpecificity implements ITraiteObjetMetier {
          List<Siege> sieges = new ArrayList<Siege>();
          sieges.add(new Siege(regimeSpecification.getSeatNumberMotriceRegimeSpecificity()));
          compartiments.add(new Compartiment(regimeSpecification.getCompartmentNumberMotriceRegimeSpecificity(), sieges));
-         try {
-            listeSpecifications.add(new Specification(new Voiture(regimeSpecification.getCoachNumberMotriceRegimeSpecificity(), compartiments), EnumEtatSpecification.Blocked, new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
-         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
-//         List<Voiture> voitures = new ArrayList<Voiture>();
-      }   
+         listeSpecifications.add(new Specification(new Voiture(regimeSpecification.getCoachNumberMotriceRegimeSpecificity(), compartiments),
+               EnumEtatSpecification.Blocked, new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      }
       atomicTranche.get().addAttributsField(listeSpecifications);
    }
 

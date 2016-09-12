@@ -20,7 +20,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 public class TraiteObjetMetierRegimeStop implements ITraiteObjetMetier {
 
    @Override
-   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
       SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
       String heureArrivee, heureDepart;
       List<ASousRegimeTranche> listeDessertes = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Desserte.class);
@@ -33,31 +33,16 @@ public class TraiteObjetMetierRegimeStop implements ITraiteObjetMetier {
          Date horaireFin = null;
          heureArrivee = regimeDesserte.getArrivalHourMotriceRegimeStop();
          if (!heureArrivee.equals("    ")) {
-            try {
-               horaireDebut = formatter.parse(heureArrivee);
-            } catch (ParseException e) {
-               // TODO Auto-generated catch block
-               e.printStackTrace();
-            }
+            horaireDebut = formatter.parse(heureArrivee);
          }
          heureDepart = regimeDesserte.getDepartureHourMotriceRegimeStop();
          if (!heureDepart.equals("    ")) {
-            try {
-               horaireFin = formatter.parse(heureDepart);
-            } catch (ParseException e) {
-               // TODO Auto-generated catch block
-               e.printStackTrace();
-            }
+            horaireFin = formatter.parse(heureDepart);
          }
          garesHoraires.add(new GareHoraire(new Gare(regimeDesserte.getStationMotriceRegimeStop()), new Horaire(horaireDebut, horaireFin)));
 
       }
-      try {
-         listeDessertes.add(new Desserte(garesHoraires, new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
-      } catch (ParseException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
+      listeDessertes.add(new Desserte(garesHoraires, new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
       atomicTranche.get().addAttributsField(listeDessertes);
    }
 

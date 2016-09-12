@@ -19,7 +19,8 @@ public class JeuDonneeService implements Serializable {
    /**
    * 
    */
-   private static final long   serialVersionUID      = 1L;
+   private static final long serialVersionUID = 1L;
+
    /**
     * Sauvegarde le jeu de données dans la table.
     * 
@@ -27,7 +28,8 @@ public class JeuDonneeService implements Serializable {
     * @return
     */
    public JeuDonneeEntity save(JeuDonneeEntity jeuDonneeDataBean) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+            .createEntityManager();
 
       try {
 
@@ -40,6 +42,7 @@ public class JeuDonneeService implements Serializable {
       } catch (Exception ex) {
          ex.printStackTrace();
          em.getTransaction().rollback();
+         throw ex;
       } finally {
          em.close();
       }
@@ -53,7 +56,8 @@ public class JeuDonneeService implements Serializable {
     * @param jeuDonneeDataBean
     */
    public void update(JeuDonneeEntity jeuDonneeDataBean) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+            .createEntityManager();
 
       try {
          em.getTransaction().begin();
@@ -63,6 +67,7 @@ public class JeuDonneeService implements Serializable {
       } catch (Exception e) {
          e.printStackTrace();
          em.getTransaction().rollback();
+         throw e;
       } finally {
          em.close();
       }
@@ -89,7 +94,8 @@ public class JeuDonneeService implements Serializable {
 
    @SuppressWarnings("finally")
    public int deleteById(int idJeuDonnee) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+            .createEntityManager();
       int deleteEntity = 0;
       try {
          String hqlDelete = "delete JeuDonneEntity jd where jd.idJeuDonnee = :idJeudonnee";
@@ -110,8 +116,11 @@ public class JeuDonneeService implements Serializable {
     * @return jeu de données
     */
    public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement, Status statusJeuDonnees) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
-      TypedQuery<JeuDonneeEntity> query = em.createQuery("SELECT t FROM JeuDonneeEntity t WHERE t.compagnieEnvironnement = :compagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees", JeuDonneeEntity.class);
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+            .createEntityManager();
+      TypedQuery<JeuDonneeEntity> query = em.createQuery(
+            "SELECT t FROM JeuDonneeEntity t WHERE t.compagnieEnvironnement = :compagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees",
+            JeuDonneeEntity.class);
       query.setParameter("compagnieEnvironnement", compagnieEnvironnement);
       query.setParameter("statusJeuDonnees", statusJeuDonnees);
 
@@ -121,7 +130,8 @@ public class JeuDonneeService implements Serializable {
          if (!query.getResultList().isEmpty())
             jeuDonneeEntity = query.getSingleResult();
       } catch (Exception e) {
-         // e.printStackTrace();
+         e.printStackTrace();
+         throw e;
       } finally {
          em.close();
       }
@@ -136,13 +146,17 @@ public class JeuDonneeService implements Serializable {
     * @return
     */
    public JeuDonneeEntity getById(int idJeuDonnees) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+            .createEntityManager();
       JeuDonneeEntity res = null;
       try {
          Query query = em.createNamedQuery("JeuDonneeEntity.getById", JeuDonneeEntity.class);
          query.setParameter("idJeuDonnees", idJeuDonnees);
          res = (JeuDonneeEntity) query.getSingleResult();
       } catch (Exception ex) {
+         ex.printStackTrace();
+         throw ex;
+      } finally {
          em.close();
       }
 

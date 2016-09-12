@@ -17,18 +17,15 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 public class TraiteObjetMetierRegimeRestriction implements ITraiteObjetMetier {
 
    @Override
-   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) {
+   public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
       List<ASousRegimeTranche> listeRestrictions = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Restriction.class);
       if (listeRestrictions == null) {
          listeRestrictions = new ArrayList<ASousRegimeTranche>();
       }
       for (MotriceRegimeRestrictionEntity regimeRestriction : regime.getMotriceRegimeRestrictions()) {
-         try {
-            listeRestrictions.add(new Restriction(new Gare(regimeRestriction.getOrigineMotriceRegimeRestriction()), new Gare(regimeRestriction.getDestinationMotriceRegimeRestriction()), null, new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
-         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
+         listeRestrictions.add(new Restriction(new Gare(regimeRestriction.getOrigineMotriceRegimeRestriction()),
+               new Gare(regimeRestriction.getDestinationMotriceRegimeRestriction()), null,
+               new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
       }
       atomicTranche.get().addAttributsField(listeRestrictions);
    }

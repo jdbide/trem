@@ -23,59 +23,49 @@ import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
 public class TraiteMotriceRegimeDistribution implements ITraiteMotriceRegime {
 
-	@Override
-	public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity,
-			MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
-			MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager,
-			AtomicReference<Tranche> atomicTranche) {
-	   
-	   Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
+   @Override
+   public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
+         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
+         throws ParseException {
 
-		IMultipleInsertRequestGenerator generatorRegime = mapGeneratorTablesMotriceRegime
-				.get(MotriceRegimeEntity.class);
-		IMultipleInsertRequestGenerator generatorDistribution = mapGeneratorTablesMotriceRegime
-				.get(MotriceRegimeDistributionEntity.class);
-		AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
-		AtomicLong idDistribution = mapIdTablesMotriceRegime.get(MotriceRegimeDistributionEntity.class);
-		Long idTrainTranche = motriceTrainTrancheEntity.getIdMotriceTrainTranche();
+      Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
-		Query queryRDistribution = entityManager.createNativeQuery(
-				"SELECT distrib.DTRC_CODE AS distribIndexMotriceRegimeDistribution, distrib.DTRC_REGI AS motriceRegime "
-						+ "FROM tremas_import_tmddtrc AS distrib "
-						+ "INNER JOIN tremas_import_tmdcath AS cath ON distrib.DTRC_TRCH_COD_CIE = cath.CATH_TRCH_COD_CIE "
-						+ "AND distrib.DTRC_TRCH_NUM_TRA1 = cath.CATH_TRCH_NUM_TRA1 "
-						+ "AND distrib.DTRC_TRCH_IND_FER = cath.CATH_TRCH_IND_FER "
-						+ "AND distrib.DTRC_TRCH_NUM = cath.CATH_TRCH_NUM " + "WHERE cath.CATH_SSIM = ?"
-						+ "AND distrib.DTRC_TRCH_NUM_TRA1 = ? AND cath.CATH_ETAT_TRCH = ? " + "ORDER BY motriceRegime");
-		queryRDistribution.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
-		queryRDistribution.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
-		queryRDistribution.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
+      IMultipleInsertRequestGenerator generatorRegime = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class);
+      IMultipleInsertRequestGenerator generatorDistribution = mapGeneratorTablesMotriceRegime.get(MotriceRegimeDistributionEntity.class);
+      AtomicLong idRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
+      AtomicLong idDistribution = mapIdTablesMotriceRegime.get(MotriceRegimeDistributionEntity.class);
+      Long idTrainTranche = motriceTrainTrancheEntity.getIdMotriceTrainTranche();
 
-		List<Object[]> rDistribution = queryRDistribution.getResultList();
-		String regime = "";
+      Query queryRDistribution = entityManager
+            .createNativeQuery("SELECT distrib.DTRC_CODE AS distribIndexMotriceRegimeDistribution, distrib.DTRC_REGI AS motriceRegime "
+                  + "FROM tremas_import_tmddtrc AS distrib "
+                  + "INNER JOIN tremas_import_tmdcath AS cath ON distrib.DTRC_TRCH_COD_CIE = cath.CATH_TRCH_COD_CIE "
+                  + "AND distrib.DTRC_TRCH_NUM_TRA1 = cath.CATH_TRCH_NUM_TRA1 " + "AND distrib.DTRC_TRCH_IND_FER = cath.CATH_TRCH_IND_FER "
+                  + "AND distrib.DTRC_TRCH_NUM = cath.CATH_TRCH_NUM " + "WHERE cath.CATH_SSIM = ?"
+                  + "AND distrib.DTRC_TRCH_NUM_TRA1 = ? AND cath.CATH_ETAT_TRCH = ? " + "ORDER BY motriceRegime");
+      queryRDistribution.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
+      queryRDistribution.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
+      queryRDistribution.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
-		List<ASousRegimeTranche> listeDistributions = (List<ASousRegimeTranche>) atomicTranche.get()
-				.getAttributsField(Distribution.class);
-		if (listeDistributions == null) {
-			listeDistributions = new ArrayList<ASousRegimeTranche>();
-		}
+      List<Object[]> rDistribution = queryRDistribution.getResultList();
+      String regime = "";
 
-		for (Object[] record : rDistribution) {
-			if (!regime.equals((String) record[1])) {
-				generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 10, idTrainTranche);
-			}
-			generatorDistribution.addValue(idDistribution.getAndIncrement(), (String) record[0], idRegime);
+      List<ASousRegimeTranche> listeDistributions = (List<ASousRegimeTranche>) atomicTranche.get().getAttributsField(Distribution.class);
+      if (listeDistributions == null) {
+         listeDistributions = new ArrayList<ASousRegimeTranche>();
+      }
 
-			try {
-            listeDistributions.add(new Distribution((String) record[0], new Regime((String) record[1], debutPeriode)));
-         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+      for (Object[] record : rDistribution) {
+         if (!regime.equals((String) record[1])) {
+            generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 10, idTrainTranche);
          }
+         generatorDistribution.addValue(idDistribution.getAndIncrement(), (String) record[0], idRegime);
 
-			regime = (String) record[1];
-		}
-		atomicTranche.get().addAttributsField(listeDistributions);
-	}
+         listeDistributions.add(new Distribution((String) record[0], new Regime((String) record[1], debutPeriode)));
+
+         regime = (String) record[1];
+      }
+      atomicTranche.get().addAttributsField(listeDistributions);
+   }
 
 }

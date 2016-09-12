@@ -3,6 +3,7 @@ package com.avancial.app.traitement;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -162,9 +163,11 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
                try {
                   Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory.getTraiteMotriceRegime(entity);
-                  // TODO Exception a gérer
                   traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em, atomicTranche);
-
+               } catch (ParseException e) {
+                   System.err.println("Erreur dans la lecture d'un régime de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
+                   e.printStackTrace();
+                   throw e;
                } catch (Exception e) {
                   System.err.println("Erreur dans la récupération de l'entité motrice régime : " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime() + " ou de son traitement");
                   e.printStackTrace();

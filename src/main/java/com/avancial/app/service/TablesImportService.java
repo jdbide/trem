@@ -37,15 +37,12 @@ public class TablesImportService {
    public JSONObject getDataTable(String entityName) throws ClassNotFoundException {
       Class<?> entity = null;
 
-      try {
-         entity = GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName);
-      } catch (ClassNotFoundException e) {
-         e.printStackTrace();
-      }
+      entity = GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName);
 
       List<ColumnTable> columns = GetDataTableColumns.getColumns(entity);
 
-      Query query = this.em.createNamedQuery(GetEntiteService.getNomEntiteImportFromNomEntiteMotrice(entityName) + ".getAll", GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName));
+      Query query = this.em.createNamedQuery(GetEntiteService.getNomEntiteImportFromNomEntiteMotrice(entityName) + ".getAll",
+            GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName));
       List<Object> tmdavtrDataBeans = query.getResultList();
       JSONArray datas = new JSONArray();
       datas.addAll(tmdavtrDataBeans);
