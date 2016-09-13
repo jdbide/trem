@@ -15,7 +15,7 @@ public class Tranche extends ASousRegimeTranche {
 
     public Tranche() {
         this.numeroTranche = "";
-        this.trancheStatut = EnumTrancheStatut.Fermer;
+        this.trancheStatut = EnumTrancheStatut.Ferme;
         this.regime = new Regime();
         this.attributs = new MapTranche();
     }

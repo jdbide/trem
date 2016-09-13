@@ -22,7 +22,7 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
     public ComparaisonPlanTransport() {
         this.numeroTrain = "";
         this.numeroTranche = "";
-        this.statutTranche = EnumTrancheStatut.Fermer;
+        this.statutTranche = EnumTrancheStatut.Ferme;
         this.ancienField = null;
         this.nouveauField = null;
         this.typeComparaisonPlanTransport = EnumTypeComparaisonPlanTransport.UNCHANGED;

@@ -4,13 +4,17 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
+
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
@@ -45,6 +49,8 @@ public class CreationObjetMetier {
          }
          AtomicReference<Tranche> atomicTranche = new AtomicReference<Tranche>(new Tranche());
          atomicTranche.get().setNumeroTranche(resTrainTranche.getTrancheNumberMotriceTrainTranche());
+         atomicTranche.get().setTrancheStatut(
+               resTrainTranche.getTrancheStatusMotriceTrainTranche().equals("O") ? EnumTrancheStatut.Ouvert : EnumTrancheStatut.Ferme);
 
          List<MotriceRegimeEntity> regimeEntities = resTrainTranche.getMotriceRegimeEntities();
          for (MotriceRegimeEntity regime : regimeEntities) {

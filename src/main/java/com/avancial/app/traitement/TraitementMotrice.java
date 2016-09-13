@@ -25,6 +25,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
@@ -127,7 +128,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             this.em.persist(motriceTrainTrancheEntity);
             this.em.flush();
 
-            System.out.println("Traitement du train-tranche " + motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche() + "-" + motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche() + " statut " + motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
+            System.out.println("Traitement du train-tranche " + motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche() + "-"
+                  + motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche() + " statut "
+                  + motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
 
             /* Insertion du régime lié au train-tranche */
             cptRegime = mapIdTablesMotriceRegime.get(MotriceRegimeEntity.class);
@@ -141,13 +144,16 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             this.em.getTransaction().commit();
 
             if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
-               train = new Train(new ArrayList<Tranche>(), motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(), motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
+               train = new Train(new ArrayList<Tranche>(), motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
+                     motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
                planTransport.getTrains().add(train);
             }
 
             AtomicReference<Tranche> atomicTranche = new AtomicReference<>(new Tranche());
             atomicTranche.get().setNumeroTranche(motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
             atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime(), debutPeriode));
+            atomicTranche.get().setTrancheStatut(
+                  motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche().equals("O") ? EnumTrancheStatut.Ouvert : EnumTrancheStatut.Ferme);
 
             train.getTranches().add(atomicTranche.get());
             lastTrainNumber = motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche();
@@ -155,15 +161,18 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             /* Initialisation des données du train-tranche */
             for (RefTablesMotriceRegimeEntity refTablesMotriceRegimeEntity : motriceRegimeEntities) {
                try {
-                  Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
+                  Class<?> entity = GetEntiteService
+                        .getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory.getTraiteMotriceRegime(entity);
-                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em, atomicTranche);
+                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em,
+                        atomicTranche);
                } catch (ParseException e) {
                   System.err.println("Erreur dans la lecture d'un régime de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   e.printStackTrace();
                   throw e;
                } catch (Exception e) {
-                  System.err.println("Erreur dans la récupération de l'entité motrice régime : " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime() + " ou de son traitement");
+                  System.err.println("Erreur dans la récupération de l'entité motrice régime : "
+                        + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime() + " ou de son traitement");
                   e.printStackTrace();
                   throw e;
                }
@@ -181,11 +190,13 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          for (RefTablesMotriceRegimeEntity refTablesMotriceRegimeEntity : motriceRegimeEntities) {
             try {
                this.log("Debut d'insertion pour " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
-               Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
+               Class<?> entity = GetEntiteService
+                     .getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                this.executeRequestGenerator(entity, mapGeneratorTablesMotriceRegime);
                this.log("Fin d'insertion pour " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
             } catch (Exception e) {
-               System.err.println("Erreur dans la récupération de l'entité motrice régime : " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
+               System.err.println(
+                     "Erreur dans la récupération de l'entité motrice régime : " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                e.printStackTrace();
                throw e;
             }
@@ -217,13 +228,15 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
       }
    }
 
-   private void getIdRegime(MapIdTablesMotriceRegime mapIdTablesMotriceRegime, List<RefTablesMotriceRegimeEntity> motriceRegimeEntities) throws Exception {
+   private void getIdRegime(MapIdTablesMotriceRegime mapIdTablesMotriceRegime, List<RefTablesMotriceRegimeEntity> motriceRegimeEntities)
+         throws Exception {
       try {
 
          mapIdTablesMotriceRegime.initMapIdTablesMotriceRegime(MotriceRegimeCompositionCoachEntity.class);
 
          for (RefTablesMotriceRegimeEntity refTablesMotriceRegimeEntity : motriceRegimeEntities) {
-            Class<?> entity = GetEntiteService.getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
+            Class<?> entity = GetEntiteService
+                  .getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
             mapIdTablesMotriceRegime.initMapIdTablesMotriceRegime(entity);
          }
 
