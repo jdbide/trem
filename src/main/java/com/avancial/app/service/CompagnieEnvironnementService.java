@@ -7,12 +7,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.service.AService;
 
 /**

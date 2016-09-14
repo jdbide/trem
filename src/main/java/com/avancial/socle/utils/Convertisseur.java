@@ -2,7 +2,6 @@ package com.avancial.socle.utils;
 
 import java.lang.reflect.Array;
 import java.math.BigInteger;
-import java.util.List;
 
 public class Convertisseur {
     public static String hexToBin(String s) {

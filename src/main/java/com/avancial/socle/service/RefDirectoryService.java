@@ -6,16 +6,10 @@ package com.avancial.socle.service;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.avancial.socle.data.model.databean.RefDirectoryDataBean;
-import com.avancial.socle.ihm.menu.model.databean.ChapitreDataBean;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 /**
  * Service pour la gestion des repertoire de l'application

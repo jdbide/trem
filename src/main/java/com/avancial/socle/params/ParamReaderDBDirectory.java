@@ -3,7 +3,6 @@
  */
 package com.avancial.socle.params;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

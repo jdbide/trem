@@ -5,7 +5,6 @@ package com.avancial.socle.jobs;
 
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

@@ -2,7 +2,6 @@ package com.avancial.socle.service;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
