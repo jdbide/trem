@@ -7,18 +7,16 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.socle.data.model.databean.UserDataBean;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 import com.avancial.socle.session.Session;
 
 @RequestScoped
-public class ImportTmsService implements Serializable {
+public class ImportTmsService extends AService implements Serializable {
    /**
    * 
    */
@@ -32,10 +30,6 @@ public class ImportTmsService implements Serializable {
 
    @Inject
    private Session                       session;
-
-   @Inject
-   @Socle_PUSocle
-   EntityManager                         em;
 
    public ImportTmsService() {
    }
@@ -62,16 +56,16 @@ public class ImportTmsService implements Serializable {
             UserDataBean user;
             if (jeuDonneeEntityDraft != null) {
                // user = this.userDao.getUserById((long) jeuDonneeEntityDraft.getIdUtilisateurCreateJeuDonnees());
-               user = (UserDataBean) this.em.createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityDraft.getIdUtilisateurCreateJeuDonnees()).getSingleResult();
+               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityDraft.getIdUtilisateurCreateJeuDonnees()).getSingleResult();
                newImportTmsDto.mergeByJeuDonneesBrouillon(jeuDonneeEntityDraft, user == null ? "/" : user.getNomComplet());
             }
 
             if (jeuDonneeEntityActif != null) {
                // user = this.userDao.getUserById((long) jeuDonneeEntityActif.getIdUtilisateurCreateJeuDonnees());
-               user = (UserDataBean) this.em.createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityActif.getIdUtilisateurCreateJeuDonnees()).getSingleResult();
+               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityActif.getIdUtilisateurCreateJeuDonnees()).getSingleResult();
                String importBy = user == null ? "/" : user.getNomComplet();
                // user = this.userDao.getUserById((long) jeuDonneeEntityActif.getIdUtilisateurLastUpdateJeuDonnees());
-               user = (UserDataBean) this.em.createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityActif.getIdUtilisateurLastUpdateJeuDonnees()).getSingleResult();
+               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityActif.getIdUtilisateurLastUpdateJeuDonnees()).getSingleResult();
                String validateBy = user == null ? "/" : user.getNomComplet();
                newImportTmsDto.mergeByJeuDonneesActif(jeuDonneeEntityActif, importBy, validateBy);
             }
@@ -82,7 +76,7 @@ public class ImportTmsService implements Serializable {
          ex.printStackTrace();
          throw ex;
       } finally {
-         this.em.close();
+         this.getEntityManager().close();
          return listImportTmsDto;
       }
    }

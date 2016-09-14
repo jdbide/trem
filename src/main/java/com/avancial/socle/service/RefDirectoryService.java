@@ -6,6 +6,8 @@ package com.avancial.socle.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -22,16 +24,12 @@ import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
  *
  */
 @RequestScoped
-public class RefDirectoryService implements Serializable {
+public class RefDirectoryService extends AService implements Serializable {
 
    /**
     * 
     */
    private static final long serialVersionUID = 1L;
-
-   @Inject
-   @Socle_PUSocle
-   private EntityManager     em;
 
    /**
     * 
@@ -48,7 +46,7 @@ public class RefDirectoryService implements Serializable {
       RefDirectoryDataBean res = null;
 
       try {
-         Query requete = this.em.createNamedQuery(RefDirectoryDataBean.QUERY_GET_BY_NOM_TECH);
+         Query requete = this.getEntityManager().createNamedQuery(RefDirectoryDataBean.QUERY_GET_BY_NOM_TECH);
 
          requete.setParameter("technicalName", technicalName);
 
@@ -69,11 +67,11 @@ public class RefDirectoryService implements Serializable {
       List<RefDirectoryDataBean> res = null;
 
       try {
-         if (this.em == null)
+         if (this.getEntityManager() == null)
             return null;
          
          String sql = "From RefDirectoryDataBean";
-         Query requete = this.em.createQuery(sql);
+         Query requete = this.getEntityManager().createQuery(sql);
          res = requete.getResultList();
       } catch (Exception ex) {
          ex.printStackTrace();

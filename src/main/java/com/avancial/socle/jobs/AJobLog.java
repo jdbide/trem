@@ -5,6 +5,8 @@ package com.avancial.socle.jobs;
 
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -29,14 +31,26 @@ public abstract class AJobLog extends AJob {
     * 
     */
    private static final long   serialVersionUID = -4611973342322362966L;
+   
    @Inject
    @Socle_PUSocle
    EntityManager               em;
+   
    @Inject
    LogJobDataBean              joblogBean;
 
    private final static String SCHEDULER_USER   = "Scheduler";
 
+	/**
+	 * méthode de pré-destruction.
+	 */
+	@PreDestroy
+	public void preDestroy() {
+		if(this.em.isOpen()) {
+			this.em.close();
+		}
+	}
+   
    /**
     * Constructeur
     */

@@ -13,34 +13,32 @@ import javax.persistence.EntityManager;
 import com.avancial.socle.ihm.menu.Chapitre;
 import com.avancial.socle.ihm.menu.model.databean.ChapitreDataBean;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 
 /**
  * @author bruno.legloahec
  *
  */
 @RequestScoped
-public class ChapitreService implements Serializable {
+public class ChapitreService extends AService implements Serializable {
    /**
    * 
    */
    private static final long serialVersionUID = 1L;
-   @Inject
-   @Socle_PUSocle
-   EntityManager             em;
 
    /**
     * @return
     */
    public List<ChapitreDataBean> getAll() {
       @SuppressWarnings("unchecked")
-      List<ChapitreDataBean> liste = em.createNamedQuery(ChapitreDataBean.QUERY_GET_ALL).getResultList();
-      this.em.close();
+      List<ChapitreDataBean> liste = this.getEntityManager().createNamedQuery(ChapitreDataBean.QUERY_GET_ALL).getResultList();
+      this.getEntityManager().close();
       return liste;
    }
 
    public List<ChapitreDataBean> getAllActif() {
       @SuppressWarnings("unchecked")
-      List<ChapitreDataBean> liste = em.createNamedQuery(ChapitreDataBean.QUERY_GET_ALL_ACTIF).getResultList();
+      List<ChapitreDataBean> liste = this.getEntityManager().createNamedQuery(ChapitreDataBean.QUERY_GET_ALL_ACTIF).getResultList();
       return liste;
    }
 
@@ -50,7 +48,7 @@ public class ChapitreService implements Serializable {
     */
    @SuppressWarnings("unchecked")
    public List<Chapitre> getById(Long id) {
-      List<Chapitre> liste = em.createNamedQuery(ChapitreDataBean.QUERY_GET_BY_ID).setParameter("id", id).getResultList();
+      List<Chapitre> liste = this.getEntityManager().createNamedQuery(ChapitreDataBean.QUERY_GET_BY_ID).setParameter("id", id).getResultList();
       return liste;
    }
 
@@ -59,13 +57,13 @@ public class ChapitreService implements Serializable {
     */
    public void addChapitre(ChapitreDataBean chapitreDataBean) {
       try {
-         this.em.getTransaction().begin();
-         this.em.persist(chapitreDataBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().persist(chapitreDataBean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
 
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
 
@@ -76,13 +74,13 @@ public class ChapitreService implements Serializable {
     */
    public void deleteChapitre(Long id) throws Exception {
       try {
-         this.em.getTransaction().begin();
-         this.em.createNamedQuery(ChapitreDataBean.QUERY_DELETE_BY_ID).setParameter("id", id).executeUpdate();
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().createNamedQuery(ChapitreDataBean.QUERY_DELETE_BY_ID).setParameter("id", id).executeUpdate();
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
 
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
    }
@@ -92,12 +90,12 @@ public class ChapitreService implements Serializable {
     */
    public void updateChapitre(ChapitreDataBean chapitreDataBean) {
       try {
-         this.em.getTransaction().begin();
-         this.em.merge(chapitreDataBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().merge(chapitreDataBean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
    }

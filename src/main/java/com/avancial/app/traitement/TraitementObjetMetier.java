@@ -2,6 +2,7 @@ package com.avancial.app.traitement;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -16,6 +17,7 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
+@RequestScoped
 public class TraitementObjetMetier extends ATraitementLogDetail implements Serializable {
    /**
    * 
@@ -29,10 +31,6 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
    private String                         environnementCompagnie;
 
    private static Logger                  logger           = Logger.getLogger(TraitementObjetMetier.class);
-
-   // @Inject
-   // @Socle_PUSocle
-   private EntityManager                  em;
 
    /**
     * Id du currentThread
@@ -53,25 +51,25 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
          System.out.println("Creation du plan de transport ACTIF");
          logger.info("Creation du plan de transport ACTIF");
          this.log("Debut de la creation du plan de transport du JdD Actif");
-         this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+         //this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
 
-         this.mapPlansDeTransport.setPlanTransportActive(creationObjetMetier.creationPlanTransport(this.environnementCompagnie, Status.ACTIVE, this.em, this.traiteObjetMetierRegimeFactory));
+         this.mapPlansDeTransport.setPlanTransportActive(creationObjetMetier.creationPlanTransport(this.environnementCompagnie, Status.ACTIVE, this.getEntityManager(), this.traiteObjetMetierRegimeFactory));
          this.log("Fin de la creation du plan de transport du JdD Actif");
          logger.info("Fin de la Creation du plan de transport ACTIF");
          /* Creation du plan de transport du Dataset draft */
          // System.out.println("Creation du plan de transport DRAFT");
          // this.mapPlansDeTransport.setPlanTransportDraft(creationObjetMetier.creationPlanTransport(this.environnementCompagnie,
          // Status.DRAFT, this.em, this.traiteObjetMetierRegimeFactory));
-         if (this.em != null && this.em.isOpen()) {
-            this.em.clear();
-            this.em.close();
+         if (this.getEntityManager() != null && this.getEntityManager().isOpen()) {
+        	 this.getEntityManager().clear();
+        	 this.getEntityManager().close();
          }
       } catch (Exception ex) {
          logger.error("Exception Creation du plan de transport ACTIF", ex);
          if (this.idTask != null) {
             Task.finishKoTask(this.idTask, "Echec d'import : veuillez reessayer ulterieurement");
-            if (this.em != null && this.em.isOpen()) {
-               this.em.clear();
+            if (this.getEntityManager() != null && this.getEntityManager().isOpen()) {
+            	this.getEntityManager().clear();
                //this.em.close();
             }
 
@@ -111,10 +109,6 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
     */
    public void setEnvironnementCompagnie(String environnementCompagnie) {
       this.environnementCompagnie = environnementCompagnie;
-   }
-
-   public void setEm(EntityManager em) {
-      this.em = em;
    }
 
    /**

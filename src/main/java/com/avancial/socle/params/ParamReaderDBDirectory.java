@@ -3,6 +3,8 @@
  */
 package com.avancial.socle.params;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -30,6 +32,16 @@ public class ParamReaderDBDirectory extends AParamReaderDB {
     */
    private static final long serialVersionUID = 1L;
 
+	/**
+	 * méthode de pré-destruction.
+	 */
+	@PreDestroy
+	public void preDestroy() {
+		if(this.em.isOpen()) {
+			this.em.close();
+		}
+	}
+   
    /**
     * Classe servant à lire les paramètres "Répertoire" stockés en base de données
     * 
