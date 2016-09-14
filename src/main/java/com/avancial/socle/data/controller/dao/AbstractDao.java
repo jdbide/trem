@@ -6,6 +6,8 @@ package com.avancial.socle.data.controller.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -35,11 +37,21 @@ public abstract class AbstractDao implements Serializable {
 
    @Inject
    @Socle_PUSocle
-   EntityManager             entityManager;
+   private EntityManager             entityManager;
 
    protected ILogger         logger;
    protected ALogBean        logBean;
 
+   /**
+    * méthode de pré-destruction.
+    */
+   @PreDestroy
+   public void preDestroy() {
+	   if(this.entityManager.isOpen()) {
+		   this.entityManager.close();
+	   }
+   }
+   
    /**
     * Constructeur sans log
     * 
@@ -99,8 +111,6 @@ public abstract class AbstractDao implements Serializable {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException(e);
-      } finally {
-         this.entityManager.close();
       }
    }
 
@@ -113,10 +123,7 @@ public abstract class AbstractDao implements Serializable {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException(e);
-      } finally {
-         this.entityManager.close();
       }
-
    }
 
    public void update(AbstractDataBean dataBean) throws ASocleException {
@@ -128,22 +135,7 @@ public abstract class AbstractDao implements Serializable {
       } catch (Exception e) {
          this.getEntityManager().getTransaction().rollback();
          throw SocleExceptionManager.getException(e);
-      } finally {
-         this.entityManager.close();
       }
-
    }
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see java.lang.Object#finalize()
-    */
-   @Override
-   protected void finalize() throws Throwable {
-      if (this.entityManager != null)
-         if (this.entityManager.isOpen())
-
-            super.finalize();
-   }
 }

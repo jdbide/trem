@@ -7,33 +7,27 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-
 import com.avancial.socle.ihm.menu.model.databean.RubriqueDataBean;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 
 /**
  * @author bruno.legloahec
  *
  */
 @RequestScoped
-public class RubriqueService implements Serializable {
+public class RubriqueService extends AService implements Serializable {
    /**
    * 
    */
    private static final long serialVersionUID = 1L;
-   @Inject
-   @Socle_PUSocle
-   EntityManager             em;
 
    /**
     * @return
     */
    public List<RubriqueDataBean> getAll() {
       @SuppressWarnings("unchecked")
-      List<RubriqueDataBean> listRubrique = em.createNamedQuery(RubriqueDataBean.QUERY_GET_ALL).getResultList();
-      this.em.close();
+      List<RubriqueDataBean> listRubrique = this.getEntityManager().createNamedQuery(RubriqueDataBean.QUERY_GET_ALL).getResultList();
+      this.getEntityManager().close();
       return listRubrique;
    }
 
@@ -42,13 +36,13 @@ public class RubriqueService implements Serializable {
     */
    public void addRubrique(RubriqueDataBean ihmRubriqueDataBean) throws Exception {
       try {
-         this.em.getTransaction().begin();
-         this.em.persist(ihmRubriqueDataBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().persist(ihmRubriqueDataBean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
 
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
 
@@ -56,12 +50,12 @@ public class RubriqueService implements Serializable {
 
    public void deleteRubrique(Long id) {
       try {
-         this.em.getTransaction().begin();
-         this.em.createNamedQuery(RubriqueDataBean.QUERY_DELETE_BY_ID).setParameter("id", id).executeUpdate();
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().createNamedQuery(RubriqueDataBean.QUERY_DELETE_BY_ID).setParameter("id", id).executeUpdate();
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
 
@@ -72,12 +66,12 @@ public class RubriqueService implements Serializable {
     */
    public void updateRubrique(RubriqueDataBean rubriqueDataBean) {
       try {
-         this.em.getTransaction().begin();
-         this.em.merge(rubriqueDataBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().merge(rubriqueDataBean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
    }

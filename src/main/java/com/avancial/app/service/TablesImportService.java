@@ -3,8 +3,6 @@ package com.avancial.app.service;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.json.simple.JSONArray;
@@ -12,7 +10,7 @@ import org.json.simple.JSONObject;
 
 import com.avancial.app.utilitaire.GetDataTableColumns;
 import com.avancial.app.utilitaire.GetEntiteService;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 import com.avancial.socle.table.ColumnTable;
 
 /**
@@ -22,12 +20,13 @@ import com.avancial.socle.table.ColumnTable;
  *
  */
 @RequestScoped
-public class TablesImportService {
-   @Inject
-   @Socle_PUSocle
-   private EntityManager em;
-
+public class TablesImportService extends AService {
    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8492330464280967813L;
+
+	/**
     * Renvoie les données contenues dans la table entityName (exemple: "TMDAVTR") en JSON
     * 
     * @param entityName
@@ -41,7 +40,7 @@ public class TablesImportService {
 
       List<ColumnTable> columns = GetDataTableColumns.getColumns(entity);
 
-      Query query = this.em.createNamedQuery(GetEntiteService.getNomEntiteImportFromNomEntiteMotrice(entityName) + ".getAll",
+      Query query = this.getEntityManager().createNamedQuery(GetEntiteService.getNomEntiteImportFromNomEntiteMotrice(entityName) + ".getAll",
             GetEntiteService.getClasseEntiteImportFromTableMotrice(entityName));
       List<Object> tmdavtrDataBeans = query.getResultList();
       JSONArray datas = new JSONArray();

@@ -75,13 +75,14 @@ public class TraitementImportWebService {
          if (!Task.isActiveTask()) {
             Thread thread = new Thread() {
                public void run() {
+            	   
+            	   ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
+                   // this will implicitly bind a new RequestContext to
+                   // your current thread
+                   ctxCtrl.startContext(RequestScoped.class);
+                   
                   try {
                      Task.addTask(Thread.currentThread().getId(), "Start import");
-
-                     ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
-                     // this will implicitly bind a new RequestContext to
-                     // your current thread
-                     ctxCtrl.startContext(RequestScoped.class);
                      
                      TraitementImportJeuDonnees globalResultHolder = BeanProvider.getContextualReference(TraitementImportJeuDonnees.class);
                      globalResultHolder.setImportJeuDonneesDto(importTmsDto);
@@ -96,6 +97,8 @@ public class TraitementImportWebService {
                      Thread.currentThread().interrupt(); // Très important de réinterrompre
                   } catch (Exception e) {
                      Thread.currentThread().interrupt(); // Très important de réinterrompre
+                  } finally {
+                	  ctxCtrl.stopContext(RequestScoped.class);
                   }
                }
             };
