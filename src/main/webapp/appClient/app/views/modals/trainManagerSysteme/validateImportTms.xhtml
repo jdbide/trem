@@ -1,0 +1,24 @@
+<div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Validate Draft Dataset</h4>
+            </div>
+            <div class="modal-body">
+                <p>You are about to validate the current draft dataset for :</p>
+                </br>
+                <p>&nbsp;&nbsp;{{currentDataValidate.libelleCompagnie}} - {{currentDataValidate.libelleEnvironnement}}</p>
+                </br>
+                <p>This dataset will replace the current active data validated :</p>
+                </br>
+                <p>&nbsp;&nbsp;{{currentDataValidate.dateValidateJeuDonneesActif | date:'dd/MM/yyyy HH:mm'}}</p>
+                </br>
+                <p>This data will be visible to all users and considered as the new point of reference.</p>
+            </div>
+            <div class="modal-footer">                
+                <button class="btn btn-primary" ng-click="executeValidateDraft()">VALIDATE DRAFT</button>
+            </div>
+        </div>
+    </div>
+</div>

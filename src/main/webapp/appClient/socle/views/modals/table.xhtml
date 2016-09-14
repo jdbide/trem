@@ -1,0 +1,25 @@
+<div class="box" ng-if="colonnes.length > 0 && !tableVide">
+    <div class="box-header with-border">
+        <h3 class="box-title">{{tableTitre}}</h3>
+    </div>
+    <div class="box-body">
+        <table ng-table-dynamic="tableParametres with colonnes"
+          template-pagination="socle/views/partials/tablePagination.xhtml"
+          class="table table-directive table-condensed table-bordered table-hover">
+          <tr ng-repeat="row in $data">
+            <td ng-repeat="col in $columns">
+                <span ng-if="tableFormat({model: 'test', filter: {name:'identity',params:[]}}) !== 'test'">
+                    {{row[col.field]}}
+                </span>
+                <span ng-if="tableFormat({model: 'test', filter: {name:'identity',params:[]}}) === 'test'">
+                    {{tableFormat({model: row[col.field], filter: col.format})}}
+                </span>
+            </td>
+          </tr>
+        </table>
+    </div>
+</div>
+
+<div class="callout callout-info" ng-if="tableVide">
+    <p>La table demandée est vide.</p>
+</div>

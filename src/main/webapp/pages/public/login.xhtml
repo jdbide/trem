@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+	
+	<title>#{paramGetterBean.getParam('app','libelle_projet').getValue()} - Login</title>	
+
+	
+	<!-- Bootstrap 3.3.5 -->
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	 <link rel="stylesheet" type="text/css" href="/#{paramGetterBean.getParam('app','nom_projet').getValue()}/appClient/vendor/bootstrap/css/bootstrap.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/#{paramGetterBean.getParam('app','nom_projet').getValue()}/appClient/vendor/font-awesome/css/font-awesome.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/#{paramGetterBean.getParam('app','nom_projet').getValue()}/appClient/vendor/theme/css/AdminLTE.css" />
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/#{paramGetterBean.getParam('app','nom_projet').getValue()}/appClient/vendor/iCheck/square/blue.css" />    	
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+       	<script src="appClient/vendor/html5shiv/3.7.3/html5shiv.min.js"></script>
+       	<script src="appClient/vendor/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</h:head>
+<body class="hold-transition login-page">	
+	<div class="login-box">
+		
+		<div class="login-logo">
+			<a href="">#{paramGetterBean.getParam('app','libelle_projet').getValue()}</a>
+		</div>
+		
+		<div class="login-box-body">
+			<p class="login-box-msg">#{msg.p_login_titre}</p>
+		
+			<form action="/#{paramGetterBean.getParam('app','nom_projet').getValue()}/login" method="post" >								
+				<div class="form-group has-feedback">
+					<input type="text" class="form-control" name="j_username" required="required" placeholder="Login" autofocus="true"  x-moz-errormessage="Veuillez saisir votre login"  />					
+           			<span class="glyphicon glyphicon-user form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<input type="password" class="form-control" name="j_password" placeholder="Password" required="required" x-moz-errormessage="Veuillez saisir votre mot de passe" />					
+           			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+
+		
+			<h:panelGrid  class="form-group has-feedback alert alert-danger" rendered="#{!empty loginController.errorMessage}" width="100%">
+<h:outputText 
+				 rendered="#{!empty loginController.errorMessage}"
+				 value="#{loginController.errorMessage}" />				 
+			
+			</h:panelGrid>
+			
+ 				 
+				 
+				<div class="row">
+			    	<div class="col-xs-8"></div><!-- /.col -->
+			        <div class="col-xs-4">
+			        	<button type="submit" class="btn btn-primary btn-block btn-flat">Valider</button>			        	
+			        </div><!-- /.col -->
+		        </div>
+			</form>
+				
+			<!--
+			<a href="#">I forgot my password</a><br/>
+        	<a href="#" class="text-center">Register a new membership</a>			
+        	-->
+		</div><!-- /.login-box-body -->
+		<div style="margin-bottom: 25px;text-align: center;">
+			<div class="col-xs-5" style="text-align: left;">Socle #{paramGetterBean.getParam('socle','version').getValue()} </div><!-- /.col -->
+			<div class="col-xs-4" style="text-align: left;">
+					- #{paramGetterBean.getParam('socle','nom_societe').getValue()} -	
+			</div>
+			<div class="col-xs-3" style="text-align: right;">				
+				<span>
+					
+					<i class="fa fa-fw fa-database" style="color: #{infoSocle.BDDActive ? 'green' : 'red' };" data-toggle="tooltip" data-placement="left" title="#{infoSocle.libelleEtatBDD}"></i>
+					
+				</span> 
+				<span>
+					<i class="fa fa-fw fa-calendar-check-o" style="color: ${ infoPage.actifJob ? 'green' : 'red' };" data-toggle="tooltip" data-placement="left" title="Tooltip on left"></i>
+				</span>
+			</div><!-- /.col -->
+		</div>
+	</div> <!-- /.login-box -->
+
+	<!-- jQuery 2.1.4 -->
+    <script src="appClient/vendor/jQuery/jquery-2.2.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="appClient/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="appClient/vendor/iCheck/icheck.min.js"></script>
+    <script>
+    	$(function () {
+    		$('input').iCheck({
+    			checkboxClass: 'icheckbox_square-blue',
+	          	radioClass: 'iradio_square-blue',
+	          	increaseArea: '20%' // optional
+	         });
+	    });
+    </script>
+</body>
+</html>

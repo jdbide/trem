@@ -1,0 +1,6 @@
+/target/
+/.settings/
+/bin/
+.classpath
+/bin/
+src/main/java/com/avancial/app/webService/TestEntityManager.java

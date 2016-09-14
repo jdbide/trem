@@ -1,6 +1,6 @@
-<project name="appSocle" default="update" basedir=".">
+<project name="socle" default="update" basedir=".">
 	<description>
-		Création d'un nouveau projet
+		Création d'un nouveau projet ou mise à jour d'un projet existant
 	</description>
 
 
@@ -9,59 +9,98 @@
 	</condition>
 	<property name="lecteur" value="d:" />
 
-	<property name="source" location="${lecteur}\Users/${user.name}/Desktop/appSocle" />
+
+	<property name="source" location="${lecteur}\Utilisateurs/${user.name}/Desktop/socle/" />
+	<property name="dest" location="." />
+
+	<property name="source.main" location="${source}/src/main" />
+	<property name="dest.main" location="${dest}/src/main/" />
+
+	<property name="source.src" location="${source.main}/java" />
+	<property name="dest.src" location="${dest.main}/java" />
+
+	<property name="source.other_resources" location="${source}/Other Resources" />
+	<property name="dest.other_resources" location="${dest}/Other Resources" />
 
 
-	<property name="source.webcontent" location="${source}/WebContent" />
-	<property name="dest.webcontent" location="WebContent/" />
+	<property name="source.src.socle" location="${source.src}/com/avancial/socle" />
+	<property name="dest.src.socle" location="${dest.src}/com/avancial/socle/" />
 
-	<property name="source.webcontent.webinf" location="${source.webcontent}/WEB-INF" />
-	<property name="dest.webcontent.webinf" location="${dest.webcontent}/WEB-INF/" />
+	<property name="source.webapp" location="${source.main}/webapp" />
+			<property name="dest.webapp" location="${dest.main}/webapp" />
+	
+	<property name="source.webapp.appclient" location="${source.webapp}/appclient" />
+		<property name="dest.webapp.appclient" location="${dest.webapp}/appclient/" />
+	
+	<property name="source.webapp.appclient.socle" location="${source.webapp.appclient}/socle" />
+	<property name="dest.webapp.appclient.socle" location="${dest.webapp.appclient}/socle/" />
 
-	<property name="source.webcontent.metainf" location="${source.webcontent}/META-INF" />
-	<property name="dest.webcontent.metainf" location="${dest.webcontent}/META-INF/" />
+	<property name="source.other_resources" location="${source}/Other Resources/" />
+	<property name="dest.other_resources" location="Other Resources" />
 
-	<property name="source.webcontent.pages" location="${source.webcontent}/pages" />
-	<property name="dest.webcontent.pages" location="${dest.webcontent}/pages/" />
+	<property name="source.other_resources.socle" location="${source}/Other Resources/socle/" />
+	<property name="dest.other_resources.socle" location="Other Resources/socle" />
 
+	
+	
+	
+	<available type="dir" property="project.not.empty" file="${dest.src.socle}">
+	</available>
 
+	<target name="java socle copy">
 
-	<property name="source.src" location="${source}/src" />
-	<property name="dest.src" location="src" />
-	<property name="source.src.socle" location="${source}/src/com/avancial/socle" />
-	<property name="dest.src.socle" location="src/com/avancial/socle/" />
-
-	<property name="dest.otherResources" location="Other Resources" />
-	<property name="source.otherResources" location="${source}/Other Resources/" />
-
-
-	<property name="dest.webcontent.pages" location="${dest.webcontent}/pages/" />
-	<property name="source.webcontent.pages" location="${source.webcontent}/pages/" />
-
-	<property name="dest.webcontent.wsdl" location="${dest.webcontent}/wsdl/" />
-
-
-	<target name="commun">
-
-
-
-
-
-
-	</target>
-
-	<target name="update">
-		<echo>update du projet</echo>
-		<delete dir="${dest.src.socle}">
+		<delete dir="${dest.src.socle}/main" quiet="true" failonerror="false">
 		</delete>
 		<mkdir dir="${dest.src.socle}" />
-
-		<echo>Copie des sources du socle</echo>
+		<echo>Copie des sources java</echo>
 		<copy todir="${dest.src.socle}" verbose="true" overwrite="true">
 			<fileset dir="${source.src.socle}">
 			</fileset>
 		</copy>
+	</target>
 
+	<target name="js socle copy">
+
+		<delete dir="${dest.webapp.appclient.socle}" quiet="true" failonerror="false">
+		</delete>
+		<mkdir dir="${dest.webapp.appclient.socle}" />
+		<echo>Copie des sources javascript</echo>
+		<copy todir="${dest.webapp.appclient.socle}" verbose="true" overwrite="true">
+			<fileset dir="${source.webapp.appclient.socle}">
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="doc socle copy">
+		<delete dir="${dest.other_resources.socle}" quiet="true" failonerror="false">
+		</delete>
+		<mkdir dir="${dest.other_resources.socle}" />
+		<echo>Copie de la documentation</echo>
+		<copy todir="${dest.other_resources.socle}" verbose="true" overwrite="true">
+			<fileset dir="${source.other_resources.socle}">
+			</fileset>
+		</copy>
+	</target>
+
+
+
+	<target name="commun">
+	</target>
+
+	<target name="update">
+		<echo>update du projet</echo>
+
+
+
+
+		<antcall target="java socle copy">
+		</antcall>
+
+		<antcall target="js socle copy">
+		</antcall>
+		
+		<antcall target="doc socle copy">
+		</antcall>
 
 		<antcall target="commun">
 		</antcall>
@@ -79,24 +118,23 @@
 		</available>
 	</target>
 
-	<target name="update-failed" depends="check_was" if="${file.exists}">
-
+	<target name="init-check_ko" if="project.not.empty">
+		<echo>Initialisation impossible, le projet n'est pas vide.</echo>
 	</target>
 
-	<target name="init">
-
+	<target name="init-check_ok" unless="project.not.empty">
 		<echo>init du projet</echo>
+	</target>
 
-		<echo>Copie des sources</echo>
-		<copy todir="${dest.src}" verbose="true" overwrite="true">
-			<fileset dir="${source.src}">
+	<target name="init" depends="init-check_ko,init-check_ok" unless="project.not.empty">
+
+
+		<mkdir dir="${dest.main}" />
+		<echo>Copie Source</echo>
+		<copy todir="${dest.main}" verbose="true" overwrite="true">
+			<fileset dir="${source.main}">
 			</fileset>
 		</copy>
-
-
-		<antcall target="commun">
-		</antcall>
-		<echo>Copie Web-Content</echo>
 
 		<echo>Copie du pom.xml</echo>
 		<copy todir="." overwrite="true">
@@ -104,34 +142,29 @@
 			</fileset>
 		</copy>
 
-		<echo>Copie du répertoire WEB-INF</echo>
-		<copy todir="${dest.webcontent.webinf}" verbose="true" overwrite="true">
-			<fileset dir="${source.webcontent.webinf}" />
-		</copy>
 
-		<echo>Creation du répertoire Other Ressources</echo>
-		<mkdir dir="${dest.otherResources}" />
-
-		<echo>Copie du répertoire META-INF</echo>
-		<copy todir="${dest.webcontent.metainf}" verbose="true" overwrite="true">
-			<fileset dir="${source.webcontent.metainf}" />
-		</copy>
-
-
-
-		<echo>Copie des resources</echo>
-		<copy todir="${dest.otherResources}" verbose="true" overwrite="true">
-			<fileset dir="${source.otherResources}">
-				<exclude name="socle/" />
+		<echo>Copie de la documentation</echo>
+		<copy todir="${dest.other_resources}" verbose="true" overwrite="true">
+			<fileset dir="${source.other_resources}">
 			</fileset>
 		</copy>
 
-		<echo>Copie des pages</echo>
-		<copy todir="${dest.webcontent.pages}" verbose="true" overwrite="true">
-			<fileset dir="${source.webcontent.pages}">
 
-			</fileset>
-		</copy>
+		<echo>Création de la structure documentation client </echo>
+		<mkdir dir="${dest.other_resources}/app" />
+		<mkdir dir="${dest.other_resources}/app/livraison" />
+		<mkdir dir="${dest.other_resources}/app/livraison/changelog" />
+		<mkdir dir="${dest.other_resources}/app/livraison/sql" />
+		<mkdir dir="${dest.other_resources}/app/documentation" />
+		<mkdir dir="${dest.other_resources}/app/documentation/md" />
+
+
+
+
+		<antcall target="commun">
+		</antcall>
+
+
 
 
 	</target>

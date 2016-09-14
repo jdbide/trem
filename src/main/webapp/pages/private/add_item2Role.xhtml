@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/template/layout.xhtml">
+
+	<!-- <f:metadata>
+         <f:event listener="#{security.chargeListRole}" type="preRenderView"></f:event>
+     </f:metadata> -->
+
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<ui:define name="title">#{p_item2Role_titre}</ui:define>
+
+	<ui:define name="contenu"
+		rendered="#{ihmManagedBean.isLogged() and security.isRendered('pageRole')}">
+		<p:messages globalOnly="false" id="idPageMessages" autoUpdate="true"
+			showDetail="true" />
+		<h:body>
+			<h:form id="formAjoutDroit">
+				<div class="panel panel-primary panelCRUD">
+					<div class="panel-heading">#{msg.p_dialog_ajout_title_droit}</div>
+					<div class="panel-body">
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="nameItem2Role">#{msg.p_dialog_libelle_nom_item2role_page}</label>
+								<h:inputText value="#{security.nameItem2Role}" required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_nom_item2role_page}"
+									placeholder="#{msg.p_dialog_place_holder_nom_item2role_page}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="form-group">
+							<div class="col-sm-2">
+								<label for="isAddable">#{msg.p_dialog_libelle_droit_item2role_ajout}
+								</label>
+								<h:inputText value="#{security.isAddable}" required="true"
+									requiredMessage="#{msg.p_dialog_msg_requis_droit_item2role_ajout}"
+									placeholder="#{msg.p_dialog_place_holder_droit_item2role_ajout}"
+									class="form-control formCRUD"></h:inputText>
+							</div>
+						</div>
+					<div class="row"></div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label for="isEditable">#{msg.p_dialog_libelle_droit_item2role_modif}
+							</label>
+							<h:inputText value="#{security.isEditable}" required="true"
+								requiredMessage="#{msg.p_dialog_msg_requis_droit_item2role_modif}"
+								placeholder="#{msg.p_dialog_place_holder_droit_item2role_modif}"
+								class="form-control formCRUD"></h:inputText>
+						</div>
+					</div>
+					<div class="row"></div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label for="isDeletable">#{msg.p_dialog_libelle_droit_item2role_supression}
+							</label>
+							<h:inputText value="#{security.isDeletable}" required="true"
+								requiredMessage="#{msg.p_dialog_msg_requis_droit_item2role_supression}"
+								placeholder="#{msg.p_dialog_place_holder_droit_item2role_supression}"
+								class="form-control formCRUD"></h:inputText>
+						</div>
+					</div>
+					<div class="row"></div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label for="isRendered">#{msg.p_dialog_libelle_droit_item2role_affichage}
+							</label>
+							<h:inputText value="#{security.isRendered}" required="true"
+								requiredMessage="#{msg.p_dialog_msg_requis_droit_item2role_affichable}"
+								placeholder="#{msg.p_dialog_place_holder_droit_item2role_affichable}"
+								class="form-control formCRUD"></h:inputText>
+						</div>
+					</div>
+					<div class="row"></div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label for="idRole">#{msg.p_dialog_idRole_item2role}
+							</label>
+							<h:selectOneMenu class="form-control formCRUD" valueChangeListener="#{security.changeSelectedRole}">
+							<!-- <f:selectItem itemLabel="Selectionnez un role" itemValue="#{null}"/> -->
+							
+							<f:selectItems value="#{security.listRole}"  var="itemRole" itemValue="#{itemRole.idRole}" itemLabel="#{itemRole.technicalNameRole}" />							
+							 <p:ajax event="valueChange" immediate="true" process="@this" update="formAjoutDroit"/>
+							</h:selectOneMenu>
+							<!--<h:selectOneMenu effect="fold" editable="true" 
+									value="#{traintocompagnie.codeCompagnie}"  
+									valueChangeListener="#{traintocompagnie.valueChanged}"  
+									style="width: auto;"  > 
+									<f:selectItem itemLabel="Selectionnez une compagnie" itemValue="#{null}"/>
+									<f:selectItems value="#{traintocompagnie.allCodeCompagnie}"/>  
+									  <p:ajax event="valueChange" immediate="true" process="@this" update="formAssocier"/>
+								</h:selectOneMenu>--> 
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+
+					<div class="form-group">
+						<div class="col-lg-5"></div>
+						<div class="col-xs-1 ">
+							<h:commandButton class="btn btn-primary"
+								value="#{msg.p_dialog_bouton_sauver_libelle}" type="submit"
+								action="#{security.add}" />
+						</div>
+
+						<h:commandButton class="btn btn-danger" immediate="true"
+							value="#{msg.p_dialog_bouton_annuler_libelle}"
+							action="item2Role?faces-redirect=true" />
+					</div>
+				</div>
+				</div>
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>

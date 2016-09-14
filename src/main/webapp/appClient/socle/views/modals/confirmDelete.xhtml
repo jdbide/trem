@@ -1,0 +1,37 @@
+<div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel"
+	aria-hidden="true" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- <div class="modal-header">
+                                 
+            </div> -->
+			<div class="modal-body">
+				<div class="login-box-body">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					
+					
+					<div ng-if="reponse != null && reponse.status != null && !reponse.status"
+		class="alert alert-danger  alert-dismissable">
+		<button class="close" aria-hidden="true" data-dismiss="alert"
+			type="button">x</button>
+		<h4>
+			<i class="icon fa fa-check"></i> Alert!
+		</h4>
+		{{reponse.message}}
+	</div>
+					
+					<form name="formConfirmDelete"  class="form-horizontal">
+					<div class="modal-header"><h2>Confirmation</h2></div>
+					<div class="modal-body">Voulez-vous supprimer cette element ? </div>
+				    <div class="modal-footer">
+   					 <button class="btn btn-primary" type="button" ng-click="deleteData(selectedRow.id)" data-dismiss="modal"data-dismiss="modal">Confirmer</button>
+   					 <button class="btn" type="button" aria-hidden="true" data-dismiss="modal">Annuler</button>
+					</div>
+					</form>
+				</div>
+				<!-- /.login-box-body -->
+			</div>
+		</div>
+	</div>
+</div>

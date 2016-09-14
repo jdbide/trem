@@ -1,0 +1,174 @@
+<project name="socle" default="update" basedir=".">
+	<description>
+		Création d'un nouveau projet ou mise à jour d'un projet existant
+	</description>
+
+
+	<condition property="lecteur" value="c:">
+		<contains string="${user.name}" substring="legloahec" casesensitive="false" />
+	</condition>
+	<property name="lecteur" value="d:" />
+
+
+	<property name="source" location="${lecteur}\Users/${user.name}/Desktop/socle/" />
+	<property name="dest" location="." />
+
+	<property name="source.main" location="${source}/src/main" />
+	<property name="dest.main" location="${dest}/src/main/" />
+
+	<property name="source.src" location="${source.main}/java" />
+	<property name="dest.src" location="${dest.main}/java" />
+
+	<property name="source.other_resources" location="${source}/Other Resources" />
+	<property name="dest.other_resources" location="${dest}/Other Resources" />
+
+
+	<property name="source.src.socle" location="${source.src}/com/avancial/socle" />
+	<property name="dest.src.socle" location="${dest.src}/com/avancial/socle/" />
+
+	<property name="source.webapp" location="${source.main}/webapp" />
+			<property name="dest.webapp" location="${dest.main}/webapp" />
+	
+	<property name="source.webapp.appclient" location="${source.webapp}/appclient" />
+		<property name="dest.webapp.appclient" location="${dest.webapp}/appclient/" />
+	
+	<property name="source.webapp.appclient.socle" location="${source.webapp.appclient}/socle" />
+	<property name="dest.webapp.appclient.socle" location="${dest.webapp.appclient}/socle/" />
+
+	<property name="source.other_resources" location="${source}/Other Resources/" />
+	<property name="dest.other_resources" location="Other Resources" />
+
+	<property name="source.other_resources.socle" location="${source}/Other Resources/socle/" />
+	<property name="dest.other_resources.socle" location="Other Resources/socle" />
+
+	
+	
+	
+	<available type="dir" property="project.not.empty" file="${dest.src.socle}">
+	</available>
+
+	<target name="java socle copy">
+
+		<delete dir="${dest.src.socle}/main" quiet="true" failonerror="false">
+		</delete>
+		<mkdir dir="${dest.src.socle}" />
+		<echo>Copie des sources java</echo>
+		<copy todir="${dest.src.socle}" verbose="true" overwrite="true">
+			<fileset dir="${source.src.socle}">
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="js socle copy">
+
+		<delete dir="${dest.webapp.appclient.socle}" quiet="true" failonerror="false">
+		</delete>
+		<mkdir dir="${dest.webapp.appclient.socle}" />
+		<echo>Copie des sources javascript</echo>
+		<copy todir="${dest.webapp.appclient.socle}" verbose="true" overwrite="true">
+			<fileset dir="${source.webapp.appclient.socle}">
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="doc socle copy">
+		<delete dir="${dest.other_resources.socle}" quiet="true" failonerror="false">
+		</delete>
+		<mkdir dir="${dest.other_resources.socle}" />
+		<echo>Copie de la documentation</echo>
+		<copy todir="${dest.other_resources.socle}" verbose="true" overwrite="true">
+			<fileset dir="${source.other_resources.socle}">
+			</fileset>
+		</copy>
+	</target>
+
+
+
+	<target name="commun">
+	</target>
+
+	<target name="update">
+		<echo>update du projet</echo>
+
+
+
+
+		<antcall target="java socle copy">
+		</antcall>
+
+		<antcall target="js socle copy">
+		</antcall>
+		
+		<antcall target="doc socle copy">
+		</antcall>
+
+		<antcall target="commun">
+		</antcall>
+	</target>
+
+
+
+	<property name="sauve" location="${source}/sauve">
+	</property>
+
+
+	<target name="check_was" unless="file.exists">
+		<!-- Vérification du repértoire source -->
+		<available type="dir" property="file.exists" file="${source}">
+		</available>
+	</target>
+
+	<target name="init-check_ko" if="project.not.empty">
+		<echo>Initialisation impossible, le projet n'est pas vide.</echo>
+	</target>
+
+	<target name="init-check_ok" unless="project.not.empty">
+		<echo>init du projet</echo>
+	</target>
+
+	<target name="init" depends="init-check_ko,init-check_ok" unless="project.not.empty">
+
+
+		<mkdir dir="${dest.main}" />
+		<echo>Copie Source</echo>
+		<copy todir="${dest.main}" verbose="true" overwrite="true">
+			<fileset dir="${source.main}">
+			</fileset>
+		</copy>
+
+		<echo>Copie du pom.xml</echo>
+		<copy todir="." overwrite="true">
+			<fileset file="${source}/pom.xml">
+			</fileset>
+		</copy>
+
+
+		<echo>Copie de la documentation</echo>
+		<copy todir="${dest.other_resources}" verbose="true" overwrite="true">
+			<fileset dir="${source.other_resources}">
+			</fileset>
+		</copy>
+
+
+		<echo>Création de la structure documentation client </echo>
+		<mkdir dir="${dest.other_resources}/app" />
+		<mkdir dir="${dest.other_resources}/app/livraison" />
+		<mkdir dir="${dest.other_resources}/app/livraison/changelog" />
+		<mkdir dir="${dest.other_resources}/app/livraison/sql" />
+		<mkdir dir="${dest.other_resources}/app/documentation" />
+		<mkdir dir="${dest.other_resources}/app/documentation/md" />
+
+
+
+
+		<antcall target="commun">
+		</antcall>
+
+
+
+
+	</target>
+
+
+
+</project>
