@@ -8,14 +8,12 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-
 import com.avancial.socle.authentification.resources.constants.AUTH_roles;
 import com.avancial.socle.data.model.databean.RoleDataBean;
 import com.avancial.socle.ihm.menu.model.databean.ChapitreDataBean;
 import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.ihm.menu.model.databean.RubriqueDataBean;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 import com.avancial.socle.session.Session;
 
 /**
@@ -24,13 +22,13 @@ import com.avancial.socle.session.Session;
  */
 
 @RequestScoped
-public class MenuService {
+public class MenuService extends AService {
 
-   @Inject
-   @Socle_PUSocle
-   // @PersistenceContext(unitName = "PU_socle")
-   EntityManager em;
-
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7818238770949755054L;
+	
    @Inject
    Session       session;
 
@@ -45,7 +43,7 @@ public class MenuService {
    public List<RubriqueDataBean> getUserMenusByRubrique() {
       @SuppressWarnings("unchecked")
 
-      List<RubriqueDataBean> userMenus = em.createNamedQuery(RubriqueDataBean.QUERY_GET_ALL.toString()).getResultList();
+      List<RubriqueDataBean> userMenus = this.getEntityManager().createNamedQuery(RubriqueDataBean.QUERY_GET_ALL.toString()).getResultList();
 
       ArrayList<RubriqueDataBean> rubriques = new ArrayList<>();
       ArrayList<ChapitreDataBean> chapitres = new ArrayList<>();
@@ -112,7 +110,7 @@ public class MenuService {
          if (rubrique.getChapitres().isEmpty())
             userMenus.remove(rubrique);
       } // Fin boucle rubriques
-      this.em.close();
+      this.getEntityManager().close();
       return userMenus;
    }
 

@@ -7,39 +7,33 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-
 import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 
 /**
  * @author bruno.legloahec
  *
  */
 @RequestScoped
-public class PageService implements Serializable {
+public class PageService extends AService implements Serializable {
    /**
    * 
    */
    private static final long serialVersionUID = 1L;
-   @Inject
-   @Socle_PUSocle
-   EntityManager             em;
 
    /**
     * @return
     */
    public List<PageDataBean> getAll() {
       @SuppressWarnings("unchecked")
-      List<PageDataBean> liste = em.createNamedQuery(PageDataBean.QUERY_GET_ALL).getResultList();
-      this.em.close();
+      List<PageDataBean> liste = this.getEntityManager().createNamedQuery(PageDataBean.QUERY_GET_ALL).getResultList();
+      this.getEntityManager().close();
       return liste;
    }
 
    public List<PageDataBean> getAllActif() {
       @SuppressWarnings("unchecked")
-      List<PageDataBean> liste = em.createNamedQuery(PageDataBean.QUERY_GET_ALL_ACTIF).getResultList();
+      List<PageDataBean> liste = this.getEntityManager().createNamedQuery(PageDataBean.QUERY_GET_ALL_ACTIF).getResultList();
       return liste;
    }
 
@@ -49,7 +43,7 @@ public class PageService implements Serializable {
     */
    @SuppressWarnings("unchecked")
    public List<PageDataBean> getById(Long id) {
-      List<PageDataBean> liste = em.createNamedQuery(PageDataBean.QUERY_GET_BY_ID).setParameter("id", id).getResultList();
+      List<PageDataBean> liste = this.getEntityManager().createNamedQuery(PageDataBean.QUERY_GET_BY_ID).setParameter("id", id).getResultList();
       return liste;
    }
 
@@ -58,13 +52,13 @@ public class PageService implements Serializable {
     */
    public void addPage(PageDataBean pageDataBean) {
       try {
-         this.em.getTransaction().begin();
-         this.em.persist(pageDataBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().persist(pageDataBean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
 
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
 
@@ -75,13 +69,13 @@ public class PageService implements Serializable {
     */
    public void deletePage(Long id) throws Exception {
       try {
-         this.em.getTransaction().begin();
-         this.em.createNamedQuery(PageDataBean.QUERY_DELETE_BY_ID).setParameter("id", id).executeUpdate();
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().createNamedQuery(PageDataBean.QUERY_DELETE_BY_ID).setParameter("id", id).executeUpdate();
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
 
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
    }
@@ -91,12 +85,12 @@ public class PageService implements Serializable {
     */
    public void updatePage(PageDataBean pageDataBean) {
       try {
-         this.em.getTransaction().begin();
-         this.em.merge(pageDataBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().merge(pageDataBean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
    }

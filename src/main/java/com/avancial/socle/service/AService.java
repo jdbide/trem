@@ -1,7 +1,4 @@
-/**
- * 
- */
-package com.avancial.socle.traitement;
+package com.avancial.socle.service;
 
 import java.io.Serializable;
 
@@ -12,17 +9,16 @@ import javax.persistence.EntityManager;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 
 /**
- * @author bruno.legloahec
- *
+ * Classe abstraite servant de base à  tous les services.
+ * 
+ * @author raphael.cabaret
  */
+public abstract class AService implements Serializable {
 
-public abstract class ATraitement implements ITraitement, Serializable {
-   /**
-    * 
-    */
-   private static final long serialVersionUID = 1L;
+	/** Automatic serial ID */
+	private static final long serialVersionUID = 5280845974698170475L;
 
-   /** entity manager. */
+	/** entity manager. */
 	@Inject
 	@Socle_PUSocle
 	private EntityManager     entityManager;
@@ -36,7 +32,7 @@ public abstract class ATraitement implements ITraitement, Serializable {
 			this.entityManager.close();
 		}
 	}
-   
+
 	/**
 	 * retourne l'entity manager.
 	 * @return l'entity manager.
@@ -45,11 +41,4 @@ public abstract class ATraitement implements ITraitement, Serializable {
 		return entityManager;
 	}
 	
-   /**
-    * Méthode contenant le code du traitement à implémenter
-    * 
-    * @throws Exception
-    * @throws Throwable 
-    */
-   protected abstract void executeTraitement() throws Exception;
 }

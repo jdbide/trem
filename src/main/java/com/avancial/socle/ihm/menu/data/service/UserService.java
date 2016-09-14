@@ -11,27 +11,25 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import com.avancial.socle.data.model.databean.UserDataBean;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 
 /**
  * @author HachemBenAyed
  *
  */
 @RequestScoped
-public class UserService implements Serializable {
+public class UserService extends AService implements Serializable {
    /**
    * 
    */
    private static final long serialVersionUID = 1L;
-   @Inject
-   @Socle_PUSocle
-   EntityManager             em;
 
    /**
     * @return
     */
    public List<UserDataBean> getAll() {
       @SuppressWarnings("unchecked")
-      List<UserDataBean> listUser = em.createNamedQuery(UserDataBean.QUERY_GET_ALL).getResultList();
+      List<UserDataBean> listUser = this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_ALL).getResultList();
       return listUser;
    }
 
@@ -40,13 +38,13 @@ public class UserService implements Serializable {
     */
    public void addUser(UserDataBean userDataBean) throws Exception {
       try {
-         this.em.getTransaction().begin();
-         this.em.persist(userDataBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().persist(userDataBean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
 
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
 
@@ -54,12 +52,12 @@ public class UserService implements Serializable {
 
    public void deleteUser(Long id) {
       try {
-         this.em.getTransaction().begin();
-         this.em.createNamedQuery(UserDataBean.QUERY_DELETE_BY_ID).setParameter("id", id).executeUpdate();
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().createNamedQuery(UserDataBean.QUERY_DELETE_BY_ID).setParameter("id", id).executeUpdate();
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
 
@@ -70,12 +68,12 @@ public class UserService implements Serializable {
     */
    public void updateUser(UserDataBean userDataBean) {
       try {
-         this.em.getTransaction().begin();
-         this.em.merge(userDataBean);
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().merge(userDataBean);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
       } catch (Exception e) {
-         this.em.getTransaction().rollback();
+         this.getEntityManager().getTransaction().rollback();
          throw e;
       }
    }

@@ -7,22 +7,21 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
 import com.avancial.app.utilitaire.GetEntiteService;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 
 /**
  * @author sebastien.benede Classe qui gère toutes les requêtes dans les tables d'import.
  */
 @RequestScoped
-public class ImportMotriceService {
-   @Inject
-   @Socle_PUSocle
-   private EntityManager    em;
+public class ImportMotriceService extends AService {
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1097499901107750530L;
 
    @Inject
    private GetEntiteService getEntiteService;
@@ -43,17 +42,17 @@ public class ImportMotriceService {
       Class<?> importEntityClass = this.getEntiteService.getClasseEntiteImportFromTableMotrice(libelleTableMotrice);
 
       if (importEntityClass != null) {
-         this.em.getTransaction().begin();
+         this.getEntityManager().getTransaction().begin();
 
          Object object;
          for (int i = 0; i < entityList.size(); i++) {
             object = modelMapper.map(entityList.get(i), importEntityClass);// mapping entre les deux entités
 
-            this.em.persist(object);
+            this.getEntityManager().persist(object);
          }
 
-         this.em.flush();
-         this.em.getTransaction().commit();
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
       }
    }
 
@@ -65,9 +64,9 @@ public class ImportMotriceService {
    public void deleteTable(String entityName) {
       String query = new StringBuilder("DELETE FROM ").append(entityName).toString();
 
-      this.em.getTransaction().begin();
-      this.em.createQuery(query).executeUpdate();
-      this.em.getTransaction().commit();
+      this.getEntityManager().getTransaction().begin();
+      this.getEntityManager().createQuery(query).executeUpdate();
+      this.getEntityManager().getTransaction().commit();
    }
 
 }

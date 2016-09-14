@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -17,6 +18,7 @@ import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapTraitementImportBrut;
 import com.avancial.socle.traitement.ATraitementImportDataBase;
 
+@RequestScoped
 public class TraitementImportDb2Motrice extends ATraitementImportDataBase implements Serializable {
 
    /**

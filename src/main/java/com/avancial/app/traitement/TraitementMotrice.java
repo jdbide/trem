@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -41,6 +42,7 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
+@RequestScoped
 public class TraitementMotrice extends ATraitementLogDetail implements Serializable {
    /**
    * 
@@ -58,10 +60,6 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
    private TraiteMotriceRegimeFactory    traiteMotriceRegimeFactory;
 
    private MapPlansDeTransport           mapPlansDeTransport;
-
-   @Inject
-   @Socle_PUSocle
-   private EntityManager                 em;
 
    /**
     * Id du currentThread
@@ -90,15 +88,15 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 
          // récupération des id pour l'insertion des régimes
          MapIdTablesMotriceRegime mapIdTablesMotriceRegime = null;
-         mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime(this.em);
+         mapIdTablesMotriceRegime = new MapIdTablesMotriceRegime(this.getEntityManager());
 
          this.getIdRegime(mapIdTablesMotriceRegime, motriceRegimeEntities);
 
-         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(this.em.unwrap(Session.class), 250);
+         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(this.getEntityManager().unwrap(Session.class), 250);
 
          // this.em.getTransaction().begin();
          /* Récupération des train-tranche */
-         Query query = this.em.createNativeQuery(
+         Query query = this.getEntityManager().createNativeQuery(
                "SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche, categorie.CATH_REGI AS regime FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_TRCH_NUM");
 
          List<Object[]> trainsTranches = query.getResultList();
@@ -116,7 +114,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          Date debutPeriode = this.jeuDonneeEntity.getDateDebutPeriode();
 
          this.log("Debut recuperation des trains tranches");
-         for (Object[] record : trainsTranches) {
+//         for (Object[] record : trainsTranches) {
+        	 for (int i = 0; i < 5; i++) {
+        		 Object[] record = trainsTranches.get(i);
             motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
             motriceTrainTrancheEntity.setJeuDonnee(this.jeuDonneeEntity);
             motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche((String) record[0]);
@@ -124,9 +124,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(((BigInteger) record[2]).intValue() == 1);
             motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche((String) record[3]);
 
-            this.em.getTransaction().begin();
-            this.em.persist(motriceTrainTrancheEntity);
-            this.em.flush();
+            this.getEntityManager().getTransaction().begin();
+            this.getEntityManager().persist(motriceTrainTrancheEntity);
+            this.getEntityManager().flush();
 
             System.out.println("Traitement du train-tranche " + motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche() + "-"
                   + motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche() + " statut "
@@ -140,8 +140,8 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             motriceRegimeEntity.setPeriodMotriceRegime((String) record[4]);
             motriceRegimeEntity.setMotriceTrainTranche(motriceTrainTrancheEntity);
 
-            this.em.persist(motriceRegimeEntity);
-            this.em.getTransaction().commit();
+            this.getEntityManager().persist(motriceRegimeEntity);
+            this.getEntityManager().getTransaction().commit();
 
             if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
                train = new Train(new ArrayList<Tranche>(), motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
@@ -164,7 +164,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
                   Class<?> entity = GetEntiteService
                         .getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory.getTraiteMotriceRegime(entity);
-                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.em,
+                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.getEntityManager(),
                         atomicTranche);
                } catch (ParseException e) {
                   System.err.println("Erreur dans la lecture d'un régime de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
@@ -207,17 +207,17 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          this.log("Fin d'insertion dans la table tremas_motrice_regime_composition_coach");
          this.log("Fin du traitement de l'import brut");
          logger.info("Fin de l'exécution de TraitementMotrice");
-         if (this.em != null && this.em.isOpen()) {
-            this.em.clear();
-            this.em.close();
+         if (this.getEntityManager() != null && this.getEntityManager().isOpen()) {
+            this.getEntityManager().clear();
+            this.getEntityManager().close();
          }
       } catch (Throwable th) {
          logger.error("Fin de l'exécution de ATraitementImportDataBase avec EXCEPTION", th);
          if (this.idTask != null) {
             Task.finishKoTask(this.idTask, "Echec de création du draft : veuillez reessayer ulterieurement");
-            if (this.em != null && this.em.isOpen()) {
-               this.em.clear();
-               this.em.close();
+            if (this.getEntityManager() != null && this.getEntityManager().isOpen()) {
+               this.getEntityManager().clear();
+               this.getEntityManager().close();
             }
 
             Thread.currentThread().interrupt();
@@ -278,7 +278,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
     *           Entité correspondant à la table que l'on veut vider
     */
    private void executeDeleteAll(Class<?> entity) {
-      this.em.createNamedQuery(GetEntiteService.getNomFromEntiteTableMotriceRegime(entity.getSimpleName()) + ".deleteAll").executeUpdate();
+      this.getEntityManager().createNamedQuery(GetEntiteService.getNomFromEntiteTableMotriceRegime(entity.getSimpleName()) + ".deleteAll").executeUpdate();
    }
 
    public void setJeuDonneeEntity(JeuDonneeEntity jeuDonneeEntity) {
@@ -288,10 +288,6 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
    public void setMap(MapPlansDeTransport mapPlansDeTransport) {
       this.mapPlansDeTransport = mapPlansDeTransport;
 
-   }
-
-   public void setEm(EntityManager em) {
-      this.em = em;
    }
 
    /**

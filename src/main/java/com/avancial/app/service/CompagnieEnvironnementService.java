@@ -7,27 +7,21 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.service.AService;
 
 /**
  * @author hamza.laterem
  *
  */
 @RequestScoped
-public class CompagnieEnvironnementService implements Serializable {
+public class CompagnieEnvironnementService extends AService implements Serializable {
    /**
     * 
     */
    private static final long serialVersionUID = 1L;
-
-   @Inject
-   @Socle_PUSocle
-   private EntityManager     em;
 
    /**
     * 
@@ -37,7 +31,7 @@ public class CompagnieEnvironnementService implements Serializable {
    }
 
    public CompagnieEnvironnementEntity getCompagnieEnvironnementById(Integer idCompagnieEnvironnement) {
-      Query query = this.em.createNamedQuery("CompagnieEnvironnementEntity.findById", CompagnieEnvironnementEntity.class);
+      Query query = this.getEntityManager().createNamedQuery("CompagnieEnvironnementEntity.findById", CompagnieEnvironnementEntity.class);
       query.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
       return ((CompagnieEnvironnementEntity) query.getSingleResult());
    }
@@ -46,7 +40,7 @@ public class CompagnieEnvironnementService implements Serializable {
       List<CompagnieEnvironnementEntity> datas = null;
       
       try {
-         Query query = this.em.createNamedQuery("CompagnieEnvironnementEntity.findAllActif", CompagnieEnvironnementEntity.class);
+         Query query = this.getEntityManager().createNamedQuery("CompagnieEnvironnementEntity.findAllActif", CompagnieEnvironnementEntity.class);
          
          datas = (List<CompagnieEnvironnementEntity>) query.getResultList();
       } catch (Exception ex) {

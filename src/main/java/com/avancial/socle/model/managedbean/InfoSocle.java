@@ -6,6 +6,7 @@ package com.avancial.socle.model.managedbean;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +35,16 @@ public class InfoSocle implements Serializable {
    @Socle_PUSocle
    EntityManager             em;
 
+	/**
+	 * méthode de pré-destruction.
+	 */
+	@PreDestroy
+	public void preDestroy() {
+		if(this.em.isOpen()) {
+			this.em.close();
+		}
+	}
+   
    /**
     * 
     */
