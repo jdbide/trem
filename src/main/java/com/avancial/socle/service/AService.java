@@ -24,17 +24,11 @@ public abstract class AService implements Serializable {
 	@Socle_PUSocle
 	private EntityManager     entityManager;
 
-	@PostConstruct
-	public void postConstruct() {
-		System.out.println("*******post construct d'une instance de la classe : " + this.getClass().getSimpleName() + " " + this.toString());
-	}
-
 	/**
 	 * méthode de pré-destruction.
 	 */
 	@PreDestroy
 	public void preDestroy() {
-		System.out.println("*******pre destroy d'une instance de la classe : " + this.getClass().getSimpleName() + " " + this.toString());
 		if(this.entityManager.isOpen()) {
 			this.entityManager.close();
 		}

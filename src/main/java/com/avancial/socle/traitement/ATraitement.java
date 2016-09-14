@@ -5,9 +5,7 @@ package com.avancial.socle.traitement;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -29,17 +27,11 @@ public abstract class ATraitement implements ITraitement, Serializable {
 	@Socle_PUSocle
 	private EntityManager     entityManager;
 
-	@PostConstruct
-	public void postConstruct() {
-		System.out.println("*******post construct d'une instance de la classe : " + this.getClass().getSimpleName() + " " + this.toString());
-	}
-
 	/**
 	 * méthode de pré-destruction.
 	 */
 	@PreDestroy
 	public void preDestroy() {
-		System.out.println("*******pre destroy d'une instance de la classe : " + this.getClass().getSimpleName() + " " + this.toString());
 		if(this.entityManager.isOpen()) {
 			this.entityManager.close();
 		}
