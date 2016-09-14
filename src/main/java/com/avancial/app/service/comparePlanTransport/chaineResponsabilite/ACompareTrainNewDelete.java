@@ -62,7 +62,7 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
                 comparaisonPlanTransport.setNumeroTrain(numeroTrain);
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                 comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());
-                comparaisonPlanTransport.setRegimeTranche(trancheNouveau.getRegime().getCodeRegime());
+                comparaisonPlanTransport.setRegimeTranche(trancheNouveau.getRegime());
                 comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
                 logger.info("Train-Tranche NEW ou DELETE : " + comparaisonPlanTransport.getNumeroTrain() + "-"
                         + comparaisonPlanTransport.getNumeroTranche());
@@ -84,7 +84,7 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
                 comparaisonPlanTransport.setNumeroTrain(numeroTrain);
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                 comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());
-                comparaisonPlanTransport.setRegimeTranche(trancheNouveau.getRegime().getCodeRegime());
+                comparaisonPlanTransport.setRegimeTranche(trancheNouveau.getRegime());
                 comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
                 logger.info("Train-Tranche NEW (régime modifié) : " + comparaisonPlanTransport.getNumeroTrain() + "-"
                         + comparaisonPlanTransport.getNumeroTranche());

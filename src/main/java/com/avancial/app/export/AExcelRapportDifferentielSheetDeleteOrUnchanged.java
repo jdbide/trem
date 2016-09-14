@@ -67,7 +67,7 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
             excelTools.createRow(ligne++);
             generateTrainTrancheField(excelTools, comparaison, couleur);
             excelTools.createCellTexteWithStyle(3,
-                    comparaison.getRegimeTranche(),
+                    comparaison.getRegimeTranche().printListeJours(),
                     excelTools.addColor(excelTools.styleBorder, couleur));
             ((SXSSFSheet) excelTools.getSheet()).flushRows(1);
             logger.info("Onglet " + comparaison.getTypeComparaisonPlanTransport().name() + " : " + "("

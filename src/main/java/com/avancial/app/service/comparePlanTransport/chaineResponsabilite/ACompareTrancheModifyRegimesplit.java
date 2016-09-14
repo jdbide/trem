@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
@@ -55,7 +56,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
     @SuppressWarnings("unchecked")
     protected MapComparaisonPlanTransport compareAttributLists(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, String numeroTranche,
-            EnumTrancheStatut trancheStatut, String regimeTranche, List<? extends IPlanTransport> attributsFieldAncien, List<? extends IPlanTransport> attributsFieldNouveau)
+            EnumTrancheStatut trancheStatut, Regime regimeTranche, List<? extends IPlanTransport> attributsFieldAncien, List<? extends IPlanTransport> attributsFieldNouveau)
             throws Exception {
         MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 

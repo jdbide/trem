@@ -1,9 +1,11 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.avancial.app.utilitaire.DecodageRegime;
 import com.avancial.socle.utils.transcodageregimemotrice.JourPourRegime;
@@ -58,6 +60,13 @@ public class Regime {
       } else {
          regime.setDateFin(null);
       }
+      if (this.listeJours != null) {
+         List<Date> dates = new ArrayList<>();
+         for (Date date : this.listeJours) {
+            dates.add(date);
+         }
+         regime.setListeJours(dates);
+      }
 
       return regime;
    }
@@ -72,7 +81,8 @@ public class Regime {
    }
 
    public boolean estInclusDans(Regime regime) {
-      return (this.dateDebut.after(regime.getDateDebut()) || this.dateDebut.equals(regime.getDateDebut())) && (this.dateFin.before(regime.getDateFin()) || this.dateFin.equals(regime.getDateFin()));
+      return (this.dateDebut.after(regime.getDateDebut()) || this.dateDebut.equals(regime.getDateDebut()))
+            && (this.dateFin.before(regime.getDateFin()) || this.dateFin.equals(regime.getDateFin()));
    }
 
    public String getCodeRegime() {
@@ -114,4 +124,46 @@ public class Regime {
       this.listeJours = listeJours;
    }
 
+   /**
+    * Affichage des dates de circulation sous la forme:<br>
+    * Mois+Année JourSemaine+Date, JourSemaine+Date, ...<br>
+    * Exemple:<br>
+    * {@code Sept16 Lun05, Mar06, Mer07}<br>
+    * {@code Oct16 Lun03, Mar04, Mer05}
+    * 
+    * @return Chaîne de caractères correspondante
+    */
+   public String printListeJours() {
+      StringBuilder stringBuilder = new StringBuilder();
+      /*
+       * Affichage des dates de circulation rassemblées par mois Les dates sont déjà triées dans la liste
+       */
+      String moisAn = "";
+      SimpleDateFormat formatMoisAn = new SimpleDateFormat("MMMYY", Locale.ENGLISH);
+      SimpleDateFormat formatJour = new SimpleDateFormat("Edd", Locale.ENGLISH);
+      boolean premiereDate = true;
+      for (Date dateCirculation : this.getListeJours()) {
+         /* On vérifie si on a changé de mois */
+         if (!moisAn.equals(formatMoisAn.format(dateCirculation))) {
+            /* Nouveau mois : on va à la ligne et on l'affiche */
+            moisAn = formatMoisAn.format(dateCirculation);
+            /* Si c'est le tout premier mois, on ne va pas à la ligne */
+            if (stringBuilder.length() > 0) {
+               stringBuilder.append("\n");
+            }
+            stringBuilder.append(moisAn).append(" ");
+            premiereDate = true;
+         }
+
+         /* Si ce n'est pas la première date de la ligne, on ajoute une virgule pour la séparer de la précédente */
+         if (!premiereDate) {
+            stringBuilder.append(", ");
+         }
+
+         /* Affichage de la date (jour de la semaine) */
+         stringBuilder.append(formatJour.format(dateCirculation));
+         premiereDate = false;
+      }
+      return stringBuilder.toString();
+   }
 }
