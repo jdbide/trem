@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
@@ -39,7 +38,6 @@ import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
-import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
 import com.avancial.socle.traitement.ATraitementLogDetail;
 
 @RequestScoped
@@ -114,9 +112,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          Date debutPeriode = this.jeuDonneeEntity.getDateDebutPeriode();
 
          this.log("Debut recuperation des trains tranches");
-//         for (Object[] record : trainsTranches) {
-        	 for (int i = 0; i < 5; i++) {
-        		 Object[] record = trainsTranches.get(i);
+         for (Object[] record : trainsTranches) {
             motriceTrainTrancheEntity = new MotriceTrainTrancheEntity();
             motriceTrainTrancheEntity.setJeuDonnee(this.jeuDonneeEntity);
             motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche((String) record[0]);
