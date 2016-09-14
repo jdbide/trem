@@ -38,10 +38,10 @@ public class Train implements IPlanTransport {
      * @return
      */
     public Tranche getTrancheByNumeroTrancheAndStatusAndRegime(String numeroTranche, EnumTrancheStatut statutTranche,
-            String regimeTranche) {
+            Regime regimeTranche) {
         for (Tranche tranche : this.tranches) {
             if (tranche.getNumeroTranche().equals(numeroTranche) && tranche.getTrancheStatut().equals(statutTranche)
-                    && tranche.getRegime().getCodeRegime().equals(regimeTranche))
+                    && tranche.getRegime().getCodeRegime().equals(regimeTranche.getCodeRegime()))
                 return tranche;
         }
 

@@ -2,6 +2,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport.comparaison;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 
 public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComparaisonPlanTransport {
 
@@ -11,7 +12,7 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
     
     private EnumTrancheStatut statutTranche;
     
-    private String regimeTranche;
+    private Regime regimeTranche;
 
     private T ancienField;
 
@@ -78,11 +79,11 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
         this.statutTranche = statutTranche;
     }
 
-    public String getRegimeTranche() {
+    public Regime getRegimeTranche() {
         return this.regimeTranche;
     }
 
-    public void setRegimeTranche(String regimeTranche) {
+    public void setRegimeTranche(Regime regimeTranche) {
         this.regimeTranche = regimeTranche;
     }
 
