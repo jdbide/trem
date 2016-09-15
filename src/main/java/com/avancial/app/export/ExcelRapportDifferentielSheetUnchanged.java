@@ -7,17 +7,16 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 public class ExcelRapportDifferentielSheetUnchanged extends AExcelRapportDifferentielSheetDeleteOrUnchanged {
 
-    @Override
-    public void generateEntete(ExcelTools excelTools, int ligneDebut) {
-        this.generateEnteteForSheetDeleteOrUnchanged(excelTools, ligneDebut, "Identical Data");
-    }
+   @Override
+   public void generateEntete(ExcelTools excelTools, int ligneDebut) {
+      this.generateEnteteForSheetDeleteOrUnchanged(excelTools, ligneDebut, "Identical Data");
+   }
 
-    @Override
-    public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons,
-            MapPlansDeTransport mapPlansDeTransport) throws IOException {
-        this.generateContentForSheetUnchangedOrDelete(excelTools, ligneDebut,
-                mapPlansDeTransport, mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.UNCHANGED),
-                excelTools.couleurVert);
-    }
+   @Override
+   public void generateContent(ExcelTools excelTools, int ligneDebut, MapComparaisonPlanTransport mapComparaisons,
+         MapPlansDeTransport mapPlansDeTransport) throws IOException {
+      this.generateContentForSheetUnchangedOrDelete(excelTools, ligneDebut, mapPlansDeTransport,
+            mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.UNCHANGED), excelTools.couleurVert);
+   }
 
 }
