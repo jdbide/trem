@@ -17,7 +17,7 @@ import org.apache.deltaspike.cdise.api.ContextControl;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.log4j.Logger;
 
-import com.avancial.app.data.Task;
+import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.traitement.TraitementImportJeuDonnees;
 import com.avancial.app.webService.bean.ResponseBean;

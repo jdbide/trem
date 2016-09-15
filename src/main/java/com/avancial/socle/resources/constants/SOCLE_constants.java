@@ -42,6 +42,7 @@ public enum SOCLE_constants {
    ERR_AUTH("msgErrAuth"),
    INPUT_USER_NAME("j_username"),
    INPUT_PASSWORD("j_password"),
+   PERSISTENCE_UNIT_NAME("PU_socle"),
    ATT_SESSION_USER("sessionUser");
 
    private String constant = "";

@@ -5,9 +5,9 @@ package com.avancial.socle.traitement;
 
 import java.util.Date;
 
-import com.avancial.app.resources.constants.APP_Const;
 import com.avancial.socle.data.model.databean.LogTraitementDetailDataBean;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * @author bruno.legloahec
@@ -28,7 +28,7 @@ public abstract class ATraitementLogDetail extends ATraitementLog {
       this.logDetailBean.setLogTraitementDataBean(this.logBean);
       this.logDetailBean.setMessageTraitementDetail(message);
 
-      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       this.emLog.getTransaction().begin();
 
       try {

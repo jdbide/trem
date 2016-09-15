@@ -34,4 +34,17 @@ public class AWebService {
       return liste;
 
    }
+
+   @SuppressWarnings("unchecked")
+   protected Object getConvertedObject(Object element, @SuppressWarnings("rawtypes") Class destClasse) {
+
+      Mapper mapper = new DozerBeanMapper();
+      Object objetDest;
+
+      objetDest = mapper.map(element, destClasse);
+
+      return objetDest;
+
+   }
+
 }

@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 
 import org.apache.log4j.Logger;
 
-import com.avancial.app.data.Task;
+import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;

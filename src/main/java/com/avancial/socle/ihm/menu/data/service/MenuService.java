@@ -110,7 +110,6 @@ public class MenuService extends AService {
          if (rubrique.getChapitres().isEmpty())
             userMenus.remove(rubrique);
       } // Fin boucle rubriques
-      this.getEntityManager().close();
       return userMenus;
    }
 

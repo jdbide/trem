@@ -4,13 +4,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.avancial.app.data.databean.importMotriceBrut.ImportTMDKAPPEntity;
-import com.avancial.app.resources.constants.APP_Const;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 public class ImportKappService {
 
    public ImportTMDKAPPEntity getKht() {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString())
             .createEntityManager();
       ImportTMDKAPPEntity kappEntity = null;
       try {
