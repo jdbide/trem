@@ -36,7 +36,7 @@ drop table if exists tremas_motrice_ref_distribution;
 
 drop table if exists tremas_motrice_ref_satcode;
 
-drop table if exists tremas_motrice_ref_fareprofilcode;
+drop table if exists tremas_motrice_ref_fareprofilecode;
 
 drop table if exists tremas_motrice_ref_eqptype;
 
@@ -74,9 +74,9 @@ CREATE TABLE `tremas_datasource` (
 -- Records of tremas_datasource
 -- ----------------------------
 INSERT INTO `tremas_datasource` VALUES ('1', 'ES_DB_PROD', 'Eurostar db production', ' ', 'com.ibm.db2.jcc.DB2Driver', 'jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRP2');
-INSERT INTO `tremas_datasource` VALUES ('2', 'ES_DB_REC', 'Eurostart db recette', ' ', 'com.ibm.db2.jcc.DB2Driver', ' jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRO2');
-INSERT INTO `tremas_datasource` VALUES ('3', 'TH_DB_PROD', 'Thalys db production', ' ', 'com.ibm.db2.jcc.DB2Driver', ' jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRP3');
-INSERT INTO `tremas_datasource` VALUES ('4', 'TH_DB_REC', 'Thalys db recette', ' ', 'com.ibm.db2.jcc.DB2Driver', ' jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRO3');
+INSERT INTO `tremas_datasource` VALUES ('2', 'ES_DB_REC', 'Eurostart db recette', ' ', 'com.ibm.db2.jcc.DB2Driver', 'jdbc:db2://sbt.aiel.sncf.fr:5016/LILLE_DSNR:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRO2');
+INSERT INTO `tremas_datasource` VALUES ('3', 'TH_DB_PROD', 'Thalys db production', ' ', 'com.ibm.db2.jcc.DB2Driver', 'jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRP3');
+INSERT INTO `tremas_datasource` VALUES ('4', 'TH_DB_REC', 'Thalys db recette', ' ', 'com.ibm.db2.jcc.DB2Driver', 'jdbc:db2://sbt.aiel.sncf.fr:5016/LILLE_DSNR:retrieveMessagesFromServerOnGetMessage=true;', '1', 'F$MDRO3');
 
 DROP TABLE IF EXISTS `tremas_compagnie_environnement`;
 CREATE TABLE `tremas_compagnie_environnement` (
@@ -146,7 +146,7 @@ create table tremas_motrice_ref_satcode (
     primary key (idMotriceRefSatCode)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-create table tremas_motrice_ref_fareprofilcode (
+create table tremas_motrice_ref_fareprofilecode (
     idMotriceRefFareProfileCode bigint not null auto_increment,
     labelFareProfileCode varchar(3) not null,
     primary key (idMotriceRefFareProfileCode)

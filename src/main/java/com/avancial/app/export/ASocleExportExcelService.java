@@ -108,7 +108,7 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
       try {
          this.excelTools = new ExcelTools(this.classeurXls);
 
-         for (int i = 0; i < nameSheet.length; i++) {
+         for (int i = 0; i < this.nameSheet.length; i++) {
             if (this.nameSheet[i] != null) {
                this.nameCurrentSheet = this.nameSheet[i];
                this.numCurrentSheet = i;
@@ -125,7 +125,7 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
       } catch (Exception e) {
          /* FIXME : Afficher un msg d'erreur */
          e.printStackTrace();
-         System.err.println("Erreur au niveau de la fonctio generateAsXls de la classe ASocleExportService");
+         System.err.println("Erreur au niveau de la fonction generateAsXls de la classe ASocleExportService");
          throw e;
       }
 
@@ -138,8 +138,8 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
 
    @Override
    protected void initFileType() throws Exception {
-      this.fileExtension = (xlsx ? "xlsx" : "xls");
-      this.contentType = (xlsx ? "vnd.openxmlformats-officedocument.spreadsheetml.sheet" : "application/vnd.ms-excel");
+      this.fileExtension = (this.xlsx ? "xlsx" : "xls");
+      this.contentType = (this.xlsx ? "vnd.openxmlformats-officedocument.spreadsheetml.sheet" : "application/vnd.ms-excel");
    }
 
    @Override
@@ -181,9 +181,9 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
     * Les valeur par defaut pour les attributs
     */
    private void init() throws Exception {
-      firstLinePreEntete    =  new int [1];
-      firstLineEntete       =  new int [1];
-      firstLineHide         =  new int [1];
+      this.firstLinePreEntete    =  new int [1];
+      this.firstLineEntete       =  new int [1];
+      this.firstLineHide         =  new int [1];
       
       this.firstLineContent = new int [1];
       this.numberColumnMax  = new int [1];
@@ -206,7 +206,7 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
     * @return the nameCurrentSheet
     */
    protected String getNameCurrentSheet() {
-      return nameCurrentSheet;
+      return this.nameCurrentSheet;
    }
 
    /**
@@ -221,7 +221,7 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
     * @return the numCurrentSheet
     */
    protected int getNumCurrentSheet() {
-      return numCurrentSheet;
+      return this.numCurrentSheet;
    }
 
    /**
@@ -236,7 +236,7 @@ public abstract class ASocleExportExcelService extends ASocleGenerateFile {
     * @return the xlsx
     */
    public boolean isXlsx() {
-      return xlsx;
+      return this.xlsx;
    }
 
    /**
