@@ -46,13 +46,13 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
     /**
      * Colonnes du tableau pour la feuille NEW
      */
-    public static String[] ENTETE_SHEET_NEW = {"Train", "Tranche", "Régime Tranche", "Company", "Tranche Status",
+    private static String[] ENTETE_SHEET_NEW = {"Train", "Tranche", "Régime Tranche", "Company", "Tranche Status",
             "Valid for RR", "Regime_Dessertes", "Dessertes", "Regime OD Tranche", "OD Tranche", "Regime Distrib",
-            "IndicDistrib", "Regime Compo", "Classes", "Compo", "RameCodes", "RM Code", "Regime_CodeSAT", "CodeSAT",
+            "IndicDistrib", "Regime Compo", "Classes", "Compo", "RameCodes", /*"RM Code",*/ "Regime_CodeSAT", "CodeSAT",
             "Regime_FareProfileCode", "FareProfileCode", "Regime Eqp_Type", "Eqp_Type", "Regime Services",
             "Services by Class & OD", "Regime_Meal", "Meal Type", "Regime_Specif", "Specificities",
             "Regime_Restrictions", "Restrictions"};
-    public static Class<?>[] LISTE_CLASSES_TRAITEMENT = {CodeSat.class, Composition.class, Desserte.class,
+    private static Class<?>[] LISTE_CLASSES_TRAITEMENT = {CodeSat.class, Composition.class, Desserte.class,
             Distribution.class, FareProfile.class, OrigineDestination.class, Repas.class, Restriction.class,
             ServiceABord.class, Specification.class, TypeEquipement.class};
 
@@ -85,13 +85,13 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
         this.mapPremiereColonneNew.put(OrigineDestination.class, 9);
         this.mapPremiereColonneNew.put(Distribution.class, 11);
         this.mapPremiereColonneNew.put(Composition.class, 13);
-        this.mapPremiereColonneNew.put(CodeSat.class, 18);
-        this.mapPremiereColonneNew.put(FareProfile.class, 20);
-        this.mapPremiereColonneNew.put(TypeEquipement.class, 22);
-        this.mapPremiereColonneNew.put(ServiceABord.class, 24);
-        this.mapPremiereColonneNew.put(Repas.class, 26);
-        this.mapPremiereColonneNew.put(Specification.class, 28);
-        this.mapPremiereColonneNew.put(Restriction.class, 30);
+        this.mapPremiereColonneNew.put(CodeSat.class, 17);
+        this.mapPremiereColonneNew.put(FareProfile.class, 19);
+        this.mapPremiereColonneNew.put(TypeEquipement.class, 21);
+        this.mapPremiereColonneNew.put(ServiceABord.class, 23);
+        this.mapPremiereColonneNew.put(Repas.class, 25);
+        this.mapPremiereColonneNew.put(Specification.class, 27);
+        this.mapPremiereColonneNew.put(Restriction.class, 29);
     }
 
     /**
@@ -102,14 +102,14 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
         this.mapDerniereColonneNew.put(Desserte.class, 8);
         this.mapDerniereColonneNew.put(OrigineDestination.class, 10);
         this.mapDerniereColonneNew.put(Distribution.class, 12);
-        this.mapDerniereColonneNew.put(Composition.class, 17);
-        this.mapDerniereColonneNew.put(CodeSat.class, 19);
-        this.mapDerniereColonneNew.put(FareProfile.class, 21);
-        this.mapDerniereColonneNew.put(TypeEquipement.class, 23);
-        this.mapDerniereColonneNew.put(ServiceABord.class, 25);
-        this.mapDerniereColonneNew.put(Repas.class, 27);
-        this.mapDerniereColonneNew.put(Specification.class, 29);
-        this.mapDerniereColonneNew.put(Restriction.class, 31);
+        this.mapDerniereColonneNew.put(Composition.class, 16);
+        this.mapDerniereColonneNew.put(CodeSat.class, 18);
+        this.mapDerniereColonneNew.put(FareProfile.class, 20);
+        this.mapDerniereColonneNew.put(TypeEquipement.class, 22);
+        this.mapDerniereColonneNew.put(ServiceABord.class, 24);
+        this.mapDerniereColonneNew.put(Repas.class, 26);
+        this.mapDerniereColonneNew.put(Specification.class, 28);
+        this.mapDerniereColonneNew.put(Restriction.class, 30);
     }
 
     @Override
