@@ -8,9 +8,8 @@ import javax.persistence.EntityManager;
 
 import org.apache.log4j.Logger;
 
-import com.avancial.app.data.Task;
+import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.databean.Status;
-import com.avancial.app.resources.constants.APP_Const;
 import com.avancial.app.service.traiteObjetMetier.CreationObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapPlansDeTransport;

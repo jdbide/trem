@@ -11,8 +11,8 @@ import javax.persistence.TypedQuery;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.Status;
-import com.avancial.app.resources.constants.APP_Const;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @RequestScoped
 public class JeuDonneeService implements Serializable {
@@ -28,7 +28,7 @@ public class JeuDonneeService implements Serializable {
     * @return
     */
    public JeuDonneeEntity save(JeuDonneeEntity jeuDonneeDataBean) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString())
             .createEntityManager();
 
       try {
@@ -56,7 +56,7 @@ public class JeuDonneeService implements Serializable {
     * @param jeuDonneeDataBean
     */
    public void update(JeuDonneeEntity jeuDonneeDataBean) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString())
             .createEntityManager();
 
       try {
@@ -94,7 +94,7 @@ public class JeuDonneeService implements Serializable {
 
    @SuppressWarnings("finally")
    public int deleteById(int idJeuDonnee) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString())
             .createEntityManager();
       int deleteEntity = 0;
       try {
@@ -116,7 +116,7 @@ public class JeuDonneeService implements Serializable {
     * @return jeu de données
     */
    public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement, Status statusJeuDonnees) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString())
             .createEntityManager();
       TypedQuery<JeuDonneeEntity> query = em.createQuery(
             "SELECT t FROM JeuDonneeEntity t WHERE t.compagnieEnvironnement = :compagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees",
@@ -146,7 +146,7 @@ public class JeuDonneeService implements Serializable {
     * @return
     */
    public JeuDonneeEntity getById(int idJeuDonnees) {
-      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString())
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString())
             .createEntityManager();
       JeuDonneeEntity res = null;
       try {

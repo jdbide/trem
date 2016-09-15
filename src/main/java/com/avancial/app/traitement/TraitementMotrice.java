@@ -17,7 +17,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
-import com.avancial.app.data.Task;
+import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.RefTablesMotriceRegimeEntity;
 import com.avancial.app.data.databean.Status;

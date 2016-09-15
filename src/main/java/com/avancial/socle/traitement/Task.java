@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.avancial.app.data;
+package com.avancial.socle.traitement;
 
 import java.util.Hashtable;
 import java.util.Map;

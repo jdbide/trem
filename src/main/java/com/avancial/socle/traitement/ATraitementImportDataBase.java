@@ -7,9 +7,9 @@ import javax.persistence.EntityManager;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
-import com.avancial.app.data.Task;
-import com.avancial.app.resources.constants.APP_Const;
+import com.avancial.socle.traitement.Task;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * 
@@ -146,7 +146,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
    }
 
    private void initSessiont() {
-      this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       this.sessionSocle = this.em.unwrap(Session.class);
    }
 
