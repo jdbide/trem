@@ -129,17 +129,21 @@ public class PageWebService extends AWebService {
    @Produces({ MediaType.APPLICATION_JSON })
    @Consumes({ MediaType.APPLICATION_JSON })
    @Path("/{id}")
-   public Response updatePage(@PathParam("id") Long id, PageDataBean pageDataBean) {
+   public Response updatePage(@PathParam("id") Long id, Object data) {
       ResponseBean response = new ResponseBean();
+      PageDataBean pageDataBean = null;
       try {
+
+         pageDataBean = (PageDataBean) this.getConvertedObject(data, PageDataBean.class);
+
          pageDataBean.setId(id);
          pageService.updatePage(pageDataBean);
-
          response.setStatus(true);
          response.setMessage(MessageController.getTraduction(SOCLE_Page.MESSAGE_UPDATE_SUCCESS.toString(), new Locale("FR")));
       } catch (Exception e) {
          response.setStatus(false);
          response.setMessage(SocleExceptionManager.getException(e).getClientMessage(new Locale("FR")));
+         e.printStackTrace();
       }
       return Response.status(200).entity(response).build();
    }

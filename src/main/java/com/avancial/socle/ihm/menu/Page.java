@@ -23,6 +23,10 @@ public class Page {
    private Long    id;
    @Column(name = "libelleIhmPage")
    private String  libelle;
+   @Column(name = "toutRoleIhmPage")
+   private boolean toutRole;
+   @Column(name = "publiqueIhmPage")
+   private boolean publique;
    @Column(name = "actifIhmPage")
    private boolean actif;
    @Column(name = "ordreIhmPage")
@@ -78,5 +82,21 @@ public class Page {
 
    public void setIdChapitre(Long idChapitre) {
       this.idChapitre = idChapitre;
+   }
+
+   public boolean isToutRole() {
+      return this.toutRole;
+   }
+
+   public void setToutRole(boolean toutRole) {
+      this.toutRole = toutRole;
+   }
+
+   public boolean isPublique() {
+      return this.publique;
+   }
+
+   public void setPublique(boolean publique) {
+      this.publique = publique;
    }
 }

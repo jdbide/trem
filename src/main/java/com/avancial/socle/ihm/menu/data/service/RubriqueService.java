@@ -27,7 +27,6 @@ public class RubriqueService extends AService implements Serializable {
    public List<RubriqueDataBean> getAll() {
       @SuppressWarnings("unchecked")
       List<RubriqueDataBean> listRubrique = this.getEntityManager().createNamedQuery(RubriqueDataBean.QUERY_GET_ALL).getResultList();
-      this.getEntityManager().close();
       return listRubrique;
    }
 
