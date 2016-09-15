@@ -62,7 +62,7 @@
                     recette: ['http://tremas.rec-avancial.com:8080', 'tremas.rec-avancial.com:8080'],
                     recette_client: [],
                     recette_client_secu: [],
-				    production: [],
+				    production: ['http://tremas.si-avancial.com:8080', 'tremas.si-avancial.com:8080'],
 					production_secu: []
 				    // anotherStage: []
                 },
@@ -98,7 +98,10 @@
                         // antoherCustomVar: ''
                     },
                     production: {
-                        apiUrl: ''
+                        apiUrl: 'http://tremas.si-avancial.com:8080/tremas/',
+                        appWebService : 'http://tremas.si-avancial.com:8080/tremas/webService/app',
+                        socleWebService : 'http://tremas.si-avancial.com:8080/tremas/webService/socle',
+                        loginUrl: 'http://tremas.si-avancial.com:8080/tremas/login'
                         // antoherCustomVar: ''
                     },
 					production_secu: {

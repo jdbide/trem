@@ -110,8 +110,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       try {
 
          this.getCompagnieEnvironnement();
-//         this.connexionDb2();
-//         this.importData();
+         this.connexionDb2();
+         this.importData();
          this.deleteDataWithStatusImportDraft();
          this.saveJeuDonnees();
          this.createDraft();

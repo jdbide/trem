@@ -1,6 +1,8 @@
 package com.avancial.app.webService;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
+import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.service.ImportTmsService;
@@ -41,9 +44,6 @@ import com.avancial.socle.service.RefDirectoryService;
 public class ImportTmsWebService {
    // Logger log4j
    private static Logger             logger = Logger.getLogger(ImportTmsWebService.class);
-
-   // @Context
-   // private HttpServletRequest request;
 
    @Inject
    private ImportTmsService          importTmsService;
@@ -93,15 +93,15 @@ public class ImportTmsWebService {
    @Produces({ MediaType.APPLICATION_JSON })
    public Response deleteDraft(@PathParam("nomTechniqueCompagnieEnvironnement") String nomTechniqueCompagnieEnvironnement) throws Exception {
       logger.info("Début : '/app/importTms' methode : @DELETE)");
-      /*
-       * TODO Traitement pour la supression d'un jeu de données
-       */
       ResponseBean responseBean = new ResponseBean();
       responseBean.setStatus(false);
       responseBean.setMessage("Erreur de suppression");
 
       try {
          this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(nomTechniqueCompagnieEnvironnement);
+         List<Status> status = new ArrayList<>();
+         status.add(Status.DRAFT);
+         this.traitementDeleteJeuDonnee.setStatus(status);
          this.traitementDeleteJeuDonnee.execute();
 
          responseBean.setStatus(true);
@@ -159,7 +159,8 @@ public class ImportTmsWebService {
       logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)");
 
       ResponseBuilder responseBuilder = null;
-      String path = refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory() + "RapportDiff-" + idJeuDonnee + ".xlsx";
+      String path = this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory()
+            + "RapportDiff-" + idJeuDonnee + ".xlsx";
 
       try {
          File fileDownload = new File(path);
@@ -170,9 +171,8 @@ public class ImportTmsWebService {
          e.printStackTrace();
          responseBuilder = Response.status(400);
          logger.error("Exception (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)", e);
-      } finally {
-         return responseBuilder.build();
       }
+      return responseBuilder.build();
    }
 
    @GET
@@ -191,8 +191,7 @@ public class ImportTmsWebService {
          e.printStackTrace();
          responseBuilder = Response.status(400);
          logger.error("Exception (WebService : '/app/importTms', Action : 'downloadFileLog', methode : @GET)", e);
-      } finally {
-         return responseBuilder.build();
       }
+      return responseBuilder.build();
    }
 }
