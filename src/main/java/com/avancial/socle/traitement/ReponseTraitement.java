@@ -17,7 +17,7 @@ public class ReponseTraitement {
     * @return the endTraitement
     */
    public Boolean getEndTraitement() {
-      return endTraitement;
+      return this.endTraitement;
    }
    /**
     * @param endTraitement the endTraitement to set
@@ -29,7 +29,7 @@ public class ReponseTraitement {
     * @return the traitementOk
     */
    public Boolean getTraitementOk() {
-      return traitementOk;
+      return this.traitementOk;
    }
    /**
     * @param traitementOk the traitementOk to set
@@ -41,7 +41,7 @@ public class ReponseTraitement {
     * @return the lastMsg
     */
    public String getLastMsg() {
-      return lastMsg;
+      return this.lastMsg;
    }
    /**
     * @param lastMsg the lastMsg to set
@@ -53,7 +53,7 @@ public class ReponseTraitement {
     * @return the msgErr
     */
    public String getMsgErr() {
-      return msgErr;
+      return this.msgErr;
    }
    /**
     * @param msgErr the msgErr to set

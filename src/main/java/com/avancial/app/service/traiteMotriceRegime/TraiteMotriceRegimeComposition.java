@@ -113,7 +113,7 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
    private void ajoutCompositionsRegime(Map<String, String> rameCodes, List<MotriceRegimeCompositionEntity> compositionEntities,
          List<ASousRegimeTranche> compositions, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager) {
       /* TODO Récupération du rmCode */
-      String rmCode = null;
+      String rmCode = "";
       String rameCode1 = rameCodes.get("RC1");
       String rameCode2 = rameCodes.get("RC2");
       // if (rameCode1 != null && rameCode2 != null) {
@@ -122,9 +122,9 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
       // StringBuilder builder = new StringBuilder();
       // query.setParameter(1, builder.append(rameCode1.substring(0, 2)).append(rameCode1.substring(rameCode1.length()-1)));
       // query.setParameter(2, builder.append(rameCode2.substring(0, 2)).append(rameCode2.substring(rameCode2.length()-1)));
-      query.setParameter(1, "15H");
-      query.setParameter(2, "14B");
-      rmCode = (String) query.getSingleResult();
+//      query.setParameter(1, "15H");
+//      query.setParameter(2, "14B");
+//      rmCode = (String) query.getSingleResult();
       // } else {
       // System.err.println("Erreur récupération rmCode");
       // return;
