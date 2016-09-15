@@ -38,7 +38,7 @@ public class Task {
       if (!tasks.containsKey(idTask))
          return;
 
-      tasks.get(idTask).setLastMsg("Traitement terminé succès");
+      tasks.get(idTask).setLastMsg("Traitement terminé avec succès");
       tasks.get(idTask).setEndTraitement(true);
       tasks.get(idTask).setTraitementOk(true);
    }
@@ -47,7 +47,7 @@ public class Task {
       if (!tasks.containsKey(idTask))
          return;
 
-      tasks.get(idTask).setLastMsg("traitement terminé avec échec");
+      tasks.get(idTask).setLastMsg("Traitement terminé en échec");
       tasks.get(idTask).setEndTraitement(true);
       tasks.get(idTask).setTraitementOk(false);
    }
