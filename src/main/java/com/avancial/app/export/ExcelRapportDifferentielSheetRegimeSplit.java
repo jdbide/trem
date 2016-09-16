@@ -51,6 +51,7 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
 
          /* On change de ligne train-tranche */
          if (!(dataPrec.getNumeroTrain().equals(data.getNumeroTrain()) && dataPrec.getNumeroTranche().equals(data.getNumeroTranche())
+               && dataPrec.getStatutTranche().equals(data.getStatutTranche()) && dataPrec.getRegimeTranche().equals(data.getRegimeTranche())
                && dataPrec.getAncienField().getClass().equals(data.getAncienField().getClass()))) {
             /*
              * On commence par merger les cellules des colonnes Train, Tranche et Field du train-tranche précédent
