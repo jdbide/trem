@@ -139,7 +139,7 @@ public class Regime {
        * Affichage des dates de circulation rassemblées par mois Les dates sont déjà triées dans la liste
        */
       String moisAn = "";
-      SimpleDateFormat formatMoisAn = new SimpleDateFormat("MMMYY", Locale.ENGLISH);
+      SimpleDateFormat formatMoisAn = new SimpleDateFormat("MMMyy", Locale.ENGLISH);
       SimpleDateFormat formatJour = new SimpleDateFormat("Edd", Locale.ENGLISH);
       boolean premiereDate = true;
       for (Date dateCirculation : this.getListeJours()) {
