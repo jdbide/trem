@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import com.avancial.socle.data.model.databean.JobDataBean;
 import com.avancial.socle.exceptions.SocleExceptionManager;
 import com.avancial.socle.exceptions.impl.ASocleException;
+import com.avancial.socle.scheduler.entity.JobDataBean;
 
 /**
  * Classe DAO pour l'objet Role
