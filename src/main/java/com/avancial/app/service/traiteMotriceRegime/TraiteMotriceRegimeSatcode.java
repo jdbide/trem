@@ -15,10 +15,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeSatcode extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -48,17 +49,25 @@ public class TraiteMotriceRegimeSatcode implements ITraiteMotriceRegime {
          listeCodeSat = new ArrayList<ASousRegimeTranche>();
       }
 
+      Regime newRegime = null;
       for (Object[] satcode : listeSatcode) {
-         if (!oldRegime.equals(satcode[1])) {// si le régime traité est
-                                             // différent du précédent
-                                             // on insère une nouvelle entrée
+         if (!oldRegime.equals(satcode[1])) {
+            // si le régime traité est
+            // différent du précédent
+            // on insère une nouvelle entrée
+            newRegime = new Regime((String) satcode[1], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
+
             mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), satcode[1], 6,
                   motriceTrainTrancheEntity.getIdMotriceTrainTranche());
          }
          // insertion du régime code sat lié au régime
          mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class).addValue(idRegimeSatcode.getAndIncrement(), satcode[0],
                idRegime.get());
-         listeCodeSat.add(new CodeSat((String) satcode[0], new Regime((String) satcode[1], debutPeriode)));
+         if (this.filtreDateAjout(newRegime)) {
+            listeCodeSat.add(new CodeSat((String) satcode[0],
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
          oldRegime = (String) satcode[1];
 
       }

@@ -17,7 +17,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
 
-public class TraiteObjetMetierRegimeSpecificity implements ITraiteObjetMetier {
+public class TraiteObjetMetierRegimeSpecificity extends AFiltreObjetMetier implements ITraiteObjetMetier {
 
    @Override
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
@@ -25,13 +25,18 @@ public class TraiteObjetMetierRegimeSpecificity implements ITraiteObjetMetier {
       if (listeSpecifications == null) {
          listeSpecifications = new ArrayList<ASousRegimeTranche>();
       }
-      for (MotriceRegimeSpecificityEntity regimeSpecification : regime.getMotriceRegimeSpecificities()) {
-         List<Compartiment> compartiments = new ArrayList<Compartiment>();
-         List<Siege> sieges = new ArrayList<Siege>();
-         sieges.add(new Siege(regimeSpecification.getSeatNumberMotriceRegimeSpecificity()));
-         compartiments.add(new Compartiment(regimeSpecification.getCompartmentNumberMotriceRegimeSpecificity(), sieges));
-         listeSpecifications.add(new Specification(new Voiture(regimeSpecification.getCoachNumberMotriceRegimeSpecificity(), compartiments),
-               EnumEtatSpecification.Blocked, new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      Regime newRegime = new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode);
+      newRegime.filtreDates(getDateDebut(), getDateFin());
+      if (this.filtreDateAjout(newRegime)) {
+         for (MotriceRegimeSpecificityEntity regimeSpecification : regime.getMotriceRegimeSpecificities()) {
+            List<Compartiment> compartiments = new ArrayList<Compartiment>();
+            List<Siege> sieges = new ArrayList<Siege>();
+            sieges.add(new Siege(regimeSpecification.getSeatNumberMotriceRegimeSpecificity()));
+            compartiments.add(new Compartiment(regimeSpecification.getCompartmentNumberMotriceRegimeSpecificity(), sieges));
+            listeSpecifications.add(new Specification(new Voiture(regimeSpecification.getCoachNumberMotriceRegimeSpecificity(), compartiments),
+                  EnumEtatSpecification.Blocked,
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
       }
       atomicTranche.get().addAttributsField(listeSpecifications);
    }

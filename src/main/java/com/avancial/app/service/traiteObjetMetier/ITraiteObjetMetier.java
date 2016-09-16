@@ -10,5 +10,5 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 public interface ITraiteObjetMetier {
 
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException;
-   
+
 }

@@ -20,10 +20,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeService implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeService extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -58,16 +59,23 @@ public class TraiteMotriceRegimeService implements ITraiteMotriceRegime {
          listeServices = new ArrayList<ASousRegimeTranche>();
       }
 
+      Regime newRegime = null;
       for (Object[] record : rService) {
          if (!oldRegime.equals((String) record[4])) {
+            newRegime = new Regime((String) record[4], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
+
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[4], 3, idTrainTranche);
          }
          // remplissage du generator pour l'insertion des données
          generatorService.addValue(idService.getAndIncrement(), (String) record[0], (String) record[1], (String) record[2], (String) record[3],
                idRegime);
          // remplissage des objets métier pour la comparaion
-         listeServices.add(new ServiceABord((String) record[0], EnumClasseService.getEnumClasseService((String) record[1]),
-               new Gare((String) record[2]), new Gare((String) record[3]), new Regime((String) record[4], debutPeriode)));
+         if (this.filtreDateAjout(newRegime)) {
+            listeServices.add(new ServiceABord((String) record[0], EnumClasseService.getEnumClasseService((String) record[1]),
+                  new Gare((String) record[2]), new Gare((String) record[3]),
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
 
          oldRegime = (String) record[4];
       }
