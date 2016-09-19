@@ -13,7 +13,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
-public class TraiteObjetMetierRegimeFareProfile implements ITraiteObjetMetier {
+public class TraiteObjetMetierRegimeFareProfile extends AFiltreObjetMetier implements ITraiteObjetMetier {
 
    @Override
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
@@ -21,9 +21,13 @@ public class TraiteObjetMetierRegimeFareProfile implements ITraiteObjetMetier {
       if (listeFareProfile == null) {
          listeFareProfile = new ArrayList<ASousRegimeTranche>();
       }
-      for (MotriceRegimeFareProfileEntity regimeFareProfile : regime.getMotriceRegimeFareProfile()) {
-         listeFareProfile.add(new FareProfile(regimeFareProfile.getFareProfileCodeMotriceRegimeFareProfile(),
-               new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      Regime newRegime = new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode);
+      newRegime.filtreDates(getDateDebut(), getDateFin());
+      if (this.filtreDateAjout(newRegime)) {
+         for (MotriceRegimeFareProfileEntity regimeFareProfile : regime.getMotriceRegimeFareProfile()) {
+            listeFareProfile.add(new FareProfile(regimeFareProfile.getFareProfileCodeMotriceRegimeFareProfile(),
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
       }
       atomicTranche.get().addAttributsField(listeFareProfile);
    }

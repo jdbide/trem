@@ -4,10 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import com.avancial.app.utilitaire.DecodageRegime;
+import com.avancial.socle.utils.ListUtils;
 import com.avancial.socle.utils.transcodageregimemotrice.JourPourRegime;
 import com.avancial.socle.utils.transcodageregimemotrice.UtilsTranscodageRegime;
 
@@ -38,15 +40,16 @@ public class Regime {
 
    public Regime(String regime, Date dateDebutService) throws ParseException {
       super();
-      DecodageRegime decodageRegime = new DecodageRegime();
       UtilsTranscodageRegime utilsTranscodageRegime = new UtilsTranscodageRegime(regime, dateDebutService);
       List<JourPourRegime> listeJourPourRegime = utilsTranscodageRegime.getListeJourPourRegime();
       this.codeRegime = utilsTranscodageRegime.executeTranscodage();
       this.listeJours = utilsTranscodageRegime.listeJourCirculeRegimeToDate(listeJourPourRegime);
+      
+      DecodageRegime decodageRegime = new DecodageRegime();
       this.dateDebut = decodageRegime.dateDebut(this.codeRegime);
       this.dateFin = decodageRegime.dateFin(this.codeRegime);
    }
-
+   
    public Regime clone() {
       Regime regime = new Regime();
       regime.setCodeRegime(this.codeRegime);
@@ -74,10 +77,46 @@ public class Regime {
    @Override
    public boolean equals(Object obj) {
       Regime regime = (Regime) obj;
-      if (regime.getCodeRegime().equals(this.codeRegime)) {
+      if (ListUtils.compareLists(regime.getListeJours(), this.listeJours)) {
          return true;
       }
       return false;
+   }
+
+   /**
+    * Filtre la liste de jours en fonction d'une période : toutes les dates qui ne sont pas comprises dedans sont enlevées.
+    * 
+    * @param dateDebut
+    *           Si non null, définit la date de début de la période
+    * @param dateFin
+    *           Si non null, définit la date de fin de la période
+    */
+   public void filtreDates(Date dateDebut, Date dateFin) {
+      /* On ne filtre la liste que si elle est non nulle et qu'au moins une date est donnée */
+      if (this.listeJours != null && (dateDebut != null || dateFin != null)) {
+         /* Indique si la date doit être retirée */
+         boolean retire;
+         /* Date dans la liste */
+         Date date;
+         for (Iterator<Date> itDate = this.listeJours.iterator(); itDate.hasNext();) {
+            date = itDate.next();
+            retire = false;
+
+            /* Si la date est antérieure à la date de début de la période, on la retire */
+            if (dateDebut != null && date.before(dateDebut)) {
+               retire = true;
+            }
+            /* Si la date est postérieure à la date de fin de la période, on la retire */
+            if (!retire && dateFin != null && date.after(dateFin)) {
+               retire = true;
+            }
+
+            /* Retrait de la date si le test est positif */
+            if (retire) {
+               itDate.remove();
+            }
+         }
+      }
    }
 
    public boolean estInclusDans(Regime regime) {
@@ -139,7 +178,7 @@ public class Regime {
        * Affichage des dates de circulation rassemblées par mois Les dates sont déjà triées dans la liste
        */
       String moisAn = "";
-      SimpleDateFormat formatMoisAn = new SimpleDateFormat("MMMYY", Locale.ENGLISH);
+      SimpleDateFormat formatMoisAn = new SimpleDateFormat("MMMyy", Locale.ENGLISH);
       SimpleDateFormat formatJour = new SimpleDateFormat("Edd", Locale.ENGLISH);
       boolean premiereDate = true;
       for (Date dateCirculation : this.getListeJours()) {

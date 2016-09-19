@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.avancial.socle.scheduler.entity.JobDataBean;
+
 /**
  * The persistent class for the socle_job_Planif database table.
  * 

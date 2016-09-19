@@ -19,10 +19,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeOD implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeOD extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -55,13 +56,19 @@ public class TraiteMotriceRegimeOD implements ITraiteMotriceRegime {
          listeOD = new ArrayList<ASousRegimeTranche>();
       }
 
+      Regime newRegime = null;
       for (Object[] record : rEqpType) {
          if (!regime.equals((String) record[2])) {
+            newRegime = new Regime((String) record[2], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
+
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[2], 12, idTrainTranche);
          }
          generatorOD.addValue(idOD.getAndIncrement(), (String) record[0], (String) record[1], idRegime);
-         listeOD
-               .add(new OrigineDestination(new Gare((String) record[0]), new Gare((String) record[1]), new Regime((String) record[2], debutPeriode)));
+         if (this.filtreDateAjout(newRegime)) {
+            listeOD.add(new OrigineDestination(new Gare((String) record[0]), new Gare((String) record[1]),
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
          regime = (String) record[2];
       }
       atomicTranche.get().addAttributsField(listeOD);

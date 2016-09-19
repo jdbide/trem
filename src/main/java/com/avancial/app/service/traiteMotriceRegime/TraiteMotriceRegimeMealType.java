@@ -21,10 +21,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeMealType implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeMealType extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -59,13 +60,21 @@ public class TraiteMotriceRegimeMealType implements ITraiteMotriceRegime {
          listeMeal = new ArrayList<ASousRegimeTranche>();
       }
 
+      Regime newRegime = null;
       for (Object[] record : rDistribution) {
          if (!regime.equals((String) record[3])) {
+            newRegime = new Regime((String) record[3], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
+
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[3], 9, idTrainTranche);
          }
          generatorMeal.addValue(idMeal.getAndIncrement(), (String) record[0], (String) record[1], (String) record[2], idRegime);
-         listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas((String) record[0]),
-               new Horaire(formatter.parse((String) record[1]), formatter.parse((String) record[2])), new Regime((String) record[3], debutPeriode)));
+
+         if (this.filtreDateAjout(newRegime)) {
+            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas((String) record[0]),
+                  new Horaire(formatter.parse((String) record[1]), formatter.parse((String) record[2])),
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
          regime = (String) record[3];
       }
       atomicTranche.get().addAttributsField(listeMeal);

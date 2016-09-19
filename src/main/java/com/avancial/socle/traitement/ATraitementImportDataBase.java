@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.avancial.socle.traitement.Task;
@@ -22,8 +21,6 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
     * 
     */
    private static final long serialVersionUID = 1L;
-
-   private static Logger     logger           = Logger.getLogger(ATraitementImportDataBase.class);
 
    protected EntityManager   entityManagerExterne;
 
@@ -102,7 +99,7 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
 
    @Override
    protected void executeTraitement() throws Exception {
-      logger.info("Début de l'exécution de ATraitementImportDataBase");
+	   this.log("Début de l'exécution de ATraitementImportDataBase");
       try {
          this.initSessiont();
          List<String> columns = null;
@@ -124,9 +121,9 @@ public abstract class ATraitementImportDataBase extends ATraitementLogDetail {
          }
 
          this.endSession();
-         logger.info("Fin de l'exécution de ATraitementImportDataBase");
+         this.log("Fin de l'exécution de ATraitementImportDataBase");
       } catch (Throwable th) {
-         logger.error("Fin de l'exécution de ATraitementImportDataBase avec EXCEPTION", th);
+    	  this.log("Fin de l'exécution de ATraitementImportDataBase avec EXCEPTION");
          if (this.idTask != null) {
             Task.finishKoTask(this.idTask, "Echec d'import : veuillez reessayer ulterieurement");
             this.endSession();

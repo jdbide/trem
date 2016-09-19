@@ -32,6 +32,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
+import com.avancial.app.service.traiteMotriceRegime.IFiltreDateRegime;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
 import com.avancial.app.utilitaire.GetEntiteService;
@@ -58,6 +59,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
    private TraiteMotriceRegimeFactory    traiteMotriceRegimeFactory;
 
    private MapPlansDeTransport           mapPlansDeTransport;
+
+   private Date                          dateDebutFiltre  = null;
+   private Date                          dateFinFiltre    = null;
 
    /**
     * Id du currentThread
@@ -90,7 +94,8 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
 
          this.getIdRegime(mapIdTablesMotriceRegime, motriceRegimeEntities);
 
-         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(this.getEntityManager().unwrap(Session.class), 250);
+         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime = new MapGeneratorTablesMotriceRegime(
+               this.getEntityManager().unwrap(Session.class), 250);
 
          // this.em.getTransaction().begin();
          /* Récupération des train-tranche */
@@ -145,11 +150,14 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
                planTransport.getTrains().add(train);
             }
 
+            Regime regimeTranche = new Regime(motriceRegimeEntity.getPeriodMotriceRegime(), debutPeriode);
+            regimeTranche.filtreDates(this.dateDebutFiltre, this.dateFinFiltre);
+            if (!regimeTranche.getListeJours().isEmpty()) {
             AtomicReference<Tranche> atomicTranche = new AtomicReference<>(new Tranche());
             atomicTranche.get().setNumeroTranche(motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
-            atomicTranche.get().setRegime(new Regime(motriceRegimeEntity.getPeriodMotriceRegime(), debutPeriode));
-            atomicTranche.get().setTrancheStatut(
-                  motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche().equals("O") ? EnumTrancheStatut.Ouvert : EnumTrancheStatut.Ferme);
+               atomicTranche.get().setRegime(regimeTranche);
+               atomicTranche.get().setTrancheStatut(motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche().equals("O")
+                     ? EnumTrancheStatut.Ouvert : EnumTrancheStatut.Ferme);
 
             train.getTranches().add(atomicTranche.get());
             lastTrainNumber = motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche();
@@ -160,8 +168,9 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
                   Class<?> entity = GetEntiteService
                         .getClasseEntiteImportFromNomEntiteImportMotriceRegime(refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   ITraiteMotriceRegime traiteMotriceRegime = this.traiteMotriceRegimeFactory.getTraiteMotriceRegime(entity);
-                  traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime, this.getEntityManager(),
-                        atomicTranche);
+                     ((IFiltreDateRegime) traiteMotriceRegime).setFiltreDate(this.dateDebutFiltre, this.dateFinFiltre);
+                     traiteMotriceRegime.traite(motriceTrainTrancheEntity, mapIdTablesMotriceRegime, mapGeneratorTablesMotriceRegime,
+                           this.getEntityManager(), atomicTranche);
                } catch (ParseException e) {
                   System.err.println("Erreur dans la lecture d'un régime de " + refTablesMotriceRegimeEntity.getLibelleRefTablesMotriceRegime());
                   e.printStackTrace();
@@ -173,6 +182,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
                   throw e;
                }
             }
+         }
          }
          this.mapPlansDeTransport.setPlanTransportDraft(this.jeuDonneeEntity, planTransport);
          this.log("Fin de recuperation des train-tranche");
@@ -257,7 +267,6 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
    private void executeRequestGenerator(Class<?> entity, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime) throws Exception {
       IMultipleInsertRequestGenerator multipleInsertRequestGenerator = mapGeneratorTablesMotriceRegime.get(entity);
       try {
-         // System.out.println(multipleInsertRequestGenerator.getRequest());
          multipleInsertRequestGenerator.executeRequest();
       } catch (Exception e) {
          System.err.println("Erreur dans l'insertion dans la table motrice régime pour l'entité : " + entity.getName());
@@ -274,7 +283,8 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
     *           Entité correspondant à la table que l'on veut vider
     */
    private void executeDeleteAll(Class<?> entity) {
-      this.getEntityManager().createNamedQuery(GetEntiteService.getNomFromEntiteTableMotriceRegime(entity.getSimpleName()) + ".deleteAll").executeUpdate();
+      this.getEntityManager().createNamedQuery(GetEntiteService.getNomFromEntiteTableMotriceRegime(entity.getSimpleName()) + ".deleteAll")
+            .executeUpdate();
    }
 
    public void setJeuDonneeEntity(JeuDonneeEntity jeuDonneeEntity) {
@@ -290,7 +300,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
     * @return the idTask
     */
    public Long getIdTask() {
-      return idTask;
+      return this.idTask;
    }
 
    /**
@@ -299,6 +309,11 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
     */
    public void setIdTask(Long idTask) {
       this.idTask = idTask;
+   }
+
+   public void setDatesFiltre(Date dateDebut, Date dateFin) {
+      this.dateDebutFiltre = dateDebut;
+      this.dateFinFiltre = dateFin;
    }
 
 }

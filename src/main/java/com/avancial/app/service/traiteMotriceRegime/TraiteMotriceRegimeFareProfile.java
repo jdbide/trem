@@ -17,10 +17,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeFareProfile implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeFareProfile extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -51,11 +52,16 @@ public class TraiteMotriceRegimeFareProfile implements ITraiteMotriceRegime {
          listeFareProfile = new ArrayList<ASousRegimeTranche>();
       }
 
+      Regime newRegime = null;
       for (Object[] fareprofil : listeFareProfil) {
-         if (!oldRegime.equals(fareprofil[1])) {// si le régime traité est
+         if (!oldRegime.equals(fareprofil[1])) {
+            // si le régime traité est
             // différent du précédent
             // on insère une nouvelle
             // entrée
+            newRegime = new Regime((String) fareprofil[1], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
+
             mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), fareprofil[1], 7,
                   motriceTrainTrancheEntity.getIdMotriceTrainTranche());
          }
@@ -63,7 +69,10 @@ public class TraiteMotriceRegimeFareProfile implements ITraiteMotriceRegime {
          mapGeneratorTablesMotriceRegime.get(MotriceRegimeFareProfileEntity.class).addValue(idRegimeFareprofil.getAndIncrement(), fareprofil[0],
                idRegime.get());
 
-         listeFareProfile.add(new FareProfile((String) fareprofil[0], new Regime((String) fareprofil[1], debutPeriode)));
+         if (this.filtreDateAjout(newRegime)) {
+            listeFareProfile.add(new FareProfile((String) fareprofil[0],
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
 
          oldRegime = (String) fareprofil[1];
       }

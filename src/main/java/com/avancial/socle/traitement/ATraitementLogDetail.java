@@ -28,6 +28,20 @@ public abstract class ATraitementLogDetail extends ATraitementLog {
       this.logDetailBean.setLogTraitementDataBean(this.logBean);
       this.logDetailBean.setMessageTraitementDetail(message);
 
+      this.log();
+   }
+   
+   public void error(String message, Exception e) {
+      this.logDetailBean = new LogTraitementDetailDataBean();
+      this.logDetailBean.setDateLogTraitementDetail(new Date());
+      this.logDetailBean.setLogTraitementDataBean(this.logBean);
+      this.logDetailBean.setMessageTraitementDetail(message);
+      this.logDetailBean.setExceptionTraitementDetail(e.getMessage());
+      
+      this.log();
+   }
+   
+   private void log() {
       this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       this.emLog.getTransaction().begin();
 

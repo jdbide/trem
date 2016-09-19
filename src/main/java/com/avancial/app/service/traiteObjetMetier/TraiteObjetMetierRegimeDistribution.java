@@ -13,7 +13,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
-public class TraiteObjetMetierRegimeDistribution implements ITraiteObjetMetier {
+public class TraiteObjetMetierRegimeDistribution extends AFiltreObjetMetier implements ITraiteObjetMetier {
 
    @Override
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
@@ -21,9 +21,13 @@ public class TraiteObjetMetierRegimeDistribution implements ITraiteObjetMetier {
       if (listeDistributions == null) {
          listeDistributions = new ArrayList<ASousRegimeTranche>();
       }
-      for (MotriceRegimeDistributionEntity regimeDistribution : regime.getMotriceRegimeDistribution()) {
-         listeDistributions.add(new Distribution(regimeDistribution.getDistribIndexMotriceRegimeDistribution(),
-               new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      Regime newRegime = new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode);
+      newRegime.filtreDates(getDateDebut(), getDateFin());
+      if (this.filtreDateAjout(newRegime)) {
+         for (MotriceRegimeDistributionEntity regimeDistribution : regime.getMotriceRegimeDistribution()) {
+            listeDistributions.add(new Distribution(regimeDistribution.getDistribIndexMotriceRegimeDistribution(),
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
       }
       atomicTranche.get().addAttributsField(listeDistributions);
    }

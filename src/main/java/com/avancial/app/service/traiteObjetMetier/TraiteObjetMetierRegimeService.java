@@ -15,7 +15,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
-public class TraiteObjetMetierRegimeService implements ITraiteObjetMetier {
+public class TraiteObjetMetierRegimeService extends AFiltreObjetMetier implements ITraiteObjetMetier {
 
    @Override
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
@@ -23,11 +23,15 @@ public class TraiteObjetMetierRegimeService implements ITraiteObjetMetier {
       if (listeServices == null) {
          listeServices = new ArrayList<ASousRegimeTranche>();
       }
-      for (MotriceRegimeServiceEntity regimeService : regime.getMotriceRegimeServices()) {
-         listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(),
-               EnumClasseService.getEnumClasseService(regimeService.getClassMotriceRegimeService()),
-               new Gare(regimeService.getOrigMotriceRegimeService()), new Gare(regimeService.getDestMotriceRegimeService()),
-               new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      Regime newRegime = new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode);
+      newRegime.filtreDates(getDateDebut(), getDateFin());
+      if (this.filtreDateAjout(newRegime)) {
+         for (MotriceRegimeServiceEntity regimeService : regime.getMotriceRegimeServices()) {
+            listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(),
+                  EnumClasseService.getEnumClasseService(regimeService.getClassMotriceRegimeService()),
+                  new Gare(regimeService.getOrigMotriceRegimeService()), new Gare(regimeService.getDestMotriceRegimeService()),
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
       }
       atomicTranche.get().addAttributsField(listeServices);
    }

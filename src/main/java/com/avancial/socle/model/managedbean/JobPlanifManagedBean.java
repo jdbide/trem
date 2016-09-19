@@ -32,13 +32,13 @@ import com.avancial.socle.business.JobPlanifBean;
 import com.avancial.socle.data.controller.dao.JobDao;
 import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.controller.dao.JobPlanifTypeDao;
-import com.avancial.socle.data.model.databean.JobDataBean;
 import com.avancial.socle.data.model.databean.JobPlanifTypeDataBean;
 import com.avancial.socle.exceptions.SocleExceptionManager;
 import com.avancial.socle.exceptions.impl.ASocleException;
 import com.avancial.socle.jobs.JobTest;
 import com.avancial.socle.resources.MessageController;
 import com.avancial.socle.resources.constants.SOCLE_constants;
+import com.avancial.socle.scheduler.entity.JobDataBean;
 
 /**
  * @author bruno.legloahec

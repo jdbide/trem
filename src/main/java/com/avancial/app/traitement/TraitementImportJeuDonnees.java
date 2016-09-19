@@ -2,6 +2,7 @@ package com.avancial.app.traitement;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.enterprise.context.RequestScoped;
@@ -87,6 +88,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
    private MapComparaisonPlanTransport   listCompare                  = null;
 
+   private Date                          dateDebutFiltre              = null;
+
    /**
    * 
    */
@@ -108,6 +111,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       this.logBean.setLibelleLogTraitement("TraitementImportJeuDonnees");
 
       try {
+         Calendar calendar = Calendar.getInstance();
+         this.dateDebutFiltre = calendar.getTime();
 
          this.getCompagnieEnvironnement();
          this.connexionDb2();
@@ -144,7 +149,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       Task.setMsgTask(this.idTask, "Création du rapport différentiel");
 
       this.excelRapportDifferentiel.setFileName("RapportDiff-" + this.jeuDonneeDataBean.getIdJeuDonnees());
-      this.excelRapportDifferentiel.setFilePath(this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory());
+      this.excelRapportDifferentiel
+            .setFilePath(this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory());
       this.excelRapportDifferentiel.setXlsx(true);
       this.excelRapportDifferentiel.setDatas(this.listCompare);
       this.excelRapportDifferentiel.setMapPlansDeTransport(this.mapPlansDeTransport);
@@ -170,7 +176,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
       try {
          logger.info("Start Compare Plan Transport");
-         this.listCompare = comparePlanTransport.compare(this.mapPlansDeTransport.getPlanTransportActive(), this.mapPlansDeTransport.getPlanTransportDraft());
+         this.listCompare = comparePlanTransport.compare(this.mapPlansDeTransport.getPlanTransportActive(),
+               this.mapPlansDeTransport.getPlanTransportDraft());
          logger.info("End Compare Plan Transport");
       } catch (Throwable e) {
          this.log("Echec comparePlanTransport.");
@@ -188,6 +195,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       this.traitementObjetMetier.setEnvironnementCompagnie(this.compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
       this.traitementObjetMetier.setMapPlansDeTransport(this.mapPlansDeTransport);
       this.traitementObjetMetier.setIdTask(this.idTask);
+      this.traitementObjetMetier.setDatesFiltre(this.dateDebutFiltre, null);
 
       try {
          logger.info("Start TraitementObjetMetier");
@@ -205,6 +213,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       this.traitementMotrice.setJeuDonneeEntity(this.jeuDonneeDataBean);
       this.traitementMotrice.setMap(this.mapPlansDeTransport);
       this.traitementMotrice.setIdTask(this.idTask);
+      this.traitementMotrice.setDatesFiltre(this.dateDebutFiltre, null);
       Task.setMsgTask(this.idTask, "Création du draft");
 
       try {
@@ -261,7 +270,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          Task.finishKoTask(this.idTask, "Echec de la suppression des données temporaires");
          logger.error("Echec de la suppression des données temporaires", e);
          throw e;
-      }}
+      }
+   }
 
    private void importData() throws Exception {
       Task.setMsgTask(this.idTask, "Importation des données");
@@ -288,7 +298,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       try {
          Task.setMsgTask(this.idTask, "Connexion à Motrice");
          logger.info("Connexion à Motrice");
-         this.entityManagerDb2 = EntityManagerFactoryProviderDb2.getInstance(this.compagnieEnvironnementEntity, this.importTmsDto.getUsername(), this.importTmsDto.getPassword()).createEntityManager();
+         this.entityManagerDb2 = EntityManagerFactoryProviderDb2
+               .getInstance(this.compagnieEnvironnementEntity, this.importTmsDto.getUsername(), this.importTmsDto.getPassword())
+               .createEntityManager();
          logger.info("End Connexion à Motrice");
       } catch (Throwable ex) {
          this.logBean.setExceptionTraitement(ex.getMessage());
@@ -304,7 +316,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          Task.setMsgTask(this.idTask, "Récupération de l'environnement");
          logger.info("Start Récupération de l'environnement");
          // Récupération de l'environnement sélectionné
-         this.compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(this.importTmsDto.getIdCompagnieEnvironnement());
+         this.compagnieEnvironnementEntity = this.compagnieEnvironnementService
+               .getCompagnieEnvironnementById(this.importTmsDto.getIdCompagnieEnvironnement());
          logger.info("End Récupération de l'environnement");
       } catch (Throwable ex) {
          this.logBean.setExceptionTraitement(ex.getMessage());
