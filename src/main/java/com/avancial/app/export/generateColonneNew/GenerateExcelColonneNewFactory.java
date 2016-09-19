@@ -13,6 +13,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tosp;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 
 /**
@@ -38,6 +39,7 @@ public class GenerateExcelColonneNewFactory {
         this.map.put(ServiceABord.class, new GenerateColonneServiceABord());
         this.map.put(Specification.class, new GenerateColonneSpecification());
         this.map.put(TypeEquipement.class, new GenerateColonneTypeEquipement());
+        this.map.put(Tosp.class, new GenerateColonneTosp());
     }
 
     public IGenerateExcelColonneNew get(Class<?> classe) {
