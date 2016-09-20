@@ -173,7 +173,7 @@ public class TraitementImportDb2Motrice extends ATraitementImportDataBase implem
                if (!mapTraitementImportBrut.containsKey(columns.get(i)))
                   sqlValues.append("'").append(objects[i].toString().replaceAll("'", "''")).append("'");
                else {
-            	   sqlValues.append("'").append(mapTraitementImportBrut.get(columns.get(i)).execute2(objects[i]).replaceAll("'", "''")).append("'");
+            	   sqlValues.append("'").append(mapTraitementImportBrut.get(columns.get(i)).execute(objects[i]).replaceAll("'", "''")).append("'");
                }
                   
                

@@ -12,10 +12,13 @@ public class DateSetterRegimeMotrice implements ITraitementDonnees {
     final String appValid = "KHT";
 
     @Override
-    public String execute(String donnee) throws ParseException {
-        if (app.equals(this.appValid))
-            TranscodageRegimeMotrice.setDateDebutService(donnee);
-        return donnee;
+    public String execute(Object donnee) throws ParseException {
+        if(app.equals(this.appValid) && donnee instanceof String) {
+        	TranscodageRegimeMotrice.setDateDebutService((String) donnee);
+    		return (String) donnee;
+    	}
+    	
+    	return null;
     }
 
     /**
@@ -25,11 +28,5 @@ public class DateSetterRegimeMotrice implements ITraitementDonnees {
     public static void setApp(String app) {
         DateSetterRegimeMotrice.app = app;
     }
-
-	@Override
-	public String execute2(Object object) throws ParseException {
-		// TODO Auto-generated method stub
-		return this.execute(object.toString());
-	}
 
 }
