@@ -143,7 +143,14 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             this.getEntityManager().persist(motriceRegimeEntity);
             this.getEntityManager().getTransaction().commit();
 
+            /* Nouveau train */
             if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
+               /* Si le train précédent n'a pas de tranche, on le retire */
+               if (train.getTranches().size() == 0) {
+                  planTransport.getTrains().remove(train);
+               }
+
+               /* On ajoute le nouveau train au plan de transport */
                train = new Train(new ArrayList<Tranche>(), motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
                      motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
                planTransport.getTrains().add(train);
@@ -183,6 +190,12 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             }
          }
          }
+
+         /* On retire le dernier train s'il n'a pas de tranche */
+         if (train.getTranches().size() == 0) {
+            planTransport.getTrains().remove(train);
+         }
+
          this.mapPlansDeTransport.setPlanTransportDraft(this.jeuDonneeEntity, planTransport);
          this.log("Fin de recuperation des train-tranche");
 
