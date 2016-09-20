@@ -32,6 +32,7 @@ public class TraiteDeleteDonneesRegimeFactory implements Serializable {
         this.donneesRegime.add(new TraiteDeleteRegimeStop());
         this.donneesRegime.add(new TraiteDeleteRegimeOD());
         this.donneesRegime.add(new TraiteDeleteRegimeTrainTranche());
+        this.donneesRegime.add(new TraiteDeleteRegimeTosp());
     }
 
     /**

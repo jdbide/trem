@@ -14,6 +14,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRegimeTospEntity;
 
 public class TraiteMotriceRegimeFactory  implements Serializable {
 
@@ -38,6 +39,7 @@ public class TraiteMotriceRegimeFactory  implements Serializable {
         this.map.put(MotriceRegimeSpecificityEntity.class, new TraiteMotriceRegimeSpecificity());
         this.map.put(MotriceRegimeStopEntity.class, new TraiteMotriceRegimeStop());
         this.map.put(MotriceRegimeODEntity.class, new TraiteMotriceRegimeOD());
+        this.map.put(MotriceRegimeTospEntity.class, new TraiteMotriceRegimeTosp());
     }
 
     public ITraiteMotriceRegime getTraiteMotriceRegime(Class<?> entity) throws Exception {
