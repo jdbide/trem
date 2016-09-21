@@ -81,8 +81,8 @@ public class TraiteMotriceRegimeStop extends AFiltreObjetMetier implements ITrai
             if (this.filtreDateAjout(newRegime)) {
                stops = new Desserte(new ArrayList<GareHoraire>(),
                      new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours()));
+               listeDessertes.add(stops);
             }
-            listeDessertes.add(stops);
 
          }
          // insertion du régime desserte lié au régime
@@ -90,19 +90,16 @@ public class TraiteMotriceRegimeStop extends AFiltreObjetMetier implements ITrai
                desserte[2], idRegime.get());
          String heureArrivee = ((String) desserte[0]).trim();
          String heureDepart = ((String) desserte[1]).trim();
-         stops.getGareHoraires()
-               .add(new GareHoraire(new Gare((String) desserte[2]), new Horaire(heureArrivee.equals("") ? null : formatter.parse(heureArrivee),
-                     heureDepart.equals("") ? null : formatter.parse(heureDepart))));
+         if (this.filtreDateAjout(newRegime)) {
+            stops.getGareHoraires()
+                  .add(new GareHoraire(new Gare((String) desserte[2]), new Horaire(heureArrivee.equals("") ? null : formatter.parse(heureArrivee),
+                        heureDepart.equals("") ? null : formatter.parse(heureDepart))));
+         }
 
          oldRegime = (String) desserte[3];
-
-         // ajout dans l'objet métier pour comparaison
-         // if ()
       }
 
       // ajout des dessertes dans l'objet métier
-      // listeDessertes.add(new Desserte(garesHoraires, new
-      // Regime(oldRegime)));
       atomicTranche.get().addAttributsField(listeDessertes);
 
    }

@@ -51,7 +51,7 @@ public class TranscodageRegimeMotrice implements ITraitementDonnees{
     }
 
 	@Override
-	public String execute2(Object object) throws ParseException {
+	public String execute(Object object) throws ParseException {
 		// TODO Auto-generated method stub
 		return this.execute(object.toString());
 	}

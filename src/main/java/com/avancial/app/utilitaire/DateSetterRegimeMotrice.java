@@ -1,35 +1,33 @@
 package com.avancial.app.utilitaire;
 
 import java.text.ParseException;
+import java.sql.Date;
+
 /**
  * set la date permetant le transcodage
+ * 
  * @author gabriel.gagnier
  *
  */
 public class DateSetterRegimeMotrice implements ITraitementDonnees {
 
-    private static String app = null;
-    final String appValid = "KHT";
+   private static String app      = null;
+   final String          appValid = "KHT";
 
-    @Override
-    public String execute(String donnee) throws ParseException {
-        if (app.equals(this.appValid))
-            TranscodageRegimeMotrice.setDateDebutService(donnee);
-        return donnee;
-    }
+   @Override
+   public String execute(Object donnee) throws ParseException {
+      if (app.equals(this.appValid) && donnee.getClass().equals(Date.class)) {
+         TranscodageRegimeMotrice.setDateDebutService(donnee.toString());
+      }
+      return donnee.toString();
+   }
 
-    /**
-     * @param app
-     *            the app to set
-     */
-    public static void setApp(String app) {
-        DateSetterRegimeMotrice.app = app;
-    }
-
-	@Override
-	public String execute2(Object object) throws ParseException {
-		// TODO Auto-generated method stub
-		return this.execute(object.toString());
-	}
+   /**
+    * @param app
+    *           the app to set
+    */
+   public static void setApp(String app) {
+      DateSetterRegimeMotrice.app = app;
+   }
 
 }

@@ -37,6 +37,7 @@ public class CreationObjetMetier {
 
       List<MotriceTrainTrancheEntity> trainsTranches = query.getResultList();
       Train train = new Train();
+      Tranche tranche = new Tranche();
 
       String lastTrainNumber = "";
 
@@ -44,7 +45,15 @@ public class CreationObjetMetier {
       for (MotriceTrainTrancheEntity resTrainTranche : trainsTranches) {
          logger.info("Remplissage du train " + resTrainTranche.getTrainNumberMotriceTrainTranche() + ", tranche "
                + resTrainTranche.getTrancheNumberMotriceTrainTranche() + ", statut " + resTrainTranche.getTrancheStatusMotriceTrainTranche());
+
+         /* Nouveau train */
          if (!resTrainTranche.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
+            /* Si le train précédent n'a pas de tranche, on le retire */
+            if (train.getTranches().size() == 0) {
+               planTransport.getTrains().remove(train);
+            }
+
+            /* On ajoute le nouveau train au plan de transport */
             train = new Train(new ArrayList<Tranche>(), resTrainTranche.getTrainNumberMotriceTrainTranche(),
                   resTrainTranche.getValidForRRMotriceTrainTranche());
             planTransport.getTrains().add(train);
@@ -68,8 +77,15 @@ public class CreationObjetMetier {
             }
          }
 
-         train.getTranches().add(atomicTranche.get());
+         tranche = atomicTranche.get();
+         if (tranche.getRegime().getListeJours().size() > 0) {
+            train.getTranches().add(tranche);
+         }
          lastTrainNumber = resTrainTranche.getTrainNumberMotriceTrainTranche();
+      }
+      /* On retire le dernier train s'il n'a pas de tranche */
+      if (train.getTranches().size() == 0) {
+         planTransport.getTrains().remove(train);
       }
       /* Fin du remplissage du plan de transport */
 

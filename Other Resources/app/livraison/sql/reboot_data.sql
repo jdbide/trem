@@ -20,6 +20,8 @@ drop table if exists tremas_motrice_regime_specificity;
 
 drop table if exists tremas_motrice_regime_stop;
 
+drop table if exists tremas_motrice_regime_tosp;
+
 drop table if exists tremas_motrice_regime_od;
 
 drop table if exists tremas_motrice_regime;
@@ -150,6 +152,13 @@ create table tremas_motrice_regime_stop (
     primary key (idMotriceRegimeStop)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+create table tremas_motrice_regime_tosp (
+    idMotriceRegimeTosp bigint not null auto_increment,
+    oureCodeMotriceRegimeTosp varchar(2) not null,
+    idMotriceRegime bigint,
+    primary key (idMotriceRegimeTosp)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 create table tremas_motrice_traintranche (
     idMotriceTrainTranche bigint not null auto_increment,
     trainNumberMotriceTrainTranche varchar(6) not null,
@@ -227,6 +236,11 @@ alter table tremas_motrice_regime_specificity
 
 alter table tremas_motrice_regime_stop 
     add constraint FK_motrice_regime_stop_idMotriceRegime 
+    foreign key (idMotriceRegime) 
+    references tremas_motrice_regime (idMotriceRegime);
+
+alter table tremas_motrice_regime_tosp 
+    add constraint FK_motrice_regime_tosp_idMotriceRegime 
     foreign key (idMotriceRegime) 
     references tremas_motrice_regime (idMotriceRegime);
 

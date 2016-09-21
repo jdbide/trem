@@ -28,6 +28,7 @@ public class TraiteObjetMetierRegimeFactory implements Serializable{
       this.map.put((long) 4, new TraiteObjetMetierRegimeSpecificity());
       this.map.put((long) 2, new TraiteObjetMetierRegimeStop());
       this.map.put((long) 12, new TraiteObjetMetierRegimeOD());
+      this.map.put((long) 13, new TraiteObjetMetierRegimeTosp());
    }
 
    public ITraiteObjetMetier getTraiteMotriceRegime(Long key) throws Exception {

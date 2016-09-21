@@ -1,7 +1,6 @@
 package com.avancial.app.traitement;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
-import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.RefTablesMotriceRegimeEntity;
 import com.avancial.app.data.databean.Status;
@@ -40,6 +38,7 @@ import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.traitement.ATraitementLogDetail;
+import com.avancial.socle.traitement.Task;
 
 @RequestScoped
 public class TraitementMotrice extends ATraitementLogDetail implements Serializable {
@@ -100,7 +99,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          // this.em.getTransaction().begin();
          /* Récupération des train-tranche */
          Query query = this.getEntityManager().createNativeQuery(
-               "SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche, categorie.CATH_REGI AS regime FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_TRCH_NUM");
+               "SELECT tranche.TRCH_TRA1_NUM_TRA1 AS trainNumberMotriceTrainTranche, categorie.CATH_SSIM AS trancheNumberMotriceTrainTranche, IF ( train.TRA1_NUM_TRAIN IS NULL, 0, 1 ) AS validForRRMotriceTrainTranche, categorie.CATH_ETAT_TRCH AS trancheStatusMotriceTrainTranche, categorie.CATH_REGI AS regime FROM tremas_import_tmdtrch AS tranche LEFT JOIN tremas_import_tmdtra1 AS train ON tranche.TRCH_TRA1_COD_CIE = train.TRA1_CIES_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = train.TRA1_NUM_TRAIN AND tranche.TRCH_TRA1_IND_FER = train.TRA1_IND_FER_ROUTE INNER JOIN tremas_import_tmdcath AS categorie ON tranche.TRCH_TRA1_COD_CIE = categorie.CATH_CIRR_COD_CIE AND tranche.TRCH_TRA1_NUM_TRA1 = categorie.CATH_TRCH_NUM_TRA1 AND tranche.TRCH_TRA1_IND_FER = categorie.CATH_TRCH_IND_FER AND tranche.TRCH_NUM = categorie.CATH_TRCH_NUM ORDER BY trainNumberMotriceTrainTranche, trancheNumberMotriceTrainTranche, trancheStatusMotriceTrainTranche");
 
          List<Object[]> trainsTranches = query.getResultList();
 
@@ -122,7 +121,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             motriceTrainTrancheEntity.setJeuDonnee(this.jeuDonneeEntity);
             motriceTrainTrancheEntity.setTrainNumberMotriceTrainTranche((String) record[0]);
             motriceTrainTrancheEntity.setTrancheNumberMotriceTrainTranche((String) record[1]);
-            motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(((BigInteger) record[2]).intValue() == 1);
+            motriceTrainTrancheEntity.setValidForRRMotriceTrainTranche(((Integer) record[2]).intValue() == 1);
             motriceTrainTrancheEntity.setTrancheStatusMotriceTrainTranche((String) record[3]);
 
             this.getEntityManager().getTransaction().begin();
@@ -144,7 +143,14 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             this.getEntityManager().persist(motriceRegimeEntity);
             this.getEntityManager().getTransaction().commit();
 
+            /* Nouveau train */
             if (!motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
+               /* Si le train précédent n'a pas de tranche, on le retire */
+               if (train.getTranches().size() == 0) {
+                  planTransport.getTrains().remove(train);
+               }
+
+               /* On ajoute le nouveau train au plan de transport */
                train = new Train(new ArrayList<Tranche>(), motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche(),
                      motriceTrainTrancheEntity.getValidForRRMotriceTrainTranche());
                planTransport.getTrains().add(train);
@@ -184,6 +190,12 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
             }
          }
          }
+
+         /* On retire le dernier train s'il n'a pas de tranche */
+         if (train.getTranches().size() == 0) {
+            planTransport.getTrains().remove(train);
+         }
+
          this.mapPlansDeTransport.setPlanTransportDraft(this.jeuDonneeEntity, planTransport);
          this.log("Fin de recuperation des train-tranche");
 

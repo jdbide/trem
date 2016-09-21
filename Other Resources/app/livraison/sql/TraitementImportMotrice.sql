@@ -20,6 +20,8 @@ drop table if exists tremas_motrice_regime_specificity;
 
 drop table if exists tremas_motrice_regime_stop;
 
+drop table if exists tremas_motrice_regime_tosp;
+
 drop table if exists tremas_motrice_regime_od;
 
 drop table if exists tremas_motrice_regime;
@@ -303,6 +305,13 @@ create table tremas_motrice_regime_stop (
     primary key (idMotriceRegimeStop)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+create table tremas_motrice_regime_tosp (
+    idMotriceRegimeTosp bigint not null auto_increment,
+    oureCodeMotriceRegimeTosp varchar(2) not null,
+    idMotriceRegime bigint,
+    primary key (idMotriceRegimeTosp)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 create table tremas_motrice_traintranche (
     idMotriceTrainTranche bigint not null auto_increment,
     trainNumberMotriceTrainTranche varchar(6) not null,
@@ -404,6 +413,11 @@ alter table tremas_motrice_regime_stop
     foreign key (idMotriceRegime) 
     references tremas_motrice_regime (idMotriceRegime);
 
+alter table tremas_motrice_regime_tosp 
+    add constraint FK_motrice_regime_tosp_idMotriceRegime 
+    foreign key (idMotriceRegime) 
+    references tremas_motrice_regime (idMotriceRegime);
+
 alter table tremas_motrice_traintranche 
     add constraint FK_motrice_regime_traintranche_idJeuDonnees 
     foreign key (idJeuDonnees) 
@@ -416,6 +430,7 @@ create table tremas_ref_tables_motrice_regime (
     ordreRefTablesMotriceRegime bigint,
     primary key (idRefTablesMotriceRegime)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('1', 1, 'MotriceRegimeCompositionEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('2', 1, 'MotriceRegimeDistributionEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('3', 1, 'MotriceRegimeEqpTypeEntity', null);
@@ -427,6 +442,7 @@ INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('8', 1, 'MotriceRegimeSer
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('9', 1, 'MotriceRegimeSpecificityEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('10', 1, 'MotriceRegimeStopEntity', null);
 INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('11', 1, 'MotriceRegimeODEntity', null);
+INSERT INTO `tremas_ref_tables_motrice_regime` VALUES ('12', 1, 'MotriceRegimeTospEntity', null);
 
 INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'C30', 'Half-Leisure', '15H', '14B' );
 INSERT INTO tremas_ref_code_rm ( codeRmRefCodeRm, libelleRefCodeRm, rame1RefCodeRm, rame2RefCodeRm ) VALUES ( 'CHE', 'Business (Charter)', '05E', '06E' );
@@ -963,4 +979,5 @@ INSERT INTO tremas_motrice_ref_regime_type VALUES(9, "Regime mealtype");
 INSERT INTO tremas_motrice_ref_regime_type VALUES(10, "Regime distribution");
 INSERT INTO tremas_motrice_ref_regime_type VALUES(11, "Regime composition");
 INSERT INTO tremas_motrice_ref_regime_type VALUES(12, "Regime OD");
+INSERT INTO tremas_motrice_ref_regime_type VALUES(13, "Regime tosp");
 

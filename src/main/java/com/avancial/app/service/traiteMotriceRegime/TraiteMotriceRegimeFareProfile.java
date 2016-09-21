@@ -32,12 +32,12 @@ public class TraiteMotriceRegimeFareProfile extends AFiltreObjetMetier implement
       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
       Query query = entityManager.createNativeQuery(
-            "SELECT IFNULL( satcode.SAT1_COD_SAT, regimeprofil.TATH_CD_VAL ) AS fareprofil, regimeprofil.TATH_REGI AS periodMotriceRegime "
+            "SELECT regimeprofil.TATH_CD_VAL AS fareprofil, regimeprofil.TATH_REGI AS periodMotriceRegime "
                   + "FROM tremas_import_tmdtath AS regimeprofil "
                   + "INNER JOIN tremas_import_tmdcath AS cara ON regimeprofil.TATH_TRCH_COD_CIE = cara.CATH_CIRR_COD_CIE "
                   + "AND regimeprofil.TATH_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 " + "AND regimeprofil.TATH_TRCH_IND_FER = cara.CATH_TRCH_IND_FER "
                   + "LEFT JOIN tremas_import_tmdsat1 AS satcode ON regimeprofil.TATH_CD_VAL = satcode.SAT1_COD_SAT "
-                  + "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ? AND cara.CATH_ETAT_TRCH = ? " + "ORDER BY periodMotriceRegime ");
+                  + "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ? AND cara.CATH_ETAT_TRCH = ? AND ISNULL(satcode.SAT1_COD_SAT)" + "ORDER BY periodMotriceRegime ");
       query.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
       query.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
       query.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
