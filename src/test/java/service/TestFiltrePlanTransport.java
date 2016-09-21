@@ -31,7 +31,6 @@ public class TestFiltrePlanTransport {
    public void main() {
       FiltrePlanTransport filtrePlanTransport = new FiltrePlanTransport();
 
-
       List<ASousRegimeTranche> ods1 = new ArrayList<>();
       ods1.add(this.origineDestination2);
       ods1.add(this.origineDestination);
@@ -62,7 +61,7 @@ public class TestFiltrePlanTransport {
       planTransport = this.createPlanTransportTest();
       filtrePlanTransport.filtre(planTransport, critereEt);
       Assert.assertEquals("Test CritereEt", planTransport2, planTransport);
-      
+
       ICritereTrainTranche critereOu = new CritereEt(critereOD, critereOD2);
       planTransport = this.createPlanTransportTest();
       filtrePlanTransport.filtre(planTransport, critereOu);
@@ -100,7 +99,7 @@ public class TestFiltrePlanTransport {
       tranches2.add(tranche3);
       Train train2 = new Train(tranches2, "2", true);
       planTransport.getTrains().add(train2);
-      
+
       return planTransport;
    }
 }
