@@ -22,7 +22,7 @@ public class FiltrePlanTransport {
     * @param critereTrainTranche
     *           Critère de sélection sur un train-tranche
     */
-   public void filtre(PlanTransport planTransport, ICritereTrainTranche critereTrainTranche) {
+   public void filtre(PlanTransport planTransport, ICritere<Tranche> critereTrainTranche) {
       /* Boucle sur les trains */
       for (Iterator<Train> itTrain = planTransport.getTrains().iterator(); itTrain.hasNext();) {
          Train train = itTrain.next();
@@ -30,7 +30,7 @@ public class FiltrePlanTransport {
          for (Iterator<Tranche> itTranche = train.getTranches().iterator(); itTranche.hasNext();) {
             Tranche tranche = itTranche.next();
             /* Si la tranche ne satisfait pas le critère, on l'enlève */
-            if (!critereTrainTranche.satisfaitCritere(train, tranche)) {
+            if (!critereTrainTranche.satisfaitCritere(tranche)) {
                itTranche.remove();
             }
          }

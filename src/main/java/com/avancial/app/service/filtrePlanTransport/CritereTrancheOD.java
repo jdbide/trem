@@ -3,7 +3,6 @@ package com.avancial.app.service.filtrePlanTransport;
 import java.util.List;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
-import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
 /**
@@ -12,7 +11,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  * @author heloise.guillemaud
  *
  */
-public class CritereOD implements ICritereTrainTranche {
+public class CritereTrancheOD implements ICritere<Tranche> {
 
    private OrigineDestination origineDestination;
 
@@ -21,13 +20,13 @@ public class CritereOD implements ICritereTrainTranche {
     * 
     * @param origineDestination
     */
-   public CritereOD(OrigineDestination origineDestination) {
+   public CritereTrancheOD(OrigineDestination origineDestination) {
       super();
       this.origineDestination = origineDestination;
    }
 
    @Override
-   public boolean satisfaitCritere(Train train, Tranche tranche) {
+   public boolean satisfaitCritere(Tranche tranche) {
       List<OrigineDestination> liste = (List<OrigineDestination>) tranche.getAttributsField(OrigineDestination.class);
       if (liste != null) {
          for (OrigineDestination origineDestination : liste) {
