@@ -80,3 +80,25 @@ a.disabled {
 .table.table-striped_control {
 	border-collapse: initial;
 }
+
+.modal-header-socle {
+	background-color: #3c8dbc; color: #fff;
+}
+.modal-body-socle {
+	background-color: #ecf0f5;
+}
+.modal-body-back-socle {
+	box-sizing: border-box; background-color: #ecf0f5;
+}
+.modal-body-content-socle {
+	overflow: hidden; background: none repeat scroll 0 0 #fff;border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;padding: 10px;
+}
+.form-group-modal-socle {
+	overflow: hidden; padding-top: 20px;
+}
+.modal-footer-socle {
+	background-color: #3c8dbc;
+}
+.form-inline-modal-socle{
+	overflow: hidden; padding-top: 20px; margin: 0px;
+}
