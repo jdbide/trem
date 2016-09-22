@@ -1,5 +1,7 @@
 package com.avancial.app.service.controlePlanTransport;
 
+import java.text.SimpleDateFormat;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 
@@ -11,6 +13,7 @@ public class ImportPlanTransportExcel {
 
    public void importePlanTransport(String excelFilePath) throws Exception {
       this.excelReadFile = new SocleExcelReadFile(excelFilePath);
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 
       try {
          this.excelReadFile.start();
@@ -26,9 +29,9 @@ public class ImportPlanTransportExcel {
                switch (cell.getCellType()) {
                   case Cell.CELL_TYPE_NUMERIC:
                      if (DateUtil.isCellDateFormatted(cell)) {
-                        System.out.println(cell.getDateCellValue());
+                        System.out.print(getCellNumberIndex(cell) + dateFormat.format(cell.getDateCellValue()) + ", ");
                      } else {
-                        System.out.print(cell.getNumericCellValue());
+                        System.out.print(getCellNumberIndex(cell) + cell.getNumericCellValue() + ", ");
                      }
                      break;
                   case Cell.CELL_TYPE_STRING:
