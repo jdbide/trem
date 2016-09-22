@@ -13,9 +13,10 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.filtrePlanTransport.CritereEt;
-import com.avancial.app.service.filtrePlanTransport.CritereOD;
+import com.avancial.app.service.filtrePlanTransport.CritereOu;
+import com.avancial.app.service.filtrePlanTransport.CritereTrancheOD;
 import com.avancial.app.service.filtrePlanTransport.FiltrePlanTransport;
-import com.avancial.app.service.filtrePlanTransport.ICritereTrainTranche;
+import com.avancial.app.service.filtrePlanTransport.ICritere;
 
 import junit.framework.Assert;
 
@@ -51,18 +52,18 @@ public class TestFiltrePlanTransport {
       Train train2 = new Train(tranches2, "2", true);
       planTransport2.getTrains().add(train2);
 
-      ICritereTrainTranche critereOD = new CritereOD(this.origineDestination);
+      ICritere<Tranche> critereOD = new CritereTrancheOD(this.origineDestination);
       PlanTransport planTransport = this.createPlanTransportTest();
       filtrePlanTransport.filtre(planTransport, critereOD);
-      Assert.assertEquals("Test CritereOD", planTransport2, planTransport);
+      Assert.assertEquals("Test CritereTrancheOD", planTransport2, planTransport);
 
-      ICritereTrainTranche critereOD2 = new CritereOD(this.origineDestination2);
-      ICritereTrainTranche critereEt = new CritereEt(critereOD, critereOD2);
+      ICritere<Tranche> critereOD2 = new CritereTrancheOD(this.origineDestination2);
+      ICritere<Tranche> critereEt = new CritereEt<Tranche>(critereOD, critereOD2);
       planTransport = this.createPlanTransportTest();
       filtrePlanTransport.filtre(planTransport, critereEt);
-      Assert.assertEquals("Test CritereEt", planTransport2, planTransport);
+      Assert.assertEquals("Test CritereTrainTrancheEt", planTransport2, planTransport);
 
-      ICritereTrainTranche critereOu = new CritereEt(critereOD, critereOD2);
+      ICritere<Tranche> critereOu = new CritereOu<Tranche>(critereOD, critereOD2);
       planTransport = this.createPlanTransportTest();
       filtrePlanTransport.filtre(planTransport, critereOu);
       List<ASousRegimeTranche> ods2 = new ArrayList<>();
@@ -70,7 +71,7 @@ public class TestFiltrePlanTransport {
       Tranche tranche2 = new Tranche();
       tranche2.addAttributsField(ods2);
       planTransport2.getTrains().get(0).getTranches().add(tranche2);
-      Assert.assertEquals("Test CritereOu", planTransport2, planTransport);
+      Assert.assertEquals("Test CritereTrainTrancheOu", planTransport2, planTransport);
    }
 
    private PlanTransport createPlanTransportTest() {
