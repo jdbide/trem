@@ -1,0 +1,227 @@
+<project name="socle" default="update" basedir=".">
+	
+	<description>
+		Création d'un nouveau projet ou mise à jour d'un projet existant
+	</description>
+
+	
+	
+	<!-- initialisation des chemins -->
+	
+	<property name="source.folder" value="socle2" />
+	
+	<condition property="lecteur" value="c:">
+		<contains string="${user.name}" substring="legloahec" casesensitive="false" />
+	</condition>
+	
+	<property name="lecteur" value="d:" />
+	
+	<condition property="user" value="Users">
+        <contains string="${user.name}" substring="legloahec" casesensitive="false" />
+    </condition>
+	
+    <property name="user" value="Utilisateurs" />
+    
+	<property name="source" location="${lecteur}\${user}/${user.name}/Desktop/${source.folder}" />
+	
+	<property name="source.pom.xml" location="${source}/pom.xml" />
+	<property name="dest.pom.xml" location="pom.xml" />
+	
+	
+	
+	<!-- initialisation des chemins pour l'initialisation -->
+
+	<property name="source.src" location="${source}/src" />
+	<property name="dest.src" location="src" />
+	
+	<property name="source.otherResources" location="${source}/Other Resources" />
+	<property name="dest.otherResources" location="Other Resources" />
+	
+	
+	
+	<!-- initialisation des chemins pour la mise à jour -->
+	
+	<property name="source.socle.otherResources" location="${source}/Other Resources/socle" />
+	<property name="dest.socle.otherResources" location="Other Resources/socle" />
+	
+	<property name="source.socle.webapp" location="${source}/src/main/webapp/appClient/socle" />
+	<property name="dest.socle.webapp" location="src/main/webapp/appClient/socle" />
+	
+	<property name="source.socle.resources" location="${source}/src/main/resources/com/avancial/socle" />
+	<property name="dest.socle.resources" location="src/main/resources/com/avancial/socle" />
+	    	
+	<property name="source.socle.java" location="${source}/src/main/java/com/avancial/socle" />
+	<property name="dest.socle.java" location="src/main/java/com/avancial/socle" />
+	
+	<property name="source.vendor" location="${source}/src/main/webapp/appClient/vendor" />
+	<property name="dest.vendor" location="src/main/webapp/appClient/vendor" />
+	
+	<property name="dest.app.doc" location="${dest.otherResources}/app" />
+	
+	
+	
+	<!-- déclaration des copies du fichier pom.xml -->
+	
+	<target name="pom_xml_copy">
+        <delete file="${dest.pom.xml}" quiet="true" failonerror="false"></delete>
+        <echo level="info">Copie du fichier pom.xml</echo>
+		<copy tofile="${dest.pom.xml}" file="${source.pom.xml}" verbose="true" overwrite="true"></copy>
+    </target>
+	
+	
+	
+	<!-- déclaration des copies de répertoires pour l'initialisation -->
+	
+	<target name="src_copy">
+		<delete dir="${dest.src}" quiet="true" failonerror="false"></delete>
+		<mkdir dir="${dest.src}" />
+		<echo level="info">Copie des sources du socle</echo>
+		<copy todir="${dest.src}" verbose="true" overwrite="true">
+            <fileset dir="${source.src}"></fileset>
+        </copy>
+	</target>
+	
+	<target name="otherResources_copy">
+        <delete dir="${dest.otherResources}" quiet="true" failonerror="false"></delete>
+        <mkdir dir="${dest.otherResources}" />
+        <echo level="info">Copie des autres resources</echo>
+        <copy todir="${dest.otherResources}" verbose="true" overwrite="true">
+            <fileset dir="${source.otherResources}"></fileset>
+        </copy>
+    </target>
+	
+	
+	
+	<!-- déclaration des copies de répertoires pour la mise à jour -->
+	
+	<target name="socle_resources_copy">
+        <delete dir="${dest.socle.resources}" quiet="true" failonerror="false"></delete>
+        <mkdir dir="${dest.socle.resources}" />
+        <echo level="info">Copie des ressources du socle</echo>
+        <copy todir="${dest.socle.resources}" verbose="true" overwrite="true">
+            <fileset dir="${source.socle.resources}"></fileset>
+        </copy>
+    </target>
+	
+	<target name="socle_otherResources_copy">
+        <delete dir="${dest.socle.otherResources}" quiet="true" failonerror="false"></delete>
+        <mkdir dir="${dest.socle.otherResources}" />
+        <echo level="info">Copie des autres ressources du socle</echo>
+        <copy todir="${dest.socle.otherResources}" verbose="true" overwrite="true">
+            <fileset dir="${source.socle.otherResources}"></fileset>
+        </copy>
+    </target>
+    
+    <target name="socle_webapp_copy">
+        <delete dir="${dest.socle.webapp}" quiet="true" failonerror="false"></delete>
+        <mkdir dir="${dest.socle.webapp}" />
+        <echo level="info">Copie du répertoir webapp du socle</echo>
+        <copy todir="${dest.socle.webapp}" verbose="true" overwrite="true">
+            <fileset dir="${source.socle.webapp}"></fileset>
+        </copy>
+    </target>
+    
+    <target name="socle_java_copy">
+        <delete dir="${dest.socle.java}" quiet="true" failonerror="false"></delete>
+        <mkdir dir="${dest.socle.java}" />
+        <echo level="info">Copie des sources java du socle</echo>
+        <copy todir="${dest.socle.java}" verbose="true" overwrite="true">
+            <fileset dir="${source.socle.java}"></fileset>
+        </copy>
+    </target>
+	
+	<target name="vendor_copy">
+        <delete dir="${dest.vendor}" quiet="true" failonerror="false"></delete>
+        <mkdir dir="${dest.vendor}" />
+        <echo level="info">Copie des dépendances JavaScript</echo>
+        <copy todir="${dest.vendor}" verbose="true" overwrite="true">
+            <fileset dir="${source.vendor}"></fileset>
+        </copy>
+    </target>
+
+	
+	
+	<!-- parties communes à tout les update update -->
+	
+	<target name="update_commun">
+		
+		<antcall target="socle_resources_copy"></antcall>
+		<antcall target="socle_otherResources_copy"></antcall>
+		<antcall target="socle_webapp_copy"></antcall>
+		<antcall target="socle_java_copy"></antcall>
+		
+	</target>
+
+	<!-- update -->
+	
+	<target name="update">
+        <echo level="info">Mise à jour du projet</echo>
+        
+        <antcall target="update_commun"></antcall>
+        
+        <echo level="info">Fin de mise à jour du projet</echo>
+		<echo level="warning">ATTENTION : le fichier pom.xml n'a pas été mis à jour</echo>
+		<echo level="warning">ATTENTION : le répertoir src/main/webapp/appClient/vendor n'a pas été mis à jour</echo>
+    </target>
+	
+	
+	
+	<!-- update -->
+    
+    <target name="update_force">
+        <echo level="info">Mise à jour du projet en écrasant les dépendances JS et le pom.xml</echo>
+        
+        <antcall target="update_commun"></antcall>
+    	<antcall target="vendor_copy"></antcall>
+    	<antcall target="pom_xml_copy"></antcall>
+        
+        <echo level="info">Fin de mise à jour forcée du projet</echo>
+    </target>
+	
+
+	
+	<!-- vérification de l'existance du projet -->
+    
+    <available type="dir" property="project.not.empty" file="${dest.socle.java}"></available>
+    
+    <target name="init-check_ko" if="project.not.empty">
+        <echo level="error">Initialisation impossible, le projet n'est pas vide.</echo>
+    </target>
+    
+    <target name="init-check_ok" unless="project.not.empty">
+        <echo level="info">Inialisation du projet</echo>
+    </target>
+	
+	
+	
+	<!-- Création de la structure documentation client -->
+	
+	<target name="create_doc">
+		
+		<echo level="info">Création de la structure documentation client</echo>
+		<mkdir dir="${dest.app.doc}" />
+		<mkdir dir="${dest.app.doc}/livraison" />
+		<mkdir dir="${dest.app.doc}/livraison/changelog" />
+		<mkdir dir="${dest.app.doc}/livraison/sql" />
+		<mkdir dir="${dest.app.doc}/documentation" />
+		<mkdir dir="${dest.app.doc}/documentation/md" />
+		
+	</target>
+	
+	
+	
+	<!-- init -->
+	
+	<target name="init" depends="init-check_ko,init-check_ok" unless="project.not.empty">
+		
+		<!-- Copie des répertoires -->
+		
+		<antcall target="pom_xml_copy"></antcall>
+		<antcall target="src_copy"></antcall>
+		<antcall target="otherResources_copy"></antcall>
+		<antcall target="create_doc"></antcall>
+
+		<echo level="info">Fin d'inialisation du projet</echo>
+		<echo level="warning">ATTENTION : il faut changer le nom du projet dans le pom.xml</echo>
+	</target>
+</project>
