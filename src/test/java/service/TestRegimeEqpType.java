@@ -21,7 +21,7 @@ import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
@@ -36,7 +36,7 @@ public class TestRegimeEqpType {
    public static WebArchive createDeployment() {
       File[] lib = Maven.resolver().resolve("org.jboss.weld.servlet:weld-servlet:2.1.0.CR1").withTransitivity().as(File.class);
 
-      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class).addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage())
+      WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneesService.class).addPackage(Socle_PUSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage()).addPackage(EntityManagerProducerSocle.class.getPackage())
             .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib).addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml").addAsManifestResource("META-INF/context.xml", "context.xml");
 
       System.out.println(jar.toString(true));

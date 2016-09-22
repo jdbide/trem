@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -45,7 +45,7 @@ public class TestTranscodage {
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(PageDataBean.class.getPackage())
                 // .addPackage(IhmPageDao.class.getPackage())
 
-                .addClass(JeuDonneeService.class).addPackage(Socle_PUSocle.class.getPackage())
+                .addClass(JeuDonneesService.class).addPackage(Socle_PUSocle.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())
                 // .addAsManifestResource("arquillian.xml")
                 .addPackage(EntityManagerProducerSocle.class.getPackage())

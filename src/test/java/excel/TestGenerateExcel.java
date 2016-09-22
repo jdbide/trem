@@ -37,7 +37,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonP
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.export.ExcelRapportDifferentiel;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
@@ -63,9 +63,9 @@ public class TestGenerateExcel {
                 .as(File.class);
 
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(ExcelRapportDifferentiel.class.getPackage())
-                .addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class)
+                .addClass(JeuDonneesService.class).addClass(TraiteObjetMetierRegimeFactory.class)
                 .addClass(FileUtil.class).addPackage(CodeSat.class.getPackage())
-                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class)
+                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneesService.class)
                 .addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class)
                 .addClass(TraitementObjetMetier.class).addPackage(Socle_PUSocle.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())

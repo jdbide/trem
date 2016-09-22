@@ -23,7 +23,7 @@ import org.json.simple.JSONArray;
 import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.resources.constants.APP_Directory;
-import com.avancial.app.service.ImportTmsService;
+import com.avancial.app.serviceDto.ImportTmsServiceDto;
 import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.app.webService.bean.ResponseBean;
 import com.avancial.socle.service.RefDirectoryService;
@@ -46,7 +46,7 @@ public class ImportTmsWebService {
    private static Logger             logger = Logger.getLogger(ImportTmsWebService.class);
 
    @Inject
-   private ImportTmsService          importTmsService;
+   private ImportTmsServiceDto          importTmsServiceDto;
 
    @Inject
    private TraitementDeleteJeuDonnee traitementDeleteJeuDonnee;
@@ -70,7 +70,7 @@ public class ImportTmsWebService {
       logger.info("Début (WebService : '/app/importTms' methode : GET)");
       JSONArray jsonArray = new JSONArray();
       try {
-         jsonArray.addAll(this.importTmsService.getAllImportTmsActif());
+         jsonArray.addAll(this.importTmsServiceDto.getAllImportTmsActif());
 
          logger.info("Fin (WebService : '/app/importTms' methode : GET)");
 
@@ -134,7 +134,7 @@ public class ImportTmsWebService {
       ResponseBean responseBean = new ResponseBean();
 
       try {
-         if (this.importTmsService.validateDraft(importTmsDto)) {
+         if (this.importTmsServiceDto.validateDraft(importTmsDto)) {
             responseBean.setData(importTmsDto);
             responseBean.setStatus(true);
             responseBean.setMessage("Validation draft OK");

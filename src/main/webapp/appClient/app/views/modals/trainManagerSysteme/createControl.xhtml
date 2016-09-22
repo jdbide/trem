@@ -1,0 +1,54 @@
+<div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Validate Draft Dataset</h4>
+            </div>
+            <div class="modal-body" style="background-color: #ecf0f5;" >
+            	<div style="box-sizing: border-box; background-color: #ecf0f5;" >
+            		<div style="background: none repeat scroll 0 0 #fff;border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;padding: 10px;">
+            			<div class="clearfix">
+	            			<p>1 - Select TimeTable file to compare:</p>
+	            			<div class="row">
+	            				<div class="col-md-2">
+	            				</div>
+	            				<div class="col-md-2">
+	            					File selected
+	            				</div>
+	            				<div class="col-md-8">
+	            					<input id="input_id_timetable" type="file" class="file" angular-bfi />
+	            				</div>
+	            			</div>
+	            		</div>
+	            		<div class="clearfix">
+	            			<p>2 - Select Yield file to compare:</p>
+	            			<div class="row">
+	            				<div class="col-md-2">
+	            				</div>
+	            				<div class="col-md-2">
+	            					File selected
+	            				</div>
+	            				<div class="col-md-8">
+	            					<input id="input_id_yield" type="file" class="file" angular-bfi />
+	            				</div>
+	            			</div>
+	            		</div>
+		                <p>You are about to validate the current draft dataset for :</p>
+		                </br>
+		                <p>&nbsp;&nbsp;{{currentDataValidate.libelleCompagnie}} - {{currentDataValidate.libelleEnvironnement}}</p>
+		                </br>
+		                <p>This dataset will replace the current active data validated :</p>
+		                </br>
+		                <p>&nbsp;&nbsp;{{currentDataValidate.dateValidateJeuDonneesActif | date:'dd/MM/yyyy HH:mm'}}</p>
+		                </br>
+		                <p>This data will be visible to all users and considered as the new point of reference.</p>
+		            </div>
+	            </div>
+            </div>
+            <div class="modal-footer" style="background-color: #3c8dbc;">                
+                <button class="btn btn-primary" ng-click="executeValidateDraft()">VALIDATE DRAFT</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -62,3 +62,21 @@ a.disabled {
     position: absolute;
     top: 50%;
 }
+
+.btn-yellow
+{
+	background-color: #F9F9CA;
+    border-color: #000;
+    color: #000;
+}
+
+.table-striped_control > tbody:nth-child(2n) > tr {
+   background-color: #e7e4e4;
+}
+
+.table-striped_control>thead {
+	background-color:#b3b3b3;
+}
+.table.table-striped_control {
+	border-collapse: initial;
+}

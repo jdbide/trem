@@ -32,7 +32,8 @@
       'ui.bootstrap',
       'myModal',
       'environment',
-      'aDisabled'
+      'aDisabled',
+      'angularBootstrapFileinput'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {

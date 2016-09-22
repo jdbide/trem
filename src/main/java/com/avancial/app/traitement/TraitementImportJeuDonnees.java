@@ -22,7 +22,7 @@ import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.ImportKappService;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
@@ -45,7 +45,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private CompagnieEnvironnementService compagnieEnvironnementService;
 
    @Inject
-   private JeuDonneeService              jeuDonneeService;
+   private JeuDonneesService              jeuDonneesService;
    
    @Inject
    private ImportKappService importKappService;
@@ -117,18 +117,18 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.getCompagnieEnvironnement();
          this.connexionDb2();
          this.importData();
-         this.deleteDataWithStatusImportDraft();
-         this.saveJeuDonnees();
-         this.createDraft();
-         this.createPlanTransport();
-         this.comparePlanTransport();
-         this.generateRapportDiff();
+//         this.deleteDataWithStatusImportDraft();
+//         this.saveJeuDonnees();
+//         this.createDraft();
+//         this.createPlanTransport();
+//         this.comparePlanTransport();
+//         this.generateRapportDiff();
 
          Task.setMsgTask(this.idTask, "Finalisation");
          this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
          this.jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
          try {
-            this.jeuDonneeService.update(this.jeuDonneeDataBean);
+            this.jeuDonneesService.update(this.jeuDonneeDataBean);
          } catch (Exception ex) {
             Task.finishKoTask(this.idTask, "Echec de mise à jour du jeu de données : veuillez réessayer ultérieurement");
             throw ex;
@@ -137,7 +137,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          if (this.jeuDonneeDataBean != null) {
             this.jeuDonneeDataBean.setStatusJeuDonnees(Status.IMPORT);
             this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-            this.jeuDonneeService.update(this.jeuDonneeDataBean);
+            this.jeuDonneesService.update(this.jeuDonneeDataBean);
          }
 
          Thread.currentThread().interrupt();
@@ -233,7 +233,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          /* Insertion dans les tables du modèle motrice */
          // Instanciation et sauvegarde du nouveau jeu de données
          Task.setMsgTask(this.idTask, "Sauvegarde jeu de données");
-         this.jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(this.compagnieEnvironnementEntity);
+         this.jeuDonneeDataBean = this.jeuDonneesService.initJeuDonnee(this.compagnieEnvironnementEntity);
          this.jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
          this.jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
          /* Récupération de la date de référence pour le jeu de données */
@@ -242,7 +242,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          Date dateOri = formatter.parse(kappEntity.getKAPP_ORI());
          this.jeuDonneeDataBean.setDateDebutPeriode(dateOri);
          
-         this.jeuDonneeService.save(this.jeuDonneeDataBean);
+         this.jeuDonneesService.save(this.jeuDonneeDataBean);
          logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
          Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
       } catch (Exception ex) {

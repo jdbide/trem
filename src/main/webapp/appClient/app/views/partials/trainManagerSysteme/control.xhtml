@@ -1,7 +1,68 @@
 <div class="tab-pane" id="control" ng-controller="controlTmsCtrl">
+	<modal visible="createControl" url="app/views/modals/trainManagerSysteme/createControl.xhtml"></modal>
+
 	<h3>Control</h3>
-	
-	
-						
+
+	<div class="box-body">
+		<div class="row">
+			<div class="col-sm-1">
+				<label for="partition">Partition:</label>
+			</div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<select class="form-control" ng-model="selectedPartition"
+						ng-change="changeSelectedPartition()"
+						ng-options="partition.idCompagnieEnvironnement as partition.nomTechniqueCompagnieEnvironnement for (key, partition) in partitions">
+					</select>
+
+				</div>
+			</div>
+			<div class="col-md-1">
+				<button class="btn btn-yellow" ng-click="startModalCreateControl()">Create Control</button>
+			</div>
+		</div>
+		<div class="box-body table-responsive no-padding">
+			<table class="table table-bordered table-striped_control">
+				<thead>
+					<tr>
+						<th class="text-center" COLSPAN=5>Control History</th>
+					</tr>
+					<tr>
+						<th class="text-center">DataSet</th>
+						<th class="text-center">Current Status</th>
+						<th class="text-center">Compared with</th>
+						<th class="text-center">Date of control</th>
+						<th class="text-center">Report</th>
+					</tr>
+				</thead>
+				<tbody ng-repeat="data in datas track by $index ">
+					<tr>
+						<td ROWSPAN=2 style="vertical-align: middle;">Import
+							{{data.dateCreateJeuDonneesControl | date:'dd/MM/yyyy HH:mm'}}
+							({{data.nameUtilisateurCreateJeuDonneesControl}})</td>
+						<td ROWSPAN=2 class="text-center" style="vertical-align: middle;">{{data.statusJeuDonnee}}</td>
+						<td><a href="#">{{data.pathFileImportJeuDonneesControl}}</a></td>
+						<td ROWSPAN=2 ng-if="startControl != $index" class="text-center"
+							style="vertical-align: middle;">{{data.dateLastUpdateJeuDonneesControl
+							| date:'dd/MM/yyyy HH:mm'}}</td>
+						<td ROWSPAN=2 ng-if="startControl != $index" class="text-center"
+							style="vertical-align: middle;"><a
+							style="text-decoration: underline" href="#">read</a></td>
+						<td ng-if="startControl == $index" ROWSPAN=2 class="box box-solid"
+							style="width: 0;" COLSPAN=2>
+							<div class="overlay">
+								<div class="box-body text-center">
+									{{progressControl.lastMsg}}</div>
+								<i class="fa fa-refresh fa-spin" style="left: 90%; !important"></i>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><a href="#">{{data.pathFileImportJeuDonneesControl}}</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 
