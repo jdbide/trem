@@ -159,7 +159,7 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
                excelTools.addColor(excelTools.styleBorder, selectColor(excelTools, cntTraiTranche, null)));
          excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 2, 2, currentTranche.getNumeroTranche(),
                excelTools.addColor(excelTools.styleBorder, selectColor(excelTools, cntTraiTranche, null)));
-         excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 3, 3, currentTranche.getRegime().printListeJours(),
+         excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 3, 3, data.getRegimeTranche().printListeJours(),
                excelTools.addColor(excelTools.styleBorder, selectColor(excelTools, cntTraiTranche, null)));
          excelTools.addMergedRegion(debutRowTrain, ligneDebut - 1, 4, 4,
                mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport().getCompagnie().toString(),
