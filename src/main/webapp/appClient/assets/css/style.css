@@ -62,3 +62,43 @@ a.disabled {
     position: absolute;
     top: 50%;
 }
+
+.btn-yellow
+{
+	background-color: #F9F9CA;
+    border-color: #000;
+    color: #000;
+}
+
+.table-striped_control > tbody:nth-child(2n) > tr {
+   background-color: #e7e4e4;
+}
+
+.table-striped_control>thead {
+	background-color:#b3b3b3;
+}
+.table.table-striped_control {
+	border-collapse: initial;
+}
+
+.modal-header-socle {
+	background-color: #3c8dbc; color: #fff;
+}
+.modal-body-socle {
+	background-color: #ecf0f5;
+}
+.modal-body-back-socle {
+	box-sizing: border-box; background-color: #ecf0f5;
+}
+.modal-body-content-socle {
+	overflow: hidden; background: none repeat scroll 0 0 #fff;border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;padding: 10px;
+}
+.form-group-modal-socle {
+	overflow: hidden; padding-top: 20px;
+}
+.modal-footer-socle {
+	background-color: #3c8dbc;
+}
+.form-inline-modal-socle{
+	overflow: hidden; padding-top: 20px; margin: 0px;
+}

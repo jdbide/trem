@@ -15,7 +15,7 @@ import com.avancial.socle.persistence.EntityManagerFactoryProvider;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
 @RequestScoped
-public class JeuDonneeService implements Serializable {
+public class JeuDonneesService implements Serializable {
    /**
    * 
    */

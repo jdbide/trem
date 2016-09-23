@@ -24,7 +24,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.traiteObjetMetier.ITraiteObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
@@ -41,7 +41,7 @@ public class RemplissageObjMetierTestHibernate {
       WebArchive jar = ShrinkWrap.create(WebArchive.class)
             .addPackage(CodeSat.class.getPackage())
             .addPackage(PageDataBean.class.getPackage())
-            .addClass(JeuDonneeService.class)
+            .addClass(JeuDonneesService.class)
             .addPackage(Socle_PUSocle.class.getPackage())
             .addPackage(EntityManagerProducerSocle.class.getPackage())
             .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml")

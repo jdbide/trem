@@ -26,7 +26,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
@@ -55,7 +55,7 @@ public class TestComparaisonPlansTransport {
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(MotriceRegimeEntity.class.getPackage())
                 .addPackage(ITraiteMotriceRegime.class.getPackage()).addPackage(ALogBean.class.getPackage())
                 .addPackage(ATraitement.class.getPackage()).addPackage(CodeSat.class.getPackage())
-                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class)
+                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneesService.class)
                 .addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class)
                 .addClass(TraitementObjetMetier.class).addClass(RefTablesMotriceRegimeService.class)
                 .addClass(TraiteMotriceRegimeFactory.class).addClass(MapPlansDeTransport.class)

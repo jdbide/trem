@@ -31,7 +31,7 @@ public class TestImport {
         WebArchive jar = ShrinkWrap.create(WebArchive.class)
                  .addPackage(PageDataBean.class.getPackage())
                  .addPackage(CompagnieEnvironnementEntity.class.getPackage())
-                //.addClass(JeuDonneeService.class)
+                //.addClass(JeuDonneesService.class)
                  .addClass(TraitementImportDb2Motrice.class)
                 .addClass(CompagnieEnvironnementService.class)
                 .addPackage(Socle_PUSocle.class.getPackage())
