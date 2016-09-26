@@ -5,7 +5,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.junit.Test;
 
 import com.avancial.app.fileImport.FileTypeNotExpectedException;
-import com.avancial.app.fileImport.SocleExcelReadFile;
+import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
 import com.avancial.app.service.controlePlanTransport.ImportPlanTransportExcel;
 
 public class TestImportPlanTransportExcel {
