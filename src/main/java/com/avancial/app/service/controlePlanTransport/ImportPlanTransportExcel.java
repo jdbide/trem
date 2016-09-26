@@ -17,14 +17,14 @@ public class ImportPlanTransportExcel {
 
       try {
          this.excelReadFile.start();
-         this.excelReadFile.setSheet(0);
+         this.excelReadFile.getExcelTools().setSheetByIndex(0);
 
          Cell cell;
-         while (this.excelReadFile.hasNextRow()) {
-            this.excelReadFile.getNextRow();
-            System.out.print("Row " + this.excelReadFile.getCurrentRowNumber() + " : ");
-            while (this.excelReadFile.hasNextCell()) {
-               cell = this.excelReadFile.getNextCell();
+         while (this.excelReadFile.getExcelTools().hasNextRow()) {
+            this.excelReadFile.getExcelTools().getNextRow();
+            System.out.print("Row " + this.excelReadFile.getExcelTools().getRowNum() + " : ");
+            while (this.excelReadFile.getExcelTools().hasNextCell()) {
+               cell = this.excelReadFile.getExcelTools().getNextCell();
 
                switch (cell.getCellType()) {
                   case Cell.CELL_TYPE_NUMERIC:
@@ -57,6 +57,6 @@ public class ImportPlanTransportExcel {
    }
 
    private String getCellNumberIndex(Cell cell) {
-      return "(" + this.excelReadFile.getCurrentCellNumber() + "-" + cell.getColumnIndex() + ") ";
+      return "(" + cell.getColumnIndex() + ") ";
    }
 }

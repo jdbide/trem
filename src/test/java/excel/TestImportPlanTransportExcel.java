@@ -19,9 +19,9 @@ public class TestImportPlanTransportExcel {
          System.out.println("***********************************************************");
          SocleExcelReadFile excelReadFile = new SocleExcelReadFile("D:/was_tmp/Eurostar Timetable Period D2 2016 V1.0A 2016_01_28.xlsx");
          excelReadFile.start();
-         excelReadFile.setSheet(0);
-         excelReadFile.setCurrentRowNumber(3);
-         Cell cell = excelReadFile.setCurrentCellNumber(0);
+         excelReadFile.getExcelTools().setSheetByIndex(0);
+         excelReadFile.getExcelTools().setRow(3);
+         Cell cell = excelReadFile.getExcelTools().setCell(0);
          switch (cell.getCellType()) {
             case Cell.CELL_TYPE_NUMERIC:
                if (DateUtil.isCellDateFormatted(cell)) {
