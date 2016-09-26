@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 
-import com.avancial.app.export.SocleExcelReadFile;
+import com.avancial.app.fileImport.SocleExcelReadFile;
 
 public class ImportPlanTransportExcel {
 
@@ -36,6 +36,9 @@ public class ImportPlanTransportExcel {
                      break;
                   case Cell.CELL_TYPE_STRING:
                      System.out.print(getCellNumberIndex(cell) + cell.getStringCellValue() + ", ");
+                     break;
+                  case Cell.CELL_TYPE_BOOLEAN:
+                     System.out.print(getCellNumberIndex(cell) + cell.getBooleanCellValue() + ", ");
                      break;
                   case Cell.CELL_TYPE_BLANK:
                      // System.out.print(getCellNumberIndex(cell) + "BLANK, ");

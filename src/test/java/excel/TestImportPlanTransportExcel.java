@@ -4,8 +4,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.junit.Test;
 
-import com.avancial.app.export.FileTypeNotExpectedException;
-import com.avancial.app.export.SocleExcelReadFile;
+import com.avancial.app.fileImport.FileTypeNotExpectedException;
+import com.avancial.app.fileImport.SocleExcelReadFile;
 import com.avancial.app.service.controlePlanTransport.ImportPlanTransportExcel;
 
 public class TestImportPlanTransportExcel {
