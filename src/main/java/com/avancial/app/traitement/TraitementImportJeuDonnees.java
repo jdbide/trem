@@ -45,10 +45,10 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private CompagnieEnvironnementService compagnieEnvironnementService;
 
    @Inject
-   private JeuDonneesService              jeuDonneesService;
-   
+   private JeuDonneesService             jeuDonneesService;
+
    @Inject
-   private ImportKappService importKappService;
+   private ImportKappService             importKappService;
 
    @Inject
    private RefDirectoryService           refDirectoryService;
@@ -117,12 +117,12 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.getCompagnieEnvironnement();
          this.connexionDb2();
          this.importData();
-//         this.deleteDataWithStatusImportDraft();
-//         this.saveJeuDonnees();
-//         this.createDraft();
-//         this.createPlanTransport();
-//         this.comparePlanTransport();
-//         this.generateRapportDiff();
+         this.deleteDataWithStatusImportDraft();
+         this.saveJeuDonnees();
+         this.createDraft();
+         this.createPlanTransport();
+         this.comparePlanTransport();
+         this.generateRapportDiff();
 
          Task.setMsgTask(this.idTask, "Finalisation");
          this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
@@ -165,7 +165,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          if (this.idTask != null) {
             Task.finishKoTask(this.idTask, "Echec de création du rapport différentiel : veuillez réessayer ultérieurement");
          }
-         
+
          throw e;
       }
    }
@@ -185,7 +185,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          if (this.idTask != null) {
             Task.finishKoTask(this.idTask, "Echec de la comparaison des plans de transport : veuillez réessayer ultérieurement");
          }
-         
+
          throw e;
       }
    }
@@ -241,7 +241,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
          Date dateOri = formatter.parse(kappEntity.getKAPP_ORI());
          this.jeuDonneeDataBean.setDateDebutPeriode(dateOri);
-         
+
          this.jeuDonneesService.save(this.jeuDonneeDataBean);
          logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
          Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
