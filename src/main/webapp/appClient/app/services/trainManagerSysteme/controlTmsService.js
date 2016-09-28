@@ -62,6 +62,44 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
         return deffered.promise;
     }
 	
+	self.createControl = function (idPartition) {
+		loadingService.show();
+		self.initReponse();
+		var deffered  = $q.defer();
+        var promissJsonFactory = jsonFactory.postJson("webService/app/controlTms/", idPartition);
+        promissJsonFactory
+            .success(function (datas, status, headers, config) {
+            	loadingService.hide();
+            	reponse = datas;
+            	deffered.resolve();
+            })
+            .error(function (datas, status, headers, config) {
+            	loadingService.hide();
+                deffered.reject();
+        });
+        
+        return deffered.promise;
+	}
+	
+	self.getImportParIdPartition = function (idPartition) {
+		loadingService.show();
+		self.initReponse();
+		var deffered  = $q.defer();
+        var promissJsonFactory = jsonFactory.postJson("webService/app/controlTms/getImportParPartition"+idPartition);
+        promissJsonFactory
+            .success(function (datas, status, headers, config) {
+            	reponse = datas;
+            	loadingService.hide();
+            	deffered.resolve();
+            })
+            .error(function (datas, status, headers, config) {
+            	loadingService.hide();
+                deffered.reject();
+        });
+        
+        return deffered.promise;
+	}
+	
 	self.getReponse = function () {
     	return reponse;
     }
