@@ -14,6 +14,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tosp;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 
 /**
@@ -49,6 +50,7 @@ public class PrintExcelSousRegimeTranche implements IPrintExcelSousRegimeTranche
         this.map.put(Specification.class, new PrintExcelSpecification());
         this.map.put(TypeEquipement.class, new PrintExcelTypeEquipement());
         this.map.put(Tosp.class, new PrintExcelTosp());
+        this.map.put(Tranche.class, new PrintExcelTranche());
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.junit.Test;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
@@ -24,6 +25,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonP
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
+import com.avancial.app.service.comparePlanTransport.CompareTrain;
 import com.avancial.app.service.comparePlanTransport.CompareTranche;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
@@ -118,8 +120,8 @@ public class TestComparePlanTransport {
         System.out.println("cooucou");
     }
 
-    // @Test
-    public void testTranche() {
+   // @Test
+    public void testAttributsTranche() {
         MapTranche mapTranche1 = new MapTranche();
         MapTranche mapTranche2 = new MapTranche();
 
@@ -141,9 +143,40 @@ public class TestComparePlanTransport {
         Date date3 = cal.getTime();
 
         Regime regimeTranche = new Regime("0", new Date(), new Date(), new ArrayList<Date>());
-        Regime regime1 = new Regime("1", date1, date2, new ArrayList<Date>());
-        Regime regime2 = new Regime("2", date1, date3, new ArrayList<Date>());
-        Regime regime3 = new Regime("2", date3, date2, new ArrayList<Date>());
+        Date dateTmp = new Date();
+        Calendar calTmp = Calendar.getInstance();
+        ArrayList<Date> dates1 = new ArrayList<Date>();
+        ArrayList<Date> dates2 = new ArrayList<Date>();
+        ArrayList<Date> dates3 = new ArrayList<Date>();
+        
+        dateTmp = date1;
+        while(dateTmp.compareTo(date2) < 0 ){
+            dates1.add(dateTmp);
+            calTmp.setTime(dateTmp);
+            calTmp.add(Calendar.DATE, 1);
+            dateTmp = calTmp.getTime();       
+        }
+        
+        dateTmp = date1;
+        while(dateTmp.compareTo(date3) < 0 ){
+            dates1.add(dateTmp);
+            calTmp.setTime(dateTmp);
+            calTmp.add(Calendar.DATE, 1);
+            dateTmp = calTmp.getTime();       
+        }
+        
+        dateTmp = date3;
+        while(dateTmp.compareTo(date2) < 0 ){
+            dates1.add(dateTmp);
+            calTmp.setTime(dateTmp);
+            calTmp.add(Calendar.DATE, 1);
+            dateTmp = calTmp.getTime();       
+        }
+        
+        
+        Regime regime1 = new Regime("1", date1, date2, dates1);
+        Regime regime2 = new Regime("2", date1, date3, dates2);
+        Regime regime3 = new Regime("3", date3, date2, dates3);
         CodeSat codeSat1 = new CodeSat("1", regime1);
         CodeSat codeSat2 = new CodeSat("2", regime1);
         FareProfile fareProfile1 = new FareProfile("1", regime1);
@@ -195,16 +228,26 @@ public class TestComparePlanTransport {
         codeSatExpected.setNumeroTranche("1");
         codeSatExpected.setAncienField(codeSat1);
         codeSatExpected.setNouveauField(codeSat2);
+        codeSatExpected.setTrancheStatut(tranche1.getTrancheStatut());
         codeSatExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
 
         ComparaisonPlanTransport<ASousRegimeTranche> fareProfileExpected = new ComparaisonPlanTransport<>();
         fareProfileExpected.setNumeroTranche("1");
         fareProfileExpected.setAncienField(fareProfile1);
         fareProfileExpected.setNouveauField(fareProfile2);
+        fareProfileExpected.setTrancheStatut(tranche1.getTrancheStatut());
         fareProfileExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
+        
+        ComparaisonPlanTransport<ASousRegimeTranche> fareProfileExpected2 = new ComparaisonPlanTransport<>();
+        fareProfileExpected2.setNumeroTranche("1");
+        fareProfileExpected2.setAncienField(fareProfile1);
+        fareProfileExpected2.setNouveauField(fareProfile3);
+        fareProfileExpected2.setTrancheStatut(tranche1.getTrancheStatut());
+        fareProfileExpected2.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
 
         expected.add(codeSatExpected);
         expected.add(fareProfileExpected);
+        expected.add(fareProfileExpected2);
 
         List<IComparaisonPlanTransport> res = new ArrayList<>();
         for (List<ComparaisonPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
@@ -213,7 +256,7 @@ public class TestComparePlanTransport {
         Assert.assertTrue(ListUtils.compareLists(res, expected));
     }
 
-     @Test
+    // @Test
     public void testRegimeSplit() {
         MapTranche mapTranche1 = new MapTranche();
         MapTranche mapTranche2 = new MapTranche();
@@ -288,6 +331,236 @@ public class TestComparePlanTransport {
         Assert.assertTrue(ListUtils.compareLists(res, expected));
     }
 
+    @Test
+    public void testTranche() {
+        ArrayList<Tranche> tranchesAncien = new ArrayList<>();
+        ArrayList<Tranche> tranchesNouveau = new ArrayList<>();
+        
+        Calendar cal = Calendar.getInstance();
+        Calendar calTmp = Calendar.getInstance();
+        Date date1,date2,dateTmp;
+        Date dateRef = new Date();
+        ArrayList<Date> dates;
+        
+        cal.setTime(dateRef);
+        Regime regimeDelete = new Regime();
+        dates  = new ArrayList<>();
+        regimeDelete.setCodeRegime("Delete");
+        cal.add(Calendar.DATE, -10);
+        date1 = cal.getTime();
+        regimeDelete.setDateDebut(date1);
+        
+        cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -9);
+        date2 = cal.getTime();
+        regimeDelete.setDateFin(date2);
+        
+        dateTmp = date1;
+        while(dateTmp.compareTo(date2) < 0 ){
+            dates.add(dateTmp);
+            calTmp.setTime(dateTmp);
+            calTmp.add(Calendar.DATE, 1);
+            dateTmp = calTmp.getTime();       
+        }
+        regimeDelete.setListeJours(dates);    
+        regimeDelete.setDateDebut(date1);
+        regimeDelete.setDateFin(date2);
+        Tranche trancheAncienDelete = new Tranche();
+        trancheAncienDelete.setNumeroTranche("Delete");
+        trancheAncienDelete.setRegime(regimeDelete);
+        trancheAncienDelete.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        tranchesAncien.add(trancheAncienDelete);
+        
+        cal.setTime(dateRef);
+        Regime regimeSplitAncien = new Regime();
+        dates  = new ArrayList<>();
+        regimeSplitAncien.setCodeRegime("Split");
+        cal.add(Calendar.DATE, -40);
+        date1 = cal.getTime();
+        regimeSplitAncien.setDateDebut(date1);        
+        cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -20);
+        date2 = cal.getTime();
+        regimeSplitAncien.setDateFin(date2); 
+        dateTmp = date1;
+        while(dateTmp.compareTo(date2) < 0 ){
+            dates.add(dateTmp);
+            calTmp.setTime(dateTmp);
+            calTmp.add(Calendar.DATE, 1);
+            dateTmp = calTmp.getTime();       
+        }
+        regimeSplitAncien.setListeJours(dates);
+        regimeSplitAncien.setDateDebut(date1);
+        regimeSplitAncien.setDateFin(date2);
+        Tranche trancheAncienSplit = new Tranche();
+        trancheAncienSplit.setNumeroTranche("Split");
+        trancheAncienSplit.setRegime(regimeSplitAncien);
+        trancheAncienSplit.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        tranchesAncien.add(trancheAncienSplit);
+        
+        cal.setTime(dateRef);
+        Regime regimeNew = new Regime();
+        dates  = new ArrayList<>();
+        regimeNew.setCodeRegime("New");
+        cal.add(Calendar.DATE, -50);
+        date1 = cal.getTime();
+        regimeNew.setDateDebut(date1);        
+        cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -45);
+        date2 = cal.getTime();
+        regimeNew.setDateFin(date2);
+        dateTmp = date1;
+        while(dateTmp.compareTo(date2) < 0 ){
+            dates.add(dateTmp);
+            calTmp.setTime(dateTmp);
+            calTmp.add(Calendar.DATE, 1);
+            dateTmp = calTmp.getTime();       
+        }
+        regimeNew.setListeJours(dates);
+        regimeNew.setDateDebut(date1);
+        regimeNew.setDateFin(date2);
+        Tranche trancheNouveauNew = new Tranche();
+        trancheNouveauNew.setNumeroTranche("New");
+        trancheNouveauNew.setRegime(regimeNew);
+        trancheNouveauNew.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        tranchesNouveau.add(trancheNouveauNew);
+        
+        cal.setTime(dateRef);
+        Regime regimeSlitNouveau1 = new Regime();
+        dates  = new ArrayList<>();
+        regimeSlitNouveau1.setCodeRegime("Split");
+        cal.add(Calendar.DATE, -40);
+        date1 = cal.getTime();
+        regimeSlitNouveau1.setDateDebut(date1);        
+        cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -30);
+        date2 = cal.getTime();
+        regimeSlitNouveau1.setDateFin(date2);
+        dateTmp = date1;
+        while(dateTmp.compareTo(date2) < 0 ){
+            dates.add(dateTmp);
+            calTmp.setTime(dateTmp);
+            calTmp.add(Calendar.DATE, 1);
+            dateTmp = calTmp.getTime();       
+        }
+        regimeSlitNouveau1.setListeJours(dates);
+        regimeSlitNouveau1.setDateDebut(date1);
+        regimeSlitNouveau1.setDateFin(date2);
+        Tranche trancheNouveauSplit1 = new Tranche();
+        trancheNouveauSplit1.setNumeroTranche("Split");
+        trancheNouveauSplit1.setRegime(regimeSlitNouveau1);
+        trancheNouveauSplit1.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        tranchesNouveau.add(trancheNouveauSplit1);
+        
+        cal.setTime(dateRef);
+        Regime regimeSlitNouveau2 = new Regime();
+        dates  = new ArrayList<>();
+        regimeSlitNouveau2.setCodeRegime("Split");
+        cal.add(Calendar.DATE, -30);
+        date1 = cal.getTime();
+        regimeSlitNouveau2.setDateDebut(date1);        
+        cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -20);
+        date2 = cal.getTime();
+        regimeSlitNouveau2.setDateFin(date2);
+        dateTmp = date1;
+        while(dateTmp.compareTo(date2) < 0 ){
+            dates.add(dateTmp);
+            calTmp.setTime(dateTmp);
+            calTmp.add(Calendar.DATE, 1);
+            dateTmp = calTmp.getTime();       
+        }
+        regimeSlitNouveau2.setListeJours(dates);
+        regimeSlitNouveau2.setDateDebut(date1);
+        regimeSlitNouveau2.setDateFin(date2);
+        Tranche trancheNouveauSplit2 = new Tranche();
+        trancheNouveauSplit2.setNumeroTranche("Split");
+        trancheNouveauSplit2.setRegime(regimeSlitNouveau2);
+        trancheNouveauSplit2.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        tranchesNouveau.add(trancheNouveauSplit2);
+        
+        Train trainAncien = new Train();
+        trainAncien.setNumeroTrain("1");
+        trainAncien.setTranches(tranchesAncien);
+        trainAncien.setValidForRR(true);
+        Train trainNouveau = new Train();
+        trainNouveau.setNumeroTrain("1");
+        trainNouveau.setTranches(tranchesNouveau);
+        trainNouveau.setValidForRR(true);
+        
+        IComparePlanTransport compareTrain = new CompareTrain();
+        MapComparaisonPlanTransport comparaison = null;
+        try {
+            comparaison = compareTrain.compare(trainAncien, trainNouveau);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<IComparaisonPlanTransport> res = new ArrayList<>();
+        for (List<ComparaisonPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
+            res.addAll(listComparaison);
+        }
+        
+        
+        List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
+        ComparaisonPlanTransport<Tranche> trancheExpected = new ComparaisonPlanTransport<>();
+        trancheExpected.setNumeroTrain("1");
+        trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
+        trancheExpected.setNumeroTranche("Delete");
+        trancheExpected.setRegimeTranche(regimeDelete);
+        expected.add(trancheExpected);
+        
+        trancheExpected = new ComparaisonPlanTransport<>();
+        trancheExpected.setNumeroTrain("1");
+        trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
+        trancheExpected.setNumeroTranche("New");
+        trancheExpected.setRegimeTranche(regimeNew);
+        expected.add(trancheExpected);
+        
+        trancheExpected = new ComparaisonPlanTransport<>();
+        trancheExpected.setNumeroTrain("1");
+        trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
+        trancheExpected.setNumeroTranche("Split");
+        trancheExpected.setRegimeTranche(regimeSlitNouveau1);
+        trancheExpected.setAncienField(trancheAncienSplit);
+        trancheExpected.setNouveauField(trancheNouveauSplit1);
+        expected.add(trancheExpected);
+        
+        trancheExpected = new ComparaisonPlanTransport<>();
+        trancheExpected.setNumeroTrain("1");
+        trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
+        trancheExpected.setNumeroTranche("Split");
+        trancheExpected.setRegimeTranche(regimeSlitNouveau2);
+        trancheExpected.setAncienField(trancheAncienSplit);
+        trancheExpected.setNouveauField(trancheNouveauSplit2);
+        expected.add(trancheExpected);
+        
+        trancheExpected = new ComparaisonPlanTransport<>();
+        trancheExpected.setNumeroTrain("1");
+        trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+        trancheExpected.setNumeroTranche("Split");
+        trancheExpected.setRegimeTranche(regimeSlitNouveau1);
+        expected.add(trancheExpected);
+        
+        trancheExpected = new ComparaisonPlanTransport<>();
+        trancheExpected.setNumeroTrain("1");
+        trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+        trancheExpected.setNumeroTranche("Split");
+        trancheExpected.setRegimeTranche(regimeSlitNouveau2);
+        expected.add(trancheExpected);
+        
+        
+        Assert.assertTrue(ListUtils.compareLists(res, expected));
+        
+ 
+    }
+    
     public boolean compareMaps(Map<Object, Object> m1, Map<Object, Object> m2) {
         Object tt = null;
         for (Object tt1 : m1.keySet()) {

@@ -14,6 +14,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.export.printSousRegimeTranche.PrintExcelSousRegimeTranche;
@@ -46,6 +47,7 @@ public abstract class AExcelRapportDifferentielSheet implements IExcelRapportDif
         this.mapNomField.put(Specification.class, "Specificities");
         this.mapNomField.put(TypeEquipement.class, "EquipmentType");
         this.mapNomField.put(Composition.class, "Composition");
+        this.mapNomField.put(Tranche.class, "Tranche");
     }
 
     /**
