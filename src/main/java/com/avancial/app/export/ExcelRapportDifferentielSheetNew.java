@@ -42,7 +42,7 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
  * @author hamza.laterem
  *
  */
-public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferentielSheet {
+public class ExcelRapportDifferentielSheetNew implements IExcelRapportComparaisonPlanTransportSheet {
 
    private static Logger                  logger                         = Logger.getLogger(ExcelRapportDifferentielSheetNew.class);
 

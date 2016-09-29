@@ -19,7 +19,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
 import com.avancial.app.export.printSousRegimeTranche.PrintExcelSousRegimeTranche;
 
-public abstract class AExcelRapportDifferentielSheet implements IExcelRapportDifferentielSheet {
+public abstract class AExcelRapportDifferentielSheet implements IExcelRapportComparaisonPlanTransportSheet {
 
     /**
      * Objet pour imprimer les valeurs des champs dans les cellules Excel

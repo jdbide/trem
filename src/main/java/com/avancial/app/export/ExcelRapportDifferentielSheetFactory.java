@@ -6,7 +6,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComp
 
 /**
  * Factory qui retourne l'implémentation de
- * {@link IExcelRapportDifferentielSheet} à partir du type de comparaison
+ * {@link IExcelRapportComparaisonPlanTransportSheet} à partir du type de comparaison
  * {@link EnumTypeComparaisonPlanTransport}
  * 
  * @author heloise.guillemaud
@@ -14,7 +14,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComp
  */
 public class ExcelRapportDifferentielSheetFactory {
 
-    private Map<String, IExcelRapportDifferentielSheet> map = new HashMap<>();
+    private Map<String, IExcelRapportComparaisonPlanTransportSheet> map = new HashMap<>();
 
     public ExcelRapportDifferentielSheetFactory() {
         this.map.put(EnumTypeComparaisonPlanTransport.NEW.toString(), new ExcelRapportDifferentielSheetNew());
@@ -26,7 +26,7 @@ public class ExcelRapportDifferentielSheetFactory {
                 new ExcelRapportDifferentielSheetUnchanged());
     }
 
-    public IExcelRapportDifferentielSheet get(String nomSheet) {
+    public IExcelRapportComparaisonPlanTransportSheet get(String nomSheet) {
         return this.map.get(nomSheet);
     }
 }
