@@ -1,5 +1,6 @@
 package com.avancial.app.utilitaire.pattern.structuredProcess;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,10 +39,27 @@ public abstract class AStructuredProcess<S, P, C extends StructuredProcessContex
 	}
 	
 	/**
+	 * constructeur simple.
+	 * @param validator le validateur de structure.
+	 * @param steps les étapes du process.
+	 */
+	public AStructuredProcess(IProcessStructureValidator<S, P, C> validator, @SuppressWarnings("unchecked") IProcessStep<S, P>... steps) {
+		this(validator, Arrays.asList(steps));
+	}
+	
+	/**
 	 * constructeur simple utilisant le validateur par défaut.
 	 * @param steps étapes du process.
 	 */
 	public AStructuredProcess(List<IProcessStep<S, P>> steps) {
+		this(null, steps);
+	}
+	
+	/**
+	 * constructeur simple utilisant le validateur par défaut.
+	 * @param steps étapes du process.
+	 */
+	public AStructuredProcess(@SuppressWarnings("unchecked") IProcessStep<S, P>... steps) {
 		this(null, steps);
 	}
 	
@@ -94,14 +112,8 @@ public abstract class AStructuredProcess<S, P, C extends StructuredProcessContex
 		// en cas d'étape finale
 		} else if(step instanceof IFinalProcessStep) {
 			// contrôle de la classe de context utilisée
-			IFinalProcessStep<S, P, C> finalStep;
-			try {
-				@SuppressWarnings("unchecked")
-				IFinalProcessStep<S, P, C> finalStepTmp = (IFinalProcessStep<S, P, C>) step;
-				finalStep = finalStepTmp;
-			} catch (ClassCastException e) {
-				throw new ProcessStructureException("une étape du process ne requiert pas la bonne classe de contexte : " + step.getClass().getCanonicalName());
-			}
+			@SuppressWarnings("unchecked")
+			IFinalProcessStep<S, P, C> finalStep = (IFinalProcessStep<S, P, C>) step;
 			// exécution de l'étape
 			try {
 				finalStep.executeStep(context);

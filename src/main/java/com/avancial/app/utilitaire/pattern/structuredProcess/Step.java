@@ -20,6 +20,6 @@ public @interface Step {
 	 * indique l'ordre dans lequel doivent être appelées les sous-étapes.
 	 * @return indice.
 	 */
-	float value(); 
+	double value(); 
 	
 }

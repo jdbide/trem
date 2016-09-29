@@ -14,6 +14,6 @@ public interface IFinalProcessStep<S, P, C extends StructuredProcessContext<S, P
 	 * @param context context d'exécution du process.
 	 * @throws Exception toute exception remontée par l'exécution.
 	 */
-	public void executeStep(StructuredProcessContext<S, P> context) throws Exception;
+	public void executeStep(C context) throws Exception;
 	
 }

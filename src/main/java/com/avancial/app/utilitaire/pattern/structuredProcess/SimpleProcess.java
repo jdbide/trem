@@ -11,16 +11,36 @@ import java.util.List;
 public class SimpleProcess<S, P> extends AStructuredProcess<S, P, SimpleProcessContext<S, P>> {
 
 	/**
-	 * {@inheritDoc}
+	 * constructeur simple.
+	 * @param validator le validateur de structure.
+	 * @param steps les étapes du process.
 	 */
 	public SimpleProcess(IProcessStructureValidator<S, P, SimpleProcessContext<S, P>> validator, List<IProcessStep<S, P>> steps) {
 		super(validator, steps);
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * constructeur simple.
+	 * @param validator le validateur de structure.
+	 * @param steps les étapes du process.
+	 */
+	public SimpleProcess(IProcessStructureValidator<S, P, SimpleProcessContext<S, P>> validator, @SuppressWarnings("unchecked") IProcessStep<S, P>... steps) {
+		super(validator, steps);
+	}
+	
+	/**
+	 * constructeur simple utilisant le validateur par défaut.
+	 * @param steps étapes du process.
 	 */
 	public SimpleProcess(List<IProcessStep<S, P>> steps) {
+		super(steps);
+	}
+	
+	/**
+	 * constructeur simple utilisant le validateur par défaut.
+	 * @param steps étapes du process.
+	 */
+	public SimpleProcess(@SuppressWarnings("unchecked") IProcessStep<S, P>... steps) {
 		super(steps);
 	}
 

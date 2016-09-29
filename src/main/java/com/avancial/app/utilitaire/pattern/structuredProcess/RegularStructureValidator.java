@@ -1,6 +1,7 @@
 package com.avancial.app.utilitaire.pattern.structuredProcess;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,6 +27,14 @@ public class RegularStructureValidator<S, P, C extends StructuredProcessContext<
 		if(this.stepsLength.isEmpty() || this.stepsLength.get(this.stepsLength.size() - 1) != 0) {
 			this.stepsLength.add(0);
 		}
+	}
+	
+	/**
+	 * constructeur simple.
+	 * @param stepsLength liste contenant le nombre de sous-étapes attendues pour chaque niveau d'étapes.
+	 */
+	public RegularStructureValidator(Integer... stepsLength){
+		this(Arrays.asList(stepsLength));
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package com.avancial.app.utilitaire.pattern.structuredProcess;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,6 +21,14 @@ public class MiddleProcessStep<S, P> implements IMiddleProcessStep<S, P> {
 	 */
 	public MiddleProcessStep(List<IProcessStep<S, P>> steps) {
 		this.steps.addAll(steps);
+	}
+	
+	/**
+	 * constructeur simple.
+	 * @param steps liste des étapes.
+	 */
+	public MiddleProcessStep(@SuppressWarnings("unchecked") IProcessStep<S, P>... steps) {
+		this.steps.addAll(Arrays.asList(steps));
 	}
 	
 	/**

@@ -49,13 +49,7 @@ public class MinimalStructureValidator<S, P, C extends StructuredProcessContext<
 				this.checkStep(subStep, checkedSteps);
 			}
 		} else if(step instanceof IFinalProcessStep) {
-			// contrôle de la conformité des contextes utilisés
-			try {
-				@SuppressWarnings({ "unchecked", "unused" })
-				IFinalProcessStep<S, P, C> finalStep = (IFinalProcessStep<S, P, C>) step;
-			} catch (ClassCastException e) {
-				throw new ProcessStructureException("une étape du process ne requiert pas la bonne classe de contexte : " + step.getClass().getCanonicalName());
-			}
+			
 		// contrôle des étapes indéterminées
 		} else {
 			throw new StructureError("une étape du process n'est ni intermédiaire ni finale");

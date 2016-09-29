@@ -1,6 +1,8 @@
 package utilitaire;
 
-import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,36 +19,51 @@ public class StructuredProcessTest {
 
 	@Test
     public void main() throws Exception {
-		List<IProcessStep<String, String>> steps = new ArrayList<IProcessStep<String, String>>();
+
+		@SuppressWarnings("unchecked")
+		SimpleProcess<String, String> process = new SimpleProcess<String, String>(
+				new StepTest(),
+				new SubStepsWrapper<String, String>(new StepsTest())
+				);
 		
-		steps.add(new StepTest());
-		steps.add(new SubStepsWrapper<String, String>(new StepsTest()));
-		
-		SimpleProcess<String, String> process = new SimpleProcess<String, String>(steps);
-		
-		process.execute("hihihi");
+		assertEquals("", " | (o_O) | (o_o) | (x_x) | (o_O)", process.execute(" | "));
 	}
 	
 	public static class StepTest implements IFinalProcessStep<String, String, SimpleProcessContext<String, String>> {
 
 		@Override
-		public void executeStep(StructuredProcessContext<String, String> context) throws Exception {
-			System.out.println("étape réalisée avec la source : " + context.getSource());
+		public void executeStep(SimpleProcessContext<String, String> context) throws Exception {
+			if(context.getProduct() == null)
+				context.setProduct("");
+			context.setProduct(context.getProduct() + context.getSource() + "(o_O)");
 		}
 		
 	}
 	
-	public static class StepsTest {
-		
+	public interface InterTest {
 		@Step(1)
+		public void etape1(StructuredProcessContext<String, String> context);
+	}
+	
+	public static class StepsTest implements InterTest {
+		
+		@Override
 		public void etape1(StructuredProcessContext<String, String> context) {
-			System.out.println("étape 1");
+			if(context.getProduct() == null)
+				context.setProduct("");
+			context.setProduct(context.getProduct() + context.getSource() + "(o_o)");
 		}
 		
 		@Step(2)
 		public void etape2(StructuredProcessContext<String, String> context) {
-			System.out.println("étape 2");
+			if(context.getProduct() == null)
+				context.setProduct("");
+			context.setProduct(context.getProduct() + context.getSource() + "(x_x)");
 		}
 		
+		@Step(3)
+		public List<IProcessStep<String, String>> etape3() {
+			return Collections.singletonList((IProcessStep<String, String>) new StepTest());
+		}
 	}
 }

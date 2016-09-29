@@ -2,8 +2,6 @@ package com.avancial.app.utilitaire.pattern.structuredProcess;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -101,16 +99,14 @@ public final class SubStepsWrapper<S, P> implements IMiddleProcessStep<S, P> {
 		
 		// extraction des seules méthodes visibles
 		for(Method method : clazz.getMethods()) {
-			if(method.isAnnotationPresent(Step.class)){
-				for(Entry<Method, Step> annotedOne : declaredMethodsMap.entrySet()) {
-					if(this.parentMethod(method, annotedOne.getKey()) != null) {
-						methodsMap.put(method, annotedOne.getValue());
-						break;
-					}
+			for(Entry<Method, Step> annotedOne : declaredMethodsMap.entrySet()) {
+				if(this.parentMethod(method, annotedOne.getKey()) != null) {
+					methodsMap.put(method, annotedOne.getValue());
+					break;
 				}
 			}
 		}
-
+		
 		// si il n'y a pas d'étapes à extraire
 		if(methodsMap.isEmpty()) {
 			throw new ProcessStructureException("la classe ne contient aucune méthode d'étape de process");
@@ -126,8 +122,8 @@ public final class SubStepsWrapper<S, P> implements IMiddleProcessStep<S, P> {
 	 */
 	private List<IProcessStep<S, P>> extractSteps(Map<Method, Step> methods) {
 		List<IProcessStep<S, P>> steps = new ArrayList<IProcessStep<S, P>>();
-		Map<Float, Method> indexedMethods = new HashMap<Float, Method>();
-		List<Float> indexes = new ArrayList<Float>();
+		Map<Double, Method> indexedMethods = new HashMap<Double, Method>();
+		List<Double> indexes = new ArrayList<Double>();
 		// indexe les méthodes par ordre d'exécution demandé
 		for(Entry<Method, Step> method : methods.entrySet()) {
 			Method doubled = indexedMethods.put(method.getValue().value(), method.getKey());
@@ -203,6 +199,12 @@ public final class SubStepsWrapper<S, P> implements IMiddleProcessStep<S, P> {
 		if(!method1.getName().equals(method2.getName()) || method1.getParameterCount() != method2.getParameterCount()) {
 			return null;
 		}
+		// contrôle des types de paramètres
+		for(int i = 0; i < method1.getParameterCount(); i++) {
+			if(!method1.getParameterTypes()[i].equals(method2.getParameterTypes()[i])) {
+				return null;
+			}
+		}
 		// détection de la classe mère
 		if(method1.getDeclaringClass().isAssignableFrom(method2.getDeclaringClass())) {
 			return method1;
@@ -221,7 +223,7 @@ public final class SubStepsWrapper<S, P> implements IMiddleProcessStep<S, P> {
 	 */
 	private boolean isStepUsable(Method method) {
 		// si la méthode n'est pas public
-		if(!Modifier.isPublic(method.getModifiers())) {
+		if(!Modifier.isPublic(method.getModifiers()) || Modifier.isStatic(method.getModifiers())) {
 			return false;
 		}
 		Class<?>[] params = method.getParameterTypes();
@@ -229,16 +231,15 @@ public final class SubStepsWrapper<S, P> implements IMiddleProcessStep<S, P> {
 		if(params.length > 1) {
 			return false;
 		}
-		Class<?> retour = method.getReturnType();
 		// si il n'y a pas d'arguments
 		if(params.length == 0) {
-			if(retour.isAssignableFrom(List.class) && ((ParameterizedType) ((Type) retour)).getActualTypeArguments()[0].equals(IProcessStep.class)) {
+			if(method.getReturnType().isAssignableFrom(List.class)) {
 				return true;
 			}
 			return false;
 		// si il y a un argument
 		} else {
-			if(retour.equals(void.class) && StructuredProcessContext.class.isAssignableFrom(params[0])){
+			if(method.getReturnType().equals(void.class) && StructuredProcessContext.class.isAssignableFrom(params[0])){
 				return true;
 			}
 			return false;
@@ -274,7 +275,7 @@ public final class SubStepsWrapper<S, P> implements IMiddleProcessStep<S, P> {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void executeStep(StructuredProcessContext<S, P> context) throws Exception {
+		public void executeStep(C context) throws Exception {
 			this.method.invoke(this.object, context);
 		}
 		
