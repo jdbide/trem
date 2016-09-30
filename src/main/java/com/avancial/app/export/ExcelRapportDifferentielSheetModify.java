@@ -5,8 +5,9 @@ import org.apache.log4j.Logger;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
@@ -39,9 +40,16 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
          MapPlansDeTransport mapPlansDeTransport) throws IOException {
       int debutRowTrain = ligneDebut;
 
-      ComparaisonPlanTransport<IPlanTransport> dataPrec = null;
+      ComparaisonDifferentielPlanTransport<IPlanTransport> data = null;
+      ComparaisonDifferentielPlanTransport<IPlanTransport> dataPrec = null;
 
-      for (ComparaisonPlanTransport<IPlanTransport> data : mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.MODIFY)) {
+      for (IComparaisonPlanTransport iData : mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.MODIFY)) {
+         try {
+            data = (ComparaisonDifferentielPlanTransport<IPlanTransport>) iData;
+         } catch (ClassCastException e) {
+            logger.error("Rapport différentiel : comparaison de type " + iData.getClass().getSimpleName() + " trouvée!");
+            throw e;
+         }
          if (dataPrec == null) {
             dataPrec = data;
          }
@@ -96,7 +104,8 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
     * @param comparaison
     *           Comparaison de type MODIFY à afficher sur la ligne
     */
-   private void generateLigneModify(ExcelTools excelTools, ComparaisonPlanTransport<IPlanTransport> comparaison) {
+   private void generateLigneModify(ExcelTools excelTools, ComparaisonDifferentielPlanTransport<IPlanTransport> comparaison) {
+      this.printExcelSousRegimeTranche.setTypeComparaison(EnumTypeComparaisonPlanTransport.MODIFY);
       this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);
 
       /* Nom du field */

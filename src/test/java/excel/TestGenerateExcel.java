@@ -33,7 +33,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.export.ExcelRapportDifferentiel;
@@ -120,30 +120,30 @@ public class TestGenerateExcel {
         Assert.assertNotNull(mapPlansDeTransport);
 
         // Delete
-        ComparaisonPlanTransport<IPlanTransport> comparaisonDelete = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonDelete = new ComparaisonDifferentielPlanTransport<>();
         comparaisonDelete.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
         comparaisonDelete.setNumeroTrain("3");
         comparaisonDelete.setNumeroTranche("6");
         // New
-        ComparaisonPlanTransport<IPlanTransport> comparaisonNew = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonNew = new ComparaisonDifferentielPlanTransport<>();
         comparaisonDelete.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
         comparaisonDelete.setNumeroTrain("5");
         comparaisonDelete.setNumeroTranche("10");
 
         // Unchanged
-        ComparaisonPlanTransport<IPlanTransport> comparaisonUnchanged = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonUnchanged = new ComparaisonDifferentielPlanTransport<>();
         comparaisonUnchanged.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
         comparaisonUnchanged.setNumeroTrain("4");
         comparaisonUnchanged.setNumeroTranche("8");
 
         // Modify
-        ComparaisonPlanTransport<IPlanTransport> comparaisonModify = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonModify = new ComparaisonDifferentielPlanTransport<>();
         comparaisonModify.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
         comparaisonModify.setNumeroTrain("2");
         comparaisonModify.setNumeroTranche("4");
 
         //
-        ComparaisonPlanTransport<IPlanTransport> comparaisonRegimSplit = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonRegimSplit = new ComparaisonDifferentielPlanTransport<>();
         comparaisonRegimSplit.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
         comparaisonRegimSplit.setNumeroTrain("2");
         comparaisonRegimSplit.setNumeroTranche("4");

@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
@@ -55,7 +55,7 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
 			throws Exception {
 		MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
-		ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
+		ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport;
 		Tranche trancheNouveau, trancheAncien;
 		/* Boucle sur les tranchesNouveau */
 		for (Iterator<Tranche> itTrancheNouveau = (Iterator<Tranche>) tranchesNouveau.iterator(); itTrancheNouveau
@@ -67,7 +67,7 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
 			/* Si trancheNouveau n'est pas dans ancien */
 			if (trancheAncien == null) {
 				/* C'est une nouvelle tranche */
-				comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+				comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<>();
 				comparaisonPlanTransport.setNumeroTrain(numeroTrain);
 				comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
 				comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());
@@ -88,7 +88,7 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
 			else if (typeComparaisonPlanTransport.equals(EnumTypeComparaisonPlanTransport.NEW)
 					&& trancheAncien.getRegime().getDateFin().before(trancheNouveau.getRegime().getDateFin())) {
 				/* C'est une nouvelle tranche */
-				comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+				comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<>();
 				comparaisonPlanTransport.setNumeroTrain(numeroTrain);
 				comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
 				comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());
@@ -111,7 +111,7 @@ public abstract class ACompareTrainNewDelete extends AChaineComparePlanTransport
 					// on retire les dates en NEW pour continuer la comparaison sur cette tranche
 					trancheNouveau.getRegime().getListeJours().removeAll(newList);
 					
-					comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+					comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<>();
 					comparaisonPlanTransport.setNumeroTrain(numeroTrain);
 					comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
 					comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());

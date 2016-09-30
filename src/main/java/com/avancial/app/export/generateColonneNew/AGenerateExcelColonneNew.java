@@ -2,6 +2,7 @@ package com.avancial.app.export.generateColonneNew;
 
 import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.export.ExcelTools;
 import com.avancial.app.export.printSousRegimeTranche.PrintExcelSousRegimeTranche;
 

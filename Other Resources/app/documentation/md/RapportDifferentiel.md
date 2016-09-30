@@ -102,4 +102,56 @@ avec la liste de CodeSat de la tranche correspondante dans le plan de transport 
 On commence par enlever tous les attributs en Unchanged, que l'on trouve à l'identique
 dans les deux tranches. On relève alors ensuite les comparaisons de type Modify et Regime
 Split. Si, entre deux tranche, il n'y a aucun résultat sur les comparaisons Modify et
-Regime Split, c'est qu'elles sont identiques, et on les ajoute à l'onglet Unchanged.
+Regime Split, c'est qu'elles sont identiques, et on l'ajoute à l'onglet Unchanged.
+
+### Processus de comparaison
+Pour effectuer ces comparaisons de plusieurs types et à plusieurs niveaux, nous avons
+mis en place le patron de conception **"chaîne de responsabilité"**.
+
+Les maillons implémentent l'interface IChaineComparePlanTransport. Chaque maillon d'une chaîne
+correspond à un type de comparaison à un niveau de comparaison donné; il existe par
+exemple le maillon CompareTrancheUnchanged. Ainsi, si une évolution demande l'ajout d'un type
+de comparaison, il devrait suffire d'implémenter une nouvelle classe.
+
+En ce qui concerne le déroulement de la chaîne, chaque maillon a pour rôle de détecter un type
+de comparaison à un niveau, et la méthode d'exécution du maillon renvoie ses résultats dans
+une MapComparaisonPlanTransport. Quand un maillon a terminé son traitement, il appelle son
+successeur, et ajoute à sa Map le résultat du successeur. La MapComparaisonPlanTransport
+finale est donc complétée en partant du dernier maillon et en remontant au premier.
+
+Pour modéliser les différents niveaux de comparaison, nous avons construit plusieurs chaînes,
+sous l'interface IComparePlanTransport. Pour chaque chaîne, **l'ordre des maillons est
+crucial** pour le fonctionnement du traitement global.
+
+Il existe quatre implémentations de chaînes:
+<dl>
+  <dt>ComparePlanTransport</dt>
+  <dd>À ce niveau on ne détecte que des New et Delete. Lorsque ceux-ci ont été trouvés et
+  enlevés des plans de transport respectifs, on passe au niveau suivant, pour comparer deux
+  trains. La chaîne est donc:
+  1. *ComparePlanTransportNew*
+  * *ComparePlanTransportDelete*
+  * *ComparePlanTransportOther* : dans ce maillon, on instancie la chaîne du niveau suivant
+  sur deux trains présents dans les deux plans de transport
+  </dd>
+
+<dt>CompareTrain</dt>
+  <dd>À ce niveau on détecte des New, Delete et RegimeSplit. Encore une fois, l'ordre des
+  maillons est très important. En effet, il faut impérativement détecter les RegimeSplit
+  avant les Delete, sous peine d'avoir des faux positifs dans le maillon TrainDelete. Une fois
+  les tranches en RegimeSplit traitées et enlevées des plans de transport, on peut passer
+  à la suite de la chaîne : New, Delete, et enfin le niveau suivant, pour comparer deux
+  tranches. La chaîne est donc:
+  1. *CompareTrainRegimeSplit* : dans ce maillon, on instancie la chaîne du niveau suivant
+  sur les tranches en RegimeSplit, avant de les enlever des plans de transport
+  * *CompareTrainNew*
+  * *CompareTrainDelete*
+  * *CompareTrainOther* : dans ce maillon, on instancie la chaîne du niveau suivant sur deux
+  tranches présentes dans les deux plans de transport
+  </dd>
+
+<dt>CompareTranche</dt>
+  <dd>À ce niveau on récupère les RegimeSplit et tous les Modify, et l'on détermine si les
+  tranches sont Unchanged. Pour ces derniers, le déroulement de la chaîne est un peu modifié
+  par rapport aux autres maillons. 
+  </dd>

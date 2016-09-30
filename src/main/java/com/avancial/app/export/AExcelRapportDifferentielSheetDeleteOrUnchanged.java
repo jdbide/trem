@@ -3,10 +3,14 @@ package com.avancial.app.export;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
+
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AExcelRapportDifferentielSheet {
@@ -59,10 +63,18 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
     * @return Ligne à laquelle la génération a terminé
     * @throws IOException
     */
+   @SuppressWarnings("unchecked")
    protected int generateContentForSheetUnchangedOrDelete(ExcelTools excelTools, int ligneDebut, MapPlansDeTransport mapPlansDeTransport,
-         List<ComparaisonPlanTransport<IPlanTransport>> comparaisons, Color couleur) throws IOException {
+         List<AComparaisonPlanTransport<IPlanTransport>> comparaisons, Color couleur) throws IOException {
       int ligne = ligneDebut;
-      for (ComparaisonPlanTransport<IPlanTransport> comparaison : comparaisons) {
+      ComparaisonDifferentielPlanTransport<IPlanTransport> comparaison;
+      for (IComparaisonPlanTransport iComparaison : comparaisons) {
+         try {
+            comparaison = (ComparaisonDifferentielPlanTransport<IPlanTransport>) iComparaison;
+         } catch (ClassCastException e) {
+            logger.error("Rapport différentiel : comparaison de type " + iComparaison.getClass().getSimpleName() + " trouvée!");
+            throw e;
+         }
          excelTools.createRow(ligne++);
          generateTrainTrancheField(excelTools, comparaison, couleur);
          excelTools.createCellTexteWithStyle(3, comparaison.getRegimeTranche().printListeJours(),

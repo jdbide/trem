@@ -16,10 +16,10 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.export.printSousRegimeTranche.PrintExcelSousRegimeTranche;
 
-public abstract class AExcelRapportDifferentielSheet implements IExcelRapportDifferentielSheet {
+public abstract class AExcelRapportDifferentielSheet implements IExcelRapportComparaisonPlanTransportSheet {
 
     /**
      * Objet pour imprimer les valeurs des champs dans les cellules Excel
@@ -62,7 +62,7 @@ public abstract class AExcelRapportDifferentielSheet implements IExcelRapportDif
      *            Couleur de fond de la cellule
      */
     protected void generateTrainTrancheField(ExcelTools excelTools,
-            ComparaisonPlanTransport<IPlanTransport> comparaison, Color couleur) {
+            ComparaisonDifferentielPlanTransport<IPlanTransport> comparaison, Color couleur) {
         /* Numéro de train */
         excelTools.createCellTexteWithStyle(1, comparaison.getNumeroTrain(),
                 excelTools.addColor(excelTools.styleBorder, couleur));
