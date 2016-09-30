@@ -7,7 +7,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.CompareAttributTranche;
@@ -60,7 +60,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
             throws Exception {
         MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
-        ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport;
         IComparePlanTransport comparePlanTransport = new CompareAttributTranche();
 
         /* Boucle sur les attributs de nouveau */
@@ -82,7 +82,7 @@ public abstract class ACompareTrancheModifyRegimesplit extends AChaineComparePla
                  * ajoute un objet dans le résultat, et on enlève les attributs
                  * des listes
                  */
-                List<ComparaisonPlanTransport<IPlanTransport>> listComparaison = resComparaison
+                List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison = resComparaison
                         .getComparaison(typeComparaisonPlanTransport, sousRegimeTrancheAncien.getClass());
                 if (listComparaison != null && listComparaison.size() > 0) {
                     comparaisonPlanTransport = listComparaison.get(0);

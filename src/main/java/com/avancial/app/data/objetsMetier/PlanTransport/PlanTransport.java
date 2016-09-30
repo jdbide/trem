@@ -2,7 +2,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.socle.utils.ListUtils;
@@ -136,7 +136,7 @@ public class PlanTransport implements IPlanTransport {
       List<IComparaisonPlanTransport> res = new ArrayList<>();
       EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport = chercheAjout ? EnumTypeComparaisonPlanTransport.NEW : EnumTypeComparaisonPlanTransport.DELETE;
       Train trainAncien;
-      ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = null;
+      ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport = null;
 
       /* Boucle sur les trains de nouveau */
       for (Train trainNouveau : nouveau) {
@@ -145,7 +145,7 @@ public class PlanTransport implements IPlanTransport {
          /* Si trainNouveau n'est pas dans ancien */
          if (index < 0) {
             /* C'est un nouveau train */
-            comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+            comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<>();
             comparaisonPlanTransport.setNumeroTrain(trainNouveau.getNumeroTrain());
             comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
             res.add(comparaisonPlanTransport);

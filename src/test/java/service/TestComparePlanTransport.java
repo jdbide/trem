@@ -22,7 +22,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
@@ -52,8 +52,8 @@ public class TestComparePlanTransport {
 
       PlanTransport p1 = new PlanTransport(EnumCompagnies.ES, trains1);
       PlanTransport p2 = new PlanTransport(EnumCompagnies.ES, trains2);
-      List<ComparaisonPlanTransport<IPlanTransport>> expected = new ArrayList<>();
-      ComparaisonPlanTransport<IPlanTransport> cpt = new ComparaisonPlanTransport<>();
+      List<ComparaisonDifferentielPlanTransport<IPlanTransport>> expected = new ArrayList<>();
+      ComparaisonDifferentielPlanTransport<IPlanTransport> cpt = new ComparaisonDifferentielPlanTransport<>();
       cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
       cpt.setNumeroTrain("1");
       cpt.setNumeroTranche("10");
@@ -69,7 +69,7 @@ public class TestComparePlanTransport {
          cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
          Assert.assertTrue("Compare UNCHANGED1 PlanTransport", ListUtils.compareLists(expected,
                comparePlanTransport.compare(p1, p1).getComparaison(EnumTypeComparaisonPlanTransport.UNCHANGED, null)));
-         Assert.assertTrue("Compare UNCHANGED2 PlanTransport", ListUtils.compareLists(new ArrayList<ComparaisonPlanTransport<IPlanTransport>>(),
+         Assert.assertTrue("Compare UNCHANGED2 PlanTransport", ListUtils.compareLists(new ArrayList<ComparaisonDifferentielPlanTransport<IPlanTransport>>(),
                comparePlanTransport.compare(p2, p2).getComparaison(EnumTypeComparaisonPlanTransport.UNCHANGED, null)));
       } catch (Exception e) {
          e.printStackTrace();
@@ -224,21 +224,21 @@ public class TestComparePlanTransport {
       }
 
       List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
-      ComparaisonPlanTransport<ASousRegimeTranche> codeSatExpected = new ComparaisonPlanTransport<>();
+      ComparaisonDifferentielPlanTransport<ASousRegimeTranche> codeSatExpected = new ComparaisonDifferentielPlanTransport<>();
       codeSatExpected.setNumeroTranche("1");
       codeSatExpected.setAncienField(codeSat1);
       codeSatExpected.setNouveauField(codeSat2);
       codeSatExpected.setTrancheStatut(tranche1.getTrancheStatut());
       codeSatExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
 
-      ComparaisonPlanTransport<ASousRegimeTranche> fareProfileExpected = new ComparaisonPlanTransport<>();
+      ComparaisonDifferentielPlanTransport<ASousRegimeTranche> fareProfileExpected = new ComparaisonDifferentielPlanTransport<>();
       fareProfileExpected.setNumeroTranche("1");
       fareProfileExpected.setAncienField(fareProfile1);
       fareProfileExpected.setNouveauField(fareProfile2);
       fareProfileExpected.setTrancheStatut(tranche1.getTrancheStatut());
       fareProfileExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
 
-      ComparaisonPlanTransport<ASousRegimeTranche> fareProfileExpected2 = new ComparaisonPlanTransport<>();
+      ComparaisonDifferentielPlanTransport<ASousRegimeTranche> fareProfileExpected2 = new ComparaisonDifferentielPlanTransport<>();
       fareProfileExpected2.setNumeroTranche("1");
       fareProfileExpected2.setAncienField(fareProfile1);
       fareProfileExpected2.setNouveauField(fareProfile3);
@@ -250,7 +250,7 @@ public class TestComparePlanTransport {
       expected.add(fareProfileExpected2);
 
       List<IComparaisonPlanTransport> res = new ArrayList<>();
-      for (List<ComparaisonPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
+      for (List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
          res.addAll(listComparaison);
       }
       Assert.assertTrue(ListUtils.compareLists(res, expected));
@@ -339,13 +339,13 @@ public class TestComparePlanTransport {
       }
 
       List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
-      ComparaisonPlanTransport<Repas> repasExpected = new ComparaisonPlanTransport<>();
+      ComparaisonDifferentielPlanTransport<Repas> repasExpected = new ComparaisonDifferentielPlanTransport<>();
       repasExpected.setNumeroTranche("1");
       repasExpected.setAncienField(repas1);
       repasExpected.setNouveauField(repas2);
       repasExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
       repasExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
-      ComparaisonPlanTransport<Repas> repasExpected2 = new ComparaisonPlanTransport<>();
+      ComparaisonDifferentielPlanTransport<Repas> repasExpected2 = new ComparaisonDifferentielPlanTransport<>();
       repasExpected2.setNumeroTranche("1");
       repasExpected2.setAncienField(repas1);
       repasExpected2.setNouveauField(repas3);
@@ -356,7 +356,7 @@ public class TestComparePlanTransport {
       expected.add(repasExpected2);
 
       List<IComparaisonPlanTransport> res = new ArrayList<>();
-      for (List<ComparaisonPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
+      for (List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
          res.addAll(listComparaison);
       }
       Assert.assertTrue(ListUtils.compareLists(res, expected));
@@ -376,12 +376,12 @@ public class TestComparePlanTransport {
          e.printStackTrace();
       }
       List<IComparaisonPlanTransport> res = new ArrayList<>();
-      for (List<ComparaisonPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
+      for (List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
          res.addAll(listComparaison);
       }
 
       List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
-      ComparaisonPlanTransport<Tranche> trancheExpected = new ComparaisonPlanTransport<>();
+      ComparaisonDifferentielPlanTransport<Tranche> trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain(trainAncien.getNumeroTrain());
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
       trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
@@ -389,7 +389,7 @@ public class TestComparePlanTransport {
       trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheAncienDelete().getRegime());
       expected.add(trancheExpected);
 
-      trancheExpected = new ComparaisonPlanTransport<>();
+      trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain(trainNouveau.getNumeroTrain());
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
       trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
@@ -397,7 +397,7 @@ public class TestComparePlanTransport {
       trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheNouveauNew().getRegime());
       expected.add(trancheExpected);
 
-      trancheExpected = new ComparaisonPlanTransport<>();
+      trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain("1");
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
       trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
@@ -407,7 +407,7 @@ public class TestComparePlanTransport {
       trancheExpected.setNouveauField(PlanTransportFactory.getTrancheNouveauSplit1());
       expected.add(trancheExpected);
 
-      trancheExpected = new ComparaisonPlanTransport<>();
+      trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain("1");
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
       trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
@@ -417,7 +417,7 @@ public class TestComparePlanTransport {
       trancheExpected.setNouveauField(PlanTransportFactory.getTrancheNouveauSplit2());
       expected.add(trancheExpected);
 
-      trancheExpected = new ComparaisonPlanTransport<>();
+      trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain("1");
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
       trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
@@ -425,7 +425,7 @@ public class TestComparePlanTransport {
       trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheNouveauSplit1().getRegime());
       expected.add(trancheExpected);
 
-      trancheExpected = new ComparaisonPlanTransport<>();
+      trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain("1");
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
       trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);

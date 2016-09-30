@@ -1,44 +1,34 @@
 package com.avancial.app.data.objetsMetier.PlanTransport.comparaison;
 
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 
-public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComparaisonPlanTransport {
-
-    private String numeroTrain;
-
-    private String numeroTranche;
+public abstract class AComparaisonPlanTransport<T extends IPlanTransport> implements IComparaisonPlanTransport{
     
-    private EnumTrancheStatut statutTranche;
     
-    private Regime regimeTranche;
+    protected String numeroTrain;
 
-    private T ancienField;
+    protected String numeroTranche;
+    
+    protected T ancienField;
 
-    private T nouveauField;
+    protected T nouveauField;
 
-    private EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport;
+    protected EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport;
+    
+    public abstract  boolean equals(Object obj);
 
-    public ComparaisonPlanTransport() {
-        this.numeroTrain = "";
-        this.numeroTranche = "";
-        this.statutTranche = EnumTrancheStatut.Ferme;
+    /**
+     * @param ancienField
+     * @param nouveauField
+     * @param typeComparaisonPlanTransport
+     */
+    public AComparaisonPlanTransport() {
+        super();
         this.ancienField = null;
         this.nouveauField = null;
         this.typeComparaisonPlanTransport = EnumTypeComparaisonPlanTransport.UNCHANGED;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        ComparaisonPlanTransport<T> comparaison = (ComparaisonPlanTransport<T>) obj;
-        return this.numeroTrain.equals(comparaison.getNumeroTrain())
-                && this.numeroTranche.equals(comparaison.getNumeroTranche())
-                && this.statutTranche.equals(comparaison.getStatutTranche())
-                && this.fieldEquals(this.ancienField, comparaison.getAncienField())
-                && this.fieldEquals(this.nouveauField, comparaison.getNouveauField());
-    }
-
+    
     /**
      * Retourne le résultat de la comparaison de deux attributs de comparaison:
      * <ul>
@@ -50,65 +40,82 @@ public class ComparaisonPlanTransport<T extends IPlanTransport> implements IComp
      * @param field2
      * @return
      */
-    private boolean fieldEquals(T field1, T field2) {
+    protected boolean fieldEquals(T field1, T field2) {
         return (field1 == null && field2 == null) || (!(field1 == null || field2 == null)
                 && field1.getClass().equals(field2.getClass()) && field1.equals(field2));
     }
 
+    
+    
+    /**
+     * @return the numeroTrain
+     */
     public String getNumeroTrain() {
         return this.numeroTrain;
     }
 
+    /**
+     * @param numeroTrain the numeroTrain to set
+     */
     public void setNumeroTrain(String numeroTrain) {
         this.numeroTrain = numeroTrain;
     }
 
+    /**
+     * @return the numeroTranche
+     */
     public String getNumeroTranche() {
         return this.numeroTranche;
     }
 
+    /**
+     * @param numeroTranche the numeroTranche to set
+     */
     public void setNumeroTranche(String numeroTranche) {
         this.numeroTranche = numeroTranche;
     }
 
-    public EnumTrancheStatut getStatutTranche() {
-        return this.statutTranche;
-    }
-
-    public void setTrancheStatut(EnumTrancheStatut statutTranche) {
-        this.statutTranche = statutTranche;
-    }
-
-    public Regime getRegimeTranche() {
-        return this.regimeTranche;
-    }
-
-    public void setRegimeTranche(Regime regimeTranche) {
-        this.regimeTranche = regimeTranche;
-    }
-
+    /**
+     * @return the ancienField
+     */
     public T getAncienField() {
         return this.ancienField;
     }
 
+    /**
+     * @param ancienField the ancienField to set
+     */
     public void setAncienField(T ancienField) {
         this.ancienField = ancienField;
     }
 
+    /**
+     * @return the nouveauField
+     */
     public T getNouveauField() {
         return this.nouveauField;
     }
 
+    /**
+     * @param nouveauField the nouveauField to set
+     */
     public void setNouveauField(T nouveauField) {
         this.nouveauField = nouveauField;
     }
 
+    /**
+     * @return the typeComparaisonPlanTransport
+     */
     public EnumTypeComparaisonPlanTransport getTypeComparaisonPlanTransport() {
         return this.typeComparaisonPlanTransport;
     }
 
+    /**
+     * @param typeComparaisonPlanTransport the typeComparaisonPlanTransport to set
+     */
     public void setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport) {
         this.typeComparaisonPlanTransport = typeComparaisonPlanTransport;
     }
-
+    
+    
 }

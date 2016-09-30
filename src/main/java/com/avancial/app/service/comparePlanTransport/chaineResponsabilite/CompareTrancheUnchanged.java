@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
@@ -43,7 +43,7 @@ public class CompareTrancheUnchanged extends AChaineComparePlanTransport {
          * tranche est inchangée
          */
         if (res.size() == 0) {
-            ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+            ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<>();
             comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
             comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());
             comparaisonPlanTransport.setRegimeTranche(trancheNouveau.getRegime());

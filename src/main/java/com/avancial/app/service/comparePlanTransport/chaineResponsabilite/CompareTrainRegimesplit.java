@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.CompareTranche;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
@@ -28,7 +28,7 @@ public class CompareTrainRegimesplit extends AChaineComparePlanTransport {
 
         MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
-        ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport;
 
         MapComparaisonPlanTransport resSplit;
 
@@ -46,7 +46,7 @@ public class CompareTrainRegimesplit extends AChaineComparePlanTransport {
             tranchesNouveau = this.findTrancheSplit(trancheAncien, (List<Tranche>) trainNouveau.getTranches());
             for (Tranche trancheNouveau : tranchesNouveau) {
                 /* traincheNouveau est un des regimeSplit de trancheAncien */
-                comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+                comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<>();
                 comparaisonPlanTransport.setNumeroTrain(trainNouveau.getNumeroTrain());
                 comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                 comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());
@@ -78,8 +78,8 @@ public class CompareTrainRegimesplit extends AChaineComparePlanTransport {
         resTrain.putAll(comparePlanTransport.compare(trancheAncien, trancheNouveau));
         logger.info("Fin comparaison Tranches : " + trancheAncien.getNumeroTranche());
 
-        for (List<ComparaisonPlanTransport<IPlanTransport>> listComparaison : resTrain.values()) {
-            for (ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport : listComparaison) {
+        for (List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison : resTrain.values()) {
+            for (ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport : listComparaison) {
                 comparaisonPlanTransport.setNumeroTrain(train.getNumeroTrain());
             }
         }

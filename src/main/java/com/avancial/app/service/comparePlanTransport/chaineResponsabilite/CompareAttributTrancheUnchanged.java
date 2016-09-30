@@ -3,7 +3,7 @@ package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
@@ -30,7 +30,7 @@ public class CompareAttributTrancheUnchanged extends AChaineComparePlanTransport
             throw new Exception("Ne peut pas comparer deux instances de IPlanTransport de classes différentes!");
         }
 
-        ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonPlanTransport<IPlanTransport>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<IPlanTransport>();
         /*
          * Deux attributs sont inchangés entre deux jeux de données s'ils ont le
          * même régime et la même valeur

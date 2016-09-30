@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
 public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AExcelRapportDifferentielSheet {
@@ -60,9 +60,9 @@ public abstract class AExcelRapportDifferentielSheetDeleteOrUnchanged extends AE
     * @throws IOException
     */
    protected int generateContentForSheetUnchangedOrDelete(ExcelTools excelTools, int ligneDebut, MapPlansDeTransport mapPlansDeTransport,
-         List<ComparaisonPlanTransport<IPlanTransport>> comparaisons, Color couleur) throws IOException {
+         List<ComparaisonDifferentielPlanTransport<IPlanTransport>> comparaisons, Color couleur) throws IOException {
       int ligne = ligneDebut;
-      for (ComparaisonPlanTransport<IPlanTransport> comparaison : comparaisons) {
+      for (ComparaisonDifferentielPlanTransport<IPlanTransport> comparaison : comparaisons) {
          excelTools.createRow(ligne++);
          generateTrainTrancheField(excelTools, comparaison, couleur);
          excelTools.createCellTexteWithStyle(3, comparaison.getRegimeTranche().printListeJours(),
