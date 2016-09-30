@@ -2,9 +2,7 @@ package com.avancial.app.data.objetsMetier.PlanTransport;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
+
 import com.avancial.socle.utils.ListUtils;
 
 public class PlanTransport implements IPlanTransport {
@@ -81,96 +79,18 @@ public class PlanTransport implements IPlanTransport {
       this.trains = trains;
    }
 
-   public List<IComparaisonPlanTransport> compare(IPlanTransport autre) throws Exception {
-      List<IComparaisonPlanTransport> res = new ArrayList<>();
-      PlanTransport autrePlanTransport = (PlanTransport) autre;
-
-      res.addAll(this.compareNew(this.trains, autrePlanTransport.getTrains()));
-
-      res.addAll(this.compareDelete(this.trains, autrePlanTransport.getTrains()));
-
-      return res;
-   }
-
-   /**
-    * Récupère les trains nouveaux ainsi que toutes les modifications entre deux listes de trains.
-    * 
-    * @param ancien
-    *           Liste de trains d'un jeu de données moins récent
-    * @param nouveau
-    *           Liste de trains d'un jeu de données plus récent
-    * @return
-    * @throws Exception
-    */
-   private List<IComparaisonPlanTransport> compareNew(List<Train> ancien, List<Train> nouveau) throws Exception {
-      return this.compare(ancien, nouveau, true);
-   }
-
-   /**
-    * Récupère les trains supprimés entre deux listes de trains.
-    * 
-    * @param ancien
-    *           Liste de trains d'un jeu de données moins récent
-    * @param nouveau
-    *           Liste de trains d'un jeu de données plus récent
-    * @return
-    * @throws Exception
-    */
-   private List<IComparaisonPlanTransport> compareDelete(List<Train> ancien, List<Train> nouveau) throws Exception {
-      return this.compare(nouveau, ancien, false);
-   }
-
-   /**
-    * Compare deux listes de trains, et retourne la liste des différences entre les deux.
-    * 
-    * @param ancien
-    *           Liste de trains correspondant à un jeu de données moins récent
-    * @param nouveau
-    *           Liste de trains correspondant à un jeu de données plus récent
-    * @param chercheAjout
-    *           Indique si l'on cherche des trains ajoutés ou supprimés
-    * @return Liste des {@link IComparaisonPlanTransport} entre "nouveau" et "ancien"
-    * @throws Exception
-    */
-   private List<IComparaisonPlanTransport> compare(List<Train> ancien, List<Train> nouveau, boolean chercheAjout) throws Exception {
-      List<IComparaisonPlanTransport> res = new ArrayList<>();
-      EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport = chercheAjout ? EnumTypeComparaisonPlanTransport.NEW : EnumTypeComparaisonPlanTransport.DELETE;
-      Train trainAncien;
-      ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport = null;
-
-      /* Boucle sur les trains de nouveau */
-      for (Train trainNouveau : nouveau) {
-         /* Vérifie si trainNouveau existe dans ancien */
-         int index = ancien.indexOf(trainNouveau);
-         /* Si trainNouveau n'est pas dans ancien */
-         if (index < 0) {
-            /* C'est un nouveau train */
-            comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<>();
-            comparaisonPlanTransport.setNumeroTrain(trainNouveau.getNumeroTrain());
-            comparaisonPlanTransport.setTypeComparaisonPlanTransport(typeComparaisonPlanTransport);
-            res.add(comparaisonPlanTransport);
-         }
-         /* TrainNouveau est dans ancien */
-         else if (chercheAjout) {
-            /* On ajoute les résultats du compare des trains */
-            trainAncien = ancien.get(index);
-            // res.addAll(trainNouveau.compare(trainAncien));
-         }
-      }
-      return res;
-   }
-   
    /**
     * Getter train par numero de train
+    * 
     * @param numeroTrain
     * @return
     */
-   public Train getTrainByNumeroTrain (String numeroTrain) {
-      for (Train train : trains) {
+   public Train getTrainByNumeroTrain(String numeroTrain) {
+      for (Train train : this.trains) {
          if (train.getNumeroTrain().equals(numeroTrain))
             return train;
       }
-      
+
       return null;
    }
 
