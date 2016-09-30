@@ -2,6 +2,7 @@ package com.avancial.app.service;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
@@ -138,7 +139,38 @@ public class JeuDonneesService implements Serializable {
 
       return jeuDonneeEntity;
    }
-
+   
+   /**
+    * Charge un jeu de données en fonction du compagnie/environnement et la liste de status.
+    * 
+    * @param idCompagnieEnvironnement
+    * @param list statusJeuDonnees
+    * @return List<JeuDonneeEntity>
+    */
+//   public List<JeuDonneeEntity> getJeuDonneeParIdCompagnieEtStatus(int idCompagnieEnvironnement, List<Status> statusJeuDonnees) {
+//      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+//      
+//      TypedQuery<JeuDonneeEntity> query = em.createQuery(
+//            "SELECT t FROM JeuDonneeEntity t WHERE t.compagnieEnvironnement = :compagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees",
+//            JeuDonneeEntity.class);
+//      
+//      query.setParameter("compagnieEnvironnement", compagnieEnvironnement);
+//      query.setParameter("statusJeuDonnees", statusJeuDonnees);
+//
+//      JeuDonneeEntity jeuDonneeEntity = null;
+//
+//      try {
+//         if (!query.getResultList().isEmpty())
+//            jeuDonneeEntity = query.getSingleResult();
+//      } catch (Exception e) {
+//         e.printStackTrace();
+//         throw e;
+//      } finally {
+//         em.close();
+//      }
+//
+//      return jeuDonneeEntity;
+//   }
    /**
     * Charge un jeu de données par son id.
     * 

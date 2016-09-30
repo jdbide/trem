@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.JeuDonneesControlEntity;
 import com.avancial.socle.service.AService;
 
@@ -18,9 +17,10 @@ import com.avancial.socle.service.AService;
  * @author hamza.laterem
  *
  */
-public class JeuDonneesControlService  extends AService implements Serializable {/**
-    * 
-    */
+public class JeuDonneesControlService extends AService implements Serializable {
+   /**
+   * 
+   */
    private static final long serialVersionUID = 1L;
 
    /**
@@ -29,21 +29,22 @@ public class JeuDonneesControlService  extends AService implements Serializable 
    public JeuDonneesControlService() {
       // TODO Auto-generated constructor stub
    }
-   
-   public JeuDonneesControlEntity initJeuDonnee(JeuDonneeEntity jeuDonneeEntity, int idUtilisateur) {
+
+   public JeuDonneesControlEntity initJeuDonneeControl() {
       // création de l'entite
       JeuDonneesControlEntity jeuDonneesControlEntity = new JeuDonneesControlEntity();
+
+      jeuDonneesControlEntity.setTitleJeuDonneesControl("");
       jeuDonneesControlEntity.setDateCreateJeuDonneesControl(new Date());
-      jeuDonneesControlEntity.setIdUtilisateurCreateJeuDonneesControl(idUtilisateur);
       jeuDonneesControlEntity.setDateLastUpdateJeuDonneesControl(new Date());
-      jeuDonneesControlEntity.setIdUtilisateurLastUpdateJeuDonneesControl(idUtilisateur);
-      jeuDonneesControlEntity.setPathFileImportJeuDonneesControl("");
+      jeuDonneesControlEntity.setPathFileImportJeuDonneesControlTimeTable("");
+      jeuDonneesControlEntity.setPathFileImportJeuDonneesControlYield("");
       jeuDonneesControlEntity.setPathFileReportJeuDonneesControl("");
-      jeuDonneesControlEntity.setJeuDonnee(jeuDonneeEntity);
+      jeuDonneesControlEntity.setCompagnieEnvironnement(null);
 
       return jeuDonneesControlEntity;
    }
-   
+
    /**
     * Sauvegarde le jeu de données control dans la table.
     * 
@@ -67,7 +68,7 @@ public class JeuDonneesControlService  extends AService implements Serializable 
 
       return jeuDonneesControlEntity;
    }
-   
+
    /**
     * Update l'entité jeu de données control dans la table associée.
     * 
@@ -85,18 +86,17 @@ public class JeuDonneesControlService  extends AService implements Serializable 
          throw e;
       }
    }
-   
+
    /**
     * Suppression d'un jeudonneescontrol par id
+    * 
     * @param idJeuDonnee
     * @return
     */
    public int deleteById(int idJeuDonneesControl) {
       int deleteEntity = 0;
       try {
-         deleteEntity = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_DELETE_BY_ID)
-               .setParameter("idJeuDonneesControl", idJeuDonneesControl)
-               .executeUpdate();
+         deleteEntity = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_DELETE_BY_ID).setParameter("idJeuDonneesControl", idJeuDonneesControl).executeUpdate();
       } catch (Exception e) {
          throw e;
       } finally {
@@ -110,14 +110,14 @@ public class JeuDonneesControlService  extends AService implements Serializable 
     * @param idCompagnieEnvironnement
     * @return List<JeuDonneesControlEntity>
     */
-   public List<JeuDonneesControlEntity> getAllJeuDonneesControlParIdCompagnieEnvironnement(int idCompagnieEnvironnement) {  
+   public List<JeuDonneesControlEntity> getAllJeuDonneesControlParIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
       Query requete = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT);
       requete.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
 
       List<JeuDonneesControlEntity> res = null;
 
       try {
-         res = ((ArrayList<JeuDonneesControlEntity>)requete.getResultList());
+         res = ((ArrayList<JeuDonneesControlEntity>) requete.getResultList());
       } catch (Exception e) {
          e.printStackTrace();
          throw e;

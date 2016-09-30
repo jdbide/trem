@@ -1,4 +1,4 @@
-package com.avancial.app.export;
+package com.avancial.app.fileImport;
 
 public class FileTypeNotExpectedException extends Exception {
 

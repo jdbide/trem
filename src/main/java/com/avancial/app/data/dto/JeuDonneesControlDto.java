@@ -5,8 +5,6 @@ package com.avancial.app.data.dto;
 
 import java.util.Date;
 
-import com.avancial.app.data.databean.JeuDonneesControlEntity;
-import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.databean.StatusControl;
 
 /**
@@ -14,16 +12,19 @@ import com.avancial.app.data.databean.StatusControl;
  *
  */
 public class JeuDonneesControlDto {
-   private int           idJeuDonneesControl;
-   private int           idJeuDonnees;
-   private Date          dateCreateJeuDonneesControl;
-   private Date          dateLastUpdateJeuDonneesControl;
-   private int           nameUtilisateurCreateJeuDonneesControl;
-   private int           idUtilisateurCreateJeuDonneesControl;
-   private String        pathFileImportJeuDonneesControl;
-   private String        pathFileReportJeuDonneesControl;
-   private StatusControl statusJeuDonneesControl;
-   private Status        statusJeuDonnee;
+   private int    idJeuDonneesControl;
+   private String titleJeuDonneesControl = "";
+   private Date   dateCreateJeuDonneesControl = new Date();
+   private Date   dateLastUpdateJeuDonneesControl = new Date();
+   private int    idUtilisateurCreateJeuDonneesControl;
+   private int    idUtilisateurLastUpdateJeuDonneesControl;
+   private String pathFileImportJeuDonneesControlTimeTable = "";
+   private String pathFileImportJeuDonneesControlYield = "";
+   private String pathFileReportJeuDonneesControl = "";
+   private String statusJeuDonneesControl= StatusControl.LOADING.toString();
+   private String statusJeuDonnees = "";
+   private int    idJeuDonnees;
+   private int    idCompagnieEnvironnement;
 
    /**
     * 
@@ -36,27 +37,39 @@ public class JeuDonneesControlDto {
     * @return the idJeuDonneesControl
     */
    public int getIdJeuDonneesControl() {
-      return this.idJeuDonneesControl;
+      return idJeuDonneesControl;
    }
 
    /**
-    * @param idJeuDonneesControl
-    *           the idJeuDonneesControl to set
+    * @param idJeuDonneesControl the idJeuDonneesControl to set
     */
    public void setIdJeuDonneesControl(int idJeuDonneesControl) {
       this.idJeuDonneesControl = idJeuDonneesControl;
    }
 
    /**
-    * @return the dateCreateJeuDonneesControl
+    * @return the titleJeuDonneesControl
     */
-   public Date getDateCreateJeuDonneesControl() {
-      return this.dateCreateJeuDonneesControl;
+   public String getTitleJeuDonneesControl() {
+      return titleJeuDonneesControl;
    }
 
    /**
-    * @param dateCreateJeuDonneesControl
-    *           the dateCreateJeuDonneesControl to set
+    * @param titleJeuDonneesControl the titleJeuDonneesControl to set
+    */
+   public void setTitleJeuDonneesControl(String titleJeuDonneesControl) {
+      this.titleJeuDonneesControl = titleJeuDonneesControl;
+   }
+
+   /**
+    * @return the dateCreateJeuDonneesControl
+    */
+   public Date getDateCreateJeuDonneesControl() {
+      return dateCreateJeuDonneesControl;
+   }
+
+   /**
+    * @param dateCreateJeuDonneesControl the dateCreateJeuDonneesControl to set
     */
    public void setDateCreateJeuDonneesControl(Date dateCreateJeuDonneesControl) {
       this.dateCreateJeuDonneesControl = dateCreateJeuDonneesControl;
@@ -66,72 +79,81 @@ public class JeuDonneesControlDto {
     * @return the dateLastUpdateJeuDonneesControl
     */
    public Date getDateLastUpdateJeuDonneesControl() {
-      return this.dateLastUpdateJeuDonneesControl;
+      return dateLastUpdateJeuDonneesControl;
    }
 
    /**
-    * @param dateLastUpdateJeuDonneesControl
-    *           the dateLastUpdateJeuDonneesControl to set
+    * @param dateLastUpdateJeuDonneesControl the dateLastUpdateJeuDonneesControl to set
     */
    public void setDateLastUpdateJeuDonneesControl(Date dateLastUpdateJeuDonneesControl) {
       this.dateLastUpdateJeuDonneesControl = dateLastUpdateJeuDonneesControl;
    }
 
    /**
-    * @return the nameUtilisateurCreateJeuDonneesControl
-    */
-   public int getNameUtilisateurCreateJeuDonneesControl() {
-      return this.nameUtilisateurCreateJeuDonneesControl;
-   }
-
-   /**
-    * @param nameUtilisateurCreateJeuDonneesControl
-    *           the nameUtilisateurCreateJeuDonneesControl to set
-    */
-   public void setNameUtilisateurCreateJeuDonneesControl(int nameUtilisateurCreateJeuDonneesControl) {
-      this.nameUtilisateurCreateJeuDonneesControl = nameUtilisateurCreateJeuDonneesControl;
-   }
-
-   /**
     * @return the idUtilisateurCreateJeuDonneesControl
     */
    public int getIdUtilisateurCreateJeuDonneesControl() {
-      return this.idUtilisateurCreateJeuDonneesControl;
+      return idUtilisateurCreateJeuDonneesControl;
    }
 
    /**
-    * @param idUtilisateurCreateJeuDonneesControl
-    *           the idUtilisateurCreateJeuDonneesControl to set
+    * @param idUtilisateurCreateJeuDonneesControl the idUtilisateurCreateJeuDonneesControl to set
     */
    public void setIdUtilisateurCreateJeuDonneesControl(int idUtilisateurCreateJeuDonneesControl) {
       this.idUtilisateurCreateJeuDonneesControl = idUtilisateurCreateJeuDonneesControl;
    }
 
    /**
-    * @return the pathFileImportJeuDonneesControl
+    * @return the idUtilisateurLastUpdateJeuDonneesControl
     */
-   public String getPathFileImportJeuDonneesControl() {
-      return this.pathFileImportJeuDonneesControl;
+   public int getIdUtilisateurLastUpdateJeuDonneesControl() {
+      return idUtilisateurLastUpdateJeuDonneesControl;
    }
 
    /**
-    * @param pathFileImportJeuDonneesControl
-    *           the pathFileImportJeuDonneesControl to set
+    * @param idUtilisateurLastUpdateJeuDonneesControl the idUtilisateurLastUpdateJeuDonneesControl to set
     */
-   public void setPathFileImportJeuDonneesControl(String pathFileImportJeuDonneesControl) {
-      this.pathFileImportJeuDonneesControl = pathFileImportJeuDonneesControl;
+   public void setIdUtilisateurLastUpdateJeuDonneesControl(int idUtilisateurLastUpdateJeuDonneesControl) {
+      this.idUtilisateurLastUpdateJeuDonneesControl = idUtilisateurLastUpdateJeuDonneesControl;
+   }
+
+   /**
+    * @return the pathFileImportJeuDonneesControlTimeTable
+    */
+   public String getPathFileImportJeuDonneesControlTimeTable() {
+      return pathFileImportJeuDonneesControlTimeTable;
+   }
+
+   /**
+    * @param pathFileImportJeuDonneesControlTimeTable the pathFileImportJeuDonneesControlTimeTable to set
+    */
+   public void setPathFileImportJeuDonneesControlTimeTable(String pathFileImportJeuDonneesControlTimeTable) {
+      this.pathFileImportJeuDonneesControlTimeTable = pathFileImportJeuDonneesControlTimeTable;
+   }
+
+   /**
+    * @return the pathFileImportJeuDonneesControlYield
+    */
+   public String getPathFileImportJeuDonneesControlYield() {
+      return pathFileImportJeuDonneesControlYield;
+   }
+
+   /**
+    * @param pathFileImportJeuDonneesControlYield the pathFileImportJeuDonneesControlYield to set
+    */
+   public void setPathFileImportJeuDonneesControlYield(String pathFileImportJeuDonneesControlYield) {
+      this.pathFileImportJeuDonneesControlYield = pathFileImportJeuDonneesControlYield;
    }
 
    /**
     * @return the pathFileReportJeuDonneesControl
     */
    public String getPathFileReportJeuDonneesControl() {
-      return this.pathFileReportJeuDonneesControl;
+      return pathFileReportJeuDonneesControl;
    }
 
    /**
-    * @param pathFileReportJeuDonneesControl
-    *           the pathFileReportJeuDonneesControl to set
+    * @param pathFileReportJeuDonneesControl the pathFileReportJeuDonneesControl to set
     */
    public void setPathFileReportJeuDonneesControl(String pathFileReportJeuDonneesControl) {
       this.pathFileReportJeuDonneesControl = pathFileReportJeuDonneesControl;
@@ -140,31 +162,29 @@ public class JeuDonneesControlDto {
    /**
     * @return the statusJeuDonneesControl
     */
-   public StatusControl getStatusJeuDonneesControl() {
-      return this.statusJeuDonneesControl;
+   public String getStatusJeuDonneesControl() {
+      return statusJeuDonneesControl;
    }
 
    /**
-    * @param statusJeuDonneesControl
-    *           the statusJeuDonneesControl to set
+    * @param statusJeuDonneesControl the statusJeuDonneesControl to set
     */
-   public void setStatusJeuDonneesControl(StatusControl statusJeuDonneesControl) {
+   public void setStatusJeuDonneesControl(String statusJeuDonneesControl) {
       this.statusJeuDonneesControl = statusJeuDonneesControl;
    }
 
    /**
-    * @return the statusJeuDonnee
+    * @return the statusJeuDonnees
     */
-   public Status getStatusJeuDonnee() {
-      return this.statusJeuDonnee;
+   public String getStatusJeuDonnees() {
+      return statusJeuDonnees;
    }
 
    /**
-    * @param statusJeuDonnee
-    *           the statusJeuDonnee to set
+    * @param statusJeuDonnees the statusJeuDonnees to set
     */
-   public void setStatusJeuDonnee(Status statusJeuDonnee) {
-      this.statusJeuDonnee = statusJeuDonnee;
+   public void setStatusJeuDonnees(String statusJeuDonnees) {
+      this.statusJeuDonnees = statusJeuDonnees;
    }
 
    /**
@@ -175,23 +195,24 @@ public class JeuDonneesControlDto {
    }
 
    /**
-    * @param idJeuDonnees
-    *           the idJeuDonnees to set
+    * @param idJeuDonnees the idJeuDonnees to set
     */
    public void setIdJeuDonnees(int idJeuDonnees) {
       this.idJeuDonnees = idJeuDonnees;
    }
 
-   public void entityToDto(JeuDonneesControlEntity jeuDonneesControl) {
-      this.setIdJeuDonneesControl(jeuDonneesControl.getIdJeuDonneesControl());
-      this.setIdJeuDonnees(jeuDonneesControl.getJeuDonnee().getIdJeuDonnees());
-      this.setDateCreateJeuDonneesControl(jeuDonneesControl.getDateCreateJeuDonneesControl());
-      this.setDateLastUpdateJeuDonneesControl(jeuDonneesControl.getDateLastUpdateJeuDonneesControl());
-      this.setIdUtilisateurCreateJeuDonneesControl(jeuDonneesControl.getIdUtilisateurCreateJeuDonneesControl());
-      this.setPathFileImportJeuDonneesControl(jeuDonneesControl.getPathFileImportJeuDonneesControl());
-      this.setPathFileReportJeuDonneesControl(jeuDonneesControl.getPathFileReportJeuDonneesControl());
-      this.setStatusJeuDonneesControl(jeuDonneesControl.getStatusJeuDonneesControl());
-      this.setStatusJeuDonnee(jeuDonneesControl.getJeuDonnee().getStatusJeuDonnees());
+   /**
+    * @return the idCompagnieEnvironnement
+    */
+   public int getIdCompagnieEnvironnement() {
+      return idCompagnieEnvironnement;
+   }
+
+   /**
+    * @param idCompagnieEnvironnement the idCompagnieEnvironnement to set
+    */
+   public void setIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
+      this.idCompagnieEnvironnement = idCompagnieEnvironnement;
    }
 
 }

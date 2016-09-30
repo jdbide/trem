@@ -18,6 +18,11 @@ import com.avancial.socle.exceptions.impl.ASocleException;
 @RequestScoped
 public class UserDao extends AbstractDao {
 
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
+
    @SuppressWarnings("unchecked")
    @Override
    public List<UserDataBean> getAll() {

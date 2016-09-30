@@ -2,7 +2,7 @@ package com.avancial.socle.utils;
 
 import java.util.List;
 
-public class ListUtils {
+public class ListUtils extends org.apache.commons.collections.ListUtils {
 
     /**
      * Vérifie si les listes contiennent les mêmes valeurs, en se basant sur la

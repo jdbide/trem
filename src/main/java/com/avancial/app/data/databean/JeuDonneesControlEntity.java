@@ -25,42 +25,50 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "tremas_jeu_donnees_control")
 @NamedQueries({ @NamedQuery(name = JeuDonneesControlEntity.QUERY_GET_ALL, query = "SELECT t FROM JeuDonneesControlEntity t"),
-      @NamedQuery(name = JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT, query = "SELECT t FROM JeuDonneesControlEntity t JOIN  t.jeuDonnee j JOIN j.compagnieEnvironnement c WHERE c.idCompagnieEnvironnement = :idCompagnieEnvironnement"),
+      // SELECT t FROM JeuDonneesControlEntity t JOIN t.jeuDonnee j JOIN j.compagnieEnvironnement c WHERE c.idCompagnieEnvironnement = :idCompagnieEnvironnement
+      @NamedQuery(name = JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT, query = "SELECT t FROM JeuDonneesControlEntity t JOIN  t.compagnieEnvironnement ce WHERE ce.idCompagnieEnvironnement = :idCompagnieEnvironnement"),
       @NamedQuery(name = JeuDonneesControlEntity.QUERY_DELETE_BY_ID, query = "DELETE FROM JeuDonneesControlEntity jdc where jdc.idJeuDonneesControl = :idJeuDonneesControl") })
 
 public class JeuDonneesControlEntity implements Serializable {
-   private static final long  serialVersionUID                     = 1L;
+   private static final long            serialVersionUID                     = 1L;
 
-   public final static String QUERY_GET_ALL                        = "findAll";
-   public final static String QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT = "findAllByCompagnieEnvironnement";
-   public final static String QUERY_DELETE_BY_ID                   = "deleteById";
+   public final static String           QUERY_GET_ALL                        = "findAll";
+   public final static String           QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT = "findAllByCompagnieEnvironnement";
+   public final static String           QUERY_DELETE_BY_ID                   = "deleteById";
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int                idJeuDonneesControl;
+   private int                          idJeuDonneesControl;
+
+   private String                       titleJeuDonneesControl;
 
    @Temporal(TemporalType.TIMESTAMP)
-   private Date               dateCreateJeuDonneesControl;
+   private Date                         dateCreateJeuDonneesControl;
 
    @Temporal(TemporalType.TIMESTAMP)
-   private Date               dateLastUpdateJeuDonneesControl;
+   private Date                         dateLastUpdateJeuDonneesControl;
 
-   private int                idUtilisateurCreateJeuDonneesControl;
+   private int                          idUtilisateurCreateJeuDonneesControl;
 
-   private int                idUtilisateurLastUpdateJeuDonneesControl;
+   private int                          idUtilisateurLastUpdateJeuDonneesControl;
 
-   private String             pathFileImportJeuDonneesControl;
+   private String                       pathFileImportJeuDonneesControlTimeTable;
 
-   private String             pathFileReportJeuDonneesControl;
+   private String                       pathFileImportJeuDonneesControlYield;
+
+   private String                       pathFileReportJeuDonneesControl;
 
    @Column(length = 11, columnDefinition = "varchar(11) default 'LOADING'")
    @Enumerated(EnumType.STRING)
-   private StatusControl      statusJeuDonneesControl              = StatusControl.LOADING;
+   private StatusControl                statusJeuDonneesControl              = StatusControl.LOADING;
 
-   // uni-directional many-to-one association to TremasJeuDonnee
+   private String                       statusJeuDonnees;
+
+   private int                          idJeuDonnees;
+
    @ManyToOne
-   @JoinColumn(name = "idJeuDonnees")
-   private JeuDonneeEntity    jeuDonnee;
+   @JoinColumn(name = "idCompagnieEnvironnement")
+   private CompagnieEnvironnementEntity compagnieEnvironnement;
 
    public JeuDonneesControlEntity() {
    }
@@ -101,16 +109,24 @@ public class JeuDonneesControlEntity implements Serializable {
       return this.idUtilisateurLastUpdateJeuDonneesControl;
    }
 
-   public void setIdUtilisateurLastUpdateJeuDonneesControl(int idUtilisateurLastUpdateJeuDonneesControl) {
-      this.idUtilisateurLastUpdateJeuDonneesControl = idUtilisateurLastUpdateJeuDonneesControl;
+   public void setIdUtilisateurLastUpdateJeuDonneesControl(int idUtilisateurLastUpdateJeuDonneesControlTimeTable) {
+      this.idUtilisateurLastUpdateJeuDonneesControl = idUtilisateurLastUpdateJeuDonneesControlTimeTable;
    }
 
-   public String getPathFileImportJeuDonneesControl() {
-      return this.pathFileImportJeuDonneesControl;
+   public String getPathFileImportJeuDonneesControlTimeTable() {
+      return this.pathFileImportJeuDonneesControlTimeTable;
    }
 
-   public void setPathFileImportJeuDonneesControl(String pathFileImportJeuDonneesControl) {
-      this.pathFileImportJeuDonneesControl = pathFileImportJeuDonneesControl;
+   public void setPathFileImportJeuDonneesControlTimeTable(String pathFileImportJeuDonneesControlTimeTable) {
+      this.pathFileImportJeuDonneesControlTimeTable = pathFileImportJeuDonneesControlTimeTable;
+   }
+
+   public String getPathFileImportJeuDonneesControlYield() {
+      return this.pathFileImportJeuDonneesControlYield;
+   }
+
+   public void setPathFileImportJeuDonneesControlYield(String pathFileImportJeuDonneesControlYield) {
+      this.pathFileImportJeuDonneesControlYield = pathFileImportJeuDonneesControlYield;
    }
 
    public String getPathFileReportJeuDonneesControl() {
@@ -129,12 +145,63 @@ public class JeuDonneesControlEntity implements Serializable {
       this.statusJeuDonneesControl = statusJeuDonneesControl;
    }
 
-   public JeuDonneeEntity getJeuDonnee() {
-      return this.jeuDonnee;
+   /**
+    * @return the titleJeuDonneesControl
+    */
+   public String getTitleJeuDonneesControl() {
+      return this.titleJeuDonneesControl;
    }
 
-   public void setJeuDonnee(JeuDonneeEntity jeuDonnee) {
-      this.jeuDonnee = jeuDonnee;
+   /**
+    * @param titleJeuDonneesControl
+    *           the titleJeuDonneesControl to set
+    */
+   public void setTitleJeuDonneesControl(String titleJeuDonneesControl) {
+      this.titleJeuDonneesControl = titleJeuDonneesControl;
    }
 
+   /**
+    * @return the statusJeuDonnees
+    */
+   public String getStatusJeuDonnees() {
+      return statusJeuDonnees;
+   }
+
+   /**
+    * @param statusJeuDonnees
+    *           the statusJeuDonnees to set
+    */
+   public void setStatusJeuDonnees(String statusJeuDonnees) {
+      this.statusJeuDonnees = statusJeuDonnees;
+   }
+
+   /**
+    * @return the compagnieEnvironnement
+    */
+   public CompagnieEnvironnementEntity getCompagnieEnvironnement() {
+      return this.compagnieEnvironnement;
+   }
+
+   /**
+    * @param compagnieEnvironnement
+    *           the compagnieEnvironnement to set
+    */
+   public void setCompagnieEnvironnement(CompagnieEnvironnementEntity compagnieEnvironnement) {
+      this.compagnieEnvironnement = compagnieEnvironnement;
+   }
+
+   /**
+    * @return the idJeuDonnees
+    */
+   public int getIdJeuDonnees() {
+      return idJeuDonnees;
+   }
+
+   /**
+    * @param idJeuDonnees
+    *           the idJeuDonnees to set
+    */
+   public void setIdJeuDonnees(int idJeuDonnees) {
+      this.idJeuDonnees = idJeuDonnees;
+   }
 }
