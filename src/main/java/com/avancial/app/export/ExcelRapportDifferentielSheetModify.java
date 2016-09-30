@@ -7,6 +7,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
@@ -39,9 +40,16 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
          MapPlansDeTransport mapPlansDeTransport) throws IOException {
       int debutRowTrain = ligneDebut;
 
+      ComparaisonDifferentielPlanTransport<IPlanTransport> data = null;
       ComparaisonDifferentielPlanTransport<IPlanTransport> dataPrec = null;
 
-      for (ComparaisonDifferentielPlanTransport<IPlanTransport> data : mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.MODIFY)) {
+      for (IComparaisonPlanTransport iData : mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.MODIFY)) {
+         try {
+            data = (ComparaisonDifferentielPlanTransport<IPlanTransport>) iData;
+         } catch (ClassCastException e) {
+            logger.error("Rapport différentiel : comparaison de type " + iData.getClass().getSimpleName() + " trouvée!");
+            throw e;
+         }
          if (dataPrec == null) {
             dataPrec = data;
          }

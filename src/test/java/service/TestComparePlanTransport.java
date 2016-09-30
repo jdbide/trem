@@ -22,6 +22,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
@@ -52,7 +53,7 @@ public class TestComparePlanTransport {
 
       PlanTransport p1 = new PlanTransport(EnumCompagnies.ES, trains1);
       PlanTransport p2 = new PlanTransport(EnumCompagnies.ES, trains2);
-      List<ComparaisonDifferentielPlanTransport<IPlanTransport>> expected = new ArrayList<>();
+      List<AComparaisonPlanTransport<IPlanTransport>> expected = new ArrayList<>();
       ComparaisonDifferentielPlanTransport<IPlanTransport> cpt = new ComparaisonDifferentielPlanTransport<>();
       cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
       cpt.setNumeroTrain("1");
@@ -69,7 +70,7 @@ public class TestComparePlanTransport {
          cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
          Assert.assertTrue("Compare UNCHANGED1 PlanTransport", ListUtils.compareLists(expected,
                comparePlanTransport.compare(p1, p1).getComparaison(EnumTypeComparaisonPlanTransport.UNCHANGED, null)));
-         Assert.assertTrue("Compare UNCHANGED2 PlanTransport", ListUtils.compareLists(new ArrayList<ComparaisonDifferentielPlanTransport<IPlanTransport>>(),
+         Assert.assertTrue("Compare UNCHANGED2 PlanTransport", ListUtils.compareLists(new ArrayList<AComparaisonPlanTransport<IPlanTransport>>(),
                comparePlanTransport.compare(p2, p2).getComparaison(EnumTypeComparaisonPlanTransport.UNCHANGED, null)));
       } catch (Exception e) {
          e.printStackTrace();
@@ -250,7 +251,7 @@ public class TestComparePlanTransport {
       expected.add(fareProfileExpected2);
 
       List<IComparaisonPlanTransport> res = new ArrayList<>();
-      for (List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
+      for (List<AComparaisonPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
          res.addAll(listComparaison);
       }
       Assert.assertTrue(ListUtils.compareLists(res, expected));
@@ -356,7 +357,7 @@ public class TestComparePlanTransport {
       expected.add(repasExpected2);
 
       List<IComparaisonPlanTransport> res = new ArrayList<>();
-      for (List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
+      for (List<AComparaisonPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
          res.addAll(listComparaison);
       }
       Assert.assertTrue(ListUtils.compareLists(res, expected));
@@ -376,7 +377,7 @@ public class TestComparePlanTransport {
          e.printStackTrace();
       }
       List<IComparaisonPlanTransport> res = new ArrayList<>();
-      for (List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
+      for (List<AComparaisonPlanTransport<IPlanTransport>> listComparaison : comparaison.values()) {
          res.addAll(listComparaison);
       }
 

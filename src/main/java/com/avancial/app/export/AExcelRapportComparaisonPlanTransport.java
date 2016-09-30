@@ -97,6 +97,17 @@ public abstract class AExcelRapportComparaisonPlanTransport extends ASocleExport
       }
    }
 
+   /**
+    * Initialise les données pour les feuilles:
+    * <ul>
+    * <li>nombre de feuilles</li>
+    * <li>noms des feuilles</li>
+    * <li>nombre de colonnes des feuilles</li>
+    * <li>première ligne pour la pré-entête</li>
+    * <li>première ligne pour l'entête du tableau</li>
+    * <li>première ligne pour le contenu du tableau</li>
+    * </ul>
+    */
    protected abstract void initVarSheets();
 
    @Override

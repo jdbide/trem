@@ -24,8 +24,10 @@ import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
@@ -104,7 +106,7 @@ public class TestComparaisonPlansTransport {
                 this.traitementObjetMetier
                         .setEnvironnementCompagnie(compagnieEnvironnement.getNomTechniqueCompagnieEnvironnement());
                 this.traitementObjetMetier.execute();
-                List<ComparaisonDifferentielPlanTransport<IPlanTransport>> expected = new ArrayList<>();
+                List<AComparaisonPlanTransport<IPlanTransport>> expected = new ArrayList<>();
 
                 for (Train train : this.mapPlansDeTransport.get(Status.DRAFT).getPlanTransport().getTrains()) {
                     for (Tranche tranche : train.getTranches()) {
