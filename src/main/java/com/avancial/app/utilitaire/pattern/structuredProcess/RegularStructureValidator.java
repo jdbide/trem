@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * validateur de structure régulière.
  * chaque niveau d'étapes doit avoir un nombre défini de sous-étapes.
+ * si le dernier niveau ne définit pas 0 étape les niveaux supérieurs ne seront pas contraints.
  * @author raphael.cabaret
  * @param <C> type de context.
  * @param <S> type source du process.
@@ -23,10 +24,6 @@ public class RegularStructureValidator<S, P, C extends StructuredProcessContext<
 	 */
 	public RegularStructureValidator(List<Integer> stepsLength){
 		this.stepsLength.addAll(stepsLength);
-		// cas où le dernier niveau n'est pas défini comme n'ayant aucune sous-étape
-		if(this.stepsLength.isEmpty() || this.stepsLength.get(this.stepsLength.size() - 1) != 0) {
-			this.stepsLength.add(0);
-		}
 	}
 	
 	/**
@@ -43,11 +40,13 @@ public class RegularStructureValidator<S, P, C extends StructuredProcessContext<
 	@Override
 	public String validateStructure(List<IProcessStep<S, P>> steps) {
 		String error = super.validateStructure(steps);
-		// contrôle toutes les étapes du niveau 1
-		for(IProcessStep<S, P> step : steps) {
-			if(error != null)
-				break;
-			error = this.checkStep(step, 0);
+		// contrôle toutes les étapes du niveau 1 si besoin
+		if (!this.stepsLength.isEmpty()) {
+			for(IProcessStep<S, P> step : steps) {
+				if(error != null)
+					break;
+				error = this.checkStep(step, 0);
+			}
 		}
 		return error;
 	}
@@ -76,8 +75,8 @@ public class RegularStructureValidator<S, P, C extends StructuredProcessContext<
 			} else if(this.stepsLength.get(level) != ((IMiddleProcessStep<S, P>) step).getSubSteps().size()) {
 				error = "une étape du niveau " + (level + 1) + " comprend " + ((IMiddleProcessStep<S, P>) step).getSubSteps().size() +
 						" étapes au lieu de " + this.stepsLength.get(level);
-			// contrôle de toutes les sous-étapes
-			} else {
+			// contrôle de toutes les sous-étapes si besoin
+			} else if(this.stepsLength.size() < level - 1) {
 				for(IProcessStep<S, P> subStep : ((IMiddleProcessStep<S, P>) step).getSubSteps()) {
 					if(error != null)
 						break;
