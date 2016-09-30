@@ -114,6 +114,7 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
     *           Indique s'il faut afficher une ligne en plus pour la valeur de l'attribut "ancien", en plus de celle de l'attribut "nouveau"
     */
    private void generateLigneRegimeSplit(ExcelTools excelTools, ComparaisonDifferentielPlanTransport<IPlanTransport> comparaison, boolean valeurAncien) {
+       this.printExcelSousRegimeTranche.setTypeComparaison(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
       this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);
 
       /* Nom du field */

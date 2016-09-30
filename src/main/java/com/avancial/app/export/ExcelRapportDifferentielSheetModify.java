@@ -97,6 +97,7 @@ public class ExcelRapportDifferentielSheetModify extends AExcelRapportDifferenti
     *           Comparaison de type MODIFY à afficher sur la ligne
     */
    private void generateLigneModify(ExcelTools excelTools, ComparaisonDifferentielPlanTransport<IPlanTransport> comparaison) {
+      this.printExcelSousRegimeTranche.setTypeComparaison(EnumTypeComparaisonPlanTransport.MODIFY);
       this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);
 
       /* Nom du field */
