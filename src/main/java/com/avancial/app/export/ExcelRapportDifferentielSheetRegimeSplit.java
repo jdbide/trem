@@ -123,6 +123,7 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
     */
    private void generateLigneRegimeSplit(ExcelTools excelTools, ComparaisonDifferentielPlanTransport<IPlanTransport> comparaison,
          boolean valeurAncien) {
+      this.printExcelSousRegimeTranche.setTypeComparaison(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
       this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);
 
       /* Nom du field */

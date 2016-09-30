@@ -382,6 +382,7 @@ public class TestComparePlanTransport {
       }
 
       List<IComparaisonPlanTransport> expected = new ArrayList<IComparaisonPlanTransport>();
+      List<IComparaisonPlanTransport> test = new ArrayList<IComparaisonPlanTransport>();
       ComparaisonDifferentielPlanTransport<Tranche> trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain(trainAncien.getNumeroTrain());
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
@@ -433,6 +434,25 @@ public class TestComparePlanTransport {
       trancheExpected.setNumeroTranche("Split");
       trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheNouveauSplit2().getRegime());
       expected.add(trancheExpected);
+      
+      trancheExpected = new ComparaisonDifferentielPlanTransport<>();
+      trancheExpected.setNumeroTrain("1");
+      trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
+      trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
+      trancheExpected.setAncienField(PlanTransportFactory.getTrancheAncienModify());
+      trancheExpected.setNouveauField(PlanTransportFactory.getTrancheNouveauModify());
+      trancheExpected.setNumeroTranche("Modify");
+      trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheNouveauModify().getRegime());
+      expected.add(trancheExpected);
+      
+      trancheExpected = new ComparaisonDifferentielPlanTransport<>();
+      trancheExpected.setNumeroTrain("1");
+      trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
+      trancheExpected.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
+      trancheExpected.setNumeroTranche("Modify");
+      trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheNouveauModify().getRegime());
+      expected.add(trancheExpected);
+
 
       Assert.assertTrue(ListUtils.compareLists(res, expected));
 
