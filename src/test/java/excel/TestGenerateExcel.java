@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
@@ -173,8 +173,8 @@ public class TestGenerateExcel {
         try {
             IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
             MapComparaisonPlanTransport compare = new MapComparaisonPlanTransport();
-            compare = comparePlanTransport.compare(mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport(),
-                    mapPlansDeTransport.get(Status.DRAFT).getPlanTransport());
+            compare = comparePlanTransport.compare(mapPlansDeTransport.get(EStatus.ACTIVE).getPlanTransport(),
+                    mapPlansDeTransport.get(EStatus.DRAFT).getPlanTransport());
             System.out.println("");
             // Assert.assertTrue("Compare",
             // ListUtils.compareLists(expected, compare));

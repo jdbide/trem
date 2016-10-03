@@ -58,9 +58,9 @@ public class JeuDonneesControlEntity implements Serializable {
 
    private String                       pathFileReportJeuDonneesControl;
 
-   @Column(length = 11, columnDefinition = "varchar(11) default 'LOADING'")
+   @Column(length = 11, columnDefinition = "varchar(11) default 'START'")
    @Enumerated(EnumType.STRING)
-   private StatusControl                statusJeuDonneesControl              = StatusControl.LOADING;
+   private EStatusControl                statusJeuDonneesControl              = EStatusControl.START;
 
    private String                       statusJeuDonnees;
 
@@ -137,11 +137,11 @@ public class JeuDonneesControlEntity implements Serializable {
       this.pathFileReportJeuDonneesControl = pathFileReportJeuDonneesControl;
    }
 
-   public StatusControl getStatusJeuDonneesControl() {
+   public EStatusControl getStatusJeuDonneesControl() {
       return this.statusJeuDonneesControl;
    }
 
-   public void setStatusJeuDonneesControl(StatusControl statusJeuDonneesControl) {
+   public void setStatusJeuDonneesControl(EStatusControl statusJeuDonneesControl) {
       this.statusJeuDonneesControl = statusJeuDonneesControl;
    }
 

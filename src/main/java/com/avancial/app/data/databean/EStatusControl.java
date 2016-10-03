@@ -7,9 +7,13 @@ package com.avancial.app.data.databean;
  * @author hamza.laterem
  *
  */
-public enum StatusControl {
+public enum EStatusControl {
    /**
-    * LOADING : Start control
+    * Creation d'un control
+    */
+   START,
+   /**
+    * LOADING : control en cours
     */
    LOADING,
    /**

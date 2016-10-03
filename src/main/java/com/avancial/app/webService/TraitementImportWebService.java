@@ -126,4 +126,18 @@ public class TraitementImportWebService {
       }
    }
 
+   /**
+    * @return the traitementImportJeuDonnees
+    */
+   public TraitementImportJeuDonnees getTraitementImportJeuDonnees() {
+      return traitementImportJeuDonnees;
+   }
+
+   /**
+    * @param traitementImportJeuDonnees the traitementImportJeuDonnees to set
+    */
+   public void setTraitementImportJeuDonnees(TraitementImportJeuDonnees traitementImportJeuDonnees) {
+      this.traitementImportJeuDonnees = traitementImportJeuDonnees;
+   }
+
 }

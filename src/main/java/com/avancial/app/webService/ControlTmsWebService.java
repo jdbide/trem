@@ -3,9 +3,13 @@
  */
 package com.avancial.app.webService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,8 +22,11 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.service.CompagnieEnvironnementService;
+import com.avancial.app.service.JeuDonneesControlService;
 import com.avancial.app.serviceDto.JeuDonneesControlServiceDto;
+import com.avancial.app.serviceDto.JeuDonneesServiceDto;
 import com.avancial.app.webService.bean.ResponseBean;
 import com.avancial.socle.session.Session;
 
@@ -42,9 +49,15 @@ public class ControlTmsWebService {
 
    @Inject
    private CompagnieEnvironnementService compagnieEnvironnementService;
+   
+   @Inject
+   private JeuDonneesControlService      jeuDonneesControlService;
 
    @Inject
    private JeuDonneesControlServiceDto   jeuDonneesControlServiceDto;
+
+   @Inject
+   private JeuDonneesServiceDto          jeuDonneesServiceDto;
 
    @Inject
    private Session                       session;
@@ -79,20 +92,20 @@ public class ControlTmsWebService {
     * @throws Exception
     */
    @GET
-   @Path("getDatasByIdPartition/{idPartition}")
+   @Path("getDatasByIdPartition/{idCompagnieEnvironnement}")
    @Produces({ MediaType.APPLICATION_JSON })
-   public Response getDatasByIdPartition(@PathParam("idPartition") Integer idPartition) throws Exception {
-      logger.info("Début (WebService : '/app/controlTms', Action : 'getDatas/{idPartition}', methode : @GET)");
+   public Response getDatasByIdPartition(@PathParam("idCompagnieEnvironnement") Integer idCompagnieEnvironnement) throws Exception {
+      logger.info("Début (WebService : '/app/controlTms', Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET)");
 
       JSONArray jsonArray = new JSONArray();
       try {
-         jsonArray.addAll(this.jeuDonneesControlServiceDto.getAllJeuDonneesControlDtoParIdCompagnieEnvironnement(idPartition));
+         jsonArray.addAll(this.jeuDonneesControlServiceDto.getAllJeuDonneesControlDtoParIdCompagnieEnvironnement(idCompagnieEnvironnement));
 
-         logger.info("Fin (WebService : '/app/controlTms' Action : 'getDatas/{idPartition}', methode : @GET)");
+         logger.info("Fin (WebService : '/app/controlTms' Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET)");
 
          return Response.status(200).entity(jsonArray).build();
       } catch (Throwable ex) {
-         logger.error("Exception (WebService : '/app/controlTms' Action : 'getDatas/{idPartition}', methode : @GET))", ex);
+         logger.error("Exception (WebService : '/app/controlTms' Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET))", ex);
          return Response.status(400).build();
       }
    }
@@ -106,9 +119,7 @@ public class ControlTmsWebService {
       ResponseBuilder responseBuilder = null;
       final ResponseBean responseBean = new ResponseBean();
       try {
-         responseBean.setData(jeuDonneesControlServiceDto.createJeuDonneesControl(this.compagnieEnvironnementService
-               .getCompagnieEnvironnementById(idCompagnieEnvironnement)
-               , this.session.getUser().getIdUser().intValue()));
+         responseBean.setData(jeuDonneesControlServiceDto.createJeuDonneesControl(this.compagnieEnvironnementService.getCompagnieEnvironnementById(idCompagnieEnvironnement), this.session.getUser().getIdUser().intValue()));
          responseBean.setStatus(true);
          logger.info("Fin (WebService : '/app/controlTms', Action : 'createControl', methode : @POST)");
       } catch (Exception e) {
@@ -121,12 +132,51 @@ public class ControlTmsWebService {
          return responseBuilder.build();
       }
    }
-   
-   @Path("getImportParPartition")
+
+   @Path("getImportParPartition/{idCompagnieEnvironnement}")
    @GET
    @Produces({ MediaType.APPLICATION_JSON })
-   public Response getImportParIdPartition(int idCompagnieEnvironnement) {
-      return null;
-      
+   public Response getImportParIdPartition(@PathParam("idCompagnieEnvironnement") final int idCompagnieEnvironnement) {
+      logger.info("Début (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
+      ResponseBuilder responseBuilder = null;
+      final ResponseBean responseBean = new ResponseBean();
+      List<EStatus> status = new ArrayList<EStatus>();
+      status.add(EStatus.ACTIVE);
+      status.add(EStatus.DRAFT);
+      try {
+         responseBean.setData(this.jeuDonneesServiceDto.getAllJeuDonneesForControlDtoParIdCompagnieEnvironnementEtListStatus(idCompagnieEnvironnement, status));
+         responseBean.setStatus(true);
+         logger.info("Fin (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBean.setStatus(false);
+         responseBean.setMessage("Erreur de chargement ...");
+         logger.error("Exception (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)", e);
+      } finally {
+         responseBuilder = Response.ok((Object) responseBean);
+         return responseBuilder.build();
+      }
+   }
+   
+   @Path("/{id}")
+   @DELETE
+   @Produces({ MediaType.APPLICATION_JSON })
+   public Response deleteJeuDonneesControl(@PathParam("id") int idJeuDonneesControl) {
+      logger.info("Début (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)");
+      ResponseBuilder responseBuilder = null;
+      final ResponseBean responseBean = new ResponseBean();
+      try {
+         responseBean.setData(this.jeuDonneesControlService.deleteById(idJeuDonneesControl));
+         responseBean.setStatus(true);
+         logger.info("Fin (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)");
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBean.setStatus(false);
+         responseBean.setMessage("Erreur de chargement ...");
+         logger.error("Exception (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)", e);
+      } finally {
+         responseBuilder = Response.ok((Object) responseBean);
+         return responseBuilder.build();
+      }
    }
 }

@@ -5,7 +5,7 @@ package com.avancial.app.data.dto;
 
 import java.util.Date;
 
-import com.avancial.app.data.databean.StatusControl;
+import com.avancial.app.data.databean.EStatusControl;
 
 /**
  * @author hamza.laterem
@@ -21,7 +21,7 @@ public class JeuDonneesControlDto {
    private String pathFileImportJeuDonneesControlTimeTable = "";
    private String pathFileImportJeuDonneesControlYield = "";
    private String pathFileReportJeuDonneesControl = "";
-   private String statusJeuDonneesControl= StatusControl.LOADING.toString();
+   private String statusJeuDonneesControl= EStatusControl.START.toString();
    private String statusJeuDonnees = "";
    private int    idJeuDonnees;
    private int    idCompagnieEnvironnement;

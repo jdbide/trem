@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
@@ -106,7 +106,7 @@ public class TestComparaisonPlansTransport {
                 this.traitementObjetMetier.execute();
                 List<ComparaisonPlanTransport<IPlanTransport>> expected = new ArrayList<>();
 
-                for (Train train : this.mapPlansDeTransport.get(Status.DRAFT).getPlanTransport().getTrains()) {
+                for (Train train : this.mapPlansDeTransport.get(EStatus.DRAFT).getPlanTransport().getTrains()) {
                     for (Tranche tranche : train.getTranches()) {
                         ComparaisonPlanTransport<IPlanTransport> cpt = new ComparaisonPlanTransport<>();
                         cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
@@ -121,8 +121,8 @@ public class TestComparaisonPlansTransport {
                     Assert.assertTrue("Compare NEW PlanTransport",
                             ListUtils.compareLists(expected,
                                     comparePlanTransport
-                                            .compare(this.mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport(),
-                                                    this.mapPlansDeTransport.get(Status.DRAFT).getPlanTransport())
+                                            .compare(this.mapPlansDeTransport.get(EStatus.ACTIVE).getPlanTransport(),
+                                                    this.mapPlansDeTransport.get(EStatus.DRAFT).getPlanTransport())
                                             .getComparaison(EnumTypeComparaisonPlanTransport.NEW)));
                 }
                 catch (Throwable e1) {

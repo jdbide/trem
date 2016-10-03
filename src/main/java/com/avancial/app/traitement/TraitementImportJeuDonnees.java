@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.importMotriceBrut.ImportTMDKAPPEntity;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.export.ExcelRapportDifferentiel;
@@ -126,7 +126,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
          Task.setMsgTask(this.idTask, "Finalisation");
          this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-         this.jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
+         this.jeuDonneeDataBean.setStatusJeuDonnees(EStatus.DRAFT);
          try {
             this.jeuDonneesService.update(this.jeuDonneeDataBean);
          } catch (Exception ex) {
@@ -135,7 +135,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          }
       } catch (Throwable ex) {
          if (this.jeuDonneeDataBean != null) {
-            this.jeuDonneeDataBean.setStatusJeuDonnees(Status.IMPORT);
+            this.jeuDonneeDataBean.setStatusJeuDonnees(EStatus.IMPORT);
             this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
             this.jeuDonneesService.update(this.jeuDonneeDataBean);
          }
@@ -257,8 +257,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private void deleteDataWithStatusImportDraft() throws Exception {
       Task.setMsgTask(this.idTask, "Suppression des données temporaires");
       this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(this.compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
-      this.traitementDeleteJeuDonnee.addStatus(Status.IMPORT);
-      this.traitementDeleteJeuDonnee.addStatus(Status.DRAFT);
+      this.traitementDeleteJeuDonnee.addStatus(EStatus.IMPORT);
+      this.traitementDeleteJeuDonnee.addStatus(EStatus.DRAFT);
       this.traitementDeleteJeuDonnee.setIdTask(this.idTask);
 
       try {

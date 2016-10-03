@@ -53,7 +53,6 @@ public class JeuDonneesControlService extends AService implements Serializable {
     */
    public JeuDonneesControlEntity save(JeuDonneesControlEntity jeuDonneesControlEntity) {
       try {
-
          if (this.getEntityManager().isOpen()) {
             this.getEntityManager().getTransaction().begin();
             this.getEntityManager().persist(jeuDonneesControlEntity);
@@ -96,11 +95,17 @@ public class JeuDonneesControlService extends AService implements Serializable {
    public int deleteById(int idJeuDonneesControl) {
       int deleteEntity = 0;
       try {
-         deleteEntity = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_DELETE_BY_ID).setParameter("idJeuDonneesControl", idJeuDonneesControl).executeUpdate();
-      } catch (Exception e) {
-         throw e;
-      } finally {
+         this.getEntityManager().getTransaction().begin();
+         deleteEntity = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_DELETE_BY_ID)
+               .setParameter("idJeuDonneesControl", idJeuDonneesControl)
+               .executeUpdate();
+         this.getEntityManager().getTransaction().commit();
+         
          return deleteEntity;
+      } catch (Exception e) {
+         e.printStackTrace();
+         this.getEntityManager().getTransaction().rollback();
+         throw e;
       }
    }
 

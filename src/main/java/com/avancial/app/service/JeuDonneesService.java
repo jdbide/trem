@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
 import com.avancial.socle.resources.constants.SOCLE_constants;
 
@@ -116,7 +116,7 @@ public class JeuDonneesService implements Serializable {
     * @param statusJeuDonnees
     * @return jeu de données
     */
-   public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement, Status statusJeuDonnees) {
+   public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(CompagnieEnvironnementEntity compagnieEnvironnement, EStatus statusJeuDonnees) {
       EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString())
             .createEntityManager();
       TypedQuery<JeuDonneeEntity> query = em.createQuery(
@@ -147,30 +147,29 @@ public class JeuDonneesService implements Serializable {
     * @param list statusJeuDonnees
     * @return List<JeuDonneeEntity>
     */
-//   public List<JeuDonneeEntity> getJeuDonneeParIdCompagnieEtStatus(int idCompagnieEnvironnement, List<Status> statusJeuDonnees) {
-//      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
-//      
-//      TypedQuery<JeuDonneeEntity> query = em.createQuery(
-//            "SELECT t FROM JeuDonneeEntity t WHERE t.compagnieEnvironnement = :compagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees",
-//            JeuDonneeEntity.class);
-//      
-//      query.setParameter("compagnieEnvironnement", compagnieEnvironnement);
-//      query.setParameter("statusJeuDonnees", statusJeuDonnees);
-//
-//      JeuDonneeEntity jeuDonneeEntity = null;
-//
-//      try {
-//         if (!query.getResultList().isEmpty())
-//            jeuDonneeEntity = query.getSingleResult();
-//      } catch (Exception e) {
-//         e.printStackTrace();
-//         throw e;
-//      } finally {
-//         em.close();
-//      }
-//
-//      return jeuDonneeEntity;
-//   }
+   public List<JeuDonneeEntity> getJeuDonneeParIdCompagnieEtStatus(int idCompagnieEnvironnement, List<EStatus> statusJeuDonnees) {
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      
+      TypedQuery<JeuDonneeEntity> query = em.createQuery(
+            "SELECT t FROM JeuDonneeEntity t JOIN t.compagnieEnvironnement c WHERE c.idCompagnieEnvironnement = :idCompagnieEnvironnement AND t.statusJeuDonnees in :statusJeuDonnees",
+            JeuDonneeEntity.class);
+      
+      query.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
+      query.setParameter("statusJeuDonnees", statusJeuDonnees);
+
+      List<JeuDonneeEntity> res = null;
+
+      try {
+            res = query.getResultList();
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      } finally {
+         em.close();
+      }
+
+      return res;
+   }
    /**
     * Charge un jeu de données par son id.
     * 

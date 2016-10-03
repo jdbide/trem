@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneesControlEntity;
-import com.avancial.app.data.databean.StatusControl;
+import com.avancial.app.data.databean.EStatusControl;
 import com.avancial.app.data.dto.JeuDonneesControlDto;
 import com.avancial.app.service.JeuDonneesControlService;
 
@@ -118,8 +118,10 @@ public class JeuDonneesControlServiceDto {
       jeuDonneesControlEntity.setPathFileImportJeuDonneesControlYield(jeuDonneesControlDto.getPathFileImportJeuDonneesControlYield());
       jeuDonneesControlEntity.setPathFileReportJeuDonneesControl(jeuDonneesControlDto.getPathFileReportJeuDonneesControl());
       jeuDonneesControlEntity.setStatusJeuDonnees(jeuDonneesControlDto.getStatusJeuDonnees());
-      jeuDonneesControlEntity.setStatusJeuDonneesControl(jeuDonneesControlDto.getStatusJeuDonneesControl().equals(StatusControl.FINISHED.toString()) ? StatusControl.FINISHED : StatusControl.LOADING);
+      jeuDonneesControlEntity.setStatusJeuDonneesControl(jeuDonneesControlDto.getStatusJeuDonneesControl().equals(EStatusControl.FINISHED.toString()) ? EStatusControl.FINISHED : EStatusControl.LOADING);
       jeuDonneesControlEntity.setTitleJeuDonneesControl(jeuDonneesControlDto.getTitleJeuDonneesControl());
+      if (jeuDonneesControlDto.getIdJeuDonnees()>0)
+         jeuDonneesControlEntity.setIdJeuDonneesControl(jeuDonneesControlDto.getIdJeuDonneesControl());
 
       return jeuDonneesControlEntity;
    }

@@ -41,7 +41,7 @@ public class UserDao extends AbstractDao {
 
    public UserDataBean getUserById(Long idUser) {
        Query query = this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID, UserDataBean.class);
-       query.setParameter("idUser", idUser);
+       query.setParameter("id", idUser);
        UserDataBean res = null;
 
        try {
