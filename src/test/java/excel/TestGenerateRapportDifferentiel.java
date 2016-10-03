@@ -2,7 +2,9 @@ package excel;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 import com.avancial.app.export.ExcelRapportDifferentiel;
+import com.avancial.app.export.control.ExcelRapportControle;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.utilitaire.FileUtil;
@@ -31,5 +33,24 @@ public class TestGenerateRapportDifferentiel {
          e.printStackTrace();
       }
 
+   }
+
+   @Test
+   public void testGenerationRapportControle() {
+      try {
+         ExcelRapportControle rapportControle = new ExcelRapportControle(true);
+         MapPlansDeTransport mapPlansDeTransport = PlanTransportFactory.createDataForCompareTrancheSplit();
+         IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
+         rapportControle
+               .setDatas(comparePlanTransport.compare(mapPlansDeTransport.getPlanTransportActive(), mapPlansDeTransport.getPlanTransportDraft()));
+         rapportControle.setMapPlansDeTransport(mapPlansDeTransport);
+
+         rapportControle.setFileName("testGenerationRapportControle");
+         rapportControle.setFilePath("D:/was_tmp/tremas/export/");
+         rapportControle.generate();
+         Assert.assertTrue(FileUtil.existFile("D:/was_tmp/tremas/export/testGenerationRapportControle.xlsx"));
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
    }
 }
