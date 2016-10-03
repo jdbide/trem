@@ -7,6 +7,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.CompareTranche;
@@ -79,8 +80,8 @@ public class CompareTrainModify extends AChaineComparePlanTransport {
         resTrain.putAll(comparePlanTransport.compare(trancheAncien, trancheNouveau));
         logger.info("Fin comparaison Tranches : " + trancheAncien.getNumeroTranche());
 
-        for (List<ComparaisonDifferentielPlanTransport<IPlanTransport>> listComparaison : resTrain.values()) {
-            for (ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport : listComparaison) {
+        for (List<AComparaisonPlanTransport<IPlanTransport>> listComparaison : resTrain.values()) {
+            for (AComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport : listComparaison) {
                 comparaisonPlanTransport.setNumeroTrain(train.getNumeroTrain());
             }
         }
