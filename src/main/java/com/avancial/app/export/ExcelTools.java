@@ -4,9 +4,7 @@
 package com.avancial.app.export;
 
 import java.awt.Color;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -27,72 +25,77 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
  *
  */
 public class ExcelTools {
-   private Workbook       classeur                   = null;
-   private Sheet          sheet;
+   private Workbook                    classeur                   = null;
+   private Sheet                       sheet;
 
    /**
     * Itérateur sur les lignes dans la feuille Excel courante
     */
-   private Iterator<Row>  rowIterator;
+   private Iterator<Row>               rowIterator;
    /**
     * Ligne en cours de lecture/écriture
     */
-   private Row            ligneSheet;
+   private Row                         ligneSheet;
    /**
     * Itérateur sur les cellules dans la ligne courante
     */
-   private Iterator<Cell> cellIterator;
+   private Iterator<Cell>              cellIterator;
    /**
     * Cellule en cours de lecture/écriture
     */
-   private Cell           cell;
+   private Cell                        cell;
 
-   public XSSFCellStyle   styleNombre                = null;
-   public XSSFCellStyle   styleNombreUnLock          = null;
-   public XSSFCellStyle   styleNombreHide            = null;
-   public XSSFCellStyle   styleNombreStandard        = null;
-   public XSSFCellStyle   styleNombreStandardUnLock  = null;
-   public XSSFCellStyle   styleEnteteGris            = null;
-   public XSSFCellStyle   styleEnteteJaune           = null;
-   public XSSFCellStyle   styleTexte                 = null;
-   public XSSFCellStyle   stylePourcent              = null;
-   public XSSFCellStyle   stylePourcentOk            = null;
-   public XSSFCellStyle   stylePourcentKo            = null;
-   public XSSFCellStyle   styleTexteLock             = null;
-   public XSSFCellStyle   styleTexteUnLock           = null;
-   public XSSFCellStyle   styleCellVideWithMergin    = null;
-   public XSSFCellStyle   styleNombreStandardLock    = null;
-   public XSSFCellStyle   styleTitre                 = null;
-   public XSSFCellStyle   styleSousTitre             = null;
-   public XSSFCellStyle   styleHide                  = null;
-   public XSSFCellStyle   styleWarning               = null;
-   public XSSFCellStyle   styleBorder                = null;
-   public XSSFCellStyle   styleBorderNotRight        = null;
-   public XSSFCellStyle   styleBorderNotLeft         = null;
-   public XSSFCellStyle   styleBorderNotLeftNotRight = null;
+   private ExcelCellStyleColorFactory  excelCellStyleColorFactory;
+   private ExcelCellStyleBorderFactory excelCellStyleBorderFactory;
 
-   public Font            fontCellVideWithMergin     = null;
-   public Font            fontEntete                 = null;
-   public Font            fontNombre                 = null;
-   public Font            fontNombreOk               = null;
-   public Font            fontNombreKo               = null;
-   public Font            fontTexte                  = null;
-   public Font            fontTitre                  = null;
-   public Font            fontSousTitre              = null;
-   public Font            fontHide                   = null;
-   public Font            fontWarning                = null;
+   public XSSFCellStyle                styleNombre                = null;
+   public XSSFCellStyle                styleNombreUnLock          = null;
+   public XSSFCellStyle                styleNombreHide            = null;
+   public XSSFCellStyle                styleNombreStandard        = null;
+   public XSSFCellStyle                styleNombreStandardUnLock  = null;
+   public XSSFCellStyle                styleEnteteGris            = null;
+   public XSSFCellStyle                styleEnteteJaune           = null;
+   public XSSFCellStyle                styleTexte                 = null;
+   public XSSFCellStyle                stylePourcent              = null;
+   public XSSFCellStyle                stylePourcentOk            = null;
+   public XSSFCellStyle                stylePourcentKo            = null;
+   public XSSFCellStyle                styleTexteLock             = null;
+   public XSSFCellStyle                styleTexteUnLock           = null;
+   public XSSFCellStyle                styleCellVideWithMergin    = null;
+   public XSSFCellStyle                styleNombreStandardLock    = null;
+   public XSSFCellStyle                styleTitre                 = null;
+   public XSSFCellStyle                styleSousTitre             = null;
+   public XSSFCellStyle                styleHide                  = null;
+   public XSSFCellStyle                styleWarning               = null;
+   public XSSFCellStyle                styleBorder                = null;
+   public XSSFCellStyle                styleBorderNotRight        = null;
+   public XSSFCellStyle                styleBorderNotLeft         = null;
+   public XSSFCellStyle                styleBorderNotLeftNotRight = null;
 
-   public Color           couleurVert                = new Color(216, 228, 188);
-   public Color           couleurRosePale            = new Color(242, 220, 219);
-   public Color           couleurRoseFonce           = new Color(255, 204, 204);
-   public Color           couleurVioletPale          = new Color(228, 223, 236);
-   public Color           couleurVioletFonce         = new Color(217, 210, 228);
-   public Color           couleurGris                = new Color(217, 217, 217);
-   public Color           couleurBleu                = new Color(220, 230, 241);
-   public Color           couleurRouge               = new Color(242, 220, 219);
-   public Color           couleurMarron              = new Color(238, 236, 225);
-   public Color           couleurJaune               = new Color(255, 255, 204);
-   public Color           couleurBlanc               = new Color(255, 255, 255);
+   public Font                         fontCellVideWithMergin     = null;
+   public Font                         fontEntete                 = null;
+   public Font                         fontNombre                 = null;
+   public Font                         fontNombreOk               = null;
+   public Font                         fontNombreKo               = null;
+   public Font                         fontTexte                  = null;
+   public Font                         fontTitre                  = null;
+   public Font                         fontSousTitre              = null;
+   public Font                         fontHide                   = null;
+   public Font                         fontWarning                = null;
+
+   public Color                        couleurVert                = new Color(216, 228, 188);
+   public Color                        couleurRosePale            = new Color(242, 220, 219);
+   public Color                        couleurRoseFonce           = new Color(255, 204, 204);
+   public Color                        couleurVioletPale          = new Color(228, 223, 236);
+   public Color                        couleurVioletFonce         = new Color(217, 210, 228);
+   public Color                        couleurGris                = new Color(217, 217, 217);
+   public Color                        couleurBleu                = new Color(220, 230, 241);
+   public Color                        couleurRouge               = new Color(242, 220, 219);
+   public Color                        couleurMarron              = new Color(238, 236, 225);
+   public Color                        couleurJaune               = new Color(255, 255, 204);
+   public Color                        couleurBlanc               = new Color(255, 255, 255);
+   public Color                        couleurRougeControle       = new Color(230, 184, 183);
+   public Color                        couleurVertControle        = new Color(196, 215, 155);
 
    /**
     * Constructeur sans arguments
@@ -107,7 +110,7 @@ public class ExcelTools {
     * @param classeur
     */
    public ExcelTools(Workbook classeur) {
-      this.classeur = classeur;
+      this.initWorkbook(classeur);
       this.init();
    }
 
@@ -118,7 +121,7 @@ public class ExcelTools {
     * @param sheet
     */
    public ExcelTools(Workbook classeur, Sheet sheet) {
-      this.classeur = classeur;
+      this.initWorkbook(classeur);
       this.sheet = sheet;
       this.init();
    }
@@ -130,13 +133,19 @@ public class ExcelTools {
     * @param nameSheet
     */
    public ExcelTools(Workbook classeur, String nameSheet) {
-      this.classeur = classeur;
+      this.initWorkbook(classeur);
       this.sheet = this.classeur.createSheet(nameSheet);
       this.init();
    }
 
    private void init() {
       this.initStyle();
+   }
+
+   private void initWorkbook(Workbook classeur) {
+      this.classeur = classeur;
+      this.excelCellStyleColorFactory = new ExcelCellStyleColorFactory(getclasseur());
+      this.excelCellStyleBorderFactory = new ExcelCellStyleBorderFactory(getclasseur());
    }
 
    /**
@@ -332,8 +341,10 @@ public class ExcelTools {
     * @param valueSelected
     */
    /*
-    * public void createCellDropDown(int firstRow, int lastRow, int firstCol, int lastCol, String[] explicitListValues) { CellRangeAddressList addressList = new CellRangeAddressList(firstRow, lastRow, firstCol, lastCol); DVConstraint dvConstraint =
-    * DVConstraint.createExplicitListConstraint(explicitListValues); DataValidation dataValidation = new DataValidation(addressList, dvConstraint); dataValidation.setSuppressDropDownArrow(false); this.sheet.addValidationData(dataValidation); }
+    * public void createCellDropDown(int firstRow, int lastRow, int firstCol, int lastCol, String[] explicitListValues) { CellRangeAddressList
+    * addressList = new CellRangeAddressList(firstRow, lastRow, firstCol, lastCol); DVConstraint dvConstraint =
+    * DVConstraint.createExplicitListConstraint(explicitListValues); DataValidation dataValidation = new DataValidation(addressList, dvConstraint);
+    * dataValidation.setSuppressDropDownArrow(false); this.sheet.addValidationData(dataValidation); }
     */
 
    /**
@@ -351,9 +362,12 @@ public class ExcelTools {
     * @param nameCol
     */
    /*
-    * public void createCellTextelimitSize(final int colonne, final String sizeMin, final String sizeMax, String nameCol) { CellRangeAddressList addressList = new CellRangeAddressList(this.ligneSheet.getRowNum(), this.ligneSheet.getRowNum(), colonne, colonne); DVConstraint dvConstraint =
-    * DVConstraint.createNumericConstraint(DataValidationConstraint. ValidationType.TEXT_LENGTH, DataValidationConstraint.OperatorType.BETWEEN, sizeMin, sizeMax); DataValidation dataValidation = new DataValidation(addressList, dvConstraint); dataValidation.setShowErrorBox(true);
-    * dataValidation.createErrorBox("Impec : " + nameCol, "Le nombre de caractères de la cellule est compris entre " + sizeMin + " et " + sizeMax); this.sheet.addValidationData(dataValidation); }
+    * public void createCellTextelimitSize(final int colonne, final String sizeMin, final String sizeMax, String nameCol) { CellRangeAddressList
+    * addressList = new CellRangeAddressList(this.ligneSheet.getRowNum(), this.ligneSheet.getRowNum(), colonne, colonne); DVConstraint dvConstraint =
+    * DVConstraint.createNumericConstraint(DataValidationConstraint. ValidationType.TEXT_LENGTH, DataValidationConstraint.OperatorType.BETWEEN,
+    * sizeMin, sizeMax); DataValidation dataValidation = new DataValidation(addressList, dvConstraint); dataValidation.setShowErrorBox(true);
+    * dataValidation.createErrorBox("Impec : " + nameCol, "Le nombre de caractères de la cellule est compris entre " + sizeMin + " et " + sizeMax);
+    * this.sheet.addValidationData(dataValidation); }
     */
 
    /**
@@ -785,7 +799,8 @@ public class ExcelTools {
    }
 
    /**
-    * Règler la largeur de la colonne pour adapter le contenu.<\br> Ce processus peut être relativement lente sur de grandes feuilles , donc cela ne devrait normalement être appelé une fois par colonne , à la fin de votre traitement.<\br>
+    * Règler la largeur de la colonne pour adapter le contenu.<\br> Ce processus peut être relativement lente sur de grandes feuilles , donc cela ne
+    * devrait normalement être appelé une fois par colonne , à la fin de votre traitement.<\br>
     * 
     * @param column
     */
@@ -952,9 +967,11 @@ public class ExcelTools {
       /*
        * this.fontCellVideWithMergin = this.classeur.createFont(); this.fontCellVideWithMergin.setFontHeightInPoints((short)(8));
        * 
-       * this.styleCellVideWithMergin = this.classeur.createCellStyle(); this.styleCellVideWithMergin.setAlignment(CellStyle.ALIGN_RIGHT); this.styleCellVideWithMergin.setFont(this.fontCellVideWithMergin);
+       * this.styleCellVideWithMergin = this.classeur.createCellStyle(); this.styleCellVideWithMergin.setAlignment(CellStyle.ALIGN_RIGHT);
+       * this.styleCellVideWithMergin.setFont(this.fontCellVideWithMergin);
        * 
-       * this.styleNombreStandard.setBorderBottom(CellStyle.BORDER_THIN); this.styleNombreStandard.setBorderLeft(CellStyle.BORDER_THIN); this.styleNombreStandard.setBorderRight(CellStyle.BORDER_THIN); this.styleNombreStandard.setBorderTop(CellStyle.BORDER_THIN);
+       * this.styleNombreStandard.setBorderBottom(CellStyle.BORDER_THIN); this.styleNombreStandard.setBorderLeft(CellStyle.BORDER_THIN);
+       * this.styleNombreStandard.setBorderRight(CellStyle.BORDER_THIN); this.styleNombreStandard.setBorderTop(CellStyle.BORDER_THIN);
        * this.styleNombreStandard.setLocked(true);
        */
 
@@ -1096,6 +1113,8 @@ public class ExcelTools {
          this.styleBorder.setBorderTop(CellStyle.BORDER_THIN);
          this.styleBorder.setVerticalAlignment(CellStyle.VERTICAL_TOP);
          this.styleBorder.setAlignment(CellStyle.ALIGN_LEFT);
+         this.styleBorder.setFillForegroundColor(new XSSFColor(this.couleurBlanc));
+         this.styleBorder.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
 
          this.styleBorderNotRight = (XSSFCellStyle) this.classeur.createCellStyle();
          this.styleBorderNotRight.setBorderBottom(CellStyle.BORDER_THIN);
@@ -1104,8 +1123,8 @@ public class ExcelTools {
          this.styleBorderNotRight.setBorderTop(CellStyle.BORDER_THIN);
          this.styleBorderNotRight.setVerticalAlignment(CellStyle.VERTICAL_TOP);
          this.styleBorderNotRight.setAlignment(CellStyle.ALIGN_LEFT);
-         this.styleBorder.setFillForegroundColor(new XSSFColor(this.couleurBlanc));
-         this.styleBorder.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
+         this.styleBorderNotRight.setFillForegroundColor(new XSSFColor(this.couleurBlanc));
+         this.styleBorderNotRight.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
 
          this.styleBorderNotLeft = (XSSFCellStyle) this.classeur.createCellStyle();
          this.styleBorderNotLeft.setBorderBottom(CellStyle.BORDER_THIN);
@@ -1184,65 +1203,11 @@ public class ExcelTools {
       this.cell.setCellValue(value);
    }
 
-   /**
-    * Classe composée d'un style et d'une couleur, utilisée comme clé dans la map mapStyleColor.<br>
-    * Pour cette clé, on compare les styles uniquement sur la base des valeurs de leurs attributs BorderLeft et BorderRight.
-    * 
-    * @author heloise.guillemaud
-    *
-    */
-   private class CellStyleColor {
-      private CellStyle cellStyle;
-      private Color     color;
-
-      public CellStyleColor(CellStyle cellStyle, Color color) {
-         super();
-         this.cellStyle = cellStyle;
-         this.color = color;
-      }
-
-      @Override
-      public boolean equals(Object obj) {
-         CellStyleColor cellStyleColor = (CellStyleColor) obj;
-         return cellStyleColor.cellStyle.getBorderLeft() == this.cellStyle.getBorderLeft()
-               && cellStyleColor.cellStyle.getBorderRight() == this.cellStyle.getBorderRight()
-               && cellStyleColor.color.getBlue() == this.color.getBlue() && cellStyleColor.color.getGreen() == this.color.getGreen()
-               && cellStyleColor.color.getRed() == this.color.getRed();
-      }
-
-      @Override
-      public int hashCode() {
-         final int prime = 31;
-         int result = 1;
-         result = prime * result + (this.cellStyle == null ? 0 : this.cellStyle.hashCode());
-         result = prime * result + (this.color == null ? 0 : this.color.hashCode());
-         return result;
-      }
-
+   public XSSFCellStyle addColor(CellStyle sourceStyle, Color c) {
+      return this.excelCellStyleColorFactory.addColor(sourceStyle, c);
    }
 
-   /**
-    * Map référençant des styles associés à une couleur de fond
-    */
-   private Map<CellStyleColor, XSSFCellStyle> mapStyleColor = new HashMap<>();
-
-   /**
-    * Ajoute une couleur de fond au style passé en paramètre. On cherche d'abord ce style dans la map mapStyleColor, et s'il n'y est pas, le style est cloné et on lui ajoute la couleur, puis on l'ajoute à la map. Cela empêche de devoir re-créer un style à chaque fois qu'on en a besoin.
-    * 
-    * @param sourceStyle
-    * @param c
-    * @return
-    */
-   public XSSFCellStyle addColor(CellStyle sourceStyle, Color c) {
-      CellStyleColor cle = new CellStyleColor(sourceStyle, c);
-      XSSFCellStyle res = this.mapStyleColor.get(cle);
-      if (res == null) {
-         res = (XSSFCellStyle) this.classeur.createCellStyle();
-         res.cloneStyleFrom(sourceStyle);
-         res.setFillForegroundColor(new XSSFColor(c));
-         res.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
-         this.mapStyleColor.put(cle, res);
-      }
-      return res;
+   public XSSFCellStyle setBorders(CellStyle sourceStyle, short borderTop, short borderBottom, short borderLeft, short borderRight) {
+      return this.excelCellStyleBorderFactory.setBorders(sourceStyle, borderTop, borderBottom, borderLeft, borderRight);
    }
 }

@@ -30,7 +30,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tosp;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.export.generateColonneNew.GenerateExcelColonneNewFactory;
@@ -42,7 +42,7 @@ import com.avancial.app.utilitaire.MapPlansDeTransport;
  * @author hamza.laterem
  *
  */
-public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferentielSheet {
+public class ExcelRapportDifferentielSheetNew implements IExcelRapportComparaisonPlanTransportSheet {
 
    private static Logger                  logger                         = Logger.getLogger(ExcelRapportDifferentielSheetNew.class);
 
@@ -134,7 +134,7 @@ public class ExcelRapportDifferentielSheetNew implements IExcelRapportDifferenti
       int cntTraiTranche = 1;
 
       for (IComparaisonPlanTransport comparaison : mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.NEW, null)) {
-         ComparaisonPlanTransport<IPlanTransport> data = ((ComparaisonPlanTransport<IPlanTransport>) comparaison);
+         ComparaisonDifferentielPlanTransport<IPlanTransport> data = ((ComparaisonDifferentielPlanTransport<IPlanTransport>) comparaison);
 
          Train currentTrain = mapPlansDeTransport.get(EStatus.DRAFT).getPlanTransport().getTrainByNumeroTrain(data.getNumeroTrain());
          Tranche currentTranche = currentTrain.getTrancheByNumeroTrancheAndStatusAndRegime(data.getNumeroTranche(), data.getStatutTranche(),
