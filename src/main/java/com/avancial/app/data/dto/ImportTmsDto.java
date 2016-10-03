@@ -81,8 +81,8 @@ public class ImportTmsDto implements Serializable {
 	@JsonIgnore
 	public void mergeByCompagnieEnvironnement(CompagnieEnvironnementEntity compagnieEnvironnementEntity) {
 		this.setIdCompagnieEnvironnement(compagnieEnvironnementEntity.getIdCompagnieEnvironnement());
-		this.setLibelleCompagnie(compagnieEnvironnementEntity.getLibelleCompagnie());
-		this.setLibelleEnvironnement(compagnieEnvironnementEntity.getLibelleEnvironnement());
+		this.setLibelleCompagnie(compagnieEnvironnementEntity.getCompagnie().getLibelleCompagnie());
+		this.setLibelleEnvironnement(compagnieEnvironnementEntity.getEnvironnement().getLibelleEnvironnement());
 		this.setNomTechniqueCompagnieEnvironnement(compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
 	}
 
