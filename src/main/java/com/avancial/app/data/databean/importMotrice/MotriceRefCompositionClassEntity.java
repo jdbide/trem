@@ -5,8 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
 @Table(name = "tremas_motrice_ref_compositionclass")
@@ -15,38 +19,36 @@ public class MotriceRefCompositionClassEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idMotriceRefCompositionClass;
+   private Long            idMotriceRefCompositionClass;
    @Column(length = 1, nullable = false)
-   private String labelCompositionClass;
+   private String          labelCompositionClass;
 
-   /**
-    * @return the idMotriceRefCodeDiagramme
-    */
-   public Long getIdMotriceRefCodeDiagramme() {
-      return idMotriceRefCompositionClass;
+   @ManyToOne
+   @JoinColumn(name = "idCompagnie")
+   private CompagnieEntity compagnie;
+
+   public Long getIdMotriceRefCompositionClass() {
+      return this.idMotriceRefCompositionClass;
    }
 
-   /**
-    * @param idMotriceRefCodeDiagramme
-    *           the idMotriceRefCodeDiagramme to set
-    */
-   public void setIdMotriceRefCodeDiagramme(Long idMotriceRefCodeDiagramme) {
-      this.idMotriceRefCompositionClass = idMotriceRefCodeDiagramme;
+   public void setIdMotriceRefCompositionClass(Long idMotriceRefCompositionClass) {
+      this.idMotriceRefCompositionClass = idMotriceRefCompositionClass;
    }
 
-   /**
-    * @return the labelCodeDiagramme
-    */
-   public String getLabelCodeDiagramme() {
-      return labelCompositionClass;
+   public String getLabelCompositionClass() {
+      return this.labelCompositionClass;
    }
 
-   /**
-    * @param labelCodeDiagramme
-    *           the labelCodeDiagramme to set
-    */
-   public void setLabelCodeDiagramme(String labelCodeDiagramme) {
-      this.labelCompositionClass = labelCodeDiagramme;
+   public void setLabelCompositionClass(String labelCompositionClass) {
+      this.labelCompositionClass = labelCompositionClass;
+   }
+
+   public CompagnieEntity getCompagnie() {
+      return this.compagnie;
+   }
+
+   public void setCompagnie(CompagnieEntity compagnie) {
+      this.compagnie = compagnie;
    }
 
 }

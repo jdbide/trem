@@ -5,8 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
 @Table(name = "tremas_motrice_ref_mealtype")
@@ -15,38 +19,48 @@ public class MotriceRefMealTypeEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idMotriceRefMealType;
+   private Long            idMotriceRefMealType;
+
    @Column(length = 1, nullable = false)
-   private String labelMealType;
+   private String          codeMealType;
 
-   /**
-    * @return the idMotriceRefCodeDiagramme
-    */
-   public Long getIdMotriceRefCodeDiagramme() {
-      return idMotriceRefMealType;
+   @Column(length = 50, nullable = false)
+   private String          labelMealType;
+
+   @ManyToOne
+   @JoinColumn(name = "idCompagnie")
+   private CompagnieEntity compagnie;
+
+   public Long getIdMotriceRefMealType() {
+      return this.idMotriceRefMealType;
    }
 
-   /**
-    * @param idMotriceRefCodeDiagramme
-    *           the idMotriceRefCodeDiagramme to set
-    */
-   public void setIdMotriceRefCodeDiagramme(Long idMotriceRefCodeDiagramme) {
-      this.idMotriceRefMealType = idMotriceRefCodeDiagramme;
+   public void setIdMotriceRefMealType(Long idMotriceRefMealType) {
+      this.idMotriceRefMealType = idMotriceRefMealType;
    }
 
-   /**
-    * @return the labelCodeDiagramme
-    */
-   public String getLabelCodeDiagramme() {
-      return labelMealType;
+   public String getCodeMealType() {
+      return this.codeMealType;
    }
 
-   /**
-    * @param labelCodeDiagramme
-    *           the labelCodeDiagramme to set
-    */
-   public void setLabelCodeDiagramme(String labelCodeDiagramme) {
-      this.labelMealType = labelCodeDiagramme;
+   public void setCodeMealType(String codeMealType) {
+      this.codeMealType = codeMealType;
+   }
+
+   public String getLabelMealType() {
+      return this.labelMealType;
+   }
+
+   public void setLabelMealType(String labelMealType) {
+      this.labelMealType = labelMealType;
+   }
+
+   public CompagnieEntity getCompagnie() {
+      return this.compagnie;
+   }
+
+   public void setCompagnie(CompagnieEntity compagnie) {
+      this.compagnie = compagnie;
    }
 
 }

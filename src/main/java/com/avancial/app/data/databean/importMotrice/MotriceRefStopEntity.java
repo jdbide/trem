@@ -19,34 +19,20 @@ public class MotriceRefStopEntity {
    @Column(length = 5, nullable = false)
    private String labelStop;
 
-   /**
-    * @return the idMotriceRefCodeDiagramme
-    */
-   public Long getIdMotriceRefCodeDiagramme() {
-      return idMotriceRefStop;
+   public Long getIdMotriceRefStop() {
+      return this.idMotriceRefStop;
    }
 
-   /**
-    * @param idMotriceRefCodeDiagramme
-    *           the idMotriceRefCodeDiagramme to set
-    */
-   public void setIdMotriceRefCodeDiagramme(Long idMotriceRefCodeDiagramme) {
-      this.idMotriceRefStop = idMotriceRefCodeDiagramme;
+   public void setIdMotriceRefStop(Long idMotriceRefStop) {
+      this.idMotriceRefStop = idMotriceRefStop;
    }
 
-   /**
-    * @return the labelCodeDiagramme
-    */
-   public String getLabelCodeDiagramme() {
-      return labelStop;
+   public String getLabelStop() {
+      return this.labelStop;
    }
 
-   /**
-    * @param labelCodeDiagramme
-    *           the labelCodeDiagramme to set
-    */
-   public void setLabelCodeDiagramme(String labelCodeDiagramme) {
-      this.labelStop = labelCodeDiagramme;
+   public void setLabelStop(String labelStop) {
+      this.labelStop = labelStop;
    }
 
 }

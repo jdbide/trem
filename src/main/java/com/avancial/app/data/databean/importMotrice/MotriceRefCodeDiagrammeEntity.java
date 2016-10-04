@@ -5,19 +5,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.avancial.app.data.databean.CompagnieEntity;
+
 @Entity
 @Table(name = "tremas_motrice_ref_codediagramme")
-@NamedQuery(name = "MotriceRefCodeDiagramme.getAll", query = "SELECT t FROM MotriceRefCodeDiagrammeEntity t")
+@NamedQueries({ @NamedQuery(name = "MotriceRefCodeDiagramme.getAll", query = "SELECT t FROM MotriceRefCodeDiagrammeEntity t"),
+      @NamedQuery(name = "MotriceRefCodeDiagramme.getUnique", query = "SELECT t FROM MotriceRefCodeDiagrammeEntity t where t.labelCodeDiagramme = :labelCodeDiagramme"), })
 public class MotriceRefCodeDiagrammeEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idMotriceRefCodeDiagramme;
+   private Long            idMotriceRefCodeDiagramme;
    @Column(length = 3, nullable = false)
-   private String labelCodeDiagramme;
+   private String          labelCodeDiagramme;
+
+   @ManyToOne
+   @JoinColumn(name = "idCompagnie")
+   private CompagnieEntity compagnie;
 
    /**
     * @return the idMotriceRefCodeDiagramme
@@ -47,6 +57,14 @@ public class MotriceRefCodeDiagrammeEntity {
     */
    public void setLabelCodeDiagramme(String labelCodeDiagramme) {
       this.labelCodeDiagramme = labelCodeDiagramme;
+   }
+
+   public CompagnieEntity getCompagnie() {
+      return this.compagnie;
+   }
+
+   public void setCompagnie(CompagnieEntity compagnie) {
+      this.compagnie = compagnie;
    }
 
 }

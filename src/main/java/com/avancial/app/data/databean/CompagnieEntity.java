@@ -1,25 +1,26 @@
 package com.avancial.app.data.databean;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_compagnie")
-public class CompagnieEntity implements Serializable {
-   private static final long serialVersionUID = 1L;
+@NamedQueries({ @NamedQuery(name = "Compagnie.findAll", query = "SELECT t FROM CompagnieEntity t"),
+      @NamedQuery(name = "Compagnie.findById", query = "SELECT t FROM CompagnieEntity t where t.idCompagnie = :idCompagnie"), })
+public class CompagnieEntity {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int               idCompagnie;
+   private int    idCompagnie;
 
-   private String            libelleCompagnie;
+   private String libelleCompagnie;
 
-   private String            nomTechniqueCompagnie;
+   private String nomTechniqueCompagnie;
 
    public int getIdCompagnie() {
       return this.idCompagnie;

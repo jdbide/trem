@@ -5,8 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
 @Table(name = "tremas_motrice_ref_fareprofilecode")
@@ -15,38 +19,36 @@ public class MotriceRefFareProfileCodeEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idMotriceRefFareProfileCode;
+   private Long            idMotriceRefFareProfileCode;
    @Column(length = 3, nullable = false)
-   private String labelFareProfileCode;
+   private String          labelFareProfileCode;
 
-   /**
-    * @return the idMotriceRefCodeDiagramme
-    */
-   public Long getIdMotriceRefCodeDiagramme() {
-      return idMotriceRefFareProfileCode;
+   @ManyToOne
+   @JoinColumn(name = "idCompagnie")
+   private CompagnieEntity compagnie;
+
+   public Long getIdMotriceRefFareProfileCode() {
+      return this.idMotriceRefFareProfileCode;
    }
 
-   /**
-    * @param idMotriceRefCodeDiagramme
-    *           the idMotriceRefCodeDiagramme to set
-    */
-   public void setIdMotriceRefCodeDiagramme(Long idMotriceRefCodeDiagramme) {
-      this.idMotriceRefFareProfileCode = idMotriceRefCodeDiagramme;
+   public void setIdMotriceRefFareProfileCode(Long idMotriceRefFareProfileCode) {
+      this.idMotriceRefFareProfileCode = idMotriceRefFareProfileCode;
    }
 
-   /**
-    * @return the labelCodeDiagramme
-    */
-   public String getLabelCodeDiagramme() {
-      return labelFareProfileCode;
+   public String getLabelFareProfileCode() {
+      return this.labelFareProfileCode;
    }
 
-   /**
-    * @param labelCodeDiagramme
-    *           the labelCodeDiagramme to set
-    */
-   public void setLabelCodeDiagramme(String labelCodeDiagramme) {
-      this.labelFareProfileCode = labelCodeDiagramme;
+   public void setLabelFareProfileCode(String labelFareProfileCode) {
+      this.labelFareProfileCode = labelFareProfileCode;
+   }
+
+   public CompagnieEntity getCompagnie() {
+      return this.compagnie;
+   }
+
+   public void setCompagnie(CompagnieEntity compagnie) {
+      this.compagnie = compagnie;
    }
 
 }
