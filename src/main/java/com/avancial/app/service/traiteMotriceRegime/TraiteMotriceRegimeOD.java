@@ -9,6 +9,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -18,6 +20,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -56,6 +59,8 @@ public class TraiteMotriceRegimeOD extends AFiltreObjetMetier implements ITraite
       }
 
       Regime newRegime = null;
+      MotriceRefODEntity refODEntity;
+      MotriceRefGareEntity refGareEntity;
       for (Object[] record : rEqpType) {
          if (!regime.equals((String) record[2])) {
             newRegime = new Regime((String) record[2], debutPeriode);
@@ -69,6 +74,21 @@ public class TraiteMotriceRegimeOD extends AFiltreObjetMetier implements ITraite
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          regime = (String) record[2];
+
+         /* Données de référence */
+         refGareEntity = new MotriceRefGareEntity();
+         refGareEntity.setCodeGareMotriceRefGare((String) record[0]);
+         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refGareEntity, entityManager);
+         refGareEntity = new MotriceRefGareEntity();
+         refGareEntity.setCodeGareMotriceRefGare((String) record[1]);
+         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refGareEntity, entityManager);
+         refODEntity = new MotriceRefODEntity();
+         refODEntity.setCodeGareOrigineMotriceRefOd((String) record[0]);
+         refODEntity.setCodeGareDestinationMotriceRefOd((String) record[1]);
+         refODEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refODEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeOD);
    }

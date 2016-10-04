@@ -11,6 +11,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefCodeDiagrammeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefCompositionClassEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefRameCodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
@@ -20,6 +23,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -61,6 +65,9 @@ public class TraiteMotriceRegimeComposition extends AFiltreObjetMetier implement
       Map<String, String> rameCodes = new HashMap<>();
       List<Voiture> voitures = new ArrayList<>();
       Regime newRegime = null;
+      MotriceRefCompositionClassEntity refCompositionClassEntity;
+      MotriceRefCodeDiagrammeEntity refCodeDiagrammeEntity;
+      MotriceRefRameCodeEntity rameCodeEntity;
       for (Object[] compo : listeCompo) {
 
          if (!oldRegime.equals(compo[4])) {
@@ -106,6 +113,20 @@ public class TraiteMotriceRegimeComposition extends AFiltreObjetMetier implement
          voitures.add(new Voiture((String) compo[3], null));
 
          rameCodes.put(((String) compo[3]).equals("0") ? "RC1" : "RC2", (String) compo[2]);
+
+         /* Données de référence */
+         refCompositionClassEntity = new MotriceRefCompositionClassEntity();
+         refCompositionClassEntity.setLabelCompositionClass((String) compo[0]);
+         refCompositionClassEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refCompositionClassEntity, entityManager);
+         refCodeDiagrammeEntity = new MotriceRefCodeDiagrammeEntity();
+         refCodeDiagrammeEntity.setLabelCodeDiagramme((String) compo[1]);
+         refCodeDiagrammeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refCodeDiagrammeEntity, entityManager);
+         rameCodeEntity = new MotriceRefRameCodeEntity();
+         rameCodeEntity.setLabelRameCode((String) compo[2]);
+         rameCodeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(rameCodeEntity, entityManager);
       }
 
       /* Insertion des Composition du dernier Regime */

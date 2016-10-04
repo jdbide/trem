@@ -19,19 +19,22 @@ public class InsertRefDataService {
          try {
             em.getTransaction().begin();
             em.persist(entity);
+            em.flush();
             em.getTransaction().commit();
             logger.info("Entité de référence de classe " + entity.getClass().getSimpleName() + " sauvegardée en base.");
          } catch (PersistenceException e) {
             em.getTransaction().rollback();
             if (e.getCause().getClass().equals(ConstraintViolationException.class)) {
-               logger.info("L'entité de référence à sauvegarder, de classe " + entity.getClass().getSimpleName() + ", est déjà présente en base.");
+               logger.warn("L'entité de référence à sauvegarder, de classe " + entity.getClass().getSimpleName() + ", est déjà présente en base.");
             } else {
+               logger.warn("Erreur lors de la sauvegarde d'une entité de référence de classe " + entity.getClass().getSimpleName());
                throw e;
             }
          }
-      } else {
-         /* La requête a retourné un résultat; la donnée de référence existe déjà en base */
-         logger.info("L'entité de référence à sauvegarder, de classe " + entity.getClass().getSimpleName() + ", est déjà présente en base.");
-      }
+      } 
+//         else {
+//         /* La requête a retourné un résultat; la donnée de référence existe déjà en base */
+//         logger.info("L'entité de référence à sauvegarder, de classe " + entity.getClass().getSimpleName() + ", est déjà présente en base.");
+//      }
    }
 }

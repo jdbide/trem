@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefMealTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeMealTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -20,6 +21,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -60,6 +62,7 @@ public class TraiteMotriceRegimeMealType extends AFiltreObjetMetier implements I
       }
 
       Regime newRegime = null;
+      MotriceRefMealTypeEntity refMealTypeEntity;
       for (Object[] record : rDistribution) {
          if (!regime.equals((String) record[3])) {
             newRegime = new Regime((String) record[3], debutPeriode);
@@ -75,6 +78,12 @@ public class TraiteMotriceRegimeMealType extends AFiltreObjetMetier implements I
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          regime = (String) record[3];
+
+         /* Données de référence */
+         refMealTypeEntity = new MotriceRefMealTypeEntity();
+         refMealTypeEntity.setCodeMealType((String) record[0]);
+         refMealTypeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refMealTypeEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeMeal);
    }

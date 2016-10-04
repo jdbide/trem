@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefFareProfileCodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeFareProfileEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -16,6 +17,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -52,28 +54,35 @@ public class TraiteMotriceRegimeFareProfile extends AFiltreObjetMetier implement
       }
 
       Regime newRegime = null;
-      for (Object[] fareprofil : listeFareProfil) {
-         if (!oldRegime.equals(fareprofil[1])) {
+      MotriceRefFareProfileCodeEntity refFareProfileCodeEntity;
+      for (Object[] fareprofile : listeFareProfil) {
+         if (!oldRegime.equals(fareprofile[1])) {
             // si le régime traité est
             // différent du précédent
             // on insère une nouvelle
             // entrée
-            newRegime = new Regime((String) fareprofil[1], debutPeriode);
+            newRegime = new Regime((String) fareprofile[1], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
 
-            mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), fareprofil[1], 7,
+            mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), fareprofile[1], 7,
                   motriceTrainTrancheEntity.getIdMotriceTrainTranche());
          }
          // insertion du régime code sat lié au régime
-         mapGeneratorTablesMotriceRegime.get(MotriceRegimeFareProfileEntity.class).addValue(idRegimeFareprofil.getAndIncrement(), fareprofil[0],
+         mapGeneratorTablesMotriceRegime.get(MotriceRegimeFareProfileEntity.class).addValue(idRegimeFareprofil.getAndIncrement(), fareprofile[0],
                idRegime.get());
 
          if (this.filtreDateAjout(newRegime)) {
-            listeFareProfile.add(new FareProfile((String) fareprofil[0],
+            listeFareProfile.add(new FareProfile((String) fareprofile[0],
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
 
-         oldRegime = (String) fareprofil[1];
+         oldRegime = (String) fareprofile[1];
+         
+         /* Données de référence */
+         refFareProfileCodeEntity = new MotriceRefFareProfileCodeEntity();
+         refFareProfileCodeEntity.setLabelFareProfileCode((String) fareprofile[0]);
+         refFareProfileCodeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refFareProfileCodeEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeFareProfile);
    }

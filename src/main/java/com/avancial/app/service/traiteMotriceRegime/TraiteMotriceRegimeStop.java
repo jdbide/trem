@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeStopEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -18,6 +20,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.GareHoraire;
 import com.avancial.app.data.objetsMetier.PlanTransport.Horaire;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -65,6 +68,7 @@ public class TraiteMotriceRegimeStop extends AFiltreObjetMetier implements ITrai
       List<Object[]> dessertes = queryRDesserte.getResultList();
       Desserte stops = null;
       Regime newRegime = null;
+      MotriceRefGareEntity refGareEntity;
       SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
       for (Object[] desserte : dessertes) {
          if (!oldRegime.equals(desserte[3])) {
@@ -96,6 +100,12 @@ public class TraiteMotriceRegimeStop extends AFiltreObjetMetier implements ITrai
          }
 
          oldRegime = (String) desserte[3];
+         
+         /* Données de référence */
+         refGareEntity = new MotriceRefGareEntity();
+         refGareEntity.setCodeGareMotriceRefGare((String) desserte[2]);
+         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refGareEntity, entityManager);
       }
 
       // ajout des dessertes dans l'objet métier

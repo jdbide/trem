@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -17,6 +18,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -55,6 +57,7 @@ public class TraiteMotriceRegimeEqpType extends AFiltreObjetMetier implements IT
       }
 
       Regime newRegime = null;
+      MotriceRefEqpTypeEntity refEqpTypeEntity;
       for (Object[] record : rEqpType) {
          if (!regime.equals((String) record[1])) {
             newRegime = new Regime((String) record[1], debutPeriode);
@@ -69,6 +72,12 @@ public class TraiteMotriceRegimeEqpType extends AFiltreObjetMetier implements IT
          }
 
          regime = (String) record[1];
+
+         /* Données de référence */
+         refEqpTypeEntity = new MotriceRefEqpTypeEntity();
+         refEqpTypeEntity.setLabelEqpType((String) record[0]);
+         refEqpTypeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refEqpTypeEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeTypeEquipement);
    }

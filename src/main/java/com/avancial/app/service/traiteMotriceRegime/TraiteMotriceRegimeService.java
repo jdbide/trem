@@ -9,6 +9,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefServiceClassEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefServiceEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -19,6 +21,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -59,6 +62,8 @@ public class TraiteMotriceRegimeService extends AFiltreObjetMetier implements IT
       }
 
       Regime newRegime = null;
+      MotriceRefServiceEntity refServiceEntity;
+      MotriceRefServiceClassEntity refServiceClassEntity;
       for (Object[] record : rService) {
          if (!oldRegime.equals((String) record[4])) {
             newRegime = new Regime((String) record[4], debutPeriode);
@@ -77,6 +82,16 @@ public class TraiteMotriceRegimeService extends AFiltreObjetMetier implements IT
          }
 
          oldRegime = (String) record[4];
+
+         /* Données de référence */
+         refServiceEntity = new MotriceRefServiceEntity();
+         refServiceEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refServiceEntity.setLabelService((String) record[0]);
+         InsertRefDataService.persistRefData(refServiceEntity, entityManager);
+         refServiceClassEntity = new MotriceRefServiceClassEntity();
+         refServiceClassEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refServiceClassEntity.setLabelServiceClass((String) record[1]);
+         InsertRefDataService.persistRefData(refServiceClassEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeServices);
    }

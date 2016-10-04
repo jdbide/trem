@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefDistributionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeDistributionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -17,6 +18,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -56,6 +58,7 @@ public class TraiteMotriceRegimeDistribution extends AFiltreObjetMetier implemen
       }
 
       Regime newRegime = null;
+      MotriceRefDistributionEntity refDistributionEntity;
       for (Object[] record : rDistribution) {
          if (!regime.equals((String) record[1])) {
             newRegime = new Regime((String) record[1], debutPeriode);
@@ -70,6 +73,12 @@ public class TraiteMotriceRegimeDistribution extends AFiltreObjetMetier implemen
          }
 
          regime = (String) record[1];
+         
+         /* Données de référence */
+         refDistributionEntity = new MotriceRefDistributionEntity();
+         refDistributionEntity.setLabelDistribution((String) record[0]);
+         refDistributionEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refDistributionEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeDistributions);
    }

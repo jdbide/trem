@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefTospEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeTospEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -16,6 +17,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tosp;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -47,6 +49,7 @@ public class TraiteMotriceRegimeTosp extends AFiltreObjetMetier implements ITrai
       }
 
       Regime newRegime = null;
+      MotriceRefTospEntity refTospEntity;
       for (Object[] tosp : resultListTosp) {
          if (!oldRegime.equals(tosp[1])) {
             // si le régime traité est
@@ -66,6 +69,11 @@ public class TraiteMotriceRegimeTosp extends AFiltreObjetMetier implements ITrai
          }
          oldRegime = (String) tosp[1];
 
+         /* Données de référence */
+         refTospEntity = new MotriceRefTospEntity();
+         refTospEntity.setCodeMotriceRefTosp((String) tosp[0]);
+         refTospEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         InsertRefDataService.persistRefData(refTospEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeTosp);
    }
