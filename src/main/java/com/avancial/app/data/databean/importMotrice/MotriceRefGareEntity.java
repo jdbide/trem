@@ -7,12 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
-@Table(name = "tremas_ref_motrice_gare")
+@Table(name = "tremas_motrice_ref_gare")
+@NamedQueries({ @NamedQuery(name = "MotriceRefGare.getAll", query = "SELECT t FROM MotriceRefGareEntity t"),
+      @NamedQuery(name = "MotriceRefGare.getUnique", query = "SELECT t FROM MotriceRefGareEntity t where t.codeGareMotriceRefGare = :codeGare and t.compagnie = :compagnie"), })
 public class MotriceRefGareEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)

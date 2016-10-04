@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -14,7 +15,8 @@ import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
 @Table(name = "tremas_motrice_ref_mealtype")
-@NamedQuery(name = "MotriceRefMealType.getAll", query = "SELECT t FROM MotriceRefMealTypeEntity t")
+@NamedQueries({ @NamedQuery(name = "MotriceRefMealType.getAll", query = "SELECT t FROM MotriceRefMealTypeEntity t"),
+      @NamedQuery(name = "MotriceRefMealType.getUnique", query = "SELECT t FROM MotriceRefMealTypeEntity t where t.codeMealType = :codeMealType and t.compagnie = :compagnie"), })
 public class MotriceRefMealTypeEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +26,7 @@ public class MotriceRefMealTypeEntity {
    @Column(length = 1, nullable = false)
    private String          codeMealType;
 
-   @Column(length = 50, nullable = false)
+   @Column(length = 50, nullable = true)
    private String          labelMealType;
 
    @ManyToOne
