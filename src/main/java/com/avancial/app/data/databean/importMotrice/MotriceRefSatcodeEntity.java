@@ -10,7 +10,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tremas_motrice_ref_satcode")
-@NamedQuery(name = "MotriceRefSatcode.getAll", query = "SELECT t FROM MotriceRefSatcodeEntity t")
+@NamedQueries({ @NamedQuery(name = "MotriceRefSatcode.getAll", query = "SELECT t FROM MotriceRefSatcodeEntity t"),
+      @NamedQuery(name = "MotriceRefSatcode.getUnique", query = "SELECT t FROM MotriceRefSatcodeEntity t where t.labelSatCode = :labelSatCode"), })
 public class MotriceRefSatcodeEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,34 +20,24 @@ public class MotriceRefSatcodeEntity {
    @Column(length = 3, nullable = false)
    private String labelSatCode;
 
-   /**
-    * @return the idMotriceRefCodeDiagramme
-    */
-   public Long getIdMotriceRefCodeDiagramme() {
-      return idMotriceRefSatCode;
+   public Long getIdMotriceRefSatCode() {
+      return this.idMotriceRefSatCode;
    }
 
-   /**
-    * @param idMotriceRefCodeDiagramme
-    *           the idMotriceRefCodeDiagramme to set
-    */
-   public void setIdMotriceRefCodeDiagramme(Long idMotriceRefCodeDiagramme) {
-      this.idMotriceRefSatCode = idMotriceRefCodeDiagramme;
+   public void setIdMotriceRefSatCode(Long idMotriceRefSatCode) {
+      this.idMotriceRefSatCode = idMotriceRefSatCode;
    }
 
-   /**
-    * @return the labelCodeDiagramme
-    */
-   public String getLabelCodeDiagramme() {
-      return labelSatCode;
+   public String getLabelSatCode() {
+      return this.labelSatCode;
    }
 
-   /**
-    * @param labelCodeDiagramme
-    *           the labelCodeDiagramme to set
-    */
-   public void setLabelCodeDiagramme(String labelCodeDiagramme) {
-      this.labelSatCode = labelCodeDiagramme;
+   public void setLabelSatCode(String labelSatCode) {
+      this.labelSatCode = labelSatCode;
+   }
+
+   }
+
    }
 
 }
