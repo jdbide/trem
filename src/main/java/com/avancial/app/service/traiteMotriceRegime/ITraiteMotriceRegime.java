@@ -12,23 +12,23 @@ import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
 public interface ITraiteMotriceRegime {
 
-    /**
-     * Traite une entité motrice régime pour l'insertion dans les tables motrice
-     * à partir des tables d'import brut.
-     * 
-     * @param motriceTrainTrancheEntity
-     *            Train-tranche pour lequel nous récupérons les données
-     * @param mapIdTablesMotriceRegime
-     *            Map des ids pour l'insertion des données dans chaque table
-     *            motrice régime
-     * @param mapGeneratorTablesMotriceRegime
-     *            Map des générateurs de requête d'insertion dans chaque table
-     *            motrice régime
-     * @param entityManager TODO
-     * @param atomicTranche TODO
-     * @throws ParseException 
-     */
-    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity,
-            MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
-            MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche) throws ParseException;
+   /**
+    * Traite une entité motrice régime pour l'insertion dans les tables motrice à partir des tables d'import brut.
+    * 
+    * @param motriceTrainTrancheEntity
+    *           Train-tranche pour lequel nous récupérons les données
+    * @param mapIdTablesMotriceRegime
+    *           Map des ids pour l'insertion des données dans chaque table motrice régime
+    * @param mapGeneratorTablesMotriceRegime
+    *           Map des générateurs de requête d'insertion dans chaque table motrice régime
+    * @param entityManager
+    *           TODO
+    * @param atomicTranche
+    *           TODO
+    * @throws ParseException
+    */
+   public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
+         MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
+         throws ParseException;
+
 }

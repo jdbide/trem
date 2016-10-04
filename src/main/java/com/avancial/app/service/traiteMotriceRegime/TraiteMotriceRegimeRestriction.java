@@ -17,10 +17,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeRestriction implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeRestriction extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -56,13 +57,20 @@ public class TraiteMotriceRegimeRestriction implements ITraiteMotriceRegime {
          listeRestrictions = new ArrayList<ASousRegimeTranche>();
       }
 
+      Regime newRegime = null;
       for (Object[] record : rEqpType) {
          if (!oldRegime.equals((String) record[2])) {
+            newRegime = new Regime((String) record[2], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
+
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[2], 5, idTrainTranche);
          }
          generatorRestriction.addValue(idRestriction.getAndIncrement(), "Champ inutile", (String) record[0], (String) record[1], idRegime);
-         listeRestrictions
-               .add(new Restriction(new Gare((String) record[0]), new Gare((String) record[1]), null, new Regime((String) record[2], debutPeriode)));
+
+         if (this.filtreDateAjout(newRegime)) {
+            listeRestrictions.add(new Restriction(new Gare((String) record[0]), new Gare((String) record[1]), null,
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
          oldRegime = (String) record[2];
       }
       atomicTranche.get().addAttributsField(listeRestrictions);

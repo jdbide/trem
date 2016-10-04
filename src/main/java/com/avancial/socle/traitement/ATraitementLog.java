@@ -8,9 +8,9 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import com.avancial.app.resources.constants.APP_Const;
 import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.persistence.EntityManagerFactoryProvider;
+import com.avancial.socle.resources.constants.SOCLE_constants;
 
 /**
  * @author bruno.legloahec
@@ -79,7 +79,7 @@ public abstract class ATraitementLog extends ATraitement {
    }
 
    protected void saveLog() throws Exception {
-      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       this.emLog.getTransaction().begin();
       try {
          this.emLog.persist(this.logBean);
@@ -94,7 +94,7 @@ public abstract class ATraitementLog extends ATraitement {
    }
 
    protected void updateLog() throws Exception {
-      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      this.emLog = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
       this.emLog.getTransaction().begin();
       try {
          this.emLog.merge(this.logBean);

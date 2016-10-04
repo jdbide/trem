@@ -88,15 +88,15 @@ public class UtilsTranscodageRegime {
 
       if (this.regime.contains("1")) {
 
-         if (listeTypeJourCircule.isEmpty()) {
+         if (this.listeTypeJourCircule.isEmpty()) {
             formatRegimeGeneralListeTypeJourEmpty();
             // regimeRetour.append("Cas particulier, aucun jour de circulation majoritaire");
          }
          regimeRetour.append("(");
-         if (circuleToutLesJoursSemaine(listeTypeJourCircule)) {
+         if (circuleToutLesJoursSemaine(this.listeTypeJourCircule)) {
 
          } else {
-            for (EnumTypeJour enumTypeJour : listeTypeJourCircule) {
+            for (EnumTypeJour enumTypeJour : this.listeTypeJourCircule) {
                if (regimeRetour.toString().length() > 1) {
                   regimeRetour.append("+");
                }
@@ -189,7 +189,7 @@ public class UtilsTranscodageRegime {
             this.listePeriodeExceptions.add(new PeriodeException(enumTypeJour, listePeriode));
          }
       }
-      Collections.sort(listePeriodeExceptions);
+      Collections.sort(this.listePeriodeExceptions);
    }
 
    /**
@@ -201,17 +201,17 @@ public class UtilsTranscodageRegime {
    public String getExceptions() throws ParseException {
       StringBuilder retour = new StringBuilder();
       for (JourPourRegime jourPourRegime : this.listeJourPourRegime) {
-         if (!jourPourRegime.isCircule() && listeTypeJourCircule.contains(jourPourRegime.getTypeJour())) {
-            listeExceptionNegative.add(jourPourRegime);
-         } else if (jourPourRegime.isCircule() && !listeTypeJourCircule.contains(jourPourRegime.getTypeJour())) {
-            listeExceptionPositive.add(jourPourRegime);
+         if (!jourPourRegime.isCircule() && this.listeTypeJourCircule.contains(jourPourRegime.getTypeJour())) {
+            this.listeExceptionNegative.add(jourPourRegime);
+         } else if (jourPourRegime.isCircule() && !this.listeTypeJourCircule.contains(jourPourRegime.getTypeJour())) {
+            this.listeExceptionPositive.add(jourPourRegime);
          }
       }
 
-      if (!listeExceptionPositive.isEmpty() && listeExceptionNegative.isEmpty()) {
-         retour.append(")").append(formatFactorisationException(listeExceptionPositive, true));
-      } else if (!listeExceptionNegative.isEmpty() && listeExceptionPositive.isEmpty()) {
-         retour.append(")").append(formatFactorisationException(listeExceptionNegative, false));
+      if (!this.listeExceptionPositive.isEmpty() && this.listeExceptionNegative.isEmpty()) {
+         retour.append(")").append(formatFactorisationException(this.listeExceptionPositive, true));
+      } else if (!this.listeExceptionNegative.isEmpty() && this.listeExceptionPositive.isEmpty()) {
+         retour.append(")").append(formatFactorisationException(this.listeExceptionNegative, false));
       } else {
 
          // StringBuilder regime1 = new StringBuilder();
@@ -226,8 +226,8 @@ public class UtilsTranscodageRegime {
          // regime1.append(exception1);
 
          StringBuilder regime2 = new StringBuilder();
-         String exceptionRegimeGeneral2 = listeDateToString(listeJourRegimeToDate(listeExceptionPositive), ",", "+");
-         String exception2 = formatFactorisationException(listeExceptionNegative, false);
+         String exceptionRegimeGeneral2 = listeDateToString(listeJourRegimeToDate(this.listeExceptionPositive), ",", "+");
+         String exception2 = formatFactorisationException(this.listeExceptionNegative, false);
          if (exceptionRegimeGeneral2.length() > 0) {
             regime2.append("+").append(exceptionRegimeGeneral2);
          }
@@ -243,7 +243,7 @@ public class UtilsTranscodageRegime {
 
       }
 
-      Collections.sort(listePeriodeExceptions);
+      Collections.sort(this.listePeriodeExceptions);
       // imprimeListePeriodeException(listePeriodeExceptions);
 
       return retour.toString();
@@ -271,7 +271,7 @@ public class UtilsTranscodageRegime {
       getListePeriodeExceptions(listeException, positif);
       StringBuilder retour = new StringBuilder();
       String factorisation = factorisationException();
-      String listeDateExceptionString = listeDateToString(listeDateException, ",", "+");
+      String listeDateExceptionString = listeDateToString(this.listeDateException, ",", "+");
       if (factorisation.length() > 0 || listeDateExceptionString.length() > 0) {
          if (positif) {
             retour.append(INDICATEUR_EXECPTION_PLUS);
@@ -297,14 +297,14 @@ public class UtilsTranscodageRegime {
       List<Periode> listeSortiePeriode = new ArrayList<>();
       List<Date> listeSortieDate = new ArrayList<>();
 
-      while (!listePeriodeExceptions.isEmpty()) {
-         PeriodeException periodeExceptionSave = listePeriodeExceptions.get(0);
+      while (!this.listePeriodeExceptions.isEmpty()) {
+         PeriodeException periodeExceptionSave = this.listePeriodeExceptions.get(0);
          listeJourSave = new ArrayList<EnumTypeJour>();
          listeJourSave.add(periodeExceptionSave.getEnumTypeJour());
          Date dateSave = periodeExceptionSave.getListePeriode().get(0).getDateDebut();
 
          // Chargement des jours concern�s par la periode en cours
-         for (PeriodeException periodeException : listePeriodeExceptions) {
+         for (PeriodeException periodeException : this.listePeriodeExceptions) {
             if (!periodeException.getEnumTypeJour().equals(periodeExceptionSave.getEnumTypeJour()) && (periodeException.periodeContain(0, getDateAjoutJour(dateSave, 7)) || getDateAjoutJour(dateSave, 7).after(getDateFinCirculation()))) {
                listeJourSave.add(periodeException.getEnumTypeJour());
             }
@@ -315,7 +315,7 @@ public class UtilsTranscodageRegime {
          Periode periodeTemp = new Periode(dateSave, null);
 
          while (!periodeTrouve) {
-            Iterator<PeriodeException> iterator = listePeriodeExceptions.iterator();
+            Iterator<PeriodeException> iterator = this.listePeriodeExceptions.iterator();
             // On passe tout les types de jours de la listes des exceptions
             while (iterator.hasNext()) {
                PeriodeException periodeException = iterator.next();
@@ -358,7 +358,7 @@ public class UtilsTranscodageRegime {
                   dateFin = null;
                }
                listeSortiePeriode.add(periodeTemp);
-               Collections.sort(listePeriodeExceptions);
+               Collections.sort(this.listePeriodeExceptions);
             } else {
                dateSave = getDateAjoutJour(dateSave, 7);
             }
@@ -405,7 +405,7 @@ public class UtilsTranscodageRegime {
          }
          retour.append("*").append(dateToString(periode.getDateDebut())).append("/").append(dateToString(periode.getDateFin()));
       } else {
-         listeDateException.addAll(listeDateTemp);
+         this.listeDateException.addAll(listeDateTemp);
       }
       return retour.toString();
    }
@@ -419,7 +419,7 @@ public class UtilsTranscodageRegime {
       retour.append(jour + "*");
       retour.append(dateDebutPeriodeToString).append("/").append(dateFinPeriodeToString);
 
-      listeExceptionNegative.removeAll(listeDatePeriodeASupprimer);
+      this.listeExceptionNegative.removeAll(listeDatePeriodeASupprimer);
    }
 
    /**
@@ -444,14 +444,14 @@ public class UtilsTranscodageRegime {
     */
    public void initListeJourPourRegime() throws ParseException {
 
-      listeJourPourRegime = new ArrayList<JourPourRegime>();
+      this.listeJourPourRegime = new ArrayList<JourPourRegime>();
 
-      if (regime.contains("1")) {
+      if (this.regime.contains("1")) {
          // Test si on prend en compte tout les lendemain et/ou toutes les veilles
-         int index = regime.indexOf("1");
+         int index = this.regime.indexOf("1");
 
          // Initialise la liste des jours du r�gime
-         for (index = regime.indexOf("1"); index <= regime.lastIndexOf("1"); index++) {
+         for (index = this.regime.indexOf("1"); index <= this.regime.lastIndexOf("1"); index++) {
             Calendar dateEnCours = Calendar.getInstance();
             dateEnCours.setTime(getDateByIndex(index));
 
@@ -462,7 +462,7 @@ public class UtilsTranscodageRegime {
             DetailCpt detailCpt = this.mapCpt.get(jourEnCours.getTypeJour().getNumeroType());
 
             // Sp�cifie la circulation du jour et incremente le compteurs ad�quate
-            if (regime.charAt(index) == CIRCULE) {
+            if (this.regime.charAt(index) == CIRCULE) {
                jourEnCours.setCircule(true);
                detailCpt.incrementeCptAutorise();
             } else {
@@ -471,7 +471,7 @@ public class UtilsTranscodageRegime {
             }
 
             // Ajoute le jour dans la liste g�n�rale
-            listeJourPourRegime.add(jourEnCours);
+            this.listeJourPourRegime.add(jourEnCours);
          }
       }
    }
@@ -547,7 +547,7 @@ public class UtilsTranscodageRegime {
     */
    public Date getDateByIndex(int index) throws ParseException {
       Calendar calendar = Calendar.getInstance();
-      calendar.setTime(dateDebutService);
+      calendar.setTime(this.dateDebutService);
       calendar.add(Calendar.DATE, index);
       return calendar.getTime();
    }
@@ -559,7 +559,7 @@ public class UtilsTranscodageRegime {
     * @throws ParseException
     */
    public Date getDateDebutCirculation() throws ParseException {
-      return getDateByIndex(regime.indexOf("1"));
+      return getDateByIndex(this.regime.indexOf("1"));
    }
 
    /**
@@ -569,7 +569,7 @@ public class UtilsTranscodageRegime {
     * @throws ParseException
     */
    public Date getDateFinCirculation() throws ParseException {
-      return getDateByIndex(regime.lastIndexOf("1"));
+      return getDateByIndex(this.regime.lastIndexOf("1"));
    }
 
    /**
@@ -578,7 +578,7 @@ public class UtilsTranscodageRegime {
     * @return the listeJourPourRegime
     */
    public final List<JourPourRegime> getListeJourPourRegime() {
-      return listeJourPourRegime;
+      return this.listeJourPourRegime;
    }
 
    /**
@@ -596,7 +596,7 @@ public class UtilsTranscodageRegime {
     * @return the regime
     */
    public final String getRegime() {
-      return regime;
+      return this.regime;
    }
 
    /**
@@ -614,7 +614,7 @@ public class UtilsTranscodageRegime {
     * @return the dateDebutService
     */
    public final Date getDateDebutService() {
-      return dateDebutService;
+      return this.dateDebutService;
    }
 
    /**

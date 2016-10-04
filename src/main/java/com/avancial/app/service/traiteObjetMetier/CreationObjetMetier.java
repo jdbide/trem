@@ -2,6 +2,7 @@ package com.avancial.app.service.traiteObjetMetier;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -18,13 +19,14 @@ import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.traiteMotriceRegime.IFiltreDateRegime;
 import com.avancial.app.utilitaire.JeuDonneesPlanTransport;
 
 public class CreationObjetMetier {
    private static Logger logger = Logger.getLogger(CreationObjetMetier.class);
 
    public JeuDonneesPlanTransport creationPlanTransport(String environnementCompagnie, Status status, EntityManager entityManager,
-         TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory) throws Exception {
+         TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory, Date dateDebutFiltre, Date dateFinFiltre) throws Exception {
       PlanTransport planTransport = new PlanTransport();
 
       Query query = entityManager.createQuery(
@@ -35,6 +37,7 @@ public class CreationObjetMetier {
 
       List<MotriceTrainTrancheEntity> trainsTranches = query.getResultList();
       Train train = new Train();
+      Tranche tranche = new Tranche();
 
       String lastTrainNumber = "";
 
@@ -42,7 +45,15 @@ public class CreationObjetMetier {
       for (MotriceTrainTrancheEntity resTrainTranche : trainsTranches) {
          logger.info("Remplissage du train " + resTrainTranche.getTrainNumberMotriceTrainTranche() + ", tranche "
                + resTrainTranche.getTrancheNumberMotriceTrainTranche() + ", statut " + resTrainTranche.getTrancheStatusMotriceTrainTranche());
+
+         /* Nouveau train */
          if (!resTrainTranche.getTrainNumberMotriceTrainTranche().equals(lastTrainNumber)) {
+            /* Si le train précédent n'a pas de tranche, on le retire */
+            if (train.getTranches().size() == 0) {
+               planTransport.getTrains().remove(train);
+            }
+
+            /* On ajoute le nouveau train au plan de transport */
             train = new Train(new ArrayList<Tranche>(), resTrainTranche.getTrainNumberMotriceTrainTranche(),
                   resTrainTranche.getValidForRRMotriceTrainTranche());
             planTransport.getTrains().add(train);
@@ -56,6 +67,7 @@ public class CreationObjetMetier {
          for (MotriceRegimeEntity regime : regimeEntities) {
             ITraiteObjetMetier traiteObjetMetier = traiteObjetMetierRegimeFactory
                   .getTraiteMotriceRegime(regime.getMotriceRefRegimeType().getIdMotriceRefRegimeType());
+            ((IFiltreDateRegime) traiteObjetMetier).setFiltreDate(dateDebutFiltre, dateFinFiltre);
             try {
                traiteObjetMetier.traite(atomicTranche, regime, resTrainTranche.getJeuDonnee().getDateDebutPeriode());
             } catch (ParseException e) {
@@ -65,8 +77,15 @@ public class CreationObjetMetier {
             }
          }
 
-         train.getTranches().add(atomicTranche.get());
+         tranche = atomicTranche.get();
+         if (tranche.getRegime().getListeJours().size() > 0) {
+            train.getTranches().add(tranche);
+         }
          lastTrainNumber = resTrainTranche.getTrainNumberMotriceTrainTranche();
+      }
+      /* On retire le dernier train s'il n'a pas de tranche */
+      if (train.getTranches().size() == 0) {
+         planTransport.getTrains().remove(train);
       }
       /* Fin du remplissage du plan de transport */
 

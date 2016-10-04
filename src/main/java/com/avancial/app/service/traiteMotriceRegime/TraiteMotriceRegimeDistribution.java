@@ -18,10 +18,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeDistribution implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeDistribution extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -55,13 +56,19 @@ public class TraiteMotriceRegimeDistribution implements ITraiteMotriceRegime {
          listeDistributions = new ArrayList<ASousRegimeTranche>();
       }
 
+      Regime newRegime = null;
       for (Object[] record : rDistribution) {
          if (!regime.equals((String) record[1])) {
+            newRegime = new Regime((String) record[1], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 10, idTrainTranche);
          }
          generatorDistribution.addValue(idDistribution.getAndIncrement(), (String) record[0], idRegime);
 
-         listeDistributions.add(new Distribution((String) record[0], new Regime((String) record[1], debutPeriode)));
+         if (this.filtreDateAjout(newRegime)) {
+            listeDistributions.add(new Distribution((String) record[0],
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
 
          regime = (String) record[1];
       }

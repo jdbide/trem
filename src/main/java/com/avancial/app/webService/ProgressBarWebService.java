@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.log4j.Logger;
 
-import com.avancial.app.data.Task;
+import com.avancial.socle.traitement.Task;
 import com.avancial.app.webService.bean.ResponseBean;
 
 /**

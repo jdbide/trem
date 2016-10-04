@@ -9,7 +9,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tremas_motrice_ref_codediagrammme")
+@Table(name = "tremas_motrice_ref_codediagramme")
 @NamedQuery(name = "MotriceRefCodeDiagramme.getAll", query = "SELECT t FROM MotriceRefCodeDiagrammeEntity t")
 public class MotriceRefCodeDiagrammeEntity {
 
@@ -23,7 +23,7 @@ public class MotriceRefCodeDiagrammeEntity {
     * @return the idMotriceRefCodeDiagramme
     */
    public Long getIdMotriceRefCodeDiagramme() {
-      return idMotriceRefCodeDiagramme;
+      return this.idMotriceRefCodeDiagramme;
    }
 
    /**
@@ -38,7 +38,7 @@ public class MotriceRefCodeDiagrammeEntity {
     * @return the labelCodeDiagramme
     */
    public String getLabelCodeDiagramme() {
-      return labelCodeDiagramme;
+      return this.labelCodeDiagramme;
    }
 
    /**

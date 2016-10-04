@@ -72,5 +72,11 @@ public abstract class AExcelRapportDifferentielSheet implements IExcelRapportDif
     protected String getNomField(Class<?> classeField) {
         return this.mapNomField.get(classeField);
     }
+    
+    protected void autoSizeColumns(ExcelTools excelTools, int[] columns) {
+       for (int i = 0; i < columns.length; i++) {
+          excelTools.getSheet().autoSizeColumn(i, true);
+       }
+    }
 
 }

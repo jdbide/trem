@@ -22,10 +22,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Siege;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeSpecificity extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -62,11 +63,15 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
       List<Siege> sieges;
 
       String oldRegime = "";
+      Regime newRegime = null;
       for (Object[] seat : listeSeat) {
-         if (!oldRegime.equals(seat[4])) {// si le régime traité est
+         if (!oldRegime.equals(seat[4])) {
+            // si le régime traité est
             // différent du précédent
             // on insère une nouvelle
             // entrée
+            newRegime = new Regime((String) seat[4], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
             mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), seat[4], 4,
                   motriceTrainTrancheEntity.getIdMotriceTrainTranche());
          }
@@ -74,12 +79,14 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
          mapGeneratorTablesMotriceRegime.get(MotriceRegimeSpecificityEntity.class).addValue(idRegimeSeat.getAndIncrement(), seat[0], seat[1], seat[2],
                seat[3], idRegime.get());
 
-         listeCompartiments = new ArrayList<Compartiment>();
-         sieges = new ArrayList<Siege>();
-         sieges.add(new Siege((String) seat[2]));
-         listeCompartiments.add(new Compartiment((String) seat[1], sieges));
-         listeSpecifications.add(new Specification(new Voiture((String) seat[0], listeCompartiments), EnumEtatSpecification.Blocked,
-               new Regime((String) seat[4], debutPeriode)));
+         if (this.filtreDateAjout(newRegime)) {
+            listeCompartiments = new ArrayList<Compartiment>();
+            sieges = new ArrayList<Siege>();
+            sieges.add(new Siege((String) seat[2]));
+            listeCompartiments.add(new Compartiment((String) seat[1], sieges));
+            listeSpecifications.add(new Specification(new Voiture((String) seat[0], listeCompartiments), EnumEtatSpecification.Blocked,
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
 
          oldRegime = (String) seat[4];
       }
@@ -121,6 +128,7 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
       }
 
       for (KeyMotriceRegimeSpecificity mapKey : mapRegimeCodeDiag.keySet()) {
+         newRegime = null;
          int i = 0;
          while (!mapKey.getCodeDiagramme().equals((String) nbComp.get(i)[0])) {
             i++;
@@ -134,24 +142,32 @@ public class TraiteMotriceRegimeSpecificity implements ITraiteMotriceRegime {
             mapGeneratorTablesMotriceRegime.get(MotriceRegimeSpecificityEntity.class).addValue(idRegimeComp.getAndIncrement(), mapKey.getVoiture(),
                   "", "", mapKey.getStateCode(), idRegime.get());
 
-            listeCompartiments = new ArrayList<Compartiment>();
-            sieges = new ArrayList<Siege>();
-            sieges.add(new Siege(""));
-            listeCompartiments.add(new Compartiment("", sieges));
-            listeSpecifications.add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments), EnumEtatSpecification.Blocked,
-                  new Regime(mapKey.getRegime(), debutPeriode)));
+            newRegime = new Regime(mapKey.getRegime(), debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
+            if (this.filtreDateAjout(newRegime)) {
+               listeCompartiments = new ArrayList<Compartiment>();
+               sieges = new ArrayList<Siege>();
+               sieges.add(new Siege(""));
+               listeCompartiments.add(new Compartiment("", sieges));
+               listeSpecifications
+                     .add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments), EnumEtatSpecification.Blocked, newRegime));
+            }
          } else {
             // Cas où seuls certains compartiments d'une voiture sont fermés
             for (String compart : mapRegimeCodeDiag.get(mapKey)) {
                mapGeneratorTablesMotriceRegime.get(MotriceRegimeSpecificityEntity.class).addValue(idRegimeComp.getAndIncrement(), mapKey.getVoiture(),
                      compart, "", mapKey.getStateCode(), idRegime.get());
 
-               listeCompartiments = new ArrayList<Compartiment>();
-               sieges = new ArrayList<Siege>();
-               sieges.add(new Siege(""));
-               listeCompartiments.add(new Compartiment(compart, sieges));
-               listeSpecifications.add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments), EnumEtatSpecification.Blocked,
-                     new Regime(mapKey.getRegime(), debutPeriode)));
+               newRegime = new Regime(mapKey.getRegime(), debutPeriode);
+               newRegime.filtreDates(getDateDebut(), getDateFin());
+               if (this.filtreDateAjout(newRegime)) {
+                  listeCompartiments = new ArrayList<Compartiment>();
+                  sieges = new ArrayList<Siege>();
+                  sieges.add(new Siege(""));
+                  listeCompartiments.add(new Compartiment(compart, sieges));
+                  listeSpecifications
+                        .add(new Specification(new Voiture(mapKey.getVoiture(), listeCompartiments), EnumEtatSpecification.Blocked, newRegime));
+               }
             }
          }
       }

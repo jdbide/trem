@@ -9,15 +9,13 @@ import java.text.ParseException;
 public class AppSetterRegimeMotrice implements ITraitementDonnees {
 
     @Override
-    public String execute(String donnee) throws ParseException {
-        DateSetterRegimeMotrice.setApp(donnee);
-        return donnee;
+    public String execute(Object donnee) throws ParseException {
+    	if(donnee instanceof String) {
+    		DateSetterRegimeMotrice.setApp((String) donnee);
+    		return (String) donnee;
+    	}
+    	
+    	return null;
     }
-
-	@Override
-	public String execute2(Object object) throws ParseException {
-		// TODO Auto-generated method stub
-		return this.execute(object.toString());
-	}
 
 }

@@ -13,7 +13,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
-public class TraiteObjetMetierRegimeSATCode implements ITraiteObjetMetier {
+public class TraiteObjetMetierRegimeSATCode extends AFiltreObjetMetier implements ITraiteObjetMetier {
 
    @Override
    public void traite(AtomicReference<Tranche> atomicTranche, MotriceRegimeEntity regime, Date dateDebutPeriode) throws ParseException {
@@ -21,8 +21,13 @@ public class TraiteObjetMetierRegimeSATCode implements ITraiteObjetMetier {
       if (listeCodeSat == null) {
          listeCodeSat = new ArrayList<ASousRegimeTranche>();
       }
-      for (MotriceRegimeSatcodeEntity regimeCodeSat : regime.getMotriceRegimeSatcode()) {
-         listeCodeSat.add(new CodeSat(regimeCodeSat.getSatCodeMotriceRegimeSatcode(), new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode)));
+      Regime newRegime = new Regime(regime.getPeriodMotriceRegime(), dateDebutPeriode);
+      newRegime.filtreDates(getDateDebut(), getDateFin());
+      if (this.filtreDateAjout(newRegime)) {
+         for (MotriceRegimeSatcodeEntity regimeCodeSat : regime.getMotriceRegimeSatcode()) {
+            listeCodeSat.add(new CodeSat(regimeCodeSat.getSatCodeMotriceRegimeSatcode(),
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+         }
       }
       atomicTranche.get().addAttributsField(listeCodeSat);
    }

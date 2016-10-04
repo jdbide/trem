@@ -102,7 +102,8 @@ public class GenerateColonneComposition extends AGenerateExcelColonneNew {
         excelTools.createCellTexteWithStyle(numColonne + 3, strRameCodes, excelTools.styleBorderNotLeftNotRight);
 
         /* RM Code */
-        excelTools.createCellTexteWithStyle(numColonne + 4, this.rmCode, excelTools.styleBorderNotLeft);
+        /* Supprimé par demande client */
+//        excelTools.createCellTexteWithStyle(numColonne + 4, this.rmCode, excelTools.styleBorderNotLeft);
     }
 
 }

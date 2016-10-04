@@ -98,7 +98,7 @@ public class ExcelRapportDifferentiel extends ASocleExportExcelService {
          this.firstLineEntete[i] = 5;
 
          this.firstLineContent[i] = 7;
-         // Pas de lignes masuqés
+         // Pas de lignes masquées
          this.firstLineHide[i] = -1;
 
          this.lockSheet[i] = false;

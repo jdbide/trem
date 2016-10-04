@@ -21,10 +21,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
+import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
-public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
+public class TraiteMotriceRegimeComposition extends AFiltreObjetMetier implements ITraiteMotriceRegime {
 
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
@@ -60,10 +61,13 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
       MotriceRegimeEntity regimeEntity = null;
       Map<String, String> rameCodes = new HashMap<>();
       List<Voiture> voitures = new ArrayList<>();
+      Regime newRegime = null;
       for (Object[] compo : listeCompo) {
 
          if (!oldRegime.equals(compo[4])) {
             /* Nouveau Regime */
+            newRegime = new Regime((String) compo[4], debutPeriode);
+            newRegime.filtreDates(getDateDebut(), getDateFin());
 
             /* Insertion des compositions du régime précédent */
             if (compositions != null) {
@@ -92,8 +96,10 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
             compositions.add(compositionEntity);
 
             voitures = new ArrayList<>();
-            listeCompositions.add(new Composition((String) compo[0], (String) compo[1], (String) compo[2], null, voitures,
-                  new Regime((String) compo[4], debutPeriode)));
+            if (this.filtreDateAjout(newRegime)) {
+               listeCompositions.add(new Composition((String) compo[0], (String) compo[1], (String) compo[2], null, voitures,
+                     new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+            }
          }
          // insertion des numéros de voiture liés à la compo
          mapGeneratorTablesMotriceRegime.get(MotriceRegimeCompositionCoachEntity.class).addValue(idRegimeCompoCoach.getAndIncrement(), compo[3],
@@ -113,7 +119,7 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
    private void ajoutCompositionsRegime(Map<String, String> rameCodes, List<MotriceRegimeCompositionEntity> compositionEntities,
          List<ASousRegimeTranche> compositions, MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager) {
       /* TODO Récupération du rmCode */
-      String rmCode = null;
+      String rmCode = "";
       String rameCode1 = rameCodes.get("RC1");
       String rameCode2 = rameCodes.get("RC2");
       // if (rameCode1 != null && rameCode2 != null) {
@@ -122,9 +128,9 @@ public class TraiteMotriceRegimeComposition implements ITraiteMotriceRegime {
       // StringBuilder builder = new StringBuilder();
       // query.setParameter(1, builder.append(rameCode1.substring(0, 2)).append(rameCode1.substring(rameCode1.length()-1)));
       // query.setParameter(2, builder.append(rameCode2.substring(0, 2)).append(rameCode2.substring(rameCode2.length()-1)));
-      query.setParameter(1, "15H");
-      query.setParameter(2, "14B");
-      rmCode = (String) query.getSingleResult();
+      // query.setParameter(1, "15H");
+      // query.setParameter(2, "14B");
+      // rmCode = (String) query.getSingleResult();
       // } else {
       // System.err.println("Erreur récupération rmCode");
       // return;
