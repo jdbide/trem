@@ -103,25 +103,43 @@ CONSTRAINT `ref_tosp_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `trem
 
 DROP TABLE IF EXISTS `tremas_motrice_ref_stop`;
 
+-- ---------------------------------------
+-- Ajout idCompagnie et index Unique
+-- ---------------------------------------
+
 ALTER TABLE `tremas_motrice_ref_codediagramme`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `labelCodeDiagramme`;
 ALTER TABLE `tremas_motrice_ref_codediagramme` ADD CONSTRAINT `ref_codediagramme_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_codediagramme`
+ADD UNIQUE INDEX `ref_codediagramme_Ulabel_idCompagnie` (`labelCodeDiagramme`, `idCompagnie`) ;
 
 ALTER TABLE `tremas_motrice_ref_compositionclass`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `labelCompositionClass`;
 ALTER TABLE `tremas_motrice_ref_compositionclass` ADD CONSTRAINT `ref_compositionclass_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_compositionclass`
+ADD UNIQUE INDEX `ref_compositionclass_Ulabel_idCompagnie` (`labelCompositionClass`, `idCompagnie`) ;
 
 ALTER TABLE `tremas_motrice_ref_distribution`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `labelDistribution`;
-ALTER TABLE `tremas_motrice_ref_distribution` ADD CONSTRAINT `ref_distribution` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_distribution` ADD CONSTRAINT `ref_distribution_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_distribution`
+ADD UNIQUE INDEX `ref_distribution_Ulabel_idCompagnie` (`labelDistribution`, `idCompagnie`) ;
 
 ALTER TABLE `tremas_motrice_ref_eqptype`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `idMotriceRefEqpType`;
 ALTER TABLE `tremas_motrice_ref_eqptype` ADD CONSTRAINT `ref_eqptype_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_eqptype`
+DROP COLUMN `idMotriceEqpType`,
+MODIFY COLUMN `idMotriceRefEqpType`  bigint(20) NOT NULL AUTO_INCREMENT FIRST ,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`idMotriceRefEqpType`),
+ADD UNIQUE INDEX `ref_eqptype_Ulabel_idCompagnie` (`labelEqpType`, `idCompagnie`) ;
 
 ALTER TABLE `tremas_motrice_ref_fareprofilecode`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `labelFareProfileCode`;
 ALTER TABLE `tremas_motrice_ref_fareprofilecode` ADD CONSTRAINT `ref_fareprofilecode_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_fareprofilecode`
+ADD UNIQUE INDEX `ref_fareprofilecode_Ulabel_idCompagnie` (`labelFareProfileCode`, `idCompagnie`) ;
 
 ALTER TABLE `tremas_motrice_ref_mealtype`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `labelMealType`;
@@ -129,10 +147,14 @@ ALTER TABLE `tremas_motrice_ref_mealtype` ADD CONSTRAINT `ref_mealtype_FKidCompa
 ALTER TABLE `tremas_motrice_ref_mealtype`
 MODIFY COLUMN `labelMealType`  varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL AFTER `idMotriceRefMealType`,
 ADD COLUMN `codeMealType`  varchar(1) NOT NULL AFTER `idMotriceRefMealType`;
+ALTER TABLE `tremas_motrice_ref_mealtype`
+ADD UNIQUE INDEX `ref_mealtype_Ucode_idCompagnie` (`codeMealType`, `idCompagnie`) ;
 
 ALTER TABLE `tremas_motrice_ref_ramecode`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `labelRameCode`;
 ALTER TABLE `tremas_motrice_ref_ramecode` ADD CONSTRAINT `ref_ramecode_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_ramecode`
+ADD UNIQUE INDEX `ref_ramecode_Ulabel_idCompagnie` (`labelRameCode`, `idCompagnie`) ;
 
 ALTER TABLE `tremas_motrice_ref_satcode`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `labelSatCode`;
@@ -143,8 +165,14 @@ ADD UNIQUE INDEX `ref_satcode_UlabelSatCode_idCompagnie` (`labelSatCode`, `idCom
 ALTER TABLE `tremas_motrice_ref_service`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `labelService`;
 ALTER TABLE `tremas_motrice_ref_service` ADD CONSTRAINT `ref_service_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_service`
+ADD UNIQUE INDEX `ref_service_Ulabel_idCompagnie` (`labelService`, `idCompagnie`) ;
 
 ALTER TABLE `tremas_motrice_ref_serviceclass`
 ADD COLUMN `idCompagnie`  int(11) NULL AFTER `libelleServiceClass`;
 ALTER TABLE `tremas_motrice_ref_serviceclass` ADD CONSTRAINT `ref_serviceclass_FKidCompagnie` FOREIGN KEY (`idCompagnie`) REFERENCES `tremas_compagnie` (`idCompagnie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `tremas_motrice_ref_serviceclass`
+DROP INDEX `labelServiceClass`,
+ADD UNIQUE INDEX `ref_serviceclass_Ulabel_idCompagnie` (`labelServiceClass`, `idCompagnie`) ;
+
 
