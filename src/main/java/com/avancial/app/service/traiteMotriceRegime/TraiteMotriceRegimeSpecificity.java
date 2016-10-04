@@ -10,6 +10,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import com.avancial.app.data.databean.importMotrice.MotriceRefCodeDiagrammeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -21,6 +23,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Siege;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -116,6 +119,7 @@ public class TraiteMotriceRegimeSpecificity extends AFiltreObjetMetier implement
 
       Map<KeyMotriceRegimeSpecificity, Collection<String>> mapRegimeCodeDiag = new HashMap<>();
 
+      MotriceRefCodeDiagrammeEntity refCodeDiagrammeEntity;
       for (Object[] comp : listeComp) {
          KeyMotriceRegimeSpecificity key = new KeyMotriceRegimeSpecificity((String) comp[0], (String) comp[4], (String) comp[5], (String) comp[3]);
          Collection<String> compartiments = mapRegimeCodeDiag.get(key);
@@ -124,6 +128,12 @@ public class TraiteMotriceRegimeSpecificity extends AFiltreObjetMetier implement
             mapRegimeCodeDiag.put(key, compartiments);
          }
          compartiments.add((String) comp[1]);
+         
+         /* Données de référence */
+         refCodeDiagrammeEntity = new MotriceRefCodeDiagrammeEntity();
+         refCodeDiagrammeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refCodeDiagrammeEntity.setLabelCodeDiagramme((String) comp[5]);
+         InsertRefDataService.persistRefData(refCodeDiagrammeEntity, entityManager);
       }
 
       for (KeyMotriceRegimeSpecificity mapKey : mapRegimeCodeDiag.keySet()) {

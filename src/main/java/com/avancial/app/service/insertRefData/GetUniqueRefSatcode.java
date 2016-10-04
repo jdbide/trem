@@ -14,6 +14,7 @@ class GetUniqueRefSatcode extends AGetUniqueRefData<MotriceRefSatcodeEntity> {
       Query q = this.getUniqueQuery(refDataEntity, em);
       MotriceRefSatcodeEntity refSatcodeEntity = (MotriceRefSatcodeEntity) refDataEntity;
       q.setParameter("labelSatCode", refSatcodeEntity.getLabelSatCode());
+      q.setParameter("compagnie", refSatcodeEntity.getCompagnie());
       return q.getResultList();
    }
 

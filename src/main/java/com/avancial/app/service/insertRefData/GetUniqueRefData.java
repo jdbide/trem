@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefCodeDiagrammeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefSatcodeEntity;
 
 public class GetUniqueRefData {
@@ -18,6 +19,7 @@ public class GetUniqueRefData {
     */
    public GetUniqueRefData() {
       this.map.put(MotriceRefSatcodeEntity.class.getSimpleName(), new GetUniqueRefSatcode());
+      this.map.put(MotriceRefCodeDiagrammeEntity.class.getSimpleName(), new GetUniqueRefCodeDiagramme());
    }
 
    public List<Object> getUniqueKeyEntity(Object refDataEntity, EntityManager em) throws Exception {
@@ -26,7 +28,7 @@ public class GetUniqueRefData {
       if (getUniqueRefData != null) {
          res = getUniqueRefData.getUniqueKeyEntity(refDataEntity, em);
       } else {
-         System.out.println("Pas de getUnique pour la classe " + refDataEntity.getClass().getSimpleName());
+         System.out.println("Pas d'implémentation de IGetUniqueRefData pour la classe " + refDataEntity.getClass().getSimpleName());
       }
       return res;
    }
