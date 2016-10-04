@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +26,7 @@ public class TraiteMotriceRegimeEqpType extends AFiltreObjetMetier implements IT
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException {
+         throws Exception {
 
       IMultipleInsertRequestGenerator generatorRegime = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class);
       IMultipleInsertRequestGenerator generatorEqpType = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEqpTypeEntity.class);

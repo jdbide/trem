@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +33,7 @@ public class TraiteMotriceRegimeStop extends AFiltreObjetMetier implements ITrai
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException {
+         throws Exception {
 
       /* Stop */
 

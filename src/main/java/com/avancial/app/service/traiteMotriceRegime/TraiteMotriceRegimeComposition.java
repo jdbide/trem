@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class TraiteMotriceRegimeComposition extends AFiltreObjetMetier implement
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException {
+         throws Exception {
       /* Composition */
       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
