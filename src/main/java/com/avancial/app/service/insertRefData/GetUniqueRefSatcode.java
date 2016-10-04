@@ -13,7 +13,7 @@ class GetUniqueRefSatcode extends AGetUniqueRefData<MotriceRefSatcodeEntity> {
    public List<MotriceRefSatcodeEntity> getUniqueKeyEntity(MotriceRefSatcodeEntity refDataEntity, EntityManager em) throws Exception {
       Query q = this.getUniqueQuery(refDataEntity, em);
       MotriceRefSatcodeEntity refSatcodeEntity = (MotriceRefSatcodeEntity) refDataEntity;
-      q.setParameter("labelSatCode", refSatcodeEntity.getLabelCodeDiagramme());
+      q.setParameter("labelSatCode", refSatcodeEntity.getLabelSatCode());
       return q.getResultList();
    }
 
