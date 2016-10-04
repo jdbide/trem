@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.EStatusControl;
 import com.avancial.app.data.databean.JeuDonneesControlEntity;
 import com.avancial.socle.service.AService;
 
@@ -118,6 +119,28 @@ public class JeuDonneesControlService extends AService implements Serializable {
    public List<JeuDonneesControlEntity> getAllJeuDonneesControlParIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
       Query requete = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT);
       requete.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
+
+      List<JeuDonneesControlEntity> res = null;
+
+      try {
+         res = ((ArrayList<JeuDonneesControlEntity>) requete.getResultList());
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+
+      return res;
+   }
+
+   /**
+    * @param idCompagnieEnvironnement
+    * @param listStatusControl
+    * @return
+    */
+   public List<JeuDonneesControlEntity> getAllJeuDonneesControlDtoParIdCompagnieEnvironnementEtListStatusControl(int idCompagnieEnvironnement, List<EStatusControl> listStatusControl) {
+      Query requete = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT_AND_LIST_OF_STATUS_CONTROL);
+      requete.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
+      requete.setParameter("listStatusControl", listStatusControl);
 
       List<JeuDonneesControlEntity> res = null;
 

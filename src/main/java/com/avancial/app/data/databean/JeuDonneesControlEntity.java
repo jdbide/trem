@@ -27,14 +27,18 @@ import javax.persistence.TemporalType;
 @NamedQueries({ @NamedQuery(name = JeuDonneesControlEntity.QUERY_GET_ALL, query = "SELECT t FROM JeuDonneesControlEntity t"),
       // SELECT t FROM JeuDonneesControlEntity t JOIN t.jeuDonnee j JOIN j.compagnieEnvironnement c WHERE c.idCompagnieEnvironnement = :idCompagnieEnvironnement
       @NamedQuery(name = JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT, query = "SELECT t FROM JeuDonneesControlEntity t JOIN  t.compagnieEnvironnement ce WHERE ce.idCompagnieEnvironnement = :idCompagnieEnvironnement"),
-      @NamedQuery(name = JeuDonneesControlEntity.QUERY_DELETE_BY_ID, query = "DELETE FROM JeuDonneesControlEntity jdc where jdc.idJeuDonneesControl = :idJeuDonneesControl") })
+      @NamedQuery(name = JeuDonneesControlEntity.QUERY_DELETE_BY_ID, query = "DELETE FROM JeuDonneesControlEntity jdc where jdc.idJeuDonneesControl = :idJeuDonneesControl"),
+      @NamedQuery(name = JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT_AND_LIST_OF_STATUS_CONTROL, 
+                  query="SELECT t FROM JeuDonneesControlEntity t JOIN  t.compagnieEnvironnement ce WHERE ce.idCompagnieEnvironnement = :idCompagnieEnvironnement AND t.statusJeuDonneesControl IN :listStatusControl")
+})
 
 public class JeuDonneesControlEntity implements Serializable {
-   private static final long            serialVersionUID                     = 1L;
+   private static final long            serialVersionUID                                                = 1L;
 
-   public final static String           QUERY_GET_ALL                        = "findAll";
-   public final static String           QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT = "findAllByCompagnieEnvironnement";
-   public final static String           QUERY_DELETE_BY_ID                   = "deleteById";
+   public final static String           QUERY_GET_ALL                                                   = "findAll";
+   public final static String           QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT                            = "findAllByCompagnieEnvironnement";
+   public final static String           QUERY_DELETE_BY_ID                                              = "deleteById";
+   public static final String           QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT_AND_LIST_OF_STATUS_CONTROL = "findAllByCompagnieEnvironnementAndListStatusControl";
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +64,7 @@ public class JeuDonneesControlEntity implements Serializable {
 
    @Column(length = 11, columnDefinition = "varchar(11) default 'START'")
    @Enumerated(EnumType.STRING)
-   private EStatusControl                statusJeuDonneesControl              = EStatusControl.START;
+   private EStatusControl               statusJeuDonneesControl                                         = EStatusControl.START;
 
    private String                       statusJeuDonnees;
 

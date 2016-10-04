@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
 import com.avancial.app.data.databean.EStatus;
+import com.avancial.app.data.databean.EStatusControl;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneesControlService;
 import com.avancial.app.serviceDto.JeuDonneesControlServiceDto;
@@ -99,7 +100,10 @@ public class ControlTmsWebService {
 
       JSONArray jsonArray = new JSONArray();
       try {
-         jsonArray.addAll(this.jeuDonneesControlServiceDto.getAllJeuDonneesControlDtoParIdCompagnieEnvironnement(idCompagnieEnvironnement));
+         List<EStatusControl> listStatusControl = new ArrayList<EStatusControl>();
+         listStatusControl.add(EStatusControl.LOADING);
+         listStatusControl.add(EStatusControl.FINISHED);
+         jsonArray.addAll(this.jeuDonneesControlServiceDto.getAllJeuDonneesControlDtoParIdCompagnieEnvironnementEtListStatusControl(idCompagnieEnvironnement, listStatusControl));
 
          logger.info("Fin (WebService : '/app/controlTms' Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET)");
 

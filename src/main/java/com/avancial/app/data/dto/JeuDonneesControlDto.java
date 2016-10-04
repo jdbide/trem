@@ -21,7 +21,7 @@ public class JeuDonneesControlDto {
    private String pathFileImportJeuDonneesControlTimeTable = "";
    private String pathFileImportJeuDonneesControlYield = "";
    private String pathFileReportJeuDonneesControl = "";
-   private String statusJeuDonneesControl= EStatusControl.START.toString();
+   private EStatusControl statusJeuDonneesControl = EStatusControl.START;
    private String statusJeuDonnees = "";
    private int    idJeuDonnees;
    private int    idCompagnieEnvironnement;
@@ -162,14 +162,14 @@ public class JeuDonneesControlDto {
    /**
     * @return the statusJeuDonneesControl
     */
-   public String getStatusJeuDonneesControl() {
+   public EStatusControl getStatusJeuDonneesControl() {
       return statusJeuDonneesControl;
    }
 
    /**
     * @param statusJeuDonneesControl the statusJeuDonneesControl to set
     */
-   public void setStatusJeuDonneesControl(String statusJeuDonneesControl) {
+   public void setStatusJeuDonneesControl(EStatusControl statusJeuDonneesControl) {
       this.statusJeuDonneesControl = statusJeuDonneesControl;
    }
 
