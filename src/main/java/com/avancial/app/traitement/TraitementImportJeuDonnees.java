@@ -288,7 +288,14 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          logger.error("Echec de l'import", ex);
          throw ex;
       } finally {
-         this.entityManagerDb2.close();
+         if (this.entityManagerDb2 != null) {
+            this.entityManagerDb2.clear();
+            
+            if (this.entityManagerDb2.isOpen()) {
+               this.entityManagerDb2.close();
+            }
+         }
+
          EntityManagerFactoryProviderDb2.closeInstance();
          logger.info("End Importation des données");
       }
