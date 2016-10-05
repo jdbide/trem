@@ -11,6 +11,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
 import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
@@ -27,6 +29,7 @@ public class MotriceRefCompositionClassEntity {
 
    @ManyToOne
    @JoinColumn(name = "idCompagnie")
+   @ForeignKey(name = "FK_motrice_ref_compositionclass_idCompagnie")
    private CompagnieEntity compagnie;
 
    public Long getIdMotriceRefCompositionClass() {

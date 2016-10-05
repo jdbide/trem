@@ -11,19 +11,22 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
 import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
 @Table(name = "tremas_motrice_ref_gare")
 @NamedQueries({ @NamedQuery(name = "MotriceRefGare.getAll", query = "SELECT t FROM MotriceRefGareEntity t"),
-      @NamedQuery(name = "MotriceRefGare.getUnique", query = "SELECT t FROM MotriceRefGareEntity t where t.codeGareMotriceRefGare = :codeGare and t.compagnie = :compagnie"), })
+      @NamedQuery(name = "MotriceRefGare.getUnique", query = "SELECT t FROM MotriceRefGareEntity t where t.codeGareMotriceRefGare = :codeGare and t.compagnie = :compagnie"),
+      @NamedQuery(name = "MotriceRefGare.getCodeGareByLabelAndCompagnie", query = "SELECT t FROM MotriceRefGareEntity t where t.labelMotriceRefGare = :labelGare and t.compagnie = :compagnie"), })
 public class MotriceRefGareEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long            idMotriceRefGare;
 
-   @Column(length = 50, nullable = false)
+   @Column(length = 5, nullable = false)
    private String          codeGareMotriceRefGare;
 
    @Column(length = 50, nullable = true)
@@ -31,6 +34,7 @@ public class MotriceRefGareEntity {
 
    @ManyToOne
    @JoinColumn(name = "idCompagnie")
+   @ForeignKey(name = "FK_motrice_ref_gare_idCompagnie")
    private CompagnieEntity compagnie;
 
    public Long getIdMotriceRefGare() {

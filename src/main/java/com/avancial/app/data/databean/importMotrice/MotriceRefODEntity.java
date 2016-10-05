@@ -11,6 +11,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
 import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
@@ -24,14 +26,15 @@ public class MotriceRefODEntity {
    @Id
    private Long            idMotriceRefOd;
 
-   @Column(length = 50, nullable = false)
+   @Column(length = 5, nullable = false)
    private String          codeGareOrigineMotriceRefOd;
 
-   @Column(length = 50, nullable = false)
+   @Column(length = 5, nullable = false)
    private String          codeGareDestinationMotriceRefOd;
 
    @ManyToOne
    @JoinColumn(name = "idCompagnie")
+   @ForeignKey(name = "FK_motrice_ref_od_idCompagnie")
    private CompagnieEntity compagnie;
 
    public Long getIdMotriceRefOd() {
