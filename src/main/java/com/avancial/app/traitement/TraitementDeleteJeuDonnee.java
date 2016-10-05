@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
 import com.avancial.app.service.traiteDeleteRegime.ITraiteDeleteDonnees;
@@ -37,8 +37,8 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
    // nomTechniqueCompagnieEnvironnement @see JeuDonneeEntity.getByEnvironnementStatus
    private String                           compagnieEnvironnement;
 
-   // status Enum Status(IMPORT, DRAFT, ACTIVE, LASTACTIVE)
-   private List<Status>                     status;
+   // eStatus Enum EStatus(IMPORT, DRAFT, ACTIVE, LASTACTIVE)
+   private List<EStatus>                     eStatus;
 
    /**
     * Id du currentThread
@@ -54,7 +54,7 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
       super();
       // initialisation du logger (log4j)
       logger = Logger.getLogger(TraiteDeleteDonneesRegimeFactory.class);
-      this.status = new ArrayList<>();
+      this.eStatus = new ArrayList<>();
    }
 
    @Override
@@ -62,7 +62,7 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
       this.logBean.setLibelleLogTraitement("Traitement Delete JeuDonnee");
       logger.info("Début Traitement Delete JeuDonnee");
       // this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
-      for (Status st : this.status) {
+      for (EStatus st : this.eStatus) {
          try {
 
             this.log("Debut du traitement pour la suppression du " + st.toString());
@@ -170,16 +170,16 @@ public class TraitementDeleteJeuDonnee extends ATraitementLogDetail implements S
       this.compagnieEnvironnement = compagnieEnvironnement;
    }
 
-   public List<Status> getStatus() {
-      return this.status;
+   public List<EStatus> getStatus() {
+      return this.eStatus;
    }
 
-   public void setStatus(List<Status> status) {
-      this.status = status;
+   public void setStatus(List<EStatus> eStatus) {
+      this.eStatus = eStatus;
    }
 
-   public void addStatus(Status status) {
-      this.status.add(status);
+   public void addStatus(EStatus eStatus) {
+      this.eStatus.add(eStatus);
    }
    
    /**

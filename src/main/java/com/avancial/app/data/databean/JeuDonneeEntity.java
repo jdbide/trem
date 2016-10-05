@@ -50,7 +50,7 @@ public class JeuDonneeEntity implements Serializable {
 
    @Column(length = 11, columnDefinition = "varchar(11) default 'IMPORT'")
    @Enumerated(EnumType.STRING)
-   private Status                       statusJeuDonnees = Status.IMPORT;
+   private EStatus                       statusJeuDonnees = EStatus.IMPORT;
 
    // uni-directional many-to-one association to TremasCompagnieEnvironnement
    @ManyToOne
@@ -100,11 +100,11 @@ public class JeuDonneeEntity implements Serializable {
       this.idUtilisateurLastUpdateJeuDonnees = idUtilisateurLastUpdateJeuDonnees;
    }
 
-   public Status getStatusJeuDonnees() {
+   public EStatus getStatusJeuDonnees() {
       return this.statusJeuDonnees;
    }
 
-   public void setStatusJeuDonnees(Status statusJeuDonnees) {
+   public void setStatusJeuDonnees(EStatus statusJeuDonnees) {
       this.statusJeuDonnees = statusJeuDonnees;
    }
 

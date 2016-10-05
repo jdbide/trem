@@ -9,7 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.dto.JeuDonneesForControlDto;
 import com.avancial.app.service.JeuDonneesService;
 import com.avancial.socle.data.controller.dao.UserDao;
@@ -33,20 +33,20 @@ public class JeuDonneesServiceDto {
    public JeuDonneesServiceDto() {
    }
 
-//   public List<JeuDonneesForControlDto> getAllJeuDonneesForControlDtoParIdCompagnieEnvironnementEtListStatus(int idCompagnieEnvironnement, List<Status> status) {
-//      List<JeuDonneesForControlDto> res = new ArrayList<>();
-//      try {
-//         List<JeuDonneeEntity> listJeuDonneeEntity = this.jeuDonneesService.getJeuDonneeParIdCompagnieEtStatus(idCompagnieEnvironnement, status);
-//         for (JeuDonneeEntity jeuDonneeEntity : listJeuDonneeEntity) {
-//            res.add(this.jeuDonneeToJeuDonneesForControlDto(jeuDonneeEntity));
-//         }
-//      } catch (Exception e) {
-//         e.printStackTrace();
-//         throw e;
-//      }
-//
-//      return res;
-//   }
+   public List<JeuDonneesForControlDto> getAllJeuDonneesForControlDtoParIdCompagnieEnvironnementEtListStatus(int idCompagnieEnvironnement, List<EStatus> eStatus) {
+      List<JeuDonneesForControlDto> res = new ArrayList<>();
+      try {
+         List<JeuDonneeEntity> listJeuDonneeEntity = this.jeuDonneesService.getJeuDonneeParIdCompagnieEtStatus(idCompagnieEnvironnement, eStatus);
+         for (JeuDonneeEntity jeuDonneeEntity : listJeuDonneeEntity) {
+            res.add(this.jeuDonneeToJeuDonneesForControlDto(jeuDonneeEntity));
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+
+      return res;
+   }
 
    /**
     * @param jeuDonneeEntity

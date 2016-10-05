@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneesService;
@@ -53,8 +53,8 @@ public class ImportTmsServiceDto extends AService implements Serializable {
             newImportTmsDto.mergeByCompagnieEnvironnement(compagnieEnvironnementEntity);
 
             // id = id && status = act && draft
-            jeuDonneeEntityDraft = this.jeuDonneesService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.DRAFT);
-            jeuDonneeEntityActif = this.jeuDonneesService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, Status.ACTIVE);
+            jeuDonneeEntityDraft = this.jeuDonneesService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, EStatus.DRAFT);
+            jeuDonneeEntityActif = this.jeuDonneesService.getJeuDonneeParIdCompagnieEtStatus(compagnieEnvironnementEntity, EStatus.ACTIVE);
 
             UserDataBean user;
             if (jeuDonneeEntityDraft != null) {
@@ -107,8 +107,8 @@ public class ImportTmsServiceDto extends AService implements Serializable {
    public boolean validateDraft(ImportTmsDto importTmsDto) throws Exception {
 
       try {
-         JeuDonneeEntity jeuDonneeEntityLastActive = this.jeuDonneesService.getJeuDonneeParIdCompagnieEtStatus(this.compagnieEnvironnementService.getCompagnieEnvironnementById(importTmsDto.getIdCompagnieEnvironnement()), Status.LASTACTIVE);
-         jeuDonneeEntityLastActive.setStatusJeuDonnees(Status.IMPORT);
+         JeuDonneeEntity jeuDonneeEntityLastActive = this.jeuDonneesService.getJeuDonneeParIdCompagnieEtStatus(this.compagnieEnvironnementService.getCompagnieEnvironnementById(importTmsDto.getIdCompagnieEnvironnement()), EStatus.LASTACTIVE);
+         jeuDonneeEntityLastActive.setStatusJeuDonnees(EStatus.IMPORT);
          jeuDonneeEntityLastActive.setDateLastUpdateJeuDonnees(new Date());
          jeuDonneeEntityLastActive.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
          this.jeuDonneesService.update(jeuDonneeEntityLastActive);
@@ -120,7 +120,7 @@ public class ImportTmsServiceDto extends AService implements Serializable {
       // on passe le status de ACTIVE à LASTACTIVE
       try {
          JeuDonneeEntity jeuDonneeEntityActif = this.jeuDonneesService.getById(importTmsDto.getIdJeuDonneesActif());
-         jeuDonneeEntityActif.setStatusJeuDonnees(Status.LASTACTIVE);
+         jeuDonneeEntityActif.setStatusJeuDonnees(EStatus.LASTACTIVE);
          jeuDonneeEntityActif.setDateLastUpdateJeuDonnees(new Date());
          jeuDonneeEntityActif.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
          this.jeuDonneesService.update(jeuDonneeEntityActif);
@@ -132,7 +132,7 @@ public class ImportTmsServiceDto extends AService implements Serializable {
       // on passe le status de DRAFT à ACTIVE
       try {
          JeuDonneeEntity jeuDonneeEntityDraft = this.jeuDonneesService.getById(importTmsDto.getIdJeuDonneeBrouillon());
-         jeuDonneeEntityDraft.setStatusJeuDonnees(Status.ACTIVE);
+         jeuDonneeEntityDraft.setStatusJeuDonnees(EStatus.ACTIVE);
          jeuDonneeEntityDraft.setDateLastUpdateJeuDonnees(new Date());
          jeuDonneeEntityDraft.setIdUtilisateurLastUpdateJeuDonnees(this.session.getUser().getIdUser().intValue());
          this.jeuDonneesService.update(jeuDonneeEntityDraft);

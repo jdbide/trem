@@ -3,7 +3,7 @@
  */
 package com.avancial.app.data.dto;
 
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 
 /**
  * @author hamza.laterem
@@ -12,7 +12,7 @@ import com.avancial.app.data.databean.Status;
 public class JeuDonneesForControlDto {
    private int    idJeuDonnees;
    private String titleJeuDonnees;
-   private Status statusJeuDonnees;
+   private EStatus statusJeuDonnees;
 
    /**
     * 
@@ -53,7 +53,7 @@ public class JeuDonneesForControlDto {
    /**
     * @return the statusJeuDonnees
     */
-   public Status getStatusJeuDonnees() {
+   public EStatus getStatusJeuDonnees() {
       return this.statusJeuDonnees;
    }
 
@@ -61,7 +61,7 @@ public class JeuDonneesForControlDto {
     * @param statusJeuDonnees
     *           the statusJeuDonnees to set
     */
-   public void setStatusJeuDonnees(Status statusJeuDonnees) {
+   public void setStatusJeuDonnees(EStatus statusJeuDonnees) {
       this.statusJeuDonnees = statusJeuDonnees;
    }
 

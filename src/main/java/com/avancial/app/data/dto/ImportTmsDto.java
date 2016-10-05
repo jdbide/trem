@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 
 /**
  * Ce Bean représente les données à afficher sur la page import du module Train
@@ -33,13 +33,13 @@ public class ImportTmsDto implements Serializable {
 	private Date dateValidateJeuDonneesActif;
 	private String validateJeuDonneesActifBy;
 	private String pathValidateJeuDonneesActif;
-	private Status statusJeudonneeActif;
+	private EStatus statusJeudonneeActif;
 
 	private int idJeuDonneeBrouillon;
 	private Date dateImportJeuDonneesBrouillon;
 	private String importJeuDonneesBrouillonBy;
 	private String pathValidateJeuDonneesBrouillon;
-	private Status statusJeudonneeBrouillon;
+	private EStatus statusJeudonneeBrouillon;
 
 	private String username;
 	private String password;
@@ -285,7 +285,7 @@ public class ImportTmsDto implements Serializable {
 	/**
 	 * @return the statusJeudonneeActif
 	 */
-	public Status getStatusJeudonneeActif() {
+	public EStatus getStatusJeudonneeActif() {
 		return this.statusJeudonneeActif;
 	}
 
@@ -293,14 +293,14 @@ public class ImportTmsDto implements Serializable {
 	 * @param statusJeudonneeActif
 	 *            the statusJeudonneeActif to set
 	 */
-	public void setStatusJeudonneeActif(Status statusJeudonneeActif) {
+	public void setStatusJeudonneeActif(EStatus statusJeudonneeActif) {
 		this.statusJeudonneeActif = statusJeudonneeActif;
 	}
 
 	/**
 	 * @return the statusJeudonneeBrouillon
 	 */
-	public Status getStatusJeudonneeBrouillon() {
+	public EStatus getStatusJeudonneeBrouillon() {
 		return this.statusJeudonneeBrouillon;
 	}
 
@@ -308,7 +308,7 @@ public class ImportTmsDto implements Serializable {
 	 * @param statusJeudonneeBrouillon
 	 *            the statusJeudonneeBrouillon to set
 	 */
-	public void setStatusJeudonneeBrouillon(Status statusJeudonneeBrouillon) {
+	public void setStatusJeudonneeBrouillon(EStatus statusJeudonneeBrouillon) {
 		this.statusJeudonneeBrouillon = statusJeudonneeBrouillon;
 	}
 

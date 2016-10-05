@@ -17,7 +17,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
@@ -66,7 +66,7 @@ public class RemplissageObjMetierTestHibernate {
 
       /* Creation du plan de transport */
       //PlanTransport planTransport = new PlanTransport(EnumCompagnies.ES, new ArrayList<Train>());
-      PlanTransport planTransport = mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport();
+      PlanTransport planTransport = mapPlansDeTransport.get(EStatus.ACTIVE).getPlanTransport();
 
       Query query = this.em.createQuery("SELECT t FROM MotriceTrainTrancheEntity t", MotriceTrainTrancheEntity.class);
 
