@@ -64,26 +64,27 @@ public class TraiteMotriceRegimeMealType extends AFiltreObjetMetier implements I
       Regime newRegime = null;
       MotriceRefMealTypeEntity refMealTypeEntity;
       for (Object[] record : rDistribution) {
+         /* Données de référence */
+         refMealTypeEntity = new MotriceRefMealTypeEntity();
+         refMealTypeEntity.setCodeMealType((String) record[0]);
+         refMealTypeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refMealTypeEntity = (MotriceRefMealTypeEntity) InsertRefDataService.persistRefData(refMealTypeEntity, entityManager);
+
          if (!regime.equals((String) record[3])) {
             newRegime = new Regime((String) record[3], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
 
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[3], 9, idTrainTranche);
          }
-         generatorMeal.addValue(idMeal.getAndIncrement(), (String) record[0], (String) record[1], (String) record[2], idRegime);
+         generatorMeal.addValue(idMeal.getAndIncrement(), refMealTypeEntity.getIdMotriceRefMealType(), (String) record[1], (String) record[2], idRegime);
 
          if (this.filtreDateAjout(newRegime)) {
-            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas((String) record[0]),
+            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(refMealTypeEntity.getCodeMealType()),
                   new Horaire(formatter.parse((String) record[1]), formatter.parse((String) record[2])),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          regime = (String) record[3];
 
-         /* Données de référence */
-         refMealTypeEntity = new MotriceRefMealTypeEntity();
-         refMealTypeEntity.setCodeMealType((String) record[0]);
-         refMealTypeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refMealTypeEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeMeal);
    }

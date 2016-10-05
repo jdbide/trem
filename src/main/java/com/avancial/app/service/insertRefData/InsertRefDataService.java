@@ -8,10 +8,10 @@ import javax.persistence.PersistenceException;
 import org.apache.log4j.Logger;
 import org.hibernate.exception.ConstraintViolationException;
 
-public class InsertRefDataService {
+public class InsertRefDataService<T> {
    private static Logger logger = Logger.getLogger(InsertRefDataService.class);
 
-   public static void persistRefData(Object entity, EntityManager em) throws Exception {
+   public static Object persistRefData(Object entity, EntityManager em) throws Exception {
       GetUniqueRefData getUniqueRefData = new GetUniqueRefData();
       List<Object> res = getUniqueRefData.getUniqueKeyEntity(entity, em);
       if (res.isEmpty()) {
@@ -22,6 +22,7 @@ public class InsertRefDataService {
             em.flush();
             em.getTransaction().commit();
             logger.info("Entité de référence de classe " + entity.getClass().getSimpleName() + " sauvegardée en base.");
+            return entity;
          } catch (PersistenceException e) {
             em.getTransaction().rollback();
             if (e.getCause().getClass().equals(ConstraintViolationException.class)) {
@@ -31,7 +32,8 @@ public class InsertRefDataService {
                throw e;
             }
          }
-      } 
+      }
+      return res.get(0);
 //         else {
 //         /* La requête a retourné un résultat; la donnée de référence existe déjà en base */
 //         logger.info("L'entité de référence à sauvegarder, de classe " + entity.getClass().getSimpleName() + ", est déjà présente en base.");

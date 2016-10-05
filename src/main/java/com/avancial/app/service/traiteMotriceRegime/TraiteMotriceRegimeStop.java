@@ -26,7 +26,8 @@ import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
 
 /**
- * Classe qui récupère les données liées au régime desserte. Chargement du generator pour l'exécution ultérieure des requêtes. Chargement des objets métier pour comparaison ultérieure.
+ * Classe qui récupère les données liées au régime desserte. Chargement du generator pour l'exécution ultérieure des requêtes. Chargement des objets
+ * métier pour comparaison ultérieure.
  * 
  * @author sebastien.benede
  *
@@ -71,6 +72,12 @@ public class TraiteMotriceRegimeStop extends AFiltreObjetMetier implements ITrai
       MotriceRefGareEntity refGareEntity;
       SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
       for (Object[] desserte : dessertes) {
+         /* Données de référence */
+         refGareEntity = new MotriceRefGareEntity();
+         refGareEntity.setCodeGareMotriceRefGare((String) desserte[2]);
+         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refGareEntity = (MotriceRefGareEntity) InsertRefDataService.persistRefData(refGareEntity, entityManager);
+
          if (!oldRegime.equals(desserte[3])) {
             // si le régime traité est
             // différent du précédent
@@ -79,8 +86,8 @@ public class TraiteMotriceRegimeStop extends AFiltreObjetMetier implements ITrai
             newRegime = new Regime((String) desserte[3], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
 
-            mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), desserte[3], 2,
-                  motriceTrainTrancheEntity.getIdMotriceTrainTranche());
+            mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class).addValue(idRegime.incrementAndGet(), desserte[3],
+                  2, motriceTrainTrancheEntity.getIdMotriceTrainTranche());
             if (this.filtreDateAjout(newRegime)) {
                stops = new Desserte(new ArrayList<GareHoraire>(),
                      new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours()));
@@ -90,22 +97,17 @@ public class TraiteMotriceRegimeStop extends AFiltreObjetMetier implements ITrai
          }
          // insertion du régime desserte lié au régime
          mapGeneratorTablesMotriceRegime.get(MotriceRegimeStopEntity.class).addValue(idRegimeStop.getAndIncrement(), desserte[0], desserte[1],
-               desserte[2], idRegime.get());
+               refGareEntity.getIdMotriceRefGare(), idRegime.get());
          String heureArrivee = ((String) desserte[0]).trim();
          String heureDepart = ((String) desserte[1]).trim();
          if (this.filtreDateAjout(newRegime)) {
             stops.getGareHoraires()
-                  .add(new GareHoraire(new Gare((String) desserte[2]), new Horaire(heureArrivee.equals("") ? null : formatter.parse(heureArrivee),
-                        heureDepart.equals("") ? null : formatter.parse(heureDepart))));
+                  .add(new GareHoraire(new Gare(refGareEntity.getCodeGareMotriceRefGare()),
+                        new Horaire(heureArrivee.equals("") ? null : formatter.parse(heureArrivee),
+                              heureDepart.equals("") ? null : formatter.parse(heureDepart))));
          }
 
          oldRegime = (String) desserte[3];
-         
-         /* Données de référence */
-         refGareEntity = new MotriceRefGareEntity();
-         refGareEntity.setCodeGareMotriceRefGare((String) desserte[2]);
-         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refGareEntity, entityManager);
       }
 
       // ajout des dessertes dans l'objet métier

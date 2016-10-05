@@ -62,33 +62,34 @@ public class TraiteMotriceRegimeOD extends AFiltreObjetMetier implements ITraite
       MotriceRefODEntity refODEntity;
       MotriceRefGareEntity refGareEntity;
       for (Object[] record : rEqpType) {
+         /* Données de référence */
+         refGareEntity = new MotriceRefGareEntity();
+         refGareEntity.setCodeGareMotriceRefGare((String) record[0]);
+         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refGareEntity = (MotriceRefGareEntity) InsertRefDataService.persistRefData(refGareEntity, entityManager);
+         refGareEntity = new MotriceRefGareEntity();
+         refGareEntity.setCodeGareMotriceRefGare((String) record[1]);
+         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refGareEntity = (MotriceRefGareEntity) InsertRefDataService.persistRefData(refGareEntity, entityManager);
+         refODEntity = new MotriceRefODEntity();
+         refODEntity.setCodeGareOrigineMotriceRefOd((String) record[0]);
+         refODEntity.setCodeGareDestinationMotriceRefOd((String) record[1]);
+         refODEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refODEntity = (MotriceRefODEntity) InsertRefDataService.persistRefData(refODEntity, entityManager);
+
          if (!regime.equals((String) record[2])) {
             newRegime = new Regime((String) record[2], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
 
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[2], 12, idTrainTranche);
          }
-         generatorOD.addValue(idOD.getAndIncrement(), (String) record[0], (String) record[1], idRegime);
+         generatorOD.addValue(idOD.getAndIncrement(), refODEntity.getIdMotriceRefOd(), idRegime);
          if (this.filtreDateAjout(newRegime)) {
-            listeOD.add(new OrigineDestination(new Gare((String) record[0]), new Gare((String) record[1]),
+            listeOD.add(new OrigineDestination(new Gare(refODEntity.getCodeGareOrigineMotriceRefOd()),
+                  new Gare(refODEntity.getCodeGareDestinationMotriceRefOd()),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          regime = (String) record[2];
-
-         /* Données de référence */
-         refGareEntity = new MotriceRefGareEntity();
-         refGareEntity.setCodeGareMotriceRefGare((String) record[0]);
-         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refGareEntity, entityManager);
-         refGareEntity = new MotriceRefGareEntity();
-         refGareEntity.setCodeGareMotriceRefGare((String) record[1]);
-         refGareEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refGareEntity, entityManager);
-         refODEntity = new MotriceRefODEntity();
-         refODEntity.setCodeGareOrigineMotriceRefOd((String) record[0]);
-         refODEntity.setCodeGareDestinationMotriceRefOd((String) record[1]);
-         refODEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refODEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeOD);
    }

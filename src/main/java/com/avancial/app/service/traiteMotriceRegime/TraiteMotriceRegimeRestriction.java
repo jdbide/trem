@@ -7,6 +7,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeRestrictionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -16,6 +18,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -57,17 +60,30 @@ public class TraiteMotriceRegimeRestriction extends AFiltreObjetMetier implement
       }
 
       Regime newRegime = null;
+      MotriceRefGareEntity refGareOrigineEntity;
+      MotriceRefGareEntity refGareDestinationEntity;
       for (Object[] record : rEqpType) {
+         refGareOrigineEntity = new MotriceRefGareEntity();
+         refGareOrigineEntity.setCodeGareMotriceRefGare((String) record[0]);
+         refGareOrigineEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refGareOrigineEntity = (MotriceRefGareEntity) InsertRefDataService.persistRefData(refGareOrigineEntity, entityManager);
+         refGareDestinationEntity = new MotriceRefGareEntity();
+         refGareDestinationEntity.setCodeGareMotriceRefGare((String) record[1]);
+         refGareDestinationEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refGareDestinationEntity = (MotriceRefGareEntity) InsertRefDataService.persistRefData(refGareDestinationEntity, entityManager);
+
          if (!oldRegime.equals((String) record[2])) {
             newRegime = new Regime((String) record[2], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
 
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[2], 5, idTrainTranche);
          }
-         generatorRestriction.addValue(idRestriction.getAndIncrement(), "Champ inutile", (String) record[0], (String) record[1], idRegime);
+         generatorRestriction.addValue(idRestriction.getAndIncrement(), "Champ inutile", refGareOrigineEntity.getIdMotriceRefGare(),
+               refGareDestinationEntity.getIdMotriceRefGare(), idRegime);
 
          if (this.filtreDateAjout(newRegime)) {
-            listeRestrictions.add(new Restriction(new Gare((String) record[0]), new Gare((String) record[1]), null,
+            listeRestrictions.add(new Restriction(new Gare(refGareOrigineEntity.getCodeGareMotriceRefGare()),
+                  new Gare(refGareDestinationEntity.getCodeGareMotriceRefGare()), null,
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          oldRegime = (String) record[2];

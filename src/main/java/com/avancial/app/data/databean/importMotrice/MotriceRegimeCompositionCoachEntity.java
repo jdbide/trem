@@ -16,21 +16,16 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_composition_coach")
-@NamedQueries({ @NamedQuery(name = " MotriceRegimeCompositionCoach.getAll",
-      query = "SELECT t FROM  MotriceRegimeCompositionCoachEntity t"),
-      @NamedQuery(name = "MotriceRegimeCompositionCoach.deleteAll",
-            query = "DELETE FROM MotriceRegimeCompositionCoachEntity"),
-      @NamedQuery(name = "MotriceRegimeCompositionCoach.deleteByCompositions",
-            query = "DELETE FROM MotriceRegimeCompositionCoachEntity t WHERE t.motriceRegimeComposition IN (:compositions)"),
-      @NamedQuery(name = "MotriceRegimeCompositionCoachEntity.getLastId",
-            query = "SELECT MAX( t.idMotriceRegimeCompositionCoach ) FROM MotriceRegimeCompositionCoachEntity t") })
+@NamedQueries({ @NamedQuery(name = " MotriceRegimeCompositionCoach.getAll", query = "SELECT t FROM  MotriceRegimeCompositionCoachEntity t"),
+      @NamedQuery(name = "MotriceRegimeCompositionCoach.deleteAll", query = "DELETE FROM MotriceRegimeCompositionCoachEntity"),
+      @NamedQuery(name = "MotriceRegimeCompositionCoach.deleteByCompositions", query = "DELETE FROM MotriceRegimeCompositionCoachEntity t WHERE t.motriceRegimeComposition IN (:compositions)"),
+      @NamedQuery(name = "MotriceRegimeCompositionCoachEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeCompositionCoach ) FROM MotriceRegimeCompositionCoachEntity t") })
 public class MotriceRegimeCompositionCoachEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long                           idMotriceRegimeCompositionCoach;
 
-   @Column(length = 3,
-         nullable = false)
+   @Column(length = 3, nullable = false)
    private String                         coachNumberMotriceRegimeCompositionCoach;
 
    @ManyToOne(fetch = FetchType.EAGER)

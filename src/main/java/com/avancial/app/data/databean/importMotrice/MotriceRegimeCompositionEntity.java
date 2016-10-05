@@ -19,40 +19,36 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_composition")
-@NamedQueries({ @NamedQuery(name = "MotriceRegimeComposition.getAll",
-      query = "SELECT t FROM MotriceRegimeCompositionEntity t"),
-      @NamedQuery(name = "MotriceRegimeComposition.getByRegimes",
-            query = "SELECT d FROM MotriceRegimeCompositionEntity d WHERE d.motriceRegime IN (:regimes)"),
-      @NamedQuery(name = "MotriceRegimeComposition.deleteAll",
-            query = "DELETE FROM MotriceRegimeCompositionEntity"),
-      @NamedQuery(name = "MotriceRegimeComposition.deleteByRegimes",
-            query = "DELETE FROM MotriceRegimeCompositionEntity t WHERE t.motriceRegime IN (:regimes)"),
-      @NamedQuery(name = "MotriceRegimeCompositionEntity.getLastId",
-            query = "SELECT MAX( t.idMotriceRegimeComposition ) FROM MotriceRegimeCompositionEntity t") })
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeComposition.getAll", query = "SELECT t FROM MotriceRegimeCompositionEntity t"),
+      @NamedQuery(name = "MotriceRegimeComposition.getByRegimes", query = "SELECT d FROM MotriceRegimeCompositionEntity d WHERE d.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeComposition.deleteAll", query = "DELETE FROM MotriceRegimeCompositionEntity"),
+      @NamedQuery(name = "MotriceRegimeComposition.deleteByRegimes", query = "DELETE FROM MotriceRegimeCompositionEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeCompositionEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeComposition ) FROM MotriceRegimeCompositionEntity t") })
 public class MotriceRegimeCompositionEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long                                      idMotriceRegimeComposition;
 
-   @Column(length = 1,
-         nullable = false)
-   private String                                    classCodeMotriceRegimeComposition;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRefCompositionClass")
+   @ForeignKey(name = "FK_motrice_regime_composition_idMotriceRefCompositionClass")
+   private MotriceRefCompositionClassEntity          motriceRefCompositionClassEntity;
 
-   @Column(length = 3,
-         nullable = false)
-   private String                                    diagCodeMotriceRegimeComposition;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRefCodeDiagramme")
+   @ForeignKey(name = "FK_motrice_regime_composition_idMotriceRefCodeDiagramme")
+   private MotriceRefCodeDiagrammeEntity             motriceRefCodeDiagrammeEntity;
 
-   @Column(length = 6,
-         nullable = false)
-   private String                                    rameCodeMotriceRegimeComposition;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRefRameCode")
+   @ForeignKey(name = "FK_motrice_regime_composition_idMotriceRefRameCode")
+   private MotriceRefRameCodeEntity                  motriceRefRameCodeEntity;
 
-   @Column(length = 3,
-         nullable = false)
+   @Column(length = 3, nullable = false)
    private String                                    rmCodeMotriceRegimeComposition;
 
-   @OneToMany(fetch = FetchType.EAGER,
-         mappedBy = "motriceRegimeComposition")
+   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegimeComposition")
    private List<MotriceRegimeCompositionCoachEntity> carsNumbers;
 
    @ManyToOne(fetch = FetchType.EAGER)
@@ -64,13 +60,14 @@ public class MotriceRegimeCompositionEntity {
       super();
    }
 
-   public MotriceRegimeCompositionEntity(Long idMotriceRegimeComposition, String classCodeMotriceRegimeComposition, String diagCodeMotriceRegimeComposition, String rameCodeMotriceRegimeComposition, String rmCodeMotriceRegimeComposition, List<MotriceRegimeCompositionCoachEntity> carsNumbers,
-         MotriceRegimeEntity motriceRegime) {
+   public MotriceRegimeCompositionEntity(Long idMotriceRegimeComposition, MotriceRefCompositionClassEntity motriceRefCompositionClassEntity,
+         MotriceRefCodeDiagrammeEntity motriceRefCodeDiagrammeEntity, MotriceRefRameCodeEntity motriceRefRameCodeEntity,
+         String rmCodeMotriceRegimeComposition, List<MotriceRegimeCompositionCoachEntity> carsNumbers, MotriceRegimeEntity motriceRegime) {
       super();
       this.idMotriceRegimeComposition = idMotriceRegimeComposition;
-      this.classCodeMotriceRegimeComposition = classCodeMotriceRegimeComposition;
-      this.diagCodeMotriceRegimeComposition = diagCodeMotriceRegimeComposition;
-      this.rameCodeMotriceRegimeComposition = rameCodeMotriceRegimeComposition;
+      this.motriceRefCompositionClassEntity = motriceRefCompositionClassEntity;
+      this.motriceRefCodeDiagrammeEntity = motriceRefCodeDiagrammeEntity;
+      this.motriceRefRameCodeEntity = motriceRefRameCodeEntity;
       this.rmCodeMotriceRegimeComposition = rmCodeMotriceRegimeComposition;
       this.carsNumbers = carsNumbers;
       this.motriceRegime = motriceRegime;
@@ -107,36 +104,6 @@ public class MotriceRegimeCompositionEntity {
    }
 
    /**
-    * @return the rameCodeMotriceRegimeComposition
-    */
-   public String getRameCodeMotriceRegimeComposition() {
-      return this.rameCodeMotriceRegimeComposition;
-   }
-
-   /**
-    * @param rameCodeMotriceRegimeComposition
-    *           the rameCodeMotriceRegimeComposition to set
-    */
-   public void setRameCodeMotriceRegimeComposition(String rameCodeMotriceRegimeComposition) {
-      this.rameCodeMotriceRegimeComposition = rameCodeMotriceRegimeComposition;
-   }
-
-   /**
-    * @return the classCodeMotriceRegimeComposition
-    */
-   public String getClassCodeMotriceRegimeComposition() {
-      return this.classCodeMotriceRegimeComposition;
-   }
-
-   /**
-    * @param classCodeMotriceRegimeComposition
-    *           the classCodeMotriceRegimeComposition to set
-    */
-   public void setClassCodeMotriceRegimeComposition(String classCodeMotriceRegimeComposition) {
-      this.classCodeMotriceRegimeComposition = classCodeMotriceRegimeComposition;
-   }
-
-   /**
     * @return the carsNumbers
     */
    public List<MotriceRegimeCompositionCoachEntity> getCarsNumbers() {
@@ -166,12 +133,28 @@ public class MotriceRegimeCompositionEntity {
       this.motriceRegime = motriceRegime;
    }
 
-   public String getDiagCodeMotriceRegimeComposition() {
-      return this.diagCodeMotriceRegimeComposition;
+   public MotriceRefCompositionClassEntity getMotriceRefCompositionClassEntity() {
+      return this.motriceRefCompositionClassEntity;
    }
 
-   public void setDiagCodeMotriceRegimeComposition(String diagCodeMotriceRegimeComposition) {
-      this.diagCodeMotriceRegimeComposition = diagCodeMotriceRegimeComposition;
+   public void setMotriceRefCompositionClassEntity(MotriceRefCompositionClassEntity motriceRefCompositionClassEntity) {
+      this.motriceRefCompositionClassEntity = motriceRefCompositionClassEntity;
+   }
+
+   public MotriceRefCodeDiagrammeEntity getMotriceRefCodeDiagrammeEntity() {
+      return this.motriceRefCodeDiagrammeEntity;
+   }
+
+   public void setMotriceRefCodeDiagrammeEntity(MotriceRefCodeDiagrammeEntity motriceRefCodeDiagrammeEntity) {
+      this.motriceRefCodeDiagrammeEntity = motriceRefCodeDiagrammeEntity;
+   }
+
+   public MotriceRefRameCodeEntity getMotriceRefRameCodeEntity() {
+      return this.motriceRefRameCodeEntity;
+   }
+
+   public void setMotriceRefRameCodeEntity(MotriceRefRameCodeEntity motriceRefRameCodeEntity) {
+      this.motriceRefRameCodeEntity = motriceRefRameCodeEntity;
    }
 
 }

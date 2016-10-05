@@ -60,25 +60,25 @@ public class TraiteMotriceRegimeDistribution extends AFiltreObjetMetier implemen
       Regime newRegime = null;
       MotriceRefDistributionEntity refDistributionEntity;
       for (Object[] record : rDistribution) {
+         /* Données de référence */
+         refDistributionEntity = new MotriceRefDistributionEntity();
+         refDistributionEntity.setLabelDistribution((String) record[0]);
+         refDistributionEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refDistributionEntity = (MotriceRefDistributionEntity) InsertRefDataService.persistRefData(refDistributionEntity, entityManager);
+
          if (!regime.equals((String) record[1])) {
             newRegime = new Regime((String) record[1], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 10, idTrainTranche);
          }
-         generatorDistribution.addValue(idDistribution.getAndIncrement(), (String) record[0], idRegime);
+         generatorDistribution.addValue(idDistribution.getAndIncrement(), refDistributionEntity.getIdMotriceRefDistribution(), idRegime);
 
          if (this.filtreDateAjout(newRegime)) {
-            listeDistributions.add(new Distribution((String) record[0],
+            listeDistributions.add(new Distribution(refDistributionEntity.getLabelDistribution(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
 
          regime = (String) record[1];
-         
-         /* Données de référence */
-         refDistributionEntity = new MotriceRefDistributionEntity();
-         refDistributionEntity.setLabelDistribution((String) record[0]);
-         refDistributionEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refDistributionEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeDistributions);
    }

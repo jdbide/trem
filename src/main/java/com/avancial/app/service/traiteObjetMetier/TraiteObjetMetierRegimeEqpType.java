@@ -25,7 +25,7 @@ public class TraiteObjetMetierRegimeEqpType extends AFiltreObjetMetier implement
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeEqpTypeEntity regimeEqpType : regime.getMotriceRegimeEqpType()) {
-            listeTypeEquipement.add(new TypeEquipement(regimeEqpType.getEqpTypeRegimeEqpType(),
+            listeTypeEquipement.add(new TypeEquipement(regimeEqpType.getMotriceRefEqpTypeEntity().getLabelEqpType(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }

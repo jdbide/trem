@@ -54,6 +54,12 @@ public class TraiteMotriceRegimeSatcode extends AFiltreObjetMetier implements IT
       Regime newRegime = null;
       MotriceRefSatcodeEntity refSatcodeEntity;
       for (Object[] satcode : listeSatcode) {
+         /* Données de référénce */
+         refSatcodeEntity = new MotriceRefSatcodeEntity();
+         refSatcodeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refSatcodeEntity.setLabelSatCode((String) satcode[0]);
+         refSatcodeEntity = (MotriceRefSatcodeEntity) InsertRefDataService.persistRefData(refSatcodeEntity, entityManager);
+
          if (!oldRegime.equals(satcode[1])) {
             // si le régime traité est
             // différent du précédent
@@ -65,19 +71,13 @@ public class TraiteMotriceRegimeSatcode extends AFiltreObjetMetier implements IT
                   motriceTrainTrancheEntity.getIdMotriceTrainTranche());
          }
          // insertion du régime code sat lié au régime
-         mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class).addValue(idRegimeSatcode.getAndIncrement(), satcode[0],
-               idRegime.get());
+         mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class).addValue(idRegimeSatcode.getAndIncrement(),
+               refSatcodeEntity.getIdMotriceRefSatCode(), idRegime.get());
          if (this.filtreDateAjout(newRegime)) {
-            listeCodeSat.add(new CodeSat((String) satcode[0],
+            listeCodeSat.add(new CodeSat(refSatcodeEntity.getLabelSatCode(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          oldRegime = (String) satcode[1];
-
-         /* Données de référénce */
-         refSatcodeEntity = new MotriceRefSatcodeEntity();
-         refSatcodeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         refSatcodeEntity.setLabelSatCode((String) satcode[0]);
-         InsertRefDataService.persistRefData(refSatcodeEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeCodeSat);
    }

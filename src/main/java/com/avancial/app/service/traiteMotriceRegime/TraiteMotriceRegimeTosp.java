@@ -51,6 +51,12 @@ public class TraiteMotriceRegimeTosp extends AFiltreObjetMetier implements ITrai
       Regime newRegime = null;
       MotriceRefTospEntity refTospEntity;
       for (Object[] tosp : resultListTosp) {
+         /* Données de référence */
+         refTospEntity = new MotriceRefTospEntity();
+         refTospEntity.setCodeMotriceRefTosp((String) tosp[0]);
+         refTospEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refTospEntity = (MotriceRefTospEntity) InsertRefDataService.persistRefData(refTospEntity, entityManager);
+
          if (!oldRegime.equals(tosp[1])) {
             // si le régime traité est
             // différent du précédent
@@ -62,18 +68,13 @@ public class TraiteMotriceRegimeTosp extends AFiltreObjetMetier implements ITrai
                   motriceTrainTrancheEntity.getIdMotriceTrainTranche());
          }
          // insertion du régime tosp lié au régime
-         mapGeneratorTablesMotriceRegime.get(MotriceRegimeTospEntity.class).addValue(idRegimeTosp.getAndIncrement(), tosp[0], idRegime.get());
+         mapGeneratorTablesMotriceRegime.get(MotriceRegimeTospEntity.class).addValue(idRegimeTosp.getAndIncrement(),
+               refTospEntity.getIdMotriceRefTosp(), idRegime.get());
          if (this.filtreDateAjout(newRegime)) {
-            listeTosp.add(new Tosp((String) tosp[0],
+            listeTosp.add(new Tosp(refTospEntity.getCodeMotriceRefTosp(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          oldRegime = (String) tosp[1];
-
-         /* Données de référence */
-         refTospEntity = new MotriceRefTospEntity();
-         refTospEntity.setCodeMotriceRefTosp((String) tosp[0]);
-         refTospEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refTospEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeTosp);
    }

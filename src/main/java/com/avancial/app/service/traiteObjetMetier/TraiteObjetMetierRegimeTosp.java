@@ -25,7 +25,7 @@ public class TraiteObjetMetierRegimeTosp extends AFiltreObjetMetier implements I
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeTospEntity regimeTosp : regime.getMotriceRegimeTosp()) {
-            listeTosp.add(new Tosp(regimeTosp.getOureCodeMotriceRegimeTosp(),
+            listeTosp.add(new Tosp(regimeTosp.getMotriceRefTospEntity().getCodeMotriceRefTosp(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }

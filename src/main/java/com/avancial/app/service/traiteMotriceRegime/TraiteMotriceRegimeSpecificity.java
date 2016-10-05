@@ -121,19 +121,20 @@ public class TraiteMotriceRegimeSpecificity extends AFiltreObjetMetier implement
 
       MotriceRefCodeDiagrammeEntity refCodeDiagrammeEntity;
       for (Object[] comp : listeComp) {
-         KeyMotriceRegimeSpecificity key = new KeyMotriceRegimeSpecificity((String) comp[0], (String) comp[4], (String) comp[5], (String) comp[3]);
+         /* Données de référence */
+         refCodeDiagrammeEntity = new MotriceRefCodeDiagrammeEntity();
+         refCodeDiagrammeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refCodeDiagrammeEntity.setLabelCodeDiagramme((String) comp[5]);
+         refCodeDiagrammeEntity = (MotriceRefCodeDiagrammeEntity) InsertRefDataService.persistRefData(refCodeDiagrammeEntity, entityManager);
+
+         KeyMotriceRegimeSpecificity key = new KeyMotriceRegimeSpecificity((String) comp[0], (String) comp[4],
+               refCodeDiagrammeEntity.getLabelCodeDiagramme(), (String) comp[3]);
          Collection<String> compartiments = mapRegimeCodeDiag.get(key);
          if (compartiments == null) {
             compartiments = new ArrayList<String>();
             mapRegimeCodeDiag.put(key, compartiments);
          }
          compartiments.add((String) comp[1]);
-         
-         /* Données de référence */
-         refCodeDiagrammeEntity = new MotriceRefCodeDiagrammeEntity();
-         refCodeDiagrammeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         refCodeDiagrammeEntity.setLabelCodeDiagramme((String) comp[5]);
-         InsertRefDataService.persistRefData(refCodeDiagrammeEntity, entityManager);
       }
 
       for (KeyMotriceRegimeSpecificity mapKey : mapRegimeCodeDiag.keySet()) {

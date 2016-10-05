@@ -32,13 +32,13 @@ public class TraiteMotriceRegimeFareProfile extends AFiltreObjetMetier implement
 
       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
-      Query query = entityManager.createNativeQuery(
-            "SELECT regimeprofil.TATH_CD_VAL AS fareprofil, regimeprofil.TATH_REGI AS periodMotriceRegime "
-                  + "FROM tremas_import_tmdtath AS regimeprofil "
-                  + "INNER JOIN tremas_import_tmdcath AS cara ON regimeprofil.TATH_TRCH_COD_CIE = cara.CATH_CIRR_COD_CIE "
-                  + "AND regimeprofil.TATH_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 " + "AND regimeprofil.TATH_TRCH_IND_FER = cara.CATH_TRCH_IND_FER "
-                  + "LEFT JOIN tremas_import_tmdsat1 AS satcode ON regimeprofil.TATH_CD_VAL = satcode.SAT1_COD_SAT "
-                  + "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ? AND cara.CATH_ETAT_TRCH = ? AND ISNULL(satcode.SAT1_COD_SAT)" + "ORDER BY periodMotriceRegime ");
+      Query query = entityManager.createNativeQuery("SELECT regimeprofil.TATH_CD_VAL AS fareprofil, regimeprofil.TATH_REGI AS periodMotriceRegime "
+            + "FROM tremas_import_tmdtath AS regimeprofil "
+            + "INNER JOIN tremas_import_tmdcath AS cara ON regimeprofil.TATH_TRCH_COD_CIE = cara.CATH_CIRR_COD_CIE "
+            + "AND regimeprofil.TATH_TRCH_NUM_TRA1 = cara.CATH_TRCH_NUM_TRA1 " + "AND regimeprofil.TATH_TRCH_IND_FER = cara.CATH_TRCH_IND_FER "
+            + "LEFT JOIN tremas_import_tmdsat1 AS satcode ON regimeprofil.TATH_CD_VAL = satcode.SAT1_COD_SAT "
+            + "WHERE cara.CATH_SSIM = ? AND cara.CATH_TRCH_NUM_TRA1 = ? AND cara.CATH_ETAT_TRCH = ? AND ISNULL(satcode.SAT1_COD_SAT)"
+            + "ORDER BY periodMotriceRegime ");
       query.setParameter(1, motriceTrainTrancheEntity.getTrancheNumberMotriceTrainTranche());
       query.setParameter(2, motriceTrainTrancheEntity.getTrainNumberMotriceTrainTranche());
       query.setParameter(3, motriceTrainTrancheEntity.getTrancheStatusMotriceTrainTranche());
@@ -56,6 +56,12 @@ public class TraiteMotriceRegimeFareProfile extends AFiltreObjetMetier implement
       Regime newRegime = null;
       MotriceRefFareProfileCodeEntity refFareProfileCodeEntity;
       for (Object[] fareprofile : listeFareProfil) {
+         /* Données de référence */
+         refFareProfileCodeEntity = new MotriceRefFareProfileCodeEntity();
+         refFareProfileCodeEntity.setLabelFareProfileCode((String) fareprofile[0]);
+         refFareProfileCodeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refFareProfileCodeEntity = (MotriceRefFareProfileCodeEntity) InsertRefDataService.persistRefData(refFareProfileCodeEntity, entityManager);
+
          if (!oldRegime.equals(fareprofile[1])) {
             // si le régime traité est
             // différent du précédent
@@ -68,21 +74,15 @@ public class TraiteMotriceRegimeFareProfile extends AFiltreObjetMetier implement
                   motriceTrainTrancheEntity.getIdMotriceTrainTranche());
          }
          // insertion du régime code sat lié au régime
-         mapGeneratorTablesMotriceRegime.get(MotriceRegimeFareProfileEntity.class).addValue(idRegimeFareprofil.getAndIncrement(), fareprofile[0],
-               idRegime.get());
+         mapGeneratorTablesMotriceRegime.get(MotriceRegimeFareProfileEntity.class).addValue(idRegimeFareprofil.getAndIncrement(),
+               refFareProfileCodeEntity.getIdMotriceRefFareProfileCode(), idRegime.get());
 
          if (this.filtreDateAjout(newRegime)) {
-            listeFareProfile.add(new FareProfile((String) fareprofile[0],
+            listeFareProfile.add(new FareProfile(refFareProfileCodeEntity.getLabelFareProfileCode(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
 
          oldRegime = (String) fareprofile[1];
-         
-         /* Données de référence */
-         refFareProfileCodeEntity = new MotriceRefFareProfileCodeEntity();
-         refFareProfileCodeEntity.setLabelFareProfileCode((String) fareprofile[0]);
-         refFareProfileCodeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refFareProfileCodeEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeFareProfile);
    }

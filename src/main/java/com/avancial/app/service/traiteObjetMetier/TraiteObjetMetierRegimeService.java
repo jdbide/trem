@@ -27,9 +27,10 @@ public class TraiteObjetMetierRegimeService extends AFiltreObjetMetier implement
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeServiceEntity regimeService : regime.getMotriceRegimeServices()) {
-            listeServices.add(new ServiceABord(regimeService.getServiceCodeMotriceRegimeService(),
-                  EnumClasseService.getEnumClasseService(regimeService.getClassMotriceRegimeService()),
-                  new Gare(regimeService.getOrigMotriceRegimeService()), new Gare(regimeService.getDestMotriceRegimeService()),
+            listeServices.add(new ServiceABord(regimeService.getMotriceRefServiceEntity().getLabelService(),
+                  EnumClasseService.getEnumClasseService(regimeService.getMotriceRefServiceClassEntity().getLabelServiceClass()),
+                  new Gare(regimeService.getOrigineMotriceRefGareEntity().getCodeGareMotriceRefGare()),
+                  new Gare(regimeService.getDestinationMotriceRefGareEntity().getCodeGareMotriceRefGare()),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }

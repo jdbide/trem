@@ -59,25 +59,25 @@ public class TraiteMotriceRegimeEqpType extends AFiltreObjetMetier implements IT
       Regime newRegime = null;
       MotriceRefEqpTypeEntity refEqpTypeEntity;
       for (Object[] record : rEqpType) {
+         /* Données de référence */
+         refEqpTypeEntity = new MotriceRefEqpTypeEntity();
+         refEqpTypeEntity.setLabelEqpType((String) record[0]);
+         refEqpTypeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refEqpTypeEntity = (MotriceRefEqpTypeEntity) InsertRefDataService.persistRefData(refEqpTypeEntity, entityManager);
+
          if (!regime.equals((String) record[1])) {
             newRegime = new Regime((String) record[1], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 8, idTrainTranche);
          }
-         generatorEqpType.addValue(idEqpType.getAndIncrement(), (String) record[0], idRegime);
+         generatorEqpType.addValue(idEqpType.getAndIncrement(), refEqpTypeEntity.getIdMotriceRefEqpType(), idRegime);
 
          if (this.filtreDateAjout(newRegime)) {
-            listeTypeEquipement.add(new TypeEquipement((String) record[0],
+            listeTypeEquipement.add(new TypeEquipement(refEqpTypeEntity.getLabelEqpType(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
 
          regime = (String) record[1];
-
-         /* Données de référence */
-         refEqpTypeEntity = new MotriceRefEqpTypeEntity();
-         refEqpTypeEntity.setLabelEqpType((String) record[0]);
-         refEqpTypeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
-         InsertRefDataService.persistRefData(refEqpTypeEntity, entityManager);
       }
       atomicTranche.get().addAttributsField(listeTypeEquipement);
    }
