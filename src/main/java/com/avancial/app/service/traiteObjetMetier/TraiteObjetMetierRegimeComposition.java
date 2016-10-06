@@ -32,10 +32,10 @@ public class TraiteObjetMetierRegimeComposition extends AFiltreObjetMetier imple
             for (MotriceRegimeCompositionCoachEntity voiture : regimeComposition.getCarsNumbers()) {
                voitures.add(new Voiture(voiture.getCoachNumberMotriceRegimeCompositionCoach(), null));
             }
-            listeCompositions.add(
-                  new Composition(regimeComposition.getClassCodeMotriceRegimeComposition(), regimeComposition.getDiagCodeMotriceRegimeComposition(),
-                        regimeComposition.getRameCodeMotriceRegimeComposition(), regimeComposition.getRmCodeMotriceRegimeComposition(), voitures,
-                        new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
+            listeCompositions.add(new Composition(regimeComposition.getMotriceRefCompositionClassEntity().getLabelCompositionClass(),
+                  regimeComposition.getMotriceRefCodeDiagrammeEntity().getLabelCodeDiagramme(),
+                  regimeComposition.getMotriceRefRameCodeEntity().getLabelRameCode(), regimeComposition.getRmCodeMotriceRegimeComposition(), voitures,
+                  new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }
       atomicTranche.get().addAttributsField(listeCompositions);

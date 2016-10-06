@@ -26,7 +26,8 @@ public class TraiteObjetMetierRegimeOD extends AFiltreObjetMetier implements ITr
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeODEntity regimeOD : regime.getMotriceRegimeOD()) {
-            listeOD.add(new OrigineDestination(new Gare(regimeOD.getOriMotriceRegimeOD()), new Gare(regimeOD.getDestMotriceRegimeOD()),
+            listeOD.add(new OrigineDestination(new Gare(regimeOD.getMotriceRefODEntity().getCodeGareOrigineMotriceRefOd()),
+                  new Gare(regimeOD.getMotriceRefODEntity().getCodeGareDestinationMotriceRefOd()),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }

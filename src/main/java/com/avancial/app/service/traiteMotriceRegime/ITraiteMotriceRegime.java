@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.persistence.EntityManager;
@@ -25,10 +24,10 @@ public interface ITraiteMotriceRegime {
     *           TODO
     * @param atomicTranche
     *           TODO
-    * @throws ParseException
+    * @throws Exception TODO
     */
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException;
+         throws Exception;
 
 }

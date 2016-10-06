@@ -16,30 +16,22 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_specificity")
-@NamedQueries({ @NamedQuery(name = "MotriceRegimeSpecificity.getAll",
-      query = "SELECT t FROM MotriceRegimeSpecificityEntity t"),
-      @NamedQuery(name = "MotriceRegimeSpecificity.deleteAll",
-            query = "DELETE FROM MotriceRegimeSpecificityEntity"),
-      @NamedQuery(name = "MotriceRegimeSpecificity.deleteByRegimes",
-            query = "DELETE FROM MotriceRegimeSpecificityEntity t WHERE t.motriceRegime IN (:regimes)"),
-      @NamedQuery(name = "MotriceRegimeSpecificityEntity.getLastId",
-            query = "SELECT MAX( t.idMotriceRegimeSpecificity ) FROM MotriceRegimeSpecificityEntity t") })
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeSpecificity.getAll", query = "SELECT t FROM MotriceRegimeSpecificityEntity t"),
+      @NamedQuery(name = "MotriceRegimeSpecificity.deleteAll", query = "DELETE FROM MotriceRegimeSpecificityEntity"),
+      @NamedQuery(name = "MotriceRegimeSpecificity.deleteByRegimes", query = "DELETE FROM MotriceRegimeSpecificityEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeSpecificityEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeSpecificity ) FROM MotriceRegimeSpecificityEntity t") })
 public class MotriceRegimeSpecificityEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long                idMotriceRegimeSpecificity;
-   @Column(length = 3,
-         nullable = false)
+   @Column(length = 3, nullable = false)
    private String              coachNumberMotriceRegimeSpecificity;
-   @Column(length = 3,
-         nullable = false)
+   @Column(length = 3, nullable = false)
    private String              compartmentNumberMotriceRegimeSpecificity;
-   @Column(length = 3,
-         nullable = false)
+   @Column(length = 3, nullable = false)
    private String              seatNumberMotriceRegimeSpecificity;
-   @Column(length = 2,
-         nullable = false)
+   @Column(length = 2, nullable = false)
    private String              stateCodeMotriceRegimeSpecificity;
 
    @ManyToOne(fetch = FetchType.EAGER)

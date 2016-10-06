@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefDistributionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeDistributionEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -18,6 +18,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Distribution;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -27,7 +28,7 @@ public class TraiteMotriceRegimeDistribution extends AFiltreObjetMetier implemen
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException {
+         throws Exception {
 
       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
@@ -57,16 +58,23 @@ public class TraiteMotriceRegimeDistribution extends AFiltreObjetMetier implemen
       }
 
       Regime newRegime = null;
+      MotriceRefDistributionEntity refDistributionEntity;
       for (Object[] record : rDistribution) {
+         /* Données de référence */
+         refDistributionEntity = new MotriceRefDistributionEntity();
+         refDistributionEntity.setLabelDistribution((String) record[0]);
+         refDistributionEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refDistributionEntity = (MotriceRefDistributionEntity) InsertRefDataService.persistRefData(refDistributionEntity, entityManager);
+
          if (!regime.equals((String) record[1])) {
             newRegime = new Regime((String) record[1], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[1], 10, idTrainTranche);
          }
-         generatorDistribution.addValue(idDistribution.getAndIncrement(), (String) record[0], idRegime);
+         generatorDistribution.addValue(idDistribution.getAndIncrement(), refDistributionEntity.getIdMotriceRefDistribution(), idRegime);
 
          if (this.filtreDateAjout(newRegime)) {
-            listeDistributions.add(new Distribution((String) record[0],
+            listeDistributions.add(new Distribution(refDistributionEntity.getLabelDistribution(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
 

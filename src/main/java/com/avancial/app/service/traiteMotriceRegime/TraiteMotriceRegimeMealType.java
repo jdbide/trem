@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefMealTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeMealTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -21,6 +21,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -30,7 +31,7 @@ public class TraiteMotriceRegimeMealType extends AFiltreObjetMetier implements I
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException {
+         throws Exception {
 
       IMultipleInsertRequestGenerator generatorRegime = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class);
       IMultipleInsertRequestGenerator generatorMeal = mapGeneratorTablesMotriceRegime.get(MotriceRegimeMealTypeEntity.class);
@@ -61,21 +62,29 @@ public class TraiteMotriceRegimeMealType extends AFiltreObjetMetier implements I
       }
 
       Regime newRegime = null;
+      MotriceRefMealTypeEntity refMealTypeEntity;
       for (Object[] record : rDistribution) {
+         /* Données de référence */
+         refMealTypeEntity = new MotriceRefMealTypeEntity();
+         refMealTypeEntity.setCodeMealType((String) record[0]);
+         refMealTypeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refMealTypeEntity = (MotriceRefMealTypeEntity) InsertRefDataService.persistRefData(refMealTypeEntity, entityManager);
+
          if (!regime.equals((String) record[3])) {
             newRegime = new Regime((String) record[3], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
 
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[3], 9, idTrainTranche);
          }
-         generatorMeal.addValue(idMeal.getAndIncrement(), (String) record[0], (String) record[1], (String) record[2], idRegime);
+         generatorMeal.addValue(idMeal.getAndIncrement(), refMealTypeEntity.getIdMotriceRefMealType(), (String) record[1], (String) record[2], idRegime);
 
          if (this.filtreDateAjout(newRegime)) {
-            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas((String) record[0]),
+            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(refMealTypeEntity.getCodeMealType()),
                   new Horaire(formatter.parse((String) record[1]), formatter.parse((String) record[2])),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          regime = (String) record[3];
+
       }
       atomicTranche.get().addAttributsField(listeMeal);
    }

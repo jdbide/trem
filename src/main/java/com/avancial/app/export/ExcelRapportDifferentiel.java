@@ -101,9 +101,10 @@ public class ExcelRapportDifferentiel extends AExcelRapportComparaisonPlanTransp
       this.excelTools.createCellTexteWithStyle(2, "", this.excelTools.styleEnteteJaune);
       this.excelTools.createCellTexteWithStyle(3, "", this.excelTools.styleEnteteJaune);
       CompagnieEnvironnementEntity compagnieEnvironnement = this.mapPlansDeTransport.getJeuDonneesDraft().getCompagnieEnvironnement();
-      this.excelTools.createCellTexteWithStyle(4, compagnieEnvironnement == null ? "" : compagnieEnvironnement.getLibelleCompagnie(),
+      this.excelTools.createCellTexteWithStyle(4, compagnieEnvironnement == null ? "" : compagnieEnvironnement.getCompagnie().getLibelleCompagnie(),
             this.excelTools.styleEnteteJaune);
-      this.excelTools.createCellTexteWithStyle(5, compagnieEnvironnement == null ? "" : compagnieEnvironnement.getLibelleEnvironnement(),
+      this.excelTools.createCellTexteWithStyle(5,
+            compagnieEnvironnement == null ? "" : compagnieEnvironnement.getEnvironnement().getLibelleEnvironnement(),
             this.excelTools.styleEnteteJaune);
 
       SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YY - HH:mm");

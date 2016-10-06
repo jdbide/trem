@@ -16,33 +16,33 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_restriction")
-@NamedQueries({ @NamedQuery(name = "MotriceRegimeRestriction.getAll",
-      query = "SELECT t FROM MotriceRegimeRestrictionEntity t"),
-      @NamedQuery(name = "MotriceRegimeRestriction.deleteAll",
-            query = "DELETE FROM MotriceRegimeRestrictionEntity"),
-      @NamedQuery(name = "MotriceRegimeRestriction.deleteByRegimes",
-            query = "DELETE FROM MotriceRegimeRestrictionEntity t WHERE t.motriceRegime IN (:regimes)"),
-      @NamedQuery(name = "MotriceRegimeRestrictionEntity.getLastId",
-            query = "SELECT MAX( t.idMotriceRegimeRestriction ) FROM MotriceRegimeRestrictionEntity t") })
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeRestriction.getAll", query = "SELECT t FROM MotriceRegimeRestrictionEntity t"),
+      @NamedQuery(name = "MotriceRegimeRestriction.deleteAll", query = "DELETE FROM MotriceRegimeRestrictionEntity"),
+      @NamedQuery(name = "MotriceRegimeRestriction.deleteByRegimes", query = "DELETE FROM MotriceRegimeRestrictionEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeRestrictionEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeRestriction ) FROM MotriceRegimeRestrictionEntity t") })
 public class MotriceRegimeRestrictionEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long                idMotriceRegimeRestriction;
+   private Long                 idMotriceRegimeRestriction;
 
    @Column(nullable = false)
-   private String              typeMotriceRegimeRestriction;
+   private String               typeMotriceRegimeRestriction;
 
-   @Column(length = 5)
-   private String              origineMotriceRegimeRestriction;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idOrigineMotriceRefGare")
+   @ForeignKey(name = "FK_motrice_regime_restriction_idOrigineMotriceRefGare")
+   private MotriceRefGareEntity origineMotriceRefGareEntity;
 
-   @Column(length = 5)
-   private String              destinationMotriceRegimeRestriction;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idDestinationMotriceRefGare")
+   @ForeignKey(name = "FK_motrice_regime_restriction_idDestinationMotriceRefGare")
+   private MotriceRefGareEntity destinationMotriceRefGareEntity;
 
    @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "idMotriceRegime")
    @ForeignKey(name = "FK_motrice_regime_restriction_idMotriceRegime")
-   private MotriceRegimeEntity motriceRegime;
+   private MotriceRegimeEntity  motriceRegime;
 
    /**
     * @return the idMotriceRegimeRestriction
@@ -75,36 +75,6 @@ public class MotriceRegimeRestrictionEntity {
    }
 
    /**
-    * @return the origineMotriceRegimeRestriction
-    */
-   public String getOrigineMotriceRegimeRestriction() {
-      return this.origineMotriceRegimeRestriction;
-   }
-
-   /**
-    * @param origineMotriceRegimeRestriction
-    *           the origineMotriceRegimeRestriction to set
-    */
-   public void setOrigineMotriceRegimeRestriction(String origineMotriceRegimeRestriction) {
-      this.origineMotriceRegimeRestriction = origineMotriceRegimeRestriction;
-   }
-
-   /**
-    * @return the destinationMotriceRegimeRestriction
-    */
-   public String getDestinationMotriceRegimeRestriction() {
-      return this.destinationMotriceRegimeRestriction;
-   }
-
-   /**
-    * @param destinationMotriceRegimeRestriction
-    *           the destinationMotriceRegimeRestriction to set
-    */
-   public void setDestinationMotriceRegimeRestriction(String destinationMotriceRegimeRestriction) {
-      this.destinationMotriceRegimeRestriction = destinationMotriceRegimeRestriction;
-   }
-
-   /**
     * @return the motriceRegime
     */
    public MotriceRegimeEntity getMotriceRegime() {
@@ -117,6 +87,22 @@ public class MotriceRegimeRestrictionEntity {
     */
    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
       this.motriceRegime = motriceRegime;
+   }
+
+   public MotriceRefGareEntity getOrigineMotriceRefGareEntity() {
+      return this.origineMotriceRefGareEntity;
+   }
+
+   public void setOrigineMotriceRefGareEntity(MotriceRefGareEntity origineMotriceRefGareEntity) {
+      this.origineMotriceRefGareEntity = origineMotriceRefGareEntity;
+   }
+
+   public MotriceRefGareEntity getDestinationMotriceRefGareEntity() {
+      return this.destinationMotriceRefGareEntity;
+   }
+
+   public void setDestinationMotriceRefGareEntity(MotriceRefGareEntity destinationMotriceRefGareEntity) {
+      this.destinationMotriceRefGareEntity = destinationMotriceRefGareEntity;
    }
 
 }

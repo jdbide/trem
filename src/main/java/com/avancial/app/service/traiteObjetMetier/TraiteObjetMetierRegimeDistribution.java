@@ -25,7 +25,7 @@ public class TraiteObjetMetierRegimeDistribution extends AFiltreObjetMetier impl
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeDistributionEntity regimeDistribution : regime.getMotriceRegimeDistribution()) {
-            listeDistributions.add(new Distribution(regimeDistribution.getDistribIndexMotriceRegimeDistribution(),
+            listeDistributions.add(new Distribution(regimeDistribution.getMotriceRefDistributionEntity().getLabelDistribution(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }

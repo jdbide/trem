@@ -16,48 +16,30 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_mealtype")
-@NamedQueries({ @NamedQuery(name = "MotriceRegimeMealTypeEntity.getAll",
-      query = "SELECT t FROM MotriceRegimeMealTypeEntity t"),
-      @NamedQuery(name = "MotriceRegimeMealType.deleteAll",
-            query = "DELETE FROM MotriceRegimeMealTypeEntity"),
-      @NamedQuery(name = "MotriceRegimeMealType.deleteByRegimes",
-            query = "DELETE FROM MotriceRegimeMealTypeEntity t WHERE t.motriceRegime IN (:regimes)"),
-      @NamedQuery(name = "MotriceRegimeMealTypeEntity.getLastId",
-            query = "SELECT MAX( t.idMotriceRegimeMealType ) FROM MotriceRegimeMealTypeEntity t") })
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeMealTypeEntity.getAll", query = "SELECT t FROM MotriceRegimeMealTypeEntity t"),
+      @NamedQuery(name = "MotriceRegimeMealType.deleteAll", query = "DELETE FROM MotriceRegimeMealTypeEntity"),
+      @NamedQuery(name = "MotriceRegimeMealType.deleteByRegimes", query = "DELETE FROM MotriceRegimeMealTypeEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeMealTypeEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeMealType ) FROM MotriceRegimeMealTypeEntity t") })
 public class MotriceRegimeMealTypeEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long                idMotriceRegimeMealType;
-   @Column(length = 1,
-         nullable = false)
-   private String              mealTypeMotriceRegimeMealType;
-   @Column(length = 8,
-         nullable = false)
-   private String              beginServiceHourRegimeMealType;
-   @Column(length = 8,
-         nullable = false)
-   private String              endServiceHourMotriceRegimeMealType;
+   private Long                     idMotriceRegimeMealType;
+
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRefMealType")
+   @ForeignKey(name = "FK_motrice_regime_mealtype_idMotriceRefMealType")
+   private MotriceRefMealTypeEntity motriceRefMealTypeEntity;
+
+   @Column(length = 8, nullable = false)
+   private String                   beginServiceHourRegimeMealType;
+   @Column(length = 8, nullable = false)
+   private String                   endServiceHourMotriceRegimeMealType;
 
    @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "idMotriceRegime")
    @ForeignKey(name = "FK_motrice_regime_mealtype_idMotriceRegime")
-   private MotriceRegimeEntity motriceRegime;
-
-   /**
-    * @return the mealTypeMotriceRegimeMealType
-    */
-   public String getMealTypeMotriceRegimeMealType() {
-      return this.mealTypeMotriceRegimeMealType;
-   }
-
-   /**
-    * @param mealTypeMotriceRegimeMealType
-    *           the mealTypeMotriceRegimeMealType to set
-    */
-   public void setMealTypeMotriceRegimeMealType(String mealTypeMotriceRegimeMealType) {
-      this.mealTypeMotriceRegimeMealType = mealTypeMotriceRegimeMealType;
-   }
+   private MotriceRegimeEntity      motriceRegime;
 
    /**
     * @return the beginServiceHourRegimeMealType
@@ -110,6 +92,14 @@ public class MotriceRegimeMealTypeEntity {
 
    public void setIdMotriceRegimeMealType(Long idMotriceRegimeMealType) {
       this.idMotriceRegimeMealType = idMotriceRegimeMealType;
+   }
+
+   public MotriceRefMealTypeEntity getMotriceRefMealTypeEntity() {
+      return this.motriceRefMealTypeEntity;
+   }
+
+   public void setMotriceRefMealTypeEntity(MotriceRefMealTypeEntity motriceRefMealTypeEntity) {
+      this.motriceRefMealTypeEntity = motriceRefMealTypeEntity;
    }
 
 }
