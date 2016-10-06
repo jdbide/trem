@@ -33,7 +33,7 @@
 												ng-disabled="$parent.disabledAll"
 												ngf-max-files="1"
 												ngf-pattern="'.xlsx'"
-												ngf-model-invalid="invalidFirstFiles"
+												ngf-model-invalid="$parent.files.firstFile.invalidFile"
 												required
 											/>
 										</div>
@@ -45,10 +45,10 @@
 			                    	<p>{{$parent.files.firstFile.msgError}}</p>
 			                  	</div>
 							</div>
-							<div ng-show="invalidFirstFiles" class="col-md-12 " style="padding-top: 20px;">
+							<div ng-show="$parent.files.firstFile.invalidFile && $parent.files.firstFile.invalidFile.$errorMessages.pattern" class="col-md-12 " style="padding-top: 20px;">
 								<div class="callout callout-danger">
-			                    	<p ng-repeat="f in invalidFirstFiles">
-			                    		Invalid File: {{f.$errorMessages}} {{f.$errorParam}}, {{f.name}} - size: {{f.size}}B - type:{{f.type}}
+			                    	<p >
+			                    		Invalid type : please select a .xlsx file.
 			                    	</p>
 			                  	</div>
 							</div>
@@ -115,10 +115,26 @@
 										<div class="btn btn-default file-input">
 											<span class="glyphicon glyphicon-folder-open"></span> 
 											<span class="file-title">Browse</span> 
-											<input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" ng-model="$parent.files.secondFile.file" ngf-select="selectedFile(2)"/>
+											<input type="file" name="input-file-preview"
+												accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+												ng-model="$parent.files.secondFile.file"
+												ngf-select="selectedFile(2)"
+												ng-disabled="$parent.disabledAll"
+												ngf-max-files="1"
+												ngf-pattern="'.xlsx'"
+												ngf-model-invalid="$parent.files.secondFile.invalidFile"
+												required
+											/>
 										</div>
 									</span><!-- if (files.firstFile.isFinishTraitementSuccess!=true) return 'disabled' -->
 								</div>
+							</div>
+							<div ng-show="$parent.files.secondFile.invalidFile  && $parent.files.secondFile.invalidFile.$errorMessages.pattern" class="col-md-12 " style="padding-top: 20px;">
+								<div class="callout callout-danger">
+			                    	<p >
+			                    		Invalid type : please select a .xlsx file.
+			                    	</p>
+			                  	</div>
 							</div>
 							<div  class="col-md-12 " ng-show="$parent.files.secondFile.etat.isStartTraitement">
 								<div class="box box-solid">

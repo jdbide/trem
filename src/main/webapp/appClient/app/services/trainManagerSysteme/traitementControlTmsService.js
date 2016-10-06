@@ -33,13 +33,13 @@ socle_app.service('traitementControlTmsService', function() {
 			file: null,
 			etat: etatUpdate.init(),
 			msgError:null,
-			invalidFiles:null
+			invalidFile:null
 		},
 		secondFile : {
 			file: null,
 			etat: etatUpdate.init(),
 			msgError:null,
-			invalidFiles:null
+			invalidFile:null
 		}
 	};
 
@@ -50,16 +50,22 @@ socle_app.service('traitementControlTmsService', function() {
 	}
 	
 	self.init = function () {
-		files.firstFile = {file:null,etat:etatUpdate.init(),msgError:null,invalidFiles:null};
-		files.secondFile = {file:null,etat:etatUpdate.init(),msgError:null,invalidFiles:null};
+		files.firstFile = {file:null,etat:etatUpdate.init(),msgError:null,invalidFile:null};
+		files.secondFile = {file:null,etat:etatUpdate.init(),msgError:null,invalidFile:null};
 	}
 	
 	self.initFirstFile = function () {
-		files.firstFile = {file:null,etat:etatUpdate.init(),msgError:null,invalidFiles:null};
+		files.firstFile.file = null;
+		files.firstFile.msgError = null;
+		files.firstFile.invalidFile = null;
+		files.firstFile.etat = etatUpdate.init();
 	}
 	
 	self.initSecondFile = function () {
-		files.secondFile = {file:null,etat:etatUpdate.init(),msgError:null,invalidFiles:null};
+		files.secondFile.file = null;
+		files.secondFile.msgError = null;
+		files.secondFile.invalidFile = null;
+		files.secondFile.etat = etatUpdate.init();
 	}
 
 	return self;

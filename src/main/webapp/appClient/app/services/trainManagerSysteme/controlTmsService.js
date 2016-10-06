@@ -131,6 +131,24 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
         return deffered.promise;
 	}
 	
+	self.uploadUsing$http = function (file, idJeuDonneesControl, typeFile) {
+		console.log("==> 1");
+//		+idJeuDonneesControl+"/"+typeFile
+		file.upload = jsonFactory.uploadFile("webService/app/controlTms/uploadFile/", file)
+		file.upload.then(function (response) {
+			file.result = response.data;
+			alert(file.result.data);
+		}, function (response) {
+			if (response.status > 0)
+				alert("Error upload file : " + response.status + ': ' + response.data);
+			}
+		);
+
+		file.upload.progress(function (evt) {
+			file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+		});
+	}
+	
 	self.getReponse = function () {
     	return reponse;
     }

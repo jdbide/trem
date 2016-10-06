@@ -4,8 +4,8 @@
  * Contrôleur qui gère la page "Control" du chapitre "Train manager systeme", 
  *
  */
-socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$interval',"controlTmsService", "Upload",'$http','traitementControlTmsService',
-                                 function($rootScope, $scope, envService, $interval, controlTmsService, Upload, $http, traitementControlTmsService) {
+socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$interval',"controlTmsService", 'traitementControlTmsService',
+                                 function($rootScope, $scope, envService, $interval, controlTmsService, traitementControlTmsService) {
 	$scope.title = "Control";
 	// Liste des CompagnieEnvironnement
 	$scope.partitions = null;
@@ -215,23 +215,31 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	 * TimeTable file doit etre uploadé avnt Yield file
 	 */
 	$scope.selectedFile = function (idInputFile) {
-		console.log("==> selectedFirstFile");
+		console.log("==> selectedFile");
 		$scope.files = traitementControlTmsService.files();
 
 		if (idInputFile == 2 && $scope.files.firstFile.file == null) {
+			console.log("====== je suis la 1");
+			traitementControlTmsService.init();
+			
 			$scope.files.firstFile.msgError="Please upload the TimeTable file";
-			traitementControlTmsService.initSecondFile();
 		}
 		
-		if (idInputFile == 2 && $scope.files.firstFile.file != null && $scope.files.firstFile.etat.isFinishTraitementSuccess != true) {
-			$scope.files.firstFile.msgError="Please upload the TimeTable file";
+		else if (idInputFile == 2 && $scope.files.firstFile.file != null && $scope.files.firstFile.etat.isFinishTraitementSuccess != true) {
+			console.log("====== je suis la 2");
 			traitementControlTmsService.initSecondFile();
+			$scope.files.firstFile.msgError="Please upload the TimeTable file";
 		}
 		
-		if (idInputFile == 2) {
+		else if (idInputFile == 2) {
+			console.log("====== je suis la 3");
 			$scope.files.secondFile.msgError=null;
+			$scope.files.firstFile.invalidFile=null;
 		} else if (idInputFile == 1){
+			console.log("====== je suis la 4");
 			$scope.files.firstFile.msgError=null;
+			$scope.files.firstFile.invalidFile=null;
+			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
 		}
 
 		console.log($scope.files);
@@ -244,7 +252,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	$scope.clickBtnClearFile = function (idInputFile) {
 		console.log("==> clickBtnClearFirsFile");
 		if (idInputFile == 1) {
-			traitementControlTmsService.initFirstFile();
+			traitementControlTmsService.init();
 		} else if (idInputFile == 2) {
 			traitementControlTmsService.initSecondFile();
 		}
@@ -259,7 +267,17 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	 */
 	$scope.clickBtnUploadFile = function (idInputFile) {
 		console.log("==> clickBtnUploadFirsFile");
-		//$scope.disabledAll = true;
+		var typeFile = null;
+		
+		if (idInputFile == 1) {
+			console.log("==> 1 " + $scope.jeuDonneesControl);
+			console.log(traitementControlTmsService.files().firstFile.file);
+			controlTmsService.uploadUsing$http(traitementControlTmsService.files().firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
+
+		} else if (idInputFile == 2) {
+			console.log("==> 2");
+			controlTmsService.uploadUsing$http(traitementControlTmsService.files().secondFile.file,$scope.jeuDonneesControl, "yield");
+		}
 	}
 	
 	/*
@@ -287,14 +305,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		
 		console.log("==> $scope.selectedIdJeuDonnees " + $scope.selectedIdJeuDonnees);
 	}
-	$scope.invalidFiles = [];
-	// make invalidFiles array for not multiple to be able to be used in ng-repeat in the ui
-	$scope.$watch('invalidFiles', function (invalidFiles) {
-		  console.log("Hamza => " + invalidFiles);
-	    if (invalidFiles != null && !angular.isArray(invalidFiles)) {
-	      $timeout(function () {$scope.invalidFiles = [invalidFiles];});
-	    }
-	  });
+
 	/*
 	 * Call constructor
 	 */
