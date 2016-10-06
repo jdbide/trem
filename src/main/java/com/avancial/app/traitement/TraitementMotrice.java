@@ -282,7 +282,6 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          multipleInsertRequestGenerator.executeRequest();
       } catch (Exception e) {
          System.err.println("Erreur dans l'insertion dans la table motrice régime pour l'entité : " + entity.getName());
-         System.out.println("Erreur dans l'insertion dans la table motrice régime pour l'entité : " + entity.getName());
          e.printStackTrace();
          throw e;
       }

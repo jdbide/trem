@@ -18,17 +18,17 @@ public abstract class ASocleExportService implements Serializable {
     * 
     */
    private static final long serialVersionUID = 1L;
-   protected String          fileName        = "export";
-   protected String          fileExtension   = "";
-   protected String          filePath        = "D:/was_tmp/tremas/";
-   protected String          contentType     = "";
-   protected OutputStream    out             = null;
-   protected ResponseBuilder responseBuilder = null;
+   protected String          fileName         = "export";
+   protected String          fileExtension    = "";
+   protected String          filePath         = "D:/was_tmp/tremas/";
+   protected String          contentType      = "";
+   protected OutputStream    out              = null;
+   protected ResponseBuilder responseBuilder  = null;
 
    /**
     * 
     */
-   public ASocleExportService()  throws Exception  {
+   public ASocleExportService() throws Exception {
    }
 
    /**
@@ -36,7 +36,7 @@ public abstract class ASocleExportService implements Serializable {
     * @param fileName
     * @param filePath
     */
-   public ASocleExportService(String fileName, String filePath)  throws Exception  {
+   public ASocleExportService(String fileName, String filePath) throws Exception {
       this.fileName = fileName;
    }
 
@@ -48,7 +48,7 @@ public abstract class ASocleExportService implements Serializable {
     * @param contentType
     * @param httpResponse
     */
-   public ASocleExportService(String fileName, String filePath, String fileExtension)  throws Exception  {
+   public ASocleExportService(String fileName, String filePath, String fileExtension) throws Exception {
       this.fileName = fileName;
       this.fileExtension = fileExtension;
       this.filePath = filePath;
@@ -96,8 +96,8 @@ public abstract class ASocleExportService implements Serializable {
     * @throws Exception
     */
    private void prepareResponse(Object fileDownload) throws Exception {
-      responseBuilder = Response.ok(fileDownload);
-      responseBuilder.header("Content-Disposition", "attachment; filename=\"" + this.fileName + "." + this.fileExtension + "\"");
+      this.responseBuilder = Response.ok(fileDownload);
+      this.responseBuilder.header("Content-Disposition", "attachment; filename=\"" + this.fileName + "." + this.fileExtension + "\"");
       /*
        * TODO A voir
        */
