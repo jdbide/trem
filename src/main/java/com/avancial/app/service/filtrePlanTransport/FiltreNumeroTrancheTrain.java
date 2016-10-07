@@ -18,6 +18,11 @@ class FiltreNumeroTrancheTrain implements IFiltre<Train> {
     */
    private List<String> numeroTranches;
 
+   public FiltreNumeroTrancheTrain(List<String> numeroTranches) {
+      super();
+      this.numeroTranches = numeroTranches;
+   }
+
    @Override
    public Train filtreParCritere(Train object) {
       Train train = new Train();

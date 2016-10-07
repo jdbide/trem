@@ -22,7 +22,10 @@ class FiltreTrainPlanTransport implements IFiltre<PlanTransport> {
    public PlanTransport filtreParCritere(PlanTransport object) {
       PlanTransport planTransport = new PlanTransport();
       planTransport.setCompagnie(object.getCompagnie());
+
+      /* Boucle sur les trains du plan de transport */
       for (Train train : object.getTrains()) {
+         /* On ajoute au résultat les trains filtrés */
          planTransport.getTrains().add(this.filtreTrain.filtreParCritere(train));
       }
       return planTransport;
