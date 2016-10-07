@@ -12,7 +12,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  * @author heloise.guillemaud
  *
  */
-public class FiltrePlanTransport {
+public class CriterePlanTransport {
 
    /**
     * Filtre un plan de transport en fonction de critères donnés : les train-tranche qui ne correspondent pas au critère sont enlevés.
