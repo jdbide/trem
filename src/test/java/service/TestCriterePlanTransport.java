@@ -1,7 +1,10 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.junit.Test;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
@@ -16,42 +19,55 @@ import com.avancial.app.service.filtrePlanTransport.CritereOu;
 import com.avancial.app.service.filtrePlanTransport.CriterePlanTransport;
 import com.avancial.app.service.filtrePlanTransport.CritereTrancheOD;
 import com.avancial.app.service.filtrePlanTransport.FiltreEtPlanTransport;
+import com.avancial.app.service.filtrePlanTransport.FiltreEtRegimePlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreOuPlanTransport;
+import com.avancial.app.service.filtrePlanTransport.FiltreOuRegimePlanTransport;
+import com.avancial.app.service.filtrePlanTransport.FiltreRegimePlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreSousRegimePlanTransport;
 import com.avancial.app.service.filtrePlanTransport.ICritere;
 import com.avancial.app.service.filtrePlanTransport.IFiltre;
+import com.avancial.socle.utils.ListUtils;
 
+import factory.PlanTransportFactory;
 import junit.framework.Assert;
 
 public class TestCriterePlanTransport {
 
-   private Gare               orig                = new Gare("ORIG");
-   private Gare               orig2               = new Gare("OR2");
-   private Gare               dest                = new Gare("DEST");
-   private OrigineDestination origineDestination1 = new OrigineDestination(this.orig, this.dest, new Regime());
-   private OrigineDestination origineDestination2 = new OrigineDestination(this.orig2, this.dest, new Regime());
-   private Tosp               tosp1               = new Tosp("tosp1", new Regime());
-   private Tosp               tosp2               = new Tosp("tosp2", new Regime());
+   private Gare                     orig                = new Gare("ORIG");
+   private Gare                     orig2               = new Gare("OR2");
+   private Gare                     dest                = new Gare("DEST");
+   private OrigineDestination       origineDestination1 = new OrigineDestination(this.orig, this.dest,
+         PlanTransportFactory.generateRegime(PlanTransportFactory.generateDate(0), PlanTransportFactory.generateDate(5)));
+   private OrigineDestination       origineDestination2 = new OrigineDestination(this.orig2, this.dest,
+         PlanTransportFactory.generateRegime(PlanTransportFactory.generateDate(5), PlanTransportFactory.generateDate(15)));
+   private Tosp                     tosp1               = new Tosp("tosp1",
+         PlanTransportFactory.generateRegime(PlanTransportFactory.generateDate(0), PlanTransportFactory.generateDate(10)));
+   private Tosp                     tosp2               = new Tosp("tosp2",
+         PlanTransportFactory.generateRegime(PlanTransportFactory.generateDate(10), PlanTransportFactory.generateDate(15)));
+   private Regime                   regimeTranche       = PlanTransportFactory.generateRegime(PlanTransportFactory.generateDate(0),
+         PlanTransportFactory.generateDate(15));
 
-   // @Test
+   private List<ASousRegimeTranche> ods1                = Arrays.asList((ASousRegimeTranche) this.origineDestination1);
+   private List<ASousRegimeTranche> ods2                = Arrays.asList((ASousRegimeTranche) this.origineDestination2);
+   private List<ASousRegimeTranche> ods1Et2             = Arrays.asList((ASousRegimeTranche) this.origineDestination1,
+         (ASousRegimeTranche) this.origineDestination2);
+   private List<ASousRegimeTranche> tosps1              = Arrays.asList((ASousRegimeTranche) this.tosp1);
+   private List<ASousRegimeTranche> tosps2              = Arrays.asList((ASousRegimeTranche) this.tosp2);
+   private List<ASousRegimeTranche> tosps1Et2           = Arrays.asList((ASousRegimeTranche) this.tosp1, (ASousRegimeTranche) this.tosp2);
+
+   @Test
    public void main() {
       CriterePlanTransport filtrePlanTransport = new CriterePlanTransport();
 
-      List<ASousRegimeTranche> ods1 = new ArrayList<>();
-      ods1.add(this.origineDestination2);
-      ods1.add(this.origineDestination1);
       Tranche tranche1 = new Tranche();
-      tranche1.addAttributsField(ods1);
+      tranche1.addAttributsField(this.ods1Et2);
       List<Tranche> tranches3 = new ArrayList<>();
       tranches3.add(tranche1);
       Train train3 = new Train(tranches3, "1", true);
       PlanTransport planTransport2 = new PlanTransport();
       planTransport2.getTrains().add(train3);
-      List<ASousRegimeTranche> ods3 = new ArrayList<>();
-      ods3.add(this.origineDestination1);
-      ods3.add(this.origineDestination2);
       Tranche tranche3 = new Tranche();
-      tranche3.addAttributsField(ods3);
+      tranche3.addAttributsField(this.ods1Et2);
       List<Tranche> tranches2 = new ArrayList<>();
       tranches2.add(tranche3);
       Train train2 = new Train(tranches2, "2", true);
@@ -79,21 +95,14 @@ public class TestCriterePlanTransport {
       Assert.assertEquals("Test CritereTrainTrancheOu", planTransport2, planTransport);
    }
 
-   // @Test
+   @Test
    public void filtreOd() {
-      List<ASousRegimeTranche> ods1 = new ArrayList<>();
-      ods1.add(this.origineDestination1);
-      List<ASousRegimeTranche> ods2 = new ArrayList<>();
-      ods2.add(this.origineDestination2);
-      List<ASousRegimeTranche> ods3 = new ArrayList<>();
-      ods3.add(this.origineDestination1);
-      ods3.add(this.origineDestination2);
       Tranche tranche1 = new Tranche();
-      tranche1.addAttributsField(ods1);
+      tranche1.addAttributsField(this.ods1);
       Tranche tranche2 = new Tranche();
-      tranche2.addAttributsField(ods2);
+      tranche2.addAttributsField(this.ods2);
       Tranche tranche3 = new Tranche();
-      tranche3.addAttributsField(ods3);
+      tranche3.addAttributsField(this.ods1Et2);
 
       List<Tranche> tranches1 = new ArrayList<>();
       tranches1.add(tranche1);
@@ -138,21 +147,14 @@ public class TestCriterePlanTransport {
       Assert.assertTrue("Test FiltreEtOD1OD2", this.comparePlanTransport(planTransportExpected, planTransportRes));
    }
 
-   // @Test
+   @Test
    public void filtreTosp() {
-      List<ASousRegimeTranche> tosps1 = new ArrayList<>();
-      tosps1.add(this.tosp1);
-      List<ASousRegimeTranche> tosps2 = new ArrayList<>();
-      tosps2.add(this.tosp2);
-      List<ASousRegimeTranche> tosps3 = new ArrayList<>();
-      tosps3.add(this.tosp1);
-      tosps3.add(this.tosp2);
       Tranche tranche1 = new Tranche();
-      tranche1.addAttributsField(tosps1);
+      tranche1.addAttributsField(this.tosps1);
       Tranche tranche2 = new Tranche();
-      tranche2.addAttributsField(tosps2);
+      tranche2.addAttributsField(this.tosps2);
       Tranche tranche3 = new Tranche();
-      tranche3.addAttributsField(tosps3);
+      tranche3.addAttributsField(this.tosps1Et2);
 
       List<Tranche> tranches1 = new ArrayList<>();
       tranches1.add(tranche1);
@@ -195,6 +197,55 @@ public class TestCriterePlanTransport {
       planTransportRes = filtreEt.filtreParCritere(planTransportFiltre);
       planTransportExpected.getTrains().clear();
       Assert.assertTrue("Test FiltreEtTosp1Tosp2", this.comparePlanTransport(planTransportExpected, planTransportRes));
+   }
+
+   @Test
+   public void filtreRegime() {
+      Tranche tranche1 = new Tranche();
+      tranche1.setRegime(this.regimeTranche);
+      tranche1.addAttributsField(this.ods1Et2);
+
+      Train train1 = new Train();
+      train1.setTranches(Arrays.asList(tranche1));
+
+      PlanTransport planTransport = new PlanTransport();
+      planTransport.getTrains().add(train1);
+
+      PlanTransport planTransportExpected = planTransport.clone();
+      planTransportExpected.getTrains().get(0).getTranches().get(0)
+            .setRegime(PlanTransportFactory.generateRegime(PlanTransportFactory.generateDate(0), PlanTransportFactory.generateDate(5)));
+
+      IFiltre<PlanTransport> filtreRegimeOd1 = new FiltreRegimePlanTransport(this.origineDestination1);
+      PlanTransport planTransportRes = filtreRegimeOd1.filtreParCritere(planTransport);
+      Assert.assertTrue("Test FiltreRegime Od1",
+            ListUtils.compareLists(planTransportExpected.getTrains().get(0).getTranches().get(0).getRegime().getListeJours(),
+                  planTransportRes.getTrains().get(0).getTranches().get(0).getRegime().getListeJours()));
+
+      planTransportExpected.getTrains().get(0).getTranches().get(0)
+            .setRegime(PlanTransportFactory.generateRegime(PlanTransportFactory.generateDate(5), PlanTransportFactory.generateDate(15)));
+
+      IFiltre<PlanTransport> filtreRegimeOd2 = new FiltreRegimePlanTransport(this.origineDestination2);
+      planTransportRes = filtreRegimeOd2.filtreParCritere(planTransport);
+      Assert.assertTrue("Test FiltreRegime Od2",
+            ListUtils.compareLists(planTransportExpected.getTrains().get(0).getTranches().get(0).getRegime().getListeJours(),
+                  planTransportRes.getTrains().get(0).getTranches().get(0).getRegime().getListeJours()));
+
+      planTransportExpected.getTrains().get(0).getTranches().get(0)
+            .setRegime(PlanTransportFactory.generateRegime(PlanTransportFactory.generateDate(0), PlanTransportFactory.generateDate(15)));
+
+      IFiltre<PlanTransport> filtreRegimeOd1OuOd2 = new FiltreOuRegimePlanTransport(filtreRegimeOd1, filtreRegimeOd2);
+      planTransportRes = filtreRegimeOd1OuOd2.filtreParCritere(planTransport);
+      Assert.assertTrue("Test FiltreRegime Od1OuOd2",
+            ListUtils.compareLists(planTransportExpected.getTrains().get(0).getTranches().get(0).getRegime().getListeJours(),
+                  planTransportRes.getTrains().get(0).getTranches().get(0).getRegime().getListeJours()));
+
+      planTransportExpected.getTrains().get(0).getTranches().get(0).getRegime().getListeJours().clear();
+
+      IFiltre<PlanTransport> filtreRegimeOd1EtOd2 = new FiltreEtRegimePlanTransport(filtreRegimeOd1, filtreRegimeOd2);
+      planTransportRes = filtreRegimeOd1EtOd2.filtreParCritere(planTransport);
+      Assert.assertTrue("Test FiltreRegime Od1EtOd2",
+            ListUtils.compareLists(planTransportExpected.getTrains().get(0).getTranches().get(0).getRegime().getListeJours(),
+                  planTransportRes.getTrains().get(0).getTranches().get(0).getRegime().getListeJours()));
    }
 
    /**
