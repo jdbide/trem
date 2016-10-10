@@ -14,6 +14,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Repas;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tosp;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
@@ -48,6 +49,7 @@ public abstract class AExcelRapportDifferentielSheet implements IExcelRapportCom
         this.mapNomField.put(TypeEquipement.class, "EquipmentType");
         this.mapNomField.put(Composition.class, "Composition");
         this.mapNomField.put(Tranche.class, "Tranche");
+        this.mapNomField.put(Tosp.class, "Tosp");
     }
 
     /**
@@ -76,9 +78,11 @@ public abstract class AExcelRapportDifferentielSheet implements IExcelRapportCom
     }
     
     protected void autoSizeColumns(ExcelTools excelTools, int[] columns) {
-       for (int i = 0; i < columns.length; i++) {
-          excelTools.getSheet().autoSizeColumn(i, true);
-       }
+       // Enlevé car observé NullPointer en recette
+       return;
+//       for (int i = 0; i < columns.length; i++) {
+//          excelTools.getSheet().autoSizeColumn(columns[i], true);
+//       }
     }
 
 }
