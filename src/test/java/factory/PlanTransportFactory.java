@@ -68,6 +68,7 @@ public class PlanTransportFactory {
         trancheEgal.setNumeroTranche("trancheEgal");
         trancheEgal.setTrancheStatut(EnumTrancheStatut.Ouvert);
         trancheEgal.setRegime(regimeEgal);
+        tranchesEgal.add(trancheEgal);
         
         
         trainEgal.setNumeroTrain("trainEgal");
@@ -75,6 +76,18 @@ public class PlanTransportFactory {
         trainEgal.setTranches(tranchesEgal);
         
         listTrain_base.add(trainEgal);
+        
+        trainEgal = new Train();
+        trancheEgal = new Tranche();
+        trancheEgal.setNumeroTranche("trancheEgal");
+        trancheEgal.setTrancheStatut(null);
+        trancheEgal.setRegime(regimeEgal);
+        tranchesEgal.add(trancheEgal);
+        
+        trainEgal.setNumeroTrain("trainEgal");
+        trainEgal.setValidForRR(true);
+        trainEgal.setTranches(tranchesEgal);
+        
         listTrain_xls.add(trainEgal);
         
         
@@ -120,9 +133,9 @@ public class PlanTransportFactory {
         CodeSat codeSatXls = new CodeSat();
         codeSatXls.setCodeSat("xls");
         codeSatXls.setRegime(generateRegime(generateDate(-16),generateDate(-15)));
-        attributsXls.add(codeSat);
+        attributsXls.add(codeSatXls);
         MapTranche mapXls = new MapTranche();
-        map.put(codeSatXls.getClass(), attributsXls);
+        mapXls.put(codeSatXls.getClass(), attributsXls);
         trancheControleXlsRepas.setAttributs(mapXls);
         tranchesControleXls.add(trancheControleXlsRepas);
         
