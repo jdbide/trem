@@ -96,11 +96,9 @@ public class TestCriterePlanTransport {
       tranche2.addAttributsField(ods2);
       Tranche tranche3 = new Tranche();
       tranche3.addAttributsField(ods3);
-      Tranche tranche4 = new Tranche();
 
       List<Tranche> tranches1 = new ArrayList<>();
       tranches1.add(tranche1);
-      tranches1.add(tranche4);
       List<Tranche> tranches2 = new ArrayList<>();
       tranches2.add(tranche1);
 
@@ -138,15 +136,11 @@ public class TestCriterePlanTransport {
 
       IFiltre<PlanTransport> filtreEt = new FiltreEtPlanTransport(filtreOD, filtreOD2);
       planTransportRes = filtreEt.filtreParCritere(planTransportFiltre);
-      tranches1.clear();
-      tranches1.add(tranche3);
-      tranches1.add(tranche4);
-      tranches2.clear();
-      tranches2.add(tranche3);
+      planTransport2.getTrains().clear();
       Assert.assertEquals("Test FiltreEtOD1OD2", planTransport2, planTransportRes);
    }
 
-   @Test
+    @Test
    public void filtreTosp() {
       List<ASousRegimeTranche> ods1 = new ArrayList<>();
       ods1.add(this.origineDestination1);
@@ -161,11 +155,9 @@ public class TestCriterePlanTransport {
       tranche2.addAttributsField(ods2);
       Tranche tranche3 = new Tranche();
       tranche3.addAttributsField(ods3);
-      Tranche tranche4 = new Tranche();
 
       List<Tranche> tranches1 = new ArrayList<>();
       tranches1.add(tranche1);
-      tranches1.add(tranche4);
       List<Tranche> tranches2 = new ArrayList<>();
       tranches2.add(tranche1);
 
@@ -188,8 +180,7 @@ public class TestCriterePlanTransport {
       tranches1.clear();
       tranches1.add(tranche2);
       tranches1.add(tranche2);
-      tranches2.clear();
-      tranches2.add(tranche4);
+      planTransport2.getTrains().remove(train2);
       Assert.assertEquals("Test FiltreTrancheTosp2", planTransport2, planTransportRes);
 
       IFiltre<PlanTransport> filtreOu = new FiltreOuPlanTransport(filtreTosp1, filtreTosp2);
@@ -197,17 +188,14 @@ public class TestCriterePlanTransport {
       tranches1.clear();
       tranches1.add(tranche3);
       tranches1.add(tranche2);
+      planTransport2.getTrains().add(train2);
       tranches2.clear();
       tranches2.add(tranche1);
       Assert.assertEquals("Test FiltreOuTosp1Tosp2", planTransport2, planTransportRes);
 
       IFiltre<PlanTransport> filtreEt = new FiltreEtPlanTransport(filtreTosp1, filtreTosp2);
       planTransportRes = filtreEt.filtreParCritere(planTransportFiltre);
-      tranches1.clear();
-      tranches1.add(tranche3);
-      tranches1.add(tranche4);
-      tranches2.clear();
-      tranches2.add(tranche4);
+      planTransport2.getTrains().clear();
       Assert.assertEquals("Test FiltreEtTosp1Tosp2", planTransport2, planTransportRes);
    }
 

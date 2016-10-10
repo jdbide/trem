@@ -25,19 +25,24 @@ class FiltreTranchePlanTransport implements IFiltre<PlanTransport> {
       PlanTransport planTransport = new PlanTransport();
       planTransport.setCompagnie(object.getCompagnie());
       Train trainFiltre;
-      
+      Tranche trancheFiltre;
+
       /* Boucle sur les trains du plan de transport */
       for (Train train : object.getTrains()) {
          trainFiltre = new Train();
          trainFiltre.setNumeroTrain(train.getNumeroTrain());
          trainFiltre.setValidForRR(train.isValidForRR());
-         
+
          /* Boucle sur les tranches du train */
          for (Tranche tranche : train.getTranches()) {
-            /* On ajoute au résultat les tranches filtrées */
-            trainFiltre.getTranches().add(this.filtreTranche.filtreParCritere(tranche));
+            /* On ajoute au résultat les tranches filtrées, si elles contiennent des données */
+            trancheFiltre = this.filtreTranche.filtreParCritere(tranche);
+            if (!trancheFiltre.getAttributs().isEmpty()) {
+               trainFiltre.getTranches().add(trancheFiltre);
+            }
          }
 
+         /* On ajoute au résultat le train s'il contient des tranches */
          if (!trainFiltre.getTranches().isEmpty()) {
             planTransport.getTrains().add(trainFiltre);
          }
