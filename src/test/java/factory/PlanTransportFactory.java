@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import com.avancial.app.data.databean.JeuDonneeEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Compartiment;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
@@ -47,6 +48,112 @@ public class PlanTransportFactory {
     * 
     */
     public PlanTransportFactory() {
+    }
+    
+    public static MapPlansDeTransport createDataForControle() {
+
+        List<Train> listTrain_base = new ArrayList<>();
+        List<Train> listTrain_xls = new ArrayList<>();
+
+        Train trainEgal = new Train();
+        Train trainControleBase = new Train();
+        Train trainControleXls = new Train();
+        
+        
+        
+        Regime regimeEgal = generateRegime(generateDate(-10), generateDate(20));
+        
+        List<Tranche> tranchesEgal = new ArrayList<>();
+        Tranche trancheEgal = new Tranche();
+        trancheEgal.setNumeroTranche("trancheEgal");
+        trancheEgal.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheEgal.setRegime(regimeEgal);
+        tranchesEgal.add(trancheEgal);
+        
+        
+        trainEgal.setNumeroTrain("trainEgal");
+        trainEgal.setValidForRR(true);
+        trainEgal.setTranches(tranchesEgal);
+        
+        listTrain_base.add(trainEgal);
+        
+        trainEgal = new Train();
+        trancheEgal = new Tranche();
+        trancheEgal.setNumeroTranche("trancheEgal");
+        trancheEgal.setTrancheStatut(null);
+        trancheEgal.setRegime(regimeEgal);
+        tranchesEgal.add(trancheEgal);
+        
+        trainEgal.setNumeroTrain("trainEgal");
+        trainEgal.setValidForRR(true);
+        trainEgal.setTranches(tranchesEgal);
+        
+        listTrain_xls.add(trainEgal);
+        
+        
+        List<Tranche> tranchesControleBase = new ArrayList<>();
+        List<Tranche> tranchesControleXls = new ArrayList<>();
+        
+        Tranche trancheControleBaseStatut = new Tranche();
+        trancheControleBaseStatut.setNumeroTranche("trancheControleStatut");
+        trancheControleBaseStatut.setTrancheStatut(EnumTrancheStatut.Ferme);
+        trancheControleBaseStatut.setRegime(generateRegime(generateDate(-10), generateDate(20)));        
+        tranchesControleBase.add(trancheControleBaseStatut);
+        
+        Tranche trancheControleBaseRepas = new Tranche();
+        trancheControleBaseRepas.setNumeroTranche("trancheControleCodeSat");
+        trancheControleBaseRepas.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheControleBaseRepas.setRegime(generateRegime(generateDate(-20),generateDate(-11)));
+        List<ASousRegimeTranche> attributs = new ArrayList<>();
+        CodeSat codeSat = new CodeSat();
+        codeSat.setCodeSat("base");
+        codeSat.setRegime(generateRegime(generateDate(-20),generateDate(-11)));
+        attributs.add(codeSat);
+        MapTranche map = new MapTranche();
+        map.put(codeSat.getClass(), attributs);
+        trancheControleBaseRepas.setAttributs(map);
+        tranchesControleBase.add(trancheControleBaseRepas);
+        
+        trainControleBase.setNumeroTrain("trainControle");
+        trainControleBase.setValidForRR(true);
+        trainControleBase.setTranches(tranchesControleBase);
+        listTrain_base.add(trainControleBase);
+        
+        Tranche trancheControleXlsStatut = new Tranche();
+        trancheControleXlsStatut.setNumeroTranche("");
+        trancheControleXlsStatut.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheControleXlsStatut.setRegime(generateRegime(generateDate(0), generateDate(20)));       
+        tranchesControleXls.add(trancheControleXlsStatut);
+        
+        Tranche trancheControleXlsRepas = new Tranche();
+        trancheControleXlsRepas.setNumeroTranche("");
+        trancheControleXlsRepas.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        trancheControleXlsRepas.setRegime(generateRegime(generateDate(-20),generateDate(-11)));
+        List<ASousRegimeTranche> attributsXls = new ArrayList<>();
+        CodeSat codeSatXls = new CodeSat();
+        codeSatXls.setCodeSat("xls");
+        codeSatXls.setRegime(generateRegime(generateDate(-16),generateDate(-15)));
+        attributsXls.add(codeSatXls);
+        MapTranche mapXls = new MapTranche();
+        mapXls.put(codeSatXls.getClass(), attributsXls);
+        trancheControleXlsRepas.setAttributs(mapXls);
+        tranchesControleXls.add(trancheControleXlsRepas);
+        
+        trainControleXls.setNumeroTrain("trainControle");
+        trainControleXls.setValidForRR(true);
+        trainControleXls.setTranches(tranchesControleXls);
+        listTrain_xls.add(trainControleXls);
+        
+        
+
+        PlanTransport pt_xls = new PlanTransport(EnumCompagnies.ES, listTrain_xls);
+        PlanTransport pt_base = new PlanTransport(EnumCompagnies.ES, listTrain_base);
+
+        MapPlansDeTransport mapPlansDeTransport = new MapPlansDeTransport();
+
+        mapPlansDeTransport.setMapPlansDeTransport(new JeuDonneeEntity(), pt_xls, new JeuDonneeEntity(), pt_base);
+
+        return mapPlansDeTransport;
     }
 
     public static MapPlansDeTransport createDataForCompare() {
