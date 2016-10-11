@@ -13,7 +13,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.service.traiteDeleteRegime.TraiteDeleteDonneesRegimeFactory;
 import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.socle.data.model.databean.LogTraitementDataBean;
@@ -45,9 +45,9 @@ public class DeleteJeuDonneeTest {
     @Test
    public void testDeleteDraft() throws Exception {
       this.test.setCompagnieEnvironnement("ES_PROD");
-      List<Status> status = new ArrayList<>();
-      status.add(Status.DRAFT);
-      this.test.setStatus(status);
+      List<EStatus> eStatus = new ArrayList<>();
+      eStatus.add(EStatus.DRAFT);
+      this.test.setStatus(eStatus);
       this.test.execute();
 
     }

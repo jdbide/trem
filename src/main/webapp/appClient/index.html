@@ -19,8 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<link rel="stylesheet" type="text/css"	href="assets/css/style.css" />
 	<!-- Select -->
     <link rel="stylesheet" href="vendor/select/select2.min.css">
-    <!-- input-file -->
-    <link rel="stylesheet" href="vendor/angular-bootstrap-fileinput/kartik-v-bootstrap-fileinput/css/fileinput.min.css">
+
 	<!--[if lt IE 9]>
 	        <script src="vendor/html5shiv/3.7.3/html5shiv.min.js"></script>
 	        <script src="vendor/respond/1.4.2/respond.min.js"></script>
@@ -46,10 +45,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		    <section class="content-header" ng-controller="breadcrumbCtrl">
                 <socle-breadcrumb></socle-breadcrumb>
             </section>
+            <m-loader></m-loader>
 		    <section class="content">
 		        <ng-view></ng-view>
 		    </section>
-            <m-loader></m-loader>
+            
 	    </div>
 	</div>
 	<!-- ./wrapper -->
@@ -64,6 +64,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="vendor/select/select2.full.js"></script>
     <!-- File-input -->
    	<script src="vendor/angular-bootstrap-fileinput/kartik-v-bootstrap-fileinput/js/fileinput.min.js"></script>
+   	<!-- bootstrap validator -->
+   	<script src="vendor/bootstrap-validator/validator.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="vendor/theme/js/app.js"></script>
 	<!-- Angularjs -->
@@ -82,8 +84,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="vendor/bootstrap/js/ui-bootstrap-tpls-1.3.3.js"></script>
     <!-- ngStorage -->
     <script src="vendor/ngStorage/ngStorage.min.js"></script>
-    <!-- File-input angularjs -->
-	<script src="vendor/angular-bootstrap-fileinput/angular-bootstrap-fileinput.js"></script>
+    <!-- ng-file-upload -->
+    <script src="vendor/ng-file-upload/ng-file-upload-shim.js"></script>
+    <script src="vendor/ng-file-upload/ng-file-upload.js"></script>
+    
+    <script src="vendor/fileInputControl.js"></script>
     <!--  Application config angularjs -->
 	<script type="text/javascript" src="config/main.app.js"></script>
 	
@@ -135,6 +140,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script type="text/javascript" src="app/config/constantes.js"></script>
 	<!-- socle_app -->
     <!-- Directives -->
+    <script type="text/javascript" src="app/directives/angular-file-model.js"></script>
     <!-- Factories -->
     <!-- Filters -->	
 
@@ -144,12 +150,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script type="text/javascript" src="app/services/generateNgTableService.js"></script>
     <script type="text/javascript" src="app/services/trainManagerSysteme/importTmsService.js"></script>
     <script type="text/javascript" src="app/services/trainManagerSysteme/controlTmsService.js"></script>
+    <script type="text/javascript" src="app/services/trainManagerSysteme/traitementControlTmsService.js"></script>
+    <script type="text/javascript" src="app/services/trainManagerSysteme/traitementPageSearchService.js"></script>
     
     <!-- Contrôleurs -->
 	<script type="text/javascript" src="app/controllers/tablesCtrl.js"></script>
 	<script type="text/javascript" src="app/controllers/trainManagerSysteme/trainTmsCtrl.js"></script>
 	<script type="text/javascript" src="app/controllers/trainManagerSysteme/importTmsCtrl.js"></script>
 	<script type="text/javascript" src="app/controllers/trainManagerSysteme/controlTmsCtrl.js"></script>
+	<script type="text/javascript" src="app/controllers/trainManagerSysteme/search/indexSearchTmsCtrl.js"></script>
+	<script type="text/javascript" src="app/controllers/trainManagerSysteme/search/searchTmsCtrl.js"></script>
+	
+ <script type="text/javascript">
+    FileAPI = {
+      debug: true,
+      //forceLoad: true, html5: false //to debug flash in HTML5 browsers
+      //wrapInsideDiv: true, //experimental for fixing css issues
+      //only one of jsPath or jsUrl.
+      //jsPath: '/js/FileAPI.min.js/folder/',
+      //jsUrl: 'yourcdn.com/js/FileAPI.min.js',
 
+      //only one of staticPath or flashUrl.
+      //staticPath: '/flash/FileAPI.flash.swf/folder/'
+      //flashUrl: 'yourcdn.com/js/FileAPI.flash.swf'
+    };
+  </script>
 </body>
 </html>

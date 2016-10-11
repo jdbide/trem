@@ -1,6 +1,6 @@
 package com.avancial.app.data.databean;
 
-public enum Status {
+public enum EStatus {
    /**
     * IMPORT : en cours d'importation, valeur par défault lorsque la création d'un jeu de données
     */

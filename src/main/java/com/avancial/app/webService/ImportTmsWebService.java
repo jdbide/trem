@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.serviceDto.ImportTmsServiceDto;
@@ -99,9 +99,9 @@ public class ImportTmsWebService {
 
       try {
          this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(nomTechniqueCompagnieEnvironnement);
-         List<Status> status = new ArrayList<>();
-         status.add(Status.DRAFT);
-         this.traitementDeleteJeuDonnee.setStatus(status);
+         List<EStatus> eStatus = new ArrayList<>();
+         eStatus.add(EStatus.DRAFT);
+         this.traitementDeleteJeuDonnee.setStatus(eStatus);
          this.traitementDeleteJeuDonnee.execute();
 
          responseBean.setStatus(true);

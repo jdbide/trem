@@ -44,7 +44,8 @@ public class TraiteObjetMetierRegimeStop extends AFiltreObjetMetier implements I
             if (!heureDepart.equals("    ")) {
                horaireFin = formatter.parse(heureDepart);
             }
-            garesHoraires.add(new GareHoraire(new Gare(regimeDesserte.getStationMotriceRegimeStop()), new Horaire(horaireDebut, horaireFin)));
+            garesHoraires.add(new GareHoraire(new Gare(regimeDesserte.getMotriceRefGareEntity().getCodeGareMotriceRefGare()),
+                  new Horaire(horaireDebut, horaireFin)));
          }
          listeDessertes.add(new Desserte(garesHoraires,
                new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));

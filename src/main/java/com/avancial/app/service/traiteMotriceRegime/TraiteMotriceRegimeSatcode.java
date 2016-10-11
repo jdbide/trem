@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +7,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import com.avancial.app.data.databean.importMotrice.MotriceRefSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -15,6 +16,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -24,7 +26,7 @@ public class TraiteMotriceRegimeSatcode extends AFiltreObjetMetier implements IT
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException {
+         throws Exception {
       /* SatCode */
 
       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
@@ -50,7 +52,14 @@ public class TraiteMotriceRegimeSatcode extends AFiltreObjetMetier implements IT
       }
 
       Regime newRegime = null;
+      MotriceRefSatcodeEntity refSatcodeEntity;
       for (Object[] satcode : listeSatcode) {
+         /* Données de référénce */
+         refSatcodeEntity = new MotriceRefSatcodeEntity();
+         refSatcodeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refSatcodeEntity.setLabelSatCode((String) satcode[0]);
+         refSatcodeEntity = (MotriceRefSatcodeEntity) InsertRefDataService.persistRefData(refSatcodeEntity, entityManager);
+
          if (!oldRegime.equals(satcode[1])) {
             // si le régime traité est
             // différent du précédent
@@ -62,14 +71,13 @@ public class TraiteMotriceRegimeSatcode extends AFiltreObjetMetier implements IT
                   motriceTrainTrancheEntity.getIdMotriceTrainTranche());
          }
          // insertion du régime code sat lié au régime
-         mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class).addValue(idRegimeSatcode.getAndIncrement(), satcode[0],
-               idRegime.get());
+         mapGeneratorTablesMotriceRegime.get(MotriceRegimeSatcodeEntity.class).addValue(idRegimeSatcode.getAndIncrement(),
+               refSatcodeEntity.getIdMotriceRefSatCode(), idRegime.get());
          if (this.filtreDateAjout(newRegime)) {
-            listeCodeSat.add(new CodeSat((String) satcode[0],
+            listeCodeSat.add(new CodeSat(refSatcodeEntity.getLabelSatCode(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
          oldRegime = (String) satcode[1];
-
       }
       atomicTranche.get().addAttributsField(listeCodeSat);
    }

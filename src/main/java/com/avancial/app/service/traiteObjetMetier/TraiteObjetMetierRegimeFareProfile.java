@@ -25,7 +25,7 @@ public class TraiteObjetMetierRegimeFareProfile extends AFiltreObjetMetier imple
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeFareProfileEntity regimeFareProfile : regime.getMotriceRegimeFareProfile()) {
-            listeFareProfile.add(new FareProfile(regimeFareProfile.getFareProfileCodeMotriceRegimeFareProfile(),
+            listeFareProfile.add(new FareProfile(regimeFareProfile.getMotriceRefFareProfileEntity().getLabelFareProfileCode(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }

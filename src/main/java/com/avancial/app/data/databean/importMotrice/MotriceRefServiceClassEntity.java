@@ -5,27 +5,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
+import com.avancial.app.data.databean.CompagnieEntity;
+
 @Entity
 @Table(name = "tremas_motrice_ref_serviceclass")
-@NamedQuery(name = "MotriceRefServiceClass.getAll", query = "SELECT t FROM MotriceRefServiceClassEntity t")
+@NamedQueries({ @NamedQuery(name = "MotriceRefServiceClass.getAll", query = "SELECT t FROM MotriceRefServiceClassEntity t"),
+      @NamedQuery(name = "MotriceRefServiceClass.getUnique", query = "SELECT t FROM MotriceRefServiceClassEntity t where t.labelServiceClass = :labelServiceClass and t.compagnie = :compagnie"),
+      @NamedQuery(name = "MotriceRefServiceClass.getByCompagnie", query = "SELECT t FROM MotriceRefServiceClassEntity t where t.compagnie = :compagnie"), })
 public class MotriceRefServiceClassEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idMotriceRefServiceClass;
+   private Long            idMotriceRefServiceClass;
    @Column(length = 1, nullable = false)
-   private String labelServiceClass;
-   @Column(length = 6, nullable = false)
-   private String libelleServiceClass;
+   private String          labelServiceClass;
+   @Column(length = 6, nullable = true)
+   private String          libelleServiceClass;
+
+   @ManyToOne
+   @JoinColumn(name = "idCompagnie")
+   @ForeignKey(name = "FK_motrice_ref_serviceclass_idCompagnie")
+   private CompagnieEntity compagnie;
 
    /**
     * @return the idMotriceRefServiceClass
     */
    public Long getIdMotriceRefServiceClass() {
-      return idMotriceRefServiceClass;
+      return this.idMotriceRefServiceClass;
    }
 
    /**
@@ -40,7 +54,7 @@ public class MotriceRefServiceClassEntity {
     * @return the labelServiceClass
     */
    public String getLabelServiceClass() {
-      return labelServiceClass;
+      return this.labelServiceClass;
    }
 
    /**
@@ -55,7 +69,7 @@ public class MotriceRefServiceClassEntity {
     * @return the libelleServiceClass
     */
    public String getLibelleServiceClass() {
-      return libelleServiceClass;
+      return this.libelleServiceClass;
    }
 
    /**
@@ -64,6 +78,14 @@ public class MotriceRefServiceClassEntity {
     */
    public void setLibelleServiceClass(String libelleServiceClass) {
       this.libelleServiceClass = libelleServiceClass;
+   }
+
+   public CompagnieEntity getCompagnie() {
+      return this.compagnie;
+   }
+
+   public void setCompagnie(CompagnieEntity compagnie) {
+      this.compagnie = compagnie;
    }
 
 }

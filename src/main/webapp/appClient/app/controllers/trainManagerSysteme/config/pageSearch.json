@@ -1,0 +1,14 @@
+[
+	{
+		"idPage":"1",
+		"titlePage": "Search Train Data",
+		"urlPage": "app/views/partials/trainManagerSysteme/search/search.xhtml",
+		"active":true
+	},
+	{
+		"idPage":"2",
+		"titlePage": "Results for your query",
+		"urlPage": "app/views/partials/trainManagerSysteme/search/result.xhtml",
+		"active":false
+	}
+]

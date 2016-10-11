@@ -5,48 +5,56 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
+import com.avancial.app.data.databean.CompagnieEntity;
+
 @Entity
 @Table(name = "tremas_motrice_ref_distribution")
-@NamedQuery(name = "MotriceRefDistribution.getAll", query = "SELECT t FROM MotriceRefDistributionEntity t")
+@NamedQueries({ @NamedQuery(name = "MotriceRefDistribution.getAll", query = "SELECT t FROM MotriceRefDistributionEntity t"),
+      @NamedQuery(name = "MotriceRefDistribution.getUnique", query = "SELECT t FROM MotriceRefDistributionEntity t where t.labelDistribution = :labelDistribution and t.compagnie = :compagnie"),
+      @NamedQuery(name = "MotriceRefDistribution.getByCompagnie", query = "SELECT t FROM MotriceRefDistributionEntity t where t.compagnie = :compagnie"), })
 public class MotriceRefDistributionEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idMotriceRefDistribution;
+   private Long            idMotriceRefDistribution;
    @Column(length = 1, nullable = false)
-   private String labelDistribution;
+   private String          labelDistribution;
 
-   /**
-    * @return the idMotriceRefCodeDiagramme
-    */
-   public Long getIdMotriceRefCodeDiagramme() {
-      return idMotriceRefDistribution;
+   @ManyToOne
+   @JoinColumn(name = "idCompagnie")
+   @ForeignKey(name = "FK_motrice_ref_distribution_idCompagnie")
+   private CompagnieEntity compagnie;
+
+   public Long getIdMotriceRefDistribution() {
+      return this.idMotriceRefDistribution;
    }
 
-   /**
-    * @param idMotriceRefCodeDiagramme
-    *           the idMotriceRefCodeDiagramme to set
-    */
-   public void setIdMotriceRefCodeDiagramme(Long idMotriceRefCodeDiagramme) {
-      this.idMotriceRefDistribution = idMotriceRefCodeDiagramme;
+   public void setIdMotriceRefDistribution(Long idMotriceRefDistribution) {
+      this.idMotriceRefDistribution = idMotriceRefDistribution;
    }
 
-   /**
-    * @return the labelCodeDiagramme
-    */
-   public String getLabelCodeDiagramme() {
-      return labelDistribution;
+   public String getLabelDistribution() {
+      return this.labelDistribution;
    }
 
-   /**
-    * @param labelCodeDiagramme
-    *           the labelCodeDiagramme to set
-    */
-   public void setLabelCodeDiagramme(String labelCodeDiagramme) {
-      this.labelDistribution = labelCodeDiagramme;
+   public void setLabelDistribution(String labelDistribution) {
+      this.labelDistribution = labelDistribution;
+   }
+
+   public CompagnieEntity getCompagnie() {
+      return this.compagnie;
+   }
+
+   public void setCompagnie(CompagnieEntity compagnie) {
+      this.compagnie = compagnie;
    }
 
 }

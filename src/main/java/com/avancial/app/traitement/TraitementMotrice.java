@@ -18,7 +18,7 @@ import org.hibernate.Session;
 
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.RefTablesMotriceRegimeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRegimeTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeCompositionCoachEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
@@ -107,7 +107,7 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          motriceRefRegimeTypeEntity.setIdMotriceRefRegimeType((long) 1);
          motriceRefRegimeTypeEntity.setLabelRegimeType("Regime train tranche");
 
-         PlanTransport planTransport = this.mapPlansDeTransport.get(Status.DRAFT).getPlanTransport();
+         PlanTransport planTransport = this.mapPlansDeTransport.get(EStatus.DRAFT).getPlanTransport();
          MotriceTrainTrancheEntity motriceTrainTrancheEntity;
          MotriceRegimeEntity motriceRegimeEntity;
          AtomicLong cptRegime;
@@ -282,7 +282,6 @@ public class TraitementMotrice extends ATraitementLogDetail implements Serializa
          multipleInsertRequestGenerator.executeRequest();
       } catch (Exception e) {
          System.err.println("Erreur dans l'insertion dans la table motrice régime pour l'entité : " + entity.getName());
-         System.out.println("Erreur dans l'insertion dans la table motrice régime pour l'entité : " + entity.getName());
          e.printStackTrace();
          throw e;
       }

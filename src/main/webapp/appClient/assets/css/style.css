@@ -102,3 +102,42 @@ a.disabled {
 .form-inline-modal-socle{
 	overflow: hidden; padding-top: 20px; margin: 0px;
 }
+
+.file-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.file-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.file-title {
+    margin-left:2px;
+}
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+@media (min-width: 768px) {
+.left-control {
+    text-align: left !important;
+  }
+}

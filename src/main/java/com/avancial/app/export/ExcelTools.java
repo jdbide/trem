@@ -94,6 +94,8 @@ public class ExcelTools {
    public Color                        couleurMarron              = new Color(238, 236, 225);
    public Color                        couleurJaune               = new Color(255, 255, 204);
    public Color                        couleurBlanc               = new Color(255, 255, 255);
+   public Color                        couleurRougeControle       = new Color(230, 184, 183);
+   public Color                        couleurVertControle        = new Color(196, 215, 155);
 
    /**
     * Constructeur sans arguments

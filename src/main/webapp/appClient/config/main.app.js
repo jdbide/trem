@@ -33,7 +33,8 @@
       'myModal',
       'environment',
       'aDisabled',
-      'angularBootstrapFileinput'
+      'ngFileUpload',
+      'file-model'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {

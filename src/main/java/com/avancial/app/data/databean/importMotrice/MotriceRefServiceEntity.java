@@ -5,48 +5,56 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ForeignKey;
+
+import com.avancial.app.data.databean.CompagnieEntity;
+
 @Entity
 @Table(name = "tremas_motrice_ref_service")
-@NamedQuery(name = "MotriceRefService.getAll", query = "SELECT t FROM MotriceRefServiceEntity t")
+@NamedQueries({ @NamedQuery(name = "MotriceRefService.getAll", query = "SELECT t FROM MotriceRefServiceEntity t"),
+      @NamedQuery(name = "MotriceRefService.getUnique", query = "SELECT t FROM MotriceRefServiceEntity t where t.labelService = :labelService and t.compagnie = :compagnie"),
+      @NamedQuery(name = "MotriceRefService.getByCompagnie", query = "SELECT t FROM MotriceRefServiceEntity t where t.compagnie = :compagnie"), })
 public class MotriceRefServiceEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long   idMotriceRefService;
+   private Long            idMotriceRefService;
    @Column(length = 2, nullable = false)
-   private String labelService;
+   private String          labelService;
 
-   /**
-    * @return the idMotriceRefCodeDiagramme
-    */
-   public Long getIdMotriceRefCodeDiagramme() {
-      return idMotriceRefService;
+   @ManyToOne
+   @JoinColumn(name = "idCompagnie")
+   @ForeignKey(name = "FK_motrice_ref_service_idCompagnie")
+   private CompagnieEntity compagnie;
+
+   public Long getIdMotriceRefService() {
+      return this.idMotriceRefService;
    }
 
-   /**
-    * @param idMotriceRefCodeDiagramme
-    *           the idMotriceRefCodeDiagramme to set
-    */
-   public void setIdMotriceRefCodeDiagramme(Long idMotriceRefCodeDiagramme) {
-      this.idMotriceRefService = idMotriceRefCodeDiagramme;
+   public void setIdMotriceRefService(Long idMotriceRefService) {
+      this.idMotriceRefService = idMotriceRefService;
    }
 
-   /**
-    * @return the labelCodeDiagramme
-    */
-   public String getLabelCodeDiagramme() {
-      return labelService;
+   public String getLabelService() {
+      return this.labelService;
    }
 
-   /**
-    * @param labelCodeDiagramme
-    *           the labelCodeDiagramme to set
-    */
-   public void setLabelCodeDiagramme(String labelCodeDiagramme) {
-      this.labelService = labelCodeDiagramme;
+   public void setLabelService(String labelService) {
+      this.labelService = labelService;
+   }
+
+   public CompagnieEntity getCompagnie() {
+      return this.compagnie;
+   }
+
+   public void setCompagnie(CompagnieEntity compagnie) {
+      this.compagnie = compagnie;
    }
 
 }

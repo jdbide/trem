@@ -9,8 +9,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
+import com.avancial.app.data.databean.EStatusControl;
 import com.avancial.app.data.databean.JeuDonneesControlEntity;
-import com.avancial.app.data.databean.StatusControl;
 import com.avancial.app.data.dto.JeuDonneesControlDto;
 import com.avancial.app.service.JeuDonneesControlService;
 
@@ -34,10 +34,10 @@ public class JeuDonneesControlServiceDto {
     * @param idCompagnieEnvironnement
     * @return List<JeuDonneesControlDto>
     */
-   public List<JeuDonneesControlDto> getAllJeuDonneesControlDtoParIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
+   public List<JeuDonneesControlDto> getAllJeuDonneesControlDtoParIdCompagnieEnvironnementEtListStatusControl(int idCompagnieEnvironnement, List<EStatusControl> listStatusControl) {
       List<JeuDonneesControlDto> res = new ArrayList<>();
       try {
-         List<JeuDonneesControlEntity> listJeuDonneesControl = this.jeuDonneesControlService.getAllJeuDonneesControlParIdCompagnieEnvironnement(idCompagnieEnvironnement);
+         List<JeuDonneesControlEntity> listJeuDonneesControl = this.jeuDonneesControlService.getAllJeuDonneesControlDtoParIdCompagnieEnvironnementEtListStatusControl(idCompagnieEnvironnement, listStatusControl);
          for (JeuDonneesControlEntity jeuDonneesControl : listJeuDonneesControl) {
             res.add(this.entityToDtoControl(jeuDonneesControl));
          }
@@ -92,7 +92,7 @@ public class JeuDonneesControlServiceDto {
       jeuDonneesControlDto.setPathFileImportJeuDonneesControlYield(jeuDonneesControl.getPathFileImportJeuDonneesControlYield());
       jeuDonneesControlDto.setPathFileReportJeuDonneesControl(jeuDonneesControl.getPathFileReportJeuDonneesControl());
       jeuDonneesControlDto.setStatusJeuDonnees(jeuDonneesControl.getStatusJeuDonnees());
-      jeuDonneesControlDto.setStatusJeuDonneesControl(jeuDonneesControl.getStatusJeuDonneesControl().toString());
+      jeuDonneesControlDto.setStatusJeuDonneesControl(jeuDonneesControl.getStatusJeuDonneesControl());
       jeuDonneesControlDto.setTitleJeuDonneesControl(jeuDonneesControl.getTitleJeuDonneesControl());
 
       return jeuDonneesControlDto;
@@ -118,8 +118,10 @@ public class JeuDonneesControlServiceDto {
       jeuDonneesControlEntity.setPathFileImportJeuDonneesControlYield(jeuDonneesControlDto.getPathFileImportJeuDonneesControlYield());
       jeuDonneesControlEntity.setPathFileReportJeuDonneesControl(jeuDonneesControlDto.getPathFileReportJeuDonneesControl());
       jeuDonneesControlEntity.setStatusJeuDonnees(jeuDonneesControlDto.getStatusJeuDonnees());
-      jeuDonneesControlEntity.setStatusJeuDonneesControl(jeuDonneesControlDto.getStatusJeuDonneesControl().equals(StatusControl.FINISHED.toString()) ? StatusControl.FINISHED : StatusControl.LOADING);
+      jeuDonneesControlEntity.setStatusJeuDonneesControl(jeuDonneesControlDto.getStatusJeuDonneesControl());
       jeuDonneesControlEntity.setTitleJeuDonneesControl(jeuDonneesControlDto.getTitleJeuDonneesControl());
+      if (jeuDonneesControlDto.getIdJeuDonnees()>0)
+         jeuDonneesControlEntity.setIdJeuDonneesControl(jeuDonneesControlDto.getIdJeuDonneesControl());
 
       return jeuDonneesControlEntity;
    }

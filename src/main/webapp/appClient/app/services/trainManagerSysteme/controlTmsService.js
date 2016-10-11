@@ -25,7 +25,19 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
 		progressImport.msgErr = null;
 	}
 	
+	function initResponse () {
+		reponse.status=null;
+    	reponse.message=null;
+    	reponse.data=null;
+	}
+	
 	self = this;
+	
+	self.initReponse = function () {
+    	reponse.status=null;
+    	reponse.message=null;
+    	reponse.data=null;
+    }
 	
 	self.getPartition = function () {
     	loadingService.show();
@@ -64,7 +76,7 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
 	
 	self.createControl = function (idPartition) {
 		loadingService.show();
-		self.initReponse();
+		initResponse();
 		var deffered  = $q.defer();
         var promissJsonFactory = jsonFactory.postJson("webService/app/controlTms/", idPartition);
         promissJsonFactory
@@ -83,9 +95,9 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
 	
 	self.getImportParIdPartition = function (idPartition) {
 		loadingService.show();
-		self.initReponse();
+		initResponse();
 		var deffered  = $q.defer();
-        var promissJsonFactory = jsonFactory.postJson("webService/app/controlTms/getImportParPartition"+idPartition);
+        var promissJsonFactory = jsonFactory.getJson("webService/app/controlTms/getImportParPartition/"+idPartition);
         promissJsonFactory
             .success(function (datas, status, headers, config) {
             	reponse = datas;
@@ -100,15 +112,48 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
         return deffered.promise;
 	}
 	
+	self.deleteControl = function (idJeuDonneesControl) {
+		loadingService.show();
+		initResponse();
+		var deffered  = $q.defer();
+        var promissJsonFactory = jsonFactory.deleteJson("webService/app/controlTms/"+idJeuDonneesControl, null);
+        promissJsonFactory
+            .success(function (datas, status, headers, config) {
+            	reponse = datas;
+            	loadingService.hide();
+            	deffered.resolve();
+            })
+            .error(function (datas, status, headers, config) {
+            	loadingService.hide();
+                deffered.reject();
+        });
+        
+        return deffered.promise;
+	}
+	
+	self.uploadUsing$http = function (file, idJeuDonneesControl, typeFile) {
+		console.log("==> 1");
+//		+idJeuDonneesControl+"/"+typeFile
+		file.upload = jsonFactory.uploadFile("webService/app/controlTms/uploadFile/", file)
+		file.upload.then(function (response) {
+			file.result = response.data;
+			alert(file.result.data);
+		}, function (response) {
+			if (response.status > 0)
+				alert("Error upload file : " + response.status + ': ' + response.data);
+			}
+		);
+
+		file.upload.progress(function (evt) {
+			file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+		});
+	}
+	
 	self.getReponse = function () {
     	return reponse;
     }
     
-    self.initReponse = function () {
-    	reponse.status=null;
-    	reponse.message=null;
-    	reponse.data=null;
-    }
+    
     
     return self;
 	

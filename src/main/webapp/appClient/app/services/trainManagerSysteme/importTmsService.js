@@ -54,7 +54,7 @@ socle_app.service('importTmsService', ['jsonFactory', 'loadingService', '$q', fu
     }
     
     self.executeImport = function (currentData) {
-    	loadingService.show();    	
+    	loadingService.show();
     	
         var deffered  = $q.defer();
         var promissJsonFactory = jsonFactory.postJson("webService/app/traitementImportTms", currentData);

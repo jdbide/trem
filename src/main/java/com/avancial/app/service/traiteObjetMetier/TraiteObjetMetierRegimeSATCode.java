@@ -25,7 +25,7 @@ public class TraiteObjetMetierRegimeSATCode extends AFiltreObjetMetier implement
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeSatcodeEntity regimeCodeSat : regime.getMotriceRegimeSatcode()) {
-            listeCodeSat.add(new CodeSat(regimeCodeSat.getSatCodeMotriceRegimeSatcode(),
+            listeCodeSat.add(new CodeSat(regimeCodeSat.getMotriceRefSatcodeEntity().getLabelSatCode(),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }

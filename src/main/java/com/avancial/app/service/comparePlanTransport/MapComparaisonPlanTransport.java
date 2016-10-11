@@ -5,14 +5,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 
 /**
- * Map contenant des objets {@link ComparaisonDifferentielPlanTransport} indexés par le type
+ * Map contenant des objets {@link AComparaisonPlanTransport} indexés par le type
  * de comparaison et la classe des attributs comparés (null s'il n'y a pas
  * d'attributs dans la comparaison, c'est-à-dire dans les cas NEW, DELETE et
  * UNCHANGED)

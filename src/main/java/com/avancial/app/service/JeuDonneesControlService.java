@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.EStatusControl;
 import com.avancial.app.data.databean.JeuDonneesControlEntity;
 import com.avancial.socle.service.AService;
 
@@ -53,7 +54,6 @@ public class JeuDonneesControlService extends AService implements Serializable {
     */
    public JeuDonneesControlEntity save(JeuDonneesControlEntity jeuDonneesControlEntity) {
       try {
-
          if (this.getEntityManager().isOpen()) {
             this.getEntityManager().getTransaction().begin();
             this.getEntityManager().persist(jeuDonneesControlEntity);
@@ -96,11 +96,17 @@ public class JeuDonneesControlService extends AService implements Serializable {
    public int deleteById(int idJeuDonneesControl) {
       int deleteEntity = 0;
       try {
-         deleteEntity = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_DELETE_BY_ID).setParameter("idJeuDonneesControl", idJeuDonneesControl).executeUpdate();
-      } catch (Exception e) {
-         throw e;
-      } finally {
+         this.getEntityManager().getTransaction().begin();
+         deleteEntity = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_DELETE_BY_ID)
+               .setParameter("idJeuDonneesControl", idJeuDonneesControl)
+               .executeUpdate();
+         this.getEntityManager().getTransaction().commit();
+         
          return deleteEntity;
+      } catch (Exception e) {
+         e.printStackTrace();
+         this.getEntityManager().getTransaction().rollback();
+         throw e;
       }
    }
 
@@ -113,6 +119,28 @@ public class JeuDonneesControlService extends AService implements Serializable {
    public List<JeuDonneesControlEntity> getAllJeuDonneesControlParIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
       Query requete = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT);
       requete.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
+
+      List<JeuDonneesControlEntity> res = null;
+
+      try {
+         res = ((ArrayList<JeuDonneesControlEntity>) requete.getResultList());
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+
+      return res;
+   }
+
+   /**
+    * @param idCompagnieEnvironnement
+    * @param listStatusControl
+    * @return
+    */
+   public List<JeuDonneesControlEntity> getAllJeuDonneesControlDtoParIdCompagnieEnvironnementEtListStatusControl(int idCompagnieEnvironnement, List<EStatusControl> listStatusControl) {
+      Query requete = this.getEntityManager().createNamedQuery(JeuDonneesControlEntity.QUERY_GET_BY_COMPAGNIE_ENVIRONNEMENT_AND_LIST_OF_STATUS_CONTROL);
+      requete.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
+      requete.setParameter("listStatusControl", listStatusControl);
 
       List<JeuDonneesControlEntity> res = null;
 

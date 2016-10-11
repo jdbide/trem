@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.service.JeuDonneesService;
 import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
@@ -93,7 +93,7 @@ public class TestJeuDeDonnees {
          tremasJD.setDateLastUpdateJeuDonnees(new Date());
          tremasJD.setIdUtilisateurCreateJeuDonnees(-1);
          tremasJD.setIdUtilisateurLastUpdateJeuDonnees(-1);
-         tremasJD.setStatusJeuDonnees(Status.IMPORT);
+         tremasJD.setStatusJeuDonnees(EStatus.IMPORT);
          this.entityManager.getTransaction().begin();
          this.entityManager.persist(tremasJD);
          this.entityManager.flush();
