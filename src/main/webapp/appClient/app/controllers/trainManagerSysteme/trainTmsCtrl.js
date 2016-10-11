@@ -10,6 +10,7 @@ socle_app.controller("trainTmsCtrl", ["$scope", "readerFileJson",
 	var URL_FILE_CONFIG_LOCAL = 'app/controllers/trainManagerSysteme/config/tab.json';
 	
 	$scope.tabs = null;
+	
 	$scope.currentTab = {
 			title:null,
 			url:null
@@ -20,8 +21,9 @@ socle_app.controller("trainTmsCtrl", ["$scope", "readerFileJson",
 		readerFileJson.get(URL_FILE_CONFIG_LOCAL).then(function(data) {
 			$scope.tabs = data;
 			angular.forEach($scope.tabs, function(value, key) {
-				if (value.active)
+				if (value.active) {
 					$scope.currentTab = value;
+				}
 			});
 		}, function () {
 			alert("Erreur de chargement de données");

@@ -41,4 +41,44 @@ public class MapTranche extends HashMap<Class<?>, List<? extends ASousRegimeTran
       return mapTranche;
    }
 
+   @Override
+   public boolean equals(Object o) {
+      MapTranche mapTranche = (MapTranche) o;
+      Class<?> tt = null;
+      for (Class<?> tt1 : this.keySet()) {
+         for (Class<?> tt2 : mapTranche.keySet()) {
+            if (tt2.equals(tt1)) {
+               tt = tt2;
+               break;
+            }
+         }
+         if (tt == null) {
+            return false;
+         }
+         for (ASousRegimeTranche aSousRegimeTranche : this.get(tt1)) {
+            if (!mapTranche.get(tt).contains(aSousRegimeTranche)) {
+               return false;
+            }
+         }
+      }
+      for (Class<?> tt2 : mapTranche.keySet()) {
+         for (Class<?> tt1 : this.keySet()) {
+            if (tt1.equals(tt2)) {
+               tt = tt1;
+               break;
+            }
+         }
+         if (tt == null) {
+            return false;
+         }
+         for (ASousRegimeTranche aSousRegimeTranche : this.get(tt)) {
+            if (!mapTranche.get(tt2).contains(aSousRegimeTranche)) {
+               return false;
+            }
+         }
+      }
+      return true;
+
+   }
+
 }
