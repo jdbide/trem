@@ -18,13 +18,14 @@ import com.avancial.app.data.databean.CompagnieEntity;
 @Entity
 @Table(name = "tremas_motrice_ref_tosp")
 @NamedQueries({ @NamedQuery(name = "MotriceRefTosp.getAll", query = "SELECT t FROM MotriceRefTospEntity t"),
-      @NamedQuery(name = "MotriceRefTosp.getUnique", query = "SELECT t FROM MotriceRefTospEntity t where t.codeMotriceRefTosp = :codeTosp and t.compagnie = :compagnie"), })
+      @NamedQuery(name = "MotriceRefTosp.getUnique", query = "SELECT t FROM MotriceRefTospEntity t where t.codeMotriceRefTosp = :codeTosp and t.compagnie = :compagnie"),
+      @NamedQuery(name = "MotriceRefTosp.getByCompagnie", query = "SELECT t FROM MotriceRefTospEntity t where t.compagnie = :compagnie"), })
 public class MotriceRefTospEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long            idMotriceRefTosp;
-   
+
    @Column(length = 50, nullable = false)
    private String          codeMotriceRefTosp;
 
