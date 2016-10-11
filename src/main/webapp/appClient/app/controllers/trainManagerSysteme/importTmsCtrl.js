@@ -224,4 +224,4 @@ socle_app.controller("importTmsCtrl", ["$rootScope", "$scope", "envService", '$i
 	}
 
 	constructor ();	
-}])
+}]);

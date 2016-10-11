@@ -1,0 +1,126 @@
+<div ng-controller="searchTmsCtrl">
+	<h3>{{$parent.currentPage.titlePage}}</h3>
+	<div class="box-body">
+		<div class="row ">
+			<div class="form-horizontal col-md-8">
+				<div class="form-group">
+					<label class="col-md-3 control-label left-control" for="partition">Partition</label>
+					<div class="col-md-5">
+						<select id="partition" class="form-control">
+							<option>ES Prod</option>
+							<option>ES Rec</option>
+							<option>TH Prod</option>
+							<option>Th Rec</option>
+						</select>
+					</div>
+					<div class="col-md-4" style="padding-top: 5px;">
+						<span class="text-muted"> Last data update: 20/06/2016 -
+							17:15 </span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label left-control" for="trains">Train
+						number</label>
+					<div class="col-sm-9">
+						<input type="text" placeholder="ex: 09260, 09164," id="trains"
+							class="form-control">
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 control-label left-control" for="tranches">Tranche
+						number</label>
+					<div class="col-sm-9">
+						<input type="password" placeholder="ex: 08002, 08214,"
+							id="tranches" class="form-control">
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-sm-3 control-label left-control" for="tranches">Running
+						Date/Period</label>
+					<div class="col-sm-5">
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</div>
+							<input type="text" id="reservation"
+								class="form-control pull-right">
+						</div>
+						<!-- /.input group -->
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label left-control" for="route">Route</label>
+					<div class="col-sm-5">
+						<select id="route" class="form-control">
+							<option></option>
+							<option>GBSPX / FRPNO</option>
+							<option>FRPNO / GBSPX</option>
+							<option>GBOPX / FRONO</option>
+							<option>FRONO / GBOPX</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						<label> <input type="checkbox" class="flat-red" checked>
+								Aller/Retour </label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label left-control" for="stops">Stops</label>
+					<div class="col-sm-9">
+						<select id="stops" class="form-control"">
+							<option></option>
+							<option>GBSPX</option>
+							<option>FRPNO</option>
+							<option>GBOPX</option>
+							<option>FRONO</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label left-control" for="tosp">TOSP</label>
+					<div class="col-sm-5">
+						<select id="tosp" class="form-control">
+							<option></option>
+							<option>?</option>
+							<option>;)</option>
+							<option>!</option>
+							<option>);</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label left-control" for="equipCodes">Equipement
+						Code</label>
+					<div class="col-sm-5">
+						<select id="equipCodes" class="form-control">
+							<option></option>
+							<option>TGT</option>
+							<option>GTT</option>
+							<option>TGI</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label left-control" for="status">Status</label>
+					<div class="col-sm-5">
+						<select id="status" class="form-control">
+							<option></option>
+							<option>Open</option>
+							<option>Close</option>
+						</select>
+					</div>
+				</div>
+				<br>
+			</div>
+			<div class="form-horizontal col-md-12">
+				<hr>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Search</button>
+					</div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+</div>

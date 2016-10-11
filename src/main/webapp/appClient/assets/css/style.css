@@ -136,3 +136,8 @@ a.disabled {
     /* inline-block space fix */
     margin-right:-4px;
 }
+@media (min-width: 768px) {
+.left-control {
+    text-align: left !important;
+  }
+}

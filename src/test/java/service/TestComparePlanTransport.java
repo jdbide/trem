@@ -434,7 +434,7 @@ public class TestComparePlanTransport {
       trancheExpected.setNumeroTranche("Split");
       trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheNouveauSplit2().getRegime());
       expected.add(trancheExpected);
-      
+
       trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain("1");
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
@@ -444,7 +444,7 @@ public class TestComparePlanTransport {
       trancheExpected.setNumeroTranche("Modify");
       trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheNouveauModify().getRegime());
       expected.add(trancheExpected);
-      
+
       trancheExpected = new ComparaisonDifferentielPlanTransport<>();
       trancheExpected.setNumeroTrain("1");
       trancheExpected.setTrancheStatut(EnumTrancheStatut.Ouvert);
@@ -453,15 +453,14 @@ public class TestComparePlanTransport {
       trancheExpected.setRegimeTranche(PlanTransportFactory.getTrancheNouveauModify().getRegime());
       expected.add(trancheExpected);
 
-
       Assert.assertTrue(ListUtils.compareLists(res, expected));
 
    }
 
-   public boolean compareMaps(Map<Object, Object> m1, Map<Object, Object> m2) {
-      Object tt = null;
-      for (Object tt1 : m1.keySet()) {
-         for (Object tt2 : m2.keySet()) {
+   public <K, V> boolean compareMaps(Map<K, V> m1, Map<K, V> m2) {
+      K tt = null;
+      for (K tt1 : m1.keySet()) {
+         for (K tt2 : m2.keySet()) {
             if (tt2.equals(tt1)) {
                tt = tt2;
                break;
@@ -471,8 +470,8 @@ public class TestComparePlanTransport {
             return false;
          }
       }
-      for (Object tt2 : m2.keySet()) {
-         for (Object tt1 : m1.keySet()) {
+      for (K tt2 : m2.keySet()) {
+         for (K tt1 : m1.keySet()) {
             if (tt1.equals(tt2)) {
                tt = tt1;
                break;
