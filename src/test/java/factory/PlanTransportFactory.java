@@ -61,7 +61,7 @@ public class PlanTransportFactory {
         
         
         
-        Regime regimeEgal = generateRegime(generateDate(-10), generateDate(20));
+        Regime regimeEgal = generateRegime(generateDate(-1), generateDate(0));
         
         List<Tranche> tranchesEgal = new ArrayList<>();
         Tranche trancheEgal = new Tranche();
@@ -82,6 +82,7 @@ public class PlanTransportFactory {
         trancheEgal.setNumeroTranche("trancheEgal");
         trancheEgal.setTrancheStatut(null);
         trancheEgal.setRegime(regimeEgal);
+        tranchesEgal = new ArrayList<>();
         tranchesEgal.add(trancheEgal);
         
         trainEgal.setNumeroTrain("trainEgal");
@@ -97,17 +98,17 @@ public class PlanTransportFactory {
         Tranche trancheControleBaseStatut = new Tranche();
         trancheControleBaseStatut.setNumeroTranche("trancheControleStatut");
         trancheControleBaseStatut.setTrancheStatut(EnumTrancheStatut.Ferme);
-        trancheControleBaseStatut.setRegime(generateRegime(generateDate(-10), generateDate(20)));        
+        trancheControleBaseStatut.setRegime(generateRegime(generateDate(-1), generateDate(0)));        
         tranchesControleBase.add(trancheControleBaseStatut);
         
         Tranche trancheControleBaseRepas = new Tranche();
         trancheControleBaseRepas.setNumeroTranche("trancheControleCodeSat");
         trancheControleBaseRepas.setTrancheStatut(EnumTrancheStatut.Ouvert);
-        trancheControleBaseRepas.setRegime(generateRegime(generateDate(-20),generateDate(-11)));
+        trancheControleBaseRepas.setRegime(generateRegime(generateDate(-3),generateDate(-2)));
         List<ASousRegimeTranche> attributs = new ArrayList<>();
         CodeSat codeSat = new CodeSat();
         codeSat.setCodeSat("base");
-        codeSat.setRegime(generateRegime(generateDate(-20),generateDate(-11)));
+        codeSat.setRegime(generateRegime(generateDate(-3),generateDate(-2)));
         attributs.add(codeSat);
         MapTranche map = new MapTranche();
         map.put(codeSat.getClass(), attributs);
@@ -122,17 +123,17 @@ public class PlanTransportFactory {
         Tranche trancheControleXlsStatut = new Tranche();
         trancheControleXlsStatut.setNumeroTranche("");
         trancheControleXlsStatut.setTrancheStatut(EnumTrancheStatut.Ouvert);
-        trancheControleXlsStatut.setRegime(generateRegime(generateDate(0), generateDate(20)));       
+        trancheControleXlsStatut.setRegime(generateRegime(generateDate(-1), generateDate(0)));       
         tranchesControleXls.add(trancheControleXlsStatut);
         
         Tranche trancheControleXlsRepas = new Tranche();
         trancheControleXlsRepas.setNumeroTranche("");
         trancheControleXlsRepas.setTrancheStatut(EnumTrancheStatut.Ouvert);
-        trancheControleXlsRepas.setRegime(generateRegime(generateDate(-20),generateDate(-11)));
+        trancheControleXlsRepas.setRegime(generateRegime(generateDate(-3),generateDate(-2)));
         List<ASousRegimeTranche> attributsXls = new ArrayList<>();
         CodeSat codeSatXls = new CodeSat();
         codeSatXls.setCodeSat("xls");
-        codeSatXls.setRegime(generateRegime(generateDate(-16),generateDate(-15)));
+        codeSatXls.setRegime(generateRegime(generateDate(-3),generateDate(-2)));
         attributsXls.add(codeSatXls);
         MapTranche mapXls = new MapTranche();
         mapXls.put(codeSatXls.getClass(), attributsXls);
