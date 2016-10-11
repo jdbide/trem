@@ -22,6 +22,15 @@ public class StructuredProcessException extends Exception {
 	}
 
 	/**
+	 * constructeur indiquant la cause.
+	 * @param context contexte dans lequel intervient l'erreur.
+	 */
+	public StructuredProcessException(StructuredProcessContext<?, ?> context, Exception cause){
+		super(cause);
+		this.context = context;
+	}
+	
+	/**
 	 * retourne le contexte de l'erreur.
 	 * @return le context.
 	 */

@@ -114,22 +114,61 @@ public abstract class AStructuredProcess<S, P, C extends StructuredProcessContex
 			// contrôle de la classe de context utilisée
 			@SuppressWarnings("unchecked")
 			IFinalProcessStep<S, P, C> finalStep = (IFinalProcessStep<S, P, C>) step;
+			Exception fatal = null;
+			// extraction d'une éventuelle étape d'exception
+			if(finalStep instanceof IExceptionSafeStep) {
+				@SuppressWarnings("unchecked")
+				IFinalProcessStep<S, P, C> eStep = ((IExceptionSafeStep<S, P, C>) step).getFatalCatchStep();
+				context.getFatalCatchSteps().add(eStep);
+			}
 			// exécution de l'étape
 			try {
 				finalStep.executeStep(context);
 			} catch (Exception e) {
 				context.setFatalException(e);
-				throw new StructuredProcessException(context);
+				fatal = e;
 			}
 			// contrôle de l'existence d'une exception fatale
 			if(context.getFatalException() != null) {
-				throw new StructuredProcessException(context);
+				fatal = context.getFatalException();
+			}
+			// déclanchement de la procédure d'exception
+			if(fatal != null) {
+				this.fatalCatch(context);
 			}
 		// en cas d'étape indéterminée
 		} else {
 			throw new ProcessStructureException("une étape du process n'est ni intermédiaire ni finale");
 		}
 		context.setCurrentStep(previousStep);
+	}
+
+	/**
+	 * exécution des étapes d'exception.
+	 * @param context contexte d'exécution.
+	 */
+	private void fatalCatch(C context) throws StructuredProcessException {
+		Exception fatal = context.getFatalException();
+		for(int i = context.getFatalCatchSteps().size() - 1; i > -1; i--) {
+			// exécution des étapes d'exception
+			try {
+				@SuppressWarnings("unchecked")
+				IFinalProcessStep<S, P, C> step = (IFinalProcessStep<S, P, C>) context.getFatalCatchSteps().get(i);
+				step.executeStep(context);
+				// cas d'une erreur relevée dans le contexte
+				if(context.getFatalException() != fatal) {
+					Exception e = context.getFatalException();
+					context.setFatalException(fatal);
+					throw e;
+				}
+			} catch (Exception e) {
+				// en cas d'erreur
+				context.setFatalException(fatal);
+				throw new StructuredProcessOverException(context, e);
+			}
+		}
+		// lancement de l'erreur d'origine
+		throw new StructuredProcessException(context);
 	}
 	
 }

@@ -1,6 +1,9 @@
 package com.avancial.app.utilitaire.pattern.structuredProcess;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.avancial.app.utilitaire.pattern.context.IContext;
 
 /**
  * classe mère des contextes d'exécution de process structurés.
@@ -8,7 +11,7 @@ import java.util.List;
  * @param <S> type source du process.
  * @param <P> type produit par le process.
  */
-public class StructuredProcessContext<S, P> {
+public class StructuredProcessContext<S, P> implements IContext{
 
 	/** exception fatale à l'exécution. */
 	private Exception fatalException = null;
@@ -24,6 +27,10 @@ public class StructuredProcessContext<S, P> {
 	
 	/** l'étape en cours d'exécution. */
 	private IProcessStep<S, P> currentStep = null;
+	
+	/** liste des étapes d'exception dans l'ordre d'appel des étapes protégées. */
+	private final List<IFinalProcessStep<S, P, ? extends StructuredProcessContext<S, P>>> fatalCatchSteps =
+			new ArrayList<IFinalProcessStep<S, P, ? extends StructuredProcessContext<S, P>>>();
 	
 	/**
 	 * constructeur simple.
@@ -106,5 +113,13 @@ public class StructuredProcessContext<S, P> {
 	public void setCurrentStep(IProcessStep<S, P> currentStep) {
 		this.currentStep = currentStep;
 	}
+
+	/**
+	 * @return the fatalCatchSteps
+	 */
+	public List<IFinalProcessStep<S, P, ? extends StructuredProcessContext<S, P>>> getFatalCatchSteps() {
+		return fatalCatchSteps;
+	}
+	
 	
 }
