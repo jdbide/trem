@@ -40,7 +40,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	private Map<String, EnumTypeRepas> refMeal;
 	
 	/** map de références du matériel roulant. */
-	private Map<String, String> refRollingStock;
+	private List<String> refRollingStock;
 	
 	/** map des tranches dans le plan de transport, indexées par numéro de train. */
 	private final Map<Integer, Tranche> tranchesByTrain = new HashMap<Integer, Tranche>();
@@ -167,14 +167,14 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	/**
 	 * @return the refRollingStock
 	 */
-	public Map<String, String> getRefRollingStock() {
+	public List<String> getRefRollingStock() {
 		return refRollingStock;
 	}
 
 	/**
 	 * @param refRollingStock the refRollingStock to set
 	 */
-	public void setRefRollingStock(Map<String, String> refRollingStock) {
+	public void setRefRollingStock(List<String> refRollingStock) {
 		this.refRollingStock = refRollingStock;
 	}
 
