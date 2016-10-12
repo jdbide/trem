@@ -11,10 +11,9 @@ import javax.persistence.EntityManager;
 
 import org.apache.log4j.Logger;
 
-import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
-import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.EStatus;
+import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.importMotriceBrut.ImportTMDKAPPEntity;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.export.ExcelRapportDifferentiel;
@@ -29,6 +28,7 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.service.RefDirectoryService;
 import com.avancial.socle.traitement.ATraitementLogDetail;
+import com.avancial.socle.traitement.Task;
 
 @RequestScoped
 public class TraitementImportJeuDonnees extends ATraitementLogDetail implements Serializable {
@@ -69,6 +69,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
    @Inject
    private TraitementDeleteJeuDonnee     traitementDeleteJeuDonnee;
+
+   @Inject
+   private TraitementMiseAJourDonneesRef traitementMiseAJourDonneesRef;
 
    /**
     * Map représente les deux plans de transport(Active & Draft)
@@ -120,6 +123,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.deleteDataWithStatusImportDraft();
          this.saveJeuDonnees();
          this.createDraft();
+         this.majDonneesRef();
          this.createPlanTransport();
          this.comparePlanTransport();
          this.generateRapportDiff();
@@ -142,6 +146,28 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
          Thread.currentThread().interrupt();
          throw (new InterruptedException());
+      }
+   }
+
+   private void majDonneesRef() throws Exception {
+      Task.setMsgTask(this.idTask, "Mise à jour des données de référence");
+
+      this.traitementMiseAJourDonneesRef.setIdTask(this.idTask);
+      this.traitementMiseAJourDonneesRef.setJeuDonneesEntity(this.jeuDonneeDataBean);
+      this.traitementMiseAJourDonneesRef.setCompagnieEnvironnement(this.compagnieEnvironnementEntity);
+
+      try {
+         logger.info("Start majDonneesRef");
+         this.traitementMiseAJourDonneesRef.execute();
+         logger.info("End majDonneesRef");
+      } catch (Throwable e) {
+         this.log("Echec majDonneesRef");
+         logger.error("Echec majDonneesRef.", e);
+         if (this.idTask != null) {
+            Task.finishKoTask(this.idTask, "Echec de mise à jour des données de référence : veuillez réessayer ultérieurement");
+         }
+
+         throw e;
       }
    }
 
@@ -290,7 +316,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
       } finally {
          if (this.entityManagerDb2 != null) {
             this.entityManagerDb2.clear();
-            
+
             if (this.entityManagerDb2.isOpen()) {
                this.entityManagerDb2.close();
             }

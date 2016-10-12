@@ -15,6 +15,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRefFareProfileCodeEnt
 import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefMealTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefODEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefOd2gareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRameCodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefServiceClassEntity;
@@ -42,6 +43,7 @@ public class GetUniqueRefData {
       this.map.put(MotriceRefServiceEntity.class.getSimpleName(), new GetUniqueRefService());
       this.map.put(MotriceRefServiceClassEntity.class.getSimpleName(), new GetUniqueRefServiceClass());
       this.map.put(MotriceRefTospEntity.class.getSimpleName(), new GetUniqueRefTosp());
+      this.map.put(MotriceRefOd2gareEntity.class.getSimpleName(), new GetUniqueRefOd2gare());
    }
 
    public List<Object> getUniqueKeyEntity(Object refDataEntity, EntityManager em) throws Exception {
