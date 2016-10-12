@@ -1,4 +1,4 @@
-package com.avancial.app.utilitaire;
+package com.avancial.socle.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

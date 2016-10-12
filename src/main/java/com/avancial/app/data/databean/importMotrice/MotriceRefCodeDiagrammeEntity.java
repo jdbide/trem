@@ -18,7 +18,8 @@ import com.avancial.app.data.databean.CompagnieEntity;
 @Entity
 @Table(name = "tremas_motrice_ref_codediagramme")
 @NamedQueries({ @NamedQuery(name = "MotriceRefCodeDiagramme.getAll", query = "SELECT t FROM MotriceRefCodeDiagrammeEntity t"),
-      @NamedQuery(name = "MotriceRefCodeDiagramme.getUnique", query = "SELECT t FROM MotriceRefCodeDiagrammeEntity t where t.labelCodeDiagramme = :labelCodeDiagramme and t.compagnie = :compagnie"), })
+      @NamedQuery(name = "MotriceRefCodeDiagramme.getUnique", query = "SELECT t FROM MotriceRefCodeDiagrammeEntity t where t.labelCodeDiagramme = :labelCodeDiagramme and t.compagnie = :compagnie"),
+      @NamedQuery(name = "MotriceRefCodeDiagramme.getByCompagnie", query = "SELECT t FROM MotriceRefCodeDiagrammeEntity t where t.compagnie = :compagnie"), })
 public class MotriceRefCodeDiagrammeEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)

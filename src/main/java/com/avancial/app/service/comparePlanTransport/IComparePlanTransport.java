@@ -10,6 +10,13 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
  */
 public interface IComparePlanTransport {
 
-    public MapComparaisonPlanTransport compare(IPlanTransport comparable1, IPlanTransport comparable2)
-            throws Exception;
+	/**
+	 * Compare deux objets métiers d'un plan de transport.
+	 * 
+	 * @param comparable1
+	 * @param comparable2
+	 * @return
+	 * @throws Exception
+	 */
+	public MapComparaisonPlanTransport compare(IPlanTransport comparable1, IPlanTransport comparable2) throws Exception;
 }

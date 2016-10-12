@@ -51,7 +51,7 @@ public class ResponseBean implements Serializable {
     * @return the data
     */
    public Object getData() {
-      return data;
+      return this.data;
    }
 
    /**

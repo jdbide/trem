@@ -241,7 +241,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			console.log("====== je suis la 4");
 			$scope.files.firstFile.msgError=null;
 			$scope.files.firstFile.invalidFile=null;
-			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
+//			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
 		}
 
 		console.log($scope.files);
@@ -274,11 +274,19 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		if (idInputFile == 1) {
 			console.log("==> 1 " + $scope.jeuDonneesControl);
 			console.log(traitementControlTmsService.files().firstFile.file);
+			
+			traitementControlTmsService.files().firstFile.etat.isStartTraitement = true;
 			controlTmsService.uploadUsing$http(traitementControlTmsService.files().firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
-
+			traitementControlTmsService.files().firstFile.etat.isFinishTraitementSucces = true;
+			traitementControlTmsService.files().firstFile.etat.isFinishTraitement = true;
+			
 		} else if (idInputFile == 2) {
 			console.log("==> 2");
+			
+			traitementControlTmsService.files().secondFile.etat.isStartTraitement = true;
 			controlTmsService.uploadUsing$http(traitementControlTmsService.files().secondFile.file,$scope.jeuDonneesControl, "yield");
+			traitementControlTmsService.files().secondFile.etat.isFinishTraitementSucces = true;
+			traitementControlTmsService.files().secondFile.etat.isFinishTraitement = true;
 		}
 	}
 	

@@ -3,11 +3,7 @@
  */
 package com.avancial.app.webService;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +25,15 @@ import org.json.simple.JSONArray;
 
 import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.EStatusControl;
+import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneesControlService;
 import com.avancial.app.serviceDto.JeuDonneesControlServiceDto;
 import com.avancial.app.serviceDto.JeuDonneesServiceDto;
 import com.avancial.app.webService.bean.ResponseBean;
+import com.avancial.socle.service.RefDirectoryService;
 import com.avancial.socle.session.Session;
+import com.avancial.socle.utils.FileUtils;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -68,7 +67,35 @@ public class ControlTmsWebService {
    private JeuDonneesServiceDto          jeuDonneesServiceDto;
 
    @Inject
+   private RefDirectoryService           refDirectoryService;
+
+   @Inject
    private Session                       session;
+
+   @Path("getImportParPartition/{idCompagnieEnvironnement}")
+   @GET
+   @Produces({ MediaType.APPLICATION_JSON })
+   public Response getImportParIdPartition(@PathParam("idCompagnieEnvironnement") final int idCompagnieEnvironnement) {
+      logger.info("Début (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
+      ResponseBuilder responseBuilder = null;
+      final ResponseBean responseBean = new ResponseBean();
+      List<EStatus> status = new ArrayList<EStatus>();
+      status.add(EStatus.ACTIVE);
+      status.add(EStatus.DRAFT);
+      try {
+         responseBean.setData(this.jeuDonneesServiceDto.getAllJeuDonneesForControlDtoParIdCompagnieEnvironnementEtListStatus(idCompagnieEnvironnement, status));
+         responseBean.setStatus(true);
+         logger.info("Fin (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBean.setStatus(false);
+         responseBean.setMessage("Erreur de chargement ...");
+         logger.error("Exception (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)", e);
+      } finally {
+         responseBuilder = Response.ok((Object) responseBean);
+         return responseBuilder.build();
+      }
+   }
 
    /**
     * récupération
@@ -121,31 +148,6 @@ public class ControlTmsWebService {
       }
    }
 
-   @Path("getImportParPartition/{idCompagnieEnvironnement}")
-   @GET
-   @Produces({ MediaType.APPLICATION_JSON })
-   public Response getImportParIdPartition(@PathParam("idCompagnieEnvironnement") final int idCompagnieEnvironnement) {
-      logger.info("Début (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
-      ResponseBuilder responseBuilder = null;
-      final ResponseBean responseBean = new ResponseBean();
-      List<EStatus> status = new ArrayList<EStatus>();
-      status.add(EStatus.ACTIVE);
-      status.add(EStatus.DRAFT);
-      try {
-         responseBean.setData(this.jeuDonneesServiceDto.getAllJeuDonneesForControlDtoParIdCompagnieEnvironnementEtListStatus(idCompagnieEnvironnement, status));
-         responseBean.setStatus(true);
-         logger.info("Fin (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
-      } catch (Exception e) {
-         e.printStackTrace();
-         responseBean.setStatus(false);
-         responseBean.setMessage("Erreur de chargement ...");
-         logger.error("Exception (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)", e);
-      } finally {
-         responseBuilder = Response.ok((Object) responseBean);
-         return responseBuilder.build();
-      }
-   }
-
    @Path("/{id}")
    @DELETE
    @Produces({ MediaType.APPLICATION_JSON })
@@ -167,57 +169,45 @@ public class ControlTmsWebService {
          return responseBuilder.build();
       }
    }
-//, 
-//   @PathParam("idJeuDonneesControl") int idJeuDonneesControl,
-//   @PathParam("typeFile") String typeFile
-   
-   @Path("uploadFile")
+
+   @Path("uploadFile/{idJeuDonneesControl}/{typeFile}")
    @POST
    @Produces({ MediaType.APPLICATION_JSON })
    @Consumes({ MediaType.MULTIPART_FORM_DATA, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" })
-   public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
-         @FormDataParam("file") FormDataContentDisposition fileDetail) {
-      
-      logger.info("Début (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)");
-      ResponseBuilder responseBuilder = null;
+   public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream, @FormDataParam("file") FormDataContentDisposition fileDetail, @PathParam("idJeuDonneesControl") int idJeuDonneesControl, @PathParam("typeFile") String typeFile) {
+
+      logger.info("Début (WebService : '/app/controlTms', Action : 'uploadFile', methode : @UPLOAD)");
+
       final ResponseBean responseBean = new ResponseBean();
       try {
-         String uploadedFileLocation = "D:/was_tmp/uploaded/" + fileDetail.getFileName();
+         String directory = this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathImport.toString()).getPathRefDirectory();
+         StringBuilder filePath = new StringBuilder(directory).append(typeFile).append("\\").append(idJeuDonneesControl).append("\\");
+
+         // création des répertoires nécessaires
+         if (!FileUtils.mkDirs(filePath.toString())) {
+            responseBean.setMessage("Impossible de créer le répertoire");
+            responseBean.setStatus(false);
+
+            return Response.ok((Object) responseBean).build();
+         }
 
          // save it
-         writeToFile(uploadedInputStream, uploadedFileLocation);
+         FileUtils.writeToFile(uploadedInputStream, filePath.append(fileDetail.getFileName()).toString());
 
-         String output = "File uploaded to : " + uploadedFileLocation;
+         responseBean.setMessage("File uploaded : " + filePath.toString());
+         responseBean.setStatus(true);
 
-         responseBean.setData(output);
-         return Response.status(200).entity(output).build();
+         return Response.ok((Object) responseBean).build();
+
       } catch (Exception e) {
          e.printStackTrace();
          responseBean.setStatus(false);
-         responseBean.setMessage("Erreur de chargement ...");
+         responseBean.setMessage(e.getMessage());
          logger.error("Exception (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)", e);
-      } finally {
-         responseBuilder = Response.ok((Object) responseBean);
-         return responseBuilder.build();
-      }
-   }
 
-   // save uploaded file to new location
-   private void writeToFile(InputStream uploadedInputStream, String uploadedFileLocation) {
-      try {
-         OutputStream out = new FileOutputStream(new File(uploadedFileLocation));
-         int read = 0;
-         byte[] bytes = new byte[1024];
+         Response.ok((Object) responseBean).build();
+         return Response.status(500).build();
 
-         out = new FileOutputStream(new File(uploadedFileLocation));
-         while ((read = uploadedInputStream.read(bytes)) != -1) {
-            out.write(bytes, 0, read);
-         }
-         out.flush();
-         out.close();
-      } catch (IOException e) {
-
-         e.printStackTrace();
       }
 
    }

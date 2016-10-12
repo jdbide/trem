@@ -152,6 +152,41 @@ Il existe quatre implémentations de chaînes:
 
 <dt>CompareTranche</dt>
   <dd>À ce niveau on récupère les RegimeSplit et tous les Modify, et l'on détermine si les
-  tranches sont Unchanged. Pour ces derniers, le déroulement de la chaîne est un peu modifié
-  par rapport aux autres maillons. 
+  tranches sont Unchanged. Nous compararons alors les attributs des tranches entre eux :
+  la liste de CodeSat du plan de transport Active avec celle du plan de transport Draft, etc.
+  Pour cette comparaison, le déroulement de la chaîne est un peu
+  modifié par rapport aux autres maillons. Nous enlevons d'abord tous les attributs détectés
+  en Unchanged, avant d'appeler la comparaison du maillon suivant (Modify). Cela permet
+  d'enlever les cas simples en premier, et d'empêcher la détection de faux positifs par la
+  suite. C'est également la raison pour laquelle nous continuons avec la comparaison Modify.
+  À la fin ne restent que des attributs en RegimeSplit, il est donc possible de détecter
+  les liens entre un régime dans le plan de transport Active et ses "splits" dans le plan
+  de transport Draft. La chaîne est donc:
+  1. *CompareTrancheUnchanged* : comme dit ci-dessus, on commence par enlever des plans de
+  transport les éléments inchangés entre les deux. Puis on appelle le successeur (Modify),
+  qui va appeler le sien (RegimeSplit). Dans ce maillon, on récupère alors les résultats
+  de ces comparaisons : s'il n'y en a aucun, c'est que les deux tranches en train d'être
+  comparées sont effectivement inchangées entre les deux plans de transport, et donc on
+  ajoute une comparaison Unchanged au résultat.
+  * *CompareTrancheModify* : dans ce maillon on cherche les attributs en Modify, c'est-à-dire
+  ayant le même régime mais des valeurs différentes entre les deux tranches.
+  * *ComparareTrancheRegimeSplit* : à ce moment du déroulement de la chaîne, il ne doit plus
+  rester que des attributs en RegimeSplit entre les deux tranches. Il nous appartient donc
+  de faire les liens entre les attributs des tranches Active et Draft.
   </dd>
+
+### Résultat de comparaison
+Les résultats de comparaison ont été mis sous une forme particulière pour faciliter leur
+représentation dans le rapport différentiel sous format Excel.
+
+Un objet "comparaison" pour le rapport différentiel contient donc les informations pour
+identifier le train-tranche, ainsi que les valeurs "avant/après" pour les modifications.
+* Numéro du train
+* Numéro de la tranche
+* Statut de la tranche
+* Régime de la tranche
+* Valeur attribut "ancien" (dans le plan de transport Active)
+* Valeur attribut "nouveau" (dans le plan de transport Draft)
+
+Pour faciliter l'accès aux données, les comparaisons ont été mises dans une Map, dont la clé
+contient le type de comparaison et la classe des attributs.

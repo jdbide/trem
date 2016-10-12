@@ -4,17 +4,17 @@ Cette documentation a pour but d'expliquer le fonctionnement de l'import des tab
 
 Pour des explications plus techniques, veuillez-vous reporter à la javadoc.
 
-### Structure de la documentation
+## Structure de la documentation
 
 * Import brut
 * Intégration dans le modèle Tremas du plan de transport
 
 
-### Import brut
+## Import brut
 
 L'import brut depuis la base motrice DB2.
 
-Le schema rentré pour la connexion à DB2 représente un transporteur :
+Le schéma utilisé pour la connexion à DB2 représente un transporteur :
 * F$MDRP2 -> EuroStar Production
 * F$MDRO2 -> EuroStar Recette
 * F$MDRP3 -> Thalys Production
@@ -28,9 +28,9 @@ Ajout d'une table à importer:
 
 > Son entité doit être créée dans src\main\java\com\avancial\app\data\databean\importMotriceBrut\
 
-> Si la table contient un champ devant être traité (tel que les champs regimes) avant d'être inseré dans la base de Tremas, le nom de ce champ ainsi que l'instance de son traitement doivent être ajoutés à la map src\main\java\com\avancial\app\utilitaire\MapTraitementImportBrut.java
+> Si la table contient un champ devant être traité (tel que les champs régime) avant d'être inseré dans la base de Tremas, le nom de ce champ ainsi que l'instance de son traitement doivent être ajoutés à la map src\main\java\com\avancial\app\utilitaire\MapTraitementImportBrut.java
 
-### Intégration dans le model Tremas du plan de transport
+## Intégration dans le modèle Tremas du plan de transport
 Pour des raisons de performance, nous utilisons des requêtes SQL natives pour insérer dans les tables motrice_regime. À chaque import, nous insérons les données table par table, en une (ou plusieurs) requête(s) de la forme:
 
     INSERT INTO table VALUES (...), (...), ...;
@@ -59,3 +59,14 @@ L'algorithme de l'import est le suivant:
       * Incrémentations des ids
 4. Exécution des requêtes d'insertion dans les tables:  
 **Attention** à cause des contraintes de *foreign keys*, l'insertion doit se faire dans un ordre particulier : d'abord les entités qui sont référencées dans des clés étrangères (donc en tout premier il faut remplir la table motrice_regime), en dernier les entités qui possèdent des clés étrangères (par exmemple, on remplit motrice_regime_composition avant motrice_regime_composition_coach)
+
+## Intégration des données de référence
+Lors de l'import, nous alimentons des tables de référence tremas_ref_motrice_xxx pour les données des plans de transport dans Motrice : par exemple, les codes Gare, code Sat, types d'équipement...
+
+Pour remplir les tables, nous partons de nos tables d'import brut "tremas_import_tmdxxxx", en même temps que l'intégration dans le modèle Tremas. Toutes les données de référence sont liées à une compagnie (Eurostar ou Thalys).
+
+Pour insérer dans les tables, on vérifie si la donnée existe déjà:
+* si oui, on récupère l'id de la donnée, pour l'insérer dans la table tremas_motrice_regime_xxx correspondante
+* sinon, on insère la donnée avant de récupérer son id.
+
+Pour l'insertion, nous utilisons un EntityManager avec les entités de référence créées.
