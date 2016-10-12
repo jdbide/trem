@@ -71,29 +71,6 @@ public class ControlTmsWebService {
    private Session                       session;
 
    /**
-    * récupération de la liste des CompagnieEnvironnement actif
-    * 
-    * @return
-    * @throws Exception
-    */
-   @GET
-   @Produces({ MediaType.APPLICATION_JSON })
-   public Response getPartitions() throws Exception {
-      logger.info("Début (WebService : '/app/controlTms' methode : GET)");
-      JSONArray jsonArray = new JSONArray();
-      try {
-         jsonArray.addAll(this.compagnieEnvironnementService.getAllCompagnieEnvironnementActif());
-
-         logger.info("Fin (WebService : '/app/controlTms' methode : GET)");
-
-         return Response.status(200).entity(jsonArray).build();
-      } catch (Throwable ex) {
-         logger.error("Exception (WebService : '/app/controlTms' methode : GET)", ex);
-         return Response.status(400).build();
-      }
-   }
-
-   /**
     * récupération
     * 
     * @return

@@ -4,8 +4,8 @@
  * Contrôleur qui gère la page "Control" du chapitre "Train manager systeme", 
  *
  */
-socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$interval',"controlTmsService", 'traitementControlTmsService',
-                                 function($rootScope, $scope, envService, $interval, controlTmsService, traitementControlTmsService) {
+socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$interval',"controlTmsService", 'traitementControlTmsService', 'partitionTmsService',
+                                 function($rootScope, $scope, envService, $interval, controlTmsService, traitementControlTmsService, partitionTmsService) {
 	$scope.title = "Control";
 	// Liste des CompagnieEnvironnement
 	$scope.partitions = null;
@@ -89,23 +89,31 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			      file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 			    });
 			  }
+
+	/*
+	 * Recuperation de la liste des jeuDonneesControl
+	 * MAJ des $scope.data
+	 */
+	function getData() {
+		// Recuperation de la liste des jeuDonneesControl
+		controlTmsService.getDataByIdPartition($scope.selectedPartition).then(
+			function(datas) {
+				$scope.datas = datas;
+			}, function() {
+				alert("Erreur serveur!!");
+			}
+		);
+	}
 	/*
 	 * Constructeur du controlleur, il récupère la liste List<ImportTmsDto>
 	 */
 	function constructor () {
 		// Recuperation de la liste des partitions
-		controlTmsService.getPartition().then(
+		partitionTmsService.getPartition().then(
 			function(datas) {
 				$scope.partitions = datas;
 				$scope.selectedPartition = datas[0].idCompagnieEnvironnement;
-				// Recuperation de la liste des jeuDonneesControl
-				controlTmsService.getDataByIdPartition($scope.selectedPartition).then(
-					function(datas) {
-						$scope.datas = datas;
-					}, function() {
-						alert("Erreur serveur!!");
-					}
-				);
+				getData();
 			}, function() {
 				alert("Erreur serveur!!");
 			}
@@ -116,13 +124,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	 * Methode pour la selection d'une autre partition
 	 */
 	$scope.changeSelectedPartition = function () {
-		controlTmsService.getDataByIdPartition($scope.selectedPartition).then(
-			function(datas) {
-				$scope.datas = datas;
-			}, function() {
-				alert("Erreur serveur!!");
-			}
-		);
+		getData();
 	}
 	
 	/*

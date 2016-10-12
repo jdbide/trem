@@ -39,24 +39,6 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
     	reponse.data=null;
     }
 	
-	self.getPartition = function () {
-    	loadingService.show();
-        var deffered  = $q.defer();
-
-        var promissJsonFactory = jsonFactory.getJson("webService/app/controlTms/");
-        promissJsonFactory
-            .success(function (datas, status, headers, config) {
-            	loadingService.hide();
-                deffered.resolve(datas);
-            })
-            .error(function (datas, status, headers, config) {
-            	loadingService.hide();
-                deffered.reject();
-        });
-        
-        return deffered.promise;
-    }
-	
 	self.getDataByIdPartition = function (idPartition) {
     	loadingService.show();
         var deffered  = $q.defer();
