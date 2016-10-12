@@ -25,7 +25,7 @@ public class DessertesEurostarRollingStockValidationStep extends AConditionalLoo
 				context.addValidationError(new ExcelImportException(null, "dans la feuille " + sheet.getSheetName() + " le 'Rolling Stock' est obligatoire"));
 				break;
 			}
-			if(!context.getRefRollingStock().containsKey(rollingStock)) {
+			if(!context.getRefRollingStock().contains(rollingStock)) {
 				context.addValidationError(new ExcelImportException(null, "dans la feuille " + sheet.getSheetName() +
 						" pour le train " + train.getIdTrain() + " le 'Rolling Stock' " + rollingStock + " est invalide"));
 			}

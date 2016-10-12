@@ -22,7 +22,7 @@ public class DessertesEurostarRollingStockExtractionStep extends AConditionalLoo
 	@Override
 	protected void doIfNoParsingAndValidationError(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {
 		for(DessertesTrainContext train : subContext.getTrains()) {
-			String stockName = context.getRefRollingStock().get(train.getOthers().get(ROLLING_STOCK));
+			String stockName = (String) train.getOthers().get(ROLLING_STOCK);
 			TypeEquipement rollingStock = new TypeEquipement(stockName, train.getRegime());
 			train.getSousRegimes().add(rollingStock);
 		}
