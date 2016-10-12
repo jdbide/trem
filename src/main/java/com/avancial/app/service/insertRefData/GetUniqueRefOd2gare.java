@@ -7,7 +7,7 @@ import javax.persistence.Query;
 
 import com.avancial.app.data.databean.importMotrice.MotriceRefOd2gareEntity;
 
-public class GetUniqueRefOd2gare extends AGetUniqueRefData<MotriceRefOd2gareEntity> {
+class GetUniqueRefOd2gare extends AGetUniqueRefData<MotriceRefOd2gareEntity> {
 
    @Override
    public List<MotriceRefOd2gareEntity> getUniqueKeyEntity(MotriceRefOd2gareEntity refDataEntity, EntityManager em) throws Exception {
