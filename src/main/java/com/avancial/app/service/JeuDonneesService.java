@@ -141,6 +141,37 @@ public class JeuDonneesService implements Serializable {
    }
    
    /**
+    * Charge un jeu de données en fonction du compagnie/environnement et du status.
+    * 
+    * @param compagnieEnvironnement
+    * @param statusJeuDonnees
+    * @return jeu de données
+    */
+   public JeuDonneeEntity getJeuDonneeParIdCompagnieEtStatus(Integer idCompagnieEnvironnement, EStatus statusJeuDonnees) {
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString())
+            .createEntityManager();
+      TypedQuery<JeuDonneeEntity> query = em.createQuery(
+            "SELECT t FROM JeuDonneeEntity t join t.compagnieEnvironnement ce WHERE ce.idCompagnieEnvironnement = :idCompagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees",
+            JeuDonneeEntity.class);
+      query.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
+      query.setParameter("statusJeuDonnees", statusJeuDonnees);
+
+      JeuDonneeEntity jeuDonneeEntity = null;
+
+      try {
+         if (!query.getResultList().isEmpty())
+            jeuDonneeEntity = query.getSingleResult();
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      } finally {
+         em.close();
+      }
+
+      return jeuDonneeEntity;
+   }
+   
+   /**
     * Charge un jeu de données en fonction du compagnie/environnement et la liste de status.
     * 
     * @param idCompagnieEnvironnement
