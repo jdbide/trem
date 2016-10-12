@@ -117,7 +117,7 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
     * @return the idTask
     */
    public Long getIdTask() {
-      return idTask;
+      return this.idTask;
    }
 
    /**

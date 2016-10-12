@@ -7,7 +7,7 @@ import javax.persistence.Query;
 
 import com.avancial.app.data.databean.importMotrice.MotriceRefCompositionClassEntity;
 
-public class GetUniqueRefCompositionClass extends AGetUniqueRefData<MotriceRefCompositionClassEntity> {
+class GetUniqueRefCompositionClass extends AGetUniqueRefData<MotriceRefCompositionClassEntity> {
 
    @Override
    public List<MotriceRefCompositionClassEntity> getUniqueKeyEntity(MotriceRefCompositionClassEntity refDataEntity, EntityManager em)

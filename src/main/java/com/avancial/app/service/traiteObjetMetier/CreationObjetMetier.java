@@ -30,10 +30,10 @@ public class CreationObjetMetier {
       PlanTransport planTransport = new PlanTransport();
 
       Query query = entityManager.createQuery(
-            "SELECT t FROM MotriceTrainTrancheEntity t JOIN t.jeuDonnee j JOIN j.compagnieEnvironnement c WHERE c.nomTechniqueCompagnieEnvironnement = ? AND j.statusJeuDonnees = ?",
+            "SELECT t FROM MotriceTrainTrancheEntity t JOIN t.jeuDonnee j JOIN j.compagnieEnvironnement c WHERE c.nomTechniqueCompagnieEnvironnement = :nomTechniqueCompagnieEnvironnement AND j.statusJeuDonnees = :statusJeuDonnees",
             MotriceTrainTrancheEntity.class);
-      query.setParameter(1, environnementCompagnie);
-      query.setParameter(2, eStatus);
+      query.setParameter("nomTechniqueCompagnieEnvironnement", environnementCompagnie);
+      query.setParameter("statusJeuDonnees", eStatus);
 
       List<MotriceTrainTrancheEntity> trainsTranches = query.getResultList();
       Train train = new Train();

@@ -15,6 +15,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRefFareProfileCodeEnt
 import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefMealTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefODEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefOd2gareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRameCodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefSatcodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefServiceClassEntity;
@@ -23,30 +24,37 @@ import com.avancial.app.data.databean.importMotrice.MotriceRefTospEntity;
 
 public class GetUniqueRefData {
 
-   private Map<String, IGetUniqueRefData<?>> map = new HashMap<>();
+   private static final Map<String, IGetUniqueRefData<?>> map = new HashMap<>();
 
-   /**
-    * Constructeur qui remplit la map
-    */
-   public GetUniqueRefData() {
-      this.map.put(MotriceRefCodeDiagrammeEntity.class.getSimpleName(), new GetUniqueRefCodeDiagramme());
-      this.map.put(MotriceRefCompositionClassEntity.class.getSimpleName(), new GetUniqueRefCompositionClass());
-      this.map.put(MotriceRefDistributionEntity.class.getSimpleName(), new GetUniqueRefDistribution());
-      this.map.put(MotriceRefEqpTypeEntity.class.getSimpleName(), new GetUniqueRefEqpType());
-      this.map.put(MotriceRefFareProfileCodeEntity.class.getSimpleName(), new GetUniqueRefFareProfileCode());
-      this.map.put(MotriceRefGareEntity.class.getSimpleName(), new GetUniqueRefGare());
-      this.map.put(MotriceRefMealTypeEntity.class.getSimpleName(), new GetUniqueRefMealType());
-      this.map.put(MotriceRefODEntity.class.getSimpleName(), new GetUniqueRefOd());
-      this.map.put(MotriceRefRameCodeEntity.class.getSimpleName(), new GetUniqueRefRameCode());
-      this.map.put(MotriceRefSatcodeEntity.class.getSimpleName(), new GetUniqueRefSatcode());
-      this.map.put(MotriceRefServiceEntity.class.getSimpleName(), new GetUniqueRefService());
-      this.map.put(MotriceRefServiceClassEntity.class.getSimpleName(), new GetUniqueRefServiceClass());
-      this.map.put(MotriceRefTospEntity.class.getSimpleName(), new GetUniqueRefTosp());
+   static {
+      map.put(MotriceRefCodeDiagrammeEntity.class.getSimpleName(), new GetUniqueRefCodeDiagramme());
+      map.put(MotriceRefCompositionClassEntity.class.getSimpleName(), new GetUniqueRefCompositionClass());
+      map.put(MotriceRefDistributionEntity.class.getSimpleName(), new GetUniqueRefDistribution());
+      map.put(MotriceRefEqpTypeEntity.class.getSimpleName(), new GetUniqueRefEqpType());
+      map.put(MotriceRefFareProfileCodeEntity.class.getSimpleName(), new GetUniqueRefFareProfileCode());
+      map.put(MotriceRefGareEntity.class.getSimpleName(), new GetUniqueRefGare());
+      map.put(MotriceRefMealTypeEntity.class.getSimpleName(), new GetUniqueRefMealType());
+      map.put(MotriceRefODEntity.class.getSimpleName(), new GetUniqueRefOd());
+      map.put(MotriceRefRameCodeEntity.class.getSimpleName(), new GetUniqueRefRameCode());
+      map.put(MotriceRefSatcodeEntity.class.getSimpleName(), new GetUniqueRefSatcode());
+      map.put(MotriceRefServiceEntity.class.getSimpleName(), new GetUniqueRefService());
+      map.put(MotriceRefServiceClassEntity.class.getSimpleName(), new GetUniqueRefServiceClass());
+      map.put(MotriceRefTospEntity.class.getSimpleName(), new GetUniqueRefTosp());
+      map.put(MotriceRefOd2gareEntity.class.getSimpleName(), new GetUniqueRefOd2gare());
    }
 
-   public List<Object> getUniqueKeyEntity(Object refDataEntity, EntityManager em) throws Exception {
+   /**
+    * Retourne la liste de données correspondant à l'entité de référence en paramètre
+    * 
+    * @param refDataEntity
+    *           Donnée de référence dont on veut l'entité correspondante en base
+    * @param em
+    * @return Liste contenant zéro ou un élément, selon que la donnée est respectivement absente ou présente dans la base
+    * @throws Exception
+    */
+   public static List<Object> getUniqueKeyEntity(Object refDataEntity, EntityManager em) throws Exception {
       List<Object> res = new ArrayList<>();
-      IGetUniqueRefData<Object> getUniqueRefData = (IGetUniqueRefData<Object>) this.map.get(refDataEntity.getClass().getSimpleName());
+      IGetUniqueRefData<Object> getUniqueRefData = (IGetUniqueRefData<Object>) map.get(refDataEntity.getClass().getSimpleName());
       if (getUniqueRefData != null) {
          res = getUniqueRefData.getUniqueKeyEntity(refDataEntity, em);
       } else {
