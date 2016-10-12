@@ -7,8 +7,9 @@ import com.avancial.app.export.ExcelRapportDifferentiel;
 import com.avancial.app.export.control.ExcelRapportControle;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
-import com.avancial.app.utilitaire.FileUtil;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
+import com.avancial.socle.utils.FileUtils;
+
 import factory.PlanTransportFactory;
 
 public class TestGenerateRapportDifferentiel {
@@ -27,7 +28,7 @@ public class TestGenerateRapportDifferentiel {
          excelRapportDifferentiel.setFilePath("D:/was_tmp/tremas/export/");
          excelRapportDifferentiel.setXlsx(true);
          excelRapportDifferentiel.generate();
-         Assert.assertTrue(FileUtil.existFile("D:/was_tmp/tremas/export/testGenerationXlsTrancheSplit.xlsx"));
+         Assert.assertTrue(FileUtils.existFile("D:/was_tmp/tremas/export/testGenerationXlsTrancheSplit.xlsx"));
       } catch (Exception e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
@@ -48,7 +49,7 @@ public class TestGenerateRapportDifferentiel {
          rapportControle.setFileName("testGenerationRapportControle");
          rapportControle.setFilePath("D:/was_tmp/tremas/export/");
          rapportControle.generate();
-         Assert.assertTrue(FileUtil.existFile("D:/was_tmp/tremas/export/testGenerationRapportControle.xlsx"));
+         Assert.assertTrue(FileUtils.existFile("D:/was_tmp/tremas/export/testGenerationRapportControle.xlsx"));
       } catch (Exception e) {
          e.printStackTrace();
       }

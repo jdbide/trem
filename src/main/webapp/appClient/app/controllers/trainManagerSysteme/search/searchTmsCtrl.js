@@ -5,7 +5,6 @@
  *
  */
 socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', function($rootScope, $scope) {
-	$scope.
 	
 	function constructor () {
 		

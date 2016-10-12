@@ -18,8 +18,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.EStatus;
+import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
@@ -43,11 +43,11 @@ import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.traitement.TraitementObjetMetier;
-import com.avancial.app.utilitaire.FileUtil;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.utils.FileUtils;
 
 import factory.PlanTransportFactory;
 
@@ -64,7 +64,7 @@ public class TestGenerateExcel {
 
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(ExcelRapportDifferentiel.class.getPackage())
                 .addClass(JeuDonneesService.class).addClass(TraiteObjetMetierRegimeFactory.class)
-                .addClass(FileUtil.class).addPackage(CodeSat.class.getPackage())
+                .addClass(FileUtils.class).addPackage(CodeSat.class.getPackage())
                 .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneesService.class)
                 .addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class)
                 .addClass(TraitementObjetMetier.class).addPackage(Socle_PUSocle.class.getPackage())
@@ -205,7 +205,7 @@ public class TestGenerateExcel {
             mapPlansDeTransport.getPlanTransportDraft();
 
             this.excelRapportDifferentiel.generate();
-            if (!FileUtil.existFile("D:/was_tmp/tremas/export.xls")) {
+            if (!FileUtils.existFile("D:/was_tmp/tremas/export.xls")) {
                 Assert.assertTrue(false);
             }
             else
@@ -245,7 +245,7 @@ public class TestGenerateExcel {
             this.excelRapportDifferentiel.setXlsx(true);
 
             this.excelRapportDifferentiel.generate();
-            if (!FileUtil.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {
+            if (!FileUtils.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {
                 Assert.assertTrue(false);
             }
             else
