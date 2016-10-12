@@ -60,9 +60,8 @@ public class DessertesExtraDateParseStep extends AConditionalLoopDessertesFinalS
 			} catch (Exception e) {
 				if(this.expectedStopValue != null) {
 					this.checkStopValue(cell, subContext, e);
-				} else {
-					date = null;
 				}
+				date = null;
 			}
 			// si la date est bonne
 			if(date != null) {
@@ -78,7 +77,11 @@ public class DessertesExtraDateParseStep extends AConditionalLoopDessertesFinalS
 				try {
 					// lecture d'une cellule
 					cell = sheet.getRow(i + this.firstRow).getCell(train.getColumn());
-					content = cell.getStringCellValue();
+					if(cell == null) {
+						content = "";
+					} else {
+						content = cell.getStringCellValue();
+					}
 					if(content.equals("X")) {
 						train.getExtraDays()[i] = true;
 					} else if (content.equals("")) {

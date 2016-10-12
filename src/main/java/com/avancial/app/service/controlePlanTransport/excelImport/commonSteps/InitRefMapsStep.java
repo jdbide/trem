@@ -45,7 +45,7 @@ public class InitRefMapsStep implements IDessertesFinalStep<DessertesContext> {
 		CompagnieService compagnieService = (CompagnieService) cdi.select(CompagnieService.class).get();
 		MotriceRefService refService = (MotriceRefService) cdi.select(MotriceRefService.class).get();
 		// récupération de l'entité de la compagnie
-		CompagnieEntity compagnieE = (CompagnieEntity) compagnieService.getByNomTechnique(this.compagnie.getValue());
+		CompagnieEntity compagnieE = compagnieService.getByNomTechnique(this.compagnie.getValue()).get(0);
 		// récupération des repas
 		List<MotriceRefMealTypeEntity> mealEntitys =
 				(List<MotriceRefMealTypeEntity>) refService.getByCompagnie(MotriceRefMealTypeEntity.class, compagnieE);

@@ -16,16 +16,23 @@ public class DessertesTrainParseStep extends AConditionalLoopDessertesFinalStep<
 	 */
 	@Override
 	protected void doFinally(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {
-		for(int col = context.getFirstTrainColumn(); col < subContext.getLastTrainColumn(); col++) {
-			Cell cell = null;
+		Cell cell = null;
+		int col = context.getFirstTrainColumn();
+		do {
 			try {
 				cell = sheet.getRow(context.getFirstStationRow() - 1).getCell(col);
-				int idTrain = (int) Math.floor(cell.getNumericCellValue());
-				subContext.getTrains().add(new DessertesTrainContext(col, idTrain, subContext));
+				if(cell != null) {
+					int idTrain = (int) Math.floor(cell.getNumericCellValue());
+					subContext.getTrains().add(new DessertesTrainContext(col, idTrain, subContext));
+					col++;
+				} else {
+					subContext.setLastTrainColumn(col);
+				}
 			} catch (Exception e) {
 				context.addParsingError(new ExcelImportException(cell, "impossible de lire le numéro du train", e));
+				col++;
 			}
-		}
+		} while (cell != null);
 	}
 
 	@Override protected void doIfNoParsingError(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {}

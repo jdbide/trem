@@ -58,12 +58,15 @@ public class DessertesTrainTimeParseStep extends AConditionalLoopDessertesFinalS
 			Cell cell = null;
 			try {
 				cell = row.getCell(column);
-				String content = cell.getStringCellValue();
-				if(!content.equals("")) {
-					if(!content.matches("([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]")) {
-						throw new RuntimeException("la valeur ne répond pas au format hh:mm : " + content);
+				String content = null;
+				if(cell != null) {
+					content = cell.getStringCellValue();
+					if(!content.equals("")) {
+						if(!content.matches("([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]")) {
+							throw new RuntimeException("la valeur ne répond pas au format hh:mm : " + content);
+						}
+						return true;
 					}
-					return true;
 				}
 				return false;
 			} catch (Exception e) {

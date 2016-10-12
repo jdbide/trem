@@ -3,11 +3,13 @@ package com.avancial.app.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.Query;
 
 import com.avancial.app.data.databean.CompagnieEntity;
 import com.avancial.socle.service.AService;
 
+@RequestScoped
 public class CompagnieService extends AService implements Serializable {
 
    /**

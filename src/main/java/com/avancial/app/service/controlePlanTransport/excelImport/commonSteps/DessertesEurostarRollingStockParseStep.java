@@ -68,7 +68,7 @@ public class DessertesEurostarRollingStockParseStep extends AConditionalLoopDess
 		for(DessertesTrainContext train : subContext.getTrains()) {
 			// lecture de la valeur
 			try {
-				cell = sheet.getRow(this.row).getCell(context.getFirstTrainColumn() - 1);
+				cell = sheet.getRow(this.row).getCell(train.getColumn());
 				content = cell.getStringCellValue();
 			} catch (Exception e) {
 				context.addParsingError(new ExcelImportException(cell, "impossible de lire du texte dans la cellule", e));
