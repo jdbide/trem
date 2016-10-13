@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**
- * récupère la liste des fuilles du classeur d'où extraire les informations.
+ * récupère la liste des feuilles du classeur d'où extraire les informations.
  * @author raphael.cabaret
  */
 public class SheetsToImportParseStep implements IDessertesFinalStep<DessertesContext>{

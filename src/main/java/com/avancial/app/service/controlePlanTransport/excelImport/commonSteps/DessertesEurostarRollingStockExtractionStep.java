@@ -7,7 +7,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import static com.avancial.app.service.controlePlanTransport.excelImport.commonSteps.DessertesEurostarRollingStockParseStep.ROLLING_STOCK;
 
 /**
- * étape d'extraction du materiel roulant.
+ * étape d'extraction du matériel roulant.
  * @author raphael.cabaret
  */
 public class DessertesEurostarRollingStockExtractionStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {

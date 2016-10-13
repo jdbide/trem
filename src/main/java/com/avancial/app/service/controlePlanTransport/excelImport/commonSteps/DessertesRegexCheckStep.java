@@ -7,18 +7,18 @@ import com.avancial.app.fileImport.excelImport.ExcelImportException;
 import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IPurveyor;
 
 /**
- * vérifie que la plage de cellules réponde au pattern fournit.
+ * vérifie que la plage de cellules répond au pattern fourni.
  * @author raphael.cabaret
  */
 public class DessertesRegexCheckStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {
 
-	/** premère ligne de la plage. */
+	/** première ligne de la plage. */
 	private int firstRow;
 	
 	/** dernière ligne de la plage. */
 	private int lastRow;
 	
-	/** fournisseur de la premère ligne de la plage. */
+	/** fournisseur de la première ligne de la plage. */
 	private IPurveyor<Integer, DessertesSheetSubContext> firstRowPurveyor = null;
 	
 	/** fournisseur de la dernière ligne de la plage. */
@@ -42,7 +42,7 @@ public class DessertesRegexCheckStep extends AConditionalLoopDessertesFinalStep<
 	/**
 	 * constructeur simple.
 	 * @param firstRow indice de la première ligne à traiter.
-	 * @param lastRow indice de la dernière ligne à traiter (si elle est inferieure à la première rien ne sera traité).
+	 * @param lastRow indice de la dernière ligne à traiter (si elle est inférieure à la première rien ne sera traité).
 	 * @param regex pattern.
 	 */
 	public DessertesRegexCheckStep(int firstRow, int lastRow, String regex) {
@@ -63,7 +63,7 @@ public class DessertesRegexCheckStep extends AConditionalLoopDessertesFinalStep<
 	/**
 	 * constructeur simple.
 	 * @param firstRow indice de la première ligne à traiter.
-	 * @param lastRow indice de la dernière ligne à traiter (si elle est inferieure à la première rien ne sera traité).
+	 * @param lastRow indice de la dernière ligne à traiter (si elle est inférieure à la première rien ne sera traité).
 	 * @param regex pattern.
 	 */
 	public DessertesRegexCheckStep(int firstRow, int lastRow, String regex, boolean verbose) {
@@ -85,7 +85,7 @@ public class DessertesRegexCheckStep extends AConditionalLoopDessertesFinalStep<
 	/**
 	 * constructeur simple.
 	 * @param firstRow indice de la première ligne à traiter (fournisseur).
-	 * @param lastRow indice de la dernière ligne à traiter (si elle est inferieure à la première rien ne sera traité) (fournisseur).
+	 * @param lastRow indice de la dernière ligne à traiter (si elle est inférieure à la première rien ne sera traité) (fournisseur).
 	 * @param regex pattern.
 	 */
 	public DessertesRegexCheckStep(IPurveyor<Integer, DessertesSheetSubContext> firstRow, IPurveyor<Integer, DessertesSheetSubContext> lastRow, String regex) {
@@ -106,7 +106,7 @@ public class DessertesRegexCheckStep extends AConditionalLoopDessertesFinalStep<
 	/**
 	 * constructeur simple.
 	 * @param firstRow indice de la première ligne à traiter (fournisseur).
-	 * @param lastRow indice de la dernière ligne à traiter (si elle est inferieure à la première rien ne sera traité) (fournisseur).
+	 * @param lastRow indice de la dernière ligne à traiter (si elle est inférieure à la première rien ne sera traité) (fournisseur).
 	 * @param regex pattern.
 	 */
 	public DessertesRegexCheckStep(IPurveyor<Integer, DessertesSheetSubContext> firstRow, IPurveyor<Integer, DessertesSheetSubContext> lastRow, String regex, boolean verbose) {

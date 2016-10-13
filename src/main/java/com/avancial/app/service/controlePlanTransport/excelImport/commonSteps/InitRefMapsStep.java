@@ -17,7 +17,7 @@ import com.avancial.app.service.CompagnieService;
 import com.avancial.app.service.MotriceRefService;
 
 /**
- * étape d'initialisation des tables de références.
+ * étape d'initialisation des tables de référence.
  * @author raphael.cabaret
  */
 public class InitRefMapsStep implements IDessertesFinalStep<DessertesContext> {
