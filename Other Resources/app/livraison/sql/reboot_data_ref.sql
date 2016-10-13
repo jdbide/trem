@@ -1,5 +1,6 @@
 -- ---------------------------------------
--- Drop-Create des tables tremas_motrice sauf ref:
+-- Drop-Create des tables tremas_motrice:
+--  - tremas_motrice_ref*
 --  - tremas_motrice_regime*
 --  - tremas_motrice_traintranche
 --  - tremas_jeu_donnees 
@@ -17,6 +18,8 @@ drop table if exists tremas_motrice_regime_fareprofile;
 
 drop table if exists tremas_motrice_regime_mealtype;
 
+drop table if exists tremas_motrice_regime_od;
+
 drop table if exists tremas_motrice_regime_restriction;
 
 drop table if exists tremas_motrice_regime_satcode;
@@ -29,11 +32,37 @@ drop table if exists tremas_motrice_regime_stop;
 
 drop table if exists tremas_motrice_regime_tosp;
 
-drop table if exists tremas_motrice_regime_od;
-
 drop table if exists tremas_motrice_regime;
 
 drop table if exists tremas_motrice_traintranche;
+
+drop table if exists tremas_motrice_ref_od2gare;
+
+drop table if exists tremas_motrice_ref_codediagramme;
+
+drop table if exists tremas_motrice_ref_compositionclass;
+
+drop table if exists tremas_motrice_ref_distribution;
+
+drop table if exists tremas_motrice_ref_eqptype;
+
+drop table if exists tremas_motrice_ref_fareprofilecode;
+
+drop table if exists tremas_motrice_ref_gare;
+
+drop table if exists tremas_motrice_ref_mealtype;
+
+drop table if exists tremas_motrice_ref_od;
+
+drop table if exists tremas_motrice_ref_ramecode;
+
+drop table if exists tremas_motrice_ref_satcode;
+
+drop table if exists tremas_motrice_ref_service;
+
+drop table if exists tremas_motrice_ref_serviceclass;
+
+drop table if exists tremas_motrice_ref_tosp;
 
 drop table if exists tremas_jeu_donnees;
 
@@ -57,6 +86,108 @@ create table tremas_motrice_regime (
     idMotriceRefRegimeType bigint,
     idMotriceTrainTranche bigint,
     primary key (idMotriceRegime)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_codediagramme (
+    idMotriceRefCodeDiagramme bigint not null auto_increment,
+    labelCodeDiagramme varchar(3) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefCodeDiagramme)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_compositionclass (
+    idMotriceRefCompositionClass bigint not null auto_increment,
+    labelCompositionClass varchar(1) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefCompositionClass)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_distribution (
+    idMotriceRefDistribution bigint not null auto_increment,
+    labelDistribution varchar(1) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefDistribution)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_eqptype (
+    idMotriceRefEqpType bigint not null auto_increment,
+    labelEqpType varchar(3) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefEqpType)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_fareprofilecode (
+    idMotriceRefFareProfileCode bigint not null auto_increment,
+    labelFareProfileCode varchar(3) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefFareProfileCode)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_gare (
+    idMotriceRefGare bigint not null auto_increment,
+    codeGareMotriceRefGare varchar(5) not null,
+    labelMotriceRefGare varchar(50),
+    idCompagnie integer,
+    primary key (idMotriceRefGare)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_mealtype (
+    idMotriceRefMealType bigint not null auto_increment,
+    codeMealType varchar(1) not null,
+    labelMealType varchar(50),
+    idCompagnie integer,
+    primary key (idMotriceRefMealType)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_od (
+    idMotriceRefOd bigint not null auto_increment,
+    codeGareDestinationMotriceRefOd varchar(5) not null,
+    codeGareOrigineMotriceRefOd varchar(5) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefOd)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_ramecode (
+    idMotriceRefRameCode bigint not null auto_increment,
+    labelRameCode varchar(6) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefRameCode)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_satcode (
+    idMotriceRefSatCode bigint not null auto_increment,
+    labelSatCode varchar(3) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefSatCode)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_service (
+    idMotriceRefService bigint not null auto_increment,
+    labelService varchar(2) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefService)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_serviceclass (
+    idMotriceRefServiceClass bigint not null auto_increment,
+    labelServiceClass varchar(1) not null,
+    libelleServiceClass varchar(6),
+    idCompagnie integer,
+    primary key (idMotriceRefServiceClass)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_tosp (
+    idMotriceRefTosp bigint not null auto_increment,
+    codeMotriceRefTosp varchar(50) not null,
+    idCompagnie integer,
+    primary key (idMotriceRefTosp)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+create table tremas_motrice_ref_od2gare (
+    idMotriceRefOd2gare bigint not null auto_increment,
+    idMotriceRefGare bigint,
+    idMotriceRefOd bigint,
+    primary key (idMotriceRefOd2gare)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 create table tremas_motrice_regime_composition (
@@ -189,6 +320,71 @@ alter table tremas_motrice_traintranche
     add constraint FK_motrice_regime_traintranche_idJeuDonnees 
     foreign key (idJeuDonnees) 
     references tremas_jeu_donnees (idJeuDonnees);
+
+alter table tremas_motrice_ref_codediagramme 
+    add constraint FK_motrice_ref_codediagramme_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_compositionclass 
+    add constraint FK_motrice_ref_compositionclass_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_distribution 
+    add constraint FK_motrice_ref_distribution_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_eqptype 
+    add constraint FK_motrice_ref_eqptype_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_fareprofilecode 
+    add constraint FK_motrice_ref_fareprofilecode_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_gare 
+    add constraint FK_motrice_ref_gare_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_mealtype 
+    add constraint FK_motrice_ref_mealtype_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_od 
+    add constraint FK_motrice_ref_od_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_ramecode 
+    add constraint FK_motrice_ref_ramecode_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_satcode 
+    add constraint FK_motrice_ref_satcode_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_service 
+    add constraint FK_motrice_ref_service_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_serviceclass 
+    add constraint FK_motrice_ref_serviceclass_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
+
+alter table tremas_motrice_ref_tosp 
+    add constraint FK_motrice_ref_tosp_idCompagnie 
+    foreign key (idCompagnie) 
+    references tremas_compagnie (idCompagnie);
 
 alter table tremas_motrice_regime_composition 
     add constraint FK_motrice_regime_composition_idMotriceRefCodeDiagramme 
@@ -339,3 +535,57 @@ alter table tremas_motrice_regime_tosp
     add constraint FK_motrice_regime_tosp_idMotriceRegime 
     foreign key (idMotriceRegime) 
     references tremas_motrice_regime (idMotriceRegime);
+
+alter table tremas_motrice_ref_od2gare 
+    add constraint FK_motrice_ref_od2gare_idMotriceRefGare 
+    foreign key (idMotriceRefGare) 
+    references tremas_motrice_ref_gare (idMotriceRefGare);
+alter table tremas_motrice_ref_od2gare 
+    add constraint FK_motrice_ref_od2gare_idMotriceRefOd 
+    foreign key (idMotriceRefOd) 
+    references tremas_motrice_ref_od (idMotriceRefOd);
+-- ---------------------------------------
+-- Ajout index Unique
+-- ---------------------------------------
+
+ALTER TABLE `tremas_motrice_ref_codediagramme`
+ADD UNIQUE INDEX `ref_codediagramme_Ulabel_idCompagnie` (`labelCodeDiagramme`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_compositionclass`
+ADD UNIQUE INDEX `ref_compositionclass_Ulabel_idCompagnie` (`labelCompositionClass`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_distribution`
+ADD UNIQUE INDEX `ref_distribution_Ulabel_idCompagnie` (`labelDistribution`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_eqptype`
+ADD UNIQUE INDEX `ref_eqptype_Ulabel_idCompagnie` (`labelEqpType`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_fareprofilecode`
+ADD UNIQUE INDEX `ref_fareprofilecode_Ulabel_idCompagnie` (`labelFareProfileCode`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_mealtype`
+ADD UNIQUE INDEX `ref_mealtype_Ucode_idCompagnie` (`codeMealType`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_ramecode`
+ADD UNIQUE INDEX `ref_ramecode_Ulabel_idCompagnie` (`labelRameCode`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_satcode`
+ADD UNIQUE INDEX `ref_satcode_UlabelSatCode_idCompagnie` (`labelSatCode`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_service`
+ADD UNIQUE INDEX `ref_service_Ulabel_idCompagnie` (`labelService`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_serviceclass`
+ADD UNIQUE INDEX `ref_serviceclass_Ulabel_idCompagnie` (`labelServiceClass`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_gare`
+ADD UNIQUE INDEX `ref_gare_UcodeGare_idCompagnie;` (`codeGareMotriceRefGare`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_od`
+ADD UNIQUE INDEX `ref_od_UcodeGareOrigine_codeGareDestination_idCompagnie` (`codeGareDestinationMotriceRefOd`, `codeGareOrigineMotriceRefOd`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_tosp`
+ADD UNIQUE INDEX `ref_tosp_Ucode_idCompagnie` (`codeMotriceRefTosp`, `idCompagnie`) ;
+
+ALTER TABLE `tremas_motrice_ref_od2gare`
+ADD UNIQUE INDEX `ref_od2gare_UidMotriceRefGare_idMotriceRefOd` (`idMotriceRefGare`, `idMotriceRefOd`) ;
