@@ -15,9 +15,12 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  * @author heloise.guillemaud
  *
  */
-class FiltreGareDesserteTranche implements IFiltre<Tranche> {
+class FiltreGareDesserteTranche extends AFiltreGareDesserteTranche {
 
-   private List<Gare> gares;
+   /**
+    * Liste des dessertes pour la tranche résultat
+    */
+   private List<ASousRegimeTranche> dessertes;
 
    /**
     * 
@@ -25,44 +28,23 @@ class FiltreGareDesserteTranche implements IFiltre<Tranche> {
     *           Liste de gares pour filtrer les dessertes
     */
    public FiltreGareDesserteTranche(List<Gare> gares) {
-      super();
-      this.gares = gares;
+      super(gares);
+      this.dessertes = new ArrayList<>();
    }
 
    @Override
-   public Tranche filtreParCritere(Tranche object) {
-      Tranche tranche = object.clone();
-
-      /* Indique si l'on trouve une gare de la liste dans un desserte */
-      boolean garePresente = false;
-      if (object.getAttributsField(Desserte.class) != null) {
-         /* On ré-initialise les données pour la classe à filtrer */
-         tranche.getAttributs().remove(Desserte.class);
-
-         /* Nouvelle liste de dessertes */
-         List<ASousRegimeTranche> dessertes = new ArrayList<>();
-
-         /* Boucle sur les dessertes à filtrer */
-         for (ASousRegimeTranche aSousRegimeTranche : object.getAttributsField(Desserte.class)) {
-            garePresente = false;
-            Desserte desserte = (Desserte) aSousRegimeTranche;
-
-            /* On cherche dans les gares de la desserte une gare présente dans la liste du filtre */
-            for (GareHoraire gareHoraire : desserte.getGareHoraires()) {
-               if (this.gares.contains(gareHoraire.getGare())) {
-                  garePresente = true;
-                  break;
-               }
-            }
-
-            /* Si au moins une gare est présente dans la liste du filtre, on ajoute la desserte au résultat */
-            if (garePresente) {
-               dessertes.add(desserte);
-            }
-         }
-         tranche.addAttributsField(dessertes);
+   protected void traiteDesserte(boolean garePresente, Desserte desserte) {
+      /* Si au moins une gare est présente dans la liste du filtre, on ajoute la desserte au résultat */
+      if (garePresente) {
+         this.dessertes.add(desserte);
       }
-      return tranche;
+   }
+
+   @Override
+   protected void traiteTranche(Tranche tranche) {
+      /* On ré-initialise les données */
+      tranche.getAttributs().remove(Desserte.class);
+      tranche.addAttributsField(this.dessertes);
    }
 
 }
