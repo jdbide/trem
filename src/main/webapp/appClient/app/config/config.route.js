@@ -12,5 +12,9 @@ socle_app.config(['$routeProvider', function($routeProvider) {
 	.when('/trainMS', {
 		templateUrl: 'app/views/partials/trainManagerSysteme/accueil.xhtml',
 		controller: 'trainTmsCtrl'
+	})
+	.when('/compareDrafts', {
+		templateUrl: 'app/views/partials/trainManagerSysteme/compareDrafts.xhtml',
+		controller: 'compareDraftsCtrl'
 	});
 }]);

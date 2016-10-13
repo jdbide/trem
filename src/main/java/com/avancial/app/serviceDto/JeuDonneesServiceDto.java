@@ -61,5 +61,24 @@ public class JeuDonneesServiceDto {
 
       return jeuDonneesForControlDto;
    }
+   
+   /**
+    * @param idCompagnieEnvironnement
+    * @return
+    */
+   public List<JeuDonneesForControlDto> getAllJeuDonneesoParIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
+      List<JeuDonneesForControlDto> res = new ArrayList<>();
+      try {
+         List<JeuDonneeEntity> listJeuDonneeEntity = this.jeuDonneesService.getJeuDonneeParIdCompagnieEnvironnement(idCompagnieEnvironnement);
+         for (JeuDonneeEntity jeuDonneeEntity : listJeuDonneeEntity) {
+            res.add(this.jeuDonneeToJeuDonneesForControlDto(jeuDonneeEntity));
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+
+      return res;
+   }
 
 }

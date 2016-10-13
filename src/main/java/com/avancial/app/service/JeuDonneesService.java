@@ -202,6 +202,34 @@ public class JeuDonneesService implements Serializable {
       return res;
    }
    /**
+    * Charge tous les jd en fonction de compagnie/environnement .
+    * 
+    * @param idCompagnieEnvironnement
+    * @return List<JeuDonneeEntity>
+    */
+   public List<JeuDonneeEntity> getJeuDonneeParIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
+      EntityManager em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(SOCLE_constants.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
+      
+      TypedQuery<JeuDonneeEntity> query = em.createQuery(
+            "SELECT t FROM JeuDonneeEntity t JOIN t.compagnieEnvironnement c WHERE c.idCompagnieEnvironnement = :idCompagnieEnvironnement ",
+            JeuDonneeEntity.class);
+      
+      query.setParameter("idCompagnieEnvironnement", idCompagnieEnvironnement);
+
+      List<JeuDonneeEntity> res = null;
+
+      try {
+            res = query.getResultList();
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      } finally {
+         em.close();
+      }
+
+      return res;
+   }
+   /**
     * Charge un jeu de données par son id.
     * 
     * @param idJeuDonnees

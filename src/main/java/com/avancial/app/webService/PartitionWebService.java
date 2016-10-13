@@ -80,5 +80,29 @@ public class PartitionWebService {
          return Response.status(400).build();
       }
    }
+   
+   /**
+    * récupération de la liste de toutes les compagnieenvironnent
+    * 
+    * @return
+    * @throws Exception
+    */
+   @GET
+   @Path("allCompEnv")
+   @Produces({ MediaType.APPLICATION_JSON })
+   public Response getAllPartitionEnv() throws Exception {
+      logger.info("Début (WebService : '/app/partition/allCompEnv' methode : GET)");
+      JSONArray jsonArray = new JSONArray();
+      try {
+         jsonArray.addAll(this.compagnieEnvironnementService.getAllCompagnieEnvironnement());
+
+         logger.info("Fin (WebService : '/app/partition' methode : GET)");
+
+         return Response.status(200).entity(jsonArray).build();
+      } catch (Throwable ex) {
+         logger.error("Exception (WebService : '/app/partition/allCompEnv' methode : GET)", ex);
+         return Response.status(400).build();
+      }
+   }
 
 }
