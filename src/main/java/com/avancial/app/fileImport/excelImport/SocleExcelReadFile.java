@@ -9,6 +9,12 @@ import com.avancial.app.export.ExcelTools;
 import com.avancial.app.fileImport.ASocleReadFile;
 import com.avancial.app.fileImport.FileTypeNotExpectedException;
 
+/**
+ * Lecture d'un fichier Excel
+ * 
+ * @author heloise.guillemaud
+ *
+ */
 public class SocleExcelReadFile extends ASocleReadFile {
 
    /**
