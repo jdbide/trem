@@ -29,7 +29,7 @@ public class DessertesEndOfExtractionStep extends AConditionalLoopDessertesFinal
 	}
 
 	/**
-	 * inssère le sous régime dans la tranche.
+	 * insère le sous régime dans la tranche.
 	 * @param tranche la tranche.
 	 * @param att le sous-régime.
 	 */

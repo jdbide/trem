@@ -27,19 +27,19 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	/** indice de la première colonne de train. */
 	private int firstTrainColumn;
 	
-	/** indice de la colonne des libelés de gare. */
+	/** indice de la colonne des libellés de gares. */
 	private int stationsColumn;
 	
 	/** indice de la première ligne de gare. */
 	private int firstStationRow;
 	
-	/** map de références des gares. */
+	/** map de référence des gares. */
 	private Map<String, String> refStation;
 	
-	/** map de références des repas. */
+	/** map de référence des repas. */
 	private Map<String, EnumTypeRepas> refMeal;
 	
-	/** map de références du matériel roulant. */
+	/** map de référence du matériel roulant. */
 	private List<String> refRollingStock;
 	
 	/** map des tranches dans le plan de transport, indexées par numéro de train. */
@@ -83,7 +83,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	 * @return liste des feuilles du classeur à importer.
 	 */
 	public List<Sheet> getSheets() {
-		return sheets;
+		return this.sheets;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	 * @return the firstTrainColumn
 	 */
 	public int getFirstTrainColumn() {
-		return firstTrainColumn;
+		return this.firstTrainColumn;
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	 * @return the stationsColumn
 	 */
 	public int getStationsColumn() {
-		return stationsColumn;
+		return this.stationsColumn;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	 * @return the firstStationRow
 	 */
 	public int getFirstStationRow() {
-		return firstStationRow;
+		return this.firstStationRow;
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	 * @return the refStation
 	 */
 	public Map<String, String> getRefStation() {
-		return refStation;
+		return this.refStation;
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	 * @return the refMeal
 	 */
 	public Map<String, EnumTypeRepas> getRefMeal() {
-		return refMeal;
+		return this.refMeal;
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	 * @return the refRollingStock
 	 */
 	public List<String> getRefRollingStock() {
-		return refRollingStock;
+		return this.refRollingStock;
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class DessertesContext  extends AExcelImportContext<PlanTransport>{
 	 * @return the tranchesByTrain
 	 */
 	public Map<Integer, Tranche> getTranchesByTrain() {
-		return tranchesByTrain;
+		return this.tranchesByTrain;
 	}
 	
 }

@@ -1,27 +1,27 @@
 package com.avancial.app.fileImport.excelImport;
 
 /**
- * étape qui rend fatal la présence d'erreur d'importation.
+ * étape qui rend fatale la présence d'erreurs d'importation.
  * @author raphael.cabaret
  * @param <P> type de produit.
  * @param <C> type de contexte.
  */
 public class ExcelImportFatalizeErrorsStep<P, C extends AExcelImportContext<P>> implements IExcelImportFinalStep<P, C> {
 
-	/** indique que les erreurs de parsing deviennes fatales. */
+	/** indique que les erreurs de parsing deviennent fatales. */
 	private final boolean parsing;
 	
-	/** indique que les erreurs de validation deviennes fatales. */
+	/** indique que les erreurs de validation deviennent fatales. */
 	private final boolean validation;
 	
-	/** indique que les erreurs d'extraction deviennes fatales. */
+	/** indique que les erreurs d'extraction deviennent fatales. */
 	private final boolean extraction;
 	
 	/**
 	 * constructeur simple.
-	 * @param parsing indique que les erreurs de parsing deviennes fatales.
-	 * @param validation indique que les erreurs de validation deviennes fatales.
-	 * @param extraction indique que les erreurs d'extraction deviennes fatales.
+	 * @param parsing indique que les erreurs de parsing deviennent fatales.
+	 * @param validation indique que les erreurs de validation deviennent fatales.
+	 * @param extraction indique que les erreurs d'extraction deviennent fatales.
 	 */
 	public ExcelImportFatalizeErrorsStep(boolean parsing, boolean validation, boolean extraction) {
 		this.parsing = parsing;
@@ -45,7 +45,7 @@ public class ExcelImportFatalizeErrorsStep<P, C extends AExcelImportContext<P>> 
 			fatal = true;
 		}
 		if(fatal) {
-			context.setFatalException(new ExcelImportException(null, "la présence d'erreur(s) pendant l'importation a été détecté"));
+			context.setFatalException(new ExcelImportException(null, "la présence d'erreur(s) pendant l'importation a été détectée"));
 		}
 	}
 
