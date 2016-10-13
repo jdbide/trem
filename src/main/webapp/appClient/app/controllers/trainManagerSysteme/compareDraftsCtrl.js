@@ -18,7 +18,7 @@ socle_app.controller("compareDraftsCtrl", ["$scope","envService","partitionTmsSe
 	$scope.selectedDraft1 = null;
 	$scope.selectedDraft2 = null;
 	
-	$scope.urlDownloadFileCompFile = envService.read('appWebService') + "/importTms/downloadFile/Compare";
+	$scope.urlDownloadFileCompFile = envService.read('appWebService') + "/importTms/downloadFile/Comparaison";
 	
 	/*
 	 * Methode pour la selection d'un  draft
