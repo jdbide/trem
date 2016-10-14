@@ -50,5 +50,20 @@ public class CompagnieEnvironnementService extends AService implements Serializa
          return datas;
       }
    }
+   
+   public List<CompagnieEnvironnementEntity> getAllCompagnieEnvironnement() {
+      List<CompagnieEnvironnementEntity> datas = null;
+      
+      try {
+         Query query = this.getEntityManager().createNamedQuery("CompagnieEnvironnementEntity.findAll", CompagnieEnvironnementEntity.class);
+         
+         datas = (List<CompagnieEnvironnementEntity>) query.getResultList();
+      } catch (Exception ex) {
+         ex.printStackTrace();
+         throw ex;
+      } finally {
+         return datas;
+      }
+   }
 
 }

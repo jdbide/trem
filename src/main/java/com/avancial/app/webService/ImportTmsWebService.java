@@ -153,24 +153,24 @@ public class ImportTmsWebService {
    }
 
    @GET
-   @Path("downloadFile/{idJeuDonnee}")
+   @Path("downloadFile/{fileName}")
    @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-   public Response downloadFileByIdJeuDonnees(@PathParam("idJeuDonnee") Integer idJeuDonnee) throws Exception {
-      logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)");
+   public Response downloadFileByIdJeuDonnees(@PathParam("fileName") String fileName) throws Exception {
+      logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{fileName}', methode : @GET)");
 
       ResponseBuilder responseBuilder = null;
       String path = this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory()
-            + "RapportDiff-" + idJeuDonnee + ".xlsx";
+            + "RapportDiff-" + fileName + ".xlsx";
 
       try {
          File fileDownload = new File(path);
          responseBuilder = Response.ok((Object) fileDownload);
-         responseBuilder.header("Content-Disposition", "attachment; filename=\"RapportDiff-" + idJeuDonnee + ".xlsx\"");
+         responseBuilder.header("Content-Disposition", "attachment; filename=\"RapportDiff-" + fileName + ".xlsx\"");
          logger.info("Fin (WebService : '/app/importTms' methode : @GET");
       } catch (Exception e) {
          e.printStackTrace();
          responseBuilder = Response.status(400);
-         logger.error("Exception (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)", e);
+         logger.error("Exception (WebService : '/app/importTms', Action : 'downloadFile/{fileName}', methode : @GET)", e);
       }
       return responseBuilder.build();
    }

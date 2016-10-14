@@ -28,7 +28,7 @@ public class InitPlanTransportStep implements IDessertesFinalStep<DessertesConte
 	 */
 	@Override
 	public void executeStep(DessertesContext context) throws Exception {
-		context.setProduct(new PlanTransport(compagnie, new ArrayList<Train>()));
+		context.setProduct(new PlanTransport(this.compagnie, new ArrayList<Train>()));
 	}
 
 }

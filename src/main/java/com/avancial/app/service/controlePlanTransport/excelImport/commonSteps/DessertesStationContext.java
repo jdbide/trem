@@ -5,12 +5,12 @@ import org.apache.poi.ss.usermodel.Row;
 import com.avancial.app.utilitaire.pattern.context.ISubContext;
 
 /**
- * représantation d'une gare dans un fichier de desserte.
+ * représentation d'une gare dans un fichier de desserte.
  * @author raphael.cabaret
  */
 public class DessertesStationContext implements ISubContext<DessertesSheetSubContext> {
 
-	/** libelle de la gare. */
+	/** libellé de la gare. */
 	private String name = null;
 	
 	/** ligne des horaires de départ. */
@@ -37,7 +37,7 @@ public class DessertesStationContext implements ISubContext<DessertesSheetSubCon
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class DessertesStationContext implements ISubContext<DessertesSheetSubCon
 	 * @return the departureRow
 	 */
 	public Row getDepartureRow() {
-		return departureRow;
+		return this.departureRow;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class DessertesStationContext implements ISubContext<DessertesSheetSubCon
 	 * @return the arrivalRow
 	 */
 	public Row getArrivalRow() {
-		return arrivalRow;
+		return this.arrivalRow;
 	}
 
 	/**

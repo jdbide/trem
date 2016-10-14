@@ -38,15 +38,11 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
 /**
- * WebService "/app/controlTms" qui gère la page Control du module Train Manager
- * System
+ * WebService "/app/controlTms" qui gère la page Control du module Train Manager System
  * 
  * Les action implémentés sont les suivantes :
  * 
- * - GET : Récupération de la liste des CompagnieEnvironnement actif et les les
- * jeux données qui correspondant.<\br> - DELETE : Suppression d'un jeu de
- * données par nomTechniqueCompagnieEnvironnement - PUT : Acivation d'un jeu de
- * données draft à la place l'ancien jd active
+ * - GET : Récupération de la liste des CompagnieEnvironnement actif et les les jeux données qui correspondant.<\br> - DELETE : Suppression d'un jeu de données par nomTechniqueCompagnieEnvironnement - PUT : Acivation d'un jeu de données draft à la place l'ancien jd active
  * 
  * 
  * @author hamza.laterem
@@ -55,208 +51,164 @@ import com.sun.jersey.multipart.FormDataParam;
 @Path("/app/controlTms")
 @RequestScoped
 public class ControlTmsWebService {
-	// Logger log4j
-	private static Logger logger = Logger.getLogger(ControlTmsWebService.class);
+   // Logger log4j
+   private static Logger                 logger = Logger.getLogger(ControlTmsWebService.class);
 
-	@Inject
-	private CompagnieEnvironnementService compagnieEnvironnementService;
+   @Inject
+   private CompagnieEnvironnementService compagnieEnvironnementService;
 
-	@Inject
-	private JeuDonneesControlService jeuDonneesControlService;
+   @Inject
+   private JeuDonneesControlService      jeuDonneesControlService;
 
-	@Inject
-	private JeuDonneesControlServiceDto jeuDonneesControlServiceDto;
+   @Inject
+   private JeuDonneesControlServiceDto   jeuDonneesControlServiceDto;
 
-	@Inject
-	private JeuDonneesServiceDto jeuDonneesServiceDto;
+   @Inject
+   private JeuDonneesServiceDto          jeuDonneesServiceDto;
 
-	@Inject
-	private RefDirectoryService refDirectoryService;
+   @Inject
+   private RefDirectoryService           refDirectoryService;
 
-	@Inject
-	private Session session;
+   @Inject
+   private Session                       session;
 
-	/**
-	 * récupération de la liste des CompagnieEnvironnement actif
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getPartitions() throws Exception {
-		logger.info("Début (WebService : '/app/controlTms' methode : GET)");
-		JSONArray jsonArray = new JSONArray();
-		try {
-			jsonArray.addAll(this.compagnieEnvironnementService.getAllCompagnieEnvironnementActif());
+   @Path("getImportParPartition/{idCompagnieEnvironnement}")
+   @GET
+   @Produces({ MediaType.APPLICATION_JSON })
+   public Response getImportParIdPartition(@PathParam("idCompagnieEnvironnement") final int idCompagnieEnvironnement) {
+      logger.info("Début (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
+      ResponseBuilder responseBuilder = null;
+      final ResponseBean responseBean = new ResponseBean();
+      List<EStatus> status = new ArrayList<EStatus>();
+      status.add(EStatus.ACTIVE);
+      status.add(EStatus.DRAFT);
+      try {
+         responseBean.setData(this.jeuDonneesServiceDto.getAllJeuDonneesForControlDtoParIdCompagnieEnvironnementEtListStatus(idCompagnieEnvironnement, status));
+         responseBean.setStatus(true);
+         logger.info("Fin (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBean.setStatus(false);
+         responseBean.setMessage("Erreur de chargement ...");
+         logger.error("Exception (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)", e);
+      } finally {
+         responseBuilder = Response.ok((Object) responseBean);
+         return responseBuilder.build();
+      }
+   }
 
-			logger.info("Fin (WebService : '/app/controlTms' methode : GET)");
+   /**
+    * récupération
+    * 
+    * @return
+    * @throws Exception
+    */
+   @GET
+   @Path("getDatasByIdPartition/{idCompagnieEnvironnement}")
+   @Produces({ MediaType.APPLICATION_JSON })
+   public Response getDatasByIdPartition(@PathParam("idCompagnieEnvironnement") Integer idCompagnieEnvironnement) throws Exception {
+      logger.info("Début (WebService : '/app/controlTms', Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET)");
 
-			return Response.status(200).entity(jsonArray).build();
-		} catch (Throwable ex) {
-			logger.error("Exception (WebService : '/app/controlTms' methode : GET)", ex);
-			return Response.status(400).build();
-		}
-	}
+      JSONArray jsonArray = new JSONArray();
+      try {
+         List<EStatusControl> listStatusControl = new ArrayList<EStatusControl>();
+         listStatusControl.add(EStatusControl.LOADING);
+         listStatusControl.add(EStatusControl.FINISHED);
+         jsonArray.addAll(this.jeuDonneesControlServiceDto.getAllJeuDonneesControlDtoParIdCompagnieEnvironnementEtListStatusControl(idCompagnieEnvironnement, listStatusControl));
 
-	/**
-	 * récupération
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	@GET
-	@Path("getDatasByIdPartition/{idCompagnieEnvironnement}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getDatasByIdPartition(@PathParam("idCompagnieEnvironnement") Integer idCompagnieEnvironnement)
-			throws Exception {
-		logger.info(
-				"Début (WebService : '/app/controlTms', Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET)");
+         logger.info("Fin (WebService : '/app/controlTms' Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET)");
 
-		JSONArray jsonArray = new JSONArray();
-		try {
-			List<EStatusControl> listStatusControl = new ArrayList<EStatusControl>();
-			listStatusControl.add(EStatusControl.LOADING);
-			listStatusControl.add(EStatusControl.FINISHED);
-			jsonArray.addAll(this.jeuDonneesControlServiceDto
-					.getAllJeuDonneesControlDtoParIdCompagnieEnvironnementEtListStatusControl(idCompagnieEnvironnement,
-							listStatusControl));
+         return Response.status(200).entity(jsonArray).build();
+      } catch (Throwable ex) {
+         logger.error("Exception (WebService : '/app/controlTms' Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET))", ex);
+         return Response.status(400).build();
+      }
+   }
 
-			logger.info(
-					"Fin (WebService : '/app/controlTms' Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET)");
+   @SuppressWarnings("finally")
+   @POST
+   @Consumes({ MediaType.APPLICATION_JSON })
+   @Produces({ MediaType.APPLICATION_JSON })
+   public Response createControl(final int idCompagnieEnvironnement) {
+      logger.info("Début (WebService : '/app/controlTms', Action : 'createControl', methode : @POST)");
+      ResponseBuilder responseBuilder = null;
+      final ResponseBean responseBean = new ResponseBean();
+      try {
+         responseBean.setData(jeuDonneesControlServiceDto.createJeuDonneesControl(this.compagnieEnvironnementService.getCompagnieEnvironnementById(idCompagnieEnvironnement), this.session.getUser().getIdUser().intValue()));
+         responseBean.setStatus(true);
+         logger.info("Fin (WebService : '/app/controlTms', Action : 'createControl', methode : @POST)");
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBean.setStatus(false);
+         responseBean.setMessage("Erreur de chargement ...");
+         logger.error("Exception (WebService : '/app/controlTms', Action : 'createControl', methode : @POST)", e);
+      } finally {
+         responseBuilder = Response.ok((Object) responseBean);
+         return responseBuilder.build();
+      }
+   }
 
-			return Response.status(200).entity(jsonArray).build();
-		} catch (Throwable ex) {
-			logger.error(
-					"Exception (WebService : '/app/controlTms' Action : 'getDatas/{idCompagnieEnvironnement}', methode : @GET))",
-					ex);
-			return Response.status(400).build();
-		}
-	}
+   @Path("/{id}")
+   @DELETE
+   @Produces({ MediaType.APPLICATION_JSON })
+   public Response deleteJeuDonneesControl(@PathParam("id") int idJeuDonneesControl) {
+      logger.info("Début (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)");
+      ResponseBuilder responseBuilder = null;
+      final ResponseBean responseBean = new ResponseBean();
+      try {
+         responseBean.setData(this.jeuDonneesControlService.deleteById(idJeuDonneesControl));
+         responseBean.setStatus(true);
+         logger.info("Fin (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)");
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBean.setStatus(false);
+         responseBean.setMessage("Erreur de chargement ...");
+         logger.error("Exception (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)", e);
+      } finally {
+         responseBuilder = Response.ok((Object) responseBean);
+         return responseBuilder.build();
+      }
+   }
 
-	@SuppressWarnings("finally")
-	@POST
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response createControl(final int idCompagnieEnvironnement) {
-		logger.info("Début (WebService : '/app/controlTms', Action : 'createControl', methode : @POST)");
-		ResponseBuilder responseBuilder = null;
-		final ResponseBean responseBean = new ResponseBean();
-		try {
-			responseBean.setData(jeuDonneesControlServiceDto.createJeuDonneesControl(
-					this.compagnieEnvironnementService.getCompagnieEnvironnementById(idCompagnieEnvironnement),
-					this.session.getUser().getIdUser().intValue()));
-			responseBean.setStatus(true);
-			logger.info("Fin (WebService : '/app/controlTms', Action : 'createControl', methode : @POST)");
-		} catch (Exception e) {
-			e.printStackTrace();
-			responseBean.setStatus(false);
-			responseBean.setMessage("Erreur de chargement ...");
-			logger.error("Exception (WebService : '/app/controlTms', Action : 'createControl', methode : @POST)", e);
-		} finally {
-			responseBuilder = Response.ok((Object) responseBean);
-			return responseBuilder.build();
-		}
-	}
+   @Path("uploadFile/{idJeuDonneesControl}/{typeFile}")
+   @POST
+   @Produces({ MediaType.APPLICATION_JSON })
+   @Consumes({ MediaType.MULTIPART_FORM_DATA, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" })
+   public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream, @FormDataParam("file") FormDataContentDisposition fileDetail, @PathParam("idJeuDonneesControl") int idJeuDonneesControl, @PathParam("typeFile") String typeFile) {
 
-	@Path("getImportParPartition/{idCompagnieEnvironnement}")
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getImportParIdPartition(@PathParam("idCompagnieEnvironnement") final int idCompagnieEnvironnement) {
-		logger.info("Début (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
-		ResponseBuilder responseBuilder = null;
-		final ResponseBean responseBean = new ResponseBean();
-		List<EStatus> status = new ArrayList<EStatus>();
-		status.add(EStatus.ACTIVE);
-		status.add(EStatus.DRAFT);
-		try {
-			responseBean.setData(
-					this.jeuDonneesServiceDto.getAllJeuDonneesForControlDtoParIdCompagnieEnvironnementEtListStatus(
-							idCompagnieEnvironnement, status));
-			responseBean.setStatus(true);
-			logger.info("Fin (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)");
-		} catch (Exception e) {
-			e.printStackTrace();
-			responseBean.setStatus(false);
-			responseBean.setMessage("Erreur de chargement ...");
-			logger.error("Exception (WebService : '/app/controlTms', Action : 'getImportParPartition', methode : @GET)",
-					e);
-		} finally {
-			responseBuilder = Response.ok((Object) responseBean);
-			return responseBuilder.build();
-		}
-	}
+      logger.info("Début (WebService : '/app/controlTms', Action : 'uploadFile', methode : @UPLOAD)");
 
-	@Path("/{id}")
-	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deleteJeuDonneesControl(@PathParam("id") int idJeuDonneesControl) {
-		logger.info("Début (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)");
-		ResponseBuilder responseBuilder = null;
-		final ResponseBean responseBean = new ResponseBean();
-		try {
-			responseBean.setData(this.jeuDonneesControlService.deleteById(idJeuDonneesControl));
-			responseBean.setStatus(true);
-			logger.info("Fin (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)");
-		} catch (Exception e) {
-			e.printStackTrace();
-			responseBean.setStatus(false);
-			responseBean.setMessage("Erreur de chargement ...");
-			logger.error(
-					"Exception (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)",
-					e);
-		} finally {
-			responseBuilder = Response.ok((Object) responseBean);
-			return responseBuilder.build();
-		}
-	}
+      final ResponseBean responseBean = new ResponseBean();
+      try {
+         String directory = this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathImport.toString()).getPathRefDirectory();
+         StringBuilder filePath = new StringBuilder(directory).append(typeFile).append("\\").append(idJeuDonneesControl).append("\\");
 
-	@Path("uploadFile/{idJeuDonneesControl}/{typeFile}")
-	@POST
-	@Produces({ MediaType.APPLICATION_JSON })
-	@Consumes({ MediaType.MULTIPART_FORM_DATA, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" })
-	public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail,
-			@PathParam("idJeuDonneesControl") int idJeuDonneesControl, @PathParam("typeFile") String typeFile) {
+         // création des répertoires nécessaires
+         if (!FileUtils.mkDirs(filePath.toString())) {
+            responseBean.setMessage("Impossible de créer le répertoire");
+            responseBean.setStatus(false);
 
-		logger.info("Début (WebService : '/app/controlTms', Action : 'uploadFile', methode : @UPLOAD)");
+            return Response.ok((Object) responseBean).build();
+         }
 
-		final ResponseBean responseBean = new ResponseBean();
-		try {
-			String directory = this.refDirectoryService
-					.getRefDirectoryByTechnicalName(APP_Directory.PathImport.toString()).getPathRefDirectory();
-			StringBuilder filePath = new StringBuilder(directory).append(typeFile).append("\\")
-					.append(idJeuDonneesControl).append("\\");
+         // save it
+         FileUtils.writeToFile(uploadedInputStream, filePath.append(fileDetail.getFileName()).toString());
 
-			// création des répertoires nécessaires
-			if (!FileUtils.mkDirs(filePath.toString())) {
-				responseBean.setMessage("Impossible de créer le répertoire");
-				responseBean.setStatus(false);
+         responseBean.setMessage("File uploaded : " + filePath.toString());
+         responseBean.setStatus(true);
 
-				return Response.ok((Object) responseBean).build();
-			}
+         return Response.ok((Object) responseBean).build();
 
-			// save it
-			FileUtils.writeToFile(uploadedInputStream, filePath.append(fileDetail.getFileName()).toString());
+      } catch (Exception e) {
+         e.printStackTrace();
+         responseBean.setStatus(false);
+         responseBean.setMessage(e.getMessage());
+         logger.error("Exception (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)", e);
 
-			responseBean.setMessage("File uploaded : " + filePath.toString());
-			responseBean.setStatus(true);
+         Response.ok((Object) responseBean).build();
+         return Response.status(500).build();
 
-			return Response.ok((Object) responseBean).build();
+      }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			responseBean.setStatus(false);
-			responseBean.setMessage(e.getMessage());
-			logger.error(
-					"Exception (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)",
-					e);
-
-			Response.ok((Object) responseBean).build();
-			return Response.status(500).build();
-			
-		}
-
-	}
-
+   }
 }

@@ -1,3 +1,10 @@
+-- ---------------------------------------
+-- Drop-Create des tables tremas_motrice sauf ref:
+--  - tremas_motrice_regime*
+--  - tremas_motrice_traintranche
+--  - tremas_jeu_donnees 
+-- ---------------------------------------
+
 drop table if exists tremas_motrice_regime_composition_coach;
 
 drop table if exists tremas_motrice_regime_composition;

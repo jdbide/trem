@@ -35,7 +35,7 @@ public class StructuredProcessException extends Exception {
 	 * @return le context.
 	 */
 	public StructuredProcessContext<?, ?> getContext() {
-		return context;
+		return this.context;
 	}
 	
 }

@@ -3,26 +3,35 @@ package com.avancial.app.service.filtrePlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 
 /**
- * Filtre un plan de transport en appliquant deux filtres à la suite.
+ * Filtre un plan de transport en appliquant plusieurs filtres à la suite.
  * 
  * @author heloise.guillemaud
  *
  */
 public abstract class AFiltreEtPlanTransport implements IFiltre<PlanTransport> {
 
-   private IFiltre<PlanTransport> filtreUn;
-   private IFiltre<PlanTransport> filtreDeux;
+   /**
+    * Liste des filtres à appliquer à la suite
+    */
+   private IFiltre<PlanTransport>[] filtres;
 
-   public AFiltreEtPlanTransport(IFiltre<PlanTransport> filtreUn, IFiltre<PlanTransport> filtreDeux) {
+   /**
+    * 
+    * @param filtres
+    *           Liste des filtres à appliquer à la suite
+    */
+   public AFiltreEtPlanTransport(IFiltre<PlanTransport>... filtres) {
       super();
-      this.filtreUn = filtreUn;
-      this.filtreDeux = filtreDeux;
+      this.filtres = filtres;
    }
 
    @Override
    public PlanTransport filtreParCritere(PlanTransport object) {
-      PlanTransport planTransport = this.filtreUn.filtreParCritere(object);
-      return this.filtreDeux.filtreParCritere(planTransport);
+      PlanTransport planTransport = object;
+      for (IFiltre<PlanTransport> iFiltre : this.filtres) {
+         planTransport = iFiltre.filtreParCritere(planTransport);
+      }
+      return planTransport;
    }
 
 }

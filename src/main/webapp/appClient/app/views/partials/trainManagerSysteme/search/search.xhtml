@@ -6,16 +6,13 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label left-control" for="partition">Partition</label>
 					<div class="col-md-5">
-						<select id="partition" class="form-control">
-							<option>ES Prod</option>
-							<option>ES Rec</option>
-							<option>TH Prod</option>
-							<option>Th Rec</option>
+						<select id="partition" class="form-control" ng-model="search.partitionSelected"
+							ng-change="changeSelectedPartition()"
+							ng-options="partition as partition.nomTechniqueCompagnieEnvironnement for (key, partition) in search.partitions">
 						</select>
 					</div>
 					<div class="col-md-4" style="padding-top: 5px;">
-						<span class="text-muted"> Last data update: 20/06/2016 -
-							17:15 </span>
+						<span class="text-muted"> search.partitionSelected.idUtilisateurLastUpdateJeuDonneesActive </span>
 					</div>
 				</div>
 				<div class="form-group">
