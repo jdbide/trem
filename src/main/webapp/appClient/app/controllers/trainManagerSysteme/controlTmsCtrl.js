@@ -274,13 +274,13 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		
 		if (idInputFile == 1) {
 			console.log("==> 1 " + $scope.jeuDonneesControl);
-			console.log(traitementControlTmsService.files().firstFile.file);
+			console.log($scope.files.firstFile.file);
 			
 			$scope.files.firstFile.etat.isStartTraitement = true;
 			controlTmsService.uploadUsing$http($scope.files.firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
 			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
 			$scope.files.firstFile.etat.isFinishTraitement = true;
-			
+
 			console.log($scope.files.firstFile.etat);
 			console.log($scope.files.secondFile.etat);
 			
@@ -288,7 +288,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			console.log("==> 2");
 			
 			$scope.files.secondFile.etat.isStartTraitement = true;
-			controlTmsService.uploadUsing$http($scope.files.secondFile.file,$scope.jeuDonneesControl, "yield");
+			controlTmsService.uploadUsing$http($scope.files.secondFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "yield");
 			$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
 			$scope.files.secondFile.etat.isFinishTraitement = true;
 			

@@ -93,7 +93,7 @@
 											Data validation Ko
 											<i class="fa fa-check-square-o text-red"></i>
 										</p>
-										<p ng-show="$parent.files.firstFile.etat.isFinishTraitementSuccess" class="text-green">
+										<p ng-show="$parent.files.firstFile.etat.isFinishTraitementSuccess==true && $parent.files.secondFile.etat.isStartTraitement!=true" class="text-green">
 											Please upload Yield
 										</p>
 									</div>
