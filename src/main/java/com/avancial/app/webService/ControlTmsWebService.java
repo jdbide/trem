@@ -181,7 +181,7 @@ public class ControlTmsWebService {
       final ResponseBean responseBean = new ResponseBean();
       try {
          String directory = this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathImport.toString()).getPathRefDirectory();
-         StringBuilder filePath = new StringBuilder(directory).append(typeFile).append("\\").append(idJeuDonneesControl).append("\\");
+         StringBuilder filePath = new StringBuilder(directory).append(idJeuDonneesControl).append("\\").append(typeFile).append("\\");
 
          // création des répertoires nécessaires
          if (!FileUtils.mkDirs(filePath.toString())) {

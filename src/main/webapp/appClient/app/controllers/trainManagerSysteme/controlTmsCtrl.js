@@ -270,23 +270,30 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	$scope.clickBtnUploadFile = function (idInputFile) {
 		console.log("==> clickBtnUploadFirsFile");
 		var typeFile = null;
+//		$scope.files = traitementControlTmsService.files();
 		
 		if (idInputFile == 1) {
 			console.log("==> 1 " + $scope.jeuDonneesControl);
-			console.log(traitementControlTmsService.files().firstFile.file);
+			console.log($scope.files.firstFile.file);
 			
-			traitementControlTmsService.files().firstFile.etat.isStartTraitement = true;
-			controlTmsService.uploadUsing$http(traitementControlTmsService.files().firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
-			traitementControlTmsService.files().firstFile.etat.isFinishTraitementSucces = true;
-			traitementControlTmsService.files().firstFile.etat.isFinishTraitement = true;
+			$scope.files.firstFile.etat.isStartTraitement = true;
+			controlTmsService.uploadUsing$http($scope.files.firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
+			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
+			$scope.files.firstFile.etat.isFinishTraitement = true;
+
+			console.log($scope.files.firstFile.etat);
+			console.log($scope.files.secondFile.etat);
 			
 		} else if (idInputFile == 2) {
 			console.log("==> 2");
 			
-			traitementControlTmsService.files().secondFile.etat.isStartTraitement = true;
-			controlTmsService.uploadUsing$http(traitementControlTmsService.files().secondFile.file,$scope.jeuDonneesControl, "yield");
-			traitementControlTmsService.files().secondFile.etat.isFinishTraitementSucces = true;
-			traitementControlTmsService.files().secondFile.etat.isFinishTraitement = true;
+			$scope.files.secondFile.etat.isStartTraitement = true;
+			controlTmsService.uploadUsing$http($scope.files.secondFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "yield");
+			$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
+			$scope.files.secondFile.etat.isFinishTraitement = true;
+			
+			console.log($scope.files.firstFile.etat);
+			console.log($scope.files.secondFile.etat);
 		}
 	}
 	
