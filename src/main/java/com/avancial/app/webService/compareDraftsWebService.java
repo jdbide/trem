@@ -28,9 +28,9 @@ import com.avancial.app.webService.bean.ResponseBean;
 import com.avancial.socle.session.Session;
 import com.avancial.socle.traitement.Task;
 /**
- * WebService "/app/controlTms" qui gère la page Control du module Train Manager System
+ * WebService "/app/compareDrafts" qui gère la page de comparaison de deux drafts en base
  * 
- * Les action implémentés sont les suivantes :
+ * Les actions implémentés sont les suivantes :
  * 
  * - GET : Récupération de la liste des CompagnieEnvironnement et des jeux données qui correspondant.
  * 
