@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import com.avancial.app.data.databean.CompagnieEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
 import com.avancial.app.utilitaire.GetEntiteService;
+import com.avancial.socle.ihm.menu.model.databean.RubriqueDataBean;
 import com.avancial.socle.service.AService;
 
 /**
@@ -58,6 +59,22 @@ public class MotriceRefService extends AService {
       } catch (NoResultException noResEx) {
          System.err.println("Pas de code Gare motrice pour le label '" + labelGare + "' et la compagnie '" + compagnie.getLibelleCompagnie() + "'.");
          return null;
+      }
+   }
+   
+   
+   /**
+    * @param motriceRefGareEntity
+    */
+   public void updateMotriceRefGare(MotriceRefGareEntity motriceRefGareEntity) {
+      try {
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().merge(motriceRefGareEntity);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
+      } catch (Exception e) {
+         this.getEntityManager().getTransaction().rollback();
+         throw e;
       }
    }
 }
