@@ -141,17 +141,17 @@
 									<div class="box-header with-border">
 										<i class="fa fa-upload"></i>
 										<h3 class="box-title">
-											Upload yield file <i ng-show="$parent.files.secondFile.etat.isFinishTraitement==true" class="fa fa-refresh fa-spin"></i>
+											Upload yield file <i ng-show="$parent.files.secondFile.etat.isFinishTraitement!=true" class="fa fa-refresh fa-spin"></i>
 										</h3>
 									</div>
 									
 									<div class="box-body">
-										<div  class="clearfix" ng-show="$parent.files.secondFile.etat.isUploadSuccess || $parent.files.secondFile.etat.isUploadSuccess == false">
-                        					<span class="pull-left">Upload file #{{$parent.files.firstFile.file.name}}</span>
-                        					<small class="pull-right">40%</small>
+										<div  class="clearfix">
+                        					<span class="pull-left">Upload file #{{files.secondFile.file.name}}</span>
+                        					<small class="pull-right">{{$parent.files.secondFile.file.progress}}%</small>
                       					</div>
-                      					<div  class="progress xs" ng-show="$parent.files.secondFile.etat.isUploadSuccess || $parent.files.secondFile.etat.isUploadSuccess == false">
-				                        	<div style="width: 40%;" class="progress-bar progress-bar-green"></div>
+                      					<div  class="progress xs">
+				                        	<div style="width: {{$parent.files.secondFile.file.progress}}%;" class="progress-bar progress-bar-green"></div>
 				                      	</div>
 										<p ng-show="$parent.files.secondFile.etat.isUploadSuccess" class="text-green">
 											Upload OK 
@@ -177,9 +177,9 @@
 											Data validation Ko
 											<i class="fa fa-check-square-o text-red"></i>
 										</p>
-										<p ng-show="$parent.files.secondFile.etat.isFinishTraitementSuccess" class="text-green">
+										<!-- <p ng-show="$parent.files.secondFile.etat.isFinishTraitementSuccess" class="text-green">
 											Please upload Timetable
-										</p>
+										</p> -->
 									</div>
 								</div>
 							</div>
