@@ -8,8 +8,13 @@ socle_app
 	"IMPORT" : "IMPORT",
 	"DRAFT" : "DRAFT",
 	"ACTIVE" : "ACTIVE",
-	"LASTACTIVE" : "LASTACTIVE",
+	"LASTACTIVE" : "LASTACTIVE"
 })
-.run(function ($rootScope, Status) {
+.constant("StatusImportForControl", {
+	"ACTIVE" : "ACTIVE",
+	"DRAFT" : "DRAFT"
+})
+.run(function ($rootScope, Status, StatusImportForControl) {
 	$rootScope.Status = Status;
+	$rootScope.StatusImportForControl = StatusImportForControl;
 });

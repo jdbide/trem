@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.service.traiteObjetMetier.CreationObjetMetier;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
@@ -54,14 +54,14 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
          this.log("Debut de la creation du plan de transport du JdD Actif");
          // this.em = EntityManagerFactoryProvider.getInstance().getEntityManagerFactory(APP_Const.PERSISTENCE_UNIT_NAME.toString()).createEntityManager();
 
-         this.mapPlansDeTransport.setPlanTransportActive(creationObjetMetier.creationPlanTransport(this.environnementCompagnie, Status.ACTIVE,
+         this.mapPlansDeTransport.setPlanTransportActive(creationObjetMetier.creationPlanTransport(this.environnementCompagnie, EStatus.ACTIVE,
                this.getEntityManager(), this.traiteObjetMetierRegimeFactory, this.dateDebutFiltre, this.dateFinFiltre));
          this.log("Fin de la creation du plan de transport du JdD Actif");
          logger.info("Fin de la Creation du plan de transport ACTIF");
          /* Creation du plan de transport du Dataset draft */
          // System.out.println("Creation du plan de transport DRAFT");
          // this.mapPlansDeTransport.setPlanTransportDraft(creationObjetMetier.creationPlanTransport(this.environnementCompagnie,
-         // Status.DRAFT, this.em, this.traiteObjetMetierRegimeFactory));
+         // EStatus.DRAFT, this.em, this.traiteObjetMetierRegimeFactory));
          if (this.getEntityManager() != null && this.getEntityManager().isOpen()) {
             this.getEntityManager().clear();
             this.getEntityManager().close();
@@ -117,7 +117,7 @@ public class TraitementObjetMetier extends ATraitementLogDetail implements Seria
     * @return the idTask
     */
    public Long getIdTask() {
-      return idTask;
+      return this.idTask;
    }
 
    /**

@@ -8,8 +8,9 @@ import org.apache.log4j.Logger;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 
@@ -41,10 +42,17 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
          MapPlansDeTransport mapPlansDeTransport) throws IOException {
       int debutRowTrain = ligneDebut;
 
-      ComparaisonPlanTransport<IPlanTransport> dataPrec = null;
+      ComparaisonDifferentielPlanTransport<IPlanTransport> data = null;
+      ComparaisonDifferentielPlanTransport<IPlanTransport> dataPrec = null;
       List<ASousRegimeTranche> listeAncienAttribut = new ArrayList<>();
 
-      for (ComparaisonPlanTransport<IPlanTransport> data : mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.REGIMESPLIT)) {
+      for (IComparaisonPlanTransport iData : mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.REGIMESPLIT)) {
+         try {
+            data = (ComparaisonDifferentielPlanTransport<IPlanTransport>) iData;
+         } catch (ClassCastException e) {
+            logger.error("Rapport différentiel : comparaison de type " + iData.getClass().getSimpleName() + " trouvée!");
+            throw e;
+         }
          if (dataPrec == null) {
             dataPrec = data;
          }
@@ -113,7 +121,9 @@ public class ExcelRapportDifferentielSheetRegimeSplit extends AExcelRapportDiffe
     * @param valeurAncien
     *           Indique s'il faut afficher une ligne en plus pour la valeur de l'attribut "ancien", en plus de celle de l'attribut "nouveau"
     */
-   private void generateLigneRegimeSplit(ExcelTools excelTools, ComparaisonPlanTransport<IPlanTransport> comparaison, boolean valeurAncien) {
+   private void generateLigneRegimeSplit(ExcelTools excelTools, ComparaisonDifferentielPlanTransport<IPlanTransport> comparaison,
+         boolean valeurAncien) {
+      this.printExcelSousRegimeTranche.setTypeComparaison(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
       this.generateTrainTrancheField(excelTools, comparaison, excelTools.couleurVert);
 
       /* Nom du field */

@@ -17,6 +17,7 @@ import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.traitement.TraitementImportDb2Motrice;
+import com.avancial.socle.data.model.databean.LogTraitementDataBean;
 import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
@@ -31,10 +32,11 @@ public class TestImport {
         WebArchive jar = ShrinkWrap.create(WebArchive.class)
                  .addPackage(PageDataBean.class.getPackage())
                  .addPackage(CompagnieEnvironnementEntity.class.getPackage())
-                //.addClass(JeuDonneeService.class)
+                //.addClass(JeuDonneesService.class)
                  .addClass(TraitementImportDb2Motrice.class)
                 .addClass(CompagnieEnvironnementService.class)
                 .addPackage(Socle_PUSocle.class.getPackage())
+                .addPackage(LogTraitementDataBean.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())
                 .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
@@ -61,7 +63,7 @@ public class TestImport {
         try {
             String userDb2 = "ejmt013";
 
-            String passwdDb2 = "xa08de09";
+            String passwdDb2 = "Xa19de09";
             
             CompagnieEnvironnementEntity compagnieEnvironnementEntity = this.compagnieEnvironnementService.getCompagnieEnvironnementById(3);
                         
@@ -79,11 +81,14 @@ public class TestImport {
             try {
                // Thread.sleep(10000);
                System.out.println("------> Import brut");
-               traitement.execute();
+               this.traitement.execute();
             } catch (SecurityException e) {
                System.err.println("------> Echec de l'import");
                e.printStackTrace();
                throw e;
+            } finally {
+               this.entityManagerDb2.close();
+               EntityManagerFactoryProviderDb2.closeInstance();
             }
 
         }

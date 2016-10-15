@@ -11,10 +11,9 @@ import javax.persistence.EntityManager;
 
 import org.apache.log4j.Logger;
 
-import com.avancial.socle.traitement.Task;
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.databean.importMotriceBrut.ImportTMDKAPPEntity;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.export.ExcelRapportDifferentiel;
@@ -22,13 +21,14 @@ import com.avancial.app.persistence.EntityManagerFactoryProviderDb2;
 import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.ImportKappService;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.service.RefDirectoryService;
 import com.avancial.socle.traitement.ATraitementLogDetail;
+import com.avancial.socle.traitement.Task;
 
 @RequestScoped
 public class TraitementImportJeuDonnees extends ATraitementLogDetail implements Serializable {
@@ -45,10 +45,10 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private CompagnieEnvironnementService compagnieEnvironnementService;
 
    @Inject
-   private JeuDonneeService              jeuDonneeService;
-   
+   private JeuDonneesService             jeuDonneesService;
+
    @Inject
-   private ImportKappService importKappService;
+   private ImportKappService             importKappService;
 
    @Inject
    private RefDirectoryService           refDirectoryService;
@@ -69,6 +69,9 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
 
    @Inject
    private TraitementDeleteJeuDonnee     traitementDeleteJeuDonnee;
+
+   @Inject
+   private TraitementMiseAJourDonneesRef traitementMiseAJourDonneesRef;
 
    /**
     * Map représente les deux plans de transport(Active & Draft)
@@ -120,28 +123,51 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          this.deleteDataWithStatusImportDraft();
          this.saveJeuDonnees();
          this.createDraft();
+         this.majDonneesRef();
          this.createPlanTransport();
          this.comparePlanTransport();
          this.generateRapportDiff();
 
          Task.setMsgTask(this.idTask, "Finalisation");
          this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-         this.jeuDonneeDataBean.setStatusJeuDonnees(Status.DRAFT);
+         this.jeuDonneeDataBean.setStatusJeuDonnees(EStatus.DRAFT);
          try {
-            this.jeuDonneeService.update(this.jeuDonneeDataBean);
+            this.jeuDonneesService.update(this.jeuDonneeDataBean);
          } catch (Exception ex) {
             Task.finishKoTask(this.idTask, "Echec de mise à jour du jeu de données : veuillez réessayer ultérieurement");
             throw ex;
          }
       } catch (Throwable ex) {
          if (this.jeuDonneeDataBean != null) {
-            this.jeuDonneeDataBean.setStatusJeuDonnees(Status.IMPORT);
+            this.jeuDonneeDataBean.setStatusJeuDonnees(EStatus.IMPORT);
             this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date());
-            this.jeuDonneeService.update(this.jeuDonneeDataBean);
+            this.jeuDonneesService.update(this.jeuDonneeDataBean);
          }
 
          Thread.currentThread().interrupt();
          throw (new InterruptedException());
+      }
+   }
+
+   private void majDonneesRef() throws Exception {
+      Task.setMsgTask(this.idTask, "Mise à jour des données de référence");
+
+      this.traitementMiseAJourDonneesRef.setIdTask(this.idTask);
+      this.traitementMiseAJourDonneesRef.setJeuDonneesEntity(this.jeuDonneeDataBean);
+      this.traitementMiseAJourDonneesRef.setCompagnieEnvironnement(this.compagnieEnvironnementEntity);
+
+      try {
+         logger.info("Start majDonneesRef");
+         this.traitementMiseAJourDonneesRef.execute();
+         logger.info("End majDonneesRef");
+      } catch (Throwable e) {
+         this.log("Echec majDonneesRef");
+         logger.error("Echec majDonneesRef.", e);
+         if (this.idTask != null) {
+            Task.finishKoTask(this.idTask, "Echec de mise à jour des données de référence : veuillez réessayer ultérieurement");
+         }
+
+         throw e;
       }
    }
 
@@ -165,7 +191,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          if (this.idTask != null) {
             Task.finishKoTask(this.idTask, "Echec de création du rapport différentiel : veuillez réessayer ultérieurement");
          }
-         
+
          throw e;
       }
    }
@@ -185,7 +211,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          if (this.idTask != null) {
             Task.finishKoTask(this.idTask, "Echec de la comparaison des plans de transport : veuillez réessayer ultérieurement");
          }
-         
+
          throw e;
       }
    }
@@ -233,7 +259,7 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          /* Insertion dans les tables du modèle motrice */
          // Instanciation et sauvegarde du nouveau jeu de données
          Task.setMsgTask(this.idTask, "Sauvegarde jeu de données");
-         this.jeuDonneeDataBean = this.jeuDonneeService.initJeuDonnee(this.compagnieEnvironnementEntity);
+         this.jeuDonneeDataBean = this.jeuDonneesService.initJeuDonnee(this.compagnieEnvironnementEntity);
          this.jeuDonneeDataBean.setIdUtilisateurCreateJeuDonnees(this.idUtilisateur);
          this.jeuDonneeDataBean.setIdUtilisateurLastUpdateJeuDonnees(this.idUtilisateur);
          /* Récupération de la date de référence pour le jeu de données */
@@ -241,8 +267,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
          Date dateOri = formatter.parse(kappEntity.getKAPP_ORI());
          this.jeuDonneeDataBean.setDateDebutPeriode(dateOri);
-         
-         this.jeuDonneeService.save(this.jeuDonneeDataBean);
+
+         this.jeuDonneesService.save(this.jeuDonneeDataBean);
          logger.info("Save jeu donnée, " + this.jeuDonneeDataBean.getIdJeuDonnees());
          Task.setMsgTask(this.idTask, "Fin Sauvegarde jeu de données");
       } catch (Exception ex) {
@@ -257,8 +283,8 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
    private void deleteDataWithStatusImportDraft() throws Exception {
       Task.setMsgTask(this.idTask, "Suppression des données temporaires");
       this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(this.compagnieEnvironnementEntity.getNomTechniqueCompagnieEnvironnement());
-      this.traitementDeleteJeuDonnee.addStatus(Status.IMPORT);
-      this.traitementDeleteJeuDonnee.addStatus(Status.DRAFT);
+      this.traitementDeleteJeuDonnee.addStatus(EStatus.IMPORT);
+      this.traitementDeleteJeuDonnee.addStatus(EStatus.DRAFT);
       this.traitementDeleteJeuDonnee.setIdTask(this.idTask);
 
       try {
@@ -288,7 +314,14 @@ public class TraitementImportJeuDonnees extends ATraitementLogDetail implements 
          logger.error("Echec de l'import", ex);
          throw ex;
       } finally {
-         this.entityManagerDb2.close();
+         if (this.entityManagerDb2 != null) {
+            this.entityManagerDb2.clear();
+
+            if (this.entityManagerDb2.isOpen()) {
+               this.entityManagerDb2.close();
+            }
+         }
+
          EntityManagerFactoryProviderDb2.closeInstance();
          logger.info("End Importation des données");
       }

@@ -16,34 +16,31 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_stop")
-@NamedQueries({ @NamedQuery(name = "MotriceRegimeStop.getAll",
-      query = "SELECT t FROM MotriceRegimeStopEntity t"),
-      @NamedQuery(name = "MotriceRegimeStop.deleteAll",
-            query = "DELETE FROM MotriceRegimeStopEntity"),
-      @NamedQuery(name = "MotriceRegimeStop.deleteByRegimes",
-            query = "DELETE FROM MotriceRegimeStopEntity t WHERE t.motriceRegime IN (:regimes)"),
-      @NamedQuery(name = "MotriceRegimeStopEntity.getLastId",
-            query = "SELECT MAX( t.idMotriceRegimeStop ) FROM MotriceRegimeStopEntity t") })
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeStop.getAll", query = "SELECT t FROM MotriceRegimeStopEntity t"),
+      @NamedQuery(name = "MotriceRegimeStop.deleteAll", query = "DELETE FROM MotriceRegimeStopEntity"),
+      @NamedQuery(name = "MotriceRegimeStop.deleteByRegimes", query = "DELETE FROM MotriceRegimeStopEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeStopEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeStop ) FROM MotriceRegimeStopEntity t"),
+      @NamedQuery(name = "MotriceRegimeStopEntity.getRefGareByIdTrainTranche", query = "SELECT stop.motriceRefGareEntity FROM MotriceRegimeStopEntity stop join stop.motriceRegime as regime join regime.motriceTrainTranche as tt where tt.idMotriceTrainTranche = :idMotriceTrainTranche") })
 public class MotriceRegimeStopEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long                idMotriceRegimeStop;
+   private Long                 idMotriceRegimeStop;
 
-   @Column(length = 4,
-         nullable = false)
-   private String              arrivalHourMotriceRegimeStop;
-   @Column(length = 4,
-         nullable = false)
-   private String              departureHourMotriceRegimeStop;
-   @Column(length = 5,
-         nullable = false)
-   private String              stationMotriceRegimeStop;
+   @Column(length = 4, nullable = false)
+   private String               arrivalHourMotriceRegimeStop;
+   @Column(length = 4, nullable = false)
+   private String               departureHourMotriceRegimeStop;
+
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRefGare")
+   @ForeignKey(name = "FK_motrice_regime_stop_idMotriceRefGare")
+   private MotriceRefGareEntity motriceRefGareEntity;
 
    @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "idMotriceRegime")
    @ForeignKey(name = "FK_motrice_regime_stop_idMotriceRegime")
-   private MotriceRegimeEntity motriceRegime;
+   private MotriceRegimeEntity  motriceRegime;
 
    public Long getIdMotriceRegimeStop() {
       return this.idMotriceRegimeStop;
@@ -51,14 +48,6 @@ public class MotriceRegimeStopEntity {
 
    public void setIdMotriceRegimeStop(Long idMotriceRegimeStop) {
       this.idMotriceRegimeStop = idMotriceRegimeStop;
-   }
-
-   public String getStationMotriceRegimeStop() {
-      return this.stationMotriceRegimeStop;
-   }
-
-   public void setStationMotriceRegimeStop(String station) {
-      this.stationMotriceRegimeStop = station;
    }
 
    public String getArrivalHourMotriceRegimeStop() {
@@ -82,6 +71,22 @@ public class MotriceRegimeStopEntity {
    }
 
    public void setMotriceRegimeMotriceRegimeStop(MotriceRegimeEntity motriceRegime) {
+      this.motriceRegime = motriceRegime;
+   }
+
+   public MotriceRefGareEntity getMotriceRefGareEntity() {
+      return this.motriceRefGareEntity;
+   }
+
+   public void setMotriceRefGareEntity(MotriceRefGareEntity motriceRefGareEntity) {
+      this.motriceRefGareEntity = motriceRefGareEntity;
+   }
+
+   public MotriceRegimeEntity getMotriceRegime() {
+      return this.motriceRegime;
+   }
+
+   public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
       this.motriceRegime = motriceRegime;
    }
 

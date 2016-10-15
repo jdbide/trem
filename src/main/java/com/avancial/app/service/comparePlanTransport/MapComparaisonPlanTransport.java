@@ -5,12 +5,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 
 /**
- * Map contenant des objets {@link ComparaisonPlanTransport} indexés par le type
+ * Map contenant des objets {@link AComparaisonPlanTransport} indexés par le type
  * de comparaison et la classe des attributs comparés (null s'il n'y a pas
  * d'attributs dans la comparaison, c'est-à-dire dans les cas NEW, DELETE et
  * UNCHANGED)
@@ -53,7 +54,7 @@ public class MapComparaisonPlanTransport {
 
     }
 
-    private Map<MapComparaisonPlanTransportCle, List<ComparaisonPlanTransport<IPlanTransport>>> mapComparaison;
+    private Map<MapComparaisonPlanTransportCle, List<AComparaisonPlanTransport<IPlanTransport>>> mapComparaison;
 
     public MapComparaisonPlanTransport() {
         super();
@@ -65,7 +66,7 @@ public class MapComparaisonPlanTransport {
      * 
      * @param comparaisonPlanTransport
      */
-    public void putComparaison(ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport) {
+    public void putComparaison(AComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport) {
         Class<?> classeCle = null;
         if (comparaisonPlanTransport.getAncienField() != null) {
             classeCle = comparaisonPlanTransport.getAncienField().getClass();
@@ -73,7 +74,7 @@ public class MapComparaisonPlanTransport {
 
         MapComparaisonPlanTransportCle cle = new MapComparaisonPlanTransportCle(
                 comparaisonPlanTransport.getTypeComparaisonPlanTransport(), classeCle);
-        List<ComparaisonPlanTransport<IPlanTransport>> list = this.mapComparaison.get(cle);
+        List<AComparaisonPlanTransport<IPlanTransport>> list = this.mapComparaison.get(cle);
         if (list == null) {
             list = new ArrayList<>();
         }
@@ -92,9 +93,9 @@ public class MapComparaisonPlanTransport {
      * @param classeAttributComparaison
      * @return
      */
-    public List<ComparaisonPlanTransport<IPlanTransport>> getComparaison(
+    public List<AComparaisonPlanTransport<IPlanTransport>> getComparaison(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport, Class<?> classeAttributComparaison) {
-        List<ComparaisonPlanTransport<IPlanTransport>> res = this.mapComparaison
+        List<AComparaisonPlanTransport<IPlanTransport>> res = this.mapComparaison
                 .get(new MapComparaisonPlanTransportCle(typeComparaisonPlanTransport, classeAttributComparaison));
         if (res == null) {
             return new ArrayList<>();
@@ -109,9 +110,9 @@ public class MapComparaisonPlanTransport {
      * @param typeComparaisonPlanTransport
      * @return
      */
-    public List<ComparaisonPlanTransport<IPlanTransport>> getComparaison(
+    public List<AComparaisonPlanTransport<IPlanTransport>> getComparaison(
             EnumTypeComparaisonPlanTransport typeComparaisonPlanTransport) {
-        List<ComparaisonPlanTransport<IPlanTransport>> res = new ArrayList<>();
+        List<AComparaisonPlanTransport<IPlanTransport>> res = new ArrayList<>();
         for (MapComparaisonPlanTransportCle cle : this.mapComparaison.keySet()) {
             if (cle.typeComparaisonPlanTransport.equals(typeComparaisonPlanTransport)) {
                 res.addAll(this.mapComparaison.get(cle));
@@ -128,9 +129,9 @@ public class MapComparaisonPlanTransport {
      *            Map dont on veut importer les données
      */
     public void putAll(MapComparaisonPlanTransport mapComparaisonPlanTransport) {
-        for (List<ComparaisonPlanTransport<IPlanTransport>> comparaisons : mapComparaisonPlanTransport.mapComparaison
+        for (List<AComparaisonPlanTransport<IPlanTransport>> comparaisons : mapComparaisonPlanTransport.mapComparaison
                 .values()) {
-            for (ComparaisonPlanTransport<IPlanTransport> comparaison : comparaisons) {
+            for (AComparaisonPlanTransport<IPlanTransport> comparaison : comparaisons) {
                 this.putComparaison(comparaison);
             }
         }
@@ -147,7 +148,7 @@ public class MapComparaisonPlanTransport {
      * 
      * @return Une collection de toutes les valeurs contenues dans la map
      */
-    public Collection<List<ComparaisonPlanTransport<IPlanTransport>>> values() {
+    public Collection<List<AComparaisonPlanTransport<IPlanTransport>>> values() {
         return this.mapComparaison.values();
     }
 

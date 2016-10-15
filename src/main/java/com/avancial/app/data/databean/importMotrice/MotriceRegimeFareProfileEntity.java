@@ -1,6 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,27 +15,25 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_fareprofile")
-@NamedQueries({ @NamedQuery(name = "MotriceRegimeFareProfile.getAll",
-      query = "SELECT t FROM MotriceRegimeFareProfileEntity t"),
-      @NamedQuery(name = "MotriceRegimeFareProfile.deleteAll",
-            query = "DELETE FROM MotriceRegimeFareProfileEntity"),
-      @NamedQuery(name = "MotriceRegimeFareProfile.deleteByRegimes",
-            query = "DELETE FROM MotriceRegimeFareProfileEntity t WHERE t.motriceRegime IN (:regimes)"),
-      @NamedQuery(name = "MotriceRegimeFareProfileEntity.getLastId",
-            query = "SELECT MAX( t.idMotriceRegimeFareProfile ) FROM MotriceRegimeFareProfileEntity t") })
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeFareProfile.getAll", query = "SELECT t FROM MotriceRegimeFareProfileEntity t"),
+      @NamedQuery(name = "MotriceRegimeFareProfile.deleteAll", query = "DELETE FROM MotriceRegimeFareProfileEntity"),
+      @NamedQuery(name = "MotriceRegimeFareProfile.deleteByRegimes", query = "DELETE FROM MotriceRegimeFareProfileEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeFareProfileEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeFareProfile ) FROM MotriceRegimeFareProfileEntity t") })
 public class MotriceRegimeFareProfileEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long                idMotriceRegimeFareProfile;
-   @Column(length = 3,
-         nullable = false)
-   private String              fareProfileCodeMotriceRegimeFareProfile;
+   private Long                            idMotriceRegimeFareProfile;
+
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRefFareProfile")
+   @ForeignKey(name = "FK_motrice_regime_fareprofile_idMotriceRefFareProfile")
+   private MotriceRefFareProfileCodeEntity motriceRefFareProfileEntity;
 
    @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "idMotriceRegime")
    @ForeignKey(name = "FK_motrice_regime_fareprofile_idMotriceRegime")
-   private MotriceRegimeEntity motriceRegime;
+   private MotriceRegimeEntity             motriceRegime;
 
    public Long getIdMotriceRegimeFareProfile() {
       return this.idMotriceRegimeFareProfile;
@@ -46,20 +43,20 @@ public class MotriceRegimeFareProfileEntity {
       this.idMotriceRegimeFareProfile = idMotriceRegimeFareProfile;
    }
 
-   public String getFareProfileCodeMotriceRegimeFareProfile() {
-      return this.fareProfileCodeMotriceRegimeFareProfile;
-   }
-
-   public void setFareProfileCodeMotriceRegimeFareProfile(String fareProfileCodeMotriceRegimeFareProfile) {
-      this.fareProfileCodeMotriceRegimeFareProfile = fareProfileCodeMotriceRegimeFareProfile;
-   }
-
    public MotriceRegimeEntity getMotriceRegime() {
       return this.motriceRegime;
    }
 
    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
       this.motriceRegime = motriceRegime;
+   }
+
+   public MotriceRefFareProfileCodeEntity getMotriceRefFareProfileEntity() {
+      return this.motriceRefFareProfileEntity;
+   }
+
+   public void setMotriceRefFareProfileEntity(MotriceRefFareProfileCodeEntity motriceRefFareProfileEntity) {
+      this.motriceRefFareProfileEntity = motriceRefFareProfileEntity;
    }
 
 }

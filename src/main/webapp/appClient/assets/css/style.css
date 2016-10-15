@@ -62,3 +62,82 @@ a.disabled {
     position: absolute;
     top: 50%;
 }
+
+.btn-yellow
+{
+	background-color: #F9F9CA;
+    border-color: #000;
+    color: #000;
+}
+
+.table-striped_control > tbody:nth-child(2n) > tr {
+   background-color: #e7e4e4;
+}
+
+.table-striped_control>thead {
+	background-color:#b3b3b3;
+}
+.table.table-striped_control {
+	border-collapse: initial;
+}
+
+.modal-header-socle {
+	background-color: #3c8dbc; color: #fff;
+}
+.modal-body-socle {
+	background-color: #ecf0f5;
+}
+.modal-body-back-socle {
+	box-sizing: border-box; background-color: #ecf0f5;
+}
+.modal-body-content-socle {
+	overflow: hidden; background: none repeat scroll 0 0 #fff;border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;padding: 10px;
+}
+.form-group-modal-socle {
+	overflow: hidden; padding-top: 20px;
+}
+.modal-footer-socle {
+	background-color: #3c8dbc;
+}
+.form-inline-modal-socle{
+	overflow: hidden; padding-top: 20px; margin: 0px;
+}
+
+.file-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.file-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.file-title {
+    margin-left:2px;
+}
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+@media (min-width: 768px) {
+.left-control {
+    text-align: left !important;
+  }
+}

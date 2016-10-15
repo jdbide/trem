@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
@@ -43,7 +43,7 @@ public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanT
             List<? extends IPlanTransport> trainsNouveau) throws Exception {
         MapComparaisonPlanTransport res = new MapComparaisonPlanTransport();
 
-        ComparaisonPlanTransport<IPlanTransport> comparaisonPlanTransport;
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonPlanTransport;
         /* Boucle sur les trainsNouveau */
         for (Iterator<Train> itTrainNouveau = (Iterator<Train>) trainsNouveau.iterator(); itTrainNouveau.hasNext();) {
             Train trainNouveau = itTrainNouveau.next();
@@ -54,7 +54,7 @@ public abstract class AComparePlanTransportNewDelete extends AChaineComparePlanT
             if (index < 0) {
                 /* C'est un nouveau train, on ajoute toutes ses tranches */
                 for (Tranche trancheNouveau : trainNouveau.getTranches()) {
-                    comparaisonPlanTransport = new ComparaisonPlanTransport<>();
+                    comparaisonPlanTransport = new ComparaisonDifferentielPlanTransport<>();
                     comparaisonPlanTransport.setNumeroTrain(trainNouveau.getNumeroTrain());
                     comparaisonPlanTransport.setNumeroTranche(trancheNouveau.getNumeroTranche());
                     comparaisonPlanTransport.setTrancheStatut(trancheNouveau.getTrancheStatut());

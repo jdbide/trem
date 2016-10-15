@@ -18,8 +18,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
@@ -33,21 +33,21 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
 import com.avancial.app.export.ExcelRapportDifferentiel;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
 import com.avancial.app.traitement.TraitementObjetMetier;
-import com.avancial.app.utilitaire.FileUtil;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.utils.FileUtils;
 
 import factory.PlanTransportFactory;
 
@@ -63,9 +63,9 @@ public class TestGenerateExcel {
                 .as(File.class);
 
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(ExcelRapportDifferentiel.class.getPackage())
-                .addClass(JeuDonneeService.class).addClass(TraiteObjetMetierRegimeFactory.class)
-                .addClass(FileUtil.class).addPackage(CodeSat.class.getPackage())
-                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class)
+                .addClass(JeuDonneesService.class).addClass(TraiteObjetMetierRegimeFactory.class)
+                .addClass(FileUtils.class).addPackage(CodeSat.class.getPackage())
+                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneesService.class)
                 .addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class)
                 .addClass(TraitementObjetMetier.class).addPackage(Socle_PUSocle.class.getPackage())
                 .addPackage(EntityManagerProducerSocle.class.getPackage())
@@ -120,30 +120,30 @@ public class TestGenerateExcel {
         Assert.assertNotNull(mapPlansDeTransport);
 
         // Delete
-        ComparaisonPlanTransport<IPlanTransport> comparaisonDelete = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonDelete = new ComparaisonDifferentielPlanTransport<>();
         comparaisonDelete.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.DELETE);
         comparaisonDelete.setNumeroTrain("3");
         comparaisonDelete.setNumeroTranche("6");
         // New
-        ComparaisonPlanTransport<IPlanTransport> comparaisonNew = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonNew = new ComparaisonDifferentielPlanTransport<>();
         comparaisonDelete.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
         comparaisonDelete.setNumeroTrain("5");
         comparaisonDelete.setNumeroTranche("10");
 
         // Unchanged
-        ComparaisonPlanTransport<IPlanTransport> comparaisonUnchanged = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonUnchanged = new ComparaisonDifferentielPlanTransport<>();
         comparaisonUnchanged.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.UNCHANGED);
         comparaisonUnchanged.setNumeroTrain("4");
         comparaisonUnchanged.setNumeroTranche("8");
 
         // Modify
-        ComparaisonPlanTransport<IPlanTransport> comparaisonModify = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonModify = new ComparaisonDifferentielPlanTransport<>();
         comparaisonModify.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.MODIFY);
         comparaisonModify.setNumeroTrain("2");
         comparaisonModify.setNumeroTranche("4");
 
         //
-        ComparaisonPlanTransport<IPlanTransport> comparaisonRegimSplit = new ComparaisonPlanTransport<>();
+        ComparaisonDifferentielPlanTransport<IPlanTransport> comparaisonRegimSplit = new ComparaisonDifferentielPlanTransport<>();
         comparaisonRegimSplit.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.REGIMESPLIT);
         comparaisonRegimSplit.setNumeroTrain("2");
         comparaisonRegimSplit.setNumeroTranche("4");
@@ -173,8 +173,8 @@ public class TestGenerateExcel {
         try {
             IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
             MapComparaisonPlanTransport compare = new MapComparaisonPlanTransport();
-            compare = comparePlanTransport.compare(mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport(),
-                    mapPlansDeTransport.get(Status.DRAFT).getPlanTransport());
+            compare = comparePlanTransport.compare(mapPlansDeTransport.get(EStatus.ACTIVE).getPlanTransport(),
+                    mapPlansDeTransport.get(EStatus.DRAFT).getPlanTransport());
             System.out.println("");
             // Assert.assertTrue("Compare",
             // ListUtils.compareLists(expected, compare));
@@ -205,7 +205,7 @@ public class TestGenerateExcel {
             mapPlansDeTransport.getPlanTransportDraft();
 
             this.excelRapportDifferentiel.generate();
-            if (!FileUtil.existFile("D:/was_tmp/tremas/export.xls")) {
+            if (!FileUtils.existFile("D:/was_tmp/tremas/export.xls")) {
                 Assert.assertTrue(false);
             }
             else
@@ -245,7 +245,7 @@ public class TestGenerateExcel {
             this.excelRapportDifferentiel.setXlsx(true);
 
             this.excelRapportDifferentiel.generate();
-            if (!FileUtil.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {
+            if (!FileUtils.existFile("D:/was_tmp/tremas/export/Test_TestGenerateExcelLocalAvecParamsAndInject.xlsx")) {
                 Assert.assertTrue(false);
             }
             else

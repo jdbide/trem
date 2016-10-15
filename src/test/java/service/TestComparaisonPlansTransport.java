@@ -18,15 +18,17 @@ import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.CompagnieEnvironnementEntity;
 import com.avancial.app.data.databean.JeuDonneeEntity;
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
-import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonDifferentielPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
-import com.avancial.app.service.JeuDonneeService;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.IComparaisonPlanTransport;
+import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
@@ -55,7 +57,7 @@ public class TestComparaisonPlansTransport {
         WebArchive jar = ShrinkWrap.create(WebArchive.class).addPackage(MotriceRegimeEntity.class.getPackage())
                 .addPackage(ITraiteMotriceRegime.class.getPackage()).addPackage(ALogBean.class.getPackage())
                 .addPackage(ATraitement.class.getPackage()).addPackage(CodeSat.class.getPackage())
-                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneeService.class)
+                .addPackage(PageDataBean.class.getPackage()).addClass(JeuDonneesService.class)
                 .addClass(TraiteObjetMetierRegimeFactory.class).addClass(MapPlansDeTransport.class)
                 .addClass(TraitementObjetMetier.class).addClass(RefTablesMotriceRegimeService.class)
                 .addClass(TraiteMotriceRegimeFactory.class).addClass(MapPlansDeTransport.class)
@@ -104,11 +106,11 @@ public class TestComparaisonPlansTransport {
                 this.traitementObjetMetier
                         .setEnvironnementCompagnie(compagnieEnvironnement.getNomTechniqueCompagnieEnvironnement());
                 this.traitementObjetMetier.execute();
-                List<ComparaisonPlanTransport<IPlanTransport>> expected = new ArrayList<>();
+                List<AComparaisonPlanTransport<IPlanTransport>> expected = new ArrayList<>();
 
-                for (Train train : this.mapPlansDeTransport.get(Status.DRAFT).getPlanTransport().getTrains()) {
+                for (Train train : this.mapPlansDeTransport.get(EStatus.DRAFT).getPlanTransport().getTrains()) {
                     for (Tranche tranche : train.getTranches()) {
-                        ComparaisonPlanTransport<IPlanTransport> cpt = new ComparaisonPlanTransport<>();
+                        ComparaisonDifferentielPlanTransport<IPlanTransport> cpt = new ComparaisonDifferentielPlanTransport<>();
                         cpt.setTypeComparaisonPlanTransport(EnumTypeComparaisonPlanTransport.NEW);
                         cpt.setNumeroTrain(train.getNumeroTrain());
                         cpt.setNumeroTranche(tranche.getNumeroTranche());
@@ -121,8 +123,8 @@ public class TestComparaisonPlansTransport {
                     Assert.assertTrue("Compare NEW PlanTransport",
                             ListUtils.compareLists(expected,
                                     comparePlanTransport
-                                            .compare(this.mapPlansDeTransport.get(Status.ACTIVE).getPlanTransport(),
-                                                    this.mapPlansDeTransport.get(Status.DRAFT).getPlanTransport())
+                                            .compare(this.mapPlansDeTransport.get(EStatus.ACTIVE).getPlanTransport(),
+                                                    this.mapPlansDeTransport.get(EStatus.DRAFT).getPlanTransport())
                                             .getComparaison(EnumTypeComparaisonPlanTransport.NEW)));
                 }
                 catch (Throwable e1) {

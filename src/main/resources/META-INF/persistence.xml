@@ -5,6 +5,7 @@
 	<persistence-unit name="PU_socle" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
+		<class>com.avancial.app.data.databean.JeuDonneesControlEntity</class>
 
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
@@ -17,7 +18,6 @@
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-			<property name="connection.autocommit" value="false" />
 			<property name="hibernate.generate_statistics" value="false" />
 			<property name="hibernate.use_sql_comments" value="false" />
 		</properties>
@@ -32,7 +32,9 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
-			<property name="connection.autocommit" value="false" />
+			<property name="hibernate.current_session_context_class" value="thread"/>
+			<property name="hibernate.connection.autocommit" value="true"/>
+			<property name="hibernate.connection.pool_size" value="0"/> 
 		</properties>
 	</persistence-unit>
 

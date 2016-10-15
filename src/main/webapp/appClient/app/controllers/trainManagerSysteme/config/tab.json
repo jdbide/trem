@@ -1,8 +1,8 @@
 [
 	{
 		"title": "Search",
-		"url": "app/views/partials/trainManagerSysteme/search.xhtml",
-		"active":false
+		"url": "app/views/partials/trainManagerSysteme/search/indexSearch.xhtml",
+		"active":true
 	},
 	{
 		"title": "Calendar View",
@@ -12,7 +12,7 @@
 	{
 		"title": "Import",
 		"url": "app/views/partials/trainManagerSysteme/import.xhtml",
-		"active":true
+		"active":false
 	},
 	{
 		"title": "Import History",

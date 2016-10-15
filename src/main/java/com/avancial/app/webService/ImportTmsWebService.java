@@ -20,10 +20,10 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
-import com.avancial.app.data.databean.Status;
+import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.dto.ImportTmsDto;
 import com.avancial.app.resources.constants.APP_Directory;
-import com.avancial.app.service.ImportTmsService;
+import com.avancial.app.serviceDto.ImportTmsServiceDto;
 import com.avancial.app.traitement.TraitementDeleteJeuDonnee;
 import com.avancial.app.webService.bean.ResponseBean;
 import com.avancial.socle.service.RefDirectoryService;
@@ -46,7 +46,7 @@ public class ImportTmsWebService {
    private static Logger             logger = Logger.getLogger(ImportTmsWebService.class);
 
    @Inject
-   private ImportTmsService          importTmsService;
+   private ImportTmsServiceDto          importTmsServiceDto;
 
    @Inject
    private TraitementDeleteJeuDonnee traitementDeleteJeuDonnee;
@@ -70,7 +70,7 @@ public class ImportTmsWebService {
       logger.info("Début (WebService : '/app/importTms' methode : GET)");
       JSONArray jsonArray = new JSONArray();
       try {
-         jsonArray.addAll(this.importTmsService.getAllImportTmsActif());
+         jsonArray.addAll(this.importTmsServiceDto.getAllImportTmsActif());
 
          logger.info("Fin (WebService : '/app/importTms' methode : GET)");
 
@@ -99,9 +99,9 @@ public class ImportTmsWebService {
 
       try {
          this.traitementDeleteJeuDonnee.setCompagnieEnvironnement(nomTechniqueCompagnieEnvironnement);
-         List<Status> status = new ArrayList<>();
-         status.add(Status.DRAFT);
-         this.traitementDeleteJeuDonnee.setStatus(status);
+         List<EStatus> eStatus = new ArrayList<>();
+         eStatus.add(EStatus.DRAFT);
+         this.traitementDeleteJeuDonnee.setStatus(eStatus);
          this.traitementDeleteJeuDonnee.execute();
 
          responseBean.setStatus(true);
@@ -134,7 +134,7 @@ public class ImportTmsWebService {
       ResponseBean responseBean = new ResponseBean();
 
       try {
-         if (this.importTmsService.validateDraft(importTmsDto)) {
+         if (this.importTmsServiceDto.validateDraft(importTmsDto)) {
             responseBean.setData(importTmsDto);
             responseBean.setStatus(true);
             responseBean.setMessage("Validation draft OK");
@@ -153,24 +153,24 @@ public class ImportTmsWebService {
    }
 
    @GET
-   @Path("downloadFile/{idJeuDonnee}")
+   @Path("downloadFile/{fileName}")
    @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-   public Response downloadFileByIdJeuDonnees(@PathParam("idJeuDonnee") Integer idJeuDonnee) throws Exception {
-      logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)");
+   public Response downloadFileByIdJeuDonnees(@PathParam("fileName") String fileName) throws Exception {
+      logger.info("Début (WebService : '/app/importTms', Action : 'downloadFile/{fileName}', methode : @GET)");
 
       ResponseBuilder responseBuilder = null;
       String path = this.refDirectoryService.getRefDirectoryByTechnicalName(APP_Directory.PathRapportDiff.toString()).getPathRefDirectory()
-            + "RapportDiff-" + idJeuDonnee + ".xlsx";
+            + "RapportDiff-" + fileName + ".xlsx";
 
       try {
          File fileDownload = new File(path);
          responseBuilder = Response.ok((Object) fileDownload);
-         responseBuilder.header("Content-Disposition", "attachment; filename=\"RapportDiff-" + idJeuDonnee + ".xlsx\"");
+         responseBuilder.header("Content-Disposition", "attachment; filename=\"RapportDiff-" + fileName + ".xlsx\"");
          logger.info("Fin (WebService : '/app/importTms' methode : @GET");
       } catch (Exception e) {
          e.printStackTrace();
          responseBuilder = Response.status(400);
-         logger.error("Exception (WebService : '/app/importTms', Action : 'downloadFile/{idJeuDonnee}', methode : @GET)", e);
+         logger.error("Exception (WebService : '/app/importTms', Action : 'downloadFile/{fileName}', methode : @GET)", e);
       }
       return responseBuilder.build();
    }

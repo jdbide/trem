@@ -1,0 +1,61 @@
+<div class="tab-pane" id="control" ng-controller="compareDraftsCtrl">
+
+	<div class="box-body">
+
+		<div class="row">
+			<div class="col-sm-1">
+				<label for="partition">Partition:</label>
+			</div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<select class="form-control" ng-model="selectedPartition"
+						ng-change="changeSelectedPartition()"
+						ng-options="partition.idCompagnieEnvironnement as partition.nomTechniqueCompagnieEnvironnement for (key, partition) in partitions">
+					</select>
+
+				</div>
+			</div>
+
+
+		</div>
+		<div class="box-body table-responsive no-padding">
+			<TABLE class="table table-bordered table-striped table-tremas">
+				<thead>
+					<tr>
+						<th class="text-center" ROWSPAN=2 style="vertical-align: middle;">Draft
+							1</th>
+						<th class="text-center" ROWSPAN=2 style="vertical-align: middle;">Draft
+							2</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><select class="form-control" ng-model="selectedDraft1"
+							ng-change="changeSelectedDraft1()"
+							ng-options="data.idJeuDonnees as data.titleJeuDonnees for (key, data) in datas">
+
+						</select></td>
+
+						<td><select class="form-control" ng-model="selectedDraft2"
+							ng-change="changeSelectedDraft2()"
+							ng-options="data.idJeuDonnees as data.titleJeuDonnees for (key, data) in datas">
+
+						</select></td>
+					</tr>
+					<tr>
+						<td>
+							<button class="btn btn-success pull-right"
+							    ng-disabled="disable()"
+								ng-click="executeValidateControl()">Compare Drafts</button>
+						</td>
+						<td><a href="{{urlDownloadFileCompFile}}"
+							style="text-decoration: underline">Read last generated file</a></td>
+					</tr>
+				</tbody>
+			</TABLE>
+		</div>
+
+	</div>
+</div>
+
+

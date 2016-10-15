@@ -24,7 +24,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "tremas_jeu_donnees")
-@NamedQueries({ @NamedQuery(name = "JeuDonneeEntity.getAll", query = "SELECT t FROM JeuDonneeEntity t"), @NamedQuery(name = "JeuDonneeEntity.deleteById", query = "DELETE FROM JeuDonneeEntity WHERE idJeuDonnees = :id"),
+@NamedQueries({ @NamedQuery(name = "JeuDonneeEntity.getAll", query = "SELECT t FROM JeuDonneeEntity t"), 
+      @NamedQuery(name = "JeuDonneeEntity.deleteById", query = "DELETE FROM JeuDonneeEntity WHERE idJeuDonnees = :id"),
       @NamedQuery(name = "JeuDonneeEntity.getByEnvironnementStatus", query = "SELECT t FROM JeuDonneeEntity t JOIN t.compagnieEnvironnement c WHERE c.nomTechniqueCompagnieEnvironnement = :nomTechniqueCompagnieEnvironnement AND t.statusJeuDonnees = :statusJeuDonnees"),
       @NamedQuery(name = "JeuDonneeEntity.getById", query = "SELECT t FROM JeuDonneeEntity t WHERE t.idJeuDonnees = :idJeuDonnees") })
 public class JeuDonneeEntity implements Serializable {
@@ -49,7 +50,7 @@ public class JeuDonneeEntity implements Serializable {
 
    @Column(length = 11, columnDefinition = "varchar(11) default 'IMPORT'")
    @Enumerated(EnumType.STRING)
-   private Status                       statusJeuDonnees = Status.IMPORT;
+   private EStatus                       statusJeuDonnees = EStatus.IMPORT;
 
    // uni-directional many-to-one association to TremasCompagnieEnvironnement
    @ManyToOne
@@ -99,11 +100,11 @@ public class JeuDonneeEntity implements Serializable {
       this.idUtilisateurLastUpdateJeuDonnees = idUtilisateurLastUpdateJeuDonnees;
    }
 
-   public Status getStatusJeuDonnees() {
+   public EStatus getStatusJeuDonnees() {
       return this.statusJeuDonnees;
    }
 
-   public void setStatusJeuDonnees(Status statusJeuDonnees) {
+   public void setStatusJeuDonnees(EStatus statusJeuDonnees) {
       this.statusJeuDonnees = statusJeuDonnees;
    }
 

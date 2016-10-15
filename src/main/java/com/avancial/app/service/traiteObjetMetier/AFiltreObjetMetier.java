@@ -17,7 +17,7 @@ public abstract class AFiltreObjetMetier implements IFiltreDateRegime {
    }
 
    /**
-    * Test l'ajout d'un objet dans le plan de transport en fonction de la période de filtre.
+    * Teste l'ajout d'un objet dans le plan de transport en fonction de la période de filtre.
     * 
     * @param regime
     *           Regime de l'objet à tester

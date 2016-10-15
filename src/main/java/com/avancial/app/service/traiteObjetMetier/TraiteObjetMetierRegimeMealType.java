@@ -29,7 +29,7 @@ public class TraiteObjetMetierRegimeMealType extends AFiltreObjetMetier implemen
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeMealTypeEntity regimeMeal : regime.getMotriceRegimeMealType()) {
-            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(regimeMeal.getMealTypeMotriceRegimeMealType()),
+            listeMeal.add(new Repas(EnumTypeRepas.getEnumTypeRepas(regimeMeal.getMotriceRefMealTypeEntity().getCodeMealType()),
                   new Horaire(formatter.parse(regimeMeal.getBeginServiceHourRegimeMealType()),
                         formatter.parse(regimeMeal.getEndServiceHourMotriceRegimeMealType())),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));

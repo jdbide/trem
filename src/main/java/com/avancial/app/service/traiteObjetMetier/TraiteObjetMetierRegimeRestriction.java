@@ -26,8 +26,8 @@ public class TraiteObjetMetierRegimeRestriction extends AFiltreObjetMetier imple
       newRegime.filtreDates(getDateDebut(), getDateFin());
       if (this.filtreDateAjout(newRegime)) {
          for (MotriceRegimeRestrictionEntity regimeRestriction : regime.getMotriceRegimeRestrictions()) {
-            listeRestrictions.add(new Restriction(new Gare(regimeRestriction.getOrigineMotriceRegimeRestriction()),
-                  new Gare(regimeRestriction.getDestinationMotriceRegimeRestriction()), null,
+            listeRestrictions.add(new Restriction(new Gare(regimeRestriction.getOrigineMotriceRefGareEntity().getCodeGareMotriceRefGare()),
+                  new Gare(regimeRestriction.getDestinationMotriceRefGareEntity().getCodeGareMotriceRefGare()), null,
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
       }

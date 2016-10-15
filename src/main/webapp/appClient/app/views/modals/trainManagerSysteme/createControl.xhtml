@@ -1,0 +1,255 @@
+<div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel"
+	aria-hidden="false" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<m-loader></m-loader>
+			<div class="modal-header modal-header-socle">
+				<h4 class="modal-title">Control Settings</h4>
+			</div>
+			<div class="modal-body modal-body-socle">
+				<div class="modal-body-back-socle">
+					<div class="modal-body-content-socle">
+						<div class="form-group form-group-modal-socle">
+							<p>1 - Select TimeTable file to compare:</p>
+
+							<div class="col-md-12">
+								<!-- image-preview-filename input [CUT FROM HERE]-->
+								<div class="input-group">
+									<input type="text" class="form-control input-filename" ng-value="$parent.files.firstFile.file.name" disabled="disabled"> 
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default fileBtn-clear" ng-show="showBtnFile(1)" ng-click="clickBtnClearFile(1)">
+											<span class="glyphicon glyphicon-trash"></span> Clear
+										</button>
+										<button type="button" class="btn btn-default fileBtn-upload" ng-show="showBtnFile(1)" ng-click="clickBtnUploadFile(1)">
+											<span class="glyphicon glyphicon-upload"></span> Upload 
+										</button> <!-- image-preview-input -->
+										<div class="btn btn-default file-input">
+											<span class="glyphicon glyphicon-folder-open"></span> 
+											<span class="file-title">Browse</span> 
+											<input type="file" name="input-file-preview"
+												accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+												ng-model="$parent.files.firstFile.file"
+												ngf-select="selectedFile(1)"
+												ng-disabled="$parent.disabledAll"
+												ngf-max-files="1"
+												ngf-pattern="'.xlsx'"
+												ngf-model-invalid="$parent.files.firstFile.invalidFile"
+												required
+											/>
+										</div>
+									</span>
+								</div>
+							</div>
+							<div ng-show="$parent.files.firstFile.msgError != null" class="col-md-12 " style="padding-top: 20px;">
+								<div class="callout callout-danger">
+			                    	<p>{{$parent.files.firstFile.msgError}}</p>
+			                  	</div>
+							</div>
+							<div ng-show="$parent.files.firstFile.invalidFile && $parent.files.firstFile.invalidFile.$errorMessages.pattern" class="col-md-12 " style="padding-top: 20px;">
+								<div class="callout callout-danger">
+			                    	<p >
+			                    		Invalid type : please select a .xlsx file.
+			                    	</p>
+			                  	</div>
+							</div>
+							<div  class="col-md-12 " ng-show="$parent.files.firstFile.etat.isStartTraitement">
+								<div class="box box-solid">
+									<div class="box-header with-border">
+										<i class="fa fa-upload"></i>
+										<h3 class="box-title">
+											Upload timeTable file <i ng-show="$parent.files.firstFile.etat.isFinishTraitement!=true" class="fa fa-refresh fa-spin"></i>
+										</h3>
+									</div>
+									
+									<div class="box-body">
+										<div  class="clearfix" >
+                        					<span class="pull-left">Upload file #{{files.firstFile.file.name}}</span>
+                        					<small class="pull-right">{{$parent.files.firstFile.file.progress}}%</small>
+                      					</div>
+                      					<div  class="progress xs">
+				                        	<div style="width: {{$parent.files.firstFile.file.progress}}%;" class="progress-bar progress-bar-green"></div>
+				                      	</div>
+										<p ng-show="$parent.files.firstFile.etat.isUploadSuccess" class="text-green">
+											Upload OK 
+											<i class="fa fa-check-square-o text-green"></i>
+										</p>
+										<p ng-show="$parent.files.firstFile.etat.isUploadSuccess == false" class="text-red">
+											Upload KO
+											<i class="fa fa-check-square-o text-red"></i>
+										</p>
+										<p ng-show="$parent.files.firstFile.etat.isFormatOk" class="text-green">
+											Format check OK 
+											<i class="fa fa-check-square-o text-green"></i>
+										</p>
+										<p ng-show="$parent.files.firstFile.etat.isFormatOk  == false" class="text-red">
+											Format check KO 
+											<i class="fa fa-check-square-o text-red"></i>
+										</p>
+										<p ng-show="$parent.files.firstFile.etat.isDataValidate" class="text-green">
+											{{files.firstFile.etat.msgDataValidate}}
+											<i class="fa fa-check-square-o text-green"></i>
+										</p>
+										<p ng-show="$parent.files.firstFile.etat.isDataValidate == false" class="text-red">
+											Data validation Ko
+											<i class="fa fa-check-square-o text-red"></i>
+										</p>
+										<p ng-show="$parent.files.firstFile.etat.isFinishTraitementSuccess==true && $parent.files.secondFile.etat.isStartTraitement!=true" class="text-green">
+											Please upload Yield
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group form-group-modal-socle">
+							<p>2 - Select Yield file to compare:</p>
+							<div class="col-md-12">
+								<div class="input-group">
+									<input type="text" class="form-control input-filename" ng-value="$parent.files.secondFile.file.name" disabled="disabled"> 
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default fileBtn-clear" ng-show="showBtnFile(2)" ng-click="clickBtnClearFile(2)">
+											<span class="glyphicon glyphicon-trash"></span> Clear
+										</button>
+										<button type="button" class="btn btn-default fileBtn-upload" ng-show="showBtnFile(2)" ng-click="clickBtnUploadFile(2)">
+											<span class="glyphicon glyphicon-upload"></span> Upload
+										</button>
+										<div class="btn btn-default file-input">
+											<span class="glyphicon glyphicon-folder-open"></span> 
+											<span class="file-title">Browse</span> 
+											<input type="file" name="input-file-preview"
+												accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+												ng-model="$parent.files.secondFile.file"
+												ngf-select="selectedFile(2)"
+												ng-disabled="$parent.disabledAll"
+												ngf-max-files="1"
+												ngf-pattern="'.xlsx'"
+												ngf-model-invalid="$parent.files.secondFile.invalidFile"
+												required
+											/>
+										</div>
+									</span><!-- if (files.firstFile.isFinishTraitementSuccess!=true) return 'disabled' -->
+								</div>
+							</div>
+							<div ng-show="$parent.files.secondFile.invalidFile  && $parent.files.secondFile.invalidFile.$errorMessages.pattern" class="col-md-12 " style="padding-top: 20px;">
+								<div class="callout callout-danger">
+			                    	<p >
+			                    		Invalid type : please select a .xlsx file.
+			                    	</p>
+			                  	</div>
+							</div>
+							<div  class="col-md-12 " ng-show="$parent.files.secondFile.etat.isStartTraitement">
+								<div class="box box-solid">
+									<div class="box-header with-border">
+										<i class="fa fa-upload"></i>
+										<h3 class="box-title">
+											Upload yield file <i ng-show="$parent.files.secondFile.etat.isFinishTraitement!=true" class="fa fa-refresh fa-spin"></i>
+										</h3>
+									</div>
+									
+									<div class="box-body">
+										<div  class="clearfix">
+                        					<span class="pull-left">Upload file #{{files.secondFile.file.name}}</span>
+                        					<small class="pull-right">{{$parent.files.secondFile.file.progress}}%</small>
+                      					</div>
+                      					<div  class="progress xs">
+				                        	<div style="width: {{$parent.files.secondFile.file.progress}}%;" class="progress-bar progress-bar-green"></div>
+				                      	</div>
+										<p ng-show="$parent.files.secondFile.etat.isUploadSuccess" class="text-green">
+											Upload OK 
+											<i class="fa fa-check-square-o text-green"></i>
+										</p>
+										<p ng-show="$parent.files.secondFile.etat.isUploadSuccess == false" class="text-red">
+											Upload KO
+											<i class="fa fa-check-square-o text-red"></i>
+										</p>
+										<p ng-show="$parent.files.secondFile.etat.isFormatOk" class="text-green">
+											Format check OK 
+											<i class="fa fa-check-square-o text-green"></i>
+										</p>
+										<p ng-show="$parent.files.secondFile.etat.isFormatOk  == false" class="text-red">
+											Format check KO 
+											<i class="fa fa-check-square-o text-red"></i>
+										</p>
+										<p ng-show="$parent.files.secondFile.etat.isDataValidate" class="text-green">
+											{{files.firstFile.etat.msgDataValidate}}
+											<i class="fa fa-check-square-o text-green"></i>
+										</p>
+										<p ng-show="$parent.files.secondFile.etat.isDataValidate == false" class="text-red">
+											Data validation Ko
+											<i class="fa fa-check-square-o text-red"></i>
+										</p>
+										<!-- <p ng-show="$parent.files.secondFile.etat.isFinishTraitementSuccess" class="text-green">
+											Please upload Timetable
+										</p> -->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group form-group-modal-socle">
+							<p>3 - Select dataset to control:</p>
+							<div class="col-md-2">
+								<select   class="form-control"  
+									ng-model="$parent.selectedStatusJeuDonnees" 
+									ng-change="changeStatusJeuDonnees()"
+									ng-disabled="!($parent.files.firstFile.etat.isFinishTraitementSuccess && $parent.files.secondFile.etat.isFinishTraitementSuccess) || $parent.disabledAll"
+								>
+									<option ng-value="StatusImportForControl.DRAFT">{{StatusImportForControl.DRAFT}}</option>
+									<option ng-value="StatusImportForControl.ACTIVE">{{StatusImportForControl.ACTIVE}}</option>
+								</select>
+							</div>
+							<div class="col-md-10">
+								<select class="form-control"
+									ng-disabled="!($parent.files.firstFile.etat.isFinishTraitementSuccess && $parent.files.secondFile.etat.isFinishTraitementSuccess) || $parent.disabledAll" 
+									ng-model="$parent.selectedIdJeuDonnees"
+									ng-options="jeuDonnees.idJeuDonnees as jeuDonnees.titleJeuDonnees for (key, jeuDonnees) in $parent.listSelectedJeuDonnees"
+								>
+								</select>
+							</div>
+						</div>
+						<div class="form-inline form-inline-modal-socle">
+							<p>4 - Apply filters (optional):</p>
+							<p style="margin: 0px; padding: 15px">limit data-comparison
+								to trains running:</p>
+							<div class="row" style="margin: 0px;">
+								<div class="form-group col-md-6" style="overflow: hidden;">
+									<label for="sel1" class="control-label col-md-3">Between:</label>
+									<div class="input-group col-md-9">
+										<select id="sel1" class="form-control" ng-disabled="true">
+											<option>01/02/2017</option>
+											<option>02/02/2017</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group col-md-6" style="overflow: hidden;">
+									<label for="sel2" class="control-label col-md-3">and:</label>
+									<div class="input-group col-md-9">
+										<select id="sel2" class="form-control" ng-disabled="true">
+											<option>30/02/2017</option>
+											<option>30/02/2017</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group form-group-modal-socle">
+							<label for="select_ods" class="col-sm-3 control-label">On
+								the following ODs:</label>
+							<div class="col-md-9">
+								<select id="select_ods" class="form-control" ng-disabled="true">
+									<option>GBSPX-FRPNO X ; GBSPX-BEBMI X</option>
+								</select>
+							</div>
+						</div>
+						<h1>{{myForm.input_id_timetable.$valid}}</h1>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer modal-footer-socle">
+				<button class="btn btn-success pull-left" ng-click="executeValidateControl()" ng-disabled="!($parent.files.firstFile.etat.isFinishTraitementSuccess && $parent.files.secondFile.etat.isFinishTraitementSuccess) || $parent.disabledAll">
+					CONTROL DATA
+				</button>
+				<button class="btn btn-danger" ng-click="cancelControl()" ng-disabled="$parent.disabledAll">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>

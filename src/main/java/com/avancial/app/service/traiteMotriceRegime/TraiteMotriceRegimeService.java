@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +9,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefServiceClassEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefServiceEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeServiceEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -20,6 +22,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.service.IMultipleInsertRequestGenerator;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -29,7 +32,7 @@ public class TraiteMotriceRegimeService extends AFiltreObjetMetier implements IT
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException {
+         throws Exception {
 
       IMultipleInsertRequestGenerator generatorRegime = mapGeneratorTablesMotriceRegime.get(MotriceRegimeEntity.class);
       IMultipleInsertRequestGenerator generatorService = mapGeneratorTablesMotriceRegime.get(MotriceRegimeServiceEntity.class);
@@ -60,7 +63,29 @@ public class TraiteMotriceRegimeService extends AFiltreObjetMetier implements IT
       }
 
       Regime newRegime = null;
+      MotriceRefServiceEntity refServiceEntity;
+      MotriceRefServiceClassEntity refServiceClassEntity;
+      MotriceRefGareEntity refGareOrigineEntity;
+      MotriceRefGareEntity refGareDestinationEntity;
       for (Object[] record : rService) {
+         /* Données de référence */
+         refServiceEntity = new MotriceRefServiceEntity();
+         refServiceEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refServiceEntity.setLabelService((String) record[0]);
+         refServiceEntity = (MotriceRefServiceEntity) InsertRefDataService.persistRefData(refServiceEntity, entityManager);
+         refServiceClassEntity = new MotriceRefServiceClassEntity();
+         refServiceClassEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refServiceClassEntity.setLabelServiceClass((String) record[1]);
+         refServiceClassEntity = (MotriceRefServiceClassEntity) InsertRefDataService.persistRefData(refServiceClassEntity, entityManager);
+         refGareOrigineEntity = new MotriceRefGareEntity();
+         refGareOrigineEntity.setCodeGareMotriceRefGare((String) record[2]);
+         refGareOrigineEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refGareOrigineEntity = (MotriceRefGareEntity) InsertRefDataService.persistRefData(refGareOrigineEntity, entityManager);
+         refGareDestinationEntity = new MotriceRefGareEntity();
+         refGareDestinationEntity.setCodeGareMotriceRefGare((String) record[2]);
+         refGareDestinationEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refGareDestinationEntity = (MotriceRefGareEntity) InsertRefDataService.persistRefData(refGareDestinationEntity, entityManager);
+
          if (!oldRegime.equals((String) record[4])) {
             newRegime = new Regime((String) record[4], debutPeriode);
             newRegime.filtreDates(getDateDebut(), getDateFin());
@@ -68,12 +93,14 @@ public class TraiteMotriceRegimeService extends AFiltreObjetMetier implements IT
             generatorRegime.addValue(idRegime.incrementAndGet(), (String) record[4], 3, idTrainTranche);
          }
          // remplissage du generator pour l'insertion des données
-         generatorService.addValue(idService.getAndIncrement(), (String) record[0], (String) record[1], (String) record[2], (String) record[3],
-               idRegime);
+         generatorService.addValue(idService.getAndIncrement(), refServiceEntity.getIdMotriceRefService(),
+               refServiceClassEntity.getIdMotriceRefServiceClass(), refGareOrigineEntity.getIdMotriceRefGare(),
+               refGareDestinationEntity.getIdMotriceRefGare(), idRegime);
          // remplissage des objets métier pour la comparaion
          if (this.filtreDateAjout(newRegime)) {
-            listeServices.add(new ServiceABord((String) record[0], EnumClasseService.getEnumClasseService((String) record[1]),
-                  new Gare((String) record[2]), new Gare((String) record[3]),
+            listeServices.add(new ServiceABord(refServiceEntity.getLabelService(),
+                  EnumClasseService.getEnumClasseService(refServiceClassEntity.getLabelServiceClass()),
+                  new Gare(refGareOrigineEntity.getCodeGareMotriceRefGare()), new Gare(refGareDestinationEntity.getCodeGareMotriceRefGare()),
                   new Regime(newRegime.getCodeRegime(), newRegime.getDateDebut(), newRegime.getDateFin(), newRegime.getListeJours())));
          }
 

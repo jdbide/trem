@@ -1,6 +1,5 @@
 package com.avancial.app.service.traiteMotriceRegime;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -11,6 +10,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import com.avancial.app.data.databean.importMotrice.MotriceRefCodeDiagrammeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeSpecificityEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceTrainTrancheEntity;
@@ -22,6 +23,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Siege;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Voiture;
+import com.avancial.app.service.insertRefData.InsertRefDataService;
 import com.avancial.app.service.traiteObjetMetier.AFiltreObjetMetier;
 import com.avancial.app.utilitaire.MapGeneratorTablesMotriceRegime;
 import com.avancial.app.utilitaire.MapIdTablesMotriceRegime;
@@ -31,7 +33,7 @@ public class TraiteMotriceRegimeSpecificity extends AFiltreObjetMetier implement
    @Override
    public void traite(MotriceTrainTrancheEntity motriceTrainTrancheEntity, MapIdTablesMotriceRegime mapIdTablesMotriceRegime,
          MapGeneratorTablesMotriceRegime mapGeneratorTablesMotriceRegime, EntityManager entityManager, AtomicReference<Tranche> atomicTranche)
-         throws ParseException {
+         throws Exception {
 
       Date debutPeriode = motriceTrainTrancheEntity.getJeuDonnee().getDateDebutPeriode();
 
@@ -117,8 +119,16 @@ public class TraiteMotriceRegimeSpecificity extends AFiltreObjetMetier implement
 
       Map<KeyMotriceRegimeSpecificity, Collection<String>> mapRegimeCodeDiag = new HashMap<>();
 
+      MotriceRefCodeDiagrammeEntity refCodeDiagrammeEntity;
       for (Object[] comp : listeComp) {
-         KeyMotriceRegimeSpecificity key = new KeyMotriceRegimeSpecificity((String) comp[0], (String) comp[4], (String) comp[5], (String) comp[3]);
+         /* Données de référence */
+         refCodeDiagrammeEntity = new MotriceRefCodeDiagrammeEntity();
+         refCodeDiagrammeEntity.setCompagnie(motriceTrainTrancheEntity.getJeuDonnee().getCompagnieEnvironnement().getCompagnie());
+         refCodeDiagrammeEntity.setLabelCodeDiagramme((String) comp[5]);
+         refCodeDiagrammeEntity = (MotriceRefCodeDiagrammeEntity) InsertRefDataService.persistRefData(refCodeDiagrammeEntity, entityManager);
+
+         KeyMotriceRegimeSpecificity key = new KeyMotriceRegimeSpecificity((String) comp[0], (String) comp[4],
+               refCodeDiagrammeEntity.getLabelCodeDiagramme(), (String) comp[3]);
          Collection<String> compartiments = mapRegimeCodeDiag.get(key);
          if (compartiments == null) {
             compartiments = new ArrayList<String>();

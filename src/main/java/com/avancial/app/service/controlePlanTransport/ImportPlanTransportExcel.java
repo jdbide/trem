@@ -1,51 +1,62 @@
 package com.avancial.app.service.controlePlanTransport;
 
+import java.text.SimpleDateFormat;
+
 import org.apache.poi.ss.usermodel.Cell;
-import com.avancial.app.export.FileTypeNotExpectedException;
-import com.avancial.app.export.SocleExcelReadFile;
+import org.apache.poi.ss.usermodel.DateUtil;
+
+import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
 
 public class ImportPlanTransportExcel {
 
-    private SocleExcelReadFile excelReadFile;
+   private SocleExcelReadFile excelReadFile;
 
-    public void importePlanTransport(String excelFilePath) throws FileTypeNotExpectedException {
-        this.excelReadFile = new SocleExcelReadFile(excelFilePath);
+   public void importePlanTransport(String excelFilePath) throws Exception {
+      this.excelReadFile = new SocleExcelReadFile(excelFilePath);
+      SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 
-        try {
-            this.excelReadFile.start();
-            this.excelReadFile.setSheet(0);
+      try {
+         this.excelReadFile.start();
+         this.excelReadFile.getExcelTools().setSheetByIndex(0);
 
-            Cell cell;
-            while (this.excelReadFile.hasNextRow()) {
-                this.excelReadFile.getNextRow();
-                System.out.print("Row " + this.excelReadFile.getCurrentRowNumber() + " : ");
-                while (this.excelReadFile.hasNextCell()) {
-                    cell = this.excelReadFile.getNextCell();
+         Cell cell;
+         while (this.excelReadFile.getExcelTools().hasNextRow()) {
+            this.excelReadFile.getExcelTools().getNextRow();
+            System.out.print("Row " + this.excelReadFile.getExcelTools().getRowNum() + " : ");
+            while (this.excelReadFile.getExcelTools().hasNextCell()) {
+               cell = this.excelReadFile.getExcelTools().getNextCell();
 
-                    switch (cell.getCellType()) {
-                        case Cell.CELL_TYPE_NUMERIC:
-                            System.out.print(getCellNumberIndex(cell) + cell.getNumericCellValue() + ", ");
-                            break;
-                        case Cell.CELL_TYPE_STRING:
-                            System.out.print(getCellNumberIndex(cell) + cell.getStringCellValue() + ", ");
-                            break;
-                        case Cell.CELL_TYPE_BLANK:
-//                            System.out.print(getCellNumberIndex(cell) + "BLANK, ");
-                            System.out.print(".., ");
-                            break;
-                    }
-                }
-                System.out.println();
+               switch (cell.getCellType()) {
+                  case Cell.CELL_TYPE_NUMERIC:
+                     if (DateUtil.isCellDateFormatted(cell)) {
+                        System.out.print(getCellNumberIndex(cell) + dateFormat.format(cell.getDateCellValue()) + ", ");
+                     } else {
+                        System.out.print(getCellNumberIndex(cell) + cell.getNumericCellValue() + ", ");
+                     }
+                     break;
+                  case Cell.CELL_TYPE_STRING:
+                     System.out.print(getCellNumberIndex(cell) + cell.getStringCellValue() + ", ");
+                     break;
+                  case Cell.CELL_TYPE_BOOLEAN:
+                     System.out.print(getCellNumberIndex(cell) + cell.getBooleanCellValue() + ", ");
+                     break;
+                  case Cell.CELL_TYPE_BLANK:
+                     // System.out.print(getCellNumberIndex(cell) + "BLANK, ");
+                     System.out.print(".., ");
+                     break;
+               }
             }
-            
-            this.excelReadFile.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    private String getCellNumberIndex(Cell cell) {
-        return "(" + this.excelReadFile.getCurrentCellNumber() + "-" + cell.getColumnIndex() + ") ";
-    }
+            System.out.println();
+         }
+
+         this.excelReadFile.close();
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+   }
+
+   private String getCellNumberIndex(Cell cell) {
+      return "(" + cell.getColumnIndex() + ") ";
+   }
 }

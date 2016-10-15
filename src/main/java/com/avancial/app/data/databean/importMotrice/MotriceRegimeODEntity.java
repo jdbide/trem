@@ -1,6 +1,5 @@
 package com.avancial.app.data.databean.importMotrice;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,25 +15,21 @@ import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "tremas_motrice_regime_od")
-@NamedQueries({ @NamedQuery(name = "MotriceRegimeOD.getAll",
-      query = "SELECT t FROM MotriceRegimeODEntity t"),
-      @NamedQuery(name = "MotriceRegimeOD.deleteAll",
-            query = "DELETE FROM MotriceRegimeODEntity"),
-      @NamedQuery(name = "MotriceRegimeOD.deleteByRegimes",
-            query = "DELETE FROM MotriceRegimeODEntity t WHERE t.motriceRegime IN (:regimes)"),
-      @NamedQuery(name = "MotriceRegimeODEntity.getLastId",
-            query = "SELECT MAX( t.idMotriceRegimeOD ) FROM MotriceRegimeODEntity t") })
+@NamedQueries({ @NamedQuery(name = "MotriceRegimeOD.getAll", query = "SELECT t FROM MotriceRegimeODEntity t"),
+      @NamedQuery(name = "MotriceRegimeOD.deleteAll", query = "DELETE FROM MotriceRegimeODEntity"),
+      @NamedQuery(name = "MotriceRegimeOD.deleteByRegimes", query = "DELETE FROM MotriceRegimeODEntity t WHERE t.motriceRegime IN (:regimes)"),
+      @NamedQuery(name = "MotriceRegimeODEntity.getLastId", query = "SELECT MAX( t.idMotriceRegimeOD ) FROM MotriceRegimeODEntity t"),
+      @NamedQuery(name = "MotriceRegimeODEntity.getRefOdByIdTrainTranche", query = "SELECT od.motriceRefODEntity FROM MotriceRegimeODEntity od join od.motriceRegime as regime join regime.motriceTrainTranche as tt where tt.idMotriceTrainTranche = :idMotriceTrainTranche") })
 public class MotriceRegimeODEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
    private Long                idMotriceRegimeOD;
-   @Column(length = 5,
-         nullable = false)
-   private String              oriMotriceRegimeOD;
-   @Column(length = 5,
-         nullable = false)
-   private String              destMotriceRegimeOD;
+
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "idMotriceRefOd")
+   @ForeignKey(name = "FK_motrice_regime_od_idMotriceRefOd")
+   private MotriceRefODEntity  motriceRefODEntity;
 
    @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "idMotriceRegime")
@@ -57,36 +52,6 @@ public class MotriceRegimeODEntity {
    }
 
    /**
-    * @return the origineMotriceRegimeOD
-    */
-   public String getOriMotriceRegimeOD() {
-      return this.oriMotriceRegimeOD;
-   }
-
-   /**
-    * @param origineMotriceRegimeOD
-    *           the origineMotriceRegimeOD to set
-    */
-   public void setOriMotriceRegimeOD(String origineMotriceRegimeOD) {
-      this.oriMotriceRegimeOD = origineMotriceRegimeOD;
-   }
-
-   /**
-    * @return the destinationMotriceRegimeOD
-    */
-   public String getDestMotriceRegimeOD() {
-      return this.destMotriceRegimeOD;
-   }
-
-   /**
-    * @param destinationMotriceRegimeOD
-    *           the destinationMotriceRegimeOD to set
-    */
-   public void setDestMotriceRegimeOD(String destinationMotriceRegimeOD) {
-      this.destMotriceRegimeOD = destinationMotriceRegimeOD;
-   }
-
-   /**
     * @return the motriceRegime
     */
    public MotriceRegimeEntity getMotriceRegime() {
@@ -99,6 +64,14 @@ public class MotriceRegimeODEntity {
     */
    public void setMotriceRegime(MotriceRegimeEntity motriceRegime) {
       this.motriceRegime = motriceRegime;
+   }
+
+   public MotriceRefODEntity getMotriceRefODEntity() {
+      return this.motriceRefODEntity;
+   }
+
+   public void setMotriceRefODEntity(MotriceRefODEntity motriceRefODEntity) {
+      this.motriceRefODEntity = motriceRefODEntity;
    }
 
 }
