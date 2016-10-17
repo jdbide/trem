@@ -12,27 +12,27 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  */
 public class FiltreStatutTranche implements IFiltre<Train> {
 
-   private EnumTrancheStatut statut;
+    private EnumTrancheStatut statut;
 
-   public FiltreStatutTranche(EnumTrancheStatut s) {
-      super();
-      statut = s;
-   }
+    public FiltreStatutTranche(EnumTrancheStatut s) {
+        super();
+        statut = s;
+    }
 
+    @Override
+    public Train filtreParCritere(Train object) {
+        if (this.statut == null)
+            return object;
+        Train train = object.clone();
 
-   @Override
-   public Train filtreParCritere(Train object) {
-
-      Train train = object.clone();
-      
-      /* Boucle sur la liste d'objets de la classe donnée */
-      if (object.getTranches() != null) {
-         for(Tranche t : object.getTranches()){
-            if(!t.getTrancheStatut().equals(statut))
-               train.getTranches().remove(t);        
-         }
-      }    
-      return train;
-   }
+        /* Boucle sur la liste d'objets de la classe donnée */
+        if (object.getTranches() != null) {
+            for (Tranche t : object.getTranches()) {
+                if (!t.getTrancheStatut().equals(statut))
+                    train.getTranches().remove(t);
+            }
+        }
+        return train;
+    }
 
 }
