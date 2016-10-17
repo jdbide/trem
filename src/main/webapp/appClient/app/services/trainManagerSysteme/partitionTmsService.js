@@ -24,6 +24,29 @@ socle_app.service('partitionTmsService', ['jsonFactory', 'loadingService', '$q',
         return deffered.promise;
     }
 	
+	/*
+	 * Récuperation des partition active 
+	 */
+	self.getAllPartitions = function () {
+    	loadingService.show();
+        var deffered  = $q.defer();
+
+        var promissJsonFactory = jsonFactory.getJson("webService/app/partition/allCompEnv");
+        promissJsonFactory
+            .success(function (datas, status, headers, config) {
+            	loadingService.hide();
+                deffered.resolve(datas);
+            })
+            .error(function (datas, status, headers, config) {
+            	loadingService.hide();
+                deffered.reject();
+        });
+        
+        return deffered.promise;
+    }
+	
+	
+	
 	self.allPartitionWithJeuDonneesActive = function () {
     	loadingService.show();
         var deffered  = $q.defer();

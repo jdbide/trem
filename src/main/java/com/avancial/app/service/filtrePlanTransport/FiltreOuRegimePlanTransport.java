@@ -8,27 +8,28 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.socle.utils.DateUtils;
 
 /**
- * Filtre un plan de transport en fonction de deux critères : les régimes des tranches du plan de transport résultant contiennent toutes les dates
- * pour lesquelles les données répondent à l'un ou à l'autre des critères.
+ * Filtre un plan de transport en fonction de plusieurs critères : les régimes des tranches du plan de transport résultant contiennent toutes les
+ * dates pour lesquelles les données répondent à au moins l'un des critères.
  * 
  * @author heloise.guillemaud
  *
  */
-public class FiltreOuRegimePlanTransport implements IFiltre<PlanTransport> {
+public class FiltreOuRegimePlanTransport extends AFiltreOuPlanTransport {
 
-   private IFiltre<PlanTransport> filtreUn;
-   private IFiltre<PlanTransport> filtreDeux;
-
-   public FiltreOuRegimePlanTransport(IFiltre<PlanTransport> filtreUn, IFiltre<PlanTransport> filtreDeux) {
-      super();
-      this.filtreUn = filtreUn;
-      this.filtreDeux = filtreDeux;
+   /**
+    * 
+    * @param filtres
+    *           Liste des filtres à appliquer en "ou"
+    */
+   public FiltreOuRegimePlanTransport(IFiltre<PlanTransport>... filtres) {
+      super(filtres);
    }
 
    @Override
-   public PlanTransport filtreParCritere(PlanTransport object) {
-      PlanTransport planTransportUn = this.filtreUn.filtreParCritere(object);
-      PlanTransport planTransportDeux = this.filtreDeux.filtreParCritere(object);
+   protected PlanTransport filtreOuDeuxPlanTransport(PlanTransport planTransport, IFiltre<PlanTransport> filtreUn,
+         IFiltre<PlanTransport> filtreDeux) {
+      PlanTransport planTransportUn = filtreUn.filtreParCritere(planTransport);
+      PlanTransport planTransportDeux = filtreDeux.filtreParCritere(planTransport);
 
       Train trainDeux;
       Tranche trancheDeux;

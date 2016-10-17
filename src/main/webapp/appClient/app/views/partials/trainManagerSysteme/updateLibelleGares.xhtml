@@ -1,0 +1,64 @@
+<!-- Version HTML -->
+
+<div class="box-body">
+	<div class="form-horizontal col-md-10">
+		<div class="tab-pane" id="libelle" ng-controller="updateLibelleCtrl">
+			<h3 class="bs-callout bs-callout-warning">Modifier libellé
+				Gares</h3>
+
+			<div ng-if="reponse != null && reponse.status"
+				class="alert alert-success alert-dismissable">
+				<button class="close" aria-hidden="true" data-dismiss="alert"
+					type="button">x</button>
+				<i class="icon fa fa-check"></i> {{reponse.message}}
+			</div>
+
+				<div class="form-group">
+					<div class="col-xs-2">
+						<select class="form-control" ng-model="selectedCompagnie"
+							ng-change="changeSelectedCompagnie()"
+							ng-options="compagnie.idCompagnie as compagnie.libelleCompagnie for (key, compagnie) in compagnies">
+						</select>
+					</div>
+
+				</div>
+
+			<table ng-table="params"
+				class="table table-bordered table-striped table-hover table-tremas"
+				ng-form="tableForm">
+				<tr class="text-center"
+					ng-repeat="row in datas | orderBy :'codeGareMotriceRefGare'"
+					ng-form="rowForm">
+					<td data-title="'Code gare'" ng-switch="row.isEditing"><span
+						ng-switch-default>{{row.codeGareMotriceRefGare}}</span></td>
+
+					<td data-title="'Libellé gare'" ng-switch="row.isEditing"><span
+						ng-switch-default class="editable-text">{{row.labelMotriceRefGare}}</span>
+						<div class="form-controls" ng-switch-when="true">
+							<input type="text" name="inputLibelle"
+								ng-model="row.labelMotriceRefGare"
+								class="editable-input form-control col-xs-2" required />
+						</div></td>
+
+
+					<td data-title="'Action'">
+						<button class="btn btn btn-primary btn-sm"
+							ng-click="row.isEditing = true;tableForm.isEditing=true;onBeforeEdit(row);"
+							ng-if="!row.isEditing" ng-disabled="tableForm.isEditing">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+						<button class="btn btn-success btn-sm"
+							ng-click="save(row, tableForm)" ng-if="row.isEditing"
+							ng-disabled="rowForm.$pristine || rowForm.$invalid">
+							<span class="glyphicon glyphicon-ok"></span>
+						</button>
+
+						<button class="btn btn-warning btn-sm"
+							ng-click="cancel(row,tableForm)" ng-if="row.isEditing">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>

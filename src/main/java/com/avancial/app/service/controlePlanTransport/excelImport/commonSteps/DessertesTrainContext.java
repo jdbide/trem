@@ -25,25 +25,25 @@ public class DessertesTrainContext implements ISubContext<DessertesSheetSubConte
 	/** numéro du train. */
 	private int idTrain;
 	
-	/** liste des stations déservies par le train. */
+	/** liste des stations desservies par le train. */
 	private List<DessertesStationContext> stations = new ArrayList<DessertesStationContext>();
 	
 	/** liste des jours de la semaine. */
 	private final boolean[] weekDays = new boolean[7];
 	
-	/** liste des jours exceptionels. */
+	/** liste des jours exceptionnels. */
 	private boolean[] extraDays;
 
-	/** liste des caractéristiques suplémentaires. */
+	/** liste des caractéristiques supplémentaires. */
 	private final Map<String, Object> others = new HashMap<String, Object>();
 	
-	/** regime associer à la colone. */
+	/** régime associé à la colonne. */
 	private Regime regime;
 	
 	/** desserte associée à cette colonne. */
 	private Desserte desserte;
 	
-	/** liste des sous régimes extraient. */
+	/** liste des sous-régimes extraits. */
 	private List<ASousRegimeTranche> sousRegimes = new ArrayList<ASousRegimeTranche>();
 	
 	/**
@@ -63,7 +63,7 @@ public class DessertesTrainContext implements ISubContext<DessertesSheetSubConte
 	 * @return the column
 	 */
 	public int getColumn() {
-		return column;
+		return this.column;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class DessertesTrainContext implements ISubContext<DessertesSheetSubConte
 	 * @return the idTrain
 	 */
 	public int getIdTrain() {
-		return idTrain;
+		return this.idTrain;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class DessertesTrainContext implements ISubContext<DessertesSheetSubConte
 	 * @return the stations
 	 */
 	public List<DessertesStationContext> getStations() {
-		return stations;
+		return this.stations;
 	}
 
 	/**
@@ -106,21 +106,21 @@ public class DessertesTrainContext implements ISubContext<DessertesSheetSubConte
 	 */
 	@Override
 	public DessertesSheetSubContext getContextContainer() {
-		return container;
+		return this.container;
 	}
 	
 	/**
 	 * @return the weekDays
 	 */
 	public boolean[] getWeekDays() {
-		return weekDays;
+		return this.weekDays;
 	}
 
 	/**
 	 * @return the extraDays
 	 */
 	public boolean[] getExtraDays() {
-		return extraDays;
+		return this.extraDays;
 	}
 
 	/**
@@ -134,14 +134,14 @@ public class DessertesTrainContext implements ISubContext<DessertesSheetSubConte
 	 * @return the others
 	 */
 	public Map<String, Object> getOthers() {
-		return others;
+		return this.others;
 	}
 
 	/**
 	 * @return the regime
 	 */
 	public Regime getRegime() {
-		return regime;
+		return this.regime;
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class DessertesTrainContext implements ISubContext<DessertesSheetSubConte
 	 * @return the desserte
 	 */
 	public Desserte getDesserte() {
-		return desserte;
+		return this.desserte;
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class DessertesTrainContext implements ISubContext<DessertesSheetSubConte
 	 * @return the sousRegimes
 	 */
 	public List<ASousRegimeTranche> getSousRegimes() {
-		return sousRegimes;
+		return this.sousRegimes;
 	}
 
 	/**

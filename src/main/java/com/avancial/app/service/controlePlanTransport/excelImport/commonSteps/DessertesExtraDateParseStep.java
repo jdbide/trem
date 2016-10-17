@@ -10,19 +10,19 @@ import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IPurveyor;
 
 public class DessertesExtraDateParseStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {
 
-	/** premère ligne. */
+	/** première ligne. */
 	private int firstRow;
 	
-	/** fournisseur de premère ligne. */
+	/** fournisseur de première ligne. */
 	private IPurveyor<Integer, DessertesSheetSubContext> firstRowPurveyor = null;
 	
-	/** regex de la valeur d'arret attendue. */
+	/** regex de la valeur d'arrêt attendue. */
 	private final String expectedStopValue;
 	
 	/**
 	 * constructeur simple.
 	 * @param firstRow première ligne.
-	 * @param expectedStopValue regex de la valeur d'arret attendue, null pour toute valeur autre qu'une date.
+	 * @param expectedStopValue regex de la valeur d'arrêt attendue, null pour toute valeur autre qu'une date.
 	 */
 	public DessertesExtraDateParseStep(int firstRow, String expectedStopValue) {
 		this.firstRow = firstRow;
@@ -32,7 +32,7 @@ public class DessertesExtraDateParseStep extends AConditionalLoopDessertesFinalS
 	/**
 	 * constructeur simple.
 	 * @param firstRow fournisseur de première ligne.
-	 * @param expectedStopValue regex de la valeur d'arret attendue, null pour toute valeur autre qu'une date.
+	 * @param expectedStopValue regex de la valeur d'arrêt attendue, null pour toute valeur autre qu'une date.
 	 */
 	public DessertesExtraDateParseStep(IPurveyor<Integer, DessertesSheetSubContext> firstRow, String expectedStopValue) {
 		this.firstRowPurveyor = firstRow;
@@ -87,7 +87,7 @@ public class DessertesExtraDateParseStep extends AConditionalLoopDessertesFinalS
 					} else if (content.equals("")) {
 						train.getExtraDays()[i] = false;
 					} else {
-						context.addParsingError(new ExcelImportException(cell, "la cellule doit etre vide ou contenir 'X'"));
+						context.addParsingError(new ExcelImportException(cell, "la cellule doit être vide ou contenir 'X'"));
 					}
 				} catch (Exception e) {
 					context.addParsingError(new ExcelImportException(cell, "impossible de lire la cellule", e));
@@ -97,10 +97,10 @@ public class DessertesExtraDateParseStep extends AConditionalLoopDessertesFinalS
 	}
 
 	/**
-	 * contrôle la valeure de la dernière cellule.
+	 * contrôle la valeur de la dernière cellule.
 	 * @param cell la cellule non-date.
 	 * @param subContext le contexte.
-	 * @param e l'xception relevée lors de la tentative de lecture d'une date.
+	 * @param e l'exception relevée lors de la tentative de lecture d'une date.
 	 */
 	private void checkStopValue(Cell cell, DessertesSheetSubContext context, Exception e) {
 		// si la cellule n'a pu être lue

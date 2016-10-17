@@ -29,17 +29,17 @@ public class ExcelImportValidator<P, C extends AExcelImportContext<P>> extends M
 	
 	/**
 	 * constructeur avec limitation du nombre d'étapes.
-	 * @param sizeMin nombre minimum d'étape.
-	 * @param sizeMax nombre maximum d'étape.
+	 * @param sizeMin nombre minimum d'étapes.
+	 * @param sizeMax nombre maximum d'étapes.
 	 */
 	public ExcelImportValidator(int sizeMin, int sizeMax) {
 		this.sizeMin = sizeMin;
 		this.sizeMax = sizeMax;
 		if(sizeMin < 0) {
-			throw new IllegalArgumentException("la contrainte sur le nombre d'étape Minimum ne peu pas être négatif");
+			throw new IllegalArgumentException("la contrainte du nombre d'étapes Minimum ne peut pas être négatif");
 		}
 		if(sizeMin > sizeMax) {
-			throw new IllegalArgumentException("la contrainte de Minimum est supérieur à la contrainte de Maximum");
+			throw new IllegalArgumentException("la contrainte de Minimum est supérieure à la contrainte de Maximum");
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class ExcelImportValidator<P, C extends AExcelImportContext<P>> extends M
 		this.sizeMin = sizeMin;
 		this.sizeMax = -1;
 		if(sizeMin < 0) {
-			throw new IllegalArgumentException("la contrainte sur le nombre d'étape Minimum ne peu pas être négatif");
+			throw new IllegalArgumentException("la contrainte du nombre d'étape Minimum ne peut pas être négatif");
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class ExcelImportValidator<P, C extends AExcelImportContext<P>> extends M
 		String error = super.validateStructure(steps);
 		// si il n'y a pas assez d'étapes
 		if(error != null && this.sizeMin != -1 && steps.size() < this.sizeMin + 2) {
-			error = "le nombre d'étapes devrait être superieur à " + this.sizeMin + ", il est de " + (steps.size() - 2);
+			error = "le nombre d'étapes devrait être supérieur à " + this.sizeMin + ", il est de " + (steps.size() - 2);
 		}
 		// si il y a trop d'étapes
 		if(error != null && this.sizeMax != -1 && steps.size() > this.sizeMax + 2) {
@@ -78,7 +78,7 @@ public class ExcelImportValidator<P, C extends AExcelImportContext<P>> extends M
 			if(error != null)
 				break;
 			if(!(steps.get(i) instanceof ExcelImportPrimaryStep))
-				error = "l'étape" + i + "n'est pas de la classe " + ExcelImportPrimaryStep.class.getCanonicalName();
+				error = "l'étape " + i + " n'est pas de la classe " + ExcelImportPrimaryStep.class.getCanonicalName();
 		}
 		// si il n'y a pas d'étape de fermeture
 		if(error != null && !(steps.get(steps.size() - 1) instanceof ExcelFileClosureStep)) {

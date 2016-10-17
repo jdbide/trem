@@ -71,7 +71,7 @@ public class DessertesWeekParse extends AConditionalLoopDessertesFinalStep<Desse
 			try {
 				cell = sheet.getRow(this.firstRow + iJour).getCell(context.getFirstTrainColumn() - 1);
 				if(!cell.getStringCellValue().matches(daysPattern.get(iJour))) {
-					context.addParsingError(new ExcelImportException(cell, "la valeur de la cellule ne corespond pas au jour de la semaine attendu : " +
+					context.addParsingError(new ExcelImportException(cell, "la valeur de la cellule ne correspond pas au jour de la semaine attendu : " +
 							cell.getStringCellValue() + " au lieu de '" + daysPattern.get(iJour) + "'"));
 					break;
 				}
@@ -98,7 +98,7 @@ public class DessertesWeekParse extends AConditionalLoopDessertesFinalStep<Desse
 					} else if (content.equals("")) {
 						train.getWeekDays()[iJour] = false;
 					} else {
-						context.addParsingError(new ExcelImportException(cell, "la cellule doit etre vide ou contenir 'X'"));
+						context.addParsingError(new ExcelImportException(cell, "la cellule doit être vide ou contenir 'X'"));
 					}
 				} catch (Exception e) {
 					context.addParsingError(new ExcelImportException(cell, "impossible de lire la cellule", e));

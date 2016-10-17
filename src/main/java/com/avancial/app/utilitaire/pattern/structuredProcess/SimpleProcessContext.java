@@ -27,7 +27,7 @@ public class SimpleProcessContext<S, P> extends StructuredProcessContext<S, P> {
 	 * @return la map.
 	 */
 	public Map<String, Object> getValues() {
-		return values;
+		return this.values;
 	}
 
 	/**

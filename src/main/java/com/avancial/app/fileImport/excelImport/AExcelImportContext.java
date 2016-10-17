@@ -58,7 +58,7 @@ public class AExcelImportContext<P> extends StructuredProcessContext<SocleExcelR
 	 * @return
 	 */
 	public List<ExcelImportException> getParsingErrors() {
-		return parsingErrors;
+		return this.parsingErrors;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class AExcelImportContext<P> extends StructuredProcessContext<SocleExcelR
 	 * @return
 	 */
 	public List<ExcelImportException> getValidationErrors() {
-		return validationErrors;
+		return this.validationErrors;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class AExcelImportContext<P> extends StructuredProcessContext<SocleExcelR
 	 * @return
 	 */
 	public List<ExcelImportException> getExtractionErrors() {
-		return extractionErrors;
+		return this.extractionErrors;
 	}
 	
 }

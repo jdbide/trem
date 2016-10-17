@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
 
 /**
- * étape de parsing des colones de train.
+ * étape de parsing des colonnes de train.
  * @author raphael.cabaret
  */
 public class DessertesTrainParseStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {
