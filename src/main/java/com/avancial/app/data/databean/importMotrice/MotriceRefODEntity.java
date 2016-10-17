@@ -29,7 +29,7 @@ public class MotriceRefODEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long                    idMotriceRefOd;
+   private Integer                    idMotriceRefOd;
 
    @Column(length = 5, nullable = false)
    private String                  codeGareOrigineMotriceRefOd;
@@ -45,11 +45,11 @@ public class MotriceRefODEntity {
    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRefODEntity")
    private List<MotriceRefOd2gareEntity> motriceRefOd2gares;
 
-   public Long getIdMotriceRefOd() {
+   public Integer getIdMotriceRefOd() {
       return this.idMotriceRefOd;
    }
 
-   public void setIdMotriceRefOd(Long idMotriceRefOd) {
+   public void setIdMotriceRefOd(Integer idMotriceRefOd) {
       this.idMotriceRefOd = idMotriceRefOd;
    }
 

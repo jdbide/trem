@@ -7,6 +7,97 @@
 socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', 'loadingService', '$q', 'partitionTmsService', 'searchService', 'searchTmsService',
                                        function($rootScope, $scope, loadingService, $q, partitionTmsService, searchService, searchTmsService) {
 	$scope.search = null;
+	$scope.disabledAll = true;
+	
+
+	function getAllData () {
+		var deffered  = $q.defer();
+		// Recuperation des données de refs
+		searchTmsService.getDataFormByIdPartition($scope.search.partitionSelected.idCompagnieEnvironnement).then(
+			function() {
+				var reponse = searchTmsService.getReponse();
+				if (reponse.status) {
+					searchService.setTrains(reponse.data.trains);
+					searchService.setTranches(reponse.data.tranches);
+					if (reponse.data.trains == null ||  reponse.data.tranches == null) {
+						$scope.disabledAll = true;
+						deffered.reject("Pas d'import active pour cette partition");
+					} else {
+						console.warn("$scope.disabledAll = false");
+						$scope.disabledAll = false;
+					}
+					searchTmsService.getDataFormByIdCompagnie("equipementByCompagnie", $scope.search.partitionSelected.idCompagnie).then(
+						function() {
+							reponse = searchTmsService.getReponse();
+							if (reponse.status) {
+								searchService.setEquipement(reponse.data);
+								searchTmsService.getDataFormByIdCompagnie("odByCompagnie",$scope.search.partitionSelected.idCompagnie).then(
+									function() {
+										reponse = searchTmsService.getReponse();
+										if (reponse.status) {
+											searchService.setOd(reponse.data);
+											searchTmsService.getDataFormByIdCompagnie("rmByCompagnie",$scope.search.partitionSelected.idCompagnie).then(
+												function() {
+													reponse = searchTmsService.getReponse();
+													if (reponse.status) {
+														searchService.setRm(reponse.data);
+														searchTmsService.getDataFormByIdCompagnie("tospsByCompagnie",$scope.search.partitionSelected.idCompagnie).then(
+															function() {
+																reponse = searchTmsService.getReponse();
+																if (reponse.status) {
+																	searchService.setTosp(reponse.data);
+																	searchTmsService.getDataFormByIdCompagnie("stopsByCompagnie",$scope.search.partitionSelected.idCompagnie).then(
+																		function() {
+																			reponse = searchTmsService.getReponse();
+																			if (reponse.status) {
+																				searchService.setStops(reponse.data);
+																				deffered.resolve();
+																			} else {
+																				deffered.reject("Erreur : " + reponse.message);
+																			}
+																		}, function() {
+																			deffered.reject("Erreur serveur");
+																		}
+																	);
+																} else {
+																	deffered.reject("Erreur : " + reponse.message);
+																}
+															}, function() {
+																deffered.reject("Erreur serveur");
+															}
+														);
+													} else {
+														deffered.reject("Erreur : " + reponse.message);
+													}
+												}, function() {
+													deffered.reject("Erreur serveur");
+												}
+											);
+										} else {
+											deffered.reject("Erreur : " + reponse.message);
+										}
+									}, function() {
+										deffered.reject("Erreur serveur");
+									}
+								);
+							} else {
+								deffered.reject("Erreur : " + reponse.message);
+							}
+						}, function() {
+							deffered.reject("Erreur serveur");
+						}
+					);
+				} else {
+					deffered.reject("Erreur : " + reponse.message);
+				}
+				
+			}, function() {
+				deffered.reject("Erreur serveur");
+			}
+		);
+		
+		return deffered.promise;
+	}
 	
 	/*
 	 * Récuperation des trainTranch / partition
@@ -17,53 +108,45 @@ socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', 'loadingService',
 			return;
 		}
 		
-		//var deffered  = $q.defer();
+		var deffered  = $q.defer();
 		loadingService.show();
-		// Recuperation des données de refs
-		searchTmsService.getDataFormByIdPartition($scope.search.partitionSelected.idCompagnieEnvironnement).then(
+		searchService.initSearch();
+		getAllData().then(
+			function() {
+				loadingService.hide();
+				$scope.search = searchService.getSearch();
+				deffered.resolve();
+			}, function(msg) {
+				alert(msg);
+				loadingService.hide();
+				deffered.reject();
+			}
+		);
+		
+		return deffered.promise;
+	}
+	
+	function getStopsByOd() {
+		loadingService.show();
+		searchService.initStops();
+		console.warn("== getStopsByOd ==");
+		searchTmsService.getStopsByOd($scope.search.odSelected.idMotriceRefOd).then(
 			function() {
 				var reponse = searchTmsService.getReponse();
-				console.warn("==> Récupération getDataFormByIdPartition <==");
 				if (reponse.status) {
-					searchService.setTrains(reponse.data.train);
-					searchService.setTranches(reponse.data.tranches);
-					searchTmsService.getDataFormByIdCompagnie($scope.search.partitionSelected.idCompagnie).then(
-						function() {
-							console.warn("==> Récupération getDataFormByIdCompagnie <==");
-							reponse = searchTmsService.getReponse();
-							if (reponse.status) {
-								searchService.setOd(reponse.data.routes);
-								searchService.setStops(reponse.data.routes);
-								searchService.setTosp(reponse.data.routes);
-								searchService.setRm(reponse.data.rm);
-								searchService.setEquipement(reponse.data.equipement);
-								//deffered.resolve();
-								console.warn("loadingService.hide();");
-								loadingService.hide();
-							} else {
-								alert("Erreur " + reponse.message);
-								loadingService.hide();
-								//deffered.reject();
-							}
-						}, function() {
-							alert("Erreur serveur!!");
-							loadingService.hide();
-							//deffered.reject();
-						}
-					);
+					searchService.changeOdData(reponse.data);
 				} else {
-					alert("Erreur " + reponse.message);
-					loadingService.hide();
-					//deffered.reject();
+					alert("Erreur : " + reponse.message);
 				}
-				
-			}, function() {
-				alert("Erreur serveur!!");
+
 				loadingService.hide();
-				//deffered.reject();
+			}, function(msg) {
+				alert("Erreur serveur");
+				loadingService.hide();
 			}
 		);
 	}
+	
 	/*
 	 * Constructeur de la page de search, il récupère la liste des partition
 	 */
@@ -86,7 +169,48 @@ socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', 'loadingService',
 				}
 			);
 		}
-			
+	}
+	
+	$scope.executeSearch = function () {
+		console.warn("Affichge de l'objet searchService.getSearch()");
+		console.log($scope.search);
+	}
+	
+	$scope.resetDate = function () {
+		$scope.search.date={startDate: moment(), endDate: moment()};
+	}
+	
+	$scope.changeOd = function () {
+		console.warn("====changeOd===");
+		if (!searchService.isEmpty()) {
+			getStopsByOd();
+		}
+	}
+	
+	$scope.clearOd = function () {
+		console.warn("===clearOd====");
+		$scope.search.odSelected = null;
+		searchService.initStops();
+		searchTmsService.getDataFormByIdCompagnie("stopsByCompagnie",$scope.search.partitionSelected.idCompagnie).then(
+			function() {
+				var reponse = searchTmsService.getReponse();
+				if (reponse.status) {
+					searchService.setStops(reponse.data);
+				} else {
+					alert("Erreur : " + reponse.message);
+				}
+			}, function() {
+				alert("Erreur serveur");
+			}
+		);
+	}
+	
+	$scope.changePartition = function () {
+		if (searchService.isEmpty()) {
+			return;
+		} else {
+			getOtherDataRef();
+		}
 	}
 	
 	constructor ();

@@ -14,6 +14,7 @@ import com.avancial.app.data.databean.EStatus;
 public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    private int     idCompagnieEnvironnement;
    private byte    actifCompagnieEnvironnement;
+   private String  nomTechniqueCompagnieEnvironnement;
    private int     idCompagnie;
    private String  libelleCompagnie;
    private String  nomTechniqueCompagnie;
@@ -43,7 +44,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param idCompagnieEnvironnement the idCompagnieEnvironnement to set
+    * @param idCompagnieEnvironnement
+    *           the idCompagnieEnvironnement to set
     */
    public void setIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
       this.idCompagnieEnvironnement = idCompagnieEnvironnement;
@@ -57,7 +59,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param actifCompagnieEnvironnement the actifCompagnieEnvironnement to set
+    * @param actifCompagnieEnvironnement
+    *           the actifCompagnieEnvironnement to set
     */
    public void setActifCompagnieEnvironnement(byte actifCompagnieEnvironnement) {
       this.actifCompagnieEnvironnement = actifCompagnieEnvironnement;
@@ -71,7 +74,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param idCompagnie the idCompagnie to set
+    * @param idCompagnie
+    *           the idCompagnie to set
     */
    public void setIdCompagnie(int idCompagnie) {
       this.idCompagnie = idCompagnie;
@@ -85,7 +89,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param libelleCompagnie the libelleCompagnie to set
+    * @param libelleCompagnie
+    *           the libelleCompagnie to set
     */
    public void setLibelleCompagnie(String libelleCompagnie) {
       this.libelleCompagnie = libelleCompagnie;
@@ -99,7 +104,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param nomTechniqueCompagnie the nomTechniqueCompagnie to set
+    * @param nomTechniqueCompagnie
+    *           the nomTechniqueCompagnie to set
     */
    public void setNomTechniqueCompagnie(String nomTechniqueCompagnie) {
       this.nomTechniqueCompagnie = nomTechniqueCompagnie;
@@ -113,7 +119,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param idEnvironnement the idEnvironnement to set
+    * @param idEnvironnement
+    *           the idEnvironnement to set
     */
    public void setIdEnvironnement(int idEnvironnement) {
       this.idEnvironnement = idEnvironnement;
@@ -127,7 +134,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param libelleEnvironnement the libelleEnvironnement to set
+    * @param libelleEnvironnement
+    *           the libelleEnvironnement to set
     */
    public void setLibelleEnvironnement(String libelleEnvironnement) {
       this.libelleEnvironnement = libelleEnvironnement;
@@ -141,7 +149,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param nomTechniqueEnvironnement the nomTechniqueEnvironnement to set
+    * @param nomTechniqueEnvironnement
+    *           the nomTechniqueEnvironnement to set
     */
    public void setNomTechniqueEnvironnement(String nomTechniqueEnvironnement) {
       this.nomTechniqueEnvironnement = nomTechniqueEnvironnement;
@@ -155,7 +164,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param idJeuDonneesActive the idJeuDonneesActive to set
+    * @param idJeuDonneesActive
+    *           the idJeuDonneesActive to set
     */
    public void setIdJeuDonneesActive(int idJeuDonneesActive) {
       this.idJeuDonneesActive = idJeuDonneesActive;
@@ -169,7 +179,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param dateCreateJeuDonneesActive the dateCreateJeuDonneesActive to set
+    * @param dateCreateJeuDonneesActive
+    *           the dateCreateJeuDonneesActive to set
     */
    public void setDateCreateJeuDonneesActive(Date dateCreateJeuDonneesActive) {
       this.dateCreateJeuDonneesActive = dateCreateJeuDonneesActive;
@@ -183,7 +194,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param dateLastUpdateJeuDonneesActive the dateLastUpdateJeuDonneesActive to set
+    * @param dateLastUpdateJeuDonneesActive
+    *           the dateLastUpdateJeuDonneesActive to set
     */
    public void setDateLastUpdateJeuDonneesActive(Date dateLastUpdateJeuDonneesActive) {
       this.dateLastUpdateJeuDonneesActive = dateLastUpdateJeuDonneesActive;
@@ -197,7 +209,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param idUtilisateurCreateJeuDonneesActive the idUtilisateurCreateJeuDonneesActive to set
+    * @param idUtilisateurCreateJeuDonneesActive
+    *           the idUtilisateurCreateJeuDonneesActive to set
     */
    public void setIdUtilisateurCreateJeuDonneesActive(int idUtilisateurCreateJeuDonneesActive) {
       this.idUtilisateurCreateJeuDonneesActive = idUtilisateurCreateJeuDonneesActive;
@@ -211,7 +224,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param idUtilisateurLastUpdateJeuDonneesActive the idUtilisateurLastUpdateJeuDonneesActive to set
+    * @param idUtilisateurLastUpdateJeuDonneesActive
+    *           the idUtilisateurLastUpdateJeuDonneesActive to set
     */
    public void setIdUtilisateurLastUpdateJeuDonneesActive(int idUtilisateurLastUpdateJeuDonneesActive) {
       this.idUtilisateurLastUpdateJeuDonneesActive = idUtilisateurLastUpdateJeuDonneesActive;
@@ -225,7 +239,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param dateDebutPeriodeJeuDonneesActive the dateDebutPeriodeJeuDonneesActive to set
+    * @param dateDebutPeriodeJeuDonneesActive
+    *           the dateDebutPeriodeJeuDonneesActive to set
     */
    public void setDateDebutPeriodeJeuDonneesActive(Date dateDebutPeriodeJeuDonneesActive) {
       this.dateDebutPeriodeJeuDonneesActive = dateDebutPeriodeJeuDonneesActive;
@@ -239,9 +254,24 @@ public class CompagnieEnvironnementWithJeuDonneesActiveDto {
    }
 
    /**
-    * @param statusJeuDonneesActive the statusJeuDonneesActive to set
+    * @param statusJeuDonneesActive
+    *           the statusJeuDonneesActive to set
     */
    public void setStatusJeuDonneesActive(EStatus statusJeuDonneesActive) {
       this.statusJeuDonneesActive = statusJeuDonneesActive;
+   }
+
+   /**
+    * @return the nomTechniqueCompagnieEnvironnement
+    */
+   public String getNomTechniqueCompagnieEnvironnement() {
+      return nomTechniqueCompagnieEnvironnement;
+   }
+
+   /**
+    * @param nomTechniqueCompagnieEnvironnement the nomTechniqueCompagnieEnvironnement to set
+    */
+   public void setNomTechniqueCompagnieEnvironnement(String nomTechniqueCompagnieEnvironnement) {
+      this.nomTechniqueCompagnieEnvironnement = nomTechniqueCompagnieEnvironnement;
    }
 }

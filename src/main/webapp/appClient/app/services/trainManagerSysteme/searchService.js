@@ -16,14 +16,12 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		tranches:[],
 		tranchesSelected:[],
 		
-		dateDebut:null,
-		dateFin:null,
-		
 		listOd:null,
 		odSelected:null,
+		roundTrip:false,
 		
 		listStops:null,
-		listStopsSelected:null,
+		stopsSelected:null,
 		
 		listTosp:null,
 		tospSelected:null,
@@ -34,7 +32,10 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		listEquipement:null,
 		equipementSelected:null,
 		
-		status:null
+		status:[{id:"O", value:"Open"}, {id:"F", value:"Close"}],
+		statusSelected:null,
+		
+		date:{startDate: moment(), endDate: moment()}
 	}
 	
 	self = this;
@@ -47,7 +48,7 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 	}
 	
 	self.initSearch = function () {
-		search.partitionSelected=null;
+		//search.partitionSelected=null;
 				
 		search.trains=[];
 		search.trainsSelected=null;
@@ -55,14 +56,12 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		search.tranches=[];
 		search.tranchesSelected=null;
 		
-		search.dateDebut=null;
-		search.dateFin=null;
-		
 		search.listOd=null;
 		search.odSelected=null;
+		search.roundTrip=false;
 		
 		search.listStops=null;
-		search.listStopsSelected=null;
+		search.stopsSelected=null;
 		
 		search.listTosp=null;
 		search.tospSelected=null;
@@ -73,7 +72,11 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		search.listEquipement=null;
 		search.equipementSelected=null;
 		
-		search.status=null;
+		search.status=[{id:"O", value:"Open"}, {id:"F", value:"Close"}];
+		search.statusSelected=null;
+		
+		search.date.startDate=moment();
+		search.date.endDate=moment();
 	}
 	
 	self.setPartition = function (partitions) {
@@ -116,6 +119,15 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 	
 	self.isEmpty = function () {
 		return (search.partitions==null);
+	}
+	
+	self.initStops = function () {
+		search.listStops=null;
+		search.stopsSelected=null;
+	}
+	
+	self.changeOdData = function (ods) {
+		search.listStops=ods;
 	}
 	
 	return self;
