@@ -10,11 +10,11 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  * @author jeandaniel.bide
  *
  */
-public class FiltreStatutTrancheplanTransport implements IFiltre<Train> {
+public class FiltreStatutTranche implements IFiltre<Train> {
 
    private EnumTrancheStatut statut;
 
-   public FiltreStatutTrancheplanTransport(EnumTrancheStatut s) {
+   public FiltreStatutTranche(EnumTrancheStatut s) {
       super();
       statut = s;
    }
