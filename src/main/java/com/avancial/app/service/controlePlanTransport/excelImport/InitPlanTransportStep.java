@@ -29,13 +29,8 @@ public class InitPlanTransportStep implements IExcelImportFinalStep<PlanTranspor
 	 * {@inheritDoc}
 	 */
 	@Override
-<<<<<<< HEAD:src/main/java/com/avancial/app/service/controlePlanTransport/excelImport/commonSteps/InitPlanTransportStep.java
-	public void executeStep(DessertesContext context) throws Exception {
-		context.setProduct(new PlanTransport(this.compagnie, new ArrayList<Train>()));
-=======
 	public void executeStep(AExcelImportContext<PlanTransport> context) throws Exception {
 		context.setProduct(new PlanTransport(compagnie, new ArrayList<Train>()));
->>>>>>> dev-rcabaret:src/main/java/com/avancial/app/service/controlePlanTransport/excelImport/InitPlanTransportStep.java
 	}
 
 }
