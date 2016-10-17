@@ -16,9 +16,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<link rel="stylesheet" href="vendor/theme/css/AdminLTE.css" />
 	<link rel="stylesheet" href="vendor/theme/css/skins/skin-blue.min.css" />
 	<link rel="stylesheet" href="vendor/ng-table/ng-table.css" />
-	<link rel="stylesheet" type="text/css"	href="assets/css/style.css" />
 	<!-- Select -->
-    <link rel="stylesheet" href="vendor/select/select2.min.css">
+	<link rel="stylesheet" type="text/css"	href="vendor/ui-select2/select.min.css" />
+	<!-- DateRangePicjer -->
+	<link rel="stylesheet" type="text/css"	href="vendor/angular-bootstrap-daterangepicker/bootstrap-daterangepicker/daterangepicker.css" />
+	<link rel="stylesheet" type="text/css"	href="assets/css/style.css" />
 
 	<!--[if lt IE 9]>
 	        <script src="vendor/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -40,12 +42,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		  </section>
 		  
 		</aside>
-		
+		<m-loader></m-loader>
 		<div class="content-wrapper">
 		    <section class="content-header" ng-controller="breadcrumbCtrl">
                 <socle-breadcrumb></socle-breadcrumb>
             </section>
-            <m-loader></m-loader>
 		    <section class="content">
 		        <ng-view></ng-view>
 		    </section>
@@ -60,12 +61,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script src="vendor/jQuery/jquery-2.2.4.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<!-- Select -->
-    <script src="vendor/select/select2.full.js"></script>
     <!-- File-input -->
    	<script src="vendor/angular-bootstrap-fileinput/kartik-v-bootstrap-fileinput/js/fileinput.min.js"></script>
    	<!-- bootstrap validator -->
    	<script src="vendor/bootstrap-validator/validator.min.js"></script>
+   	<!-- momentjs -->
+   	<script src="vendor/moment/moment.js"></script>
+   	<!-- DateRangePicker -->
+   	<script src="vendor/angular-bootstrap-daterangepicker/bootstrap-daterangepicker/daterangepicker.js"></script>
 	<!-- AdminLTE App -->
 	<script src="vendor/theme/js/app.js"></script>
 	<!-- Angularjs -->
@@ -74,8 +77,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script src="vendor/angular/angular-animate.min.js"></script>
 	<script src="vendor/angular/angular-touch.min.js"></script>
 	<script src="vendor/angular/angular-locale_fr-fr.js"></script>
+	<!-- DateRangePicker -->
+   	<script src="vendor/angular-bootstrap-daterangepicker/angular-daterangepicker.js"></script>
 	<!-- Module externes -->
 	<script type="text/javascript" src="vendor/angular-environment/angular-environment.js"></script>
+	<!-- Select -->
+	<script src="vendor/ui-select2/select.min.js"></script>
     <!-- ng-table -->
     <script src="vendor/ng-table/ng-table.js"></script>
     <!-- m-loader -->
@@ -132,6 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script type="text/javascript" src="socle/controllers/chapitreCtrl.js"></script>
 	<script type="text/javascript" src="socle/controllers/userCtrl.js"></script>
 	
+	
 	<!-- Interceptor -->
 	<script type="text/javascript" src="socle/factories/socleHttpProvider.js"></script>
 	
@@ -152,7 +160,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script type="text/javascript" src="app/services/trainManagerSysteme/controlTmsService.js"></script>
     <script type="text/javascript" src="app/services/trainManagerSysteme/traitementControlTmsService.js"></script>
     <script type="text/javascript" src="app/services/trainManagerSysteme/traitementPageSearchService.js"></script>
-    
+    <script type="text/javascript" src="app/services/trainManagerSysteme/searchTmsService.js"></script>
+    <script type="text/javascript" src="app/services/trainManagerSysteme/searchService.js"></script>
+    <script type="text/javascript" src="app/services/trainManagerSysteme/partitionTmsService.js"></script>
+    <script type="text/javascript" src="app/services/trainManagerSysteme/compareDraftsService.js"></script>
+    <script type="text/javascript" src="app/services/trainManagerSysteme/updateLibelleService.js"></script>
+
     <!-- Contrôleurs -->
 	<script type="text/javascript" src="app/controllers/tablesCtrl.js"></script>
 	<script type="text/javascript" src="app/controllers/trainManagerSysteme/trainTmsCtrl.js"></script>
@@ -160,7 +173,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script type="text/javascript" src="app/controllers/trainManagerSysteme/controlTmsCtrl.js"></script>
 	<script type="text/javascript" src="app/controllers/trainManagerSysteme/search/indexSearchTmsCtrl.js"></script>
 	<script type="text/javascript" src="app/controllers/trainManagerSysteme/search/searchTmsCtrl.js"></script>
-	
+	<script type="text/javascript" src="app/controllers/trainManagerSysteme/compareDraftsCtrl.js"></script>
+	<script type="text/javascript" src="app/controllers/trainManagerSysteme/updateLibelleCtrl.js"></script>
  <script type="text/javascript">
     FileAPI = {
       debug: true,

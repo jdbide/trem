@@ -3,7 +3,7 @@ package com.avancial.app.service.controlePlanTransport.excelImport.dessertesComm
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**
- * étape finale bouclant sur les feuilles de calcules et décomposant létape en bloques conditionels.
+ * étape finale bouclant sur les feuilles de calcul et décomposant l'étape en blocs conditionnels.
  * @author raphael.cabaret
  * @param <C> type de contextes.
  */
@@ -50,7 +50,7 @@ public abstract class AConditionalLoopDessertesFinalStep<C extends DessertesCont
 	}
 	
 	/**
-	 * à jouer dans tout les cas en tout dernier.
+	 * à jouer dans tous les cas en tout dernier.
 	 * @param context le contexte.
 	 */
 	protected void doFinallyAfterAll(C context) {
@@ -58,40 +58,40 @@ public abstract class AConditionalLoopDessertesFinalStep<C extends DessertesCont
 	}
 	
 	/**
-	 * à jouer dans tout les cas à la fin du traitement de chaque feuille.
+	 * à jouer dans tous les cas à la fin du traitement de chaque feuille.
 	 * @param context le contexte.
-	 * @param sheet la fuille à traiter.
-	 * @param sheetIndex l'indexe de la feuille dans la liste des celles qu'il faut traiter.
-	 * @param subContext le sous-contexte associer à la feuille.
+	 * @param sheet la feuille à traiter.
+	 * @param sheetIndex l'index de la feuille dans la liste de celles qu'il faut traiter.
+	 * @param subContext le sous-contexte associé à la feuille.
 	 */
 	protected abstract void doFinally(C context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex);
 	
 	/**
-	 * à jouer si il n'y à pas d'erreurs.
+	 * à jouer s'il n'y a pas d'erreurs.
 	 * @param context le contexte.
-	 * @param sheet la fuille à traiter.
-	 * @param sheetIndex l'indexe de la feuille dans la liste des celles qu'il faut traiter.
-	 * @param subContext le sous-contexte associer à la feuille.
+	 * @param sheet la feuille à traiter.
+	 * @param sheetIndex l'index de la feuille dans la liste de celles qu'il faut traiter.
+	 * @param subContext le sous-contexte associé à la feuille.
 	 */
 	protected void doIfNoError(C context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {
 		
 	}
 	
 	/**
-	 * à jouer si il n'y à pas d'erreurs de parsing.
+	 * à jouer s'il n'y a pas d'erreurs de parsing.
 	 * @param context le contexte.
-	 * @param sheet la fuille à traiter.
-	 * @param sheetIndex l'indexe de la feuille dans la liste des celles qu'il faut traiter.
-	 * @param subContext le sous-contexte associer à la feuille.
+	 * @param sheet la feuille à traiter.
+	 * @param sheetIndex l'index de la feuille dans la liste de celles qu'il faut traiter.
+	 * @param subContext le sous-contexte associé à la feuille.
 	 */
 	protected abstract void doIfNoParsingError(C context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex);
 	
 	/**
-	 * à jouer si il n'y à pas d'erreurs de parsing ni de validation.
+	 * à jouer s'il n'y a pas d'erreurs de parsing ni de validation.
 	 * @param context le contexte.
-	 * @param sheet la fuille à traiter.
-	 * @param sheetIndex l'indexe de la feuille dans la liste des celles qu'il faut traiter.
-	 * @param subContext le sous-contexte associer à la feuille.
+	 * @param sheet la feuille à traiter.
+	 * @param sheetIndex l'index de la feuille dans la liste de celles qu'il faut traiter.
+	 * @param subContext le sous-contexte associé à la feuille.
 	 */
 	protected abstract void doIfNoParsingAndValidationError(C context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex);
 
@@ -107,8 +107,8 @@ public abstract class AConditionalLoopDessertesFinalStep<C extends DessertesCont
 	}
 	
 	/**
-	 * termine brutalement le traitement des feuilles, passe tout de même par le block doFinallyAfterAll.
-	 * ne déclanche pas d'erreur fatale.
+	 * termine brutalement le traitement des feuilles, passe tout de même par le bloc doFinallyAfterAll.
+	 * ne déclenche pas d'erreur fatale.
 	 * @throws BreakSheetsExecution .
 	 */
 	protected final void breakSheetsExecution() {
@@ -116,8 +116,8 @@ public abstract class AConditionalLoopDessertesFinalStep<C extends DessertesCont
 	}
 	
 	/**
-	 * termine brutalement l'exécution de la tache sans passer par le block doFinallyAfterAll.
-	 * ne déclanche pas d'erreur fatale.
+	 * termine brutalement l'exécution de la tâche sans passer par le bloc doFinallyAfterAll.
+	 * ne déclenche pas d'erreur fatale.
 	 * @throws BreakStepExecution .
 	 */
 	protected final void breakStepExecution() {
@@ -130,7 +130,7 @@ public abstract class AConditionalLoopDessertesFinalStep<C extends DessertesCont
 		
 	}
 	
-	// exception de fin d'execution de l'étape
+	// exception de fin d'exécution de l'étape
 	@SuppressWarnings("serial")
 	private static class BreakStepExecution extends RuntimeException {
 		

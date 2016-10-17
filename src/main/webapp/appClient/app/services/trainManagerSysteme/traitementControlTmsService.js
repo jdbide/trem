@@ -15,6 +15,8 @@ socle_app.service('traitementControlTmsService', function() {
 		msgDataValidate:null,
 		
 		init: function () {
+			vm = this;
+			
 			this.idTraitement=null;
 			this.isStartTraitement=null;
 			this.isFinishTraitement=null;
@@ -31,13 +33,31 @@ socle_app.service('traitementControlTmsService', function() {
 	var files = {
 		firstFile : {
 			file: null,
-			etat: etatUpdate.init(),
+			etat: {
+				idTraitement:null,
+				isStartTraitement:null,
+				isFinishTraitement:null,
+				isFinishTraitementSuccess:null,
+				isUploadSuccess:null,
+				isFormatOk:null,
+				isDataValidate:null,
+				msgDataValidate:null
+			},
 			msgError:null,
 			invalidFile:null
 		},
 		secondFile : {
 			file: null,
-			etat: etatUpdate.init(),
+			etat: {
+				idTraitement:null,
+				isStartTraitement:null,
+				isFinishTraitement:null,
+				isFinishTraitementSuccess:null,
+				isUploadSuccess:null,
+				isFormatOk:null,
+				isDataValidate:null,
+				msgDataValidate:null
+			},
 			msgError:null,
 			invalidFile:null
 		}
@@ -50,22 +70,22 @@ socle_app.service('traitementControlTmsService', function() {
 	}
 	
 	self.init = function () {
-		files.firstFile = {file:null,etat:etatUpdate.init(),msgError:null,invalidFile:null};
-		files.secondFile = {file:null,etat:etatUpdate.init(),msgError:null,invalidFile:null};
+		files.firstFile = {file:null,etat:{idTraitement:null,isStartTraitement:null,isFinishTraitement:null,isFinishTraitement:null,isUploadSuccess:null,isFormatOk:null,isDataValidate:null,msgDataValidate:null},msgError:null,invalidFile:null};
+		files.secondFile = {file:null,etat:{idTraitement:null,isStartTraitement:null,isFinishTraitement:null,isFinishTraitement:null,isUploadSuccess:null,isFormatOk:null,isDataValidate:null,msgDataValidate:null},msgError:null,invalidFile:null};
 	}
 	
 	self.initFirstFile = function () {
 		files.firstFile.file = null;
 		files.firstFile.msgError = null;
 		files.firstFile.invalidFile = null;
-		files.firstFile.etat = etatUpdate.init();
+		files.firstFile.etat = {idTraitement:null,isStartTraitement:null,isFinishTraitement:null,isFinishTraitement:null,isUploadSuccess:null,isFormatOk:null,isDataValidate:null,msgDataValidate:null};
 	}
 	
 	self.initSecondFile = function () {
 		files.secondFile.file = null;
 		files.secondFile.msgError = null;
 		files.secondFile.invalidFile = null;
-		files.secondFile.etat = etatUpdate.init();
+		files.secondFile.etat = {idTraitement:null,isStartTraitement:null,isFinishTraitement:null,isFinishTraitement:null,isUploadSuccess:null,isFormatOk:null,isDataValidate:null,msgDataValidate:null};
 	}
 
 	return self;

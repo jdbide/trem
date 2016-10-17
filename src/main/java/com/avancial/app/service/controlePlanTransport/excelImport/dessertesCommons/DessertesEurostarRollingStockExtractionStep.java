@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 
 /**
- * étape d'extraction du materiel roulant.
+ * étape d'extraction du matériel roulant.
  * @author raphael.cabaret
  */
 public class DessertesEurostarRollingStockExtractionStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {

@@ -196,11 +196,11 @@ public final class SubStepsWrapper<S, P> implements IMiddleProcessStep<S, P> {
 	 */
 	private Method parentMethod(Method method1, Method method2) {
 		// si la méthode n'a pas le même nom ou pas le même nombre d'arguments
-		if(!method1.getName().equals(method2.getName()) || method1.getParameterCount() != method2.getParameterCount()) {
+		if(!method1.getName().equals(method2.getName()) || method1.getParameterTypes().length != method2.getParameterTypes().length) {
 			return null;
 		}
 		// contrôle des types de paramètres
-		for(int i = 0; i < method1.getParameterCount(); i++) {
+		for(int i = 0; i < method1.getParameterTypes().length; i++) {
 			if(!method1.getParameterTypes()[i].equals(method2.getParameterTypes()[i])) {
 				return null;
 			}

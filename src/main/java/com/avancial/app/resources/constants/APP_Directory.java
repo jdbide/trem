@@ -9,16 +9,18 @@ package com.avancial.app.resources.constants;
  * Constantes pour les paths
  */
 public enum APP_Directory {
-   PathRapportDiff("APP_Path_RapportDiff");
+	PathRapportDiff("APP_Path_RapportDiff"),
+	PathImport("TREMAS_Import");
    
-   private String directory ="";
+	private String directory ="";
+	
    
-   private APP_Directory(String directory) {
-      this.directory = directory;
-   }
-   
-   @Override
-   public String toString() {
-      return this.directory;
-   }
+	private APP_Directory(String directory) {
+		this.directory = directory;
+	}
+
+	@Override
+	public String toString() {
+		return this.directory;
+	}
 }

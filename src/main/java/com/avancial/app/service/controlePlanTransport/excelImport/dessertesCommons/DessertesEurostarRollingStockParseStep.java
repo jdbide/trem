@@ -7,7 +7,7 @@ import com.avancial.app.fileImport.excelImport.ExcelImportException;
 import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IPurveyor;
 
 /**
- * étape de parsing des types déquipement.
+ * étape de parsing des types d'équipement.
  * @author raphael.cabaret
  */
 public class DessertesEurostarRollingStockParseStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {
@@ -18,7 +18,7 @@ public class DessertesEurostarRollingStockParseStep extends AConditionalLoopDess
 	/** ligne à traiter. */
 	private int row;
 	
-	/** ligne à traiter. */
+	/** fournisseur de ligne à traiter. */
 	private IPurveyor<Integer, DessertesSheetSubContext> rowPurveyor = null;
 	
 	/**
@@ -52,7 +52,7 @@ public class DessertesEurostarRollingStockParseStep extends AConditionalLoopDess
 		}
 		Cell cell = null;
 		String content = null;
-		// contrôle du libeller de la ligne
+		// contrôle du libellé de la ligne
 		try {
 			cell = sheet.getRow(this.row).getCell(context.getFirstTrainColumn() - 1);
 			content = cell.getStringCellValue();

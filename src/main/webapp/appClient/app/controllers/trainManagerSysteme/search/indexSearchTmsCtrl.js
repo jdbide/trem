@@ -27,7 +27,6 @@ socle_app.controller("indexSearchTmsCtrl", ['$rootScope', '$scope', '$q', 'reade
         	deffered.resolve();
 		}, function () {
 			alert("Erreur de chargement de données");
-			loadingService.hide();
 			deffered.reject();
 		});
         
@@ -38,11 +37,12 @@ socle_app.controller("indexSearchTmsCtrl", ['$rootScope', '$scope', '$q', 'reade
 	 * Constructor
 	 */
 	function constructor () {
+		loadingService.show();
 		if (traitementPageSearchService.isInit()) {
 			console.warn("traitementPageSearchService.isInit() is init");
 			$scope.currentPage = traitementPageSearchService.getCurrentPage();
+			loadingService.hide();
 		} else {
-			loadingService.show();
 			var promissTraitementPage = initPage();
 			
 			promissTraitementPage.then(

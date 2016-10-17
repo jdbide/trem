@@ -47,7 +47,7 @@ public class StructuredProcessContext<S, P> implements IContext{
 	 * @return l'exception fatale.
 	 */
 	public Exception getFatalException() {
-		return fatalException;
+		return this.fatalException;
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class StructuredProcessContext<S, P> implements IContext{
 	 * @return le produit de l'exécution.
 	 */
 	public P getProduct() {
-		return product;
+		return this.product;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class StructuredProcessContext<S, P> implements IContext{
 	 * @return le produit d'exécution.
 	 */
 	public S getSource() {
-		return source;
+		return this.source;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class StructuredProcessContext<S, P> implements IContext{
 	 * @return la liste des étapes.
 	 */
 	public List<IProcessStep<S, P>> getSteps() {
-		return steps;
+		return this.steps;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class StructuredProcessContext<S, P> implements IContext{
 	 * @return l'étape.
 	 */
 	public IProcessStep<S, P> getCurrentStep() {
-		return currentStep;
+		return this.currentStep;
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class StructuredProcessContext<S, P> implements IContext{
 	 * @return the fatalCatchSteps
 	 */
 	public List<IFinalProcessStep<S, P, ? extends StructuredProcessContext<S, P>>> getFatalCatchSteps() {
-		return fatalCatchSteps;
+		return this.fatalCatchSteps;
 	}
 	
 	

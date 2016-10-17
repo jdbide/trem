@@ -4,8 +4,8 @@
  * Contrôleur qui gère la page "Control" du chapitre "Train manager systeme", 
  *
  */
-socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$interval',"controlTmsService", 'traitementControlTmsService',
-                                 function($rootScope, $scope, envService, $interval, controlTmsService, traitementControlTmsService) {
+socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$interval',"controlTmsService", 'traitementControlTmsService', 'partitionTmsService',
+                                 function($rootScope, $scope, envService, $interval, controlTmsService, traitementControlTmsService, partitionTmsService) {
 	$scope.title = "Control";
 	// Liste des CompagnieEnvironnement
 	$scope.partitions = null;
@@ -89,23 +89,31 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			      file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 			    });
 			  }
+
+	/*
+	 * Recuperation de la liste des jeuDonneesControl
+	 * MAJ des $scope.data
+	 */
+	function getData() {
+		// Recuperation de la liste des jeuDonneesControl
+		controlTmsService.getDataByIdPartition($scope.selectedPartition).then(
+			function(datas) {
+				$scope.datas = datas;
+			}, function() {
+				alert("Erreur serveur!!");
+			}
+		);
+	}
 	/*
 	 * Constructeur du controlleur, il récupère la liste List<ImportTmsDto>
 	 */
 	function constructor () {
 		// Recuperation de la liste des partitions
-		controlTmsService.getPartition().then(
+		partitionTmsService.getPartition().then(
 			function(datas) {
 				$scope.partitions = datas;
 				$scope.selectedPartition = datas[0].idCompagnieEnvironnement;
-				// Recuperation de la liste des jeuDonneesControl
-				controlTmsService.getDataByIdPartition($scope.selectedPartition).then(
-					function(datas) {
-						$scope.datas = datas;
-					}, function() {
-						alert("Erreur serveur!!");
-					}
-				);
+				getData();
 			}, function() {
 				alert("Erreur serveur!!");
 			}
@@ -116,13 +124,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	 * Methode pour la selection d'une autre partition
 	 */
 	$scope.changeSelectedPartition = function () {
-		controlTmsService.getDataByIdPartition($scope.selectedPartition).then(
-			function(datas) {
-				$scope.datas = datas;
-			}, function() {
-				alert("Erreur serveur!!");
-			}
-		);
+		getData();
 	}
 	
 	/*
@@ -239,7 +241,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			console.log("====== je suis la 4");
 			$scope.files.firstFile.msgError=null;
 			$scope.files.firstFile.invalidFile=null;
-			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
+//			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
 		}
 
 		console.log($scope.files);
@@ -268,15 +270,30 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	$scope.clickBtnUploadFile = function (idInputFile) {
 		console.log("==> clickBtnUploadFirsFile");
 		var typeFile = null;
+//		$scope.files = traitementControlTmsService.files();
 		
 		if (idInputFile == 1) {
 			console.log("==> 1 " + $scope.jeuDonneesControl);
-			console.log(traitementControlTmsService.files().firstFile.file);
-			controlTmsService.uploadUsing$http(traitementControlTmsService.files().firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
+			console.log($scope.files.firstFile.file);
+			
+			$scope.files.firstFile.etat.isStartTraitement = true;
+			controlTmsService.uploadUsing$http($scope.files.firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
+			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
+			$scope.files.firstFile.etat.isFinishTraitement = true;
 
+			console.log($scope.files.firstFile.etat);
+			console.log($scope.files.secondFile.etat);
+			
 		} else if (idInputFile == 2) {
 			console.log("==> 2");
-			controlTmsService.uploadUsing$http(traitementControlTmsService.files().secondFile.file,$scope.jeuDonneesControl, "yield");
+			
+			$scope.files.secondFile.etat.isStartTraitement = true;
+			controlTmsService.uploadUsing$http($scope.files.secondFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "yield");
+			$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
+			$scope.files.secondFile.etat.isFinishTraitement = true;
+			
+			console.log($scope.files.firstFile.etat);
+			console.log($scope.files.secondFile.etat);
 		}
 	}
 	

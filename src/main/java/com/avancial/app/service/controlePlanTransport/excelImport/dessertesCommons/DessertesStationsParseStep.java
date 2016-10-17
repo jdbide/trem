@@ -21,7 +21,7 @@ public class DessertesStationsParseStep extends AConditionalLoopDessertesFinalSt
 		do {
 			String content = "";
 			Cell cell = null;
-			// lecture du lébelé de la gare
+			// lecture du libellé de la gare
 			try {
 				cell = sheet.getRow(i).getCell(context.getStationsColumn());
 				if(cell == null) {
@@ -33,14 +33,14 @@ public class DessertesStationsParseStep extends AConditionalLoopDessertesFinalSt
 				context.setFatalException(new ExcelImportException(cell, "impossible de lire un libellé de gare dans cette cellule", e));
 				this.breakStepExecution();
 			}
-			// si un libelle est présent
+			// si un libellé est présent
 			if(!content.equals("")) {
 				station = new DessertesStationContext(content, subContext);
 				subContext.getStations().add(station);
-				// si il n'y à qu'un horaire de départ
+				// s'il n'y a qu'un horaire de départ
 				if(sheet.getRow(i).getCell(context.getFirstTrainColumn() - 1).getStringCellValue().trim().toLowerCase().matches("dep|depart")) {
 					station.setDepartureRow(cell.getRow());
-				// si la première ligne est un horaire d'arrivé
+				// si la première ligne est un horaire d'arrivée
 				} else if (sheet.getRow(i).getCell(context.getFirstTrainColumn() - 1).getStringCellValue().trim().toLowerCase().matches("arr|arrive")) {
 					station.setArrivalRow(cell.getRow());
 					Cell labelCell = null;
@@ -65,7 +65,7 @@ public class DessertesStationsParseStep extends AConditionalLoopDessertesFinalSt
 						station.setDepartureRow(cell.getRow());
 					}
 				} else {
-					context.setFatalException(new ExcelImportException(cell, "les cellules 'arrivé' et 'depart' de la gare ne sont pas correctes"));
+					context.setFatalException(new ExcelImportException(cell, "les cellules 'arrivée' et 'depart' de la gare ne sont pas correctes"));
 					this.breakStepExecution();
 				}
 				i++;

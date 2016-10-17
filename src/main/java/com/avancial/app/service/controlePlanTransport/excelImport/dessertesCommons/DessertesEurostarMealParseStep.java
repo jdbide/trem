@@ -7,7 +7,7 @@ import com.avancial.app.fileImport.excelImport.ExcelImportException;
 import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IPurveyor;
 
 /**
- * étape de parcing des repas.
+ * étape de parsing des repas.
  * @author raphael.cabaret
  */
 public class DessertesEurostarMealParseStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {
@@ -79,7 +79,7 @@ public class DessertesEurostarMealParseStep extends AConditionalLoopDessertesFin
 	 * parse une cellule de repas.
 	 * @param row ligne.
 	 * @param column colonne.
-	 * @return la valeur si elle est correcte, sinon une erreur de parsing est relevée et l'étape est intérompue.
+	 * @return la valeur si elle est correcte, sinon une erreur de parsing est relevée et l'étape est interrompue.
 	 */
 	private String getMeal(int row, int column, Sheet sheet, DessertesContext context) {
 		Cell cell = null;

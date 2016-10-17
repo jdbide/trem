@@ -6,7 +6,9 @@ package com.avancial.app.export;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import com.avancial.app.utilitaire.FileUtil;
+import com.avancial.socle.utils.FileUtils;
+
+
 
 /**
  * @author hamza.laterem
@@ -79,8 +81,8 @@ public abstract class ASocleGenerateFile extends ASocleExportService {
 
    private void createFolder() throws Exception {
       try {
-         if (!FileUtil.existFile(this.filePath)) {
-            FileUtil.mkDirs(this.filePath);
+         if (!FileUtils.existFile(this.filePath)) {
+            FileUtils.mkDirs(this.filePath);
          }
       } catch (Exception e) {
          e.printStackTrace();

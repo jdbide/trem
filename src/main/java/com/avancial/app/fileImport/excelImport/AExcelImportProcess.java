@@ -8,9 +8,9 @@ import com.avancial.app.utilitaire.pattern.structuredProcess.AStructuredProcess;
 import com.avancial.app.utilitaire.pattern.structuredProcess.IProcessStep;
 
 /**
- * classe mère de tout les process d'importation de fichiers excel.
+ * classe mère de tous les process d'importation de fichiers excel.
  * @author raphael.cabaret
- * @param <C> type de context.
+ * @param <C> type de contexte.
  * @param <P> type produit par le process.
  */
 @SuppressWarnings("unchecked")

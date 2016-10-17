@@ -19,10 +19,10 @@ public class DessertesTrainTimeParseStep extends AConditionalLoopDessertesFinalS
 	protected void doFinally(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {
 		for(DessertesTrainContext train : subContext.getTrains()) {
 			for(DessertesStationContext station : subContext.getStations()) {
-				// contrôle de présance et de formatage des horaires
+				// contrôle de présence et de formatage des horaires
 				boolean arrival = this.isTimePresent(context, station.getArrivalRow(), train.getColumn());
 				boolean departure = this.isTimePresent(context, station.getDepartureRow(), train.getColumn());
-				// recherche des gares déservies
+				// recherche des gares deservies
 				if(train.getStations().isEmpty()) {
 					// cas de la gare de départ
 					if(departure) {
@@ -32,7 +32,7 @@ public class DessertesTrainTimeParseStep extends AConditionalLoopDessertesFinalS
 					// cas d'une gare intermédiaire
 					if(departure && arrival) {
 						train.getStations().add(station);
-					// cas de la gare d'arrivé
+					// cas de la gare d'arrivée
 					} else if(!departure && arrival) {
 						train.getStations().add(station);
 						break;
@@ -47,7 +47,7 @@ public class DessertesTrainTimeParseStep extends AConditionalLoopDessertesFinalS
 	@Override protected void doIfNoParsingAndValidationError(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {}
 
 	/**
-	 * lie et contrôle un horaire.
+	 * lit et contrôle un horaire.
 	 * @param context le contexte d'exécution.
 	 * @param row la ligne.
 	 * @param column la colonne.

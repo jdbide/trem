@@ -22,7 +22,7 @@ public class CompagnieService extends AService implements Serializable {
       return query.getResultList();
    }
 
-   public CompagnieEntity getById(Long idCompagnie) {
+   public CompagnieEntity getById(Integer idCompagnie) {
       Query query = this.getEntityManager().createNamedQuery("Compagnie.findById", CompagnieEntity.class);
       query.setParameter("idCompagnie", idCompagnie);
       return (CompagnieEntity) query.getSingleResult();

@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
 
 /**
- * parseur d'interval de dates
+ * parseur d'intervalle de dates
  * @author raphael.cabaret
  */
 public class DateIntervalParseStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {
@@ -55,7 +55,7 @@ public class DateIntervalParseStep extends AConditionalLoopDessertesFinalStep<De
 			end = endCell.getDateCellValue();
 		} catch (Exception e) {
 			// erreur de lecture
-			context.addParsingError(new ExcelImportException(beginCell, "impossible de lire la date début et/ou de fin de l'intervale", e));
+			context.addParsingError(new ExcelImportException(beginCell, "impossible de lire la date début et/ou de fin de l'intervalle", e));
 		}
 		// mise en session
 		subContext.setEndDate(end);

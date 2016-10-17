@@ -22,7 +22,7 @@ public class DessertesTrainTimeValidationStep extends AConditionalLoopDessertesF
 			Cell cell = sheet.getRow(context.getFirstStationRow() -1).getCell(train.getColumn());
 			// si il y a moins de deux gares dans la liste
 			if(train.getStations().size() < 2) {
-				context.addValidationError(new ExcelImportException(cell, "la desserte doit au moins contenir une gare de départ et une gare d'arrivé"));
+				context.addValidationError(new ExcelImportException(cell, "la desserte doit au moins contenir une gare de départ et une gare d'arrivée"));
 			}
 			boolean nextDay = false;
 			// pour toute les gares
@@ -37,11 +37,11 @@ public class DessertesTrainTimeValidationStep extends AConditionalLoopDessertesF
 				// si le trajet s'étale sur deux jours
 				if(nextDay) {
 					if(this.minutes(departure) > this.minutes(arrival)) {
-						context.addValidationError(new ExcelImportException(cell, "la chronologie des dates n'est pas choérente"));
+						context.addValidationError(new ExcelImportException(cell, "la chronologie des dates n'est pas cohérente"));
 						break;
 					}
 					if(nextDeparture != null && this.minutes(arrival) > this.minutes(nextDeparture)) {
-						context.addValidationError(new ExcelImportException(cell, "la chronologie des dates n'est pas choérente"));
+						context.addValidationError(new ExcelImportException(cell, "la chronologie des dates n'est pas cohérente"));
 						break;
 					}
 				// si le trajet ne s'étale pas sur deux jours
@@ -49,7 +49,7 @@ public class DessertesTrainTimeValidationStep extends AConditionalLoopDessertesF
 					if(this.minutes(departure) > this.minutes(arrival)) {
 						nextDay = true;
 						if(nextDeparture != null && this.minutes(arrival) > this.minutes(nextDeparture)) {
-							context.addValidationError(new ExcelImportException(cell, "la chronologie des dates n'est pas choérente"));
+							context.addValidationError(new ExcelImportException(cell, "la chronologie des dates n'est pas cohérente"));
 							break;
 						}
 					} else if(nextDeparture != null && this.minutes(arrival) > this.minutes(nextDeparture)) {
@@ -63,7 +63,7 @@ public class DessertesTrainTimeValidationStep extends AConditionalLoopDessertesF
 	@Override protected void doIfNoParsingAndValidationError(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {}
 
 	/**
-	 * converti une heure au format hh:mm en minutes.
+	 * convertit une heure au format hh:mm en minutes.
 	 * @param time le texte au format hh:mm.
 	 * @return le nombre de minutes.
 	 */

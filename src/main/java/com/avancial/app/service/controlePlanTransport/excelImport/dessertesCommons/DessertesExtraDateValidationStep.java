@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
 
 /**
- * étape de validation des dates exceptionelles.
+ * étape de validation des dates exceptionnelles.
  * @author raphael.cabaret
  */
 public class DessertesExtraDateValidationStep extends AConditionalLoopDessertesFinalStep<DessertesContext> {
@@ -33,17 +33,17 @@ public class DessertesExtraDateValidationStep extends AConditionalLoopDessertesF
 			if(!this.isIn(date, begin, end)) {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				context.addValidationError(new ExcelImportException(null,
-						"la date est hors de l'interval (feuille '" + sheet.getSheetName() + "') : " + df.format(date)));
+						"la date est hors de l'intervalle (feuille '" + sheet.getSheetName() + "') : " + df.format(date)));
 			}
 		}
 	}
 
 	/**
-	 * indique si le jour représanté par la première date est situer entre les deux dates données.
+	 * indique si le jour représenté par la première date est situé entre les deux dates données.
 	 * @param value la date à contrôler.
 	 * @param begin le premier jour.
 	 * @param end le second jour.
-	 * @return true si le premier jour est situé dans l'interval entre les deux dates (incluses), false si non.
+	 * @return true si le premier jour est situé dans l'intervalle entre les deux dates (incluses), false sinon.
 	 */
 	private boolean isIn(Date value, Calendar begin, Calendar end) {
 		if(begin.after(end)) {

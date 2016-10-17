@@ -65,14 +65,6 @@ socle_app.service('traitementPageSearchService', function() {
 	}
 	
 	self = this;
-	
-	function constructor () {
-		console.log("--> Constructor : traitementPageSearchService <--");
-	}
-	
-	constructor();
-
-	
 
 	self.getCurrentPage = function() {
 		return currentPage.page;

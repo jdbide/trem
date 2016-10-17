@@ -30,11 +30,13 @@
       'ngTable',
       'm-loader',
       'ui.bootstrap',
+      'ui.select',
       'myModal',
       'environment',
       'aDisabled',
       'ngFileUpload',
-      'file-model'
+      'file-model',
+      'daterangepicker'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {

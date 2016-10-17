@@ -34,7 +34,7 @@ public class DessertesDateExtractionStep extends AConditionalLoopDessertesFinalS
 	
 	/**
 	 * construit le régime.
-	 * @param train la colonne train d'où est extraite le régime.
+	 * @param train la colonne train d'où est extrait le régime.
 	 * @return
 	 */
 	private Regime constructRegime(DessertesTrainContext train) {
@@ -46,10 +46,10 @@ public class DessertesDateExtractionStep extends AConditionalLoopDessertesFinalS
 	}
 
 	/**
-	 * supprime les dates exceptionelles ou les ajoutes à la liste de dates, en fonction du booléen associé.
+	 * supprime les dates exceptionnelles ou les ajoute à la liste de dates, en fonction du booléen associé.
 	 * @param days la liste de dates.
-	 * @param extraDates la liste des dates exceptionelles.
-	 * @param extraDays indication de présence ou d'absances.
+	 * @param extraDates la liste des dates exceptionnelles.
+	 * @param extraDays indication de présences ou d'absences.
 	 */
 	private void putExtraDates(List<Date> days, List<Date> extraDates, boolean[] extraDays) {
 		for(int i = 0; i < extraDates.size(); i++) {
@@ -71,7 +71,7 @@ public class DessertesDateExtractionStep extends AConditionalLoopDessertesFinalS
 
 	/**
 	 * construit la liste des dates effectives pour la configuration hebdomadaire donnée.
-	 * @param begin date de déput.
+	 * @param begin date de début.
 	 * @param end date de fin.
 	 * @param days configuration hebdomadaire.
 	 * @return la liste des dates.
@@ -92,10 +92,10 @@ public class DessertesDateExtractionStep extends AConditionalLoopDessertesFinalS
 	}
 	
 	/**
-	 * indique si le jour représanté par la première date est situer avant ou est le même que le second jour.
+	 * indique si le jour représenté par la première date est situé avant ou est le même que le second jour.
 	 * @param first le premier jour.
 	 * @param second le second jour.
-	 * @return true si le premier jour est avant ou le meme que le second, false si il est après.
+	 * @return true si le premier jour est avant ou le même que le second, false si il est après.
 	 */
 	private boolean isBeforeOrEquals(Calendar first, Calendar second) {
 		if(first.get(Calendar.YEAR) < second.get(Calendar.YEAR)) {

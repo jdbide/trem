@@ -6,44 +6,69 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label left-control" for="partition">Partition</label>
 					<div class="col-md-5">
-						<select id="partition" class="form-control">
-							<option>ES Prod</option>
-							<option>ES Rec</option>
-							<option>TH Prod</option>
-							<option>Th Rec</option>
-						</select>
+						<ui-select ng-model="search.partitionSelected" theme="bootstrap" on-select="changePartition()">
+							<ui-select-match>
+								<span ng-bind="$select.selected.nomTechniqueCompagnieEnvironnement"></span>
+								</ui-select-match>
+									<ui-select-choices repeat="item in (search.partitions | filter: $select.search) track by item.idCompagnieEnvironnement">
+								<span ng-bind="item.nomTechniqueCompagnieEnvironnement"></span>
+							</ui-select-choices>
+						</ui-select>
 					</div>
 					<div class="col-md-4" style="padding-top: 5px;">
-						<span class="text-muted"> Last data update: 20/06/2016 -
-							17:15 </span>
+						<span ng-show="search.partitionSelected.dateLastUpdateJeuDonneesActive != null" class="text-muted"> Last update: {{search.partitionSelected.dateLastUpdateJeuDonneesActive | date:'dd/MM/yyyy - HH:mm'}} </span>
+						<span ng-show="search.partitionSelected.dateLastUpdateJeuDonneesActive == null" class="text-muted"> Aucun import active pour cette Partition </span>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-3 control-label left-control" for="trains">Train
-						number</label>
+					<label class="col-sm-3 control-label left-control" for="trains">Train number</label>
 					<div class="col-sm-9">
-						<input type="text" placeholder="ex: 09260, 09164," id="trains"
-							class="form-control">
+						<div ng-class="(search.trainsSelected.length > 0) ? 'input-group' : ''">
+							<ui-select multiple tagging tagging-label="false" ng-model="search.trainsSelected" theme="bootstrap" ng-disabled="disabledAll" ><!-- style="width: 300px;" title="Choose a color" -->
+								<ui-select-match placeholder="Select train : ex: 09260, 09164,">{{$item}}</ui-select-match>
+								<ui-select-choices repeat="train in search.trains | filter:$select.search">
+									{{train}}
+								</ui-select-choices>
+							</ui-select>
+							<span ng-show="search.trainsSelected.length > 0" class="input-group-btn">
+								<button type="button" ng-click="search.trainsSelected = []" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</span>
+						</div>
 					</div>
 				</div>
 				<div class="form-group ">
-					<label class="col-sm-3 control-label left-control" for="tranches">Tranche
-						number</label>
+					<label class="col-sm-3 control-label left-control" for="tranches">Tranche number</label>
 					<div class="col-sm-9">
-						<input type="password" placeholder="ex: 08002, 08214,"
-							id="tranches" class="form-control">
+						<div ng-class="(search.tranchesSelected.length > 0) ? 'input-group' : ''">
+							<ui-select multiple tagging tagging-label="false" ng-model="search.tranchesSelected" theme="bootstrap" ng-disabled="disabledAll" ><!-- style="width: 300px;" title="Choose a color" -->
+								<ui-select-match placeholder="Select tranche : ex: 08002, 08214,">{{$item}}</ui-select-match>
+								<ui-select-choices repeat="tranche in search.tranches | filter:$select.search">
+									{{tranche}}
+								</ui-select-choices>
+							</ui-select>
+							<span ng-show="search.tranchesSelected.length > 0" class="input-group-btn">
+								<button type="button" ng-click="search.tranchesSelected = []" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</span>
+						</div>
 					</div>
 				</div>
 				<div class="form-group ">
-					<label class="col-sm-3 control-label left-control" for="tranches">Running
-						Date/Period</label>
+					<label class="col-sm-3 control-label left-control" for="date">Running Date/Period</label>
 					<div class="col-sm-5">
 						<div class="input-group">
 							<div class="input-group-addon">
 								<i class="fa fa-calendar"></i>
 							</div>
-							<input type="text" id="reservation"
-								class="form-control pull-right">
+							<input id="date" date-range-picker  class="form-control pull-right date-picker" type="text" ng-model="search.date" ng-disabled="disabledAll"/>
+							<span  class="input-group-btn">
+								<button type="button" ng-click="resetDate()" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</span>
 						</div>
 						<!-- /.input group -->
 					</div>
@@ -51,63 +76,105 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label left-control" for="route">Route</label>
 					<div class="col-sm-5">
-						<select id="route" class="form-control">
-							<option></option>
-							<option>GBSPX / FRPNO</option>
-							<option>FRPNO / GBSPX</option>
-							<option>GBOPX / FRONO</option>
-							<option>FRONO / GBOPX</option>
-						</select>
+						<div  ng-class="(search.odSelected != null && search.odSelected != 'undefined') ? 'input-group' : '' ">
+							<ui-select ng-model="search.odSelected" on-select="changeOd()" style="margin-top: 1px;" theme="bootstrap" ng-disabled="disabledAll">
+								<ui-select-match placeholder="Select route">
+									<span>{{$select.selected.codeGareOrigineMotriceRefOd}} / {{$select.selected.codeGareDestinationMotriceRefOd}}</span>
+								</ui-select-match>
+								<ui-select-choices repeat="item in (search.listOd | filter: $select.search) track by item.idMotriceRefOd">
+									<span ng-bind="item.codeGareOrigineMotriceRefOd"></span> / 
+									<span ng-bind="item.codeGareDestinationMotriceRefOd"></span>
+								</ui-select-choices>
+							</ui-select>
+							<span ng-show="search.odSelected != null && search.odSelected != 'undefined'" class="input-group-btn">
+								<button type="button" ng-click="search.odSelected = undefined; clearOd();" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</span>
+						</div>
 					</div>
 					<div class="col-sm-4">
-						<label> <input type="checkbox" class="flat-red" checked>
-								Aller/Retour </label>
-					</div>
+							<label> <input type="checkbox" class="flat-red" ng-model="search.roundTrip"> Round Trip</label>
+						</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-3 control-label left-control" for="stops">Stops</label>
 					<div class="col-sm-9">
-						<select id="stops" class="form-control"">
-							<option></option>
-							<option>GBSPX</option>
-							<option>FRPNO</option>
-							<option>GBOPX</option>
-							<option>FRONO</option>
-						</select>
+						<div ng-class="(search.stopsSelected.length > 0) ? 'input-group' : ''">
+							<ui-select multiple tagging tagging-label="false" ng-model="search.stopsSelected" theme="bootstrap" ng-disabled="disabledAll" ><!-- style="width: 300px;" title="Choose a color" -->
+								<ui-select-match placeholder="Select stops : GBSAF; GBEBB,">{{$item.codeGareMotriceRefGare}}</ui-select-match>
+								<ui-select-choices repeat="stop in search.listStops | filter:$select.search">
+									{{stop.codeGareMotriceRefGare}}
+								</ui-select-choices>
+							</ui-select>
+							<span ng-show="search.stopsSelected.length > 0" class="input-group-btn">
+								<button type="button" ng-click="search.stopsSelected = []" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</span>
+						</div>
 					</div>
 				</div>
+				
 				<div class="form-group">
 					<label class="col-sm-3 control-label left-control" for="tosp">TOSP</label>
 					<div class="col-sm-5">
-						<select id="tosp" class="form-control">
-							<option></option>
-							<option>?</option>
-							<option>;)</option>
-							<option>!</option>
-							<option>);</option>
-						</select>
+						<div ng-class="(search.tospSelected != null && search.tospSelected != 'undefined') ? 'input-group' : ''">
+							<ui-select ng-model="search.tospSelected" style="margin-top: 1px;" ng-disabled="disabledAll">
+								<ui-select-match placeholder="Select tosp">
+									<span ng-bind="$select.selected.codeMotriceRefTosp"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="item in (search.listTosp | filter: $select.search) track by item.idMotriceRefTosp">
+									<span ng-bind="item.codeMotriceRefTosp"></span>
+								</ui-select-choices>
+							</ui-select>
+							<span ng-show="search.tospSelected != null && search.tospSelected != 'undefined'" class="input-group-btn">
+								<button  type="button" ng-click="search.tospSelected  = undefined" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</span>
+						</div>
 					</div>
 				</div>
+
 				<div class="form-group">
-					<label class="col-sm-3 control-label left-control" for="equipCodes">Equipement
-						Code</label>
+					<label class="col-sm-3 control-label left-control" for="equipCodes">Equipement Code</label>
 					<div class="col-sm-5">
-						<select id="equipCodes" class="form-control">
-							<option></option>
-							<option>TGT</option>
-							<option>GTT</option>
-							<option>TGI</option>
-						</select>
+						<div ng-class="(search.equipementSelected != null && search.equipementSelected!='undefined') ? 'input-group' : ''">
+							<ui-select ng-model="search.equipementSelected" style="margin-top: 1px;" ng-disabled="disabledAll">
+								<ui-select-match placeholder="Select equipement code">
+									<span ng-bind="$select.selected.labelEqpType"></span>
+								</ui-select-match>
+								<ui-select-choices repeat="item in (search.listEquipement | filter: $select.search) track by item.idMotriceRefEqpType">
+									<span ng-bind="item.labelEqpType"></span>
+								</ui-select-choices>
+							</ui-select>
+							<span ng-show="search.equipementSelected != null && search.equipementSelected!='undefined'" class="input-group-btn">
+								<button type="button" ng-click="search.equipementSelected = undefined" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</span>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-3 control-label left-control" for="status">Status</label>
 					<div class="col-sm-5">
-						<select id="status" class="form-control">
-							<option></option>
-							<option>Open</option>
-							<option>Close</option>
-						</select>
+						<div ng-class="(search.statusSelected != null && search.statusSelected!='undefined') ? 'input-group' : ''">
+							<ui-select  allow-clear ng-model="search.statusSelected" style="margin-top: 1px;" ng-disabled="disabledAll">
+							    <ui-select-match placeholder="Select Status">
+							        <span ng-bind="$select.selected.value"></span>
+							    </ui-select-match>
+							    <ui-select-choices repeat="item in (search.status | filter: $select.search) track by item.id">
+							        <span ng-bind="item.value"></span>
+							    </ui-select-choices>
+							</ui-select>
+							<span ng-show="search.statusSelected != null && search.statusSelected!='undefined'" class="input-group-btn">
+								<button   type="button" ng-click="search.statusSelected = undefined" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</span>
+						</div>
 					</div>
 				</div>
 				<br>
@@ -116,7 +183,7 @@
 				<hr>
 				<div class="form-group">
 					<div class="col-sm-10">
-						<button type="submit" class="btn btn-primary">Search</button>
+						<button type="submit" class="btn btn-primary" ng-click="executeSearch()" ng-disabled="disabledAll">Search</button>
 					</div>
 				</div>
 			</div>

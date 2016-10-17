@@ -60,4 +60,35 @@ public class MotriceRefService extends AService {
          return null;
       }
    }
+
+   /**
+    * Exemple : Recupération des gare par idOd dans la table MotriceRefOd2Gare
+    * 
+    * @param refEntityClass
+    * @param nameQuery
+    * @param nameAttribut
+    * @param objetInput
+    * @return
+    */
+   public List<?> getByAttribut(Class<?> refEntityClass, String nameQuery, String nameAttribut, Object objetInput) {
+      Query query = this.getEntityManager()
+            .createNamedQuery(GetEntiteService.getNomFromEntiteTableMotriceRegime(refEntityClass.getSimpleName()) + "." + nameQuery);
+      query.setParameter(nameAttribut, objetInput);
+      return query.getResultList();
+   }
+
+   /**
+    * @param motriceRefGareEntity
+    */
+   public void updateMotriceRefGare(MotriceRefGareEntity motriceRefGareEntity) {
+      try {
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().merge(motriceRefGareEntity);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
+      } catch (Exception e) {
+         this.getEntityManager().getTransaction().rollback();
+         throw e;
+      }
+   }
 }

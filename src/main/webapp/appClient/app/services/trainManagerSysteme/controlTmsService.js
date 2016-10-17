@@ -39,24 +39,6 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
     	reponse.data=null;
     }
 	
-	self.getPartition = function () {
-    	loadingService.show();
-        var deffered  = $q.defer();
-
-        var promissJsonFactory = jsonFactory.getJson("webService/app/controlTms/");
-        promissJsonFactory
-            .success(function (datas, status, headers, config) {
-            	loadingService.hide();
-                deffered.resolve(datas);
-            })
-            .error(function (datas, status, headers, config) {
-            	loadingService.hide();
-                deffered.reject();
-        });
-        
-        return deffered.promise;
-    }
-	
 	self.getDataByIdPartition = function (idPartition) {
     	loadingService.show();
         var deffered  = $q.defer();
@@ -132,16 +114,19 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
 	}
 	
 	self.uploadUsing$http = function (file, idJeuDonneesControl, typeFile) {
-		console.log("==> 1");
-//		+idJeuDonneesControl+"/"+typeFile
-		file.upload = jsonFactory.uploadFile("webService/app/controlTms/uploadFile/", file)
+		file.upload = jsonFactory.uploadFile("webService/app/controlTms/uploadFile/"+idJeuDonneesControl+"/"+typeFile, file)
 		file.upload.then(function (response) {
-			file.result = response.data;
-			alert(file.result.data);
+			file.result = response.message;
+			//alert(file.result);
 		}, function (response) {
-			if (response.status > 0)
-				alert("Error upload file : " + response.status + ': ' + response.data);
+			alert(response);
+			console.log(response);
+			if (!response.status)
+				alert("Error upload file : " + response.message);
+			
 			}
+		
+		
 		);
 
 		file.upload.progress(function (evt) {

@@ -61,7 +61,7 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 						new DateIntervalParseStep(0, 3, 1, 3),
 						new DateIntervalValidationStep(),
 						null),
-				// parse et validation de la liste des gares
+				// parsing et validation de la liste des gares
 				new DessertesPrimaryStep(
 						new DessertesStationsParseStep(),
 						new DessertesStationsValidationStep(),
