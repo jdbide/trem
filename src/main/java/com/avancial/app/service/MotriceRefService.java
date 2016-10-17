@@ -9,7 +9,6 @@ import com.avancial.app.data.databean.CompagnieEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
 import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.socle.service.AService;
-import com.avancial.socle.utils.StringUtils;
 
 /**
  * Récupération de données dans les tables des données de référence motrice (tremas_motrice_ref_xxx).
@@ -61,7 +60,7 @@ public class MotriceRefService extends AService {
          return null;
       }
    }
-   
+
    /**
     * Exemple : Recupération des gare par idOd dans la table MotriceRefOd2Gare
     * 
@@ -76,5 +75,20 @@ public class MotriceRefService extends AService {
             .createNamedQuery(GetEntiteService.getNomFromEntiteTableMotriceRegime(refEntityClass.getSimpleName()) + "." + nameQuery);
       query.setParameter(nameAttribut, objetInput);
       return query.getResultList();
+   }
+
+   /**
+    * @param motriceRefGareEntity
+    */
+   public void updateMotriceRefGare(MotriceRefGareEntity motriceRefGareEntity) {
+      try {
+         this.getEntityManager().getTransaction().begin();
+         this.getEntityManager().merge(motriceRefGareEntity);
+         this.getEntityManager().flush();
+         this.getEntityManager().getTransaction().commit();
+      } catch (Exception e) {
+         this.getEntityManager().getTransaction().rollback();
+         throw e;
+      }
    }
 }
