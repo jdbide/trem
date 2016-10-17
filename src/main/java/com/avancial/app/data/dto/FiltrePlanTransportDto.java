@@ -5,6 +5,7 @@ package com.avancial.app.data.dto;
 
 import java.util.Date;
 import java.util.List;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 
 /**
  * DTO permettant de filtrer un plan de transport
@@ -24,7 +25,7 @@ public class FiltrePlanTransportDto {
     private int idTosp;
     private int idCodeRM;
     private int idCodeEquipement;
-    private int idStatus;
+    private EnumTrancheStatut status;
 
     /**
      * Constructeur vide
@@ -184,18 +185,19 @@ public class FiltrePlanTransportDto {
     }
 
     /**
-     * @return the idStatus
+     * @return the status
      */
-    public int getIdStatus() {
-        return this.idStatus;
+    public EnumTrancheStatut getStatus() {
+        return this.status;
     }
 
     /**
-     * @param idStatus
-     *            the idStatus to set
+     * @param status the status to set
      */
-    public void setIdStatus(int idStatus) {
-        this.idStatus = idStatus;
+    public void setStatus(EnumTrancheStatut status) {
+        this.status = status;
     }
+
+
 
 }
