@@ -88,7 +88,7 @@ socle_app.service('searchTmsService', ['jsonFactory', 'loadingService', '$q', fu
 	self.executeSearch = function (data) {
 		initResponse();
 		var deffered  = $q.defer();
-		var promissJsonFactory = jsonFactory.postJson("webService/app/searchTms/executeSearch/", data);
+		var promissJsonFactory = jsonFactory.putJson("webService/app/filtrePdt/", data);
         promissJsonFactory
             .success(function (datas, status, headers, config) {
             	//loadingService.hide();

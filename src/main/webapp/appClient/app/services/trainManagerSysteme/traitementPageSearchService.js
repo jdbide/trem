@@ -49,16 +49,16 @@ socle_app.service('traitementPageSearchService', function() {
 			if (!self.active || self.page.idPage == null) {
 				return currentPage.init();
 			}
-
-			if (self.page.idPage == pages[0].idPage) {
+			console.log(self);
+			if (self.page.idPage == self.pages[0].idPage) {
 				self.page = null;
-				self.page = pages[1];
+				self.page = self.pages[1];
 			} else {
 				self.page = null;
-				self.page = pages[0];
+				self.page = self.pages[0];
 			}
 
-			active:true
+			self.active=true;
 			
 			return self;
 		}

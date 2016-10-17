@@ -1,6 +1,7 @@
 package com.avancial.app.webService;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -26,6 +27,9 @@ public class FlitrePlanTransportWebService {
 
     // Logger log4j
     private static Logger logger = Logger.getLogger(SearchTmsWebService.class);
+    
+    @Inject
+    private TraitementFiltrePlanTransport traitementFiltre;
 
     /**
      * recuperation du plan de transport filtrer
@@ -40,15 +44,14 @@ public class FlitrePlanTransportWebService {
         logger.info("Début (WebService : '/app/filtrePdt', Action : 'getPlanTransportFiltre', methode : @PUT)");
         ResponseBuilder responseBuilder = null;
         final ResponseBean responseBean = new ResponseBean();
-        TraitementFiltrePlanTransport traitementFiltre = new TraitementFiltrePlanTransport();
-        traitementFiltre.setFiltre(filtrePlanTransportDto);
+        this.traitementFiltre.setFiltre(filtrePlanTransportDto);
         try {
-            traitementFiltre.execute();
-            responseBean.setData(traitementFiltre.getPlanTransport());
-            responseBean.setStatus(true);
-            logger.info("Fin (WebService : '/app/filtrePdt', Action : 'getPlanTransportFiltre', methode : @PUT)");
-            responseBuilder = Response.ok((Object) responseBean);
-            return responseBuilder.build();
+           this.traitementFiltre.execute();
+           responseBean.setData(this.traitementFiltre.getPlanTransport());
+           responseBean.setStatus(true);
+           logger.info("Fin (WebService : '/app/filtrePdt', Action : 'getPlanTransportFiltre', methode : @PUT)");
+           responseBuilder = Response.ok((Object) responseBean);
+           return responseBuilder.build();
         }
         catch (Exception e) {
             responseBean.setStatus(false);

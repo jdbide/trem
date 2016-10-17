@@ -10,6 +10,8 @@ socle_app.controller("indexSearchTmsCtrl", ['$rootScope', '$scope', '$q', 'reade
 	var URL_FILE_CONFIG_LOCAL = 'app/controllers/trainManagerSysteme/config/pageSearch.json';
 
 	$scope.currentPage = null;
+	
+	$rootScope.isModif = false;
 
 	/*
 	 * init des pages;
@@ -58,4 +60,10 @@ socle_app.controller("indexSearchTmsCtrl", ['$rootScope', '$scope', '$q', 'reade
 	}
 	
 	constructor ();
+	
+	$rootScope.changePage = function () {
+		console.warn("------------------------> changePage");
+		traitementPageSearchService.changePage();
+		$scope.currentPage = traitementPageSearchService.getCurrentPage();
+	}
 }]);

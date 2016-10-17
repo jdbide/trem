@@ -81,7 +81,7 @@ public class TraitementFiltrePlanTransport extends ATraitementLogDetail implemen
          * creation du filtre sur l'"origine/destination"
          */
         MotriceRefODEntity odEntity = this.getEntityManager()
-                .createNamedQuery("MotriceRefODEntity.getById", MotriceRefODEntity.class)
+                .createNamedQuery("MotriceRefOD.getById", MotriceRefODEntity.class)
                 .setParameter("idMotriceRefOd", this.filtre.getIdOrigineDestination()).getSingleResult();
         gare.setCodeGare(odEntity.getCodeGareOrigineMotriceRefOd());
         od.setOrigine(gare);
@@ -98,7 +98,7 @@ public class TraitementFiltrePlanTransport extends ATraitementLogDetail implemen
         for (Integer idStop : this.filtre.getIdsStops()) {
             gare = new Gare();
             gareEntity = this.getEntityManager()
-                    .createNamedQuery("MotriceRefGareEntity.getById", MotriceRefGareEntity.class)
+                    .createNamedQuery("MotriceRefGare.getById", MotriceRefGareEntity.class)
                     .setParameter("idMotriceRefGare", idStop).getSingleResult();
             gare.setCodeGare(gareEntity.getCodeGareMotriceRefGare());
             garesStops.add(gare);

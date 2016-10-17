@@ -151,16 +151,28 @@ socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', 'loadingService',
 	 * Constructeur de la page de search, il récupère la liste des partition
 	 */
 	function constructor () {
-		if (!searchService.isEmpty()) {
-			console.warn("searchService.isEmpty is not empty");
-			console.log(searchService.getSearch());
+		if ($rootScope.isModif) {
+			console.warn("----------> isModif")
+			$scope.disabledAll = false;
+			$rootScope.isModif = false;
 			$scope.search = searchService.getSearch();
+			console.log($scope.search);
+		} else if (!searchService.isEmpty()) {
+			console.warn("searchService.isEmpty is not empty");
+			searchService.initPartitionSelected();
+			$scope.search = searchService.getSearch();
+			if ($scope.search.partitionSelected.dateLastUpdateJeuDonneesActive != null) {
+				$scope.disabledAll = false;
+			} else {
+				$scope.disabledAll = true;
+			}
+			
 		} else {
 			// Recuperation de la liste des partitions
 			partitionTmsService.allPartitionWithJeuDonneesActive().then(
 				function(datas) {
 					console.warn("==> Récupération des partitions <==");
-					searchService.setPartition(datas)
+					searchService.setPartition(datas);
 					searchService.initPartitionSelected();
 					$scope.search = searchService.getSearch();
 					getOtherDataRef();
@@ -172,8 +184,26 @@ socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', 'loadingService',
 	}
 	
 	$scope.executeSearch = function () {
-		console.warn("Affichge de l'objet searchService.getSearch()");
-		console.log($scope.search);
+		$rootScope.changePage();
+//		console.warn("Affichge de l'objet searchService.getSearch()");
+//		loadingService.show();
+//		console.log($scope.search);
+//		console.log(searchService.searchToResult());
+//		searchTmsService.executeSearch(searchService.searchToResult()).then(
+//			function() {
+//				var reponse = searchTmsService.getReponse();
+//				if (reponse.status) {
+//					searchService.setStops(reponse.data);
+//				} else {
+//					alert("Erreur : " + reponse.message);
+//				}
+//				
+//				loadingService.hide();
+//			}, function() {
+//				alert("Erreur serveur");
+//				loadingService.hide();
+//			}
+//		);
 	}
 	
 	$scope.resetDate = function () {
