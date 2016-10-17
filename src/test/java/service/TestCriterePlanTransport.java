@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
 import com.avancial.app.data.objetsMetier.PlanTransport.GareHoraire;
 import com.avancial.app.data.objetsMetier.PlanTransport.Horaire;
@@ -30,6 +31,7 @@ import com.avancial.app.service.filtrePlanTransport.FiltreOuPlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreOuRegimePlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreRegimePlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreSousRegimePlanTransport;
+import com.avancial.app.service.filtrePlanTransport.FiltreStatutTrancheplanTransport;
 import com.avancial.app.service.filtrePlanTransport.ICritere;
 import com.avancial.app.service.filtrePlanTransport.IFiltre;
 import com.avancial.socle.utils.ListUtils;
@@ -313,6 +315,38 @@ public class TestCriterePlanTransport {
       trancheExpected.getRegime().setListeJours(datesRegime);
       planTransportRes = filtreDesserteRegime.filtreParCritere(planTransport);
       Assert.assertTrue("Test FiltreGareDesserteRegime", this.comparePlanTransport(planTransportExpected, planTransportRes));
+   }
+   
+   @Test
+   public void filtreStatutTranche(){
+      Tranche tranche1 = new Tranche();
+      tranche1.setTrancheStatut(EnumTrancheStatut.Ouvert);
+      Tranche tranche2 = new Tranche();
+      tranche2.setTrancheStatut(EnumTrancheStatut.Ferme);
+      
+      Train train =  new Train();
+      train.getTranches().add(tranche1);
+      train.getTranches().add(tranche2);
+      
+      Train trainTrancheOuverte =  new Train();
+      train.getTranches().add(tranche1);
+      
+      Train trainTrancheFerme =  new Train();
+      train.getTranches().add(tranche2);
+      
+      
+      
+      Tranche trancheOuverte = new Tranche();
+      trancheOuverte.setTrancheStatut(EnumTrancheStatut.Ouvert);
+      IFiltre<Train> critereStatutOuvert = (IFiltre<Train>) new FiltreStatutTrancheplanTransport(EnumTrancheStatut.Ouvert);
+      IFiltre<Train> critereStatutFerme = (IFiltre<Train>) new FiltreStatutTrancheplanTransport(EnumTrancheStatut.Ferme);
+      
+      
+      Assert.assertEquals("Test Critere ", trainTrancheOuverte, critereStatutOuvert.filtreParCritere(train));
+      Assert.assertEquals("Test Critere ", trainTrancheFerme, critereStatutFerme.filtreParCritere(train));
+      //Assert.assertEquals("Test", true, true);
+   
+
    }
 
    /**
