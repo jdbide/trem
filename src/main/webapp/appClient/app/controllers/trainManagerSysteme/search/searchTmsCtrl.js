@@ -6,7 +6,7 @@
  */
 socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', 'loadingService', '$q', 'partitionTmsService', 'searchService', 'searchTmsService',
                                        function($rootScope, $scope, loadingService, $q, partitionTmsService, searchService, searchTmsService) {
-	$scope.search = null;
+	$scope.search = searchService.getSearch();
 	$scope.disabledAll = true;
 	
 
