@@ -5,6 +5,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
 import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
 import com.avancial.app.data.objetsMetier.PlanTransport.GareHoraire;
+import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
 /**
@@ -26,6 +27,14 @@ public abstract class AFiltreGareDesserteTranche implements IFiltre<Tranche> {
     public AFiltreGareDesserteTranche(List<Gare> gares) {
         super();
         this.gares = gares;
+    }
+
+    /**
+     * constructeur vide
+     */
+    public AFiltreGareDesserteTranche() {
+        super();
+        this.gares = null;
     }
 
     @Override
@@ -58,6 +67,16 @@ public abstract class AFiltreGareDesserteTranche implements IFiltre<Tranche> {
             this.traiteTranche(tranche);
         }
         return tranche;
+    }
+
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.gares = (List<Gare>) object;
+        }
+        catch (Exception e) {
+            this.gares = null;
+        }
     }
 
     /**

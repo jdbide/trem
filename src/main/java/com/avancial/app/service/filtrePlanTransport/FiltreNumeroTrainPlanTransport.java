@@ -22,6 +22,14 @@ public class FiltreNumeroTrainPlanTransport implements IFiltre<PlanTransport> {
         super();
         this.numeroTrains = numeroTrains;
     }
+    
+    /**
+     * constructeur vide
+     */
+    public FiltreNumeroTrainPlanTransport() {
+        super();
+        this.numeroTrains = null;
+    }
 
     @Override
     public PlanTransport filtreParCritere(PlanTransport object) {
@@ -35,6 +43,16 @@ public class FiltreNumeroTrainPlanTransport implements IFiltre<PlanTransport> {
             }
         }
         return planTransport;
+    }
+    
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.numeroTrains = (List<String>) object;
+        }
+        catch (Exception e) {
+            this.numeroTrains = null;
+        }
     }
 
 }

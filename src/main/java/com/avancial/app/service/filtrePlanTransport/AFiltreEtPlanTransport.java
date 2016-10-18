@@ -24,6 +24,14 @@ public abstract class AFiltreEtPlanTransport implements IFiltre<PlanTransport> {
         super();
         this.filtres = filtres;
     }
+    
+    /**
+     * constructeur vide
+     */
+    public AFiltreEtPlanTransport() {
+        super();
+        this.filtres = null;
+    }
 
     @Override
     public PlanTransport filtreParCritere(PlanTransport object) {
@@ -34,6 +42,16 @@ public abstract class AFiltreEtPlanTransport implements IFiltre<PlanTransport> {
             planTransport = iFiltre.filtreParCritere(planTransport);
         }
         return planTransport;
+    }
+
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.filtres = (IFiltre<PlanTransport>[]) object;
+        }
+        catch (Exception e) {
+            this.filtres = null;
+        }
     }
 
 }

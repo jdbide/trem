@@ -18,4 +18,10 @@ public interface IFiltre<T> {
     * @return Copie de l'objet en paramètre, contenant seulement les données qui répondent au critère implémenté
     */
    public T filtreParCritere(T object);
+   
+   /**
+    * permet de setter le critere de filtre
+    * @param object
+    */
+   public void setCritere(Object object);
 }
