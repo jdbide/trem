@@ -1,4 +1,4 @@
-package com.avancial.socle.data.model.databean;
+package com.avancial.socle.params.data.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.avancial.socle.data.model.databean.AbstractDataBean;
+
 /**
  * The persistent class for the socle_ref_directory database table.
  * 
@@ -15,10 +17,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "socle_ref_directory")
 @NamedQueries({ 
-   @NamedQuery(name = RefDirectoryDataBean.QUERY_GET_ALL, query = "FROM RubriqueDataBean"),
-   @NamedQuery(name = RefDirectoryDataBean.QUERY_GET_BY_NOM_TECH, query = "FROM RefDirectoryDataBean refDirectory WHERE refDirectory.technicalNameRefDirectory = :technicalName"),
+   @NamedQuery(name = RefDirectoryEntity.QUERY_GET_ALL, query = "FROM RubriqueDataBean"),
+   @NamedQuery(name = RefDirectoryEntity.QUERY_GET_BY_NOM_TECH, query = "FROM RefDirectoryEntity refDirectory WHERE refDirectory.technicalNameRefDirectory = :technicalName"),
 })
-public class RefDirectoryDataBean extends AbstractDataBean {
+public class RefDirectoryEntity extends AbstractDataBean {
    private static final long serialVersionUID = 1L;
    
    public final static String     QUERY_GET_ALL               = "refDirectoryGetAll";
@@ -37,7 +39,7 @@ public class RefDirectoryDataBean extends AbstractDataBean {
    @Column(nullable = false, length = 30)
    private String technicalNameRefDirectory;
 
-   public RefDirectoryDataBean() {
+   public RefDirectoryEntity() {
    }
 
    public int getIdRefDirectory() {

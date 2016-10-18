@@ -51,7 +51,6 @@ public abstract class AParamGetter implements IParamGetter {
     */
    public AParamGetter() throws Exception {
       this.mapParamBean = new HashMap<>();
-      // this.initPathToWebInf();
 
    }
 
@@ -59,16 +58,13 @@ public abstract class AParamGetter implements IParamGetter {
    public void init() throws Exception {
 
       // On instancie les Paramètres du socle
-      // ParamReaderFileGeneric socle = new ParamReaderFileGeneric(this.pathToWebInf + SOCLE_constants.SOCLE_PROPERTIES_PATH.toString());
       socle.loadParams(SOCLE_params.PARAMS_SOCLE.getValue());
       this.add(socle);
 
-      // AParamReaderDB paramDb = new ParamReaderDBDirectory();
       paramDb.loadParams(SOCLE_params.PARAM_DIRECTORIES.getValue());
       this.add(paramDb);
 
       // On instancie les Paramètres de l'appli
-      // ParamReaderFileGeneric app = new ParamReaderFileGeneric(this.getPathToWebInf() + SOCLE_constants.APP_PROPERTIES_PATH.toString());
       app.loadParams(SOCLE_params.PARAMS_APP.getValue());
       this.add(app);
    }

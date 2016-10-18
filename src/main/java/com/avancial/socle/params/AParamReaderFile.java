@@ -11,7 +11,7 @@ import com.avancial.socle.params.beans.IParamBean;
 import com.avancial.socle.params.beans.ParamBeanGeneric;
 
 /**
- * Classe abstraite pour l'impl�mentation de la lecture de param�tres � partir d'un fichier
+ * Classe abstraite pour l'implémentation de la lecture de paramètres à partir d'un fichier
  * 
  * @author bruno
  *

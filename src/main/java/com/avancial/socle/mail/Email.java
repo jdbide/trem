@@ -13,100 +13,99 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+public class Email implements Sendable {// extends AbstractEmail
+   protected String    contenu;
+   protected TypeEmail type;
+   protected Multipart multipart;
+   protected String    sujet;
+   protected File[]    fileTab;
 
-public class Email implements Sendable {//extends AbstractEmail 		
-	protected String 	contenu;
-	protected TypeEmail type;
-	protected Multipart multipart;
-	protected String	sujet;
-	protected File[]	fileTab;
-	
-	public Email() {
-		//this.setType(TypeEmail.TEXTE);
-		this.multipart = new MimeMultipart();
-		//multipart.addBodyPart(messageBodyPart);
-	}
-	
-	@Override
-	public void send(String listeDiffusionTo, String mailFrom) throws Exception {
-		final Properties props = System.getProperties();
-		props.put("mail.smtp.host", "CZC3137DTH.sysrail.local");
-		props.put("mail.smtp.port", "8090");
+   public Email() {
+      // this.setType(TypeEmail.TEXTE);
+      this.multipart = new MimeMultipart();
+      // multipart.addBodyPart(messageBodyPart);
+   }
 
-		final Session session = Session.getInstance(props, null);
-		final Message message = new MimeMessage(session);
+   @Override
+   public void send(String listeDiffusionTo, String mailFrom) throws Exception {
+      final Properties props = System.getProperties();
+      props.put("mail.smtp.host", "localhost");
+      props.put("mail.smtp.port", "8090");
 
-		this.prepareMessage(message, listeDiffusionTo, mailFrom);
+      final Session session = Session.getInstance(props, null);
+      final Message message = new MimeMessage(session);
 
-		BodyPart messageBodyPart = new MimeBodyPart();
-		messageBodyPart.setContent(this.contenu, this.type.toString());
-		this.multipart.addBodyPart(messageBodyPart);
-		message.setContent(this.multipart);
-		
-		Transport.send(message);
-		
-		System.out.println(message.getContent().toString());
-	}
+      this.prepareMessage(message, listeDiffusionTo, mailFrom);
 
-	private void prepareMessage(final Message message, String listeDiffusionTo, String mailFrom) throws Exception {
-		message.setFrom(new InternetAddress(mailFrom));
+      BodyPart messageBodyPart = new MimeBodyPart();
+      messageBodyPart.setContent(this.contenu, this.type.toString());
+      this.multipart.addBodyPart(messageBodyPart);
+      message.setContent(this.multipart);
 
-		InternetAddress[] toAddrsBCC = null;
-		InternetAddress[] toAddrsCC = null;
-		InternetAddress[] toAddrsTO = null;
-		InternetAddress[] replyToAddrs = null;
+      Transport.send(message);
 
-		if (listeDiffusionTo != null)
-			toAddrsTO = InternetAddress.parse(listeDiffusionTo, false);
+      System.out.println(message.getContent().toString());
+   }
 
-		message.setRecipients(Message.RecipientType.BCC, toAddrsBCC);
-		message.setRecipients(Message.RecipientType.CC, toAddrsCC);
-		message.setRecipients(Message.RecipientType.TO, toAddrsTO);
-		message.setReplyTo(replyToAddrs);
-		message.setSubject(this.sujet);
-	}
+   private void prepareMessage(final Message message, String listeDiffusionTo, String mailFrom) throws Exception {
+      message.setFrom(new InternetAddress(mailFrom));
 
-	@Override
-	public String getContenu() {
-		return this.contenu;
-	}
+      InternetAddress[] toAddrsBCC = null;
+      InternetAddress[] toAddrsCC = null;
+      InternetAddress[] toAddrsTO = null;
+      InternetAddress[] replyToAddrs = null;
 
-	@Override
-	public void setContenu(String contenu) {
-		this.contenu = contenu;
-	}
+      if (listeDiffusionTo != null)
+         toAddrsTO = InternetAddress.parse(listeDiffusionTo, false);
 
-	public TypeEmail getType() {
-		return this.type;
-	}
+      message.setRecipients(Message.RecipientType.BCC, toAddrsBCC);
+      message.setRecipients(Message.RecipientType.CC, toAddrsCC);
+      message.setRecipients(Message.RecipientType.TO, toAddrsTO);
+      message.setReplyTo(replyToAddrs);
+      message.setSubject(this.sujet);
+   }
 
-	@Override
-	public Multipart getMultipart() {
-		return this.multipart;
-	}
+   @Override
+   public String getContenu() {
+      return this.contenu;
+   }
 
-	@Override
-	public void setType(TypeEmail type) {
-		this.type = type;
-	}
+   @Override
+   public void setContenu(String contenu) {
+      this.contenu = contenu;
+   }
 
-	@Override
-	public void setMultipart(Multipart multipart) {
-		this.multipart = multipart;
-	}
+   public TypeEmail getType() {
+      return this.type;
+   }
 
-	@Override
-	public void setSujet(String sujet) {
-		this.sujet = sujet;
-	}
+   @Override
+   public Multipart getMultipart() {
+      return this.multipart;
+   }
 
-	@Override
-	public void setFileTab(File[] fileTab) {
-		this.fileTab = fileTab;
-	}
+   @Override
+   public void setType(TypeEmail type) {
+      this.type = type;
+   }
 
-	@Override
-	public File[] getFileTab() {
-		return this.fileTab;
-	}
+   @Override
+   public void setMultipart(Multipart multipart) {
+      this.multipart = multipart;
+   }
+
+   @Override
+   public void setSujet(String sujet) {
+      this.sujet = sujet;
+   }
+
+   @Override
+   public void setFileTab(File[] fileTab) {
+      this.fileTab = fileTab;
+   }
+
+   @Override
+   public File[] getFileTab() {
+      return this.fileTab;
+   }
 }

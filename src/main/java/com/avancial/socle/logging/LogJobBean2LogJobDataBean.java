@@ -3,10 +3,12 @@
  */
 package com.avancial.socle.logging;
 
-import com.avancial.socle.data.controller.dao.JobPlanifDao;
+import javax.inject.Inject;
+
 import com.avancial.socle.data.controller.dao.UserDao;
 import com.avancial.socle.data.model.databean.AbstractDataBean;
 import com.avancial.socle.data.model.databean.LogJobDataBean;
+import com.avancial.socle.scheduler.service.JobPlanifService;
 
 /**
  * @author bruno
@@ -14,6 +16,9 @@ import com.avancial.socle.data.model.databean.LogJobDataBean;
  */
 public class LogJobBean2LogJobDataBean implements ILogBean2LogDataBeanConverter {
 
+	@Inject
+   private JobPlanifService jobService;
+	
    private LogJobDataBean dataBean;
 
    /**
@@ -36,8 +41,7 @@ public class LogJobBean2LogJobDataBean implements ILogBean2LogDataBeanConverter 
       this.dataBean.setDateDebutLogJob(bean1.getDateDebutJob());
       this.dataBean.setDateFinLogJob(bean1.getDateDebutJob());
       this.dataBean.setEtatOkLogJob(bean1.getEtatOkJob());
-      JobPlanifDao jobPlanifDao = new JobPlanifDao();
-      this.dataBean.setJobPlanif(jobPlanifDao.getJobPlanifById(bean1.getIdJobPlanif()));
+      this.dataBean.setJobPlanif(this.jobService.getJobPlanifById(bean1.getIdJobPlanif()));
       this.dataBean.setLibelleJobLogJob(bean1.getLibelleJob());
       UserDao userDao = new UserDao();
       // this.dataBean.setUser(userDao.getUserByLogin(bean1.getLoginUser()));

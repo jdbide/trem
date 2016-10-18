@@ -1,9 +1,11 @@
 package com.avancial.socle.logging;
 
+import javax.inject.Inject;
+
 import com.avancial.socle.data.controller.dao.AbstractDao;
-import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.model.databean.LogJobDataBean;
 import com.avancial.socle.exceptions.impl.ASocleException;
+import com.avancial.socle.scheduler.service.JobPlanifService;
 
 /**
  * Implémentation du pattern Strategy pour logger un job en base de données.<br/>
@@ -15,6 +17,9 @@ import com.avancial.socle.exceptions.impl.ASocleException;
  */
 public class StrategySortieLogJobBdd implements IStrategySortieLog {
 
+   @Inject
+   private JobPlanifService jobService;
+   
    protected LogJobDataBean logJobDataBean;
 
    /**
@@ -37,8 +42,7 @@ public class StrategySortieLogJobBdd implements IStrategySortieLog {
       this.logJobDataBean.setDateDebutLogJob(bean1.getDateDebutJob());
       this.logJobDataBean.setDateFinLogJob(bean1.getDateDebutJob());
       this.logJobDataBean.setEtatOkLogJob(bean1.getEtatOkJob());
-      JobPlanifDao jobPlanifDao = new JobPlanifDao();
-      this.logJobDataBean.setJobPlanif(jobPlanifDao.getJobPlanifById(bean1.getIdJobPlanif()));
+      this.logJobDataBean.setJobPlanif(jobService.getJobPlanifById(bean1.getIdJobPlanif()));
       this.logJobDataBean.setLibelleJobLogJob(bean1.getLibelleJob());
       this.logJobDataBean.setLibelleUserLogJob(bean1.getLoginUser());
 

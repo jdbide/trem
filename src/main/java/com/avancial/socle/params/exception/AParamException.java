@@ -12,17 +12,17 @@ public abstract class AParamException extends Exception {
    /**
     * 
     */
-   private static final long serialVersionUID = 1L;
+   private static final long  serialVersionUID              = 1L;
    @SuppressWarnings("javadoc")
-   public static final String MSG_COLLECTION_ITEM_NOT_FOUND = "Le paramètre '%s' de la collection '%s' n'a pas été trouvé";
+   public static final String MSG_COLLECTION_ITEM_NOT_FOUND = "Le paramÃ¨tre '%s' de la collection '%s' n'a pas Ã©tÃ© trouvÃ©";
    @SuppressWarnings("javadoc")
-   public static final String MSG_COLLECTION_NOT_LOADED = "La collection '%s' n'a pas été chargée";
+   public static final String MSG_COLLECTION_NOT_LOADED     = "La collection '%s' n'a pas Ã©tÃ© chargÃ©e";
 
    /**
     * Constructeur
     */
    public AParamException() {
-      // TODO Auto-generated constructor stub
+      // Vide pour injection
    }
 
    /**
@@ -32,7 +32,6 @@ public abstract class AParamException extends Exception {
     */
    public AParamException(String message) {
       super(message);
-      // TODO Auto-generated constructor stub
    }
 
    /**
@@ -42,7 +41,6 @@ public abstract class AParamException extends Exception {
     */
    public AParamException(Throwable cause) {
       super(cause);
-      // TODO Auto-generated constructor stub
    }
 
    /**
@@ -53,7 +51,6 @@ public abstract class AParamException extends Exception {
     */
    public AParamException(String message, Throwable cause) {
       super(message, cause);
-      // TODO Auto-generated constructor stub
    }
 
    /**
@@ -66,7 +63,6 @@ public abstract class AParamException extends Exception {
     */
    public AParamException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
       super(message, cause, enableSuppression, writableStackTrace);
-      // TODO Auto-generated constructor stub
    }
 
 }
