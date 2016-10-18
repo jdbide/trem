@@ -10,10 +10,12 @@
 	</div>
 	<div class="row">
 		<div class="col-md-2">
-			<button class="btn btn-default" ng-click="modifSearch()">Add/Modify search</button>
+			<button class="btn btn-default" ng-click="modifSearch()">Add/Modify
+				search</button>
 		</div>
 		<div class="col-md-2">
-			<button class="btn btn-default" ng-click="newSearch()">Make New Search</button>
+			<button class="btn btn-default" ng-click="newSearch()">Make
+				New Search</button>
 		</div>
 	</div>
 	<br>
@@ -26,6 +28,7 @@
 							<th class="text-center">Train</th>
 							<th class="text-center">Tranche</th>
 							<th class="text-center">RunDate</th>
+							<th class="text-center">RM</th>
 							<th class="text-center">Equip</th>
 							<th class="text-center">Capacity</th>
 							<th class="text-center">Status</th>
@@ -37,21 +40,26 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td><a> 09020 </a></td>
-							<td><a> 08004 </a></td>
-							<td>01/06/2016</td>
-							<td><a> TGT </a></td>
-							<td><a> 730 (..) </a></td>
-							<td>Open</td>
-							<td><a> GBSPX/../FRPNO </a></td>
-							<td>AVT</td>
-							<td>G341</td>
-							<td>02/02/2016</td>
-							<td><a> 25/05/2016 </a></td>
+						<tr ng-repeat="train in datas.trains">
+							<td><a> {{currentTrain}} </a></td>
+							<td><a> {{currentTranche}} </a></td>
+							<td>{{currentRunDate}}</td>
+							<td><a> {{currentRM}} </a></td>
+							<td><a> {{currentEquip}} </a></td>
+							<td>{{currentCapacity}}</td>
+							<td><a> {{currentStatut}} </a></td>
+							<td>{{currentStops}}</td>
+							<td>{{currentSat}}</td>
+							<td>{{currentTosp}}</td>
+							<td><a> {{currentLoadedOn}} </a></td>
+							<td><a> {{currentLastModif}} </a></td>
 						</tr>
 					</tbody>
 				</table>
+
+				<td data-title="'Code gare'" ng-switch="row.isEditing"><span
+					ng-switch-default></span></td>
+
 			</div>
 		</div>
 	</div>
