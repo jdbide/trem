@@ -19,11 +19,16 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tosp;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.service.filtrePlanTransport.FiltreEtPlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreGareDesserteRegimePlanTransport;
+import com.avancial.app.service.filtrePlanTransport.FiltreGareDesserteRegimeTranche;
 import com.avancial.app.service.filtrePlanTransport.FiltreNumeroTrainPlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreNumeroTranchePlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreOuPlanTransport;
 import com.avancial.app.service.filtrePlanTransport.FiltreSousRegimePlanTransport;
+import com.avancial.app.service.filtrePlanTransport.FiltreSousRegimeTranche;
 import com.avancial.app.service.filtrePlanTransport.FiltreStatutPlanTransport;
+import com.avancial.app.service.filtrePlanTransport.FiltreStatutTranche;
+import com.avancial.app.service.filtrePlanTransport.FiltreTrainPlanTransport;
+import com.avancial.app.service.filtrePlanTransport.FiltreTranchePlanTransport;
 import com.avancial.app.service.filtrePlanTransport.IFiltre;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.traitement.ATraitementLogDetail;
@@ -66,12 +71,12 @@ public class TraitementFiltrePlanTransport extends ATraitementLogDetail implemen
         this.traitementObjetMetier.setMapPlansDeTransport(mapPdt);
         this.traitementObjetMetier.execute();
         PlanTransport planTransportCompar = mapPdt.getPlanTransportActive();
-        
+
         /**
          * creation du filtre sur le numero de train
          */
         IFiltre<PlanTransport> filtreTrain = new FiltreNumeroTrainPlanTransport(this.filtre.getNumerosTrains());
-
+        PlanTransport planTransportTest = filtreTrain.filtreParCritere(planTransportCompar);
         /**
          * creation du filtre sur le numero de tranche
          */
@@ -80,79 +85,98 @@ public class TraitementFiltrePlanTransport extends ATraitementLogDetail implemen
         /**
          * creation du filtre sur l'"origine/destination"
          */
-        MotriceRefODEntity odEntity = this.getEntityManager()
-                .createNamedQuery("MotriceRefOD.getById", MotriceRefODEntity.class)
-                .setParameter("idMotriceRefOd", this.filtre.getIdOrigineDestination()).getSingleResult();
-        gare.setCodeGare(odEntity.getCodeGareOrigineMotriceRefOd());
-        od.setOrigine(gare);
-        gare = new Gare();
-        gare.setCodeGare(odEntity.getCodeGareDestinationMotriceRefOd());
-        od.setDestination(gare);
-        IFiltre<PlanTransport> filtreOD = new FiltreSousRegimePlanTransport(od);
+
+        IFiltre<PlanTransport> filtreOD = new FiltreSousRegimePlanTransport();
+        if (this.filtre.getIdOrigineDestination() != 0) {
+            MotriceRefODEntity odEntity = this.getEntityManager()
+                    .createNamedQuery("MotriceRefOD.getById", MotriceRefODEntity.class)
+                    .setParameter("idMotriceRefOd", this.filtre.getIdOrigineDestination()).getSingleResult();
+            gare.setCodeGare(odEntity.getCodeGareOrigineMotriceRefOd());
+            od.setOrigine(gare);
+            gare = new Gare();
+            gare.setCodeGare(odEntity.getCodeGareDestinationMotriceRefOd());
+            od.setDestination(gare);
+            filtreOD.setCritere(new FiltreTranchePlanTransport(new FiltreSousRegimeTranche(od)));
+        }
 
         /**
          * creation du filtre sur les arret du train
          */
-        List<Gare> garesStops = new ArrayList<>();
-        MotriceRefGareEntity gareEntity;
-        for (Integer idStop : this.filtre.getIdsStops()) {
-            gare = new Gare();
-            gareEntity = this.getEntityManager()
-                    .createNamedQuery("MotriceRefGare.getById", MotriceRefGareEntity.class)
-                    .setParameter("idMotriceRefGare", idStop).getSingleResult();
-            gare.setCodeGare(gareEntity.getCodeGareMotriceRefGare());
-            garesStops.add(gare);
+        IFiltre<PlanTransport> filtreStop = new FiltreGareDesserteRegimePlanTransport();
+        if (!this.filtre.getIdsStops().isEmpty()) {
+            List<Gare> garesStops = new ArrayList<>();
+            MotriceRefGareEntity gareEntity;
+            for (Integer idStop : this.filtre.getIdsStops()) {
+                gare = new Gare();
+                gareEntity = this.getEntityManager()
+                        .createNamedQuery("MotriceRefGare.getById", MotriceRefGareEntity.class)
+                        .setParameter("idMotriceRefGare", idStop).getSingleResult();
+                gare.setCodeGare(gareEntity.getCodeGareMotriceRefGare());
+                garesStops.add(gare);
+            }
+            filtreStop.setCritere(new FiltreTranchePlanTransport(new FiltreGareDesserteRegimeTranche(garesStops)));
         }
-        IFiltre<PlanTransport> filtreStop = new FiltreGareDesserteRegimePlanTransport(garesStops);
 
         /**
          * creation du filtre sur les Tosp
          */
-        MotriceRegimeTospEntity tospEntity = this.getEntityManager()
-                .createNamedQuery("MotriceRegimeTosp.getById", MotriceRegimeTospEntity.class)
-                .setParameter("idMotriceRegimeTosp", this.filtre.getIdTosp()).getSingleResult();
-        Tosp tosp = new Tosp();
-        tosp.setOureCode(tospEntity.getMotriceRefTospEntity().getCodeMotriceRefTosp());
-        IFiltre<PlanTransport> filtreTosp = new FiltreSousRegimePlanTransport(tosp);
+        IFiltre<PlanTransport> filtreTosp = new FiltreSousRegimePlanTransport();
+        if (this.filtre.getIdTosp() != 0) {
+            MotriceRegimeTospEntity tospEntity = this.getEntityManager()
+                    .createNamedQuery("MotriceRegimeTosp.getById", MotriceRegimeTospEntity.class)
+                    .setParameter("idMotriceRegimeTosp", this.filtre.getIdTosp()).getSingleResult();
+            Tosp tosp = new Tosp();
+            tosp.setOureCode(tospEntity.getMotriceRefTospEntity().getCodeMotriceRefTosp());
+            filtreTosp.setCritere(new FiltreTranchePlanTransport(new FiltreSousRegimeTranche(tosp)));
+        }
 
         /**
          * creation du filtre sur le CodeRm
          */
-        Composition compo = new Composition();
-        MotriceRefRameCodeEntity codeRmEntity = this.getEntityManager()
-                .createNamedQuery("MotriceRefRameCode.getById", MotriceRefRameCodeEntity.class)
-                .setParameter("idMotriceRefRameCode", this.filtre.getIdCodeRM()).getSingleResult();
-        compo.setCodeRm(codeRmEntity.getLabelRameCode());
-        IFiltre<PlanTransport> filtreCodeRm = new FiltreSousRegimePlanTransport(compo);
+        IFiltre<PlanTransport> filtreCodeRm = new FiltreSousRegimePlanTransport();
+        if (this.filtre.getIdCodeRM() != 0) {
+            Composition compo = new Composition();
+            MotriceRefRameCodeEntity codeRmEntity = this.getEntityManager()
+                    .createNamedQuery("MotriceRefRameCode.getById", MotriceRefRameCodeEntity.class)
+                    .setParameter("idMotriceRefRameCode", this.filtre.getIdCodeRM()).getSingleResult();
+            compo.setCodeRm(codeRmEntity.getLabelRameCode());
+            filtreCodeRm.setCritere(new FiltreTranchePlanTransport(new FiltreSousRegimeTranche(compo)));
+        }
 
         /**
          * creation du filtre sur le codeEquipement
          */
-        TypeEquipement eqp = new TypeEquipement();
-        MotriceRefEqpTypeEntity eqpEntity = this.getEntityManager()
-                .createNamedQuery("MotriceRefEqpType.getById", MotriceRefEqpTypeEntity.class)
-                .setParameter("idMotriceRefEqpType", this.filtre.getIdCodeEquipement()).getSingleResult();
-        eqp.setTypeEquipement(eqpEntity.getLabelEqpType());
-        IFiltre<PlanTransport> filtreCodeEqp = new FiltreSousRegimePlanTransport(eqp);
+        IFiltre<PlanTransport> filtreCodeEqp = new FiltreSousRegimePlanTransport();
+        if (this.filtre.getIdCodeEquipement() != 0) {
+            TypeEquipement eqp = new TypeEquipement();
+            MotriceRefEqpTypeEntity eqpEntity = this.getEntityManager()
+                    .createNamedQuery("MotriceRefEqpType.getById", MotriceRefEqpTypeEntity.class)
+                    .setParameter("idMotriceRefEqpType", this.filtre.getIdCodeEquipement()).getSingleResult();
+            eqp.setTypeEquipement(eqpEntity.getLabelEqpType());
+            filtreCodeEqp.setCritere(new FiltreTranchePlanTransport(new FiltreSousRegimeTranche(eqp)));
+        }
 
         /**
          * creation du filtre sur le statut de la tranche
          */
-        IFiltre<PlanTransport> filtreStatus = new FiltreStatutPlanTransport(this.filtre.getStatus());
+        IFiltre<PlanTransport> filtreStatus = new FiltreStatutPlanTransport();
+        if (this.filtre.getStatus() != null)
+            filtreStatus.setCritere(new FiltreTrainPlanTransport(new FiltreStatutTranche(this.filtre.getStatus())));
 
         /**
          * creation du filtre OU pour les trains "ou" les tranches
          */
         @SuppressWarnings("unchecked")
         IFiltre<PlanTransport> filtreOu = new FiltreOuPlanTransport(filtreTrain, filtreTranche);
-        
+
         /**
          * creation du filtre global
          */
         @SuppressWarnings("unchecked")
-        IFiltre<PlanTransport> filtreEt = new FiltreEtPlanTransport(filtreCodeEqp,filtreCodeRm,filtreOD, filtreStatus, filtreStop, filtreTosp, filtreOu);
-        
-        this.planTransport =  filtreEt.filtreParCritere(planTransportCompar);
+        IFiltre<PlanTransport> filtreEt = new FiltreEtPlanTransport(filtreCodeEqp, filtreCodeRm, filtreOD, filtreStatus,
+                filtreStop, filtreTosp, filtreOu);
+
+        this.planTransport = filtreEt.filtreParCritere(planTransportCompar);
 
     }
 

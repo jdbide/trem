@@ -12,7 +12,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  * @author heloise.guillemaud
  *
  */
-class FiltreTranchePlanTransport implements IFiltre<PlanTransport> {
+public class FiltreTranchePlanTransport implements IFiltre<PlanTransport> {
 
     private IFiltre<Tranche> filtreTranche;
 
@@ -21,6 +21,14 @@ class FiltreTranchePlanTransport implements IFiltre<PlanTransport> {
         this.filtreTranche = filtreTranche;
     }
 
+    /**
+     * constructeur vide
+     */
+    public FiltreTranchePlanTransport() {
+        super();
+        this.filtreTranche = null;
+    }
+    
     @Override
     public PlanTransport filtreParCritere(PlanTransport object) {
         if (this.filtreTranche == null)
@@ -54,6 +62,16 @@ class FiltreTranchePlanTransport implements IFiltre<PlanTransport> {
             }
         }
         return planTransport;
+    }
+    
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.filtreTranche = (IFiltre<Tranche>) object;
+        }
+        catch (Exception e) {
+            this.filtreTranche = null;
+        }
     }
 
 }
