@@ -76,7 +76,6 @@ public class TraitementFiltrePlanTransport extends ATraitementLogDetail implemen
          * creation du filtre sur le numero de train
          */
         IFiltre<PlanTransport> filtreTrain = new FiltreNumeroTrainPlanTransport(this.filtre.getNumerosTrains());
-        PlanTransport planTransportTest = filtreTrain.filtreParCritere(planTransportCompar);
         /**
          * creation du filtre sur le numero de tranche
          */
