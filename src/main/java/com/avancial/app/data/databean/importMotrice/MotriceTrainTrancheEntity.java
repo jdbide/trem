@@ -69,7 +69,7 @@ public class MotriceTrainTrancheEntity {
    @ForeignKey(name = "FK_motrice_regime_traintranche_idJeuDonnees")
    private JeuDonneeEntity           jeuDonnee;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceTrainTranche")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceTrainTranche")
    private List<MotriceRegimeEntity> motriceRegimeEntities;
 
    public Long getIdMotriceTrainTranche() {
@@ -121,6 +121,7 @@ public class MotriceTrainTrancheEntity {
    }
 
    public List<MotriceRegimeEntity> getMotriceRegimeEntities() {
+      System.out.println("-- MotriceTrainTrancheEntity - getMotriceRegimeEntities");
       return this.motriceRegimeEntities;
    }
 
