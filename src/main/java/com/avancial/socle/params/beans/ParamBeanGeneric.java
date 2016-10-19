@@ -3,12 +3,11 @@
  */
 package com.avancial.socle.params.beans;
 
-
 /**
  * @author bruno
  *
  */
 public class ParamBeanGeneric extends AParamBean {
-   // Implémentation générique des paramètres
+   // ImplÃ©mentation gÃ©nÃ©rique des paramÃ¨tres
 
 }

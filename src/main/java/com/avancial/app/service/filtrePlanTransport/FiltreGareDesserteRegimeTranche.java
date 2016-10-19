@@ -16,7 +16,7 @@ import com.avancial.socle.utils.DateUtils;
  * @author heloise.guillemaud
  *
  */
-class FiltreGareDesserteRegimeTranche extends AFiltreGareDesserteTranche {
+public class FiltreGareDesserteRegimeTranche extends AFiltreGareDesserteTranche {
 
    /**
     * Liste des dates à enlever du régime de la Tranche résultat

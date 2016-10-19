@@ -9,17 +9,19 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import com.avancial.socle.data.controller.dao.JobDao;
-import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.controller.dao.JobPlanifTypeDao;
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
 import com.avancial.socle.exceptions.impl.ASocleException;
 import com.avancial.socle.scheduler.entity.JobDataBean;
+import com.avancial.socle.scheduler.service.JobPlanifService;
 
 /**
  * @author bruno.legloahec
  *
  */
 public class JobPlanifBean {
+   @Inject
+   private JobPlanifService  jobService;
    @Inject
    private JobPlanifDataBean jobPlanifDataBean;
    @Inject
@@ -43,10 +45,9 @@ public class JobPlanifBean {
    /**
     * @return
     */
-   public static Collection<? extends JobPlanifBean> getAll() {
+   public Collection<? extends JobPlanifBean> getAll() {
       ArrayList<JobPlanifBean> liste = new ArrayList<>();
-      JobPlanifDao dao = new JobPlanifDao();
-      for (JobPlanifDataBean bean : dao.getAll()) {
+      for (JobPlanifDataBean bean : this.jobService.getAll()) {
          JobPlanifBean job = new JobPlanifBean(bean);
          liste.add(job);
       }
@@ -65,9 +66,7 @@ public class JobPlanifBean {
       this.getJobPlanif().setJobPlanifTypeDataBean(planifDao.getJobPlanifTypeById(jobPlanifTypeId));
       this.getJobPlanif().setJob(jobDao.getJobById(jobId));
 
-      JobPlanifDao dao = new JobPlanifDao();
-
-      dao.save(this.jobPlanifDataBean);
+      this.jobService.save(this.jobPlanifDataBean);
 
    }
 
@@ -76,8 +75,7 @@ public class JobPlanifBean {
     * 
     */
    public void update() throws ASocleException {
-      JobPlanifDao dao = new JobPlanifDao();
-      dao.update(this.jobPlanifDataBean);
+	   this.jobService.update(this.jobPlanifDataBean);
    }
 
    /**
@@ -85,8 +83,7 @@ public class JobPlanifBean {
     * 
     */
    public void delete() throws ASocleException {
-      JobPlanifDao dao = new JobPlanifDao();
-      dao.delete(this.jobPlanifDataBean);
+      this.jobService.delete(this.jobPlanifDataBean);
    }
 
    public Boolean isExisteClasse(String classe) {

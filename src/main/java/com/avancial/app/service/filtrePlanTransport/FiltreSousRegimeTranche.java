@@ -22,9 +22,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
  * @author heloise.guillemaud
  *
  */
-class FiltreSousRegimeTranche extends AFiltreTranche {
-
-    private ASousRegimeTranche aSousRegimeTranche;
+public class FiltreSousRegimeTranche extends AFiltreTranche {
 
     /**
      * 
@@ -34,6 +32,10 @@ class FiltreSousRegimeTranche extends AFiltreTranche {
     public FiltreSousRegimeTranche(ASousRegimeTranche aSousRegimeTranche) {
         super();
         this.aSousRegimeTranche = aSousRegimeTranche;
+    }
+    
+    public FiltreSousRegimeTranche(){
+        super();
     }
 
     @Override

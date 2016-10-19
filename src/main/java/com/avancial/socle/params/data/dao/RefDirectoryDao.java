@@ -1,10 +1,11 @@
-package com.avancial.socle.data.controller.dao;
+package com.avancial.socle.params.data.dao;
 
 import java.util.List;
 
 import javax.persistence.Query;
 
-import com.avancial.socle.data.model.databean.RefDirectoryDataBean;
+import com.avancial.socle.data.controller.dao.AbstractDao;
+import com.avancial.socle.params.data.entities.RefDirectoryEntity;
 
 /**
  * Classe DAO pour l'objet technique RefDirectory
@@ -15,19 +16,24 @@ import com.avancial.socle.data.model.databean.RefDirectoryDataBean;
 public class RefDirectoryDao extends AbstractDao {
 
    /**
-    * Retourne un RefDirectoryDataBean à partir du nom technique
+    * 
+    */
+   private static final long serialVersionUID = -2698430580961221287L;
+
+   /**
+    * Retourne un RefDirectoryEntity Ã  partir du nom technique
     * 
     * @param technicalName
     * 
     * @return l'utilisateur ayant comme login le parametre
     */
-   public RefDirectoryDataBean getRefDirectoryByTechnicalName(String technicalName) {
-      String sql = "FROM RefDirectoryDataBean refDirectory WHERE refDirectory.technicalNameRefDirectory = :technicalName";
+   public RefDirectoryEntity getRefDirectoryByTechnicalName(String technicalName) {
+      String sql = "FROM RefDirectoryEntity refDirectory WHERE refDirectory.technicalNameRefDirectory = :technicalName";
 
       Query requete = this.getEntityManager().createQuery(sql);
       requete.setParameter("technicalName", technicalName);
 
-      return (RefDirectoryDataBean) requete.getSingleResult();
+      return (RefDirectoryEntity) requete.getSingleResult();
 
    }
 
@@ -38,7 +44,7 @@ public class RefDirectoryDao extends AbstractDao {
    public List<?> getAll() {
       if (this.getEntityManager() == null)
          return null;
-      String sql = "From RefDirectoryDataBean";
+      String sql = "From RefDirectoryEntity";
       Query requete = this.getEntityManager().createQuery(sql);
       return requete.getResultList();
    }

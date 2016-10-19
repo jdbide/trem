@@ -1,5 +1,7 @@
 package com.avancial.app.service.filtrePlanTransport;
 
+import java.util.List;
+import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 
 /**
@@ -24,6 +26,14 @@ public abstract class AFiltreOuPlanTransport implements IFiltre<PlanTransport> {
         super();
         this.filtres = filtres;
     }
+    
+    /**
+     * constructeur vide
+     */
+    public AFiltreOuPlanTransport() {
+        super();
+        this.filtres = null;
+    }
 
     @Override
     public PlanTransport filtreParCritere(PlanTransport object) {
@@ -45,6 +55,18 @@ public abstract class AFiltreOuPlanTransport implements IFiltre<PlanTransport> {
         return object.clone();
     }
 
+    
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.filtres = (IFiltre<PlanTransport>[]) object;
+        }
+        catch (Exception e) {
+            this.filtres = null;
+        }
+    }
+    
+    
     /**
      * Applique un "ou" entre deux filtres sur un plan de transport
      * 

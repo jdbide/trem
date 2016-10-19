@@ -24,7 +24,6 @@ import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefODEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRefOd2gareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRameCodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefTospEntity;
 import com.avancial.app.data.dto.DataFormCompagnieEnvironnementSearchDto;

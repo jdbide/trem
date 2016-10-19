@@ -8,7 +8,7 @@ import java.util.Collection;
 import com.avancial.socle.params.beans.IParamBean;
 
 /**
- * Interface de chargement et de r�cup�ration de param�tres
+ * Interface de chargement et de récupération de paramètres
  * 
  * 
  * @author bruno
@@ -19,7 +19,7 @@ public interface IParamReader {
    /**
     * Permet de récupérer l'ensemble des paramètres
     * 
-    * @return une collection contenant l'ensemble des param�tres
+    * @return une collection contenant l'ensemble des paramètres
     */
    public Collection<IParamBean> getParams();
 

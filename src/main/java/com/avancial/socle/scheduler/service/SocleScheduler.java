@@ -26,7 +26,6 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.spi.JobFactory;
 
 import com.avancial.socle.business.JobPlanifBean;
-import com.avancial.socle.data.controller.dao.JobPlanifDao;
 import com.avancial.socle.data.model.databean.JobPlanifDataBean;
 import com.avancial.socle.resources.constants.SOCLE_jobs;
 
@@ -47,7 +46,7 @@ public class SocleScheduler implements ISocleScheduler, Serializable {
    private static final String     GROUP_NAME       = "socle";
 
    @Inject
-   JobPlanifDao                    dao;
+   private JobPlanifService                jobService;
 
    @Inject
    private JobFactory              cdiJobFactory;
@@ -103,7 +102,7 @@ public class SocleScheduler implements ISocleScheduler, Serializable {
     */
    private void chargeActiveJobs() {
       this.jobs.clear();
-      jobs = dao.getAllActif();
+      jobs = this.jobService.getAllActif();
    }
 
    /*

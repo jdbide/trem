@@ -1,5 +1,6 @@
 package com.avancial.app.service.filtrePlanTransport;
 
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 
@@ -10,13 +11,21 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Train;
  * @author heloise.guillemaud
  *
  */
-class FiltreTrainPlanTransport implements IFiltre<PlanTransport> {
+public class FiltreTrainPlanTransport implements IFiltre<PlanTransport> {
 
     private IFiltre<Train> filtreTrain;
 
     public FiltreTrainPlanTransport(IFiltre<Train> filtreTrain) {
         super();
         this.filtreTrain = filtreTrain;
+    }
+    
+    /**
+     * constructeur vide
+     */
+    public FiltreTrainPlanTransport() {
+        super();
+        this.filtreTrain = null;
     }
 
     @Override
@@ -39,6 +48,16 @@ class FiltreTrainPlanTransport implements IFiltre<PlanTransport> {
             }
         }
         return planTransport;
+    }
+    
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.filtreTrain = (IFiltre<Train>) object;
+        }
+        catch (Exception e) {
+            this.filtreTrain = null;
+        }
     }
 
 }

@@ -22,6 +22,11 @@ class FiltreNumeroTrancheTrain implements IFiltre<Train> {
         super();
         this.numeroTranches = numeroTranches;
     }
+    
+    public FiltreNumeroTrancheTrain() {
+        super();
+        this.numeroTranches = null;
+    }
 
     @Override
     public Train filtreParCritere(Train object) {
@@ -36,6 +41,16 @@ class FiltreNumeroTrancheTrain implements IFiltre<Train> {
             }
         }
         return train;
+    }
+    
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.numeroTranches = (List<String>) object;
+        }
+        catch (Exception e) {
+            this.numeroTranches = null;
+        }
     }
 
 }

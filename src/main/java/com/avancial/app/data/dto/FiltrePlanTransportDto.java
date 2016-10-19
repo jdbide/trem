@@ -26,6 +26,10 @@ public class FiltrePlanTransportDto {
     private int idCodeRM;
     private int idCodeEquipement;
     private EnumTrancheStatut status;
+    /**
+     * Boolean qui represente si l'od selectionné doit se prendre en aller/retour
+     */
+    private boolean roundTrip;
 
     /**
      * Constructeur vide
@@ -197,6 +201,20 @@ public class FiltrePlanTransportDto {
     public void setStatus(EnumTrancheStatut status) {
         this.status = status;
     }
+
+   /**
+    * @return the roundTrip
+    */
+   public boolean isRoundTrip() {
+      return roundTrip;
+   }
+
+   /**
+    * @param roundTrip the roundTrip to set
+    */
+   public void setRoundTrip(boolean roundTrip) {
+      this.roundTrip = roundTrip;
+   }
 
 
 
