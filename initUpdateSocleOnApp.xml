@@ -8,7 +8,7 @@
 	
 	<!-- initialisation des chemins -->
 	
-	<property name="source.folder" value="socle2" />
+	<property name="source.folder" value="socle" />
 	
 	<condition property="lecteur" value="c:">
 		<contains string="${user.name}" substring="legloahec" casesensitive="false" />
@@ -26,6 +26,9 @@
 	
 	<property name="source.pom.xml" location="${source}/pom.xml" />
 	<property name="dest.pom.xml" location="pom.xml" />
+	
+	<property name="source.socle.resources.arquillian.xml" location="${source}/src/main/resources/arquillian.xml" />
+	<property name="dest.socle.webapp.resources.arquillian.xml" location="src/main/resources/arquillian.xml" />
 	
 	
 	
@@ -58,6 +61,16 @@
 	
 	<property name="dest.app.doc" location="${dest.otherResources}/app" />
 	
+	
+	
+	
+	<!-- déclaration de la copie du fichier de configuration d'Arquillian -->
+	
+	<target name="arquillian_xml_copy">
+        <delete file="${dest.socle.webapp.resources.arquillian.xml}" quiet="true" failonerror="false"></delete>
+        <echo level="info">Copie du fichier pom.xml</echo>
+		<copy tofile="${dest.socle.webapp.resources.arquillian.xml}" file="${source.socle.resources.arquillian.xml}" verbose="true" overwrite="true"></copy>
+    </target>
 	
 	
 	<!-- déclaration des copies du fichier pom.xml -->
@@ -141,46 +154,9 @@
 
 	
 	
-	<!-- parties communes à tout les update update -->
-	
-	<target name="update_commun">
-		
-		<antcall target="socle_resources_copy"></antcall>
-		<antcall target="socle_otherResources_copy"></antcall>
-		<antcall target="socle_webapp_copy"></antcall>
-		<antcall target="socle_java_copy"></antcall>
-		
-	</target>
-
-	<!-- update -->
-	
-	<target name="update">
-        <echo level="info">Mise à jour du projet</echo>
-        
-        <antcall target="update_commun"></antcall>
-        
-        <echo level="info">Fin de mise à jour du projet</echo>
-		<echo level="warning">ATTENTION : le fichier pom.xml n'a pas été mis à jour</echo>
-		<echo level="warning">ATTENTION : le répertoir src/main/webapp/appClient/vendor n'a pas été mis à jour</echo>
-    </target>
-	
-	
-	
-	<!-- update -->
-    
-    <target name="update_force">
-        <echo level="info">Mise à jour du projet en écrasant les dépendances JS et le pom.xml</echo>
-        
-        <antcall target="update_commun"></antcall>
-    	<antcall target="vendor_copy"></antcall>
-    	<antcall target="pom_xml_copy"></antcall>
-        
-        <echo level="info">Fin de mise à jour forcée du projet</echo>
-    </target>
 	
 
-	
-	<!-- vérification de l'existance du projet -->
+	<!-- vérification de l'existence du projet -->
     
     <available type="dir" property="project.not.empty" file="${dest.socle.java}"></available>
     
@@ -208,7 +184,15 @@
 		
 	</target>
 	
+	<!-- parties communes à tout les update update -->
 	
+	<target name="update_commun">
+			<antcall target="socle_resources_copy"></antcall>
+			<antcall target="socle_otherResources_copy"></antcall>
+			<antcall target="socle_webapp_copy"></antcall>
+			<antcall target="socle_java_copy"></antcall>
+			<antcall target="arquillian_xml_copy"></antcall>
+		</target>
 	
 	<!-- init -->
 	
@@ -224,4 +208,31 @@
 		<echo level="info">Fin d'inialisation du projet</echo>
 		<echo level="warning">ATTENTION : il faut changer le nom du projet dans le pom.xml</echo>
 	</target>
+	
+	<!-- update -->
+		
+		<target name="update">
+	        <echo level="info">Mise à jour du projet</echo>
+	        
+	        <antcall target="update_commun"></antcall>
+	        
+	        <echo level="info">Fin de mise à jour du projet</echo>
+			<echo level="warning">ATTENTION : le fichier pom.xml n'a pas été mis à jour</echo>
+			<echo level="warning">ATTENTION : le répertoir src/main/webapp/appClient/vendor n'a pas été mis à jour</echo>
+	    </target>
+	
+	
+	<!-- update -->
+    
+    <target name="update_force">
+        <echo level="info">Mise à jour du projet en écrasant les dépendances JS et le pom.xml</echo>
+        
+        <antcall target="update_commun"></antcall>
+    	<antcall target="vendor_copy"></antcall>
+    	<antcall target="pom_xml_copy"></antcall>
+        
+        <echo level="info">Fin de mise à jour forcée du projet</echo>
+    </target>
+	
+	
 </project>

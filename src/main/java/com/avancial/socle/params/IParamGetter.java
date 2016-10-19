@@ -11,8 +11,8 @@ import com.avancial.socle.params.exception.ParamCollectionNotLoadedException;
 import com.avancial.socle.params.exception.ParamNotFoundException;
 
 /**
- * Cette classe repr�sente le point d'acc�s unique d'acc�s aux param�tres de l'application.<br/>
- * Pour impl�menter cette interface, il faut �tendre la classe abstraite AParamGetter sous la forme :
+ * La classe implmémentant cette interface représente le point d'accès unique d'accès aux paramètres de l'application.<br/>
+ * Pour implémenter cette interface, il faut étendre la classe abstraite AParamGetter sous la forme :
  * <ul>
  * 
  * 

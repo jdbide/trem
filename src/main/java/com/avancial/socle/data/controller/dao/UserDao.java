@@ -18,11 +18,6 @@ import com.avancial.socle.exceptions.impl.ASocleException;
 @RequestScoped
 public class UserDao extends AbstractDao {
 
-   /**
-    * 
-    */
-   private static final long serialVersionUID = 1L;
-
    @SuppressWarnings("unchecked")
    @Override
    public List<UserDataBean> getAll() {
@@ -41,7 +36,7 @@ public class UserDao extends AbstractDao {
 
    public UserDataBean getUserById(Long idUser) {
        Query query = this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID, UserDataBean.class);
-       query.setParameter("id", idUser);
+       query.setParameter("idUser", idUser);
        UserDataBean res = null;
 
        try {

@@ -10,9 +10,9 @@ package com.avancial.socle.params.beans;
 public interface IParamBean {
 
    /**
-    * Récupère le nom du paramètre
+    * RÃ©cupÃ¨re le nom du paramÃ¨tre
     * 
-    * @return le nom du paramètre
+    * @return le nom du paramÃ¨tre
     */
    public String getName();
 
@@ -22,7 +22,7 @@ public interface IParamBean {
    public void setName(String name);
 
    /**
-    * @return la valeur du paramètre
+    * @return la valeur du paramÃ¨tre
     */
    public String getValue();
 
