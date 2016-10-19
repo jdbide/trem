@@ -10,7 +10,7 @@
 				<div class="modal-body-back-socle">
 					<div class="modal-body-content-socle">
 						<div class="form-group form-group-modal-socle">
-							<p>1 - Select TimeTable file to compare:</p>
+							<p>1 - Select timetable file to compare:</p>
 
 							<div class="col-md-12">
 								<!-- image-preview-filename input [CUT FROM HERE]-->
@@ -52,24 +52,26 @@
 			                    	</p>
 			                  	</div>
 							</div>
-							<div  class="col-md-12 " ng-show="$parent.files.firstFile.etat.isStartTraitement">
+							<div  class="col-md-12 " ng-show="$parent.files.firstFile.etat.isStartTraitement && $parent.files.firstFile.etat.isFinishTraitement==false">
 								<div class="box box-solid">
 									<div class="box-header with-border">
 										<i class="fa fa-upload"></i>
 										<h3 class="box-title">
-											Upload timeTable file <i ng-show="$parent.files.firstFile.etat.isFinishTraitement!=true" class="fa fa-refresh fa-spin"></i>
+											Uploading timeTable file <i ng-show="$parent.files.firstFile.etat.isFinishTraitement!=true" class="fa fa-refresh fa-spin"></i>
 										</h3>
 									</div>
 									
 									<div class="box-body">
-										<div  class="clearfix" >
+										<!-- <div  class="clearfix" >
                         					<span class="pull-left">Upload file #{{files.firstFile.file.name}}</span>
                         					<small class="pull-right">{{$parent.files.firstFile.file.progress}}%</small>
-                      					</div>
-                      					<div  class="progress xs">
+                        					 <span>------ </span>
+                        					<span ng-bind="$parent.files.firstFile.etat.isUploadSuccess"></span>
+                      					</div> -->
+                      					<!-- <div  class="progress xs">
 				                        	<div style="width: {{$parent.files.firstFile.file.progress}}%;" class="progress-bar progress-bar-green"></div>
-				                      	</div>
-										<p ng-show="$parent.files.firstFile.etat.isUploadSuccess" class="text-green">
+				                      	</div> -->
+										<!-- <p ng-show="$parent.files.firstFile.etat.isUploadSuccess" class="text-green">
 											Upload OK 
 											<i class="fa fa-check-square-o text-green"></i>
 										</p>
@@ -92,16 +94,16 @@
 										<p ng-show="$parent.files.firstFile.etat.isDataValidate == false" class="text-red">
 											Data validation Ko
 											<i class="fa fa-check-square-o text-red"></i>
-										</p>
+										</p> -->
 										<p ng-show="$parent.files.firstFile.etat.isFinishTraitementSuccess==true && $parent.files.secondFile.etat.isStartTraitement!=true" class="text-green">
-											Please upload Yield
+											Please upload yield file.
 										</p>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group form-group-modal-socle">
-							<p>2 - Select Yield file to compare:</p>
+							<p>2 - Select yield file to compare :</p>
 							<div class="col-md-12">
 								<div class="input-group">
 									<input type="text" class="form-control input-filename" ng-value="$parent.files.secondFile.file.name" disabled="disabled"> 
@@ -141,12 +143,12 @@
 									<div class="box-header with-border">
 										<i class="fa fa-upload"></i>
 										<h3 class="box-title">
-											Upload yield file <i ng-show="$parent.files.secondFile.etat.isFinishTraitement!=true" class="fa fa-refresh fa-spin"></i>
+											Uploading yield file <i ng-show="$parent.files.secondFile.etat.isFinishTraitement!=true" class="fa fa-refresh fa-spin"></i>
 										</h3>
 									</div>
 									
 									<div class="box-body">
-										<div  class="clearfix">
+										<!-- <div  class="clearfix">
                         					<span class="pull-left">Upload file #{{files.secondFile.file.name}}</span>
                         					<small class="pull-right">{{$parent.files.secondFile.file.progress}}%</small>
                       					</div>
@@ -176,7 +178,7 @@
 										<p ng-show="$parent.files.secondFile.etat.isDataValidate == false" class="text-red">
 											Data validation Ko
 											<i class="fa fa-check-square-o text-red"></i>
-										</p>
+										</p> -->
 										<!-- <p ng-show="$parent.files.secondFile.etat.isFinishTraitementSuccess" class="text-green">
 											Please upload Timetable
 										</p> -->
@@ -186,7 +188,7 @@
 						</div>
 
 						<div class="form-group form-group-modal-socle">
-							<p>3 - Select dataset to control:</p>
+							<p>3 - Select dataset to control :</p>
 							<div class="col-md-2">
 								<select   class="form-control"  
 									ng-model="$parent.selectedStatusJeuDonnees" 

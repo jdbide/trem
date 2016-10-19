@@ -3,7 +3,8 @@
 /**
  * Appelle un WebService pour récupérer le JSON qu'il envoie
  */
-socle_app.factory('jsonFactory',['$http', 'envService',function($http, envService) {
+socle_app.factory('jsonFactory',['$http', 'envService', 'Upload',function($http, envService, Upload) {
+
 	var jsonFactory = [];
 	
     jsonFactory.getJson = function (nameWebservice) {
@@ -59,6 +60,26 @@ socle_app.factory('jsonFactory',['$http', 'envService',function($http, envServic
         });
         
     };
+    
+    jsonFactory.uploadFile = function (nameWebservice, file) {
+        return Upload.upload({
+              url: envService.read('apiUrl')+nameWebservice,              
+              headers: {
+                'optional-header': 'header-value'
+              },
+              data: {file: file}
+            });
+        ///envService.read('apiUrl')+
+//        return Upload.http({
+//            url: envService.read('apiUrl')+nameWebservice,
+//            method: 'POST',
+//            headers: {
+//                'Content-Type': 'multipart/form-data'//file.type
+//            },
+//            data: file
+//        });
+    }
+
     
     return jsonFactory;
 }]);

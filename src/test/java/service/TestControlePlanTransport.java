@@ -77,7 +77,7 @@ public class TestControlePlanTransport {
         return jar;
     }
 	
-    @Test
+//    @Test
     public void testPlanTransport() {
         MapPlansDeTransport mapPlansDeTransport = PlanTransportFactory.createDataForControle();
         PlanTransport pdtXls = mapPlansDeTransport.getPlanTransportDraft();
@@ -138,7 +138,7 @@ public class TestControlePlanTransport {
     
     @Test
     public void testImportDessertesEurostar() throws FileTypeNotExpectedException {
-    	SocleExcelReadFile file = new SocleExcelReadFile("src/test/resources/testFiles/rapportDeControle/EurostarDessertesTest1.xlsx");
+    	SocleExcelReadFile file = new SocleExcelReadFile("D:\\was_tmp\\tremas\\import\\446\\timetable\\Eurostar Timetable Period D2 2016 V1.0A 2016_01_28.xlsx");
     	EurostarDessertesImportProcess importer = new EurostarDessertesImportProcess();
     	PlanTransport plan = null;
     	try {
@@ -161,6 +161,8 @@ public class TestControlePlanTransport {
 		System.out.println("autres erreurs " + (context.getValidationErrors().size() + context.getParsingErrors().size() + context.getExtractionErrors().size()) + " : ");
 		if(!context.getParsingErrors().isEmpty()) {
 			System.out.println("- de parsing :");
+			System.out.println("colonne : " + context.getParsingErrors().get(0).getCell().getColumnIndex() + " / " + "ligne : " + context.getParsingErrors().get(0).getCell().getRowIndex());
+			context.getParsingErrors().get(0).printStackTrace();
 			for(ExcelImportException error : context.getParsingErrors()) {
 				System.out.println("    " + error.getMessage() + " -> " + error.getStackTrace()[0].toString());
 			}

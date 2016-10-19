@@ -114,24 +114,29 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
 	}
 	
 	self.uploadUsing$http = function (file, idJeuDonneesControl, typeFile) {
-		file.upload = jsonFactory.uploadFile("webService/app/controlTms/uploadFile/"+idJeuDonneesControl+"/"+typeFile, file)
-		file.upload.then(function (response) {
-			file.result = response.message;
-			//alert(file.result);
-		}, function (response) {
-			alert(response);
-			console.log(response);
-			if (!response.status)
-				alert("Error upload file : " + response.message);
-			
+		var deffered  = $q.defer();
+		file.upload = jsonFactory.uploadFile("webService/app/controlTms/uploadFile/"+idJeuDonneesControl+"/"+typeFile, file);
+		initResponse();
+		file.upload.then(
+			function (response) {
+				file.result = response.message;
+				reponse = response.data;
+				
+				deffered.resolve();
+				
+				
+				
+			}, function () {
+				//alert("Erreur serveur !");
+				deffered.reject();
+				
 			}
-		
-		
 		);
-
 		file.upload.progress(function (evt) {
 			file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 		});
+		
+		return deffered.promise;
 	}
 	
 	self.getReponse = function () {
