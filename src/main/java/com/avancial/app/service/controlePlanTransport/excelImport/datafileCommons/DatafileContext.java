@@ -3,6 +3,7 @@ package com.avancial.app.service.controlePlanTransport.excelImport.datafileCommo
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -17,23 +18,41 @@ import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
  */
 public class DatafileContext extends AExcelImportContext<PlanTransport> {
 
+	/** liste des sous contextes de lignes. */
 	private final List<DatafileLineContext> lines = new ArrayList<DatafileLineContext>();
 	
+	/** liste de référence des types d'équipements. */
 	private List<String> refRollingStock;
 	
+	/** table de corespondance et de référence entre les codes RM et les codes Rame. */
+	private Map<String, String[]> refCodeRm;
+	
+	/** liste de référence des codes SAT. */
+	private List<String> refCodeSat;
+	
+	/** feuille à traiter dans le classeur. */
 	private Sheet sheet;
 	
+	/** indice de la première ligne de données. */
 	private int firstDataLineIndex;
 	
 	/**
 	 * construction simple.
-	 * @param source
+	 * @param source la source de données liée au contexte.
+	 * @param firstDataLineIndex indice de la première ligne de données.
 	 */
 	public DatafileContext(SocleExcelReadFile source, int firstDataLineIndex) {
 		super(source);
 		this.firstDataLineIndex = firstDataLineIndex;
 	}
 
+	/**
+	 * ajoute un sous contexte de ligne.
+	 * @param index indice de la ligne.
+	 * @param trainId numéro du train.
+	 * @param date date de circulation.
+	 * @param statut statut de la tranche.
+	 */
 	public void addSubContext(int index, int trainId, Date date, EnumTrancheStatut statut) {
 		DatafileLineContext subContext = new DatafileLineContext(this, trainId, date, statut, index);
 		this.lines.add(subContext);
@@ -86,6 +105,34 @@ public class DatafileContext extends AExcelImportContext<PlanTransport> {
 	 */
 	public void setFirstDataLineIndex(int firstDataLineIndex) {
 		this.firstDataLineIndex = firstDataLineIndex;
+	}
+
+	/**
+	 * @return the refCodeRm
+	 */
+	public Map<String, String[]> getRefCodeRm() {
+		return refCodeRm;
+	}
+
+	/**
+	 * @param refCodeRm the refCodeRm to set
+	 */
+	public void setRefCodeRm(Map<String, String[]> refCodeRm) {
+		this.refCodeRm = refCodeRm;
+	}
+
+	/**
+	 * @return the refCodeSat
+	 */
+	public List<String> getRefCodeSat() {
+		return refCodeSat;
+	}
+
+	/**
+	 * @param refCodeSat the refCodeSat to set
+	 */
+	public void setRefCodeSat(List<String> refCodeSat) {
+		this.refCodeSat = refCodeSat;
 	}
 	
 	
