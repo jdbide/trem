@@ -1,6 +1,6 @@
 package com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,12 +36,10 @@ public class DatafileLineContext implements ISubContext<DatafileContext>{
 	private final int index;
 	
 	/** liste des objets métier extraient. */
-	private final Map<Class<? extends ASousRegimeTranche>, ASousRegimeTranche> sousRegimes =
-			new HashMap<Class<? extends ASousRegimeTranche>, ASousRegimeTranche>();
+	private final List<ASousRegimeTranche> sousRegimes = new ArrayList<ASousRegimeTranche>();
 	
-	/** liste des sous contextes parsées. */
-	private final Map<Class<? extends ISubContext<DatafileLineContext>>, ISubContext<DatafileLineContext>> subContexts =
-			new HashMap<Class<? extends ISubContext<DatafileLineContext>>, ISubContext<DatafileLineContext>>();
+	/** liste des objets parsées. */
+	private final Map<String, Object> parseds = new HashMap<String, Object>();
 	
 	/**
 	 * constructeur simple.
@@ -63,24 +61,31 @@ public class DatafileLineContext implements ISubContext<DatafileContext>{
 		return contextContainer;
 	}
 	
+	/**
+	 * récupère l'objet parsé corespondant.
+	 * @param key nom de l'objet.
+	 * @return l'objet.
+	 */
 	@SuppressWarnings("unchecked")
-	public <T extends ISubContext<DatafileLineContext>> T getSubContext(Class<T> clazz) {
-		return (T) this.subContexts.get(clazz);
-	}
-
-	@SuppressWarnings("unchecked")
-	public <T extends ASousRegimeTranche> T getSousRegime(Class<T> clazz) {
-		return (T) this.sousRegimes.get(clazz);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public <T extends ISubContext<DatafileLineContext>> T putSubContext(T subContext) {
-		return (T) this.subContexts.put((Class<T>) subContext.getClass(), subContext);
+	public <T> T getParsed(String key) {
+		return (T) this.parseds.get(key);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <T extends ASousRegimeTranche> T putSubContext(T sousRegime) {
-		return (T) this.sousRegimes.put((Class<T>) sousRegime.getClass(), sousRegime);
+	/**
+	 * définit un objet parsé.
+	 * @param key le nom de l'objet.
+	 * @param value l'objet.
+	 * @return l'objet portant précedament ce nom, sinon null.
+	 */
+	public Object putParsed(String key, Object value) {
+		return this.parseds.put(key, value);
+	}
+	
+	/**
+	 * ajoute un sous régime.
+	 */
+	public  void addSousRegime(ASousRegimeTranche sousRegime) {
+		this.sousRegimes.add(sousRegime);
 	}
 
 	/**
@@ -128,7 +133,7 @@ public class DatafileLineContext implements ISubContext<DatafileContext>{
 	/**
 	 * @return tout les sous régimes.
 	 */
-	public Collection<ASousRegimeTranche> getSousRegimes() {
-		return this.sousRegimes.values();
+	public List<ASousRegimeTranche> getSousRegimes() {
+		return this.sousRegimes;
 	}
 }

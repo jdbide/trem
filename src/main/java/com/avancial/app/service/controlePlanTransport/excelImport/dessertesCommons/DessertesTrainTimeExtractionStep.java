@@ -13,6 +13,9 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
 import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
 import com.avancial.app.data.objetsMetier.PlanTransport.GareHoraire;
 import com.avancial.app.data.objetsMetier.PlanTransport.Horaire;
+import com.avancial.app.fileImport.excelImport.ExcelImportException;
+
+import static com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesTrainTimeParseStep.readTime;
 
 /**
  * étape d'extraction des dessertes.
@@ -30,7 +33,11 @@ public class DessertesTrainTimeExtractionStep extends AConditionalLoopDessertesF
 	@Override
 	protected void doIfNoParsingAndValidationError(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {
 		for(DessertesTrainContext train : subContext.getTrains()) {
-			train.setDesserte(this.constructDesserte(train));
+			try {
+				train.setDesserte(this.constructDesserte(train));
+			} catch (ExcelImportException e) {
+				context.addExtractionError(e);
+			}
 		}
 	}
 
@@ -38,8 +45,9 @@ public class DessertesTrainTimeExtractionStep extends AConditionalLoopDessertesF
 	 * construit la desserte correspondant à la colonne donnée.
 	 * @param train colonne de train.
 	 * @return la desserte.
+	 * @throws ExcelImportException .
 	 */
-	private Desserte constructDesserte(DessertesTrainContext train) {
+	private Desserte constructDesserte(DessertesTrainContext train) throws ExcelImportException {
 		List<GareHoraire> times = new ArrayList<GareHoraire>();
 		for(DessertesStationContext station : train.getStations()) {
 			String stationCode = train.getContextContainer().getContextContainer().getRefStation().get(train.getIdTrain());
@@ -56,14 +64,15 @@ public class DessertesTrainTimeExtractionStep extends AConditionalLoopDessertesF
 	 * @param column indice de la colonne.
 	 * @param row ligne.
 	 * @return la date dont seul l'heure est significative, null si la ligne est nulle.
+	 * @throws ExcelImportException .
 	 */
-	private Date parseDate(int column, Row row) {
+	private Date parseDate(int column, Row row) throws ExcelImportException {
 		if(row == null) {
 			return null;
 		}
-		String content = row.getCell(column).getStringCellValue();
-		int hour = Integer.parseInt(content.substring(0, content.length() - 3));
-		int mins = Integer.parseInt(content.substring(content.length() - 2));
+		int mins = readTime(row, column);
+		int hour = mins / 60;
+		mins = mins % 60;
 		Calendar calendar = new GregorianCalendar();
 		calendar.set(Calendar.MINUTE, mins);
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
