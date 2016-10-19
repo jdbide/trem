@@ -5,13 +5,12 @@
  *
  */
 socle_app.controller("resultTmsCtrl", ['$rootScope', '$scope', 'loadingService', '$q', 'resultService', 'searchService', 'resultTmsService',
-                                       function($rootScope, $scope, loadingService, $q, resultService, searchService, resultTmsService) {
+                                       'ClassSousRegime',function($rootScope, $scope, loadingService, $q, resultService, searchService, resultTmsService,ClassSousRegime) {
 	$scope.datas = resultTmsService.getReponse().data;
 	$scope.tab = resultService.getTbody();	
 	
-	
 	function constructor() {
-		console.log("-----------resultTmsCtrl");
+		console.log("-----------resultTmsCtrl + " + ClassSousRegime.Desserte);
 		var data = searchService.searchToResult();
 		if ($scope.datas == null) {
 			resultTmsService.getResult(data).then(
@@ -22,14 +21,13 @@ socle_app.controller("resultTmsCtrl", ['$rootScope', '$scope', 'loadingService',
 						$scope.datas = reponse.data;		
 						
 						//On boucle sur les trains du plan de transport
-						angular.forEach(datas.trains, function(train, key) {	  
-							currentTrain = train.numeroTrain;
+						angular.forEach($scope.datas.trains, function(train, key) {	  
 							//On boucle sur les tranches du train
 							angular.forEach(train.tranches, function(tranche, key) {	  
-							currentTranche = tranche.numeroTranche;
 								//On boucle sur la liste de jours du régime
 								angular.forEach(tranche.regime.listejours, function(jour, key) {	
-									if(tranche.attributs.)
+									//if(tranche.attributs.ClassSousRegime.Desserte[0]);
+									alert(tranche.attributs.ClassSousRegime.Desserte[0].regime.codeRegime);
 									
 								});
 								
