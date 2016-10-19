@@ -32,50 +32,50 @@ public class MotriceRegimeEntity {
    @Column(nullable = false)
    private String                                periodMotriceRegime;
 
-   @ManyToOne(fetch = FetchType.EAGER)
+   @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "idMotriceRefRegimeType")
    @ForeignKey(name = "FK_motrice_regime_idMotriceRefRegimeType")
    private MotriceRefRegimeTypeEntity            motriceRefRegimeType;
 
-   @ManyToOne(fetch = FetchType.EAGER)
+   @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "idMotriceTrainTranche")
    @ForeignKey(name = "FK_motrice_regime_idMotriceTrainTranche")
    private MotriceTrainTrancheEntity             motriceTrainTranche;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeStopEntity>         motriceRegimeStops;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeServiceEntity>      motriceRegimeServices;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeSpecificityEntity>  motriceRegimeSpecificities;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeRestrictionEntity>  motriceRegimeRestrictions;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeDistributionEntity> motriceRegimeDistribution;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeSatcodeEntity>      motriceRegimeSatcode;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeFareProfileEntity>  motriceRegimeFareProfile;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeEqpTypeEntity>      motriceRegimeEqpType;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeCompositionEntity>  motriceRegimeComposition;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeMealTypeEntity>     motriceRegimeMealType;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeODEntity>           motriceRegimeOD;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "motriceRegime")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "motriceRegime")
    private List<MotriceRegimeTospEntity>         motriceRegimeTosp;
 
    /**
@@ -97,6 +97,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRefRegimeTypeEntity
     */
    public MotriceRefRegimeTypeEntity getMotriceRefRegimeType() {
+      System.out.println("1 -- MotriceRegimeEntity - getMotriceRefRegimeType");
       return this.motriceRefRegimeType;
    }
 
@@ -112,6 +113,7 @@ public class MotriceRegimeEntity {
     * @return the motriceTrainTranche
     */
    public MotriceTrainTrancheEntity getMotriceTrainTranche() {
+      System.out.println("2 -- MotriceRegimeEntity - getMotriceTrainTranche");
       return this.motriceTrainTranche;
    }
 
@@ -127,6 +129,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeStops
     */
    public List<MotriceRegimeStopEntity> getMotriceRegimeStops() {
+      System.out.println("3 -- MotriceRegimeEntity - getMotriceRegimeStops");
       return this.motriceRegimeStops;
    }
 
@@ -142,6 +145,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeServices
     */
    public List<MotriceRegimeServiceEntity> getMotriceRegimeServices() {
+      System.out.println("4 -- MotriceRegimeEntity - getMotriceRegimeServices");
       return this.motriceRegimeServices;
    }
 
@@ -157,6 +161,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeSpecificities
     */
    public List<MotriceRegimeSpecificityEntity> getMotriceRegimeSpecificities() {
+      System.out.println("5 -- MotriceRegimeEntity - getMotriceRegimeSpecificities");
       return this.motriceRegimeSpecificities;
    }
 
@@ -172,6 +177,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeRestrictions
     */
    public List<MotriceRegimeRestrictionEntity> getMotriceRegimeRestrictions() {
+      System.out.println("6 -- MotriceRegimeEntity - getMotriceRegimeRestrictions");
       return this.motriceRegimeRestrictions;
    }
 
@@ -187,6 +193,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeDistributions
     */
    public List<MotriceRegimeDistributionEntity> getMotriceRegimeDistribution() {
+      System.out.println("7 -- MotriceRegimeEntity - getMotriceRegimeDistribution");
       return this.motriceRegimeDistribution;
    }
 
@@ -202,6 +209,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeSatcodes
     */
    public List<MotriceRegimeSatcodeEntity> getMotriceRegimeSatcode() {
+      System.out.println("8 -- MotriceRegimeEntity - getMotriceRegimeSatcode");
       return this.motriceRegimeSatcode;
    }
 
@@ -217,6 +225,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeFareProfiles
     */
    public List<MotriceRegimeFareProfileEntity> getMotriceRegimeFareProfile() {
+      System.out.println("9 -- MotriceRegimeEntity - getMotriceRegimeFareProfile");
       return this.motriceRegimeFareProfile;
    }
 
@@ -232,6 +241,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeEqpTypes
     */
    public List<MotriceRegimeEqpTypeEntity> getMotriceRegimeEqpType() {
+      System.out.println("10 -- MotriceRegimeEntity - getMotriceRegimeEqpType");
       return this.motriceRegimeEqpType;
    }
 
@@ -247,6 +257,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeCompositions
     */
    public List<MotriceRegimeCompositionEntity> getMotriceRegimeComposition() {
+      System.out.println("11 -- MotriceRegimeEntity - getMotriceRegimeComposition");
       return this.motriceRegimeComposition;
    }
 
@@ -262,6 +273,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeMealTypes
     */
    public List<MotriceRegimeMealTypeEntity> getMotriceRegimeMealType() {
+      System.out.println("12 -- MotriceRegimeEntity - getMotriceRegimeMealType");
       return this.motriceRegimeMealType;
    }
 
@@ -308,6 +320,7 @@ public class MotriceRegimeEntity {
     * @return the motriceRegimeOD
     */
    public List<MotriceRegimeODEntity> getMotriceRegimeOD() {
+      System.out.println("13 -- MotriceRegimeEntity - getMotriceRegimeOD");
       return this.motriceRegimeOD;
    }
 
@@ -320,6 +333,7 @@ public class MotriceRegimeEntity {
    }
 
    public List<MotriceRegimeTospEntity> getMotriceRegimeTosp() {
+      System.out.println("14 -- MotriceRegimeEntity - getMotriceRegimeTosp");
       return this.motriceRegimeTosp;
    }
 
