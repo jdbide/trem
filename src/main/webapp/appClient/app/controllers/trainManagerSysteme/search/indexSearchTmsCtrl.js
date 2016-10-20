@@ -9,7 +9,7 @@ socle_app.controller("indexSearchTmsCtrl", ['$rootScope', '$scope', '$q', 'reade
 	console.log("==> indexSearchTmsCtrl <==");
 	var URL_FILE_CONFIG_LOCAL = 'app/controllers/trainManagerSysteme/config/pageSearch.json';
 
-	$scope.currentPage = null;
+	$scope.currentPage = traitementPageSearchService.getCurrentPage();
 	
 	$rootScope.isModif = false;
 

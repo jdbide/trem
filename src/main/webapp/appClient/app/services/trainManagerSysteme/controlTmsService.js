@@ -60,7 +60,7 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
 		loadingService.show();
 		initResponse();
 		var deffered  = $q.defer();
-        var promissJsonFactory = jsonFactory.postJson("webService/app/controlTms/", idPartition);
+        var promissJsonFactory = jsonFactory.postJson("webService/app/controlTms/createControl/", idPartition);
         promissJsonFactory
             .success(function (datas, status, headers, config) {
             	loadingService.hide();

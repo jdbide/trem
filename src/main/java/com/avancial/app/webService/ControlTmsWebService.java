@@ -127,6 +127,7 @@ public class ControlTmsWebService {
 
    @SuppressWarnings("finally")
    @POST
+   @Path("createControl")
    @Consumes({ MediaType.APPLICATION_JSON })
    @Produces({ MediaType.APPLICATION_JSON })
    public Response createControl(final int idCompagnieEnvironnement) {
