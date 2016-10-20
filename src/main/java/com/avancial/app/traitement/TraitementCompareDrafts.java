@@ -41,16 +41,9 @@ public class TraitementCompareDrafts extends ATraitementLogDetail implements Ser
 
    private static Logger                 logger                       = Logger.getLogger(TraitementCompareDrafts.class);
 
-   private EntityManager                 entityManagerDb2;
-
-   @Inject
-   private CompagnieEnvironnementService compagnieEnvironnementService;
 
    @Inject
    private JeuDonneesService             jeuDonneesService;
-
-   @Inject
-   private ImportKappService             importKappService;
 
    @Inject
    private RefDirectoryService           refDirectoryService;
@@ -58,19 +51,10 @@ public class TraitementCompareDrafts extends ATraitementLogDetail implements Ser
    private ImportTmsDto                  importTmsDto;
 
    @Inject
-   private TraitementMotrice             traitementMotrice;
-
-   @Inject
-   private TraitementImportDb2Motrice    traitementImportDb2Motrice;
-
-   @Inject
    private TraitementObjetmetierCompareDrafts   traitementObjetMetierFromDb;
 
    @Inject
    private ExcelRapportDifferentiel      excelRapportDifferentiel;
-
-   @Inject
-   private TraitementDeleteJeuDonnee     traitementDeleteJeuDonnee;
    
    @Inject
    private TraiteObjetMetierRegimeFactory traiteObjetMetierRegimeFactory;
@@ -86,10 +70,6 @@ public class TraitementCompareDrafts extends ATraitementLogDetail implements Ser
    private Long                          idTask;
 
    private int                           idUtilisateur;
-
-   private CompagnieEnvironnementEntity  compagnieEnvironnementEntity = null;
-
-   private JeuDonneeEntity               jeuDonneeDataBean            = null;
 
    private MapComparaisonPlanTransport   listCompare                  = null;
 
@@ -120,12 +100,15 @@ public class TraitementCompareDrafts extends ATraitementLogDetail implements Ser
 
       try {
 
+         this.logBean.setMessageTraitement("Création des plans de transport");
          this.createPlanTransportFromOldImports();
          logger.info("Début compare");
+         this.logBean.setMessageTraitement("Comparaison en cours");
          this.comparePlanTransport();
          logger.info("Début generate");
+         this.logBean.setMessageTraitement("Génération du rapport différentiel");
          this.generateRapportDiff();
-
+         this.logBean.setMessageTraitement("Fin du traitement");
          Task.setMsgTask(this.idTask, "Finalisation");
          /*
           * this.jeuDonneeDataBean.setDateLastUpdateJeuDonnees(new Date()); this.jeuDonneeDataBean.setStatusJeuDonnees(EStatus.DRAFT); try { this.jeuDonneesService.update(this.jeuDonneeDataBean); } catch (Exception ex) { Task.finishKoTask(this.idTask,
@@ -216,11 +199,13 @@ public class TraitementCompareDrafts extends ATraitementLogDetail implements Ser
       
       try{
       logger.info("Creation du plan de transport 1");
+      this.logBean.setMessageTraitement("Creation du plan de transport 1");
       this.log("Debut de la creation du plan de transport 1");
       JeuDonneesPlanTransport Pt1 = creationObjetMetier.creationPlanTransportFromJd(jeuDonneeEntityUn.getCompagnieEnvironnement().getNomTechniqueCompagnieEnvironnement(), jeuDonneeEntityUn.getStatusJeuDonnees(), this.getEntityManager(), this.traiteObjetMetierRegimeFactory, this.dateDebutFiltre, this.dateFinFiltre,jeuDonneeEntityUn);
       this.log("Fin de la creation du plan de transport 1");
       logger.info("Fin de la Creation du plan de transport 1");
       logger.info("Creation du plan de transport 2");
+      this.logBean.setMessageTraitement("Creation du plan de transport 2");
       this.log("Debut de la creation des plans de transport 2");
       JeuDonneesPlanTransport Pt2 = creationObjetMetier.creationPlanTransportFromJd(jeuDonneeEntityDeux.getCompagnieEnvironnement().getNomTechniqueCompagnieEnvironnement(), jeuDonneeEntityDeux.getStatusJeuDonnees(), this.getEntityManager(), this.traiteObjetMetierRegimeFactory, this.dateDebutFiltre, this.dateFinFiltre,jeuDonneeEntityDeux);
       this.log("Fin de la creation du plan de transport 2");
