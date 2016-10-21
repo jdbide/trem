@@ -10,7 +10,7 @@ import java.util.List;
  *
  */
 public class CompositionDto {
-   private Integer          capacity;
+   private Integer          capacity = 0;
    private List<VoitureDto> voitures;
 
    /**

@@ -13,7 +13,9 @@ import com.avancial.app.data.dto.filtrePlanTransport.MealServiceDto;
 import com.avancial.app.data.dto.filtrePlanTransport.RMCodeDto;
 import com.avancial.app.data.dto.filtrePlanTransport.ServiceABoardDto;
 import com.avancial.app.data.dto.filtrePlanTransport.ServicesDto;
+import com.avancial.app.data.dto.filtrePlanTransport.StopsDto;
 import com.avancial.app.data.dto.filtrePlanTransport.TrainTrancheDateDto;
+import com.avancial.app.data.dto.filtrePlanTransport.VoitureDto;
 import com.avancial.app.data.objetsMetier.PlanTransport.*;
 
 /**
@@ -101,9 +103,46 @@ public class FiltrePlanTransportServiceDto {
     * @param list2
     * @param date
     */
-   private void getDataByAttributForTospAndSat(TrainTrancheDateDto trainTrancheDateDto, List<Tosp> list, List<CodeSat> list2, Date currentDate) {
-      // TODO Auto-generated method stub
+   private void getDataByAttributForTospAndSat(TrainTrancheDateDto trainTrancheDateDto, List<Tosp> listTosp, List<CodeSat> listCodeSat, Date currentDate) {
+      if (listTosp != null) {
+         this.getTosp(trainTrancheDateDto, listTosp, currentDate);
+      }
       
+      if (listCodeSat != null) {
+         this.getSat(trainTrancheDateDto, listCodeSat, currentDate);
+      }
+      
+   }
+
+   /**
+    * @param trainTrancheDateDto
+    * @param listCodeSat
+    * @param currentDate
+    */
+   private void getSat(TrainTrancheDateDto trainTrancheDateDto, List<CodeSat> listCodeSat, Date currentDate) {
+      for (CodeSat codeSat : listCodeSat) {
+         if (codeSat.getRegime() != null &&  codeSat.getRegime().getListeJours() != null && !codeSat.getRegime().getListeJours().isEmpty() && codeSat.getRegime().getListeJours().contains(currentDate)) {
+            trainTrancheDateDto.setCodeSat(codeSat.getCodeSat());
+
+            return;
+         }
+      }
+   }
+
+   /**
+    * @param currentDate 
+    * @param listTosp 
+    * @param trainTrancheDateDto 
+    * 
+    */
+   private void getTosp(TrainTrancheDateDto trainTrancheDateDto, List<Tosp> listTosp, Date currentDate) {
+      for (Tosp tosp : listTosp) {
+         if ( tosp.getRegime() != null &&  tosp.getRegime().getListeJours() != null && !tosp.getRegime().getListeJours().isEmpty() && tosp.getRegime().getListeJours().contains(currentDate)) {
+            trainTrancheDateDto.setCodeTosp(tosp.getOureCode());
+            
+            return;
+         }
+      }
    }
 
    /**
@@ -112,9 +151,35 @@ public class FiltrePlanTransportServiceDto {
     * @param list2
     * @param date
     */
-   private void getDataByAttributForStopsDto(TrainTrancheDateDto trainTrancheDateDto, List<Desserte> list, List<Restriction> list2, Date currentDate) {
-      // TODO Auto-generated method stub
+   private void getDataByAttributForStopsDto(TrainTrancheDateDto trainTrancheDateDto, List<Desserte> listDesserte, List<Restriction> listRestriction, Date currentDate) {
+      List<StopsDto> listStops = new ArrayList<>();
       
+      if (listDesserte != null) {
+         for (Desserte desserte : listDesserte) {
+            if ( desserte.getRegime() != null &&  desserte.getRegime().getListeJours() != null && !desserte.getRegime().getListeJours().isEmpty()) {
+               for (Date date : desserte.getRegime().getListeJours()) {
+                  if (date.compareTo(currentDate) == 0) {
+                     for (GareHoraire gareHoraire : desserte.getGareHoraires()) {
+                        StopsDto stopsDto = new StopsDto();
+                        stopsDto.setCityCode(gareHoraire.getGare().getCodeGare());
+                        stopsDto.setDepartureTime(gareHoraire.getHoraire().getHoraireDebut());
+                        stopsDto.setArrivalTime(gareHoraire.getHoraire().getHoraireFin());
+                        /*
+                         * TODO FIXEME
+                         */
+                        stopsDto.setLibelle("");
+                        stopsDto.setOffForbidden("");
+                        stopsDto.setOnForbidden("");
+                        
+                        listStops.add(stopsDto);
+                     }
+                  }
+               }
+            }
+         }
+      }
+      
+      trainTrancheDateDto.setStops(listStops);
    }
 
    /**
@@ -150,7 +215,6 @@ public class FiltrePlanTransportServiceDto {
             }
          }
       }
-      
    }
 
    /**
@@ -190,21 +254,101 @@ public class FiltrePlanTransportServiceDto {
     * @param date
     */
    private void getDataByAttributForCompositionDto(TrainTrancheDateDto trainTrancheDateDto, List<Composition> listComposition, List<Specification> listSpecification, Date currentDate) {
+      CompositionDto compositionDto = new CompositionDto();
+      List<VoitureDto> voitures = new ArrayList<>();
+      
       if (listComposition != null) {
          for (Composition composition : listComposition) {
             if (composition.getVoitures() != null && !composition.getVoitures().isEmpty() && composition.getRegime() != null &&
                   composition.getRegime().getListeJours() != null && !composition.getRegime().getListeJours().isEmpty()) {
-               for (Date date : composition.getRegime().getListeJours()) {
-                  if (date.compareTo(currentDate) == 0) {
+               if (composition.getRegime().getListeJours().contains(currentDate)) {
+//               for (Date date : composition.getRegime().getListeJours()) {
+//                  if (date.compareTo(currentDate) == 0) {
                      for (Voiture voiture : composition.getVoitures()) {
+                        VoitureDto voitureDto = new VoitureDto();
                         
+                        voitureDto.setCoachClass(composition.getCodeClasse());
+                        voitureDto.setDiagCode(composition.getCodeDiag());
+                        voitureDto.setNumeroCoach(voiture.getNumeroVoiture());
+                        voitureDto.setRameCode(composition.getCodeRame());
+                        
+                        voitureDto.setCapacity(this.getCapacityByCoach(voiture));
+                        voitureDto.setSpecifications(this.getSpecificationsByVoitureAndDate(voiture, currentDate, listSpecification));
+                        
+                        voitures.add(voitureDto);
+                     }
+//                   }
+//                }
+               }
+            }
+         }
+         
+         for (VoitureDto voitureDto : voitures) {
+            compositionDto.setCapacity(compositionDto.getCapacity() + voitureDto.getCapacity());
+         }
+      }
+
+      compositionDto.setVoitures(voitures);
+      trainTrancheDateDto.setComposition(compositionDto);
+   }
+
+   /**
+    * @param voiture
+    * @param currentDate
+    * @param listSpecification
+    * @return
+    */
+   private List<String> getSpecificationsByVoitureAndDate(Voiture voiture, Date currentDate, List<Specification> listSpecification) {
+      List<String> specs = new ArrayList<>();
+
+      if (listSpecification != null && !listSpecification.isEmpty()) {
+         for (Specification specification : listSpecification) {
+            if (specification.getRegime() != null && specification.getRegime().getListeJours() != null && !specification.getRegime().getListeJours().isEmpty()) {
+               for (Date date : specification.getRegime().getListeJours()) {
+                  if (date.compareTo(currentDate) == 0) {
+                     if (voiture.getNumeroVoiture().equals(specification.getVoiture().getNumeroVoiture())) {
+                        if (specification.getVoiture().getCompartiments() == null || specification.getVoiture().getCompartiments().isEmpty()) {
+                           specs.add("Coach " + specification.getVoiture().getNumeroVoiture() + " - " + specification.getEtat().toString());
+                        } else {
+                           for (Compartiment compartiment : specification.getVoiture().getCompartiments()) {
+                              if (compartiment.getSieges() == null || compartiment.getSieges().isEmpty()) {
+                                 specs.add("Coach " + specification.getVoiture().getNumeroVoiture() + " - " + specification.getEtat().toString());
+                              } else {
+                                 for (Siege siege : compartiment.getSieges()) {
+                                    specs.add("Seat " + siege.getNumeroSiege() + " - " + specification.getEtat().toString());
+                                 }
+                              }
+                           }
+                        }
                      }
                   }
                }
             }
          }
       }
+
+      return specs;
+   }
+
+   /**
+    * @param voiture
+    * @return
+    */
+   private int getCapacityByCoach(Voiture voiture) {
+      if (voiture.getCompartiments() == null && voiture.getCompartiments().isEmpty()) {
+         return 0;
+      }
+
+      int capacity = 0;
       
+      for (Compartiment compartiment : voiture.getCompartiments()) {
+         if (compartiment.getSieges() != null && !compartiment.getSieges().isEmpty()) {
+            capacity += compartiment.getSieges().size();
+         }
+      }
+      
+      
+      return capacity;
    }
 
    /**

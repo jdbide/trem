@@ -14,7 +14,7 @@ public class VoitureDto {
    private String       rameCode;
    private String       coachClass;
    private String       diagCode;
-   private String       capacity;
+   private int          capacity;
    private List<String> specifications;
 
    /**
@@ -86,7 +86,7 @@ public class VoitureDto {
    /**
     * @return the capacity
     */
-   public String getCapacity() {
+   public int getCapacity() {
       return capacity;
    }
 
@@ -94,7 +94,7 @@ public class VoitureDto {
     * @param capacity
     *           the capacity to set
     */
-   public void setCapacity(String capacity) {
+   public void setCapacity(int capacity) {
       this.capacity = capacity;
    }
 
