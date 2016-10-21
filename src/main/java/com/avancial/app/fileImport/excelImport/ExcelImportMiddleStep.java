@@ -1,5 +1,8 @@
 package com.avancial.app.fileImport.excelImport;
 
+import java.util.List;
+
+import com.avancial.app.utilitaire.pattern.structuredProcess.IProcessStep;
 import com.avancial.app.utilitaire.pattern.structuredProcess.MiddleProcessStep;
 
 /**
@@ -9,4 +12,20 @@ import com.avancial.app.utilitaire.pattern.structuredProcess.MiddleProcessStep;
  */
 public class ExcelImportMiddleStep<P> extends MiddleProcessStep<SocleExcelReadFile, P> {
 
+	/**
+	 * constructeur simple.
+	 * @param steps liste des sçous-étapes.
+	 */
+	public ExcelImportMiddleStep(List<IProcessStep<SocleExcelReadFile, P>> steps) {
+		super(steps);
+	}
+	
+	/**
+	 * constructeur simple.
+	 * @param steps liste des sçous-étapes.
+	 */
+	public ExcelImportMiddleStep(@SuppressWarnings("unchecked") IProcessStep<SocleExcelReadFile, P>... steps) {
+		super(steps);
+	}
+	
 }
