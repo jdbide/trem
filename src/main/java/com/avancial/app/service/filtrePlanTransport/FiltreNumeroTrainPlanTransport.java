@@ -34,7 +34,7 @@ public class FiltreNumeroTrainPlanTransport implements IFiltre<PlanTransport> {
     @Override
     public PlanTransport filtreParCritere(PlanTransport object) {
         if (this.numeroTrains == null)
-            return object;
+            return new PlanTransport();
         PlanTransport planTransport = new PlanTransport();
         planTransport.setCompagnie(object.getCompagnie());
         for (Train train : object.getTrains()) {
