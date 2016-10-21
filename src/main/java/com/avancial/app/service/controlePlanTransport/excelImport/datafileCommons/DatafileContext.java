@@ -30,6 +30,9 @@ public class DatafileContext extends AExcelImportContext<PlanTransport> {
 	/** liste de référence des codes SAT. */
 	private List<String> refCodeSat;
 	
+	/** liste de référence des codes tarifairs. */
+	private List<String> refCodeFareProfile;
+	
 	/** feuille à traiter dans le classeur. */
 	private Sheet sheet;
 	
@@ -133,6 +136,20 @@ public class DatafileContext extends AExcelImportContext<PlanTransport> {
 	 */
 	public void setRefCodeSat(List<String> refCodeSat) {
 		this.refCodeSat = refCodeSat;
+	}
+
+	/**
+	 * @return the refCodeFareProfile
+	 */
+	public List<String> getRefCodeFareProfile() {
+		return refCodeFareProfile;
+	}
+
+	/**
+	 * @param refCodeFareProfile the refCodeFareProfile to set
+	 */
+	public void setRefCodeFareProfile(List<String> refCodeFareProfile) {
+		this.refCodeFareProfile = refCodeFareProfile;
 	}
 	
 	
