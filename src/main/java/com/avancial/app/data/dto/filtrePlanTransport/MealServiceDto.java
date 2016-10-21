@@ -3,6 +3,8 @@
  */
 package com.avancial.app.data.dto.filtrePlanTransport;
 
+import java.util.Date;
+
 /**
  * @author hamza.laterem
  *
@@ -12,8 +14,8 @@ public class MealServiceDto {
    private String mealType;
    private String mealCode;
    private String type;
-   private String starting;
-   private String  ending;
+   private Date starting;
+   private Date  ending;
    
    /**
     * constructor vide
@@ -81,30 +83,28 @@ public class MealServiceDto {
    /**
     * @return the starting
     */
-   public String getStarting() {
+   public Date getStarting() {
       return starting;
    }
 
    /**
     * @param starting the starting to set
     */
-   public void setStarting(String starting) {
+   public void setStarting(Date starting) {
       this.starting = starting;
    }
 
    /**
     * @return the ending
     */
-   public String getEnding() {
+   public Date getEnding() {
       return ending;
    }
 
    /**
     * @param ending the ending to set
     */
-   public void setEnding(String ending) {
+   public void setEnding(Date ending) {
       this.ending = ending;
    }
-   
-   
 }
