@@ -38,6 +38,7 @@ socle_app.service('resultTmsService', ['jsonFactory', 'loadingService', '$q', fu
         promissJsonFactory
             .success(function (datas, status, headers, config) {
             	loadingService.hide();
+            	console.log("loadingService.hide();");
             	reponse = datas;
             	deffered.resolve();
             })

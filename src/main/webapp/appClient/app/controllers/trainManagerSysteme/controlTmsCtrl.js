@@ -224,13 +224,13 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			console.log("====== je suis la 1");
 			traitementControlTmsService.init();
 			
-			$scope.files.firstFile.msgError="Please upload the TimeTable file";
+			$scope.files.firstFile.msgError="Please upload the timetable file";
 		}
 		
 		else if (idInputFile == 2 && $scope.files.firstFile.file != null && $scope.files.firstFile.etat.isFinishTraitementSuccess != true) {
 			console.log("====== je suis la 2");
 			traitementControlTmsService.initSecondFile();
-			$scope.files.firstFile.msgError="Please upload the TimeTable file";
+			$scope.files.firstFile.msgError="Please upload the timetable file";
 		}
 		
 		else if (idInputFile == 2) {
@@ -277,23 +277,58 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			console.log($scope.files.firstFile.file);
 			
 			$scope.files.firstFile.etat.isStartTraitement = true;
-			controlTmsService.uploadUsing$http($scope.files.firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
-			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
-			$scope.files.firstFile.etat.isFinishTraitement = true;
-
-			console.log($scope.files.firstFile.etat);
-			console.log($scope.files.secondFile.etat);
-			
+			$scope.files.firstFile.etat.isFinishTraitement = false;
+			controlTmsService.uploadUsing$http($scope.files.firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable").then
+			(
+					function () {
+						var reponse = controlTmsService.getReponse();
+						
+						if (reponse.status) {
+							$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
+							$scope.files.firstFile.etat.isFinishTraitement = true;
+							$scope.files.firstFile.etat.isUploadSuccess = true;
+							console.log($scope.files.firstFile.etat);
+						} else {
+							// erreur au niveau de l'upload
+							$scope.files.firstFile.etat.isUploadSuccess = false;
+							$scope.files.firstFile.etat.isFinishTraitement = true;
+							$scope.files.firstFile.etat.isFinishTraitementSuccess = false;
+							$scope.files.firstFile.msgError = reponse.message;
+							console.log($scope.files.firstFile.etat);
+						}
+						
+					}, function () {
+						alert("Erreur serveur !");
+						
+					}
+				);
 		} else if (idInputFile == 2) {
 			console.log("==> 2");
 			
 			$scope.files.secondFile.etat.isStartTraitement = true;
-			controlTmsService.uploadUsing$http($scope.files.secondFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "yield");
-			$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
-			$scope.files.secondFile.etat.isFinishTraitement = true;
-			
-			console.log($scope.files.firstFile.etat);
-			console.log($scope.files.secondFile.etat);
+			$scope.files.secondFile.etat.isFinishTraitement = false;
+			controlTmsService.uploadUsing$http($scope.files.secondFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "yield").then
+			(
+					function () {
+						var reponse = controlTmsService.getReponse();
+						
+						if (reponse.status) {
+							$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
+							$scope.files.secondFile.etat.isFinishTraitement = true;
+							$scope.files.secondFile.etat.isUploadSuccess = true;
+						} else {
+							// erreur au niveau de l'upload
+							$scope.files.secondFile.etat.isUploadSuccess = false;
+							$scope.files.secondFile.etat.isFinishTraitement = true;
+							$scope.files.secondFile.etat.isFinishTraitementSuccess = false;
+							$scope.files.secondFile.msgError = reponse.message;
+						}
+						
+					}, function () {
+						alert("Erreur serveur !");
+						
+					}
+				);
 		}
 	}
 	

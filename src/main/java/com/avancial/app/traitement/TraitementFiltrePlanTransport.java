@@ -10,7 +10,7 @@ import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefODEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefRameCodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeTospEntity;
-import com.avancial.app.data.dto.FiltrePlanTransportDto;
+import com.avancial.app.data.dto.FiltreFormPlanTransportDto;
 import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
 import com.avancial.app.data.objetsMetier.PlanTransport.OrigineDestination;
@@ -46,7 +46,7 @@ public class TraitementFiltrePlanTransport extends ATraitementLogDetail implemen
      */
     private static final long serialVersionUID = 1L;
 
-    private FiltrePlanTransportDto filtre;
+    private FiltreFormPlanTransportDto filtre;
 
     private PlanTransport planTransport;
 
@@ -182,7 +182,7 @@ public class TraitementFiltrePlanTransport extends ATraitementLogDetail implemen
     /**
      * @return the filtre
      */
-    public FiltrePlanTransportDto getFiltre() {
+    public FiltreFormPlanTransportDto getFiltre() {
         return this.filtre;
     }
 
@@ -190,7 +190,7 @@ public class TraitementFiltrePlanTransport extends ATraitementLogDetail implemen
      * @param filtre
      *            the filtre to set
      */
-    public void setFiltre(FiltrePlanTransportDto filtre) {
+    public void setFiltre(FiltreFormPlanTransportDto filtre) {
         this.filtre = filtre;
     }
 
