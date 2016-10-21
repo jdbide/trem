@@ -25,7 +25,7 @@ public class TrainTrancheDateDto {
    private String                  status;
    private String                  company;
    private String                  indicateurDistribution;
-   private HashMap<String, String> globalClass;
+   private HashMap<String, Integer> globalClass;
    private String                  codeSat;
    private String                  codeTosp;
    private Date                    loadedOn;
@@ -196,7 +196,7 @@ public class TrainTrancheDateDto {
    /**
     * @return the globalClass
     */
-   public HashMap<String, String> getGlobalClass() {
+   public HashMap<String, Integer> getGlobalClass() {
       return globalClass;
    }
 
@@ -204,7 +204,7 @@ public class TrainTrancheDateDto {
     * @param globalClass
     *           the globalClass to set
     */
-   public void setGlobalClass(HashMap<String, String> globalClass) {
+   public void setGlobalClass(HashMap<String, Integer> globalClass) {
       this.globalClass = globalClass;
    }
 
