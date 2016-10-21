@@ -52,7 +52,7 @@
 			                    	</p>
 			                  	</div>
 							</div>
-							<div  class="col-md-12 " ng-show="$parent.files.firstFile.etat.isStartTraitement && $parent.files.firstFile.etat.isFinishTraitement==false">
+							<div  class="col-md-12 " ng-show="$parent.files.firstFile.etat.isStartTraitement">
 								<div class="box box-solid">
 									<div class="box-header with-border">
 										<i class="fa fa-upload"></i>
@@ -71,7 +71,7 @@
                       					<!-- <div  class="progress xs">
 				                        	<div style="width: {{$parent.files.firstFile.file.progress}}%;" class="progress-bar progress-bar-green"></div>
 				                      	</div> -->
-										<!-- <p ng-show="$parent.files.firstFile.etat.isUploadSuccess" class="text-green">
+										<p ng-show="$parent.files.firstFile.etat.isUploadSuccess" class="text-green">
 											Upload OK 
 											<i class="fa fa-check-square-o text-green"></i>
 										</p>
@@ -79,7 +79,7 @@
 											Upload KO
 											<i class="fa fa-check-square-o text-red"></i>
 										</p>
-										<p ng-show="$parent.files.firstFile.etat.isFormatOk" class="text-green">
+										<!-- <p ng-show="$parent.files.firstFile.etat.isFormatOk" class="text-green">
 											Format check OK 
 											<i class="fa fa-check-square-o text-green"></i>
 										</p>
@@ -154,7 +154,7 @@
                       					</div>
                       					<div  class="progress xs">
 				                        	<div style="width: {{$parent.files.secondFile.file.progress}}%;" class="progress-bar progress-bar-green"></div>
-				                      	</div>
+				                      	</div> -->
 										<p ng-show="$parent.files.secondFile.etat.isUploadSuccess" class="text-green">
 											Upload OK 
 											<i class="fa fa-check-square-o text-green"></i>
@@ -163,7 +163,7 @@
 											Upload KO
 											<i class="fa fa-check-square-o text-red"></i>
 										</p>
-										<p ng-show="$parent.files.secondFile.etat.isFormatOk" class="text-green">
+										<!-- <p ng-show="$parent.files.secondFile.etat.isFormatOk" class="text-green">
 											Format check OK 
 											<i class="fa fa-check-square-o text-green"></i>
 										</p>
