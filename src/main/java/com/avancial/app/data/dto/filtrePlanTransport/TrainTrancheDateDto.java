@@ -7,41 +7,40 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * Dto representant une ligne du resultat de search.
- * Clef: n° Train, n° Tranche, Date du jour
+ * Dto representant une ligne du resultat de search. Clef: n° Train, n° Tranche, Date du jour
+ * 
  * @author hamza.laterem
  *
  */
 public class TrainTrancheDateDto {
 
-   private Date dateJour;
-   private String numeroTrain;
-   private String origine;
-   private String destination;
-   private String mandatoryBooking;
-   private String validForRR;
-   private String numeroTranche;
-   private String status;
-   private String compagnie;
-   private String indicateurDistribution;
-   private HashMap<String,String> globalClass;
-   private String codeSat;
-   private String codeTosp;
-   private Date loadedOn;
-   //TODO private LastModifDto lastModif;
-   private RMCodeDto rmCode;
-   private ServicesDto service;
-   private CompositionDto composition;
-   private StopsDto stops;
-   
-   
+   private Date                    dateJour;
+   private String                  numeroTrain;
+   private String                  origine;
+   private String                  destination;
+   private String                  mandatoryBooking;
+   private String                  validForRR;
+   private String                  numeroTranche;
+   private String                  status;
+   private String                  company;
+   private String                  indicateurDistribution;
+   private HashMap<String, String> globalClass;
+   private String                  codeSat;
+   private String                  codeTosp;
+   private Date                    loadedOn;
+   // TODO private LastModifDto lastModif;
+   private RMCodeDto               rmCode;
+   private ServicesDto             service;
+   private CompositionDto          composition;
+   private StopsDto                stops;
+
    /**
     * constructeur vide
+    * 
     * @author gabriel.gagnier
     */
    public TrainTrancheDateDto() {
    }
-
 
    /**
     * @return the dateJour
@@ -50,14 +49,13 @@ public class TrainTrancheDateDto {
       return dateJour;
    }
 
-
    /**
-    * @param dateJour the dateJour to set
+    * @param dateJour
+    *           the dateJour to set
     */
    public void setDateJour(Date dateJour) {
       this.dateJour = dateJour;
    }
-
 
    /**
     * @return the numeroTrain
@@ -66,14 +64,13 @@ public class TrainTrancheDateDto {
       return numeroTrain;
    }
 
-
    /**
-    * @param numeroTrain the numeroTrain to set
+    * @param numeroTrain
+    *           the numeroTrain to set
     */
    public void setNumeroTrain(String numeroTrain) {
       this.numeroTrain = numeroTrain;
    }
-
 
    /**
     * @return the origine
@@ -82,14 +79,13 @@ public class TrainTrancheDateDto {
       return origine;
    }
 
-
    /**
-    * @param origine the origine to set
+    * @param origine
+    *           the origine to set
     */
    public void setOrigine(String origine) {
       this.origine = origine;
    }
-
 
    /**
     * @return the destination
@@ -98,14 +94,13 @@ public class TrainTrancheDateDto {
       return destination;
    }
 
-
    /**
-    * @param destination the destination to set
+    * @param destination
+    *           the destination to set
     */
    public void setDestination(String destination) {
       this.destination = destination;
    }
-
 
    /**
     * @return the mandatoryBooking
@@ -114,14 +109,13 @@ public class TrainTrancheDateDto {
       return mandatoryBooking;
    }
 
-
    /**
-    * @param mandatoryBooking the mandatoryBooking to set
+    * @param mandatoryBooking
+    *           the mandatoryBooking to set
     */
    public void setMandatoryBooking(String mandatoryBooking) {
       this.mandatoryBooking = mandatoryBooking;
    }
-
 
    /**
     * @return the validForRR
@@ -130,14 +124,13 @@ public class TrainTrancheDateDto {
       return validForRR;
    }
 
-
    /**
-    * @param validForRR the validForRR to set
+    * @param validForRR
+    *           the validForRR to set
     */
    public void setValidForRR(String validForRR) {
       this.validForRR = validForRR;
    }
-
 
    /**
     * @return the numeroTranche
@@ -146,14 +139,13 @@ public class TrainTrancheDateDto {
       return numeroTranche;
    }
 
-
    /**
-    * @param numeroTranche the numeroTranche to set
+    * @param numeroTranche
+    *           the numeroTranche to set
     */
    public void setNumeroTranche(String numeroTranche) {
       this.numeroTranche = numeroTranche;
    }
-
 
    /**
     * @return the status
@@ -162,30 +154,28 @@ public class TrainTrancheDateDto {
       return status;
    }
 
-
    /**
-    * @param status the status to set
+    * @param status
+    *           the status to set
     */
    public void setStatus(String status) {
       this.status = status;
    }
 
-
    /**
-    * @return the compagnie
+    * @return the company
     */
-   public String getCompagnie() {
-      return compagnie;
+   public String getCompany() {
+      return company;
    }
 
-
    /**
-    * @param compagnie the compagnie to set
+    * @param company
+    *           the company to set
     */
-   public void setCompagnie(String compagnie) {
-      this.compagnie = compagnie;
+   public void setCompany(String company) {
+      this.company = company;
    }
-
 
    /**
     * @return the indicateurDistribution
@@ -194,14 +184,13 @@ public class TrainTrancheDateDto {
       return indicateurDistribution;
    }
 
-
    /**
-    * @param indicateurDistribution the indicateurDistribution to set
+    * @param indicateurDistribution
+    *           the indicateurDistribution to set
     */
    public void setIndicateurDistribution(String indicateurDistribution) {
       this.indicateurDistribution = indicateurDistribution;
    }
-
 
    /**
     * @return the globalClass
@@ -210,14 +199,13 @@ public class TrainTrancheDateDto {
       return globalClass;
    }
 
-
    /**
-    * @param globalClass the globalClass to set
+    * @param globalClass
+    *           the globalClass to set
     */
    public void setGlobalClass(HashMap<String, String> globalClass) {
       this.globalClass = globalClass;
    }
-
 
    /**
     * @return the codeSat
@@ -226,14 +214,13 @@ public class TrainTrancheDateDto {
       return codeSat;
    }
 
-
    /**
-    * @param codeSat the codeSat to set
+    * @param codeSat
+    *           the codeSat to set
     */
    public void setCodeSat(String codeSat) {
       this.codeSat = codeSat;
    }
-
 
    /**
     * @return the codeTosp
@@ -242,14 +229,13 @@ public class TrainTrancheDateDto {
       return codeTosp;
    }
 
-
    /**
-    * @param codeTosp the codeTosp to set
+    * @param codeTosp
+    *           the codeTosp to set
     */
    public void setCodeTosp(String codeTosp) {
       this.codeTosp = codeTosp;
    }
-
 
    /**
     * @return the loadedOn
@@ -258,14 +244,13 @@ public class TrainTrancheDateDto {
       return loadedOn;
    }
 
-
    /**
-    * @param loadedOn the loadedOn to set
+    * @param loadedOn
+    *           the loadedOn to set
     */
    public void setLoadedOn(Date loadedOn) {
       this.loadedOn = loadedOn;
    }
-
 
    /**
     * @return the rmCode
@@ -274,14 +259,13 @@ public class TrainTrancheDateDto {
       return rmCode;
    }
 
-
    /**
-    * @param rmCode the rmCode to set
+    * @param rmCode
+    *           the rmCode to set
     */
    public void setRmCode(RMCodeDto rmCode) {
       this.rmCode = rmCode;
    }
-
 
    /**
     * @return the service
@@ -290,14 +274,13 @@ public class TrainTrancheDateDto {
       return service;
    }
 
-
    /**
-    * @param service the service to set
+    * @param service
+    *           the service to set
     */
    public void setService(ServicesDto service) {
       this.service = service;
    }
-
 
    /**
     * @return the composition
@@ -306,14 +289,13 @@ public class TrainTrancheDateDto {
       return composition;
    }
 
-
    /**
-    * @param composition the composition to set
+    * @param composition
+    *           the composition to set
     */
    public void setComposition(CompositionDto composition) {
       this.composition = composition;
    }
-
 
    /**
     * @return the stops
@@ -322,9 +304,9 @@ public class TrainTrancheDateDto {
       return stops;
    }
 
-
    /**
-    * @param stops the stops to set
+    * @param stops
+    *           the stops to set
     */
    public void setStops(StopsDto stops) {
       this.stops = stops;

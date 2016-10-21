@@ -8,6 +8,7 @@ package com.avancial.app.data.dto.filtrePlanTransport;
  *
  */
 public class RMCodeDto {
+   private String rmCode;
    private String codeRame1;
    private String codeRame2;
    private String fareProfileCode;
@@ -61,6 +62,20 @@ public class RMCodeDto {
     */
    public void setFareProfileCode(String fareProfileCode) {
       this.fareProfileCode = fareProfileCode;
+   }
+
+   /**
+    * @return the rmCode
+    */
+   public String getRmCode() {
+      return rmCode;
+   }
+
+   /**
+    * @param rmCode the rmCode to set
+    */
+   public void setRmCode(String rmCode) {
+      this.rmCode = rmCode;
    }
 
 }
