@@ -5,6 +5,7 @@ package com.avancial.app.data.dto.filtrePlanTransport;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Dto representant une ligne du resultat de search. Clef: n° Train, n° Tranche, Date du jour
@@ -32,7 +33,7 @@ public class TrainTrancheDateDto {
    private RMCodeDto               rmCode;
    private ServicesDto             service;
    private CompositionDto          composition;
-   private StopsDto                stops;
+   private List<StopsDto>          stops;
 
    /**
     * constructeur vide
@@ -300,7 +301,7 @@ public class TrainTrancheDateDto {
    /**
     * @return the stops
     */
-   public StopsDto getStops() {
+   public List<StopsDto> getStops() {
       return stops;
    }
 
@@ -308,7 +309,7 @@ public class TrainTrancheDateDto {
     * @param stops
     *           the stops to set
     */
-   public void setStops(StopsDto stops) {
+   public void setStops(List<StopsDto> stops) {
       this.stops = stops;
    }
 

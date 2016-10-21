@@ -9,8 +9,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+
 import org.apache.log4j.Logger;
-import com.avancial.app.data.dto.FiltrePlanTransportDto;
+
+import com.avancial.app.data.dto.filtrePlanTransport.FiltrePlanTransportDto;
 import com.avancial.app.traitement.TraitementFiltrePlanTransport;
 import com.avancial.app.webService.bean.ResponseBean;
 

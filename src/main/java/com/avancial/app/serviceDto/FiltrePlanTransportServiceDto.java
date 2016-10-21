@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.avancial.app.data.dto.filtrePlanTransport.CompositionDto;
 import com.avancial.app.data.dto.filtrePlanTransport.FiltrePlanTransportDto;
 import com.avancial.app.data.dto.filtrePlanTransport.MealServiceDto;
 import com.avancial.app.data.dto.filtrePlanTransport.RMCodeDto;
@@ -182,13 +183,27 @@ public class FiltrePlanTransportServiceDto {
    }
 
    /**
+    * Recuperation des données pour la {@link CompositionDto}
     * @param trainTrancheDateDto
     * @param list
     * @param list2
     * @param date
     */
-   private void getDataByAttributForCompositionDto(TrainTrancheDateDto trainTrancheDateDto, List<Composition> list, List<Specification> list2, Date currentDate) {
-      // TODO Auto-generated method stub
+   private void getDataByAttributForCompositionDto(TrainTrancheDateDto trainTrancheDateDto, List<Composition> listComposition, List<Specification> listSpecification, Date currentDate) {
+      if (listComposition != null) {
+         for (Composition composition : listComposition) {
+            if (composition.getVoitures() != null && !composition.getVoitures().isEmpty() && composition.getRegime() != null &&
+                  composition.getRegime().getListeJours() != null && !composition.getRegime().getListeJours().isEmpty()) {
+               for (Date date : composition.getRegime().getListeJours()) {
+                  if (date.compareTo(currentDate) == 0) {
+                     for (Voiture voiture : composition.getVoitures()) {
+                        
+                     }
+                  }
+               }
+            }
+         }
+      }
       
    }
 
@@ -204,16 +219,13 @@ public class FiltrePlanTransportServiceDto {
       ServicesDto servicesDto = new ServicesDto();
       List<ServiceABoardDto> services = new ArrayList<>();
       List<MealServiceDto> mealServices = new ArrayList<>();
-      
+
       this.getDataTypeEquipementForServicesDto(servicesDto, listTypeEquipement, currentDate);
       this.getDataServiceABordForServicesDto(services, listServiceABord, currentDate);
       this.getDataServiceABordForMealServiceDto(mealServices, listComposition, listRepas, currentDate);
-      
-      
+
       servicesDto.setServices(services);
-      
-      
-      
+      servicesDto.setMealServices(mealServices);
       trainTrancheDateDto.setService(servicesDto);
    }
 
@@ -241,8 +253,14 @@ public class FiltrePlanTransportServiceDto {
                                      * TODO a enlever 1 c 4
                                      */
                                     mealServiceDto.setMealType("Meal Service");
-                                    mealServiceDto.
-                                    
+                                    /*
+                                     * TODO 
+                                     */
+                                    mealServiceDto.setMealCode("");
+                                    mealServiceDto.setType(repas.getTypeRepas().toString());
+                                    mealServiceDto.setStarting(repas.getHoraire() != null ? repas.getHoraire().getHoraireDebut() : null);
+                                    mealServiceDto.setEnding(repas.getHoraire() != null ? repas.getHoraire().getHoraireFin() : null);
+                                    mealServices.add(mealServiceDto);
                                  }
                               }
                            }
@@ -271,7 +289,13 @@ public class FiltrePlanTransportServiceDto {
                      ServiceABoardDto serviceABoardDto = new ServiceABoardDto();
                      serviceABoardDto.setCode(serviceABord.getCodeService());
                      serviceABoardDto.setClasse(serviceABord.getClasse().toString());
+                     /*
+                      * TODO
+                      */
                      serviceABoardDto.setLibelle("");
+                     /*
+                      * TODO
+                      */
                      serviceABoardDto.setManualAuto("");
                      serviceABoardDto.setOrigine(serviceABord.getOrigine() == null ? "" : serviceABord.getOrigine().getCodeGare());
                      serviceABoardDto.setDestination(serviceABord.getDestination() == null ? "" : serviceABord.getDestination().getCodeGare());
