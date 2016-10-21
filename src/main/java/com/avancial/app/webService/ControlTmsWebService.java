@@ -83,7 +83,6 @@ public class ControlTmsWebService {
 	@Inject
 	private Session session;
 
-
 	@Path("getImportParPartition/{idCompagnieEnvironnement}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -149,6 +148,7 @@ public class ControlTmsWebService {
 
 	@SuppressWarnings("finally")
 	@POST
+	@Path("createControl")
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response createControl(final int idCompagnieEnvironnement) {
@@ -212,8 +212,8 @@ public class ControlTmsWebService {
 					.getRefDirectoryByTechnicalName(APP_Directory.PathImport.toString()).getPathRefDirectory();
 			StringBuilder filePath = new StringBuilder(directory).append(idJeuDonneesControl).append("\\")
 					.append(typeFile).append("\\");
-			
-			if(!FileUtils.existFile(filePath.toString())) {
+
+			if (!FileUtils.existFile(filePath.toString())) {
 				// création des répertoires nécessaires
 				if (!FileUtils.mkDirs(filePath.toString())) {
 					responseBean.setMessage("Error creating repository");
@@ -222,7 +222,7 @@ public class ControlTmsWebService {
 				}
 			} else {
 				FileUtils.forceDelete(new File(filePath.toString()));
-				
+
 				if (!FileUtils.mkDirs(filePath.toString())) {
 					responseBean.setMessage("Error creating repository");
 					responseBean.setStatus(false);
@@ -230,8 +230,8 @@ public class ControlTmsWebService {
 				}
 			}
 
-			// save it			
-			if(!FileUtils.writeToFile(uploadedInputStream, filePath.append(fileDetail.getFileName()).toString())) {
+			// save it
+			if (!FileUtils.writeToFile(uploadedInputStream, filePath.append(fileDetail.getFileName()).toString())) {
 				responseBean.setMessage("Error writing file");
 				responseBean.setStatus(false);
 				return Response.ok((Object) responseBean).build();
@@ -241,45 +241,48 @@ public class ControlTmsWebService {
 			SocleExcelReadFile file = new SocleExcelReadFile(filePath.toString());
 			EurostarDessertesImportProcess importer = new EurostarDessertesImportProcess();
 			PlanTransport plan = importer.execute(file);
-			
-			responseBean.setStatus(true);	
+
+			responseBean.setStatus(true);
 			return Response.ok((Object) responseBean).build();
 
 		} catch (StructuredProcessException e) {
 			System.out.println("Une erreur est survenue : ");
-//			e.printStackTrace();
-			
+			// e.printStackTrace();
+
 			StringBuilder sb = new StringBuilder("Error on ");
-			
+
 			DessertesContext context = (DessertesContext) e.getContext();
 			System.out.println("autres erreurs " + (context.getValidationErrors().size()
 					+ context.getParsingErrors().size() + context.getExtractionErrors().size()) + " : ");
-			
+
 			if (!context.getParsingErrors().isEmpty()) {
-				sb.append("parsing (column ").append(context.getParsingErrors().get(0).getCell().getColumnIndex()).append(" / line ").append(context.getParsingErrors().get(0).getCell().getRowIndex()).append(")");
-				
+				sb.append("parsing (column ").append(context.getParsingErrors().get(0).getCell().getColumnIndex())
+						.append(" / line ").append(context.getParsingErrors().get(0).getCell().getRowIndex())
+						.append(")");
+
 				System.out.println("- de parsing :");
-				System.out.println("colonne : " + context.getParsingErrors().get(0).getCell().getColumnIndex() + " / " + "ligne : " + context.getParsingErrors().get(0).getCell().getRowIndex());
+				System.out.println("colonne : " + context.getParsingErrors().get(0).getCell().getColumnIndex() + " / "
+						+ "ligne : " + context.getParsingErrors().get(0).getCell().getRowIndex());
 				context.getParsingErrors().get(0).printStackTrace();
 				for (ExcelImportException error : context.getParsingErrors()) {
 					System.out.println("    " + error.getMessage() + " -> " + error.getStackTrace()[0].toString());
 				}
 			}
 			if (!context.getValidationErrors().isEmpty()) {
-				if(sb.lastIndexOf("parsing")!=-1)
+				if (sb.lastIndexOf("parsing") != -1)
 					sb.append(" and ");
 				sb.append("validation");
-				
+
 				System.out.println("- de validation :");
 				for (ExcelImportException error : context.getValidationErrors()) {
 					System.out.println("    " + error.getMessage() + " -> " + error.getStackTrace()[0].toString());
 				}
 			}
 			if (!context.getExtractionErrors().isEmpty()) {
-				if(sb.lastIndexOf("parsing")!=-1 || sb.lastIndexOf("validation")!=-1)
+				if (sb.lastIndexOf("parsing") != -1 || sb.lastIndexOf("validation") != -1)
 					sb.append(" and ");
 				sb.append("extraction");
-				
+
 				System.out.println("- d'extraction :");
 				for (ExcelImportException error : context.getExtractionErrors()) {
 					System.out.println("    " + error.getMessage() + " -> " + error.getStackTrace()[0].toString());
@@ -288,7 +291,7 @@ public class ControlTmsWebService {
 			responseBean.setStatus(false);
 			responseBean.setMessage(sb.toString());
 			return Response.ok((Object) responseBean).build();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			responseBean.setStatus(false);
@@ -297,7 +300,7 @@ public class ControlTmsWebService {
 					"Exception (WebService : '/app/controlTms', Action : 'deleteJeuDonneesControl', methode : @DELETE)",
 					e);
 			return Response.ok((Object) responseBean).build();
-			
+
 		}
 
 	}

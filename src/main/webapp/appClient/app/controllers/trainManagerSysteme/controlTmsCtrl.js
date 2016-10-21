@@ -287,13 +287,14 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 							$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
 							$scope.files.firstFile.etat.isFinishTraitement = true;
 							$scope.files.firstFile.etat.isUploadSuccess = true;
+							console.log($scope.files.firstFile.etat);
 						} else {
 							// erreur au niveau de l'upload
 							$scope.files.firstFile.etat.isUploadSuccess = false;
 							$scope.files.firstFile.etat.isFinishTraitement = true;
 							$scope.files.firstFile.etat.isFinishTraitementSuccess = false;
 							$scope.files.firstFile.msgError = reponse.message;
-
+							console.log($scope.files.firstFile.etat);
 						}
 						
 					}, function () {
