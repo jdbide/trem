@@ -26,7 +26,7 @@ import org.json.simple.JSONArray;
 
 import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.EStatusControl;
-import com.avancial.app.data.dto.ErrorListDto;
+import com.avancial.app.data.dto.UploadFileResponseDto;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
 import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
@@ -88,6 +88,9 @@ public class ControlTmsWebService {
 
 	@Inject
 	private PlanTransport planDeTransport;
+	
+	@Inject
+	private UploadFileResponseDto uploadFileResponseDto;
 
 	@Path("getImportParPartition/{idCompagnieEnvironnement}")
 	@GET
@@ -263,8 +266,12 @@ public class ControlTmsWebService {
 				//Merge des deux fichiers et mise en session
 				planDeTransport = PlanTransportUtils.merge(session.getPlanDeTransportTemp(), planDeTransport);
 				session.setPlanDeTransportTemp(planDeTransport);
+				uploadFileResponseDto.setDateInterval(PlanTransportUtils.extractDateInterval(planDeTransport));
+				uploadFileResponseDto.setOriginesDestinations(PlanTransportUtils.extractOriginesDestinations(planDeTransport));
+				responseBean.setData(uploadFileResponseDto);
 			}
-
+			
+		
 			responseBean.setStatus(true);
 			return Response.ok((Object) responseBean).build();
 
@@ -274,14 +281,14 @@ public class ControlTmsWebService {
 
 			StringBuilder sb = new StringBuilder("Error on ");
 			// Objet renvoyé contenant les erreurs
-			ErrorListDto errorList = new ErrorListDto();
-			List<String> parsing = errorList.getParsing();
-			List<String> validation = errorList.getValidation();
-			List<String> extraction = errorList.getExtraction();
+
+			List<String> parsing = uploadFileResponseDto.getParsingError();
+			List<String> validation = uploadFileResponseDto.getValidationError();
+			List<String> extraction = uploadFileResponseDto.getExtractionError();
 
 			DessertesContext context = (DessertesContext) e.getContext();
 
-			errorList.setErreurFatale(context.getFatalException().toString());
+			uploadFileResponseDto.setErreurFatale(context.getFatalException().toString());
 
 			System.out.println("autres erreurs " + (context.getValidationErrors().size()
 					+ context.getParsingErrors().size() + context.getExtractionErrors().size()) + " : ");
@@ -341,7 +348,7 @@ public class ControlTmsWebService {
 			}
 			responseBean.setStatus(false);
 			responseBean.setMessage(sb.toString());
-			responseBean.setData(errorList);
+			responseBean.setData(uploadFileResponseDto);
 			return Response.ok((Object) responseBean).build();
 
 		} catch (Exception e) {
