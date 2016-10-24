@@ -746,7 +746,7 @@ public class PlanTransportFactory {
          */
         TypeEquipement te00 = new TypeEquipement("TGT", generateRegime(generateDate(0), generateDate(1)));
         TypeEquipement te01 = new TypeEquipement("TGR", generateRegime(generateDate(-1), generateDate(0)));
-        TypeEquipement te10 = new TypeEquipement("TIT", generateRegime(generateDate(0), generateDate(1)));
+        TypeEquipement te10 = new TypeEquipement("TIT", generateRegime(generateDate(-1), generateDate(1)));
         List<TypeEquipement> tes00 = new ArrayList<>();
         tes00.add(te00);
         List<TypeEquipement> tes01 = new ArrayList<>();
@@ -766,9 +766,9 @@ public class PlanTransportFactory {
         List<ServiceABord> sabs00 = new ArrayList<>();
         sabs00.add(sab00);
         List<ServiceABord> sabs01 = new ArrayList<>();
-        sabs00.add(sab01);
+        sabs01.add(sab01);
         List<ServiceABord> sabs10 = new ArrayList<>();
-        sabs00.add(sab10);
+        sabs10.add(sab10);
 
         /**
          * Repas
@@ -818,10 +818,14 @@ public class PlanTransportFactory {
         GareHoraire gh4 = new GareHoraire(g4, h);
 
         List<GareHoraire> lGh = new ArrayList<>();
+        List<GareHoraire> lGh1 = new ArrayList<>();
         List<GareHoraire> lGh2 = new ArrayList<>();
 
         lGh.add(gh1);
         lGh.add(gh2);
+        
+        lGh1.add(gh1);
+        lGh1.add(gh2);
 
         lGh2.add(gh3);
         lGh2.add(gh4);
@@ -863,7 +867,7 @@ public class PlanTransportFactory {
         mapTranche01.put(TypeEquipement.class, tes01);
         mapTranche01.put(ServiceABord.class, sabs01);
         mapTranche01.put(Repas.class, r01);
-        mapTranche01.put(Desserte.class, dess00);
+        mapTranche01.put(Desserte.class, dess01);
 
         MapTranche mapTranche10 = new MapTranche();
         mapTranche10.put(OrigineDestination.class, ods10);
@@ -872,7 +876,7 @@ public class PlanTransportFactory {
         mapTranche10.put(Tosp.class, tosps10);
         mapTranche10.put(FareProfile.class, fp10);
         mapTranche10.put(Composition.class, compos10);
-        mapTranche10.put(Desserte.class, dess10);
+        mapTranche10.put(TypeEquipement.class, tes10);
         mapTranche10.put(ServiceABord.class, sabs10);
         mapTranche10.put(Repas.class, r10);
         mapTranche10.put(Desserte.class, dess10);
