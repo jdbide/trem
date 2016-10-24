@@ -13,7 +13,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
  * @author gabriel.gagnier
  *
  */
-public class FiltreFormPlanTransportDto {
+public class FiltrePlanTransportDto {
 
     private int idCompagnieEnvironnement;
     private List<String> numerosTrains;
@@ -34,7 +34,7 @@ public class FiltreFormPlanTransportDto {
     /**
      * Constructeur vide
      */
-    public FiltreFormPlanTransportDto() {
+    public FiltrePlanTransportDto() {
         super();
     }
 

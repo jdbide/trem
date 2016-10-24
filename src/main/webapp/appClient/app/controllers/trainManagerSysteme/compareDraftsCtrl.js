@@ -18,10 +18,20 @@ socle_app.controller("compareDraftsCtrl", ["$scope","envService","partitionTmsSe
 	$scope.selectedDraft1 = null;
 	$scope.selectedDraft2 = null;
 	
+	$scope.traitementEnCours = compareDraftsService.getStatut();
+	
 	$scope.urlDownloadFileCompFile = envService.read('appWebService') + "/importTms/downloadFile/Comparaison";
 	
+	
+	$scope.progressImport = {
+			endTraitement : null,
+			traitementOk : null,
+			lastMsg : null,
+			msgErr : null,
+		}
+	
 	/*
-	 * Methode pour la selection d'un  draft
+	 * Méthode pour la sélection d'un  draft
 	 */
 	$scope.changeSelectedDraft1 = function () {
 		 //alert('hey, myVar has changed!');	
@@ -51,14 +61,22 @@ socle_app.controller("compareDraftsCtrl", ["$scope","envService","partitionTmsSe
 	}
 	
 	$scope.executeValidateControl = function(){
-		//console.log("==> execute control <==");
 		compareDraftsService.compareJd($scope.selectedDraft1,$scope.selectedDraft2).then(
-				function(datas) {
-					$scope.result = datas;
+				function(){					
+					$scope.result = compareDraftsService.getReponse();
+					if (result.status) {
+						compareDraftsService.changeStatut();
+						startCheckProgressImport(result.data);
+						compareDraftsService.changeStatut();
+					}else{
+						alert("Erreur en bd:" + result.message);
+					}
 				}, function() {
 					alert("Erreur serveur!!");
 				}
 			);
+		alert('fin');
+		$scope.traitementEnCours = compareDraftsService.getStatut();
 	}
 	
 	
@@ -70,8 +88,51 @@ socle_app.controller("compareDraftsCtrl", ["$scope","envService","partitionTmsSe
 		  else {
 		   return false;
 		  }
-		};
+		}
+		
 
+		
+		function initProgressImport() {
+			progressImport.endTraitement = null;
+			progressImport.traitementOk = null;
+			progressImport.lastMsg = null;
+			progressImport.msgErr = null;
+		}
+
+		function startCheckProgressImport(idTask) {
+			compareDraftsService.initReponse();
+			$scope.reponse = compareDraftsService.getReponse();
+			var myInterval = $interval(function() {
+				compareDraftsService.getProgressImport(idTask)
+				.success(function (data, status, headers, config) {
+	            	$scope.progressImport = data.data;
+	            	if ($scope.progressImport != null && $scope.progressImport.endTraitement == true && $scope.progressImport.traitementOk == false) {
+	            		end();
+	            		$scope.reponse.status = false;
+	            		$scope.reponse.message = $scope.progressImport.msgErr;
+	            		$interval.cancel(myInterval);
+	            	}
+	            	else if ($scope.progressImport == null || $scope.progressImport.endTraitement == true && $scope.progressImport.traitementOk == true) {
+	            		end();
+	            		$scope.reponse.status = true;
+	            		$scope.reponse.message = "Comparaison terminée avec succès";
+	            		$interval.cancel(myInterval);
+	            		constructor();
+	            	}
+	            })
+	            .error(function (data, status, headers, config) {
+	            	end();
+	            	$interval.cancel(myInterval);
+	            });
+		    }, 1000);
+		}
+
+		/**
+		 * Mise à jour des données en fin d'un import
+		 */
+		function end() {
+			$scope.traitementEnCours = false;
+		}
 	
 	/*
 	 * Constructeur du controlleur, il récupère la liste des partitions
