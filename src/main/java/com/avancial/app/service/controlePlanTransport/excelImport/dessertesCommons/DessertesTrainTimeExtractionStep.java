@@ -50,7 +50,7 @@ public class DessertesTrainTimeExtractionStep extends AConditionalLoopDessertesF
 	private Desserte constructDesserte(DessertesTrainContext train) throws ExcelImportException {
 		List<GareHoraire> times = new ArrayList<GareHoraire>();
 		for(DessertesStationContext station : train.getStations()) {
-			String stationCode = train.getContextContainer().getContextContainer().getRefStation().get(train.getIdTrain());
+			String stationCode = train.getContextContainer().getContextContainer().getRefStation().get(station.getName());
 			Date arrival = this.parseDate(train.getColumn(), station.getArrivalRow());
 			Date departure = this.parseDate(train.getColumn(), station.getDepartureRow());
 			GareHoraire time = new GareHoraire(new Gare(stationCode), new Horaire(arrival, departure));
