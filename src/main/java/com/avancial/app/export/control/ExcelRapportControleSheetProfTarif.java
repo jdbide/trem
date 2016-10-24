@@ -26,7 +26,7 @@ public class ExcelRapportControleSheetProfTarif extends AExcelRapportControleShe
       FareProfile fareProfileAncien = (FareProfile) data.getAncienField();
       FareProfile fareProfileNouveau = (FareProfile) data.getNouveauField();
 
-      this.generateCellulesRougeVert(excelTools, 5, fareProfileAncien.getFareProfileCode(), fareProfileNouveau.getFareProfileCode(), borderTop,
+      this.generateCellulesRougeVert(excelTools, 4, fareProfileAncien.getFareProfileCode(), fareProfileNouveau.getFareProfileCode(), borderTop,
             borderBottom, CellStyle.BORDER_THIN);
    }
 

@@ -27,14 +27,14 @@ public class ExcelRapportControleSheetHoraires extends AExcelRapportControleShee
       GareHoraire gareHoraireNouveau = (GareHoraire) data.getNouveauField();
 
       /* Station */
-      excelTools.createCellTexteWithStyle(5, gareHoraireNouveau.getGare().getCodeGare(),
+      excelTools.createCellTexteWithStyle(4, gareHoraireNouveau.getGare().getCodeGare(),
             excelTools.setBorders(excelTools.styleBorder, borderTop, borderBottom, CellStyle.BORDER_NONE, CellStyle.BORDER_NONE));
 
       /* Horaire départ */
-      this.generateCellulesRougeVert(excelTools, 6, gareHoraireAncien.getHoraire().printHoraireDebut(),
+      this.generateCellulesRougeVert(excelTools, 5, gareHoraireAncien.getHoraire().printHoraireDebut(),
             gareHoraireNouveau.getHoraire().printHoraireDebut(), borderTop, borderBottom, CellStyle.BORDER_NONE);
       /* Horaire arrivée */
-      this.generateCellulesRougeVert(excelTools, 8, gareHoraireAncien.getHoraire().printHoraireFin(),
+      this.generateCellulesRougeVert(excelTools, 7, gareHoraireAncien.getHoraire().printHoraireFin(),
             gareHoraireNouveau.getHoraire().printHoraireFin(), borderTop, borderBottom, CellStyle.BORDER_THIN);
    }
 
