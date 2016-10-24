@@ -3,7 +3,6 @@ package service;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
-import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
@@ -27,6 +25,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonC
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.fileImport.FileTypeNotExpectedException;
 import com.avancial.app.fileImport.excelImport.AExcelImportContext;
+import com.avancial.app.fileImport.excelImport.AExcelImportProcess;
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
 import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
 import com.avancial.app.service.CompagnieService;
@@ -34,6 +33,7 @@ import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.ComparePlanTransportControl;
+import com.avancial.app.service.controlePlanTransport.excelImport.eurostar.EurostarDatafileImportProcess;
 import com.avancial.app.service.controlePlanTransport.excelImport.eurostar.EurostarDessertesImportProcess;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
@@ -144,8 +144,8 @@ public class TestControlePlanTransport {
     
     @Test
     public void testImportDessertesEurostar() throws FileTypeNotExpectedException {
-    	SocleExcelReadFile file = new SocleExcelReadFile("D:\\was_tmp\\tremas\\import\\446\\timetable\\Eurostar Timetable Period D2 2016 V1.0A 2016_01_28.xlsx");
-    	EurostarDessertesImportProcess importer = new EurostarDessertesImportProcess();
+    	SocleExcelReadFile file = new SocleExcelReadFile("src/test/resources/testFiles/rapportDeControle/EurostarDessertesTest1.xlsx");
+    	AExcelImportProcess<PlanTransport, ?> importer = new EurostarDessertesImportProcess();
     	PlanTransport plan = null;
     	try {
 			plan = importer.execute(file);
@@ -176,6 +176,19 @@ public class TestControlePlanTransport {
     	Assert.assertEquals("l'horaire de départ de la seconde gare de semaine du train 9008 est incorrecte", 492, depGare2Sem.get(Calendar.HOUR_OF_DAY) * 60 + depGare2Sem.get(Calendar.MINUTE));
     }
     
+    @Test
+    public void testImportDatafileEurostar() throws FileTypeNotExpectedException {
+    	SocleExcelReadFile file = new SocleExcelReadFile("src/test/resources/testFiles/rapportDeControle/EurostarDatafileTest1.xlsx");
+    	AExcelImportProcess<PlanTransport, ?> importer = new EurostarDatafileImportProcess();
+    	PlanTransport plan = null;
+    	try {
+			plan = importer.execute(file);
+		} catch (StructuredProcessException e) {
+			this.showExceptions(e, "testImportDessertesEurostar");
+		}
+    	Assert.assertEquals("le nombre de trains est incorrecte", 8, plan.getTrains().size());
+    }
+    
     /**
      * affiche la liste des erreurs d'import.
      * @param e erreur fatale.
@@ -188,22 +201,31 @@ public class TestControlePlanTransport {
 		System.out.println("autres erreurs " + (context.getValidationErrors().size() + context.getParsingErrors().size() + context.getExtractionErrors().size()) + " : ");
 		if(!context.getParsingErrors().isEmpty()) {
 			System.out.println("- de parsing :");
-			System.out.println("colonne : " + context.getParsingErrors().get(0).getCell().getColumnIndex() + " / " + "ligne : " + context.getParsingErrors().get(0).getCell().getRowIndex());
+			System.out.println("ce : " + context.getParsingErrors().get(0).getCell().getColumnIndex() + " / " + "ligne : " + context.getParsingErrors().get(0).getCell().getRowIndex());
 			context.getParsingErrors().get(0).printStackTrace();
 			for(ExcelImportException error : context.getParsingErrors()) {
-				System.out.println("    " + error.getMessage() + " -> " + error.getStackTrace()[0].toString());
+				System.out.print("    ");
+				if(error.getCell() != null)
+					System.out.print("cellule : C" + error.getCell().getColumnIndex() + "/L" + error.getCell().getRowIndex() + " : ");
+				System.out.println(error.getMessage() + " -> " + error.getStackTrace()[0].toString());
 			}
 		}
 		if(!context.getValidationErrors().isEmpty()) {
 			System.out.println("- de validation :");
 			for(ExcelImportException error : context.getValidationErrors()) {
-				System.out.println("    " + error.getMessage() + " -> " + error.getStackTrace()[0].toString());
+				System.out.print("    ");
+				if(error.getCell() != null)
+					System.out.print("cellule : C" + error.getCell().getColumnIndex() + "/L" + error.getCell().getRowIndex() + " : ");
+				System.out.println(error.getMessage() + " -> " + error.getStackTrace()[0].toString());
 			}
 		}
 		if(!context.getExtractionErrors().isEmpty()) {
 			System.out.println("- d'extraction :");
 			for(ExcelImportException error : context.getExtractionErrors()) {
-				System.out.println("    " + error.getMessage() + " -> " + error.getStackTrace()[0].toString());
+				System.out.print("    ");
+				if(error.getCell() != null)
+					System.out.print("cellule : C" + error.getCell().getColumnIndex() + "/L" + error.getCell().getRowIndex() + " : ");
+				System.out.println(error.getMessage() + " -> " + error.getStackTrace()[0].toString());
 			}
 		}
 		Assert.fail("une(des) erreure(s) est(sont) survenue(s) lors tu test " + testName);

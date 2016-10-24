@@ -38,7 +38,7 @@ public abstract class AFiltreOuPlanTransport implements IFiltre<PlanTransport> {
     @Override
     public PlanTransport filtreParCritere(PlanTransport object) {
         if (this.filtres == null)
-            return object;
+            return new PlanTransport();
         if (this.filtres.length == 1) {
             return this.filtres[0].filtreParCritere(object);
         }

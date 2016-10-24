@@ -3,6 +3,7 @@ package com.avancial.app.service.controlePlanTransport.excelImport.datafileCommo
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
@@ -59,13 +60,24 @@ public class DatafileLinesParsingStep implements IDatafileFinalStep<DatafileCont
 		int i = context.getFirstDataLineIndex();
 		// scan de toutes les lignes
 		do {
-			// récupération des cellules
+			// récupération de la ligne
+			Row row;
 			try {
-				trainIdCell = context.getSheet().getRow(i).getCell(this.trainIdColumn);
-				dateCell = context.getSheet().getRow(i).getCell(this.dateColumn);
-				statutCell = context.getSheet().getRow(i).getCell(this.statutColumn);
+				row = context.getSheet().getRow(i);
 			} catch (Exception e) {
-				throw new ExcelImportException(null, "l'une des cellules train, date ou statut est manquante à  la ligne " + ++i, e);
+				throw new ExcelImportException(null, "erreur de récupération de la ligne " + ++i, e);
+			}
+			// récupération des cellules
+			if(row != null) {
+				try {
+					trainIdCell = context.getSheet().getRow(i).getCell(this.trainIdColumn);
+					dateCell = context.getSheet().getRow(i).getCell(this.dateColumn);
+					statutCell = context.getSheet().getRow(i).getCell(this.statutColumn);
+				} catch (Exception e) {
+					throw new ExcelImportException(null, "l'une des cellules train, date ou statut est manquante à  la ligne " + ++i, e);
+				}
+			} else {
+				trainIdCell = null;
 			}
 			// si la ligne de donnée existe
 			if(trainIdCell != null) {

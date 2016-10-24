@@ -19,7 +19,6 @@ import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.serviceDto.FiltrePlanTransportServiceDto;
-import com.avancial.app.utilitaire.GetEntiteService;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.utils.ListUtils;
 import factory.PlanTransportFactory;
@@ -57,7 +56,7 @@ public class TestResultatFiltreDto {
         CompositionDto compo0 = new CompositionDto();
         compo0.setCapacity(72);
         List<VoitureDto> voitures0 = new ArrayList<>();
-        
+
         VoitureDto voiture00 = new VoitureDto();
         voiture00.setCapacity(24);
         voiture00.setCoachClass("A");
@@ -68,7 +67,7 @@ public class TestResultatFiltreDto {
         specifications00.add("Coach 001 - " + EnumEtatSpecification.Blocked);
         voiture00.setSpecifications(specifications00);
         voitures0.add(voiture00);
-        
+
         VoitureDto voiture01 = new VoitureDto();
         voiture01.setCapacity(24);
         voiture01.setCoachClass("A");
@@ -78,7 +77,7 @@ public class TestResultatFiltreDto {
         List<String> specifications01 = new ArrayList<>();
         voiture01.setSpecifications(specifications01);
         voitures0.add(voiture01);
-        
+
         VoitureDto voiture02 = new VoitureDto();
         voiture02.setCapacity(24);
         voiture02.setCoachClass("A");
@@ -88,7 +87,7 @@ public class TestResultatFiltreDto {
         List<String> specifications02 = new ArrayList<>();
         voiture02.setSpecifications(specifications02);
         voitures0.add(voiture02);
-        
+
         compo0.setVoitures(voitures0);
         trainTrancheDateDtoExpected0.setComposition(compo0);
         RMCodeDto rmCode0 = new RMCodeDto();
@@ -123,11 +122,11 @@ public class TestResultatFiltreDto {
         mealService02.setType(EnumTypeRepas.Dejeuner.toString());
         mealServices0.add(mealService00);
         mealServices0.add(mealService01);
-        mealServices0.add(mealService02);        
+        mealServices0.add(mealService02);
         service0.setMealServices(mealServices0);
         List<ServiceABoardDto> services0 = new ArrayList<>();
         ServiceABoardDto serviceABord0 = new ServiceABoardDto();
-        serviceABord0.setClasse( EnumClasseService.Premiere.toString());
+        serviceABord0.setClasse(EnumClasseService.Premiere.toString());
         serviceABord0.setCode("NY");
         serviceABord0.setDestination("GBEBB");
         serviceABord0.setLibelle("");
@@ -173,7 +172,7 @@ public class TestResultatFiltreDto {
         CompositionDto compo1 = new CompositionDto();
         compo1.setCapacity(72);
         List<VoitureDto> voitures1 = new ArrayList<>();
-        
+
         VoitureDto voiture10 = new VoitureDto();
         voiture10.setCapacity(24);
         voiture10.setCoachClass("H");
@@ -184,7 +183,6 @@ public class TestResultatFiltreDto {
         voiture10.setSpecifications(specifications10);
         voitures1.add(voiture10);
 
-        
         VoitureDto voiture11 = new VoitureDto();
         voiture11.setCapacity(24);
         voiture11.setCoachClass("H");
@@ -194,7 +192,7 @@ public class TestResultatFiltreDto {
         List<String> specifications11 = new ArrayList<>();
         voiture11.setSpecifications(specifications11);
         voitures1.add(voiture11);
-        
+
         VoitureDto voiture12 = new VoitureDto();
         voiture12.setCapacity(24);
         voiture12.setCoachClass("H");
@@ -210,7 +208,7 @@ public class TestResultatFiltreDto {
         rmCode1.setCodeRame1("16001J");
         rmCode1.setCodeRame2("");
         rmCode1.setRmCode("C01");
-        rmCode1.setFareProfileCode("1");
+        rmCode1.setFareProfileCode("2");
         trainTrancheDateDtoExpected1.setRmCode(rmCode1);
         ServicesDto service1 = new ServicesDto();
         service1.setCodeEquipement("TGR");
@@ -238,11 +236,11 @@ public class TestResultatFiltreDto {
         mealService12.setType(EnumTypeRepas.diner.toString());
         mealServices1.add(mealService10);
         mealServices1.add(mealService11);
-        mealServices1.add(mealService12);  
+        mealServices1.add(mealService12);
         service1.setMealServices(mealServices1);
         List<ServiceABoardDto> services1 = new ArrayList<>();
         ServiceABoardDto serviceABord1 = new ServiceABoardDto();
-        serviceABord1.setClasse( EnumClasseService.Premiere.toString());
+        serviceABord1.setClasse(EnumClasseService.Premiere.toString());
         serviceABord1.setCode("NE");
         serviceABord1.setDestination("GBEBB");
         serviceABord1.setLibelle("");
@@ -298,7 +296,6 @@ public class TestResultatFiltreDto {
         voiture20.setSpecifications(specifications20);
         voitures2.add(voiture20);
 
-        
         VoitureDto voiture21 = new VoitureDto();
         voiture21.setCapacity(24);
         voiture21.setCoachClass("B");
@@ -308,7 +305,7 @@ public class TestResultatFiltreDto {
         List<String> specifications21 = new ArrayList<>();
         voiture21.setSpecifications(specifications21);
         voitures2.add(voiture21);
-        
+
         VoitureDto voiture22 = new VoitureDto();
         voiture22.setCapacity(24);
         voiture22.setCoachClass("B");
@@ -318,14 +315,14 @@ public class TestResultatFiltreDto {
         List<String> specifications22 = new ArrayList<>();
         voiture22.setSpecifications(specifications22);
         voitures2.add(voiture22);
-        
+
         compo2.setVoitures(voitures2);
         trainTrancheDateDtoExpected2.setComposition(compo2);
         RMCodeDto rmCode2 = new RMCodeDto();
         rmCode2.setCodeRame1("15001K");
         rmCode2.setCodeRame2("");
         rmCode2.setRmCode("D031");
-        rmCode2.setFareProfileCode("1");
+        rmCode2.setFareProfileCode("3");
         trainTrancheDateDtoExpected2.setRmCode(rmCode2);
         ServicesDto service2 = new ServicesDto();
         service2.setCodeEquipement("TIT");
@@ -341,7 +338,7 @@ public class TestResultatFiltreDto {
         mealService21.setEnding(PlanTransportFactory.generateDate(1));
         mealService21.setMealCode("");
         mealService21.setMealType("Meal Service");
-        mealService21.setNumeroCoach("009");
+        mealService21.setNumeroCoach("008");
         mealService21.setStarting(PlanTransportFactory.generateDate(-1));
         mealService21.setType(EnumTypeRepas.Snack.toString());
         MealServiceDto mealService22 = new MealServiceDto();
@@ -353,7 +350,7 @@ public class TestResultatFiltreDto {
         mealService22.setType(EnumTypeRepas.Snack.toString());
         mealServices2.add(mealService20);
         mealServices2.add(mealService21);
-        mealServices2.add(mealService22);  
+        mealServices2.add(mealService22);
         service2.setMealServices(mealServices2);
         List<ServiceABoardDto> services2 = new ArrayList<>();
         ServiceABoardDto serviceABord2 = new ServiceABoardDto();
@@ -413,7 +410,6 @@ public class TestResultatFiltreDto {
         voiture30.setSpecifications(specifications30);
         voitures3.add(voiture30);
 
-        
         VoitureDto voiture31 = new VoitureDto();
         voiture31.setCapacity(24);
         voiture31.setCoachClass("B");
@@ -423,7 +419,7 @@ public class TestResultatFiltreDto {
         List<String> specifications31 = new ArrayList<>();
         voiture31.setSpecifications(specifications31);
         voitures3.add(voiture31);
-        
+
         VoitureDto voiture32 = new VoitureDto();
         voiture32.setCapacity(24);
         voiture32.setCoachClass("B");
@@ -433,14 +429,14 @@ public class TestResultatFiltreDto {
         List<String> specifications32 = new ArrayList<>();
         voiture32.setSpecifications(specifications32);
         voitures3.add(voiture32);
-        
+
         compo3.setVoitures(voitures3);
         trainTrancheDateDtoExpected3.setComposition(compo3);
         RMCodeDto rmCode3 = new RMCodeDto();
         rmCode3.setCodeRame1("15001K");
         rmCode3.setCodeRame2("");
         rmCode3.setRmCode("D031");
-        rmCode3.setFareProfileCode("1");
+        rmCode3.setFareProfileCode("3");
         trainTrancheDateDtoExpected3.setRmCode(rmCode3);
         ServicesDto service3 = new ServicesDto();
         service3.setCodeEquipement("TIT");
@@ -468,7 +464,7 @@ public class TestResultatFiltreDto {
         mealService32.setType(EnumTypeRepas.Snack.toString());
         mealServices3.add(mealService30);
         mealServices3.add(mealService31);
-        mealServices3.add(mealService32);  
+        mealServices3.add(mealService32);
         service3.setMealServices(mealServices3);
         List<ServiceABoardDto> services3 = new ArrayList<>();
         ServiceABoardDto serviceABord3 = new ServiceABoardDto();
@@ -504,10 +500,116 @@ public class TestResultatFiltreDto {
         ttddsExpected.add(trainTrancheDateDtoExpected1);
         ttddsExpected.add(trainTrancheDateDtoExpected2);
         ttddsExpected.add(trainTrancheDateDtoExpected3);
- 
-        Assert.assertTrue(ListUtils.compareLists(ttdds, ttddsExpected));
-        
-        
+
+        for (TrainTrancheDateDto trainTrancheDate : ttdds) {
+            for (TrainTrancheDateDto trainTrancheDateExpected : ttddsExpected) {
+                if (trainTrancheDate.getDateJour().equals(trainTrancheDateExpected.getDateJour())
+                        && trainTrancheDate.getNumeroTrain().equals(trainTrancheDateExpected.getNumeroTrain())
+                        && trainTrancheDate.getNumeroTranche().equals(trainTrancheDateExpected.getNumeroTranche())) {
+                    System.out.println("Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                            + trainTrancheDate.getNumeroTranche() + " Date: "
+                            + trainTrancheDate.getDateJour().toString());
+                    /**
+                     * origine
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " Origine",
+                            trainTrancheDate.getOrigine().equals(trainTrancheDateExpected.getOrigine()));
+                    /**
+                     * Destination
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " Destination",
+                            trainTrancheDate.getDestination().equals(trainTrancheDateExpected.getDestination()));
+                    /**
+                     * validForRR
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " ValidForRR",
+                            trainTrancheDate.getValidForRR().equals(trainTrancheDateExpected.getValidForRR()));
+                    /**
+                     * status
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " Status",
+                            trainTrancheDate.getStatus().equals(trainTrancheDateExpected.getStatus()));
+                    /**
+                     * compagnie
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " Company",
+                            trainTrancheDate.getCompany().equals(trainTrancheDateExpected.getCompany()));
+                    /**
+                     * indicateurDistribution
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " indicateurDistribution",
+                            trainTrancheDate.getIndicateurDistribution()
+                                    .equals(trainTrancheDateExpected.getIndicateurDistribution()));
+                    /**
+                     * codeSat
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " codeSat",
+                            trainTrancheDate.getCodeSat().equals(trainTrancheDateExpected.getCodeSat()));
+                    /**
+                     * codeTosp
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " codeTosp",
+                            trainTrancheDate.getCodeTosp().equals(trainTrancheDateExpected.getCodeTosp()));
+                    /**
+                     * rmCode
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " rmCode",
+                            trainTrancheDate.getRmCode().equals(trainTrancheDateExpected.getRmCode()));
+                    /**
+                     * service
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " service",
+                            trainTrancheDate.getService().equals(trainTrancheDateExpected.getService()));
+                    /**
+                     * composition
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " composition",
+                            trainTrancheDate.getComposition().equals(trainTrancheDateExpected.getComposition()));
+                    /**
+                     * stops
+                     */
+                    Assert.assertTrue(
+                            "Train: " + trainTrancheDate.getNumeroTrain() + " Tranche: "
+                                    + trainTrancheDate.getNumeroTranche() + " Date: "
+                                    + trainTrancheDate.getDateJour().toString() + " stops",
+                            ListUtils.compareLists(trainTrancheDate.getStops(), trainTrancheDateExpected.getStops()));
+                }
+            }
+        }
+        // Assert.assertTrue(ListUtils.compareLists(ttdds, ttddsExpected));
 
     }
 }

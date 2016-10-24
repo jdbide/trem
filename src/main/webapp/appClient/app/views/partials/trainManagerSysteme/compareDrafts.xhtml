@@ -43,12 +43,22 @@
 						</select></td>
 					</tr>
 					<tr>
-						<td>
+						<td ng-if="!traitementEnCours">
 							<button class="btn btn-success pull-right"
-							    ng-disabled="disable()"
-								ng-click="executeValidateControl()">Compare Drafts</button>
+								ng-disabled="disable()" ng-click="executeValidateControl()">Compare
+								Drafts</button>
+
 						</td>
-						<td><a href="{{urlDownloadFileCompFile}}"
+						<td ng-if="traitementEnCours">
+							<div class="overlay" class="box box-solid">
+								<div class="box-body text-center">
+									{{progressImport.lastMsg}}</div>
+								<i class="fa fa-refresh fa-spin fa-3x pull-right"></i>
+
+							</div>
+						</td>
+						<td ng-if="!traitementEnCours"><a
+							href="{{urlDownloadFileCompFile}}"
 							style="text-decoration: underline">Read last generated file</a></td>
 					</tr>
 				</tbody>

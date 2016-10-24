@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.avancial.app.data.databean.RefCodeRmEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefEqpTypeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefFareProfileCodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefSatcodeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
@@ -16,6 +17,8 @@ import com.avancial.app.fileImport.excelImport.ExcelImportMiddleStep;
 import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
 import com.avancial.app.service.controlePlanTransport.excelImport.InitPlanTransportStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DataFileSheetToImportParseStep;
+import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeFareProfileExtractionStep;
+import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeFareProfileValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeRameExtractionStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeRmValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeSATExtractionStep;
@@ -34,6 +37,7 @@ import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IIntegrator;
 import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeSATExtractionStep.CODE_SAT;
 import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeRameExtractionStep.CODE_RM;
 import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileRollingStockExtractionStep.ROLLING_STOCK;
+import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeFareProfileExtractionStep.CODE_FARE_PROFILE;
 
 public class EurostarDatafileImportProcess extends AExcelImportProcess<PlanTransport, DatafileContext>{
 
@@ -46,6 +50,7 @@ public class EurostarDatafileImportProcess extends AExcelImportProcess<PlanTrans
 						new ExcelImportMiddleStep<PlanTransport>(
 								new GenericRefImportStep<MotriceRefEqpTypeEntity, DatafileContext>(EnumCompagnies.ES, MotriceRefEqpTypeEntity.class, itRefRollingStock()),
 								new GenericRefImportStep<MotriceRefSatcodeEntity, DatafileContext>(EnumCompagnies.ES, MotriceRefSatcodeEntity.class, itRefCodeSat()),
+								new GenericRefImportStep<MotriceRefFareProfileCodeEntity, DatafileContext>(EnumCompagnies.ES, MotriceRefFareProfileCodeEntity.class, itRefCodeFareProfile()),
 								new RefCodeRmImportStep<DatafileContext>(itRefCodeRm())
 								),
 						new InitPlanTransportStep(EnumCompagnies.ES)),
@@ -64,11 +69,11 @@ public class EurostarDatafileImportProcess extends AExcelImportProcess<PlanTrans
 						new DatafileStringParseStep(13, ROLLING_STOCK, "impossible de lire le type d'équipement"),
 						new DatafileRollingStockValidationStep(),
 						new DatafileRollingStockExtractionStep()),
-				// import des profils tarifaires TODO ****************************************************************
+				// import des profils tarifaires
 				new DatafilePrimaryStep(
-						null,
-						null,
-						null),
+						new DatafileStringParseStep(10, CODE_FARE_PROFILE, "impossible de lire le profil tarifaire"),
+						new DatafileCodeFareProfileValidationStep("NO SPFT"),
+						new DatafileCodeFareProfileExtractionStep("NO SPFT")),
 				// import des codes SAT
 				new DatafilePrimaryStep(
 						new DatafileStringParseStep(1, CODE_SAT, "impossible de lire un code SAT"),
@@ -133,6 +138,21 @@ public class EurostarDatafileImportProcess extends AExcelImportProcess<PlanTrans
 					refCodeSat.add(codeSat.getLabelSatCode());
 				}
 				context.setRefCodeSat(refCodeSat);
+			}
+		};
+	}
+	
+	/**
+	 * @return un intégrateur pour : la liste de référence des profiles tarifaires.
+	 */
+	public static IIntegrator<List<MotriceRefFareProfileCodeEntity>, DatafileContext> itRefCodeFareProfile() {
+		return new IIntegrator<List<MotriceRefFareProfileCodeEntity>, DatafileContext>() {
+			@Override public void set(DatafileContext context, List<MotriceRefFareProfileCodeEntity> value) {
+				List<String> refCodeFareProfile = new ArrayList<String>();
+				for(MotriceRefFareProfileCodeEntity codeFare : value) {
+					refCodeFareProfile.add(codeFare.getLabelFareProfileCode());
+				}
+				context.setRefCodeFareProfile(refCodeFareProfile);
 			}
 		};
 	}

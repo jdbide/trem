@@ -45,9 +45,13 @@ public abstract class ARefImportStep<E, S, C extends AExcelImportContext<PlanTra
 	 */
 	@SuppressWarnings("unchecked")
 	public ARefImportStep(EnumCompagnies compagnie, Class<? extends S> serviceClass, Class<? extends E> entityClass, IIntegrator<List<E>, C> integrator){
-		CompagnieService compagnieService = (CompagnieService) this.cdi.select(CompagnieService.class).get();
-		this.compagnie = compagnieService.getByNomTechnique(compagnie.getValue()).get(0);
-		this.cdi.destroy(compagnieService);
+		if(compagnie != null) {
+			CompagnieService compagnieService = (CompagnieService) this.cdi.select(CompagnieService.class).get();
+			this.compagnie = compagnieService.getByNomTechnique(compagnie.getValue()).get(0);
+			this.cdi.destroy(compagnieService);
+		} else {
+			this.compagnie = null;
+		}
 		this.integrator = integrator;
 		this.serviceClass = serviceClass;
 		this.entityClass = entityClass;
