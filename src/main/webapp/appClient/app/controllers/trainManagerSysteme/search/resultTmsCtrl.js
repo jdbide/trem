@@ -196,15 +196,7 @@ socle_app.controller("resultTmsCtrl", ['$rootScope', '$scope', 'loadingService',
 					if (reponse.status) {
 						$scope.datas = reponse.data;
 						
-						buildTable().then(
-							function () {
-								$scope.tab = resultService.getTbody();
-//								console.log($scope.tab);
-								alert("construction du tableau");
-							}, function () {
-								alert("Erreur de construction du tableau");
-							}
-						);
+						
 					} else {
 						alert("Erreur : " + reponse.message);
 					}

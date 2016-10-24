@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import org.apache.poi.ss.formula.functions.T;
 import com.avancial.app.data.databean.JeuDonneeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
@@ -19,6 +20,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumEtatSpecification;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRestriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
 import com.avancial.app.data.objetsMetier.PlanTransport.Gare;
 import com.avancial.app.data.objetsMetier.PlanTransport.GareHoraire;
@@ -32,6 +34,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.ServiceABord;
 import com.avancial.app.data.objetsMetier.PlanTransport.Siege;
 import com.avancial.app.data.objetsMetier.PlanTransport.Specification;
+import com.avancial.app.data.objetsMetier.PlanTransport.Tosp;
 import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
@@ -49,7 +52,7 @@ public class PlanTransportFactory {
     */
     public PlanTransportFactory() {
     }
-    
+
     public static MapPlansDeTransport createDataForControle() {
 
         List<Train> listTrain_base = new ArrayList<>();
@@ -58,25 +61,22 @@ public class PlanTransportFactory {
         Train trainEgal = new Train();
         Train trainControleBase = new Train();
         Train trainControleXls = new Train();
-        
-        
-        
+
         Regime regimeEgal = generateRegime(generateDate(-1), generateDate(0));
-        
+
         List<Tranche> tranchesEgal = new ArrayList<>();
         Tranche trancheEgal = new Tranche();
         trancheEgal.setNumeroTranche("trancheEgal");
         trancheEgal.setTrancheStatut(EnumTrancheStatut.Ouvert);
         trancheEgal.setRegime(regimeEgal);
         tranchesEgal.add(trancheEgal);
-        
-        
+
         trainEgal.setNumeroTrain("trainEgal");
         trainEgal.setValidForRR(true);
         trainEgal.setTranches(tranchesEgal);
-        
+
         listTrain_base.add(trainEgal);
-        
+
         trainEgal = new Train();
         trancheEgal = new Tranche();
         trancheEgal.setNumeroTranche("trancheEgal");
@@ -84,68 +84,65 @@ public class PlanTransportFactory {
         trancheEgal.setRegime(regimeEgal);
         tranchesEgal = new ArrayList<>();
         tranchesEgal.add(trancheEgal);
-        
+
         trainEgal.setNumeroTrain("trainEgal");
         trainEgal.setValidForRR(true);
         trainEgal.setTranches(tranchesEgal);
-        
+
         listTrain_xls.add(trainEgal);
-        
-        
+
         List<Tranche> tranchesControleBase = new ArrayList<>();
         List<Tranche> tranchesControleXls = new ArrayList<>();
-        
+
         Tranche trancheControleBaseStatut = new Tranche();
         trancheControleBaseStatut.setNumeroTranche("trancheControleStatut");
         trancheControleBaseStatut.setTrancheStatut(EnumTrancheStatut.Ferme);
-        trancheControleBaseStatut.setRegime(generateRegime(generateDate(-1), generateDate(0)));        
+        trancheControleBaseStatut.setRegime(generateRegime(generateDate(-1), generateDate(0)));
         tranchesControleBase.add(trancheControleBaseStatut);
-        
+
         Tranche trancheControleBaseRepas = new Tranche();
         trancheControleBaseRepas.setNumeroTranche("trancheControleCodeSat");
         trancheControleBaseRepas.setTrancheStatut(EnumTrancheStatut.Ouvert);
-        trancheControleBaseRepas.setRegime(generateRegime(generateDate(-3),generateDate(-2)));
+        trancheControleBaseRepas.setRegime(generateRegime(generateDate(-3), generateDate(-2)));
         List<ASousRegimeTranche> attributs = new ArrayList<>();
         CodeSat codeSat = new CodeSat();
         codeSat.setCodeSat("base");
-        codeSat.setRegime(generateRegime(generateDate(-3),generateDate(-2)));
+        codeSat.setRegime(generateRegime(generateDate(-3), generateDate(-2)));
         attributs.add(codeSat);
         MapTranche map = new MapTranche();
         map.put(codeSat.getClass(), attributs);
         trancheControleBaseRepas.setAttributs(map);
         tranchesControleBase.add(trancheControleBaseRepas);
-        
+
         trainControleBase.setNumeroTrain("trainControle");
         trainControleBase.setValidForRR(true);
         trainControleBase.setTranches(tranchesControleBase);
         listTrain_base.add(trainControleBase);
-        
+
         Tranche trancheControleXlsStatut = new Tranche();
         trancheControleXlsStatut.setNumeroTranche("");
         trancheControleXlsStatut.setTrancheStatut(EnumTrancheStatut.Ouvert);
-        trancheControleXlsStatut.setRegime(generateRegime(generateDate(-1), generateDate(0)));       
+        trancheControleXlsStatut.setRegime(generateRegime(generateDate(-1), generateDate(0)));
         tranchesControleXls.add(trancheControleXlsStatut);
-        
+
         Tranche trancheControleXlsRepas = new Tranche();
         trancheControleXlsRepas.setNumeroTranche("");
         trancheControleXlsRepas.setTrancheStatut(EnumTrancheStatut.Ouvert);
-        trancheControleXlsRepas.setRegime(generateRegime(generateDate(-3),generateDate(-2)));
+        trancheControleXlsRepas.setRegime(generateRegime(generateDate(-3), generateDate(-2)));
         List<ASousRegimeTranche> attributsXls = new ArrayList<>();
         CodeSat codeSatXls = new CodeSat();
         codeSatXls.setCodeSat("xls");
-        codeSatXls.setRegime(generateRegime(generateDate(-3),generateDate(-2)));
+        codeSatXls.setRegime(generateRegime(generateDate(-3), generateDate(-2)));
         attributsXls.add(codeSatXls);
         MapTranche mapXls = new MapTranche();
         mapXls.put(codeSatXls.getClass(), attributsXls);
         trancheControleXlsRepas.setAttributs(mapXls);
         tranchesControleXls.add(trancheControleXlsRepas);
-        
+
         trainControleXls.setNumeroTrain("trainControle");
         trainControleXls.setValidForRR(true);
         trainControleXls.setTranches(tranchesControleXls);
         listTrain_xls.add(trainControleXls);
-        
-        
 
         PlanTransport pt_xls = new PlanTransport(EnumCompagnies.ES, listTrain_xls);
         PlanTransport pt_base = new PlanTransport(EnumCompagnies.ES, listTrain_base);
@@ -574,6 +571,341 @@ public class PlanTransportFactory {
     }
 
     public static Date dateRef = new Date();
+
+    public static MapPlansDeTransport createDataForResultatFiltre() {
+
+        /**
+         * creation plan de transport
+         */
+        PlanTransport pdt = new PlanTransport();
+        pdt.setCompagnie(EnumCompagnies.ES);
+
+        /**
+         * creation des trains
+         */
+        Train train0 = new Train();
+        train0.setNumeroTrain("0");
+        train0.setValidForRR(true);
+        Train train1 = new Train();
+        train1.setNumeroTrain("1");
+        train1.setValidForRR(false);
+
+        /**
+         * creation des tranches
+         */
+        Tranche tranche00 = new Tranche();
+        tranche00.setNumeroTranche("00");
+        tranche00.setRegime(generateRegime(generateDate(0), generateDate(1)));
+        tranche00.setTrancheStatut(EnumTrancheStatut.Ouvert);
+        Tranche tranche01 = new Tranche();
+        tranche01.setNumeroTranche("01");
+        tranche01.setRegime(generateRegime(generateDate(-1), generateDate(0)));
+        tranche01.setTrancheStatut(EnumTrancheStatut.Ferme);
+        Tranche tranche10 = new Tranche();
+        tranche10.setNumeroTranche("10");
+        tranche10.setRegime(generateRegime(generateDate(-1), generateDate(1)));
+        tranche10.setTrancheStatut(EnumTrancheStatut.Ouvert);
+
+        /**
+         * Init Od
+         */
+        Gare g = new Gare("GBSPX");
+        Gare g2 = new Gare("GBEBB");
+        Gare g3 = new Gare("GARE3");
+        Gare g4 = new Gare("GARE4");
+
+        OrigineDestination od00 = new OrigineDestination(g, g2, generateRegime(generateDate(0), generateDate(1)));
+        OrigineDestination od01 = new OrigineDestination(g3, g2, generateRegime(generateDate(-1), generateDate(0)));
+        OrigineDestination od10 = new OrigineDestination(g2, g4, generateRegime(generateDate(-1), generateDate(1)));
+        List<OrigineDestination> ods00 = new ArrayList<>();
+        ods00.add(od00);
+        List<OrigineDestination> ods01 = new ArrayList<>();
+        ods01.add(od01);
+        List<OrigineDestination> ods10 = new ArrayList<>();
+        ods10.add(od10);
+
+        /**
+         * Regime Distrib
+         */
+        Distribution d00 = new Distribution("C", generateRegime(generateDate(0), generateDate(1)));
+        Distribution d01 = new Distribution("B", generateRegime(generateDate(-1), generateDate(0)));
+        Distribution d10 = new Distribution("D", generateRegime(generateDate(-1), generateDate(1)));
+        List<Distribution> distributions00 = new ArrayList<>();
+        distributions00.add(d00);
+        List<Distribution> distributions01 = new ArrayList<>();
+        distributions01.add(d01);
+        List<Distribution> distributions10 = new ArrayList<>();
+        distributions10.add(d10);
+
+        /**
+         * CodeSat
+         */
+
+        CodeSat codeSat00 = new CodeSat("1", generateRegime(generateDate(0), generateDate(1)));
+        CodeSat codeSat01 = new CodeSat("2", generateRegime(generateDate(-1), generateDate(0)));
+        CodeSat codeSat10 = new CodeSat("3", generateRegime(generateDate(-1), generateDate(1)));
+        List<CodeSat> codeSats00 = new ArrayList<>();
+        codeSats00.add(codeSat00);
+        List<CodeSat> codeSats01 = new ArrayList<>();
+        codeSats01.add(codeSat01);
+        List<CodeSat> codeSats10 = new ArrayList<>();
+        codeSats10.add(codeSat10);
+
+        /**
+         * Tosp
+         */
+
+        Tosp tosp00 = new Tosp("1", generateRegime(generateDate(0), generateDate(1)));
+        Tosp tosp01 = new Tosp("2", generateRegime(generateDate(-1), generateDate(0)));
+        Tosp tosp10 = new Tosp("3", generateRegime(generateDate(-1), generateDate(1)));
+        List<Tosp> tosps00 = new ArrayList<>();
+        tosps00.add(tosp00);
+        List<Tosp> tosps01 = new ArrayList<>();
+        tosps01.add(tosp01);
+        List<Tosp> tosps10 = new ArrayList<>();
+        tosps10.add(tosp10);
+
+        /**
+         * FareProfile
+         */
+
+        FareProfile fareProfile00 = new FareProfile("1", generateRegime(generateDate(0), generateDate(1)));
+        FareProfile fareProfile01 = new FareProfile("2", generateRegime(generateDate(-1), generateDate(0)));
+        FareProfile fareProfile10 = new FareProfile("3", generateRegime(generateDate(-1), generateDate(1)));
+        List<FareProfile> fp00 = new ArrayList<>();
+        fp00.add(fareProfile00);
+        List<FareProfile> fp01 = new ArrayList<>();
+        fp01.add(fareProfile01);
+        List<FareProfile> fp10 = new ArrayList<>();
+        fp10.add(fareProfile10);
+
+        /**
+         * Regime Compo
+         */
+
+        List<Voiture> voitures00 = new ArrayList<>();
+        List<Siege> sieges = new ArrayList<>();
+        sieges.add(new Siege("1"));
+        sieges.add(new Siege("2"));
+        sieges.add(new Siege("3"));
+        sieges.add(new Siege("4"));
+        sieges.add(new Siege("5"));
+        sieges.add(new Siege("6"));
+        sieges.add(new Siege("7"));
+        sieges.add(new Siege("8"));
+
+        List<Compartiment> compartiments = new ArrayList<>();
+        compartiments.add(new Compartiment("1", sieges));
+        compartiments.add(new Compartiment("2", sieges));
+        compartiments.add(new Compartiment("3", sieges));
+
+        Voiture v1 = new Voiture("001", compartiments);
+        Voiture v2 = new Voiture("002", compartiments);
+        Voiture v3 = new Voiture("003", compartiments);
+
+        voitures00.add(v1);
+        voitures00.add(v2);
+        voitures00.add(v3);
+
+        Composition compo00 = new Composition("A", "ESA", "15001H", "C01", voitures00,
+                generateRegime(generateDate(0), generateDate(1)));
+
+        List<Voiture> voitures01 = new ArrayList<>();
+        Voiture v4 = new Voiture("004", compartiments);
+        Voiture v5 = new Voiture("005", compartiments);
+        Voiture v6 = new Voiture("006", compartiments);
+
+        voitures01.add(v4);
+        voitures01.add(v5);
+        voitures01.add(v6);
+
+        Composition compo01 = new Composition("H", "ESH", "16001J", "C01", voitures01,
+                generateRegime(generateDate(-1), generateDate(0)));
+
+        List<Voiture> voitures10 = new ArrayList<>();
+
+        Voiture v7 = new Voiture("007", compartiments);
+        Voiture v8 = new Voiture("008", compartiments);
+        Voiture v9 = new Voiture("009", compartiments);
+
+        voitures10.add(v7);
+        voitures10.add(v8);
+        voitures10.add(v9);
+
+        Composition compo10 = new Composition("B", "DKT", "15001K", "D031", voitures10,
+                generateRegime(generateDate(-1), generateDate(1)));
+        List<Composition> compos00 = new ArrayList<>();
+        compos00.add(compo00);
+        List<Composition> compos01 = new ArrayList<>();
+        compos01.add(compo01);
+        List<Composition> compos10 = new ArrayList<>();
+        compos10.add(compo10);
+
+        /**
+         * TypeEquipement
+         */
+        TypeEquipement te00 = new TypeEquipement("TGT", generateRegime(generateDate(0), generateDate(1)));
+        TypeEquipement te01 = new TypeEquipement("TGR", generateRegime(generateDate(-1), generateDate(0)));
+        TypeEquipement te10 = new TypeEquipement("TIT", generateRegime(generateDate(0), generateDate(1)));
+        List<TypeEquipement> tes00 = new ArrayList<>();
+        tes00.add(te00);
+        List<TypeEquipement> tes01 = new ArrayList<>();
+        tes01.add(te01);
+        List<TypeEquipement> tes10 = new ArrayList<>();
+        tes10.add(te10);
+
+        /**
+         * ServiceAbord
+         */
+        ServiceABord sab00 = new ServiceABord("NY", EnumClasseService.Premiere, g, g2,
+                generateRegime(generateDate(0), generateDate(1)));
+        ServiceABord sab01 = new ServiceABord("NE", EnumClasseService.Premiere, g, g2,
+                generateRegime(generateDate(-1), generateDate(0)));
+        ServiceABord sab10 = new ServiceABord("BAR", EnumClasseService.Toute, g3, g,
+                generateRegime(generateDate(-1), generateDate(1)));
+        List<ServiceABord> sabs00 = new ArrayList<>();
+        sabs00.add(sab00);
+        List<ServiceABord> sabs01 = new ArrayList<>();
+        sabs00.add(sab01);
+        List<ServiceABord> sabs10 = new ArrayList<>();
+        sabs00.add(sab10);
+
+        /**
+         * Repas
+         */
+
+        Repas repas00 = new Repas(EnumTypeRepas.Dejeuner, new Horaire(generateDate(0), generateDate(1)),
+                generateRegime(generateDate(0), generateDate(1)));
+        Repas repas01 = new Repas(EnumTypeRepas.diner, new Horaire(generateDate(-1), generateDate(0)),
+                generateRegime(generateDate(-1), generateDate(0)));
+        Repas repas10 = new Repas(EnumTypeRepas.Snack, new Horaire(generateDate(-1), generateDate(1)),
+                generateRegime(generateDate(-1), generateDate(1)));
+        List<Repas> r00 = new ArrayList<>();
+        r00.add(repas00);
+        List<Repas> r01 = new ArrayList<>();
+        r01.add(repas01);
+        List<Repas> r10 = new ArrayList<>();
+        r10.add(repas10);
+
+        /**
+         * Specification
+         */
+
+        Specification spe00 = new Specification(v1, EnumEtatSpecification.Blocked,
+                generateRegime(generateDate(0), generateDate(1)));
+        List<Specification> spes00 = new ArrayList<>();
+        spes00.add(spe00);
+
+        
+
+        /**
+         * Init Desserte
+         */
+        Desserte des00 = new Desserte();
+        des00.setRegime(generateRegime(generateDate(0), generateDate(1)));
+        Desserte des01 = new Desserte();
+        des01.setRegime(generateRegime(generateDate(-1), generateDate(0)));
+        Desserte des10 = new Desserte();
+        des10.setRegime(generateRegime(generateDate(-1), generateDate(1)));
+
+        Horaire h = new Horaire();
+        h.setHoraireDebut(generateDate(0));
+        h.setHoraireFin(generateDate(1));
+
+        GareHoraire gh1 = new GareHoraire(g, h);
+        GareHoraire gh2 = new GareHoraire(g2, h);
+        GareHoraire gh3 = new GareHoraire(g3, h);
+        GareHoraire gh4 = new GareHoraire(g4, h);
+
+        List<GareHoraire> lGh = new ArrayList<>();
+        List<GareHoraire> lGh2 = new ArrayList<>();
+
+        lGh.add(gh1);
+        lGh.add(gh2);
+
+        lGh2.add(gh3);
+        lGh2.add(gh4);
+
+        des00.setGareHoraires(lGh);
+        des01.setGareHoraires(lGh);
+        des10.setGareHoraires(lGh2);
+
+        List<Desserte> dess00  = new ArrayList<>();
+        dess00.add(des00);
+        List<Desserte> dess01  = new ArrayList<>();
+        dess01.add(des01);
+        List<Desserte> dess10 = new ArrayList<>();
+        dess10.add(des10);
+
+        /**
+         * replissage des attributs tranche
+         */
+        MapTranche mapTranche00 = new MapTranche();
+        mapTranche00.put(OrigineDestination.class, ods00);
+        mapTranche00.put(Distribution.class, distributions00);
+        mapTranche00.put(CodeSat.class, codeSats00);
+        mapTranche00.put(Tosp.class, tosps00);
+        mapTranche00.put(FareProfile.class, fp00);
+        mapTranche00.put(Composition.class, compos00);
+        mapTranche00.put(TypeEquipement.class, tes00);
+        mapTranche00.put(ServiceABord.class, sabs00);
+        mapTranche00.put(Repas.class, r00);
+        mapTranche00.put(Specification.class, spes00);
+        mapTranche00.put(Desserte.class, dess00);
+
+        MapTranche mapTranche01 = new MapTranche();
+        mapTranche01.put(OrigineDestination.class, ods01);
+        mapTranche01.put(Distribution.class, distributions01);
+        mapTranche01.put(CodeSat.class, codeSats01);
+        mapTranche01.put(Tosp.class, tosps01);
+        mapTranche01.put(FareProfile.class, fp01);
+        mapTranche01.put(Composition.class, compos01);
+        mapTranche01.put(TypeEquipement.class, tes01);
+        mapTranche01.put(ServiceABord.class, sabs01);
+        mapTranche01.put(Repas.class, r01);
+        mapTranche01.put(Desserte.class, dess00);
+
+        MapTranche mapTranche10 = new MapTranche();
+        mapTranche10.put(OrigineDestination.class, ods10);
+        mapTranche10.put(Distribution.class, distributions10);
+        mapTranche10.put(CodeSat.class, codeSats10);
+        mapTranche10.put(Tosp.class, tosps10);
+        mapTranche10.put(FareProfile.class, fp10);
+        mapTranche10.put(Composition.class, compos10);
+        mapTranche10.put(Desserte.class, dess10);
+        mapTranche10.put(ServiceABord.class, sabs10);
+        mapTranche10.put(Repas.class, r10);
+        mapTranche10.put(Desserte.class, dess10);
+
+        /**
+         * setage des mapTranche
+         */
+        tranche00.setAttributs(mapTranche00);
+        tranche01.setAttributs(mapTranche01);
+        tranche10.setAttributs(mapTranche10);
+        
+        List<Tranche> tranches0 = new ArrayList<>();
+        tranches0.add(tranche00);
+        tranches0.add(tranche01);
+        List<Tranche> tranches1 = new ArrayList<>();
+        tranches1.add(tranche10);
+        
+        train0.setTranches(tranches0);
+        train1.setTranches(tranches1);
+        
+        List<Train> trains = new ArrayList<>();
+        trains.add(train0);
+        trains.add(train1);
+
+        pdt.setTrains(trains);
+        
+
+        MapPlansDeTransport mapPlansDeTransport = new MapPlansDeTransport();
+
+        mapPlansDeTransport.setMapPlansDeTransport(new JeuDonneeEntity(),null, new JeuDonneeEntity(), pdt);
+
+        return mapPlansDeTransport;
+    }
 
     public static MapPlansDeTransport createDataForCompareTrancheSplit() {
         List<Train> trainsDraft = new ArrayList<>();
