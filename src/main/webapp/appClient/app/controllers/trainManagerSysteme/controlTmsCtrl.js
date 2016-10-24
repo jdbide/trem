@@ -17,6 +17,8 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	$scope.startControl = -1;
 	// Boolean pour l'ouverture du modal de création d'un controle
 	$scope.modalCreateControl = false;
+	// Boolean pour l'ouverture du modal d'affichage des détails d'erreur
+	$scope.modalErrorsDetails = false;
 	// IdJeuDonneesControl
 	$scope.jeuDonneesControl = null;
 	// status pour jeuDonnees selectionne
@@ -293,6 +295,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 							$scope.files.firstFile.etat.isFinishTraitement = true;
 							$scope.files.firstFile.etat.isFinishTraitementSuccess = false;
 							$scope.files.firstFile.msgError = reponse.message;
+							$scope.files.firstFile.errorDetailsList = reponse.data;
 
 						}
 						
@@ -356,6 +359,15 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		
 		console.log("==> $scope.selectedIdJeuDonnees " + $scope.selectedIdJeuDonnees);
 	}
+	
+	
+	/**
+	 * Afficher les détails d'une erreur
+	 */
+	$scope.showOrHideErrorsModal = function(){
+		$scope.modalErrorsDetails = !$scope.modalErrorsDetails;
+	}
+	
 
 	/*
 	 * Call constructor

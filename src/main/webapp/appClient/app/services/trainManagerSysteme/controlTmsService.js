@@ -122,10 +122,7 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
 				file.result = response.message;
 				reponse = response.data;
 				
-				deffered.resolve();
-				
-				
-				
+				deffered.resolve();		
 			}, function () {
 				//alert("Erreur serveur !");
 				deffered.reject();

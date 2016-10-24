@@ -1,0 +1,79 @@
+<div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel"
+	aria-hidden="false" data-keyboard="false" data-backdrop="static">
+
+
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<m-loader></m-loader>
+			<div class="modal-header modal-header-socle">
+				<h3 class="modal-title">Error Details</h3>
+			</div>
+			<div class="modal-body modal-body-socle">
+				<div class="modal-body-back-socle">
+					<div class="modal-body-content-socle">
+
+
+						<div class="form-group form-group-modal-socle">
+
+							<div class="box-body table-responsive no-padding">
+								<table class="table table-bordered table-striped_control">
+									<thead>
+										<tr>
+											<th class="text-center">Error type</th>
+											<th class="text-center">Details</th>
+
+										</tr>
+									</thead>
+									<tbody
+										>
+										<tr>
+											<td ROWSPAN=2 style="vertical-align: middle;">Erreur fatale</td>
+											<td ROWSPAN=2 class="text-center"
+												style="vertical-align: middle;">{{$parent.files.firstFile.errorDetailsList.erreurFatale}}</td>
+
+										</tr>
+									</tbody>
+									<tbody
+										ng-repeat="datas in $parent.files.firstFile.errorDetailsList.parsing">
+										<tr>
+											<td ROWSPAN=2 style="vertical-align: middle;">Parsing</td>
+											<td ROWSPAN=2 class="text-center"
+												style="vertical-align: middle;">{{datas}}</td>
+
+										</tr>
+									</tbody>
+									<tbody
+										ng-repeat="datas in $parent.files.firstFile.errorDetailsList.validation">
+										<tr>
+											<td ROWSPAN=2 style="vertical-align: middle;">Validation</td>
+											<td ROWSPAN=2 class="text-center"
+												style="vertical-align: middle;">{{datas}}</td>
+
+										</tr>
+									</tbody>
+									<tbody
+										ng-repeat="datas in $parent.files.firstFile.errorDetailsList.extraction">
+										<tr>
+											<td ROWSPAN=2 style="vertical-align: middle;">Extraction</td>
+											<td ROWSPAN=2 class="text-center"
+												style="vertical-align: middle;">{{datas}}</td>
+
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer modal-footer-socle">
+
+					<button class="btn btn-danger" ng-click="showOrHideErrorsModal()">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
