@@ -2,6 +2,9 @@ package service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -13,7 +16,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.avancial.app.data.databean.importMotrice.MotriceRegimeEntity;
+import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
+import com.avancial.app.data.objetsMetier.PlanTransport.Desserte;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
@@ -29,7 +34,6 @@ import com.avancial.app.service.JeuDonneesService;
 import com.avancial.app.service.RefTablesMotriceRegimeService;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.ComparePlanTransportControl;
-import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesContext;
 import com.avancial.app.service.controlePlanTransport.excelImport.eurostar.EurostarDessertesImportProcess;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
@@ -44,6 +48,8 @@ import com.avancial.socle.ihm.menu.model.databean.PageDataBean;
 import com.avancial.socle.logging.ALogBean;
 import com.avancial.socle.persistence.EntityManagerProducerSocle;
 import com.avancial.socle.persistence.qualifiers.Socle_PUSocle;
+import com.avancial.socle.scheduler.CdiJobFactory;
+import com.avancial.socle.scheduler.service.JobPlanifService;
 import com.avancial.socle.traitement.ATraitement;
 import com.avancial.socle.utils.ListUtils;
 import factory.PlanTransportFactory;
@@ -65,9 +71,9 @@ public class TestControlePlanTransport {
                 .addClass(TraitementObjetMetier.class).addClass(RefTablesMotriceRegimeService.class)
                 .addClass(TraiteMotriceRegimeFactory.class).addClass(MapPlansDeTransport.class)
                 .addClass(TraitementMotrice.class).addPackage(Socle_PUSocle.class.getPackage())
-                .addPackage(EntityManagerProducerSocle.class.getPackage())
+                .addPackage(EntityManagerProducerSocle.class.getPackage()).addPackage(CdiJobFactory.class.getPackage())
                 .addPackage(LogTraitementDataBean.class.getPackage()).addPackage(CompagnieService.class.getPackage())
-                .addPackage(GetEntiteService.class.getPackage())
+                .addPackage(GetEntiteService.class.getPackage()).addPackage(JobPlanifService.class.getPackage())
                 .addAsWebInfResource("WEB-INF/beans.xml", "beans.xml").addAsLibraries(lib)
                 .addAsWebInfResource("persistence.xml", "classes/META-INF/persistence.xml").setWebXML("WEB-INF/web.xml")
                 .addAsManifestResource("META-INF/context.xml", "context.xml");
@@ -146,7 +152,28 @@ public class TestControlePlanTransport {
 		} catch (StructuredProcessException e) {
 			this.showExceptions(e, "testImportDessertesEurostar");
 		}
-    	// TODO asserts
+    	Assert.assertEquals("le nombre de trains est incorrecte", 8, plan.getTrains().size());
+    	Tranche tranche = plan.getTrainByNumeroTrain("009008").getTranches().get(0);
+    	@SuppressWarnings("unchecked")
+		List<Desserte> dessertes = (List<Desserte>) tranche.getAttributsField(Desserte.class);
+    	Calendar firstDay = new GregorianCalendar();
+    	firstDay.setTime(dessertes.get(0).getRegime().getListeJours().get(0));
+    	Desserte weekDesserte;
+    	Desserte saturdayDesserte;
+    	if(firstDay.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+    		saturdayDesserte = dessertes.get(1);
+    		weekDesserte = dessertes.get(0);
+    	} else {
+    		saturdayDesserte = dessertes.get(0);
+    		weekDesserte = dessertes.get(1);
+    	}
+    	Assert.assertEquals("le nombre de gares dans la desserte du samedi du train 9008 est incorrecte", 3, saturdayDesserte.getGareHoraires().size());
+    	Calendar depGare2Sem = new GregorianCalendar();
+    	depGare2Sem.setTime(weekDesserte.getGareHoraires().get(1).getHoraire().getHoraireFin());
+    	Calendar depGare2Sam = new GregorianCalendar();
+    	depGare2Sam.setTime(saturdayDesserte.getGareHoraires().get(1).getHoraire().getHoraireFin());
+    	Assert.assertEquals("l'horaire de départ de la seconde gare du samedi du train 9008 est incorrecte", 492, depGare2Sam.get(Calendar.HOUR_OF_DAY) * 60 + depGare2Sam.get(Calendar.MINUTE));
+    	Assert.assertEquals("l'horaire de départ de la seconde gare de semaine du train 9008 est incorrecte", 492, depGare2Sem.get(Calendar.HOUR_OF_DAY) * 60 + depGare2Sem.get(Calendar.MINUTE));
     }
     
     /**

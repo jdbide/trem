@@ -1,16 +1,21 @@
 package com.avancial.app.service.controlePlanTransport.excelImport.eurostar;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.avancial.app.data.databean.importMotrice.MotriceRefEqpTypeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefMealTypeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.fileImport.excelImport.AExcelImportProcess;
 import com.avancial.app.fileImport.excelImport.ExcelImportFatalizeErrorsStep;
+import com.avancial.app.fileImport.excelImport.ExcelImportMiddleStep;
 import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
 import com.avancial.app.service.controlePlanTransport.excelImport.InitPlanTransportStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.InitRefMapsStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DateIntervalParseStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DateIntervalValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesContext;
@@ -35,6 +40,7 @@ import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommo
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesTrainTimeValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesTrainValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesWeekParse;
+import com.avancial.app.service.controlePlanTransport.excelImport.refImportSteps.GenericRefImportStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesSheetsToImportParseStep;
 import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IIntegrator;
 import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IPurveyor;
@@ -54,7 +60,11 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 				// initialisation
 				new DessertesPrimaryStep(
 						new DessertesSheetsToImportParseStep(),
-						new InitRefMapsStep<DessertesContext>(EnumCompagnies.ES, itRefMeal(), itRefStation(), itRefRollingStock()),
+						new ExcelImportMiddleStep<PlanTransport>(
+								new GenericRefImportStep<MotriceRefEqpTypeEntity, DessertesContext>(EnumCompagnies.ES, MotriceRefEqpTypeEntity.class, itRefRollingStock()),
+								new GenericRefImportStep<MotriceRefMealTypeEntity, DessertesContext>(EnumCompagnies.ES, MotriceRefMealTypeEntity.class, itRefMeal()),
+								new GenericRefImportStep<MotriceRefGareEntity, DessertesContext>(EnumCompagnies.ES, MotriceRefGareEntity.class, itRefStation())
+								),
 						new InitPlanTransportStep(EnumCompagnies.ES)),
 				// import des dates
 				new DessertesPrimaryStep(
@@ -167,10 +177,14 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 	/**
 	 * @return un intégrateur pour : la table de référence des repas.
 	 */
-	public static IIntegrator<Map<String, EnumTypeRepas>, DessertesContext> itRefMeal() {
-		return new IIntegrator<Map<String, EnumTypeRepas>, DessertesContext>() {
-			@Override public void set(DessertesContext context, Map<String, EnumTypeRepas> value) {
-				context.setRefMeal(value);
+	public static IIntegrator<List<MotriceRefMealTypeEntity>, DessertesContext> itRefMeal() {
+		return new IIntegrator<List<MotriceRefMealTypeEntity>, DessertesContext>() {
+			@Override public void set(DessertesContext context, List<MotriceRefMealTypeEntity> value) {
+				Map<String, EnumTypeRepas> refMeal = new HashMap<String, EnumTypeRepas>();
+				for(MotriceRefMealTypeEntity meal : value) {
+					refMeal.put(meal.getLabelMealType(), EnumTypeRepas.getEnumTypeRepas(meal.getCodeMealType()));
+				}
+				context.setRefMeal(refMeal);
 			}
 		};
 	}
@@ -178,10 +192,14 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 	/**
 	 * @return un intégrateur pour : la table de référence des gares.
 	 */
-	public static IIntegrator<Map<String, String>, DessertesContext> itRefStation() {
-		return new IIntegrator<Map<String, String>, DessertesContext>() {
-			@Override public void set(DessertesContext context, Map<String, String> value) {
-				context.setRefStation(value);
+	public static IIntegrator<List<MotriceRefGareEntity>, DessertesContext> itRefStation() {
+		return new IIntegrator<List<MotriceRefGareEntity>, DessertesContext>() {
+			@Override public void set(DessertesContext context, List<MotriceRefGareEntity> value) {
+				Map<String, String> refStation = new HashMap<String, String>();
+				for(MotriceRefGareEntity station : value) {
+					refStation.put(station.getLabelMotriceRefGare(), station.getCodeGareMotriceRefGare());
+				}
+				context.setRefStation(refStation);
 			}
 		};
 	}
@@ -189,10 +207,14 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 	/**
 	 * @return un intégrateur pour : la table de référence du matériel roulant.
 	 */
-	public static IIntegrator<List<String>, DessertesContext> itRefRollingStock() {
-		return new IIntegrator<List<String>, DessertesContext>() {
-			@Override public void set(DessertesContext context, List<String> value) {
-				context.setRefRollingStock(value);
+	public static IIntegrator<List<MotriceRefEqpTypeEntity>, DessertesContext> itRefRollingStock() {
+		return new IIntegrator<List<MotriceRefEqpTypeEntity>, DessertesContext>() {
+			@Override public void set(DessertesContext context, List<MotriceRefEqpTypeEntity> value) {
+				List<String> refRollingStock = new ArrayList<String>();
+				for(MotriceRefEqpTypeEntity stock : value) {
+					refRollingStock.add(stock.getLabelEqpType());
+				}
+				context.setRefRollingStock(refRollingStock);
 			}
 		};
 	}

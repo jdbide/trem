@@ -59,6 +59,7 @@ import com.sun.jersey.multipart.FormDataParam;
 @Path("/app/controlTms")
 @RequestScoped
 public class ControlTmsWebService {
+
    // Logger log4j
    private static Logger                 logger = Logger.getLogger(ControlTmsWebService.class);
 

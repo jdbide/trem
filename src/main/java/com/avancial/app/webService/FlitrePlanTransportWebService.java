@@ -9,8 +9,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+
 import org.apache.log4j.Logger;
-import com.avancial.app.data.dto.FiltrePlanTransportDto;
+
+import com.avancial.app.data.dto.FiltreFormPlanTransportDto;
+import com.avancial.app.serviceDto.FiltrePlanTransportServiceDto;
 import com.avancial.app.traitement.TraitementFiltrePlanTransport;
 import com.avancial.app.webService.bean.ResponseBean;
 
@@ -30,6 +33,9 @@ public class FlitrePlanTransportWebService {
     
     @Inject
     private TraitementFiltrePlanTransport traitementFiltre;
+    
+    @Inject
+    private FiltrePlanTransportServiceDto filtrePlanTransportServiceDto;
 
     /**
      * recuperation du plan de transport filtrer
@@ -40,14 +46,15 @@ public class FlitrePlanTransportWebService {
     @PUT
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getPlanTransportFiltre(FiltrePlanTransportDto filtrePlanTransportDto) {
+    public Response getPlanTransportFiltre(FiltreFormPlanTransportDto filtreFormPlanTransportDto) {
         logger.info("Début (WebService : '/app/filtrePdt', Action : 'getPlanTransportFiltre', methode : @PUT)");
         ResponseBuilder responseBuilder = null;
         final ResponseBean responseBean = new ResponseBean();
-        this.traitementFiltre.setFiltre(filtrePlanTransportDto);
+        this.traitementFiltre.setFiltre(filtreFormPlanTransportDto);
         try {
            this.traitementFiltre.execute();
-           responseBean.setData(this.traitementFiltre.getPlanTransport());
+           this.filtrePlanTransportServiceDto.setPlanTransport(this.traitementFiltre.getPlanTransport());
+           responseBean.setData(this.filtrePlanTransportServiceDto.transforme());
            responseBean.setStatus(true);
            logger.info("Fin (WebService : '/app/filtrePdt', Action : 'getPlanTransportFiltre', methode : @PUT)");
            responseBuilder = Response.ok((Object) responseBean);
