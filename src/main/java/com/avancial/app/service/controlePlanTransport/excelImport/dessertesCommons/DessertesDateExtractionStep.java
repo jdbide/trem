@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
+import static com.avancial.app.service.controlePlanTransport.excelImport.PlanTransportUtils.isDayBeforeOrEquals;
 
 /**
  * étape d'extraction des régimes et dessertes.
@@ -82,32 +83,12 @@ public class DessertesDateExtractionStep extends AConditionalLoopDessertesFinalS
 		Calendar endCal = new GregorianCalendar();
 		endCal.setTime(end);
 		calendar.setTime(begin);
-		while(this.isBeforeOrEquals(calendar, endCal)) {
+		while(isDayBeforeOrEquals(calendar, endCal)) {
 			if(days[(Calendar.DAY_OF_WEEK + 12) % 7]) {
 				dates.add(calendar.getTime());
 			}
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		return dates;
-	}
-	
-	/**
-	 * indique si le jour représenté par la première date est situé avant ou est le même que le second jour.
-	 * @param first le premier jour.
-	 * @param second le second jour.
-	 * @return true si le premier jour est avant ou le même que le second, false si il est après.
-	 */
-	private boolean isBeforeOrEquals(Calendar first, Calendar second) {
-		if(first.get(Calendar.YEAR) < second.get(Calendar.YEAR)) {
-			return true;
-		} else if(first.get(Calendar.YEAR) > second.get(Calendar.YEAR)) {
-			return false;
-		} else {
-			if(first.get(Calendar.DAY_OF_YEAR) > second.get(Calendar.DAY_OF_YEAR)) {
-				return false;
-			} else {
-				return true;
-			}
-		}
 	}
 }

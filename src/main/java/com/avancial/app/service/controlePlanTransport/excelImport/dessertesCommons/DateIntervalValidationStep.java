@@ -3,6 +3,7 @@ package com.avancial.app.service.controlePlanTransport.excelImport.dessertesComm
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
+import static com.avancial.app.service.controlePlanTransport.excelImport.PlanTransportUtils.isDayBeforeOrEquals;
 
 /**
  * validateur d'intervalle de dates.
@@ -19,7 +20,7 @@ public class DateIntervalValidationStep extends AConditionalLoopDessertesFinalSt
 	@Override
 	protected void doIfNoParsingError(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {
 		// si la chronologie des dates n'est pas correcte
-		if(subContext.getStartDate().after(subContext.getEndDate())) {
+		if(!isDayBeforeOrEquals(subContext.getStartDate(), subContext.getEndDate())) {
 			context.addValidationError(new ExcelImportException(null, "la chronologie des dates de l'intervalle n'est pas cohérente (feuille " + sheet.getSheetName() + ")"));
 			this.breakSheetsExecution();
 		}
