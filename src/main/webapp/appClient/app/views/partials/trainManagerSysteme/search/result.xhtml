@@ -46,23 +46,23 @@
 							<th class="text-center">SAT</th>
 							<th class="text-center">TOSP</th>
 							<th class="text-center">LoadedOn</th>
-							<th class="text-center">Last Modif</th>
+					<!--	<th class="text-center">Last Modif</th> -->
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="tr in tab">
-							<td><a> {{tr.currentTrain}} </a></td>
-							<td><a> {{tr.currentTranche}} </a></td>
-							<td>{{tr.currentRunDate | date:'dd/MM/yyyy'}}</td>
-							<td><a> {{tr.currentRM}} </a></td>
-							<td><a> {{tr.currentEquip}} </a></td>
-							<td>{{tr.currentCapacity}}</td>
-							<td><a> {{tr.currentStatut}} </a></td>
-							<td>{{tr.currentStops}}</td>
-							<td>{{tr.currentSat}}</td>
-							<td>{{tr.currentTosp}}</td>
-							<td><a> {{tr.currentLoadedOn | date:'dd/MM/yyyy'}} </a></td>
-							<td><a> {{tr.currentLastModif | date:'dd/MM/yyyy'}} </a></td>
+						<tr ng-repeat="tr in data">
+							<td><a> {{tr.numeroTrain}} </a></td>
+							<td><a> {{tr.numeroTranche}} </a></td>
+							<td>{{tr.dateJour | date:'dd/MM/yyyy'}}</td>
+							<td><a> {{tr.rmCode.rmCode}} </a></td>
+							<td><a> {{tr.service.service}} </a></td>
+							<td>{{tr.composition.capacity}}</td>
+							<td><a> {{tr.status}} </a></td>
+							<td>{{tr.stops.libelle}}</td>
+							<td>{{tr.codeSat}}</td>
+							<td>{{tr.codeTosp}}</td>
+							<td><a> {{tr.loadedOn | date:'dd/MM/yyyy'}} </a></td>
+						<!--  	<td><a> {{tr.currentLastModif | date:'dd/MM/yyyy'}} </a></td> -->
 						</tr>
 					</tbody>
 				</table>

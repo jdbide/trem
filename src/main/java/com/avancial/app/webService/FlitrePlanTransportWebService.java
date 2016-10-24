@@ -29,7 +29,7 @@ import com.avancial.app.webService.bean.ResponseBean;
 public class FlitrePlanTransportWebService {
 
     // Logger log4j
-    private static Logger logger = Logger.getLogger(SearchTmsWebService.class);
+    private static Logger logger = Logger.getLogger(FlitrePlanTransportWebService.class);
     
     @Inject
     private TraitementFiltrePlanTransport traitementFiltre;
