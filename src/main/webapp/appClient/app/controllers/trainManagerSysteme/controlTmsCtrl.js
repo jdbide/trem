@@ -287,21 +287,18 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 						
 						if (reponse.status) {
 							$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
-							$scope.files.firstFile.etat.isFinishTraitement = true;
 							$scope.files.firstFile.etat.isUploadSuccess = true;
 							console.log($scope.files.firstFile.etat);
 						} else {
 							// erreur au niveau de l'upload
 							$scope.files.firstFile.etat.isUploadSuccess = false;
-							$scope.files.firstFile.etat.isFinishTraitement = true;
 							$scope.files.firstFile.etat.isFinishTraitementSuccess = false;
 							$scope.files.firstFile.msgError = reponse.message;
 							$scope.files.firstFile.errorDetailsList = reponse.data;
-
-
 							console.log($scope.files.firstFile.etat);
 
 						}
+						$scope.files.firstFile.etat.isFinishTraitement = true;
 						
 					}, function () {
 						alert("Erreur serveur !");
@@ -320,15 +317,15 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 						
 						if (reponse.status) {
 							$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
-							$scope.files.secondFile.etat.isFinishTraitement = true;
 							$scope.files.secondFile.etat.isUploadSuccess = true;
 						} else {
 							// erreur au niveau de l'upload
 							$scope.files.secondFile.etat.isUploadSuccess = false;
-							$scope.files.secondFile.etat.isFinishTraitement = true;
 							$scope.files.secondFile.etat.isFinishTraitementSuccess = false;
 							$scope.files.secondFile.msgError = reponse.message;
+							$scope.files.secondFile.errorDetailsList =  reponse.data;
 						}
+						$scope.files.secondFile.etat.isFinishTraitement = true;
 						
 					}, function () {
 						alert("Erreur serveur !");

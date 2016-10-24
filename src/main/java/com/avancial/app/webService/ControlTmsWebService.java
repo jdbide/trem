@@ -33,6 +33,7 @@ import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
 import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneesControlService;
+import com.avancial.app.service.controlePlanTransport.excelImport.PlanTransportUtils;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesContext;
 import com.avancial.app.service.controlePlanTransport.excelImport.eurostar.EurostarDessertesImportProcess;
 import com.avancial.app.serviceDto.JeuDonneesControlServiceDto;
@@ -80,6 +81,9 @@ public class ControlTmsWebService {
 
    @Inject
    private Session                       session;
+   
+   @Inject
+   private PlanTransport planDeTransport;
 
    @Path("getImportParPartition/{idCompagnieEnvironnement}")
    @GET
@@ -216,11 +220,28 @@ public class ControlTmsWebService {
             responseBean.setStatus(false);
             return Response.ok((Object) responseBean).build();
          }
+         
+
 
          System.out.println("************************TEST BEGINING************************");
          SocleExcelReadFile file = new SocleExcelReadFile(filePath.toString());
          EurostarDessertesImportProcess importer = new EurostarDessertesImportProcess();
-         PlanTransport plan = importer.execute(file);
+         //TODO controle
+         planDeTransport = importer.execute(file);
+         // Mise du premier plan de transport en session
+         
+         
+         
+         //Merge des deux plans de transport
+         //si pas de fichier en session alors c'est un fichier desserte eurostar
+         if(session.getPlanDeTransportTemp() == null)      //
+            session.setPlanDeTransportTemp(planDeTransport);
+         else {//sinon fichier thalys
+            planDeTransport = PlanTransportUtils.merge(session.getPlanDeTransportTemp(), planDeTransport);
+            session.setPlanDeTransportTemp(planDeTransport);
+         }
+         
+         
 
          responseBean.setStatus(true);
          return Response.ok((Object) responseBean).build();
