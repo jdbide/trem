@@ -26,10 +26,11 @@ import org.json.simple.JSONArray;
 
 import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.EStatusControl;
-import com.avancial.app.data.dto.UploadFileResponseDto;
+import com.avancial.app.data.dto.ResponseControlData;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
 import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
+import com.avancial.app.model.CurrentSession;
 import com.avancial.app.resources.constants.APP_Directory;
 import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneesControlService;
@@ -85,12 +86,12 @@ public class ControlTmsWebService {
 
 	@Inject
 	private Session session;
+	
+	@Inject
+	private CurrentSession currentSession;
 
 	@Inject
 	private PlanTransport planDeTransport;
-	
-	@Inject
-	private UploadFileResponseDto uploadFileResponseDto;
 
 	@Path("getImportParPartition/{idCompagnieEnvironnement}")
 	@GET
@@ -216,6 +217,8 @@ public class ControlTmsWebService {
 		logger.info("Début (WebService : '/app/controlTms', Action : 'uploadFile', methode : @UPLOAD)");
 
 		final ResponseBean responseBean = new ResponseBean();
+		//bean dto de retour 
+		ResponseControlData responseControlData = new ResponseControlData();
 		try {
 			String directory = this.refDirectoryService
 					.getRefDirectoryByTechnicalName(APP_Directory.PathImport.toString()).getPathRefDirectory();
@@ -250,28 +253,27 @@ public class ControlTmsWebService {
 			SocleExcelReadFile file = new SocleExcelReadFile(filePath.toString());
 			EurostarDessertesImportProcess importer;
 
-			PlanTransport sess = session.getPlanDeTransportTemp();
-
-			// Merge des deux plans de transport
-			// si pas de fichier en session alors c'est un fichier desserte
-			// eurostar
-			if (session.getPlanDeTransportTemp() == null) {
+			if(typeFile.equalsIgnoreCase("timetable")){
 				importer = new EurostarDessertesImportProcess();
 				planDeTransport = importer.execute(file);
-				session.setPlanDeTransportTemp(planDeTransport);
-			} else {// sinon fichier thalys
-				//traitement thalys
-				//importer = new EurostarDessertesImportProcess();
-				//planDeTransport = importer.execute(file);
-				//Merge des deux fichiers et mise en session
-				planDeTransport = PlanTransportUtils.merge(session.getPlanDeTransportTemp(), planDeTransport);
-				session.setPlanDeTransportTemp(planDeTransport);
-				uploadFileResponseDto.setDateInterval(PlanTransportUtils.extractDateInterval(planDeTransport));
-				uploadFileResponseDto.setOriginesDestinations(PlanTransportUtils.extractOriginesDestinations(planDeTransport));
-				responseBean.setData(uploadFileResponseDto);
+				currentSession.setPlanDeTransportTimeTable(planDeTransport);
 			}
-			
-		
+			else{
+				importer = new EurostarDessertesImportProcess();
+				planDeTransport = importer.execute(file);
+				currentSession.setPlanDeTransportYield(planDeTransport);
+				
+				//Merge des deux fichiers et mise en session
+				PlanTransport plantransportMerge = PlanTransportUtils.merge(currentSession.getPlanDeTransportYield(),currentSession.getPlanDeTransportTimeTable()); 
+				currentSession.setPlanDeTransportMerge(plantransportMerge);
+				
+					
+				responseControlData.setDateInterval(PlanTransportUtils.extractDateInterval(plantransportMerge));
+				responseControlData.setOrigineDestinations(PlanTransportUtils.extractOriginesDestinations(plantransportMerge));
+				
+				
+			}
+			responseBean.setData(responseControlData);
 			responseBean.setStatus(true);
 			return Response.ok((Object) responseBean).build();
 
@@ -281,14 +283,15 @@ public class ControlTmsWebService {
 
 			StringBuilder sb = new StringBuilder("Error on ");
 			// Objet renvoyé contenant les erreurs
-
-			List<String> parsing = uploadFileResponseDto.getParsingError();
-			List<String> validation = uploadFileResponseDto.getValidationError();
-			List<String> extraction = uploadFileResponseDto.getExtractionError();
+			
+			List<String> parsing = responseControlData.getParsingErrorList();
+			List<String> validation = responseControlData.getValidationErrorList();
+			List<String> extraction = responseControlData.getExtractionErrorList();
 
 			DessertesContext context = (DessertesContext) e.getContext();
 
-			uploadFileResponseDto.setErreurFatale(context.getFatalException().toString());
+			//Erreur ayant causé l'arrêt du traitement
+			responseControlData.setErreurFatale(context.getFatalException().toString());
 
 			System.out.println("autres erreurs " + (context.getValidationErrors().size()
 					+ context.getParsingErrors().size() + context.getExtractionErrors().size()) + " : ");
@@ -348,7 +351,7 @@ public class ControlTmsWebService {
 			}
 			responseBean.setStatus(false);
 			responseBean.setMessage(sb.toString());
-			responseBean.setData(uploadFileResponseDto);
+			responseBean.setData(responseControlData);
 			return Response.ok((Object) responseBean).build();
 
 		} catch (Exception e) {
