@@ -32,7 +32,7 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		listEquipement:null,
 		equipementSelected:null,
 		
-		status:[{id:"O", value:"Open"}, {id:"F", value:"Close"}],
+		status:[{id:"O", value:"Open", send:"Ouvert"}, {id:"F", value:"Close", send:"Ferme"}],
 		statusSelected:null,
 		
 		date:{startDate: moment(), endDate: moment()},
@@ -44,7 +44,6 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		var res = new Array();
 		
 		angular.forEach(search.stopsSelected, function(stop, key) {
-			console.log(stop.idMotriceRefGare);
 			res.push(stop.idMotriceRefGare);
 		});
 		
@@ -65,7 +64,6 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 	}
 	
 	self.isModif = function () {
-		console.warn("=======> "+search.isModif);
 		return search.isModif;
 	}
 	
@@ -99,7 +97,7 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		search.listEquipement=null;
 		search.equipementSelected=null;
 		
-		search.status=[{id:"O", value:"Open"}, {id:"F", value:"Close"}];
+		search.status=[{id:"O", value:"Open", send:"Ouvert"}, {id:"F", value:"Close", send:"Ferme"}];
 		search.statusSelected=null;
 		
 		search.date = {startDate: moment(), endDate: moment()};
@@ -132,7 +130,7 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		search.listEquipement=null;
 		search.equipementSelected=null;
 		
-		search.status=[{id:"O", value:"Open"}, {id:"F", value:"Close"}];
+		search.status=[{id:"O", value:"Open", send:"Ouvert"}, {id:"F", value:"Close", send:"Ferme"}];
 		search.statusSelected=null;
 		
 		search.date = {startDate: moment(), endDate: moment()};
@@ -208,7 +206,7 @@ socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q',
 		
 		res.idCodeEquipement = ((search.equipementSelected!= null) ? search.equipementSelected.idMotriceRefEqpType : null);
 		
-		res.status = ((search.statusSelected != null) ? search.statusSelected.id : null);
+		res.status = ((search.statusSelected != null) ? search.statusSelected.send : null);
 		
 		res.idsStops = getIdsStops();
 		

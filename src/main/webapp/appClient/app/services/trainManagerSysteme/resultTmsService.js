@@ -10,6 +10,8 @@ socle_app.service('resultTmsService', ['jsonFactory', 'loadingService', '$q', fu
 		data : null
 	};
 	
+	var datas = null;
+	var noData = false;
 	
 
 	function initResponse () {
@@ -17,9 +19,18 @@ socle_app.service('resultTmsService', ['jsonFactory', 'loadingService', '$q', fu
     	reponse.message=null;
     	reponse.data=null;
 	}
+	
+	function initDatas () {
+		datas=null;
+	}
 
+	
 	self = this;
-
+	
+	self.initDatas = function () {
+		datas=null;
+	}
+	
 	self.initReponse = function () {
     	reponse.status=null;
     	reponse.message=null;
@@ -33,12 +44,12 @@ socle_app.service('resultTmsService', ['jsonFactory', 'loadingService', '$q', fu
 	self.getResult = function (data) {
 		loadingService.show();
 		initResponse();
+		initDatas();
 		var deffered  = $q.defer();
 		var promissJsonFactory = jsonFactory.putJson("webService/app/filtrePdt/", data);
         promissJsonFactory
             .success(function (datas, status, headers, config) {
             	loadingService.hide();
-            	console.log("loadingService.hide();");
             	reponse = datas;
             	deffered.resolve();
             })
@@ -48,6 +59,14 @@ socle_app.service('resultTmsService', ['jsonFactory', 'loadingService', '$q', fu
         });
         
         return deffered.promise;
+	}
+	
+	self.getDatas = function () {
+		return datas;
+	}
+	
+	self.setDatas = function (data) {
+		datas = data;
 	}
 	
     return self;

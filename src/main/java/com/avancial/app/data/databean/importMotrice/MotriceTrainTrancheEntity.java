@@ -121,7 +121,6 @@ public class MotriceTrainTrancheEntity {
    }
 
    public List<MotriceRegimeEntity> getMotriceRegimeEntities() {
-      System.out.println("-- MotriceTrainTrancheEntity - getMotriceRegimeEntities");
       return this.motriceRegimeEntities;
    }
 

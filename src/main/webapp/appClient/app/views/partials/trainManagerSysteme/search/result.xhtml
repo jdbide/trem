@@ -4,10 +4,44 @@
 			<h3>{{$parent.currentPage.titlePage}}</h3>
 		</div>
 		<div class="col-md-4 text-right" style="margin-top: 22px;">
-			<span class="text-muted"> Last data update: 20/06/2016 - 17:15
-			</span>
+			<span ng-show="search.partitionSelected.dateLastUpdateJeuDonneesActive != null" class="text-muted"> Last update: {{search.partitionSelected.dateLastUpdateJeuDonneesActive | date:'dd/MM/yyyy - HH:mm'}} </span>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-8">
+			<p>Your search criteria were :</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8">
+			<span>Partition = {{search.partitionSelected.nomTechniqueCompagnieEnvironnement}};</span>
+			
+			<span ng-show="search.trainsSelected.length>0"> Trains number =</span>
+			<span ng-show="search.trainsSelected.length>0" ng-repeat="train in search.trainsSelected">{{train}},</span>
+			<span ng-show="search.trainsSelected.length>0">;</span>
+			
+			<span ng-show="search.tranchesSelected.length>0"> Tranche number =</span>
+			<span ng-show="search.tranchesSelected.length>0" ng-repeat="tranche in search.tranchesSelected">{{tranche}},</span>
+			<span ng-show="search.tranchesSelected.length>0">;</span>
+			
+			<span> running periode = from {{search.date.startDate | date:'dd/MM/yyyy' }} to {{search.date.endDate | date:'dd/MM/yyyy' }};</span>
+			
+			<span ng-show="search.odSelected"> Route = {{search.odSelected.codeGareOrigineMotriceRefOd}}/{{search.odSelected.codeGareDestinationMotriceRefOd}};</span>
+			
+			<span ng-show="search.stopsSelected.length>0"> Stops = </span>
+			<span ng-show="search.stopsSelected.length>0" ng-repeat="stops in search.stopsSelected">{{stops.codeGareMotriceRefGare}},</span>
+			<span ng-show="search.stopsSelected.length>0">;</span>
+			
+			<span ng-show="search.tospSelected"> Tosp = {{search.tospSelected.codeMotriceRefTosp}};</span>
+			
+			<span ng-show="search.rmSelected"> RmCode = {{search.rmSelected.rmSelected}};</span>
+			
+			<span ng-show="search.equipementSelected"> Type Equipement = {{search.equipementSelected.labelEqpType}};</span>
+			
+			<span ng-show="search.statusSelected"> Status = {{search.statusSelected.value}};</span>
+		</div>
+	</div>
+	<br/><br/>
 	<div class="row">
 		<div class="col-md-2">
 			<button class="btn btn-default" ng-click="modifSearch()">Add/Modify
@@ -16,16 +50,6 @@
 		<div class="col-md-2">
 			<button class="btn btn-default" ng-click="newSearch()">Make
 				New Search</button>
-		</div>
-		
-		<div class="col-md-2">
-			<button class="btn btn-default" ng-click="showTab()">Make
-				Show data</button>
-		</div>
-		
-		<div class="col-md-2">
-			<button class="btn btn-default" ng-click="getTbody()">Make
-				Show data service</button>
 		</div>
 	</div>
 	<br>
@@ -50,22 +74,30 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="tr in data">
-							<td><a> {{tr.numeroTrain}} </a></td>
-							<td><a> {{tr.numeroTranche}} </a></td>
-							<td>{{tr.dateJour | date:'dd/MM/yyyy'}}</td>
-							<td><a> {{tr.rmCode.rmCode}} </a></td>
-							<td><a> {{tr.service.service}} </a></td>
-							<td>{{tr.composition.capacity}}</td>
-							<td><a> {{tr.status}} </a></td>
-							<td>{{tr.stops.libelle}}</td>
-							<td>{{tr.codeSat}}</td>
-							<td>{{tr.codeTosp}}</td>
-							<td><a> {{tr.loadedOn | date:'dd/MM/yyyy'}} </a></td>
+						<tr  ng-repeat="train in data track by $index">
+							<td><a> {{train.numeroTrain}} </a></td>
+							<td><a> {{train.numeroTranche}} </a></td>
+							<td>{{train.dateJour | date:'dd/MM/yyyy'}}</td>
+							<td><a> {{train.rmCode.rmCode}} </a></td>
+							<td><a> {{train.service.codeEquipement}} </a></td>
+							<td><a>{{train.composition.capacity}}</a></td>
+							<td> {{train.status}} </td>
+							<td><a>{{train.origine}} /.../ {{train.destination}}</a></td>
+							<td>{{train.codeSat}}</td>
+							<td>{{train.codeTosp}}</td>
+							<td>{{train.loadedOn | date:'dd/MM/yyyy'}}</td>
 						<!--  	<td><a> {{tr.currentLastModif | date:'dd/MM/yyyy'}} </a></td> -->
 						</tr>
+						<tr ng-show="noData" COLSPAN="11">No data</tr>
 					</tbody>
 				</table>
+			</div>
+			<div class="box-footer clearfix">
+				<ul class="pagination pagination-md no-margin pull-left">
+					<li><a a-disabled="currrentPage == 0" ng-click="getPage(0)" style="cursor: pointer;">&laquo;</a></li>
+					<li  ng-repeat-n="nbrPage" ><a ng-click="getPage($index)" style="cursor: pointer;">{{$index+1}}</a></li>
+					<li><a a-disabled="currrentPage == nbrPage-1" ng-click="getPage(nbrPage-1)" style="cursor: pointer;">&raquo;</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>

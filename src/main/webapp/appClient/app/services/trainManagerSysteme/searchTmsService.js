@@ -50,7 +50,7 @@ socle_app.service('searchTmsService', ['jsonFactory', 'loadingService', '$q', fu
 	
 	self.getDataFormByIdCompagnie = function (action, idCompagnie) {
 		initResponse();
-		console.log("==> " + action);
+		//console.log("==> " + action);
 		var deffered  = $q.defer();
 		var promissJsonFactory = jsonFactory.getJson("webService/app/searchTms/"+action+"/"+idCompagnie);
         promissJsonFactory

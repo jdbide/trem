@@ -54,6 +54,7 @@ public class FiltrePlanTransportServiceDto {
                     if (tranche.getRegime() != null && tranche.getRegime().getListeJours() != null
                             && !tranche.getRegime().getListeJours().isEmpty()) {
                         for (Date date : tranche.getRegime().getListeJours()) {
+//                           System.out.println("Train : " + train.getNumeroTrain() + " Tranche : " + tranche.getNumeroTranche() + " Date : " + date.toString());
                             TrainTrancheDateDto trainTrancheDateDto = new TrainTrancheDateDto();
 
                             trainTrancheDateDto.setDateJour(date);
@@ -104,10 +105,10 @@ public class FiltrePlanTransportServiceDto {
         this.getDataByAttributForCompositionDto(trainTrancheDateDto,
                 ((List<Composition>) tranche.getAttributsField(Composition.class)),
                 ((List<Specification>) tranche.getAttributsField(Specification.class)), currentDate);
-        this.getDataByAttributForStopsDto(trainTrancheDateDto,
+       /* this.getDataByAttributForStopsDto(trainTrancheDateDto,
                 ((List<Desserte>) tranche.getAttributsField(Desserte.class)),
                 ((List<Restriction>) tranche.getAttributsField(Restriction.class)), currentDate);
-
+*/
         this.getDataByAttributForTospAndSat(trainTrancheDateDto, ((List<Tosp>) tranche.getAttributsField(Tosp.class)),
                 ((List<CodeSat>) tranche.getAttributsField(CodeSat.class)), currentDate);
     }
@@ -215,7 +216,7 @@ public class FiltrePlanTransportServiceDto {
      */
     private void getDataByAttributTrainTranche(TrainTrancheDateDto trainTrancheDateDto,
             List<OrigineDestination> listOrigineDestination, List<Distribution> listDistribution, Date currentDate) {
-        this.getDataByDistribution(trainTrancheDateDto, listDistribution, currentDate);
+        //this.getDataByDistribution(trainTrancheDateDto, listDistribution, currentDate);
         this.getDataByOrigineDestination(trainTrancheDateDto, listOrigineDestination, currentDate);
     }
 
@@ -305,14 +306,15 @@ public class FiltrePlanTransportServiceDto {
                             voitureDto.setRameCode(composition.getCodeRame());
 
                             voitureDto.setCapacity(this.getCapacityByCoach(voiture));
-                            voitureDto.setSpecifications(
-                                    this.getSpecificationsByVoitureAndDate(voiture, currentDate, listSpecification));
-                            if(voitureDto.getSpecifications().size() == voitureDto.getCapacity()){
-                                List<String> spec = new ArrayList<>();
-                                spec.add("Coach " + voiture.getNumeroVoiture() + " - "
-                                        + listSpecification.get(0).getEtat().toString());
-                                voitureDto.setSpecifications(spec);
-                            }
+                            /*voitureDto.setSpecifications(
+                                    this.getSpecificationsByVoitureAndDate(voiture, currentDate, listSpecification));*/
+                            // FIXME 
+//                            if(voitureDto.getSpecifications().size() == voitureDto.getCapacity()){
+//                                List<String> spec = new ArrayList<>();
+//                                spec.add("Coach " + voiture.getNumeroVoiture() + " - "
+//                                        + listSpecification.get(0).getEtat().toString());
+//                                voitureDto.setSpecifications(spec);
+//                            }
                             voitures.add(voitureDto);
                         }
                         // }
@@ -384,7 +386,7 @@ public class FiltrePlanTransportServiceDto {
      * @return
      */
     private int getCapacityByCoach(Voiture voiture) {
-        if (voiture.getCompartiments() == null && voiture.getCompartiments().isEmpty()) {
+        if (voiture == null || voiture.getCompartiments() == null || voiture.getCompartiments().isEmpty()) {
             return 0;
         }
 
@@ -415,11 +417,11 @@ public class FiltrePlanTransportServiceDto {
         List<MealServiceDto> mealServices = new ArrayList<>();
 
         this.getDataTypeEquipementForServicesDto(servicesDto, listTypeEquipement, currentDate);
-        this.getDataServiceABordForServicesDto(services, listServiceABord, currentDate);
-        this.getDataServiceABordForMealServiceDto(mealServices, listComposition, listRepas, currentDate);
+        //this.getDataServiceABordForServicesDto(services, listServiceABord, currentDate);
+        //this.getDataServiceABordForMealServiceDto(mealServices, listComposition, listRepas, currentDate);
 
-        servicesDto.setServices(services);
-        servicesDto.setMealServices(mealServices);
+        //servicesDto.setServices(services);
+        //servicesDto.setMealServices(mealServices);
         trainTrancheDateDto.setService(servicesDto);
     }
 
@@ -543,7 +545,7 @@ public class FiltrePlanTransportServiceDto {
         RMCodeDto rmCodeDto = new RMCodeDto();
 
         this.getDataCompositionForRMCodeDto(rmCodeDto, listComposition, currentDate);
-        this.getDataFareProfileForRMCodeDto(rmCodeDto, listFareProfile, currentDate);
+        //this.getDataFareProfileForRMCodeDto(rmCodeDto, listFareProfile, currentDate);
 
         trainTrancheDateDto.setRmCode(rmCodeDto);
     }

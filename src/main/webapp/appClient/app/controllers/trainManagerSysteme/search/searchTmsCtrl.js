@@ -8,7 +8,6 @@ socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', 'loadingService',
                                        function($rootScope, $scope, loadingService, $q, partitionTmsService, searchService, searchTmsService) {
 	$scope.search = searchService.getSearch();
 	$scope.disabledAll = true;
-	
 	//alert("-----------resultTmsCtrl + ");
 	function getAllData () {
 		var deffered  = $q.defer();
