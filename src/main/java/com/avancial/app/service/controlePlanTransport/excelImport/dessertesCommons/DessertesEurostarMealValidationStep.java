@@ -37,7 +37,7 @@ public class DessertesEurostarMealValidationStep extends AConditionalLoopDessert
 				error = true;
 			}
 			// contrôle des doublons
-			if(meal1 != null && meal2 != null && !error) {
+			if(meal1 != null && meal2 != null && !error && meal1.equals(meal2)) {
 				context.addValidationError(new ExcelImportException(null, "dans la feuille " + sheet.getSheetName() +
 						" pour le train " + train.getIdTrain() + " les deux repas ne peuvent pas être identiques"));
 			}

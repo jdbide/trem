@@ -20,9 +20,9 @@ public abstract class AExcelRapportControleSheet implements IExcelRapportCompara
 
    private static Logger logger         = Logger.getLogger(AExcelRapportControleSheet.class);
 
-   private static String ENTETE_TRAIN   = "Train";
+   protected static String ENTETE_TRAIN   = "Train";
    private static String ENTETE_TRANCHE = "Tranche";
-   private static String ENTETE_DATE    = "Date_Circul";
+   protected static String ENTETE_DATE    = "Date_Circul";
 
    @Override
    public void generateEntete(ExcelTools excelTools, int ligneDebut) {
@@ -120,7 +120,8 @@ public abstract class AExcelRapportControleSheet implements IExcelRapportCompara
                   && dataPrec.getAncienField().getClass().equals(data.getAncienField().getClass()))) {
                /* On change de ligne train-tranche */
                borderTop = CellStyle.BORDER_THIN;
-            } else if (listeAComparaisons.indexOf(data) == listeAComparaisons.size() - 1) {
+            }
+            if (listeAComparaisons.indexOf(data) == listeAComparaisons.size() - 1) {
                /* Dernière ligne du tableau */
                borderBottom = CellStyle.BORDER_THIN;
             }
