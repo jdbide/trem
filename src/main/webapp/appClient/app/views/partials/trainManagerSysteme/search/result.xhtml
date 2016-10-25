@@ -1,4 +1,16 @@
 <div ng-controller="resultTmsCtrl">
+	<modal visible="trainModal"
+		url="app/views/modals/trainManagerSysteme/result/trainInfo.xhtml"></modal>
+	<modal visible="trancheModal"
+		url="app/views/modals/trainManagerSysteme/result/trancheInfo.xhtml"></modal>
+	<modal visible="stopsModal"
+		url="app/views/modals/trainManagerSysteme/result/stopsInfo.xhtml"></modal>
+	<modal visible="serviceModal"
+		url="app/views/modals/trainManagerSysteme/result/serviceInfo.xhtml"></modal>
+	<modal visible="rmCodeModal"
+		url="app/views/modals/trainManagerSysteme/result/rmCodeInfo.xhtml"></modal>
+	<modal visible="compoModal"
+		url="app/views/modals/trainManagerSysteme/result/compositionInfo.xhtml"></modal>
 
 	<div class="row">
 		<div class="col-md-8">
@@ -52,6 +64,10 @@
 			<button class="btn btn-default" ng-click="newSearch()">Make
 				New Search</button>
 		</div>
+		<div class="col-md-2">
+			<button class="btn btn-default" ng-click="selectedRowTest()">
+				Show</button>
+		</div>
 	</div>
 	<br>
 	<div class="row">
@@ -76,14 +92,14 @@
 					</thead>
 					<tbody>
 						<tr  ng-repeat="train in data track by $index">
-							<td><a> {{train.numeroTrain}} </a></td>
-							<td><a> {{train.numeroTranche}} </a></td>
+							<td><a ng-click="showModal(train, 'trainModal')"> {{train.numeroTrain}} </a></td>
+							<td><a ng-click="showModal(train, 'trancheModal')"> {{train.numeroTranche}} </a></td>
 							<td>{{train.dateJour | date:'dd/MM/yyyy'}}</td>
-							<td><a> {{train.rmCode.rmCode}} </a></td>
-							<td><a> {{train.service.codeEquipement}} </a></td>
-							<td><a>{{train.composition.capacity}}</a></td>
+							<td><a ng-click="showModal(train, 'rmCodeModal')"> {{train.rmCode.rmCode}} </a></td>
+							<td><a ng-click="showModal(train, 'serviceModal')"> {{train.service.codeEquipement}} </a></td>
+							<td><a ng-click="showModal(train, 'compoModal')">{{train.composition.capacity}}</a></td>
 							<td> {{train.status}} </td>
-							<td><a>{{train.origine}} /.../ {{train.destination}}</a></td>
+							<td><a ng-click="showModal(train, 'stopsModal')">{{train.origine}} /.../ {{train.destination}}</a></td>
 							<td>{{train.codeSat}}</td>
 							<td>{{train.codeTosp}}</td>
 							<td>{{train.loadedOn | date:'dd/MM/yyyy'}}</td>

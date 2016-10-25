@@ -36,19 +36,32 @@ public class ExcelRapportControle extends AExcelRapportComparaisonPlanTransport 
 
    @Override
    protected void initVarSheets() {
-      this.setNombreSheet(11);
+      //this.setNombreSheet(11);
+      this.setNombreSheet(7);
+      
+      //this.getNomSheets().add(ERR_TOSP);
+      //this.getNombreColonneSheets().add(7);
+      
+      this.getNomSheets().add(ERR_CONFIG);
+      this.getNombreColonneSheets().add(9);
+      
+      this.getNomSheets().add(ERR_HORAIRES);
+      this.getNombreColonneSheets().add(10);
+      
+      //this.getNomSheets().add(ERR_RESTRICTIONS);
+      //this.getNombreColonneSheets().add(11);
+      
+      this.getNomSheets().add(ERR_TRANCHE);
+      this.getNombreColonneSheets().add(0);
 
       this.getNomSheets().add(ERR_STATUT);
       this.getNombreColonneSheets().add(7);
 
-      this.getNomSheets().add(ERR_CONFIG);
+      //this.getNomSheets().add(ERR_SPECIF);
+      //this.getNombreColonneSheets().add(0);
+      
+      this.getNomSheets().add(ERR_REPAS);
       this.getNombreColonneSheets().add(9);
-
-      this.getNomSheets().add(ERR_SPECIF);
-      this.getNombreColonneSheets().add(0);
-
-      this.getNomSheets().add(ERR_HORAIRES);
-      this.getNombreColonneSheets().add(10);
 
       this.getNomSheets().add(ERR_PROFTARIF);
       this.getNombreColonneSheets().add(7);
@@ -56,20 +69,9 @@ public class ExcelRapportControle extends AExcelRapportComparaisonPlanTransport 
       this.getNomSheets().add(ERR_SAT);
       this.getNombreColonneSheets().add(7);
 
-      this.getNomSheets().add(ERR_TRANCHE);
-      this.getNombreColonneSheets().add(0);
-
-      this.getNomSheets().add(ERR_GDS_AVN);
-      this.getNombreColonneSheets().add(0);
-
-      this.getNomSheets().add(ERR_TOSP);
-      this.getNombreColonneSheets().add(7);
-
-      this.getNomSheets().add(ERR_REPAS);
-      this.getNombreColonneSheets().add(9);
+      //this.getNomSheets().add(ERR_GDS_AVN);
+      //this.getNombreColonneSheets().add(0);
       
-      this.getNomSheets().add(ERR_RESTRICTIONS);
-      this.getNombreColonneSheets().add(11);
 
       this.setPremiereLigneEntetes(1);
       this.setPremiereLigneContents(2);

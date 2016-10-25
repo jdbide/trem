@@ -54,7 +54,7 @@ public class FiltrePlanTransportServiceDto {
                     if (tranche.getRegime() != null && tranche.getRegime().getListeJours() != null
                             && !tranche.getRegime().getListeJours().isEmpty()) {
                         for (Date date : tranche.getRegime().getListeJours()) {
-//                           System.out.println("Train : " + train.getNumeroTrain() + " Tranche : " + tranche.getNumeroTranche() + " Date : " + date.toString());
+                           System.out.println("Train : " + train.getNumeroTrain() + " Tranche : " + tranche.getNumeroTranche() + " Date : " + date.toString());
                             TrainTrancheDateDto trainTrancheDateDto = new TrainTrancheDateDto();
 
                             trainTrancheDateDto.setDateJour(date);

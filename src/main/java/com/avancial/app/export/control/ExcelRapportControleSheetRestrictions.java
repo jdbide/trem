@@ -8,6 +8,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.Restriction;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.ComparaisonControlePlanTransport;
+import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComparaisonPlanTransport;
 import com.avancial.app.export.ExcelTools;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
@@ -36,8 +37,7 @@ public class ExcelRapportControleSheetRestrictions extends AExcelRapportControle
 
    @Override
    protected List<AComparaisonPlanTransport<IPlanTransport>> getListeComparaisons(MapComparaisonPlanTransport mapComparaisons) {
-      // TODO Auto-generated method stub
-      return null;
+      return mapComparaisons.getComparaison(EnumTypeComparaisonPlanTransport.CONTROL, Restriction.class);
    }
 
 }

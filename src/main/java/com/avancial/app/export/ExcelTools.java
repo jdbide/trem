@@ -214,6 +214,16 @@ public class ExcelTools {
    public void createRow(int row) {
       this.ligneSheet = this.sheet.createRow(row);
    }
+   
+   /**
+    * Suppression de la ligne actuelle
+    * 
+    */
+   public void deleteCurrentRow() {
+      int i = this.getRowNum();
+      this.sheet.removeRow(this.ligneSheet);
+      this.setRow(i-1);
+   }
 
    /**
     * Sette la ligne à lire, et initialise l'itérateur sur les cellules de cette ligne. L'itérateur sur les lignes est passé à {@code null}.
