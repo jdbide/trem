@@ -1,15 +1,23 @@
-package com.avancial.app.service.controlePlanTransport.excelImport.eurostar;
+package com.avancial.app.service.controlePlanTransport.excelImport.thalys;
+
+import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeFareProfileExtractionStep.CODE_FARE_PROFILE;
+import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeRameExtractionStep.CODE_RAME;
+import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeSATExtractionStep.CODE_SAT;
+import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileRollingStockExtractionStep.ROLLING_STOCK;
+import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileMealExtractionStep.CODE_MEAL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.avancial.app.data.databean.RefCodeRmEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefFareProfileCodeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefMealTypeEntity;
+import com.avancial.app.data.databean.importMotrice.MotriceRefRameCodeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefSatcodeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.fileImport.excelImport.AExcelImportProcess;
 import com.avancial.app.fileImport.excelImport.ExcelImportFatalizeErrorsStep;
@@ -20,72 +28,80 @@ import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommon
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeFareProfileExtractionStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeFareProfileValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeRameExtractionStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeRmValidationStep;
+import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeRameValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeSATExtractionStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeSATValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileContext;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileEndOfExtraction;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileLinesExtractionStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileLinesParsingStep;
+import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileMealExtractionStep;
+import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileMealValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafilePrimaryStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileRollingStockExtractionStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileRollingStockValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileStringParseStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.refImportSteps.GenericRefImportStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.refImportSteps.RefCodeRmImportStep;
 import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IIntegrator;
-import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeSATExtractionStep.CODE_SAT;
-import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeRameExtractionStep.CODE_RM;
-import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileRollingStockExtractionStep.ROLLING_STOCK;
-import static com.avancial.app.service.controlePlanTransport.excelImport.datafileCommons.DatafileCodeFareProfileExtractionStep.CODE_FARE_PROFILE;
 
 /**
- * process d'importation du fichier de données Eurostar.
+ * process d'importation du fichier de données Thalys.
  * @author raphael.cabaret
  */
-public class EurostarDatafileImportProcess extends AExcelImportProcess<PlanTransport, DatafileContext>{
+public class ThalysDatafileImportProcess extends AExcelImportProcess<PlanTransport, DatafileContext> {
 
 	/**
 	 * constructeur simple.
 	 */
 	@SuppressWarnings("unchecked")
-	public EurostarDatafileImportProcess() {
+	public ThalysDatafileImportProcess() {
 		super(
 				// initialisation
 				new DatafilePrimaryStep(
 						new DataFileSheetToImportParseStep(0),
 						new ExcelImportMiddleStep<PlanTransport>(
-								new GenericRefImportStep<MotriceRefEqpTypeEntity, DatafileContext>(EnumCompagnies.ES, MotriceRefEqpTypeEntity.class, itRefRollingStock()),
-								new GenericRefImportStep<MotriceRefSatcodeEntity, DatafileContext>(EnumCompagnies.ES, MotriceRefSatcodeEntity.class, itRefCodeSat()),
-								new GenericRefImportStep<MotriceRefFareProfileCodeEntity, DatafileContext>(EnumCompagnies.ES, MotriceRefFareProfileCodeEntity.class, itRefCodeFareProfile()),
-								new RefCodeRmImportStep<DatafileContext>(itRefCodeRm())
+								new GenericRefImportStep<MotriceRefMealTypeEntity, DatafileContext>(EnumCompagnies.TH, MotriceRefMealTypeEntity.class, itRefMeal()),
+								new GenericRefImportStep<MotriceRefRameCodeEntity, DatafileContext>(EnumCompagnies.TH, MotriceRefRameCodeEntity.class, itRefCodeRame()),
+								new GenericRefImportStep<MotriceRefEqpTypeEntity, DatafileContext>(EnumCompagnies.TH, MotriceRefEqpTypeEntity.class, itRefRollingStock()),
+								new GenericRefImportStep<MotriceRefSatcodeEntity, DatafileContext>(EnumCompagnies.TH, MotriceRefSatcodeEntity.class, itRefCodeSat()),
+								new GenericRefImportStep<MotriceRefFareProfileCodeEntity, DatafileContext>(EnumCompagnies.TH, MotriceRefFareProfileCodeEntity.class, itRefCodeFareProfile())
 								),
-						new InitPlanTransportStep(EnumCompagnies.ES)),
+						new InitPlanTransportStep(EnumCompagnies.TH)),
 				// import des lignes
 				new DatafilePrimaryStep(
-						new DatafileLinesParsingStep(0, 3, 9, "OP", "CL"),
+						new DatafileLinesParsingStep(0, 2, 9, "OPEN", "CLOSE"),
 						null,
 						new DatafileLinesExtractionStep()),
 				// import des codes Rame
 				new DatafilePrimaryStep(
-						new DatafileStringParseStep(4, CODE_RM, "impossible de lire un code RM"),
-						new DatafileCodeRmValidationStep(),
+						new DatafileStringParseStep(5, CODE_RAME, "impossible de lire un code rame"),
+						new DatafileCodeRameValidationStep(),
 						new DatafileCodeRameExtractionStep()),
 				// import des types d'équipements
 				new DatafilePrimaryStep(
-						new DatafileStringParseStep(13, ROLLING_STOCK, "impossible de lire le type d'équipement"),
+						new DatafileStringParseStep(15, ROLLING_STOCK, "impossible de lire le type d'équipement"),
 						new DatafileRollingStockValidationStep(),
 						new DatafileRollingStockExtractionStep()),
 				// import des profils tarifaires
 				new DatafilePrimaryStep(
 						new DatafileStringParseStep(10, CODE_FARE_PROFILE, "impossible de lire le profil tarifaire"),
-						new DatafileCodeFareProfileValidationStep("NO SPFT"),
-						new DatafileCodeFareProfileExtractionStep("NO SPFT")),
+						new DatafileCodeFareProfileValidationStep("NO PPT"),
+						new DatafileCodeFareProfileExtractionStep("NO PPT")),
 				// import des codes SAT
 				new DatafilePrimaryStep(
-						new DatafileStringParseStep(1, CODE_SAT, "impossible de lire un code SAT"),
+						new DatafileStringParseStep(4, CODE_SAT, "impossible de lire un code SAT"),
 						new DatafileCodeSATValidationStep(),
 						new DatafileCodeSATExtractionStep()),
+				// import du premier repas
+				new DatafilePrimaryStep(
+						new DatafileStringParseStep(12, CODE_MEAL, null),
+						new DatafileMealValidationStep(),
+						new DatafileMealExtractionStep()),
+				// import du second repas
+				new DatafilePrimaryStep(
+						new DatafileStringParseStep(13, CODE_MEAL, null),
+						new DatafileMealValidationStep(),
+						new DatafileMealExtractionStep()),
 				// finalisation de l'extraction
 				new DatafilePrimaryStep(
 						null,
@@ -122,19 +138,16 @@ public class EurostarDatafileImportProcess extends AExcelImportProcess<PlanTrans
 	}
 	
 	/**
-	 * @return un intégrateur pour : la table de corespondance et de référence entre les codes RM et les codes Rame.
+	 * @return un intégrateur pour : la table de corespondance et de référence des codes Rame.
 	 */
-	public static IIntegrator<List<RefCodeRmEntity>, DatafileContext> itRefCodeRm() {
-		return new IIntegrator<List<RefCodeRmEntity>, DatafileContext>() {
-			@Override public void set(DatafileContext context, List<RefCodeRmEntity> value) {
-				Map<String, String[]> refCodeRm = new HashMap<String, String[]>();
-				for(RefCodeRmEntity codeRm : value) {
-					String[] codesRames = new String[2];
-					codesRames[0] = codeRm.getRame1RefCodeRm().substring(0, 2) + "001" + codeRm.getRame1RefCodeRm().substring(2);
-					codesRames[1] = codeRm.getRame2RefCodeRm().substring(0, 2) + "002" + codeRm.getRame2RefCodeRm().substring(2);
-					refCodeRm.put(codeRm.getCodeRmRefCodeRm(), codesRames);
+	public static IIntegrator<List<MotriceRefRameCodeEntity>, DatafileContext> itRefCodeRame() {
+		return new IIntegrator<List<MotriceRefRameCodeEntity>, DatafileContext>() {
+			@Override public void set(DatafileContext context, List<MotriceRefRameCodeEntity> value) {
+				List<String> refCodeRame = new ArrayList<String>();
+				for(MotriceRefRameCodeEntity rame : value) {
+					refCodeRame.add(rame.getLabelRameCode());
 				}
-				context.setRefCodeRm(refCodeRm);
+				context.setRefCodeRame(refCodeRame);
 			}
 		};
 	}
@@ -165,6 +178,21 @@ public class EurostarDatafileImportProcess extends AExcelImportProcess<PlanTrans
 					refCodeFareProfile.add(codeFare.getLabelFareProfileCode());
 				}
 				context.setRefCodeFareProfile(refCodeFareProfile);
+			}
+		};
+	}
+	
+	/**
+	 * @return un intégrateur pour : la table de référence des repas.
+	 */
+	public static IIntegrator<List<MotriceRefMealTypeEntity>, DatafileContext> itRefMeal() {
+		return new IIntegrator<List<MotriceRefMealTypeEntity>, DatafileContext>() {
+			@Override public void set(DatafileContext context, List<MotriceRefMealTypeEntity> value) {
+				Map<String, EnumTypeRepas> refMeal = new HashMap<String, EnumTypeRepas>();
+				for(MotriceRefMealTypeEntity meal : value) {
+					refMeal.put(meal.getLabelMealType(), EnumTypeRepas.getEnumTypeRepas(meal.getCodeMealType()));
+				}
+				context.setRefMeal(refMeal);
 			}
 		};
 	}

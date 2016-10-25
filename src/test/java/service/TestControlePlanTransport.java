@@ -35,6 +35,8 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
 import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.ComparePlanTransportControl;
 import com.avancial.app.service.controlePlanTransport.excelImport.eurostar.EurostarDatafileImportProcess;
 import com.avancial.app.service.controlePlanTransport.excelImport.eurostar.EurostarDessertesImportProcess;
+import com.avancial.app.service.controlePlanTransport.excelImport.thalys.ThalysDatafileImportProcess;
+import com.avancial.app.service.controlePlanTransport.excelImport.thalys.ThalysDessertesImportProcess;
 import com.avancial.app.service.traiteMotriceRegime.ITraiteMotriceRegime;
 import com.avancial.app.service.traiteMotriceRegime.TraiteMotriceRegimeFactory;
 import com.avancial.app.service.traiteObjetMetier.TraiteObjetMetierRegimeFactory;
@@ -143,6 +145,47 @@ public class TestControlePlanTransport {
     }
     
     @Test
+    public void testImportDessertesThalys() throws FileTypeNotExpectedException {
+    	SocleExcelReadFile file = new SocleExcelReadFile("src/test/resources/testFiles/rapportDeControle/ThalysDessertesTest1.xls");
+    	AExcelImportProcess<PlanTransport, ?> importer = new ThalysDessertesImportProcess();
+    	PlanTransport plan = null;
+    	try {
+			plan = importer.execute(file);
+		} catch (StructuredProcessException e) {
+			this.showExceptions(e, "testImportDessertesThalysr");
+		}
+    	Assert.assertEquals("le nombre de trains est incorrecte", 7, plan.getTrains().size());
+    	Tranche tranche = plan.getTrainByNumeroTrain("009391").getTranches().get(0);
+    	@SuppressWarnings("unchecked")
+		List<Desserte> dessertes = (List<Desserte>) tranche.getAttributsField(Desserte.class);
+    	Calendar firstDay = new GregorianCalendar();
+    	firstDay.setTime(dessertes.get(0).getRegime().getListeJours().get(0));
+    	Desserte exceptDesserte;
+    	if(firstDay.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+    		exceptDesserte = dessertes.get(1);
+    	} else {
+    		exceptDesserte = dessertes.get(0);
+    	}
+    	Assert.assertEquals("le nombre de gares dans la desserte exceptionnelle du train 9391 est incorrecte", 5, exceptDesserte.getGareHoraires().size());
+    	Calendar depGare2Exc = new GregorianCalendar();
+    	depGare2Exc.setTime(exceptDesserte.getGareHoraires().get(1).getHoraire().getHoraireFin());
+    	Assert.assertEquals("l'horaire de départ de la seconde gare exceptionelle du train 9391 est incorrecte", 449, depGare2Exc.get(Calendar.HOUR_OF_DAY) * 60 + depGare2Exc.get(Calendar.MINUTE));
+    }
+    
+    @Test
+    public void testImportDatafileThalys() throws FileTypeNotExpectedException {
+    	SocleExcelReadFile file = new SocleExcelReadFile("src/test/resources/testFiles/rapportDeControle/ThalysDatafileTest1.xls");
+    	AExcelImportProcess<PlanTransport, ?> importer = new ThalysDatafileImportProcess();
+    	PlanTransport plan = null;
+    	try {
+			plan = importer.execute(file);
+		} catch (StructuredProcessException e) {
+			this.showExceptions(e, "testImportDatafileThalys");
+		}
+    	Assert.assertEquals("le nombre de trains est incorrecte", 7, plan.getTrains().size());
+    }
+    
+    @Test
     public void testImportDessertesEurostar() throws FileTypeNotExpectedException {
     	SocleExcelReadFile file = new SocleExcelReadFile("src/test/resources/testFiles/rapportDeControle/EurostarDessertesTest1.xlsx");
     	AExcelImportProcess<PlanTransport, ?> importer = new EurostarDessertesImportProcess();
@@ -184,7 +227,7 @@ public class TestControlePlanTransport {
     	try {
 			plan = importer.execute(file);
 		} catch (StructuredProcessException e) {
-			this.showExceptions(e, "testImportDessertesEurostar");
+			this.showExceptions(e, "testImportDatafileEurostar");
 		}
     	Assert.assertEquals("le nombre de trains est incorrecte", 8, plan.getTrains().size());
     }

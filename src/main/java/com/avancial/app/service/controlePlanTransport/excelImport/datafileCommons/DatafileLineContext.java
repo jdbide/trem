@@ -62,6 +62,14 @@ public class DatafileLineContext implements ISubContext<DatafileContext>{
 	}
 	
 	/**
+	 * récupère la map des objets parsés.
+	 * @return la map.
+	 */
+	public Map<String, Object> getParseds() {
+		return this.parseds;
+	}
+	
+	/**
 	 * récupère l'objet parsé corespondant.
 	 * @param key nom de l'objet.
 	 * @return l'objet.
