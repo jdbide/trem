@@ -7,6 +7,7 @@ import com.avancial.app.export.ExcelRapportDifferentiel;
 import com.avancial.app.export.control.ExcelRapportControle;
 import com.avancial.app.service.comparePlanTransport.ComparePlanTransport;
 import com.avancial.app.service.comparePlanTransport.IComparePlanTransport;
+import com.avancial.app.service.controlePlanTransport.ControlePlanTransport;
 import com.avancial.app.utilitaire.MapPlansDeTransport;
 import com.avancial.socle.utils.FileUtils;
 
@@ -40,8 +41,8 @@ public class TestGenerateRapportDifferentiel {
    public void testGenerationRapportControle() {
       try {
          ExcelRapportControle rapportControle = new ExcelRapportControle(true);
-         MapPlansDeTransport mapPlansDeTransport = PlanTransportFactory.createDataForCompareTrancheSplit();
-         IComparePlanTransport comparePlanTransport = new ComparePlanTransport();
+         MapPlansDeTransport mapPlansDeTransport = PlanTransportFactory.createDataForControle();
+         ControlePlanTransport comparePlanTransport = new ControlePlanTransport();
          rapportControle
                .setDatas(comparePlanTransport.compare(mapPlansDeTransport.getPlanTransportActive(), mapPlansDeTransport.getPlanTransportDraft()));
          rapportControle.setMapPlansDeTransport(mapPlansDeTransport);

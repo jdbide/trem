@@ -12,7 +12,7 @@ import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.EnumTypeComp
 import com.avancial.app.export.ExcelTools;
 import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport;
 
-public class ExcelRapportControleSheetCircul extends AExcelRapportControleSheet {
+public class ExcelRapportControleSheetStatut extends AExcelRapportControleSheet {
 
    private String[] entetes = { "Statut_Motrice", "Statut_attendu" };
 
@@ -26,7 +26,7 @@ public class ExcelRapportControleSheetCircul extends AExcelRapportControleSheet 
       Tranche trancheAncien = (Tranche) data.getAncienField();
       Tranche trancheNouveau = (Tranche) data.getNouveauField();
 
-      this.generateCellulesRougeVert(excelTools, 5, trancheAncien.getTrancheStatut().toString().substring(0, 1),
+      this.generateCellulesRougeVert(excelTools, 4, trancheAncien.getTrancheStatut().toString().substring(0, 1),
             trancheNouveau.getTrancheStatut().toString().substring(0, 1), borderTop, borderBottom, CellStyle.BORDER_THIN);
    }
 

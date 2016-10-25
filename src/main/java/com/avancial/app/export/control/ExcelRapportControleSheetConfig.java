@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 
+import com.avancial.app.data.objetsMetier.PlanTransport.Composition;
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
 import com.avancial.app.data.objetsMetier.PlanTransport.TypeEquipement;
 import com.avancial.app.data.objetsMetier.PlanTransport.comparaison.AComparaisonPlanTransport;
@@ -14,7 +15,7 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
 
 public class ExcelRapportControleSheetConfig extends AExcelRapportControleSheet {
 
-   private String[] entetes = { "TEqp_Motrice", "TEqp_attendu" };
+   private String[] entetes = { "CRame_Motrice", "CRame_attendu", "TEqp_Motrice", "TEqp_attendu" };
 
    @Override
    protected String[] getNomEntetes() {
@@ -23,10 +24,16 @@ public class ExcelRapportControleSheetConfig extends AExcelRapportControleSheet 
 
    @Override
    protected void generateLigne(ExcelTools excelTools, ComparaisonControlePlanTransport<IPlanTransport> data, short borderTop, short borderBottom) {
+      Composition compositionAncien = (Composition) data.getAncienField();
+      Composition compositionNouveau = (Composition) data.getNouveauField();
+      
+      this.generateCellulesRougeVert(excelTools, 4, compositionAncien.getCodeRame(), compositionNouveau.getCodeRame(), borderTop,
+            borderBottom, CellStyle.BORDER_THIN);
+      
       TypeEquipement typeEquipementAncien = (TypeEquipement) data.getAncienField();
       TypeEquipement typeEquipementNouveau = (TypeEquipement) data.getNouveauField();
 
-      this.generateCellulesRougeVert(excelTools, 5, typeEquipementAncien.getTypeEquipement(), typeEquipementNouveau.getTypeEquipement(), borderTop,
+      this.generateCellulesRougeVert(excelTools, 6, typeEquipementAncien.getTypeEquipement(), typeEquipementNouveau.getTypeEquipement(), borderTop,
             borderBottom, CellStyle.BORDER_THIN);
    }
 

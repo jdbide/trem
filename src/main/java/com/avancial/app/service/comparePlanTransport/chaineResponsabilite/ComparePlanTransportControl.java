@@ -18,9 +18,13 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
  * @author sebastien.benede
  *
  */
-public class ComparePlanTransportControl {
+public class ComparePlanTransportControl implements IChaineComparePlanTransport {
 
 	private static Logger logger = Logger.getLogger(ComparePlanTransportControl.class);
+	
+	public void setSuccesseur(IChaineComparePlanTransport chaineComparePlanTransport){
+	   return;
+	}
 
 	/**
 	 * Compare deux listes de trains issus des plans de transport comparés.

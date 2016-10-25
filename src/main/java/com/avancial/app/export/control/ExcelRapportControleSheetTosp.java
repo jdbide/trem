@@ -26,7 +26,7 @@ public class ExcelRapportControleSheetTosp extends AExcelRapportControleSheet {
       Tosp tospAncien = (Tosp) data.getAncienField();
       Tosp tospNouveau = (Tosp) data.getNouveauField();
 
-      this.generateCellulesRougeVert(excelTools, 5, tospAncien.getOureCode(), tospNouveau.getOureCode(), borderTop, borderBottom,
+      this.generateCellulesRougeVert(excelTools, 4, tospAncien.getOureCode(), tospNouveau.getOureCode(), borderTop, borderBottom,
             CellStyle.BORDER_THIN);
    }
 

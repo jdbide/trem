@@ -2,8 +2,7 @@ package com.avancial.app.service.controlePlanTransport;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.service.comparePlanTransport.AComparePlanTransport;
-import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.IChaineComparePlanTransport;
-import com.avancial.app.service.controlePlanTransport.chaineResponsabilite.ComparePlanTransportControl;
+import com.avancial.app.service.comparePlanTransport.chaineResponsabilite.ComparePlanTransportControl;
 
 /**
  * Création de la chaîne de responsabilité pour comparer deux
@@ -16,9 +15,9 @@ public class ControlePlanTransport extends AComparePlanTransport {
 
     @Override
     protected void initChaineComparePlanTransport() {
-        IChaineComparePlanTransport chaineComparePlanTransportOther = new ComparePlanTransportControl();
+       ComparePlanTransportControl chaineComparePlanTransportControl = new ComparePlanTransportControl();
 
-        this.chaineComparePlanTransport = chaineComparePlanTransportOther;
+       this.chaineComparePlanTransport = chaineComparePlanTransportControl;
     }
 
 }
