@@ -20,7 +20,7 @@ public class DessertesTrainTimeValidationStep extends AConditionalLoopDessertesF
 	@Override
 	protected void doIfNoParsingError(DessertesContext context, Sheet sheet, DessertesSheetSubContext subContext, int sheetIndex) {
 		for(DessertesTrainContext train : subContext.getTrains()) {
-			Cell cell = sheet.getRow(context.getFirstStationRow() -1).getCell(train.getColumn());
+			Cell cell = sheet.getRow(context.getFirstStationRow() - 1).getCell(train.getColumn());
 			// si il y a moins de deux gares dans la liste
 			if(train.getStations().size() < 2) {
 				context.addValidationError(new ExcelImportException(cell, "la desserte doit au moins contenir une gare de départ et une gare d'arrivée"));
