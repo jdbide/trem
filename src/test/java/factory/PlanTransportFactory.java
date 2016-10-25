@@ -111,6 +111,14 @@ public class PlanTransportFactory {
         attributs.add(codeSat);
         MapTranche map = new MapTranche();
         map.put(codeSat.getClass(), attributs);
+        
+        List<ASousRegimeTranche> attributsRepas = new ArrayList<>();
+        Repas repas1 = new Repas();
+        attributsRepas.add(repas1);
+        Repas repas2 = new Repas();
+        attributsRepas.add(repas2);
+        map.put(repas1.getClass(), attributsRepas);
+        
         trancheControleBaseRepas.setAttributs(map);
         tranchesControleBase.add(trancheControleBaseRepas);
 
@@ -136,6 +144,14 @@ public class PlanTransportFactory {
         attributsXls.add(codeSatXls);
         MapTranche mapXls = new MapTranche();
         mapXls.put(codeSatXls.getClass(), attributsXls);
+        
+        List<ASousRegimeTranche> attributsRepasXls = new ArrayList<>();
+        Repas repasXls1 = new Repas(EnumTypeRepas.diner, new Horaire());
+        attributsRepasXls.add(repasXls1);
+        Repas repasXls2 = new Repas(EnumTypeRepas.diner, new Horaire());
+        attributsRepasXls.add(repasXls2);
+        mapXls.put(repasXls1.getClass(), attributsRepasXls);
+        
         trancheControleXlsRepas.setAttributs(mapXls);
         tranchesControleXls.add(trancheControleXlsRepas);
 
