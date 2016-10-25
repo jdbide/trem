@@ -4,6 +4,11 @@
  * Service se chargeant des fonctionnalité de la page control du module trainManagerSysteme
  */
 socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
+	
+	
+	var datas ;
+
+	
 	var reponse= 
 	{
 		status : null,
@@ -32,6 +37,14 @@ socle_app.service('controlTmsService', ['jsonFactory', 'loadingService', '$q', f
 	}
 	
 	self = this;
+	
+	self.getDatas = function(){
+		return datas;
+	}
+	
+	self.setDatas = function(data){
+		datas = data;
+	}
 	
 	self.initReponse = function () {
     	reponse.status=null;

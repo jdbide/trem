@@ -86,7 +86,7 @@ public class ControlTmsWebService {
 
 	@Inject
 	private Session session;
-	
+
 	@Inject
 	private CurrentSession currentSession;
 
@@ -217,7 +217,7 @@ public class ControlTmsWebService {
 		logger.info("Début (WebService : '/app/controlTms', Action : 'uploadFile', methode : @UPLOAD)");
 
 		final ResponseBean responseBean = new ResponseBean();
-		//bean dto de retour 
+		// bean dto de retour
 		ResponseControlData responseControlData = new ResponseControlData();
 		try {
 			String directory = this.refDirectoryService
@@ -251,27 +251,34 @@ public class ControlTmsWebService {
 
 			System.out.println("************************TEST BEGINING************************");
 			SocleExcelReadFile file = new SocleExcelReadFile(filePath.toString());
-			EurostarDessertesImportProcess importer;
 
-			if(typeFile.equalsIgnoreCase("timetable")){
-				importer = new EurostarDessertesImportProcess();
+			if (typeFile.equalsIgnoreCase("timetable")) {
+				EurostarDessertesImportProcess importer = new EurostarDessertesImportProcess();
 				planDeTransport = importer.execute(file);
 				currentSession.setPlanDeTransportTimeTable(planDeTransport);
-			}
-			else{
-				importer = new EurostarDessertesImportProcess();
+			} else {
+				// TODO
+				EurostarDessertesImportProcess importer = new EurostarDessertesImportProcess();
 				planDeTransport = importer.execute(file);
-				currentSession.setPlanDeTransportYield(planDeTransport);
+
+				if (planDeTransport.getCompagnie() == currentSession.getPlanDeTransportTimeTable().getCompagnie()) {
+					currentSession.setPlanDeTransportYield(planDeTransport);
+					// Merge des deux fichiers et mise en session
+					PlanTransport plantransportMerge = PlanTransportUtils.merge(
+							currentSession.getPlanDeTransportYield(), currentSession.getPlanDeTransportTimeTable());
+					currentSession.setPlanDeTransportMerge(plantransportMerge);
+
+					//Récupération de l'intervalle de dates et des ods
+					responseControlData.setDateInterval(PlanTransportUtils.extractDateInterval(plantransportMerge));
+					responseControlData
+							.setOrigineDestinations(PlanTransportUtils.extractOriginesDestinations(plantransportMerge));
+				}else{
+					responseBean.setData("The two selected files are not related to the same company !");
+					responseBean.setStatus(false);
+					return Response.ok((Object) responseBean).build();
+				}
 				
-				//Merge des deux fichiers et mise en session
-				PlanTransport plantransportMerge = PlanTransportUtils.merge(currentSession.getPlanDeTransportYield(),currentSession.getPlanDeTransportTimeTable()); 
-				currentSession.setPlanDeTransportMerge(plantransportMerge);
-				
-					
-				responseControlData.setDateInterval(PlanTransportUtils.extractDateInterval(plantransportMerge));
-				responseControlData.setOrigineDestinations(PlanTransportUtils.extractOriginesDestinations(plantransportMerge));
-				
-				
+
 			}
 			responseBean.setData(responseControlData);
 			responseBean.setStatus(true);
@@ -282,32 +289,46 @@ public class ControlTmsWebService {
 			// e.printStackTrace();
 
 			StringBuilder sb = new StringBuilder("Error on ");
-			// Objet renvoyé contenant les erreurs
-			
+
+			//Liste d'erreurs
 			List<String> parsing = responseControlData.getParsingErrorList();
 			List<String> validation = responseControlData.getValidationErrorList();
 			List<String> extraction = responseControlData.getExtractionErrorList();
 
 			DessertesContext context = (DessertesContext) e.getContext();
 
-			//Erreur ayant causé l'arrêt du traitement
+			// Erreur ayant causé l'arrêt du traitement
 			responseControlData.setErreurFatale(context.getFatalException().toString());
 
+			//Affichage dans la console
 			System.out.println("autres erreurs " + (context.getValidationErrors().size()
 					+ context.getParsingErrors().size() + context.getExtractionErrors().size()) + " : ");
 
+			//Si il y a des erreurs de parsing
 			if (!context.getParsingErrors().isEmpty()) {
-				sb.append("parsing (column ").append(context.getParsingErrors().get(0).getCell().getColumnIndex())
-						.append(" / line ").append(context.getParsingErrors().get(0).getCell().getRowIndex())
-						.append(")");
+				/*
+				 * sb.append("parsing (column ").append(context.getParsingErrors
+				 * ().get(0).getCell().getColumnIndex())
+				 * .append(" / line ").append(context.getParsingErrors().get(0).
+				 * getCell().getRowIndex()) .append(")");
+				 */
 
 				System.out.println("- de parsing :");
-				System.out.println("colonne : " + context.getParsingErrors().get(0).getCell().getColumnIndex() + " / "
-						+ "ligne : " + context.getParsingErrors().get(0).getCell().getRowIndex());
-				context.getParsingErrors().get(0).printStackTrace();
+				/*
+				 * System.out.println("colonne : " +
+				 * context.getParsingErrors().get(0).getCell().getColumnIndex()
+				 * + " / " + "ligne : " +
+				 * context.getParsingErrors().get(0).getCell().getRowIndex());
+				 * context.getParsingErrors().get(0).printStackTrace();
+				 */
 				for (ExcelImportException error : context.getParsingErrors()) {
-					System.out.println("    " + error.getMessage() + " -> " + error.getStackTrace()[0].toString());
-
+					// Affichage dans console
+					System.out.println("    " + error.getMessage()
+							+ (error.getCell() != null ? "sur la cellule " + error.getCell().getColumnIndex()
+									+ error.getCell().getRowIndex() + " de la feuille "
+									+ error.getCell().getSheet().getSheetName() : "")
+							+ " -> " + error.getStackTrace()[0].toString());
+					// Ajout de chaqueerreur dans le dto de retour
 					parsing.add(error.getMessage() + (error.getCell() != null
 							? "sur la cellule " + error.getCell().getColumnIndex() + error.getCell().getRowIndex()
 									+ " de la feuille " + error.getCell().getSheet().getSheetName()
@@ -315,10 +336,10 @@ public class ControlTmsWebService {
 
 				}
 			}
+			//Si il y a des erreurs de validation
 			if (!context.getValidationErrors().isEmpty()) {
 				if (sb.lastIndexOf("parsing") != -1) {
 					sb.append(" and ");
-
 				}
 
 				sb.append("validation");
@@ -330,9 +351,9 @@ public class ControlTmsWebService {
 							? "sur la cellule " + error.getCell().getColumnIndex() + error.getCell().getRowIndex()
 									+ " de la feuille " + error.getCell().getSheet().getSheetName()
 							: ""));
-
 				}
 			}
+
 			if (!context.getExtractionErrors().isEmpty()) {
 				if (sb.lastIndexOf("parsing") != -1 || sb.lastIndexOf("validation") != -1) {
 					sb.append(" and ");

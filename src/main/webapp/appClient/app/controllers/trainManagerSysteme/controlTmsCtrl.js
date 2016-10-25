@@ -30,6 +30,11 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	$scope.selectedIdJeuDonnees = null;
 	//Boolean pour disabled all sur le modal
 	$scope.disabledAll = true;
+	//Liste des ods
+	$scope.ods = "";
+	//Date affichées dans la page
+	$scope.dateDebut =null;
+	$scope.dateFin = null;
 
 	
 	$scope.confNgFileUpload = {
@@ -47,9 +52,6 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		traitementControlTmsService.init();
 		$scope.files = traitementControlTmsService.files();
 	}
-	
-	
-	
 	
 	
 	$scope.uploadPic = function (file) {
@@ -213,7 +215,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		//réinitialisation du champs date et od si necessaire
 		if($scope.files.firstFile.file == null|| $scope.files.secondFile.file == null) {
 			resetDates(); 
-			$scope.datas.origineDestinations = [];
+			$scope.ods ="";
 		}
 		
 		
@@ -308,6 +310,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 							$scope.files.firstFile.msgError = reponse.message;
 							$scope.files.firstFile.errorDetailsList = reponse.data;
 							console.log($scope.files.firstFile.etat);
+							controlTmsService.setDatas(reponse.data);
 							//Reinitialiser dates
 							 resetDates();
 
@@ -335,6 +338,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 							$scope.dateDebut = reponse.data.dateInterval.dateDebut;
 							$scope.dateFin = reponse.data.dateInterval.dateFin;
 							$scope.datas = reponse.data;
+							updateOds();
 							
 						} else {
 							// erreur au niveau de l'upload
@@ -342,8 +346,9 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 							$scope.files.secondFile.etat.isFinishTraitementSuccess = false;
 							$scope.files.secondFile.msgError = reponse.message;
 							$scope.files.secondFile.errorDetailsList =  reponse.data;
+							controlTmsService.setDatas(reponse.data);
 							//Reinitialiser dates
-							 $scope.resetDates();
+							 resetDates();
 						}
 						$scope.files.secondFile.etat.isFinishTraitement = true;
 						
@@ -355,6 +360,19 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		}
 	}
 	
+	$scope.ods = "";
+	
+	function updateOds(){
+		//Remplir liste ods
+		angular.forEach($scope.datas.origineDestinations, function(value, key) {
+			  //console.log(key + ': ' + value.origine.codeGare);
+			  //alert(key + ': ' + value.origine.codeGare);
+			  $scope.ods = $scope.ods + value.origine.codeGare + "-" + value.destination.codeGare + " ; "; 
+			});
+	} 
+		
+	
+
 	/*
 	 * ng-change sur le status du jeuDonnees => mise à jour de la liste des jeuDonnees
 	 */
@@ -385,8 +403,19 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	/**
 	 * Afficher les détails d'une erreur
 	 */
-	$scope.showOrHideErrorsModal = function(){
+	$scope.showOrHideErrorsModal = function(id){
 		$scope.modalErrorsDetails = !$scope.modalErrorsDetails;
+		$scope.datas = controlTmsService.getDatas();
+		console.log("====>datasssssssssssssss");
+		console.log($scope.datas);
+		/*if(scope.modalErrorDetails){
+			if(id == 1){
+				$scope.datas = 
+			}else{
+				$scope.datas = 
+			}
+				
+		}*/
 	}
 	
 	function resetDates (){

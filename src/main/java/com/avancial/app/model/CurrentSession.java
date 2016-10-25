@@ -1,20 +1,26 @@
 package com.avancial.app.model;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
-import com.avancial.socle.model.managedbean.SocleMenuManagedBean;
 
 /**
- * Managed Bean de gestion de la page liste utilisateurs public
+ * Utilisé pour stocker des objets pendant la session
  * 
- * @author guillaume.bouziou
+ * @author jeandaniel.bide
  * 
  */
 
 @SessionScoped
-public class CurrentSession  {
+public class CurrentSession implements Serializable   {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private PlanTransport planDeTransportTimeTable;

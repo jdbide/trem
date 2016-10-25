@@ -29,34 +29,35 @@
 										<tr>
 											<td ROWSPAN=2 style="vertical-align: middle;">Erreur fatale</td>
 											<td ROWSPAN=2 class="text-center"
-												style="vertical-align: middle;">{{$parent.files.firstFile.errorDetailsList.erreurFatale}}</td>
+												style="vertical-align: middle;">{{datas.erreurFatale}}</td>
 
 										</tr>
 									</tbody>
 									<tbody
-										ng-repeat="datas in $parent.files.firstFile.errorDetailsList.parsingErrorList">
+										ng-repeat="data in datas.parsingErrorList">
 										<tr>
 											<td ROWSPAN=2 style="vertical-align: middle;">Parsing</td>
 											<td ROWSPAN=2 class="text-center"
-												style="vertical-align: middle;">{{datas}}</td>
+												style="vertical-align: middle;">{{data}}</td>
+												
 
 										</tr>
 									</tbody>
 									<tbody
-										ng-repeat="datas in $parent.files.firstFile.errorDetailsList.validationErrorList">
+										ng-repeat="data in datas.validationErrorList">
 										<tr>
 											<td ROWSPAN=2 style="vertical-align: middle;">Validation</td>
 											<td ROWSPAN=2 class="text-center"
-												style="vertical-align: middle;">{{datas}}</td>
+												style="vertical-align: middle;">{{data}}</td>
 
 										</tr>
 									</tbody>
 									<tbody
-										ng-repeat="datas in $parent.files.firstFile.errorDetailsList.extractionErrorList">
+										ng-repeat="data in datas.extractionErrorList">
 										<tr>
 											<td ROWSPAN=2 style="vertical-align: middle;">Extraction</td>
 											<td ROWSPAN=2 class="text-center"
-												style="vertical-align: middle;">{{datas}}</td>
+												style="vertical-align: middle;">{{data}}</td>
 
 										</tr>
 									</tbody>

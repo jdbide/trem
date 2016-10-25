@@ -1,5 +1,6 @@
 <div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel"
-	aria-hidden="false" data-keyboard="false" data-backdrop="static" data-focus-on="input:first">
+	aria-hidden="false" data-keyboard="false" data-backdrop="static"
+	data-focus-on="input:first">
 
 
 	<modal visible="$parent.modalErrorsDetails"
@@ -47,22 +48,7 @@
 									</span>
 								</div>
 							</div>
-							<div ng-show="$parent.files.firstFile.msgError != null"
-								class="col-md-12 " style="padding-top: 20px;">
-								<div class="callout callout-danger">
-									<table class="table">
-										<tr>
-											<td>{{$parent.files.firstFile.msgError}} <br />
-											</td>
-											<td>
-												<button class="btn btn-yellow btn-sm pull-right "
-													ng-click="showOrHideErrorsModal()">Show errors
-													details</button>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</div>
+
 							<div
 								ng-show="$parent.files.firstFile.invalidFile && $parent.files.firstFile.invalidFile.$errorMessages.pattern"
 								class="col-md-12 " style="padding-top: 20px;">
@@ -105,6 +91,10 @@
 											ng-show="$parent.files.firstFile.etat.isUploadSuccess == false"
 											class="text-red">
 											Upload KO <i class="fa fa-check-square-o text-red"></i>
+											{{$parent.files.firstFile.msgError}}
+											<button class="btn btn-yellow btn-sm pull-right "
+												ng-click="showOrHideErrorsModal()">Show errors
+												details</button>
 										</p>
 										<!-- <p ng-show="$parent.files.firstFile.etat.isFormatOk" class="text-green">
 											Format check OK 
@@ -161,13 +151,7 @@
 									<!-- if (files.firstFile.isFinishTraitementSuccess!=true) return 'disabled' -->
 								</div>
 							</div>
-							<div
-								ng-show="$parent.files.secondFile.invalidFile  && $parent.files.secondFile.invalidFile.$errorMessages.pattern"
-								class="col-md-12 " style="padding-top: 20px;">
-								<div class="callout callout-danger">
-									<p>Invalid type : please select a .xlsx file.</p>
-								</div>
-							</div>
+
 							<div class="col-md-12 "
 								ng-show="$parent.files.secondFile.etat.isStartTraitement">
 								<div class="box box-solid">
@@ -195,8 +179,14 @@
 										<p
 											ng-show="$parent.files.secondFile.etat.isUploadSuccess == false"
 											class="text-red">
-											Upload KO <i class="fa fa-check-square-o text-red"></i>
+											Upload KO <i class="fa fa-check-square-o text-red"></i>{{$parent.files.secondFile.msgError}}
+											<button class="btn btn-yellow btn-sm pull-right "
+												ng-click="showOrHideErrorsModal()">Show errors
+												details</button>
 										</p>
+
+
+
 										<!-- <p ng-show="$parent.files.secondFile.etat.isFormatOk" class="text-green">
 											Format check OK 
 											<i class="fa fa-check-square-o text-green"></i>
@@ -242,66 +232,33 @@
 							</div>
 						</div>
 						<div class="form-inline form-inline-modal-socle">
-							<p>4 - Apply filters (optional):</p>
-							<p style="margin: 0px; padding: 15px">limit data-comparison
-								to trains running:</p>
+							<p>TimeTable informations:</p>
+
 							<div class="row" style="margin: 0px;">
 								<div class="form-group col-md-6" style="overflow: hidden;">
 									<label for="sel1" class="control-label col-md-3">Between:</label>
-									<div class="input-group col-md-9">
-										<select id="sel1" class="form-control" ng-disabled="true">
-											<option>{{dateDebut | date:'dd/MM/yyyy'}}</option>
-											<option>02/02/2017</option>
-										</select>
-									</div>
+
+									{{dateDebut?(dateDebut | date:'dd/MM/yyyy'):'---'}} And:
+
+									{{dateFin?(dateFin | date:'dd/MM/yyyy'):'---'}}
+									<!--  <div>
+										<input id="sel1" type="text" ng-disabled="true"
+											ng-model="dateDebut?(dateDebut | date:'dd/MM/yyyy'):'date'">
+									</div>-->
 								</div>
-								<div class="form-group col-md-6" style="overflow: hidden;">
-									<label for="sel2" class="control-label col-md-3">and:</label>
-									<div class="input-group col-md-9">
-										<select id="sel2" class="form-control" ng-disabled="true">
-											<option>{{dateFin | date:'dd/MM/yyyy'}}</option>
-											<option>{{dateFin}}</option>
-										</select>
-									</div>
-								</div>
+
+								<!-- <div class="form-group col-md-6" style="overflow: hidden;">
+									<input id="sel2" type="text" ng-disabled="true"
+										ng-model="dateFin?(dateFin | date:'dd/MM/yyyy'):'date'">
+								</div>-->
 							</div>
 						</div>
 						<div class="form-group form-group-modal-socle">
 							<label for="select_ods" class="col-sm-3 control-label">On
 								the following ODs:</label>
-							<div class="col-md-9">
-								<select id="select_ods" class="form-control" ng-disabled="true">
-									<option>GBSPX-FRPNO X ; GBSPX-BEBMI X</option>
-								</select>
+							<div id="select_ods" class="col-lg">
+								<input type="text" ng-disabled="true" ng-model="ods" >
 							</div>
-
-
-							<div class="form-group">
-								<label class="col-sm-3 control-label left-control" for="stops">Stops</label>
-								<div class="col-sm-9">
-									<div
-										ng-class="(datas.odsSelected.length > 0) ? 'input-group' : ''">
-										<ui-select multiple tagging tagging-label="false"
-											ng-model="datas.odsSelected" theme="bootstrap"
-											ng-disabled="disabledAll"><!-- style="width: 300px;" title="Choose a color" -->
-										<ui-select-match placeholder="Select Ods ...">{{$datas.origineDestinations.origine.codeGare}}</ui-select-match>
-										<ui-select-choices
-											repeat="od in datas.origineDestinations | filter:$select.datas">
-										{{od.origine.codeGare}} - {{od.destination.codeGare}} </ui-select-choices> </ui-select>
-										<span ng-show="true"
-											class="input-group-btn">
-											<button type="button" ng-click="datas.odsSelected = []"
-												class="btn btn-default">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button>
-										</span>
-									</div>
-								</div>
-							</div>
-
-
-
-
 
 						</div>
 						<h1>{{myForm.input_id_timetable.$valid}}</h1>
