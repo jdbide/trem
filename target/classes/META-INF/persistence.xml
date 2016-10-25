@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="2.0">
+
+	<persistence-unit name="PU_socle" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<non-jta-data-source>java:comp/env/jdbc/socle</non-jta-data-source>
+		<class>com.avancial.app.data.databean.JeuDonneesControlEntity</class>
+
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<!-- Configuring JDBC properties -->
+			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/socle" />
+			<!-- Hibernate properties -->
+			<property name="hibernate.id.new_generator_mappings" value="true" />
+			<property name="hibernate.archive.autodetection" value="class" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+			<property name="hibernate.generate_statistics" value="false" />
+			<property name="hibernate.use_sql_comments" value="false" />
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="PU_db2" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<properties>
+			<!-- Hibernate properties -->
+			<property name="hibernate.id.new_generator_mappings" value="true" />
+			<property name="hibernate.archive.autodetection" value="class" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
+			<property name="hibernate.current_session_context_class" value="thread"/>
+			<property name="hibernate.connection.autocommit" value="true"/>
+			<property name="hibernate.connection.pool_size" value="0"/> 
+		</properties>
+	</persistence-unit>
+
+</persistence>

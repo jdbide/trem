@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context antiJARLocking="true" path="/Test">
+	<Resource name="jdbc/memoire" auth="Container" type="javax.sql.DataSource"
+		username="sa" password="" driverClassName="org.h2.Driver"
+		url="jdbc:h2:~/memoire;AUTO_SERVER=TRUE" maxActive="8" maxIdle="4"
+		maxWait="10000" />
+		
+	
+	<Resource name="jdbc/socle" auth="Container" type="javax.sql.DataSource"
+		username="dbad_tremas" password="!tremas-12" driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://caliban/tremas" maxActive="8" maxIdle="4"
+		maxWait="10000" />	
+
+       <Resource name="jdbc/externe" auth="Container" type="javax.sql.DataSource"
+        username="ejmt013" password="Isab1000" driverClassName="com.ibm.db2.jcc.DB2Driver"
+        url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;"
+
+         maxActive="8" maxIdle="4"
+        maxWait="10000" />
+<!--         url="jdbc:db2://sbt.aiel.sncf.fr:5016/LILLE_DSNR:retrieveMessagesFromServerOnGetMessage=true;" -->
+
+<Resource name="jdbc/db2" auth="Container" type="javax.sql.DataSource"
+        driverClassName="com.ibm.db2.jcc.DB2Driver" maxActive="8" maxIdle="4" maxWait="10000"
+        url="jdbc:db2://prd.aiel.sncf.fr:5018/LILLE_DSNC:retrieveMessagesFromServerOnGetMessage=true;" />
+
+	<Resource name="BeanManager" auth="Container"
+		type="javax.enterprise.inject.spi.BeanManager" factory="org.jboss.weld.resources.ManagerObjectFactory" />
+
+</Context>
