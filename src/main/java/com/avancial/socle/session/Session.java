@@ -28,9 +28,6 @@ public class Session implements Serializable {
    @Inject
    private User              user;
    
-   @Inject
-   private  PlanTransport planDeTransportTemp;
-
    /**
     * Constructeur
     */
@@ -46,13 +43,5 @@ public class Session implements Serializable {
       this.user = user;
    }
    
-
-   public PlanTransport getPlanDeTransportTemp() {
-      return planDeTransportTemp;
-   }
-
-   public void setPlanDeTransportTemp(PlanTransport planDeTransportTemp) {
-      this.planDeTransportTemp = planDeTransportTemp;
-   }
 
 }
