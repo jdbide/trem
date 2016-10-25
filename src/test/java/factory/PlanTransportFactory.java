@@ -80,7 +80,7 @@ public class PlanTransportFactory {
         trainEgal = new Train();
         trancheEgal = new Tranche();
         trancheEgal.setNumeroTranche("trancheEgal");
-        trancheEgal.setTrancheStatut(null);
+        trancheEgal.setTrancheStatut(EnumTrancheStatut.Ferme);
         trancheEgal.setRegime(regimeEgal);
         tranchesEgal = new ArrayList<>();
         tranchesEgal.add(trancheEgal);

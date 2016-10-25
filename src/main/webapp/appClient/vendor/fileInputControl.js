@@ -12,7 +12,6 @@ $(document).on('click', '#close-preview', function(){
 });
 
 $(function() {
-		console.log("FileInputControl vient d'etre charger");
     // Create the close button
     var closebtn = $('<button/>', {
         type:"button",
