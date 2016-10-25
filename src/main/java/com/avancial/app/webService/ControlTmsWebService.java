@@ -27,6 +27,7 @@ import org.json.simple.JSONArray;
 import com.avancial.app.data.databean.EStatus;
 import com.avancial.app.data.databean.EStatusControl;
 import com.avancial.app.data.dto.ResponseControlData;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.fileImport.excelImport.ExcelImportException;
 import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
@@ -36,7 +37,10 @@ import com.avancial.app.service.CompagnieEnvironnementService;
 import com.avancial.app.service.JeuDonneesControlService;
 import com.avancial.app.service.controlePlanTransport.excelImport.PlanTransportUtils;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesContext;
+import com.avancial.app.service.controlePlanTransport.excelImport.eurostar.EurostarDatafileImportProcess;
 import com.avancial.app.service.controlePlanTransport.excelImport.eurostar.EurostarDessertesImportProcess;
+import com.avancial.app.service.controlePlanTransport.excelImport.thalys.ThalysDatafileImportProcess;
+import com.avancial.app.service.controlePlanTransport.excelImport.thalys.ThalysDessertesImportProcess;
 import com.avancial.app.serviceDto.JeuDonneesControlServiceDto;
 import com.avancial.app.serviceDto.JeuDonneesServiceDto;
 import com.avancial.app.utilitaire.pattern.structuredProcess.StructuredProcessException;
@@ -252,16 +256,32 @@ public class ControlTmsWebService {
 			System.out.println("************************TEST BEGINING************************");
 			SocleExcelReadFile file = new SocleExcelReadFile(filePath.toString());
 
+			//Si fichier provenant du champs timetable
 			if (typeFile.equalsIgnoreCase("timetable")) {
+				
 				EurostarDessertesImportProcess importer = new EurostarDessertesImportProcess();
 				planDeTransport = importer.execute(file);
 				currentSession.setPlanDeTransportTimeTable(planDeTransport);
+				
+				
 			} else {
-				// TODO
-				EurostarDessertesImportProcess importer = new EurostarDessertesImportProcess();
-				planDeTransport = importer.execute(file);
 
+				// Sinon fichier yield
+				//si fichier 1 fichier euro
+				if(currentSession.getPlanDeTransportTimeTable().getCompagnie().equals(EnumCompagnies.ES.toString())){
+					//essayer import datatable euro
+					EurostarDatafileImportProcess importerEuro = new EurostarDatafileImportProcess();
+					planDeTransport = importerEuro.execute(file);
+				}else {
+					//sinon essayer import datatable euro
+					EurostarDatafileImportProcess importerTha = new EurostarDatafileImportProcess();
+					planDeTransport = importerTha.execute(file);
+				}
+				
+
+				//si les fichiers 1 et 2 se rapportent à la même compagnie
 				if (planDeTransport.getCompagnie() == currentSession.getPlanDeTransportTimeTable().getCompagnie()) {
+					//mettre le fichier 2 en mémoire
 					currentSession.setPlanDeTransportYield(planDeTransport);
 					// Merge des deux fichiers et mise en session
 					PlanTransport plantransportMerge = PlanTransportUtils.merge(
@@ -277,9 +297,8 @@ public class ControlTmsWebService {
 					responseBean.setStatus(false);
 					return Response.ok((Object) responseBean).build();
 				}
-				
-
 			}
+			
 			responseBean.setData(responseControlData);
 			responseBean.setStatus(true);
 			return Response.ok((Object) responseBean).build();
