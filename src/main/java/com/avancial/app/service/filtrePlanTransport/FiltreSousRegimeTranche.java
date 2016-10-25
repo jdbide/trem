@@ -1,10 +1,12 @@
 package com.avancial.app.service.filtrePlanTransport;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.avancial.app.data.objetsMetier.PlanTransport.ASousRegimeTranche;
 import com.avancial.app.data.objetsMetier.PlanTransport.CodeSat;
 import com.avancial.app.data.objetsMetier.PlanTransport.FareProfile;
+import com.avancial.app.data.objetsMetier.PlanTransport.Regime;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tosp;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
@@ -41,6 +43,7 @@ public class FiltreSousRegimeTranche extends AFiltreTranche {
     @Override
     protected Tranche filtreCritere(Tranche object) {
         Tranche tranche = object.clone();
+        List<Date> datesTrancheAttributFiltre = new ArrayList<>();
 
         /* Boucle sur la liste d'objets de la classe donnée */
         if (object.getAttributsField(this.aSousRegimeTranche.getClass()) != null) {
@@ -56,6 +59,7 @@ public class FiltreSousRegimeTranche extends AFiltreTranche {
                  */
                 if (this.aSousRegimeTranche.equals(aSousRegimeTranche)) {
                     donnees.add(aSousRegimeTranche);
+                    datesTrancheAttributFiltre = aSousRegimeTranche.getRegime().getListeJours();
                     /*
                      * On peut sortir de la boucle : il y a au plus un élément
                      * d'une valeur dans la liste
@@ -64,8 +68,27 @@ public class FiltreSousRegimeTranche extends AFiltreTranche {
                 }
             }
             tranche.addAttributsField(donnees);
+            Regime regime = tranche.getRegime();
+            regime.setListeJours(this.intersection(tranche.getRegime().getListeJours(), datesTrancheAttributFiltre));
+            tranche.setRegime(regime);
         }
         return tranche;
+    }
+    
+    /**
+     * renvois une list de date contenant l'intersection de dates1 avec dates2
+     * @param dates1
+     * @param dates2
+     * @return
+     */
+    private List<Date> intersection(List<Date> dates1, List<Date> dates2){
+        List<Date> res = new ArrayList<>();
+        for (Date date1 : dates1) {
+            if (dates2.contains(date1)) {
+                res.add(date1);
+            }
+        }
+        return res;
     }
 
 }

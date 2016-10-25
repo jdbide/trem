@@ -15,16 +15,16 @@ import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
  */
 public class FiltreFormPlanTransportDto {
 
-    private int idCompagnieEnvironnement;
+    private Integer idCompagnieEnvironnement;
     private List<String> numerosTrains;
     private List<String> numerosTranches;
     private Date debutPeriode;
     private Date finPeriode;
-    private int idOrigineDestination;
+    private Integer idOrigineDestination;
     private List<Integer> idsStops;
-    private int idTosp;
-    private int idCodeRM;
-    private int idCodeEquipement;
+    private Integer idTosp;
+    private Integer idCodeRM;
+    private Integer idCodeEquipement;
     private EnumTrancheStatut status;
     /**
      * Boolean qui represente si l'od selectionné doit se prendre en aller/retour
@@ -41,7 +41,7 @@ public class FiltreFormPlanTransportDto {
     /**
      * @return the idCompagnieEnvironnement
      */
-    public int getIdCompagnieEnvironnement() {
+    public Integer getIdCompagnieEnvironnement() {
         return this.idCompagnieEnvironnement;
     }
 
@@ -49,7 +49,7 @@ public class FiltreFormPlanTransportDto {
      * @param idCompagnieEnvironnement
      *            the idCompagnieEnvironnement to set
      */
-    public void setIdCompagnieEnvironnement(int idCompagnieEnvironnement) {
+    public void setIdCompagnieEnvironnement(Integer idCompagnieEnvironnement) {
         this.idCompagnieEnvironnement = idCompagnieEnvironnement;
     }
 
@@ -116,7 +116,7 @@ public class FiltreFormPlanTransportDto {
     /**
      * @return the idOrigineDestination
      */
-    public int getIdOrigineDestination() {
+    public Integer getIdOrigineDestination() {
         return this.idOrigineDestination;
     }
 
@@ -124,7 +124,7 @@ public class FiltreFormPlanTransportDto {
      * @param idOrigineDestination
      *            the idOrigineDestination to set
      */
-    public void setIdOrigineDestination(int idOrigineDestination) {
+    public void setIdOrigineDestination(Integer idOrigineDestination) {
         this.idOrigineDestination = idOrigineDestination;
     }
 
@@ -146,7 +146,7 @@ public class FiltreFormPlanTransportDto {
     /**
      * @return the idTosp
      */
-    public int getIdTosp() {
+    public Integer getIdTosp() {
         return this.idTosp;
     }
 
@@ -154,14 +154,14 @@ public class FiltreFormPlanTransportDto {
      * @param idTosp
      *            the idTosp to set
      */
-    public void setIdTosp(int idTosp) {
+    public void setIdTosp(Integer idTosp) {
         this.idTosp = idTosp;
     }
 
     /**
      * @return the idCodeRM
      */
-    public int getIdCodeRM() {
+    public Integer getIdCodeRM() {
         return this.idCodeRM;
     }
 
@@ -169,14 +169,14 @@ public class FiltreFormPlanTransportDto {
      * @param idCodeRM
      *            the idCodeRM to set
      */
-    public void setIdCodeRM(int idCodeRM) {
+    public void setIdCodeRM(Integer idCodeRM) {
         this.idCodeRM = idCodeRM;
     }
 
     /**
      * @return the idCodeEquipement
      */
-    public int getIdCodeEquipement() {
+    public Integer getIdCodeEquipement() {
         return this.idCodeEquipement;
     }
 
@@ -184,7 +184,7 @@ public class FiltreFormPlanTransportDto {
      * @param idCodeEquipement
      *            the idCodeEquipement to set
      */
-    public void setIdCodeEquipement(int idCodeEquipement) {
+    public void setIdCodeEquipement(Integer idCodeEquipement) {
         this.idCodeEquipement = idCodeEquipement;
     }
 
