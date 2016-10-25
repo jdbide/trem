@@ -141,3 +141,7 @@ a.disabled {
     text-align: left !important;
   }
 }
+
+.ui-select-multiple.ui-select-bootstrap {
+	height: 34px;
+}

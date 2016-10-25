@@ -20,14 +20,13 @@ public abstract class AExcelRapportControleSheet implements IExcelRapportCompara
 
    private static Logger logger         = Logger.getLogger(AExcelRapportControleSheet.class);
 
-   private static String ENTETE_TRAIN   = "Train";
+   protected static String ENTETE_TRAIN   = "Train";
    private static String ENTETE_TRANCHE = "Tranche";
-   private static String ENTETE_REGIME  = "Regime_Circul";
-   private static String ENTETE_DATE    = "Date_Circul";
+   protected static String ENTETE_DATE    = "Date_Circul";
 
    @Override
    public void generateEntete(ExcelTools excelTools, int ligneDebut) {
-      this.generateEnteteTrainTrancheRegimeDateCircul(excelTools);
+      this.generateEnteteTrainTrancheDateCircul(excelTools);
       this.generateEnteteSheet(excelTools);
    }
 
@@ -36,14 +35,12 @@ public abstract class AExcelRapportControleSheet implements IExcelRapportCompara
     * 
     * @param excelTools
     */
-   protected void generateEnteteTrainTrancheRegimeDateCircul(ExcelTools excelTools) {
+   protected void generateEnteteTrainTrancheDateCircul(ExcelTools excelTools) {
       excelTools.createCellTexteWithStyle(1, ENTETE_TRAIN, excelTools.setBorders(excelTools.styleBorder, CellStyle.BORDER_MEDIUM,
             CellStyle.BORDER_MEDIUM, CellStyle.BORDER_MEDIUM, CellStyle.BORDER_NONE));
       excelTools.createCellTexteWithStyle(2, ENTETE_TRANCHE, excelTools.setBorders(excelTools.styleBorder, CellStyle.BORDER_MEDIUM,
             CellStyle.BORDER_MEDIUM, CellStyle.BORDER_NONE, CellStyle.BORDER_NONE));
-      excelTools.createCellTexteWithStyle(3, ENTETE_REGIME, excelTools.setBorders(excelTools.styleBorder, CellStyle.BORDER_MEDIUM,
-            CellStyle.BORDER_MEDIUM, CellStyle.BORDER_NONE, CellStyle.BORDER_NONE));
-      excelTools.createCellTexteWithStyle(4, ENTETE_DATE, excelTools.setBorders(excelTools.styleBorder, CellStyle.BORDER_MEDIUM,
+      excelTools.createCellTexteWithStyle(3, ENTETE_DATE, excelTools.setBorders(excelTools.styleBorder, CellStyle.BORDER_MEDIUM,
             CellStyle.BORDER_MEDIUM, CellStyle.BORDER_NONE, CellStyle.BORDER_NONE));
    }
 
@@ -56,12 +53,12 @@ public abstract class AExcelRapportControleSheet implements IExcelRapportCompara
       String[] entetes = this.getNomEntetes();
       /* Cellules d'entête */
       short borderRight = CellStyle.BORDER_NONE;
-      for (int col = 5; col < entetes.length + 5; col++) {
-         if (col == entetes.length - 1 + 5) {
+      for (int col = 4; col < entetes.length + 4; col++) {
+         if (col == entetes.length - 1 + 4) {
             /* Dernière cellule d'entête : on ferme la bordure à droite */
             borderRight = CellStyle.BORDER_MEDIUM;
          }
-         excelTools.createCellTexteWithStyle(col, entetes[col - 5],
+         excelTools.createCellTexteWithStyle(col, entetes[col - 4],
                excelTools.setBorders(excelTools.styleBorder, CellStyle.BORDER_MEDIUM, CellStyle.BORDER_MEDIUM, CellStyle.BORDER_NONE, borderRight));
       }
    }
@@ -83,16 +80,13 @@ public abstract class AExcelRapportControleSheet implements IExcelRapportCompara
     * @param borderBottom
     *           Style de la bordure du bas de la cellule pour la ligne
     */
-   protected void generateContentTrainTrancheRegimeDateCircul(ExcelTools excelTools, ComparaisonControlePlanTransport<IPlanTransport> comparaison,
+   protected void generateContentTrainTrancheDateCircul(ExcelTools excelTools, ComparaisonControlePlanTransport<IPlanTransport> comparaison,
          short borderTop, short borderBottom) {
       /* Numéro de train */
       excelTools.createCellTexteWithStyle(1, comparaison.getNumeroTrain(),
             excelTools.setBorders(excelTools.styleBorder, borderTop, borderBottom, CellStyle.BORDER_THIN, CellStyle.BORDER_NONE));
       /* Numéro de tranche */
       excelTools.createCellTexteWithStyle(2, comparaison.getNumeroTranche(),
-            excelTools.setBorders(excelTools.styleBorder, borderTop, borderBottom, CellStyle.BORDER_NONE, CellStyle.BORDER_NONE));
-      /* Régime tranche */
-      excelTools.createCellTexteWithStyle(3, comparaison.getRegimeTranche().getCodeRegime(),
             excelTools.setBorders(excelTools.styleBorder, borderTop, borderBottom, CellStyle.BORDER_NONE, CellStyle.BORDER_NONE));
       /* Date circulation */
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -126,14 +120,15 @@ public abstract class AExcelRapportControleSheet implements IExcelRapportCompara
                   && dataPrec.getAncienField().getClass().equals(data.getAncienField().getClass()))) {
                /* On change de ligne train-tranche */
                borderTop = CellStyle.BORDER_THIN;
-            } else if (listeAComparaisons.indexOf(data) == listeAComparaisons.size() - 1) {
+            }
+            if (listeAComparaisons.indexOf(data) == listeAComparaisons.size() - 1) {
                /* Dernière ligne du tableau */
                borderBottom = CellStyle.BORDER_THIN;
             }
 
             excelTools.createRow(ligneDebut++);
-            /* Ajout des valeurs Train-Tranche-Regime-Date */
-            this.generateContentTrainTrancheRegimeDateCircul(excelTools, data, borderTop, borderBottom);
+            /* Ajout des valeurs Train-Tranche-Date */
+            this.generateContentTrainTrancheDateCircul(excelTools, data, borderTop, borderBottom);
             /* Ajout des valeurs ancien-nouveau */
             this.generateLigne(excelTools, data, borderTop, borderBottom);
             borderTop = CellStyle.BORDER_NONE;

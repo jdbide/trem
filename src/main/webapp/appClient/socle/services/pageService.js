@@ -31,18 +31,24 @@ socle_app.service('pageService', ['jsonFactory', 'loadingService', '$q',
 		return promissJsonFactory;
 	}
 	
-	self.addPage = function (libelle,ordre) {
+	self.add = function (row) {
 		loadingService.show();
 		var deffered = $q.defer();
+		console.log("Adding "+row);
 		
-		var test = {
-				idIhmRubrique:null,
-				libelleIhmRubrique:"Test",
-				actifIhmRubrique:true,
-				ordreIhmRubrique:null
-		};
+		var page={
+			id:null,
+			libelle:row.libelle,
+			actif:row.actif,
+			toutRole:row.toutRole,
+			publique:row.publique,
+			ordre:row.ordre,
+			idChapitre:row.idChapitre,
+			lien:row.lien
+	};
 		
-		var promissJsonFactory = jsonFactory.postJson("webService/rubriques", test);
+		
+		var promissJsonFactory = jsonFactory.postJson("webService/pages", page);
 		promissJsonFactory
 			.success(function (data) {
 				loadingService.hide();
@@ -57,11 +63,11 @@ socle_app.service('pageService', ['jsonFactory', 'loadingService', '$q',
 	}
 	
 	
-	self.deleteRubrique = function (idRubrique) {
+	self.delete = function (row) {
 		loadingService.show();
 		var deffered = $q.defer();
 		
-		var promissJsonFactory = jsonFactory.deleteJson("webService/rubriques/"+idRubrique, null);
+		var promissJsonFactory = jsonFactory.deleteJson("webService/pages/"+row.id, null);
 		promissJsonFactory
 			.success(function (data) {
 				loadingService.hide();
@@ -75,11 +81,11 @@ socle_app.service('pageService', ['jsonFactory', 'loadingService', '$q',
 		return promissJsonFactory;
 	}
 	
-	self.editRubrique = function (data) {
+	self.update = function (data) {
 		loadingService.show();
 		var deffered = $q.defer();
 		
-		var promissJsonFactory = jsonFactory.putJson("webService/rubriques/"+data.id,data);
+		var promissJsonFactory = jsonFactory.putJson("webService/pages/"+data.id,data);
 		promissJsonFactory
 			.success(function (data) {
 				loadingService.hide();
@@ -88,8 +94,10 @@ socle_app.service('pageService', ['jsonFactory', 'loadingService', '$q',
 			})
 			.error(function (data, status, headers, config) {
 				loadingService.hide();
+				reponse = data;
 				deffered.reject();
 			});
+		
 		return promissJsonFactory;
 	}
 	

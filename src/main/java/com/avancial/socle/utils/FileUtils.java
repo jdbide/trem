@@ -165,24 +165,47 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		}
 	}
 
-	// save uploaded file to new location
-	public static void writeToFile(InputStream uploadedInputStream, String uploadedFileLocation) {
+	/**
+	 * Créer un fichier à partir d'un @InputStream.
+	 * @param inputStream source du fichier
+	 * @param fileLocation destination
+	 */
+	public static boolean writeToFile(InputStream inputStream, String fileLocation) {
+		OutputStream outputStream = null;
+		boolean isOk = true;
+
 		try {
-			OutputStream out = new FileOutputStream(new File(uploadedFileLocation));
+			outputStream = new FileOutputStream(new File(fileLocation));
+
 			int read = 0;
 			byte[] bytes = new byte[1024];
 
-			out = new FileOutputStream(new File(uploadedFileLocation));
-			while ((read = uploadedInputStream.read(bytes)) != -1) {
-				out.write(bytes, 0, read);
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
 			}
-			out.flush();
-			out.close();
+
 		} catch (IOException e) {
-
+			isOk = false;
 			e.printStackTrace();
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (outputStream != null) {
+				try {
+					// outputStream.flush();
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
 		}
-
+		
+		return isOk;
 	}
-
 }

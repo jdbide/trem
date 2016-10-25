@@ -34,12 +34,12 @@
 					<artifactId>maven-war-plugin</artifactId>
 					<version>2.3</version>
 				</plugin>
-				 <plugin>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-        <version>3.1.1</version>
-      </plugin>
-				
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>3.1.1</version>
+				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -257,9 +257,9 @@
 			<version>1.19.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.sun.jersey.contribs</groupId>
-		    <artifactId>jersey-multipart</artifactId>
-		    <version>1.19.1</version>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>1.19.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
@@ -269,12 +269,15 @@
 		<dependency>
 			<groupId>ibm.db2</groupId>
 			<artifactId>db2jcc</artifactId>
-			<version>1</version>
+			<scope>system</scope>
+			<systemPath>E:\Developpement\db2_jdbc\db2_db2driver_for_jdbc_sqlj\db2jcc.jar</systemPath>
 		</dependency>
+
 		<dependency>
 			<groupId>ibm.db2</groupId>
 			<artifactId>db2jcc_license_cisuz</artifactId>
-			<version>1</version>
+			<scope>system</scope>
+			<systemPath>E:\Developpement\db2_jdbc\db2jcc_license_cu.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -287,36 +290,36 @@
 			<version>0.7.5</version>
 		</dependency>
 		<dependency>
-    		<groupId>com.mchange</groupId>
-    		<artifactId>c3p0</artifactId>
-    		<version>0.9.5</version>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
 			<version>4.2.0.Final</version>
 			<exclusions>
-        		<exclusion>
-		            <artifactId>c3p0</artifactId>
-		            <groupId>c3p0</groupId>
-        		</exclusion>
-    		</exclusions>
+				<exclusion>
+					<artifactId>c3p0</artifactId>
+					<groupId>c3p0</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<!-- DeltaSpike  : controlling-cdi-containers-in-se-and-ee  -->
+		<!-- DeltaSpike : controlling-cdi-containers-in-se-and-ee -->
 		<dependency>
-		    <groupId>org.apache.deltaspike.core</groupId>
-		    <artifactId>deltaspike-core-impl</artifactId>
-		    <version>1.7.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.deltaspike.cdictrl</groupId>
-		    <artifactId>deltaspike-cdictrl-api</artifactId>
-		    <version>1.7.1</version>
+			<groupId>org.apache.deltaspike.core</groupId>
+			<artifactId>deltaspike-core-impl</artifactId>
+			<version>1.7.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.deltaspike.cdictrl</groupId>
-		    <artifactId>deltaspike-cdictrl-weld</artifactId>
-		    <version>1.7.1</version>
+			<groupId>org.apache.deltaspike.cdictrl</groupId>
+			<artifactId>deltaspike-cdictrl-api</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.deltaspike.cdictrl</groupId>
+			<artifactId>deltaspike-cdictrl-weld</artifactId>
+			<version>1.7.1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.dozer</groupId>
@@ -329,14 +332,14 @@
 			<version>3.9</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.5</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
 		</dependency>
 		<dependency>
-		    <groupId>log4j</groupId>
-		    <artifactId>log4j</artifactId>
-		    <version>1.2.17</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 

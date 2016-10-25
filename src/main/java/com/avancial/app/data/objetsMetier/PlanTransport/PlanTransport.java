@@ -1,13 +1,21 @@
 package com.avancial.app.data.objetsMetier.PlanTransport;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.SessionScoped;
+
 import com.avancial.socle.utils.ListUtils;
 
-public class PlanTransport implements IPlanTransport {
+@SessionScoped
+public class PlanTransport implements IPlanTransport,Serializable {
 
-   private EnumCompagnies compagnie;
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private EnumCompagnies compagnie;
    private List<Train>    trains;
 
    public PlanTransport clone() {

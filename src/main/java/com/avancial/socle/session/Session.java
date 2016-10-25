@@ -8,6 +8,7 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 
+import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.socle.authentification.model.User;
 
 /**
@@ -26,7 +27,7 @@ public class Session implements Serializable {
     */
    @Inject
    private User              user;
-
+   
    /**
     * Constructeur
     */
@@ -41,5 +42,6 @@ public class Session implements Serializable {
    public void setUser(User user) {
       this.user = user;
    }
+   
 
 }

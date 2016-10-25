@@ -17,6 +17,8 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	$scope.startControl = -1;
 	// Boolean pour l'ouverture du modal de création d'un controle
 	$scope.modalCreateControl = false;
+	// Boolean pour l'ouverture du modal d'affichage des détails d'erreur
+	$scope.modalErrorsDetails = false;
 	// IdJeuDonneesControl
 	$scope.jeuDonneesControl = null;
 	// status pour jeuDonnees selectionne
@@ -28,6 +30,12 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	$scope.selectedIdJeuDonnees = null;
 	//Boolean pour disabled all sur le modal
 	$scope.disabledAll = true;
+	//Liste des ods
+	$scope.ods = "";
+	//Date affichées dans la page
+	$scope.dateDebut =null;
+	$scope.dateFin = null;
+
 	
 	$scope.confNgFileUpload = {
 		ngfAccept:"'image/*'",
@@ -44,9 +52,6 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		traitementControlTmsService.init();
 		$scope.files = traitementControlTmsService.files();
 	}
-	
-	
-	
 	
 	
 	$scope.uploadPic = function (file) {
@@ -114,6 +119,8 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 				$scope.partitions = datas;
 				$scope.selectedPartition = datas[0].idCompagnieEnvironnement;
 				getData();
+				//initialiser dates
+				resetDates();
 			}, function() {
 				alert("Erreur serveur!!");
 			}
@@ -204,11 +211,20 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	 * Methode qui affiche ou non les button clear & upload apres le choix des fichiers
 	 */
 	$scope.showBtnFile = function (idInputFile) {
+		
+		//réinitialisation du champs date et od si necessaire
+		if($scope.files.firstFile.file == null|| $scope.files.secondFile.file == null) {
+			resetDates(); 
+			$scope.ods ="";
+		}
+		
+		
 		if (idInputFile == 1) {
 			return ($scope.files.firstFile.file != null);
 		} else if (idInputFile == 2) {
 			return ($scope.files.secondFile.file != null);
 		}
+		resetDates ();
 	}
 
 	/*
@@ -224,13 +240,13 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			console.log("====== je suis la 1");
 			traitementControlTmsService.init();
 			
-			$scope.files.firstFile.msgError="Please upload the TimeTable file";
+			$scope.files.firstFile.msgError="Please upload the timetable file";
 		}
 		
 		else if (idInputFile == 2 && $scope.files.firstFile.file != null && $scope.files.firstFile.etat.isFinishTraitementSuccess != true) {
 			console.log("====== je suis la 2");
 			traitementControlTmsService.initSecondFile();
-			$scope.files.firstFile.msgError="Please upload the TimeTable file";
+			$scope.files.firstFile.msgError="Please upload the timetable file";
 		}
 		
 		else if (idInputFile == 2) {
@@ -277,26 +293,86 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 			console.log($scope.files.firstFile.file);
 			
 			$scope.files.firstFile.etat.isStartTraitement = true;
-			controlTmsService.uploadUsing$http($scope.files.firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable");
-			$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
-			$scope.files.firstFile.etat.isFinishTraitement = true;
+			$scope.files.firstFile.etat.isFinishTraitement = false;
+			controlTmsService.uploadUsing$http($scope.files.firstFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "timetable").then
+			(
+					function () {
+						var reponse = controlTmsService.getReponse();
+						
+						if (reponse.status) {
+							$scope.files.firstFile.etat.isFinishTraitementSuccess = true;
+							$scope.files.firstFile.etat.isUploadSuccess = true;
+							console.log($scope.files.firstFile.etat);
+						} else {
+							// erreur au niveau de l'upload
+							$scope.files.firstFile.etat.isUploadSuccess = false;
+							$scope.files.firstFile.etat.isFinishTraitementSuccess = false;
+							$scope.files.firstFile.msgError = reponse.message;
+							$scope.files.firstFile.errorDetailsList = reponse.data;
+							console.log($scope.files.firstFile.etat);
+							controlTmsService.setDatas(reponse.data);
+							//Reinitialiser dates
+							 resetDates();
 
-			console.log($scope.files.firstFile.etat);
-			console.log($scope.files.secondFile.etat);
-			
+						}
+						$scope.files.firstFile.etat.isFinishTraitement = true;
+						
+					}, function () {
+						alert("Erreur serveur !");
+						
+					}
+				);
 		} else if (idInputFile == 2) {
 			console.log("==> 2");
 			
 			$scope.files.secondFile.etat.isStartTraitement = true;
-			controlTmsService.uploadUsing$http($scope.files.secondFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "yield");
-			$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
-			$scope.files.secondFile.etat.isFinishTraitement = true;
-			
-			console.log($scope.files.firstFile.etat);
-			console.log($scope.files.secondFile.etat);
+			$scope.files.secondFile.etat.isFinishTraitement = false;
+			controlTmsService.uploadUsing$http($scope.files.secondFile.file, $scope.jeuDonneesControl.idJeuDonneesControl, "yield").then
+			(
+					function () {
+						var reponse = controlTmsService.getReponse();
+						
+						if (reponse.status) {
+							$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
+							$scope.files.secondFile.etat.isUploadSuccess = true;
+							$scope.dateDebut = reponse.data.dateInterval.dateDebut;
+							$scope.dateFin = reponse.data.dateInterval.dateFin;
+							$scope.datas = reponse.data;
+							updateOds();
+							
+						} else {
+							// erreur au niveau de l'upload
+							$scope.files.secondFile.etat.isUploadSuccess = false;
+							$scope.files.secondFile.etat.isFinishTraitementSuccess = false;
+							$scope.files.secondFile.msgError = reponse.message;
+							$scope.files.secondFile.errorDetailsList =  reponse.data;
+							controlTmsService.setDatas(reponse.data);
+							//Reinitialiser dates
+							 resetDates();
+						}
+						$scope.files.secondFile.etat.isFinishTraitement = true;
+						
+					}, function () {
+						alert("Erreur serveur !");
+						
+					}
+				);
 		}
 	}
 	
+	$scope.ods = "";
+	
+	function updateOds(){
+		//Remplir liste ods
+		angular.forEach($scope.datas.origineDestinations, function(value, key) {
+			  //console.log(key + ': ' + value.origine.codeGare);
+			  //alert(key + ': ' + value.origine.codeGare);
+			  $scope.ods = $scope.ods + value.origine.codeGare + "-" + value.destination.codeGare + " ; "; 
+			});
+	} 
+		
+	
+
 	/*
 	 * ng-change sur le status du jeuDonnees => mise à jour de la liste des jeuDonnees
 	 */
@@ -322,6 +398,32 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 		
 		console.log("==> $scope.selectedIdJeuDonnees " + $scope.selectedIdJeuDonnees);
 	}
+	
+	
+	/**
+	 * Afficher les détails d'une erreur
+	 */
+	$scope.showOrHideErrorsModal = function(id){
+		$scope.modalErrorsDetails = !$scope.modalErrorsDetails;
+		$scope.datas = controlTmsService.getDatas();
+		console.log("====>datasssssssssssssss");
+		console.log($scope.datas);
+		/*if(scope.modalErrorDetails){
+			if(id == 1){
+				$scope.datas = 
+			}else{
+				$scope.datas = 
+			}
+				
+		}*/
+	}
+	
+	function resetDates (){
+		//Reinitialiser dates
+		$scope.dateDebut = $scope.vide;
+		$scope.dateFin = $scope.vide;
+	}
+	
 
 	/*
 	 * Call constructor

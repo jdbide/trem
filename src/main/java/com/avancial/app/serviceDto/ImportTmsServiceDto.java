@@ -59,16 +59,16 @@ public class ImportTmsServiceDto extends AService implements Serializable {
             UserDataBean user;
             if (jeuDonneeEntityDraft != null) {
                // user = this.userDao.getUserById((long) jeuDonneeEntityDraft.getIdUtilisateurCreateJeuDonnees());
-               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityDraft.getIdUtilisateurCreateJeuDonnees()).getSingleResult();
+               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("idUser", (long) jeuDonneeEntityDraft.getIdUtilisateurCreateJeuDonnees()).getSingleResult();
                newImportTmsDto.mergeByJeuDonneesBrouillon(jeuDonneeEntityDraft, user == null ? "/" : user.getNomComplet());
             }
 
             if (jeuDonneeEntityActif != null) {
                // user = this.userDao.getUserById((long) jeuDonneeEntityActif.getIdUtilisateurCreateJeuDonnees());
-               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityActif.getIdUtilisateurCreateJeuDonnees()).getSingleResult();
+               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("idUser", (long) jeuDonneeEntityActif.getIdUtilisateurCreateJeuDonnees()).getSingleResult();
                String importBy = user == null ? "/" : user.getNomComplet();
                // user = this.userDao.getUserById((long) jeuDonneeEntityActif.getIdUtilisateurLastUpdateJeuDonnees());
-               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("id", (long) jeuDonneeEntityActif.getIdUtilisateurLastUpdateJeuDonnees()).getSingleResult();
+               user = (UserDataBean) this.getEntityManager().createNamedQuery(UserDataBean.QUERY_GET_BY_ID).setParameter("idUser", (long) jeuDonneeEntityActif.getIdUtilisateurLastUpdateJeuDonnees()).getSingleResult();
                String validateBy = user == null ? "/" : user.getNomComplet();
                newImportTmsDto.mergeByJeuDonneesActif(jeuDonneeEntityActif, importBy, validateBy);
             }

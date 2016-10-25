@@ -1,65 +1,138 @@
 <!-- <socle-table table-titre="title" table-parametres="params" colonnes="cols"></socle-table> -->
-
-
 <!-- Version HTML -->
-<div class="tab-pane" id="import">
-	<h3 class="bs-callout bs-callout-warning">Pages</h3>
 
-	<div ng-if="reponse != null && reponse.status"
-		class="alert alert-success alert-dismissable">
-		<button class="close" aria-hidden="true" data-dismiss="alert"
-			type="button">x</button>
-		<i class="icon fa fa-check"></i> 
-		{{reponse.message}}
-	</div>
-	<div >
-     				
- <table ng-table="params" class="table table-bordered table-striped table-hover table-tremas" ng-form="tableForm" >
-         <tr  class="text-center"  ng-repeat="row in datas " ng-form="rowForm" >
-          <td data-title="'Libellé'" ng-switch="row.isEditing" >
-           <span ng-switch-default class="editable-text">{{row.libelle}}</span>
-           <div class="controls"  ng-switch-when="true">
-              <input type="text" name="libelle" ng-model="row.libelle" class="editable-input form-control input-sm" required />
-            </div>
-          </td>
-          <td  ng-switch="row.isEditing">
-           <span ng-switch-default class="editable-text">{{row.libelleChapitre}}</span>
-              <div class="controls"  ng-switch-when="true">
-             <select ng-model="selectedChapitre" ng-options="chapitre.libelle for chapitre in chapitres track by chapitre.id" ng-change="onChapitreChange(row,selectedChapitre)">  
-             <!-- <select ng-change="onChapitreChange(row);"ng-model="selectedChapitre"> -->
-           <!--  <option  ng-repeat="chapitre in chapitres" ng-selected="selectedChapitre.id==row.idChapitre"  >
-             {{chapitre.libelle}}
-             </option>   -->
-              </select>
-            </div>
-           
-          </td>
-            <td class="col-xs-2 col-lg-2" ng-switch="row.isEditing">
-             <span ng-switch-default class="editable-text">
-             <div ng-if="row.actif" sty><i class="fa fa-fw fa-check  text-success"></i> </div>
-             <div ng-if="!row.actif" class="glyphicon glyphicon-remove"></div>
-             </span>
-                <div class="controls "  ng-switch-when="true">
-              
-              <label>
-                  <input type="checkbox" name="actif" ng-model="row.actif"  class="editable-input form-control col-xs-2 "/>
-                </label>
-            </div>
-            </td>
-          <td  ng-switch="row.isEditing">
-           <span ng-switch-default class="editable-text">{{row.ordre}}</span>
-              <div class="form-controls"  ng-switch-when="true">
-              <input type="text" name="ordre" ng-model="row.ordre" class="editable-input form-control col-xs-2" required />
-            </div>
-           </td>
-          
-          
-          <td> <button class="btn btn btn-primary btn-sm" ng-click="row.isEditing = true;tableForm.isEditing=true;onBeforeEdit(row);" ng-if="!row.isEditing" ng-disabled="tableForm.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
-          <button class="btn btn-success btn-sm" ng-click="save(row, tableForm)" ng-if="row.isEditing" ng-disabled="rowForm.$pristine || rowForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
-           <button class="btn btn-danger btn-sm" ng-click="del(row,tableForm)" ng-if="!row.isEditing" ng-disabled="tableForm.isEditing"><span class="glyphicon glyphicon-trash"></span></button>
-           <button class="btn btn-warning btn-sm" ng-click="cancel(row,tableForm)" ng-if="row.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
-          </td>
-        </tr>
-      </table>
-      
-      
+<modal visible="modalConfirmDelete" url="socle/views/modals/confirmDelete.xhtml"></modal>
+
+<h3 class="bs-callout bs-callout-warning">Pages</h3>
+
+<div ng-if="reponse != null && reponse.status"
+	class="alert alert-success alert-dismissable">
+	<button class="close" aria-hidden="true" data-dismiss="alert"
+		type="button">x</button>
+	<i class="icon fa fa-check"></i> {{reponse.message}}
+</div>
+
+<div>
+<button class="btn btn-success btn-sm" ng-click="beforeAdd()" ng-disabled="isFormEditing">
+<i class="icon fa fa-plus"></i>
+</button>
+
+</div>
+	<table ng-table="ngTableParams" data-all-option-title="Tout"
+		show-filter="true" class="table table-bordered table-admin"
+		ng-form="tableForm">
+		<tbody>
+			<tr class="text-center" ng-repeat="row in $data track by row.id " ng-form="rowForm">
+
+				<td data-title="'Action'" class="col-xs-1">
+					<button class="btn btn btn-primary btn-sm"
+						ng-click="row.isEditing = true;onBeforeEdit(row);"
+						ng-if="!row.isEditing" ng-disabled="isFormEditing">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+					<button class="btn btn-success btn-sm"
+						ng-click="save(row)" ng-if="row.isEditing"
+						ng-disabled="rowForm.$pristine || rowForm.$invalid">
+						<span class="glyphicon glyphicon-ok"></span>
+					</button>
+					<button class="btn btn-danger btn-sm" ng-click="onBeforeDelete(row);"
+						ng-if="!row.isEditing" ng-disabled="isFormEditing">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+					<button class="btn btn-warning btn-sm"
+						ng-click="cancel(row,tableForm)" ng-if="row.isEditing">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button>
+				</td>
+
+				<td data-title="'Actif'" class="col-xs-1" ng-switch="row.isEditing">
+					<span ng-switch-default class="editable-text col-xs-1">
+						<div ng-if="row.actif" sty>
+							<i class="fa fa-fw fa-check  text-success"></i>
+						</div>
+						<div ng-if="!row.actif"
+							class="glyphicon glyphicon-remove text-danger"></div>
+				</span>
+					<div class="controls " ng-switch-when="true">
+
+						<label> <input type="checkbox" name="actif"
+							ng-model="row.actif" class="editable-input form-control " />
+						</label>
+					</div>
+				</td>
+
+				<td data-title="'Libellé'" sortable="'libelle'"
+					filter="{libelle:'text'}" ng-switch="row.isEditing"><span
+					ng-switch-default class="editable-text">{{row.libelle}}</span>
+					<div class="controls" ng-switch-when="true">
+						<input type="text" name="libelle" ng-model="row.libelle"
+							class="editable-input form-control input-sm" required />
+					</div></td>
+
+				<td data-title="'Chapitre'" ng-switch="row.isEditing"
+					filter="{'libelleChapitre': 'text'}" >
+					<span ng-switch-default class="editable-text">{{row.libelleChapitre}}</span>
+					<div class="controls" ng-switch-when="true">
+						<select ng-model="selectedChapitre"
+							ng-options="chapitre.libelle for chapitre in chapitres track by chapitre.id"
+							ng-change="onChapitreChange(row,selectedChapitre)">
+						</select>
+					</div>
+					
+					<td data-title="'Lien'" ng-switch="row.isEditing"
+					filter="{'lien': 'text'}">
+					<span ng-switch-default class="editable-text">{{row.lien}}</span>
+					<div class="controls" ng-switch-when="true">
+						<input type="text" name="lien" ng-model="row.lien"
+							class="editable-input form-control input-sm" required />
+					</div>
+
+				</td>
+				<td data-title="'Tout Role'" class="col-xs-1 "
+					ng-switch="row.isEditing"><span ng-switch-default
+					class="editable-text col-xs-1">
+						<div ng-if="row.toutRole" sty>
+							<i class="fa fa-fw fa-check  text-success"></i>
+						</div>
+						<div ng-if="!row.toutRole"
+							class="glyphicon glyphicon-remove text-danger"></div>
+				</span>
+					<div class="controls " ng-switch-when="true">
+
+						<label> <input type="checkbox" name="toutRole"
+							ng-model="row.toutRole" class="editable-input form-control " />
+						</label>
+					</div></td>
+
+				<td data-title="'Publique'" class="col-xs-1 "
+					ng-switch="row.isEditing"><span ng-switch-default
+					class="editable-text col-xs-1">
+						<div ng-if="row.publique" sty>
+							<i class="fa fa-fw fa-check  text-success"></i>
+						</div>
+						<div ng-if="!row.publique"
+							class="glyphicon glyphicon-remove text-danger"></div>
+				</span>
+					<div class="controls " ng-switch-when="true">
+
+						<label> <input type="checkbox" name="publique"
+							ng-model="row.publique" class="editable-input form-control " />
+						</label>
+					</div></td>
+
+				</td>
+
+
+				<td class="col-xs-1" data-title="'Ordre'" ng-switch="row.isEditing">
+					<span ng-switch-default class="editable-text ">{{row.ordre}}</span>
+					<div class="form-controls " ng-switch-when="true">
+						<input type="text" name="ordre" ng-model="row.ordre"
+							class="editable-input form-control col-xs-1" required />
+					</div>
+				</td>
+
+
+
+			</tr>
+		</tbody>
+	</table>

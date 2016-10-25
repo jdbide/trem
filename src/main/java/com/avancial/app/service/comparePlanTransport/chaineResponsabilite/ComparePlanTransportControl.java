@@ -1,8 +1,6 @@
 package com.avancial.app.service.comparePlanTransport.chaineResponsabilite;
 
 import java.util.Iterator;
-
-import org.apache.commons.lang.text.StrBuilder;
 import org.apache.log4j.Logger;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.IPlanTransport;
@@ -18,9 +16,13 @@ import com.avancial.app.service.comparePlanTransport.MapComparaisonPlanTransport
  * @author sebastien.benede
  *
  */
-public class ComparePlanTransportControl {
+public class ComparePlanTransportControl implements IChaineComparePlanTransport {
 
 	private static Logger logger = Logger.getLogger(ComparePlanTransportControl.class);
+	
+	public void setSuccesseur(IChaineComparePlanTransport chaineComparePlanTransport){
+	   return;
+	}
 
 	/**
 	 * Compare deux listes de trains issus des plans de transport comparés.
@@ -46,7 +48,7 @@ public class ComparePlanTransportControl {
 				Train trainBase = itTrainBase.next();
 				/* Si les trains ont le même numeroTrain, on les compare */
 				if (trainXls.equals(trainBase)) {
-					logger.info(new StrBuilder("Comparaison des trains : ").append(trainBase.getNumeroTrain())
+					logger.info(new StringBuilder("Comparaison des trains : ").append(trainBase.getNumeroTrain())
 							.append("/").append(trainXls.getNumeroTrain()));
 					res.putAll(comparePlanTransport.compare(trainBase, trainXls));
 

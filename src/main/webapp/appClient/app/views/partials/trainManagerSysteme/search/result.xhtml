@@ -1,19 +1,72 @@
-<div>
+<div ng-controller="resultTmsCtrl">
+	<modal visible="trainModal"
+		url="app/views/modals/trainManagerSysteme/result/trainInfo.xhtml"></modal>
+	<modal visible="trancheModal"
+		url="app/views/modals/trainManagerSysteme/result/trancheInfo.xhtml"></modal>
+	<modal visible="stopsModal"
+		url="app/views/modals/trainManagerSysteme/result/stopsInfo.xhtml"></modal>
+	<modal visible="serviceModal"
+		url="app/views/modals/trainManagerSysteme/result/serviceInfo.xhtml"></modal>
+	<modal visible="rmCodeModal"
+		url="app/views/modals/trainManagerSysteme/result/rmCodeInfo.xhtml"></modal>
+	<modal visible="compoModal"
+		url="app/views/modals/trainManagerSysteme/result/compositionInfo.xhtml"></modal>
+
 	<div class="row">
 		<div class="col-md-8">
-			<h3>Results for your query</h3>
+			<h3>{{$parent.currentPage.titlePage}}</h3>
 		</div>
 		<div class="col-md-4 text-right" style="margin-top: 22px;">
-			<span class="text-muted"> Last data update: 20/06/2016 - 17:15
-			</span>
+			<span ng-show="search.partitionSelected.dateLastUpdateJeuDonneesActive != null" class="text-muted"> Last update: {{search.partitionSelected.dateLastUpdateJeuDonneesActive | date:'dd/MM/yyyy - HH:mm'}} </span>
 		</div>
 	</div>
 	<div class="row">
+		<div class="col-md-8">
+			<p>Your search criteria were :</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8">
+			<span>Partition = {{search.partitionSelected.nomTechniqueCompagnieEnvironnement}};</span>
+			
+			<span ng-show="search.trainsSelected.length>0"> Trains number =</span>
+			<span ng-show="search.trainsSelected.length>0" ng-repeat="train in search.trainsSelected">{{train}},</span>
+			<span ng-show="search.trainsSelected.length>0">;</span>
+			
+			<span ng-show="search.tranchesSelected.length>0"> Tranche number =</span>
+			<span ng-show="search.tranchesSelected.length>0" ng-repeat="tranche in search.tranchesSelected">{{tranche}},</span>
+			<span ng-show="search.tranchesSelected.length>0">;</span>
+			
+			<span> running periode = from {{search.date.startDate | date:'dd/MM/yyyy' }} to {{search.date.endDate | date:'dd/MM/yyyy' }};</span>
+			
+			<span ng-show="search.odSelected"> Route = {{search.odSelected.codeGareOrigineMotriceRefOd}}/{{search.odSelected.codeGareDestinationMotriceRefOd}};</span>
+			
+			<span ng-show="search.stopsSelected.length>0"> Stops = </span>
+			<span ng-show="search.stopsSelected.length>0" ng-repeat="stops in search.stopsSelected">{{stops.codeGareMotriceRefGare}},</span>
+			<span ng-show="search.stopsSelected.length>0">;</span>
+			
+			<span ng-show="search.tospSelected"> Tosp = {{search.tospSelected.codeMotriceRefTosp}};</span>
+			
+			<span ng-show="search.rmSelected"> RmCode = {{search.rmSelected.rmSelected}};</span>
+			
+			<span ng-show="search.equipementSelected"> Type Equipement = {{search.equipementSelected.labelEqpType}};</span>
+			
+			<span ng-show="search.statusSelected"> Status = {{search.statusSelected.value}};</span>
+		</div>
+	</div>
+	<br/><br/>
+	<div class="row">
 		<div class="col-md-2">
-			<button class="btn btn-default">Add/Modify search</button>
+			<button class="btn btn-default" ng-click="modifSearch()">Add/Modify
+				search</button>
 		</div>
 		<div class="col-md-2">
-			<button class="btn btn-default">Make New Search</button>
+			<button class="btn btn-default" ng-click="newSearch()">Make
+				New Search</button>
+		</div>
+		<div class="col-md-2">
+			<button class="btn btn-default" ng-click="selectedRowTest()">
+				Show</button>
 		</div>
 	</div>
 	<br>
@@ -26,6 +79,7 @@
 							<th class="text-center">Train</th>
 							<th class="text-center">Tranche</th>
 							<th class="text-center">RunDate</th>
+							<th class="text-center">RM</th>
 							<th class="text-center">Equip</th>
 							<th class="text-center">Capacity</th>
 							<th class="text-center">Status</th>
@@ -33,25 +87,34 @@
 							<th class="text-center">SAT</th>
 							<th class="text-center">TOSP</th>
 							<th class="text-center">LoadedOn</th>
-							<th class="text-center">Last Modif</th>
+					<!--	<th class="text-center">Last Modif</th> -->
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td><a> 09020 </a></td>
-							<td><a> 08004 </a></td>
-							<td>01/06/2016</td>
-							<td><a> TGT </a></td>
-							<td><a> 730 (..) </a></td>
-							<td>Open</td>
-							<td><a> GBSPX/../FRPNO </a></td>
-							<td>AVT</td>
-							<td>G341</td>
-							<td>02/02/2016</td>
-							<td><a> 25/05/2016 </a></td>
+						<tr  ng-repeat="train in data track by $index">
+							<td><a ng-click="showModal(train, 'trainModal')"> {{train.numeroTrain}} </a></td>
+							<td><a ng-click="showModal(train, 'trancheModal')"> {{train.numeroTranche}} </a></td>
+							<td>{{train.dateJour | date:'dd/MM/yyyy'}}</td>
+							<td><a ng-click="showModal(train, 'rmCodeModal')"> {{train.rmCode.rmCode}} </a></td>
+							<td><a ng-click="showModal(train, 'serviceModal')"> {{train.service.codeEquipement}} </a></td>
+							<td><a ng-click="showModal(train, 'compoModal')">{{train.composition.capacity}}</a></td>
+							<td> {{train.status}} </td>
+							<td><a ng-click="showModal(train, 'stopsModal')">{{train.origine}} /.../ {{train.destination}}</a></td>
+							<td>{{train.codeSat}}</td>
+							<td>{{train.codeTosp}}</td>
+							<td>{{train.loadedOn | date:'dd/MM/yyyy'}}</td>
+						<!--  	<td><a> {{tr.currentLastModif | date:'dd/MM/yyyy'}} </a></td> -->
 						</tr>
+						<tr ng-show="noData" COLSPAN="11">No data</tr>
 					</tbody>
 				</table>
+			</div>
+			<div class="box-footer clearfix">
+				<ul class="pagination pagination-md no-margin pull-left">
+					<li><a a-disabled="currrentPage == 0" ng-click="getPage(0)" style="cursor: pointer;">&laquo;</a></li>
+					<li  ng-repeat-n="nbrPage" ><a ng-click="getPage($index)" style="cursor: pointer;">{{$index+1}}</a></li>
+					<li><a a-disabled="currrentPage == nbrPage-1" ng-click="getPage(nbrPage-1)" style="cursor: pointer;">&raquo;</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>

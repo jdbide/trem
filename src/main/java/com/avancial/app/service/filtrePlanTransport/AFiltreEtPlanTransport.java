@@ -10,28 +10,48 @@ import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
  */
 public abstract class AFiltreEtPlanTransport implements IFiltre<PlanTransport> {
 
-   /**
-    * Liste des filtres à appliquer à la suite
-    */
-   private IFiltre<PlanTransport>[] filtres;
+    /**
+     * Liste des filtres à appliquer à la suite
+     */
+    private IFiltre<PlanTransport>[] filtres;
 
-   /**
-    * 
-    * @param filtres
-    *           Liste des filtres à appliquer à la suite
-    */
-   public AFiltreEtPlanTransport(IFiltre<PlanTransport>... filtres) {
-      super();
-      this.filtres = filtres;
-   }
+    /**
+     * 
+     * @param filtres
+     *            Liste des filtres à appliquer à la suite
+     */
+    public AFiltreEtPlanTransport(IFiltre<PlanTransport>... filtres) {
+        super();
+        this.filtres = filtres;
+    }
+    
+    /**
+     * constructeur vide
+     */
+    public AFiltreEtPlanTransport() {
+        super();
+        this.filtres = null;
+    }
 
-   @Override
-   public PlanTransport filtreParCritere(PlanTransport object) {
-      PlanTransport planTransport = object;
-      for (IFiltre<PlanTransport> iFiltre : this.filtres) {
-         planTransport = iFiltre.filtreParCritere(planTransport);
-      }
-      return planTransport;
-   }
+    @Override
+    public PlanTransport filtreParCritere(PlanTransport object) {
+        if (this.filtres == null)
+            return object;
+        PlanTransport planTransport = object;
+        for (IFiltre<PlanTransport> iFiltre : this.filtres) {
+            planTransport = iFiltre.filtreParCritere(planTransport);
+        }
+        return planTransport;
+    }
+
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.filtres = (IFiltre<PlanTransport>[]) object;
+        }
+        catch (Exception e) {
+            this.filtres = null;
+        }
+    }
 
 }

@@ -72,6 +72,8 @@ public class CompagnieEnvironnementWithJeuDonneesActiveService {
 
       dto.setIdCompagnieEnvironnement(compagnieEnvironnement.getIdCompagnieEnvironnement());
       dto.setActifCompagnieEnvironnement(compagnieEnvironnement.getActifCompagnieEnvironnement());
+      dto.setNomTechniqueCompagnieEnvironnement(compagnieEnvironnement.getNomTechniqueCompagnieEnvironnement());
+      
       if (compagnieEnvironnement.getCompagnie() != null) {
          dto.setIdCompagnie(compagnieEnvironnement.getCompagnie().getIdCompagnie());
          dto.setLibelleCompagnie(compagnieEnvironnement.getCompagnie().getLibelleCompagnie());

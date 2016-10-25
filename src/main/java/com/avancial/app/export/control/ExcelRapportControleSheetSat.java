@@ -26,7 +26,7 @@ public class ExcelRapportControleSheetSat extends AExcelRapportControleSheet {
       CodeSat codeSatAncien = (CodeSat) data.getAncienField();
       CodeSat codeSatNouveau = (CodeSat) data.getNouveauField();
 
-      this.generateCellulesRougeVert(excelTools, 5, codeSatAncien.getCodeSat(), codeSatNouveau.getCodeSat(), borderTop, borderBottom,
+      this.generateCellulesRougeVert(excelTools, 4, codeSatAncien.getCodeSat(), codeSatNouveau.getCodeSat(), borderTop, borderBottom,
             CellStyle.BORDER_THIN);
    }
 

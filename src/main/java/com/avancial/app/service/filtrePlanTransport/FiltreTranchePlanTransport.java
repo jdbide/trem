@@ -5,49 +5,73 @@ import com.avancial.app.data.objetsMetier.PlanTransport.Train;
 import com.avancial.app.data.objetsMetier.PlanTransport.Tranche;
 
 /**
- * Filtre un plan de transport à partir d'un {@link IFiltre} sur les {@link Tranche} : applique ce filtre sur toutes les tranches de tous les trains
- * du plan de transport.
+ * Filtre un plan de transport à partir d'un {@link IFiltre} sur les
+ * {@link Tranche} : applique ce filtre sur toutes les tranches de tous les
+ * trains du plan de transport.
  * 
  * @author heloise.guillemaud
  *
  */
-class FiltreTranchePlanTransport implements IFiltre<PlanTransport> {
+public class FiltreTranchePlanTransport implements IFiltre<PlanTransport> {
 
-   private IFiltre<Tranche> filtreTranche;
+    private IFiltre<Tranche> filtreTranche;
 
-   public FiltreTranchePlanTransport(IFiltre<Tranche> filtreTranche) {
-      super();
-      this.filtreTranche = filtreTranche;
-   }
+    public FiltreTranchePlanTransport(IFiltre<Tranche> filtreTranche) {
+        super();
+        this.filtreTranche = filtreTranche;
+    }
 
-   @Override
-   public PlanTransport filtreParCritere(PlanTransport object) {
-      PlanTransport planTransport = new PlanTransport();
-      planTransport.setCompagnie(object.getCompagnie());
-      Train trainFiltre;
-      Tranche trancheFiltre;
+    /**
+     * constructeur vide
+     */
+    public FiltreTranchePlanTransport() {
+        super();
+        this.filtreTranche = null;
+    }
+    
+    @Override
+    public PlanTransport filtreParCritere(PlanTransport object) {
+        if (this.filtreTranche == null)
+            return object;
+        PlanTransport planTransport = new PlanTransport();
+        planTransport.setCompagnie(object.getCompagnie());
+        Train trainFiltre;
+        Tranche trancheFiltre;
 
-      /* Boucle sur les trains du plan de transport */
-      for (Train train : object.getTrains()) {
-         trainFiltre = new Train();
-         trainFiltre.setNumeroTrain(train.getNumeroTrain());
-         trainFiltre.setValidForRR(train.isValidForRR());
+        /* Boucle sur les trains du plan de transport */
+        for (Train train : object.getTrains()) {
+            trainFiltre = new Train();
+            trainFiltre.setNumeroTrain(train.getNumeroTrain());
+            trainFiltre.setValidForRR(train.isValidForRR());
 
-         /* Boucle sur les tranches du train */
-         for (Tranche tranche : train.getTranches()) {
-            /* On ajoute au résultat les tranches filtrées, si elles contiennent des données */
-            trancheFiltre = this.filtreTranche.filtreParCritere(tranche);
-            if (!trancheFiltre.getAttributs().isEmpty()) {
-               trainFiltre.getTranches().add(trancheFiltre);
+            /* Boucle sur les tranches du train */
+            for (Tranche tranche : train.getTranches()) {
+                /*
+                 * On ajoute au résultat les tranches filtrées, si elles
+                 * contiennent des données
+                 */
+                trancheFiltre = this.filtreTranche.filtreParCritere(tranche);
+                if (!trancheFiltre.getAttributs().isEmpty()) {
+                    trainFiltre.getTranches().add(trancheFiltre);
+                }
             }
-         }
 
-         /* On ajoute au résultat le train s'il contient des tranches */
-         if (!trainFiltre.getTranches().isEmpty()) {
-            planTransport.getTrains().add(trainFiltre);
-         }
-      }
-      return planTransport;
-   }
+            /* On ajoute au résultat le train s'il contient des tranches */
+            if (!trainFiltre.getTranches().isEmpty()) {
+                planTransport.getTrains().add(trainFiltre);
+            }
+        }
+        return planTransport;
+    }
+    
+    @Override
+    public void setCritere(Object object) {
+        try {
+            this.filtreTranche = (IFiltre<Tranche>) object;
+        }
+        catch (Exception e) {
+            this.filtreTranche = null;
+        }
+    }
 
 }

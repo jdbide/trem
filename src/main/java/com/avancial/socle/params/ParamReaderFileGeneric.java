@@ -4,7 +4,7 @@
 package com.avancial.socle.params;
 
 /**
- * Classe générique pour traiter les fichiers .properties classiques
+ * Classe gÃ©nÃ©rique pour traiter les fichiers .properties classiques
  * 
  * @author bruno.legloahec
  *

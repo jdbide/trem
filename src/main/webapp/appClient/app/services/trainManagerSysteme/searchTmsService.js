@@ -2,6 +2,7 @@
 
 /**
  * Service se chargeant des fonctionnalité de la page control du module trainManagerSysteme
+ * Authors : Hamza LATEREM
  */
 socle_app.service('searchTmsService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
 	var reponse = {
@@ -36,30 +37,67 @@ socle_app.service('searchTmsService', ['jsonFactory', 'loadingService', '$q', fu
 		var promissJsonFactory = jsonFactory.getJson("webService/app/searchTms/dataFormByPartition/"+idCompagnieEnvironnement);
         promissJsonFactory
             .success(function (datas, status, headers, config) {
-            	loadingService.hide();
+            	//loadingService.hide();
             	reponse = datas;
             	deffered.resolve();
             })
             .error(function (datas, status, headers, config) {
-            	loadingService.hide();
+            	//loadingService.hide();
                 deffered.reject();
         });
         
         return deffered.promise;
 	}
 	
-	self.getDataFormByIdCompagnie = function (idCompagnie) {
+	self.getDataFormByIdCompagnie = function (action, idCompagnie) {
 		initResponse();
+		//console.log("==> " + action);
 		var deffered  = $q.defer();
-		var promissJsonFactory = jsonFactory.getJson("webService/app/searchTms/dataFormByCompagnie/"+idCompagnie);
+		var promissJsonFactory = jsonFactory.getJson("webService/app/searchTms/"+action+"/"+idCompagnie);
         promissJsonFactory
             .success(function (datas, status, headers, config) {
-            	loadingService.hide();
+            	//loadingService.hide();
             	reponse = datas;
             	deffered.resolve();
             })
             .error(function (datas, status, headers, config) {
-            	loadingService.hide();
+            	//loadingService.hide();
+                deffered.reject();
+        });
+        
+        return deffered.promise;
+	}
+	
+	self.getStopsByOd = function (idMotriceRefOd) {
+		initResponse();
+		var deffered  = $q.defer();
+		var promissJsonFactory = jsonFactory.getJson("webService/app/searchTms/stopsByOd/"+idMotriceRefOd);
+        promissJsonFactory
+            .success(function (datas, status, headers, config) {
+            	//loadingService.hide();
+            	reponse = datas;
+            	deffered.resolve();
+            })
+            .error(function (datas, status, headers, config) {
+            	//loadingService.hide();
+                deffered.reject();
+        });
+        
+        return deffered.promise;
+	}
+	
+	self.executeSearch = function (data) {
+		initResponse();
+		var deffered  = $q.defer();
+		var promissJsonFactory = jsonFactory.putJson("webService/app/filtrePdt/", data);
+        promissJsonFactory
+            .success(function (datas, status, headers, config) {
+            	//loadingService.hide();
+            	reponse = datas;
+            	deffered.resolve();
+            })
+            .error(function (datas, status, headers, config) {
+            	//loadingService.hide();
                 deffered.reject();
         });
         

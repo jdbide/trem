@@ -20,7 +20,6 @@ socle_app.service('userInfoService', ['jsonFactory', '$q', function(jsonFactory,
         promissJsonFactory
             .success(function (data, status, headers, config) {
             	user = data['userInfo'];
-            	console.log(user);
                 deffered.resolve();
             })
             .error(function (data, status, headers, config) {

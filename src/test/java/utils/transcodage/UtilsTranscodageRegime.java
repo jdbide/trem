@@ -616,4 +616,17 @@ public class UtilsTranscodageRegime {
 		this.dateDebutService = dateDebutService;
 	}
 
+	/**
+	 * 
+	 * @return la list de dates de circulation
+	 */
+    public List<Date> getListeJourCirculation() {
+        List<Date> res = new ArrayList<>();
+        for (JourPourRegime jour : this.listeJourPourRegime) {
+            if(jour.isCircule())
+                res.add(jour.getDateDuJour());
+        }
+        return res;
+    }
+
 }

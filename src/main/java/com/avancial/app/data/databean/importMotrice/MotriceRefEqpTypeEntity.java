@@ -10,51 +10,52 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.ForeignKey;
-
 import com.avancial.app.data.databean.CompagnieEntity;
 
 @Entity
 @Table(name = "tremas_motrice_ref_eqptype")
-@NamedQueries({ @NamedQuery(name = "MotriceRefEqpType.getAll", query = "SELECT t FROM MotriceRefEqpTypeEntity t"),
-      @NamedQuery(name = "MotriceRefEqpType.getUnique", query = "SELECT t FROM MotriceRefEqpTypeEntity t where t.labelEqpType = :labelEqpType and t.compagnie = :compagnie"),
-      @NamedQuery(name = "MotriceRefEqpType.getByCompagnie", query = "SELECT t FROM MotriceRefEqpTypeEntity t where t.compagnie = :compagnie"), })
+@NamedQueries({@NamedQuery(name = "MotriceRefEqpType.getAll", query = "SELECT t FROM MotriceRefEqpTypeEntity t"),
+        @NamedQuery(name = "MotriceRefEqpType.getById", query = "SELECT t FROM MotriceRefEqpTypeEntity t WHERE t.idMotriceRefEqpType = :idMotriceRefEqpType"),
+        @NamedQuery(name = "MotriceRefEqpType.getUnique",
+                query = "SELECT t FROM MotriceRefEqpTypeEntity t where t.labelEqpType = :labelEqpType and t.compagnie = :compagnie"),
+        @NamedQuery(name = "MotriceRefEqpType.getByCompagnie",
+                query = "SELECT t FROM MotriceRefEqpTypeEntity t where t.compagnie = :compagnie"),})
 public class MotriceRefEqpTypeEntity {
 
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Id
-   private Long            idMotriceRefEqpType;
-   @Column(length = 3, nullable = false)
-   private String          labelEqpType;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long idMotriceRefEqpType;
+    @Column(length = 3, nullable = false)
+    private String labelEqpType;
 
-   @ManyToOne
-   @JoinColumn(name = "idCompagnie")
-   @ForeignKey(name = "FK_motrice_ref_eqptype_idCompagnie")
-   private CompagnieEntity compagnie;
+    @ManyToOne
+    @JoinColumn(name = "idCompagnie")
+    @ForeignKey(name = "FK_motrice_ref_eqptype_idCompagnie")
+    private CompagnieEntity compagnie;
 
-   public Long getIdMotriceRefEqpType() {
-      return this.idMotriceRefEqpType;
-   }
+    public Long getIdMotriceRefEqpType() {
+        return this.idMotriceRefEqpType;
+    }
 
-   public void setIdMotriceRefEqpType(Long idMotriceRefEqpType) {
-      this.idMotriceRefEqpType = idMotriceRefEqpType;
-   }
+    public void setIdMotriceRefEqpType(Long idMotriceRefEqpType) {
+        this.idMotriceRefEqpType = idMotriceRefEqpType;
+    }
 
-   public String getLabelEqpType() {
-      return this.labelEqpType;
-   }
+    public String getLabelEqpType() {
+        return this.labelEqpType;
+    }
 
-   public void setLabelEqpType(String labelEqpType) {
-      this.labelEqpType = labelEqpType;
-   }
+    public void setLabelEqpType(String labelEqpType) {
+        this.labelEqpType = labelEqpType;
+    }
 
-   public CompagnieEntity getCompagnie() {
-      return this.compagnie;
-   }
+    public CompagnieEntity getCompagnie() {
+        return this.compagnie;
+    }
 
-   public void setCompagnie(CompagnieEntity compagnie) {
-      this.compagnie = compagnie;
-   }
+    public void setCompagnie(CompagnieEntity compagnie) {
+        this.compagnie = compagnie;
+    }
 
 }

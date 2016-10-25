@@ -15,12 +15,14 @@ import org.hibernate.annotations.ForeignKey;
 @Entity
 @Table(name = "tremas_motrice_ref_od2gare")
 @NamedQueries({ @NamedQuery(name = "MotriceRefOd2gareEntity.getAll", query = "SELECT t FROM MotriceRefOd2gareEntity t"),
-      @NamedQuery(name = "MotriceRefOd2gare.getUnique", query = "SELECT t FROM MotriceRefOd2gareEntity t where t.motriceRefODEntity = :refOd and t.motriceRefGareEntity = :refGare"), })
+      @NamedQuery(name = "MotriceRefOd2gare.getUnique", query = "SELECT t FROM MotriceRefOd2gareEntity t where t.motriceRefODEntity = :refOd and t.motriceRefGareEntity = :refGare"),
+      @NamedQuery(name = "MotriceRefOd2gare.getByOd", query = "SELECT t FROM MotriceRefOd2gareEntity t join t.motriceRefODEntity od where od.idMotriceRefOd = :idMotriceRefOd"),
+})
 public class MotriceRefOd2gareEntity {
 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Id
-   private Long                 idMotriceRefOd2gare;
+   private Integer                 idMotriceRefOd2gare;
 
    @ManyToOne
    @JoinColumn(name = "idMotriceRefOd")
@@ -32,11 +34,11 @@ public class MotriceRefOd2gareEntity {
    @ForeignKey(name = "FK_motrice_ref_od2gare_idMotriceRefGare")
    private MotriceRefGareEntity motriceRefGareEntity;
 
-   public Long getIdMotriceRefOd2gare() {
+   public Integer getIdMotriceRefOd2gare() {
       return this.idMotriceRefOd2gare;
    }
 
-   public void setIdMotriceRefOd2gare(Long idMotriceRefOd2gare) {
+   public void setIdMotriceRefOd2gare(Integer idMotriceRefOd2gare) {
       this.idMotriceRefOd2gare = idMotriceRefOd2gare;
    }
 

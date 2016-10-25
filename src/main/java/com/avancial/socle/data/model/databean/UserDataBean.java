@@ -24,7 +24,7 @@ import com.avancial.socle.ihm.menu.model.databean.User;
 @NamedQueries({ @NamedQuery(name = UserDataBean.QUERY_GET_ALL,
       query = "FROM UserDataBean"),
       @NamedQuery(name = UserDataBean.QUERY_GET_BY_ID,
-            query = "SELECT u FROM UserDataBean u where u.idUser = :id"),
+            query = "SELECT u FROM UserDataBean u where u.idUser = :idUser"),
       @NamedQuery(name = UserDataBean.QUERY_DELETE_BY_ID,
             query = "DELETE FROM UserDataBean where id = :id") })
 
