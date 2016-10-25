@@ -61,6 +61,7 @@ public class FlitrePlanTransportWebService {
            return responseBuilder.build();
         }
         catch (Exception e) {
+           e.printStackTrace();
             responseBean.setStatus(false);
             responseBean.setMessage("Erreur de chargement ...");
             logger.error("Exception (WebService : '/app/filtrePdt', Action : 'getPlanTransportFiltre', methode : @PUT)", e);

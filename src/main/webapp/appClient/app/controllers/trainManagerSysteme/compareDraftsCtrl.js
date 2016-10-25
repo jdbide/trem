@@ -48,7 +48,7 @@ socle_app.controller("compareDraftsCtrl", ["$scope","envService","partitionTmsSe
 	 * Methode pour la selection d'une autre partition
 	 */
 	$scope.changeSelectedPartition = function () {
-		console.log("==> changeSelectedPartition <==");
+		//console.log("==> changeSelectedPartition <==");
 		compareDraftsService.getJeuDonneesParIdCompagnieEnvironnement($scope.selectedPartition).then(
 				function(datas) {
 					$scope.datas = datas;

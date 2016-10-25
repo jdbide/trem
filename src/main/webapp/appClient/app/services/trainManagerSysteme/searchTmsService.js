@@ -2,6 +2,7 @@
 
 /**
  * Service se chargeant des fonctionnalité de la page control du module trainManagerSysteme
+ * Authors : Hamza LATEREM
  */
 socle_app.service('searchTmsService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
 	var reponse = {
@@ -50,7 +51,7 @@ socle_app.service('searchTmsService', ['jsonFactory', 'loadingService', '$q', fu
 	
 	self.getDataFormByIdCompagnie = function (action, idCompagnie) {
 		initResponse();
-		console.log("==> " + action);
+		//console.log("==> " + action);
 		var deffered  = $q.defer();
 		var promissJsonFactory = jsonFactory.getJson("webService/app/searchTms/"+action+"/"+idCompagnie);
         promissJsonFactory

@@ -36,7 +36,9 @@
       'aDisabled',
       'ngFileUpload',
       'file-model',
-      'daterangepicker'
+      'daterangepicker',
+      'simplePagination',
+      'angular-repeat-n'
     ])
     
     .run(['ngTableDefaults', function(ngTableDefaults) {

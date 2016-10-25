@@ -1,12 +1,12 @@
 'use strict';
 
 /**
- * Contrôleur qui gère la page search du chapitre "Train manager systeme", 
+ * Contrôleur qui gère la gestion du passage de la page search à la page result
+ * Authors : Hamza LATEREM 
  *
  */
 socle_app.controller("indexSearchTmsCtrl", ['$rootScope', '$scope', '$q', 'readerFileJson', 'loadingService', 'traitementPageSearchService',
                                             function($rootScope, $scope, $q, readerFileJson, loadingService, traitementPageSearchService) {
-	console.log("==> indexSearchTmsCtrl <==");
 	var URL_FILE_CONFIG_LOCAL = 'app/controllers/trainManagerSysteme/config/pageSearch.json';
 
 	$scope.currentPage = traitementPageSearchService.getCurrentPage();
@@ -41,7 +41,6 @@ socle_app.controller("indexSearchTmsCtrl", ['$rootScope', '$scope', '$q', 'reade
 	function constructor () {
 		loadingService.show();
 		if (traitementPageSearchService.isInit()) {
-			console.warn("traitementPageSearchService.isInit() is init");
 			$scope.currentPage = traitementPageSearchService.getCurrentPage();
 			loadingService.hide();
 		} else {
