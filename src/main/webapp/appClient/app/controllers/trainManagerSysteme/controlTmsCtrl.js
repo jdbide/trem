@@ -30,6 +30,7 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	$scope.selectedIdJeuDonnees = null;
 	//Boolean pour disabled all sur le modal
 	$scope.disabledAll = true;
+
 	
 	$scope.confNgFileUpload = {
 		ngfAccept:"'image/*'",
@@ -116,6 +117,8 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 				$scope.partitions = datas;
 				$scope.selectedPartition = datas[0].idCompagnieEnvironnement;
 				getData();
+				//initialiser dates
+				resetDates();
 			}, function() {
 				alert("Erreur serveur!!");
 			}
@@ -206,11 +209,20 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	 * Methode qui affiche ou non les button clear & upload apres le choix des fichiers
 	 */
 	$scope.showBtnFile = function (idInputFile) {
+		
+		//réinitialisation du champs date et od si necessaire
+		if($scope.files.firstFile.file == null|| $scope.files.secondFile.file == null) {
+			resetDates(); 
+			$scope.datas.origineDestinations = [];
+		}
+		
+		
 		if (idInputFile == 1) {
 			return ($scope.files.firstFile.file != null);
 		} else if (idInputFile == 2) {
 			return ($scope.files.secondFile.file != null);
 		}
+		resetDates ();
 	}
 
 	/*
@@ -296,6 +308,8 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 							$scope.files.firstFile.msgError = reponse.message;
 							$scope.files.firstFile.errorDetailsList = reponse.data;
 							console.log($scope.files.firstFile.etat);
+							//Reinitialiser dates
+							 resetDates();
 
 						}
 						$scope.files.firstFile.etat.isFinishTraitement = true;
@@ -318,12 +332,18 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 						if (reponse.status) {
 							$scope.files.secondFile.etat.isFinishTraitementSuccess = true;
 							$scope.files.secondFile.etat.isUploadSuccess = true;
+							$scope.dateDebut = reponse.data.dateInterval.dateDebut;
+							$scope.dateFin = reponse.data.dateInterval.dateFin;
+							$scope.datas = reponse.data;
+							
 						} else {
 							// erreur au niveau de l'upload
 							$scope.files.secondFile.etat.isUploadSuccess = false;
 							$scope.files.secondFile.etat.isFinishTraitementSuccess = false;
 							$scope.files.secondFile.msgError = reponse.message;
 							$scope.files.secondFile.errorDetailsList =  reponse.data;
+							//Reinitialiser dates
+							 $scope.resetDates();
 						}
 						$scope.files.secondFile.etat.isFinishTraitement = true;
 						
@@ -367,6 +387,12 @@ socle_app.controller("controlTmsCtrl", ["$rootScope", "$scope", "envService", '$
 	 */
 	$scope.showOrHideErrorsModal = function(){
 		$scope.modalErrorsDetails = !$scope.modalErrorsDetails;
+	}
+	
+	function resetDates (){
+		//Reinitialiser dates
+		$scope.dateDebut = $scope.vide;
+		$scope.dateFin = $scope.vide;
 	}
 	
 

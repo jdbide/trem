@@ -1,5 +1,5 @@
 <div class="modal fade" role="dialog" aria-labelledby="dataConfirmLabel"
-	aria-hidden="false" data-keyboard="false" data-backdrop="static">
+	aria-hidden="false" data-keyboard="false" data-backdrop="static" data-focus-on="input:first">
 
 
 	<modal visible="$parent.modalErrorsDetails"
@@ -73,40 +73,40 @@
 
 
 
-								<div class="col-md-12 "
-									ng-show="$parent.files.firstFile.etat.isStartTraitement ">
+							<div class="col-md-12 "
+								ng-show="$parent.files.firstFile.etat.isStartTraitement">
 
-									<div class="box box-solid">
-										<div class="box-header with-border">
-											<i class="fa fa-upload"></i>
-											<h3 class="box-title">
-												Uploading timeTable file <i
-													ng-show="$parent.files.firstFile.etat.isFinishTraitement!=true"
-													class="fa fa-refresh fa-spin"></i>
-											</h3>
-										</div>
+								<div class="box box-solid">
+									<div class="box-header with-border">
+										<i class="fa fa-upload"></i>
+										<h3 class="box-title">
+											Uploading timeTable file <i
+												ng-show="$parent.files.firstFile.etat.isFinishTraitement!=true"
+												class="fa fa-refresh fa-spin"></i>
+										</h3>
+									</div>
 
-										<div class="box-body">
-											<!-- <div  class="clearfix" >
+									<div class="box-body">
+										<!-- <div  class="clearfix" >
                         					<span class="pull-left">Upload file #{{files.firstFile.file.name}}</span>
                         					<small class="pull-right">{{$parent.files.firstFile.file.progress}}%</small>
                         					 <span>------ </span>
                         					<span ng-bind="$parent.files.firstFile.etat.isUploadSuccess"></span>
                       					</div> -->
-											<!-- <div  class="progress xs">
+										<!-- <div  class="progress xs">
 				                        	<div style="width: {{$parent.files.firstFile.file.progress}}%;" class="progress-bar progress-bar-green"></div>
 				                      	</div> -->
-											<p ng-show="$parent.files.firstFile.etat.isUploadSuccess"
-												class="text-green">
-												Upload OK <i class="fa fa-check-square-o text-green"></i>
-											</p>
+										<p ng-show="$parent.files.firstFile.etat.isUploadSuccess"
+											class="text-green">
+											Upload OK <i class="fa fa-check-square-o text-green"></i>
+										</p>
 
-											<p
-												ng-show="$parent.files.firstFile.etat.isUploadSuccess == false"
-												class="text-red">
-												Upload KO <i class="fa fa-check-square-o text-red"></i>
-											</p>
-											<!-- <p ng-show="$parent.files.firstFile.etat.isFormatOk" class="text-green">
+										<p
+											ng-show="$parent.files.firstFile.etat.isUploadSuccess == false"
+											class="text-red">
+											Upload KO <i class="fa fa-check-square-o text-red"></i>
+										</p>
+										<!-- <p ng-show="$parent.files.firstFile.etat.isFormatOk" class="text-green">
 											Format check OK 
 											<i class="fa fa-check-square-o text-green"></i>
 										</p>
@@ -122,13 +122,13 @@
 											Data validation Ko
 											<i class="fa fa-check-square-o text-red"></i>
 										</p> -->
-											<p
-												ng-show="$parent.files.firstFile.etat.isFinishTraitementSuccess==true && $parent.files.secondFile.etat.isStartTraitement!=true"
-												class="text-green">Please upload yield file.</p>
-										</div>
+										<p
+											ng-show="$parent.files.firstFile.etat.isFinishTraitementSuccess==true && $parent.files.secondFile.etat.isStartTraitement!=true"
+											class="text-green">Please upload yield file.</p>
 									</div>
 								</div>
-					
+							</div>
+
 						</div>
 						<div class="form-group form-group-modal-socle">
 							<p>2 - Select yield file to compare :</p>
@@ -250,7 +250,7 @@
 									<label for="sel1" class="control-label col-md-3">Between:</label>
 									<div class="input-group col-md-9">
 										<select id="sel1" class="form-control" ng-disabled="true">
-											<option>01/02/2017</option>
+											<option>{{dateDebut | date:'dd/MM/yyyy'}}</option>
 											<option>02/02/2017</option>
 										</select>
 									</div>
@@ -259,8 +259,8 @@
 									<label for="sel2" class="control-label col-md-3">and:</label>
 									<div class="input-group col-md-9">
 										<select id="sel2" class="form-control" ng-disabled="true">
-											<option>30/02/2017</option>
-											<option>30/02/2017</option>
+											<option>{{dateFin | date:'dd/MM/yyyy'}}</option>
+											<option>{{dateFin}}</option>
 										</select>
 									</div>
 								</div>
@@ -274,6 +274,35 @@
 									<option>GBSPX-FRPNO X ; GBSPX-BEBMI X</option>
 								</select>
 							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label left-control" for="stops">Stops</label>
+								<div class="col-sm-9">
+									<div
+										ng-class="(datas.odsSelected.length > 0) ? 'input-group' : ''">
+										<ui-select multiple tagging tagging-label="false"
+											ng-model="datas.odsSelected" theme="bootstrap"
+											ng-disabled="disabledAll"><!-- style="width: 300px;" title="Choose a color" -->
+										<ui-select-match placeholder="Select Ods ...">{{$datas.origineDestinations.origine.codeGare}}</ui-select-match>
+										<ui-select-choices
+											repeat="od in datas.origineDestinations | filter:$select.datas">
+										{{od.origine.codeGare}} - {{od.destination.codeGare}} </ui-select-choices> </ui-select>
+										<span ng-show="true"
+											class="input-group-btn">
+											<button type="button" ng-click="datas.odsSelected = []"
+												class="btn btn-default">
+												<span class="glyphicon glyphicon-remove"></span>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+
+
+
+
+
 						</div>
 						<h1>{{myForm.input_id_timetable.$valid}}</h1>
 					</div>
