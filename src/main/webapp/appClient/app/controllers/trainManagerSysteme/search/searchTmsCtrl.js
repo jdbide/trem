@@ -2,7 +2,7 @@
 
 /**
  * Contrôleur qui gère la page search du chapitre "Train manager systeme / search", 
- *
+ *	Authors : Hamza LATEREM
  */
 socle_app.controller("searchTmsCtrl", ['$rootScope', '$scope', 'loadingService', '$q', 'partitionTmsService', 'searchService', 'searchTmsService',
                                        function($rootScope, $scope, loadingService, $q, partitionTmsService, searchService, searchTmsService) {

@@ -2,6 +2,7 @@
 
 /**
  * Service se chargeant des fonctionnalité de l'objet de la recherche
+ * Authors : Hamza LATEREM
  */
 socle_app.service('searchService', ['jsonFactory', 'loadingService', '$q', 
                                     function(jsonFactory, loadingService, $q) {

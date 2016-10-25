@@ -1,7 +1,8 @@
 'use strict';
 
 /**
- * Contrôleur qui gère la page search du chapitre "Train manager systeme", 
+ * Contrôleur qui gère la gestion du passage de la page search à la page result
+ * Authors : Hamza LATEREM 
  *
  */
 socle_app.controller("indexSearchTmsCtrl", ['$rootScope', '$scope', '$q', 'readerFileJson', 'loadingService', 'traitementPageSearchService',

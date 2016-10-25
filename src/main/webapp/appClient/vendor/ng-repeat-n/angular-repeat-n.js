@@ -1,5 +1,4 @@
 angular.module('angular-repeat-n', [])
-
   .directive('ngRepeatN', ['$parse', function ($parse) {
     return {
       restrict: 'A',

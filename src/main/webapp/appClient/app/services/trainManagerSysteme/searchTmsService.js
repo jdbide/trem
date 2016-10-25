@@ -2,6 +2,7 @@
 
 /**
  * Service se chargeant des fonctionnalité de la page control du module trainManagerSysteme
+ * Authors : Hamza LATEREM
  */
 socle_app.service('searchTmsService', ['jsonFactory', 'loadingService', '$q', function(jsonFactory, loadingService, $q) {
 	var reponse = {
