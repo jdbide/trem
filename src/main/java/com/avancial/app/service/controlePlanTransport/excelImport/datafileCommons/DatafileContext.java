@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumTrancheStatut;
+import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.fileImport.excelImport.AExcelImportContext;
 import com.avancial.app.fileImport.excelImport.SocleExcelReadFile;
@@ -27,6 +28,9 @@ public class DatafileContext extends AExcelImportContext<PlanTransport> {
 	/** table de corespondance et de référence entre les codes RM et les codes Rame. */
 	private Map<String, String[]> refCodeRm;
 	
+	/** liste de référence des codes rame. */
+	private List<String> refCodeRame;
+	
 	/** liste de référence des codes SAT. */
 	private List<String> refCodeSat;
 	
@@ -38,6 +42,9 @@ public class DatafileContext extends AExcelImportContext<PlanTransport> {
 	
 	/** indice de la première ligne de données. */
 	private int firstDataLineIndex;
+	
+	/** map de référence des repas. */
+	private Map<String, EnumTypeRepas> refMeal;
 	
 	/**
 	 * construction simple.
@@ -151,6 +158,33 @@ public class DatafileContext extends AExcelImportContext<PlanTransport> {
 	public void setRefCodeFareProfile(List<String> refCodeFareProfile) {
 		this.refCodeFareProfile = refCodeFareProfile;
 	}
-	
+
+	/**
+	 * @return the refCodeRame
+	 */
+	public List<String> getRefCodeRame() {
+		return refCodeRame;
+	}
+
+	/**
+	 * @param refCodeRame the refCodeRame to set
+	 */
+	public void setRefCodeRame(List<String> refCodeRame) {
+		this.refCodeRame = refCodeRame;
+	}
+
+	/**
+	 * @return the refMeal
+	 */
+	public Map<String, EnumTypeRepas> getRefMeal() {
+		return refMeal;
+	}
+
+	/**
+	 * @param refMeal the refMeal to set
+	 */
+	public void setRefMeal(Map<String, EnumTypeRepas> refMeal) {
+		this.refMeal = refMeal;
+	}
 	
 }

@@ -1,15 +1,11 @@
-package com.avancial.app.service.controlePlanTransport.excelImport.eurostar;
+package com.avancial.app.service.controlePlanTransport.excelImport.thalys;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.avancial.app.data.databean.importMotrice.MotriceRefEqpTypeEntity;
 import com.avancial.app.data.databean.importMotrice.MotriceRefGareEntity;
-import com.avancial.app.data.databean.importMotrice.MotriceRefMealTypeEntity;
 import com.avancial.app.data.objetsMetier.PlanTransport.EnumCompagnies;
-import com.avancial.app.data.objetsMetier.PlanTransport.EnumTypeRepas;
 import com.avancial.app.data.objetsMetier.PlanTransport.PlanTransport;
 import com.avancial.app.fileImport.excelImport.AExcelImportProcess;
 import com.avancial.app.fileImport.excelImport.ExcelImportFatalizeErrorsStep;
@@ -21,16 +17,11 @@ import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommo
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesContext;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesDateExtractionStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesEndOfExtractionStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesEurostarMealExtractionStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesEurostarMealParseStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesEurostarMealValidationStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesEurostarRollingStockExtractionStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesEurostarRollingStockParseStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesEurostarRollingStockValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesExtraDateParseStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesExtraDateValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesPrimaryStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesSheetSubContext;
+import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesSheetsToImportParseStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesStationsParseStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesStationsValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesTrainExtractionStep;
@@ -41,34 +32,31 @@ import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommo
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesTrainValidationStep;
 import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesWeekParse;
 import com.avancial.app.service.controlePlanTransport.excelImport.refImportSteps.GenericRefImportStep;
-import com.avancial.app.service.controlePlanTransport.excelImport.dessertesCommons.DessertesSheetsToImportParseStep;
 import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IIntegrator;
 import com.avancial.app.utilitaire.pattern.purveyorIntegrator.IPurveyor;
 
 /**
- * process d'import du fichier desserte eurostar.
+ * process d'import du fichier desserte thalys.
  * @author raphael.cabaret
  */
-public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTransport, DessertesContext>{
-	
+public class ThalysDessertesImportProcess extends AExcelImportProcess<PlanTransport, DessertesContext>{
+
 	/**
 	 * Constructeur simple.
 	 */
 	@SuppressWarnings("unchecked")
-	public EurostarDessertesImportProcess() {
+	public ThalysDessertesImportProcess() {
 		super(
 				// initialisation
 				new DessertesPrimaryStep(
-						new DessertesSheetsToImportParseStep(),
+						new DessertesSheetsToImportParseStep(0, 1),
 						new ExcelImportMiddleStep<PlanTransport>(
-								new GenericRefImportStep<MotriceRefEqpTypeEntity, DessertesContext>(EnumCompagnies.ES, MotriceRefEqpTypeEntity.class, itRefRollingStock()),
-								new GenericRefImportStep<MotriceRefMealTypeEntity, DessertesContext>(EnumCompagnies.ES, MotriceRefMealTypeEntity.class, itRefMeal()),
-								new GenericRefImportStep<MotriceRefGareEntity, DessertesContext>(EnumCompagnies.ES, MotriceRefGareEntity.class, itRefStation())
+								new GenericRefImportStep<MotriceRefGareEntity, DessertesContext>(EnumCompagnies.TH, MotriceRefGareEntity.class, itRefStation())
 								),
-						new InitPlanTransportStep(EnumCompagnies.ES)),
+						new InitPlanTransportStep(EnumCompagnies.TH)),
 				// import des dates
 				new DessertesPrimaryStep(
-						new DateIntervalParseStep(0, 3, 1, 3),
+						new DateIntervalParseStep(1, 3, 2, 3),
 						new DateIntervalValidationStep(),
 						null),
 				// parsing et validation de la liste des gares
@@ -93,19 +81,9 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 						null),
 				// parse et validation des jours exceptionnels
 				new DessertesPrimaryStep(
-						new DessertesExtraDateParseStep(pvFirstExtraDayRow(), "M|MEAL|Journey time|Rolling Stock"),
+						new DessertesExtraDateParseStep(pvFirstExtraDayRow(), null),
 						new DessertesExtraDateValidationStep(),
 						new DessertesDateExtractionStep()),
-				// parse des repas
-				new DessertesPrimaryStep(
-						new DessertesEurostarMealParseStep(pvFirstMealRow()),
-						new DessertesEurostarMealValidationStep(),
-						new DessertesEurostarMealExtractionStep()),
-				// parse des équipements
-				new DessertesPrimaryStep(
-						new DessertesEurostarRollingStockParseStep(pvRollingStockRow()),
-						new DessertesEurostarRollingStockValidationStep(),
-						new DessertesEurostarRollingStockExtractionStep()),
 				// finalisation de l'extraction
 				new DessertesPrimaryStep(
 						null,
@@ -122,7 +100,7 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 	@Override
 	protected DessertesContext newContext(SocleExcelReadFile source) {
 		DessertesContext context = new DessertesContext(source);
-		context.setFirstTrainColumn(2);
+		context.setFirstTrainColumn(3);
 		context.setStationsColumn(0);
 		context.setFirstStationRow(6);
 		return context;
@@ -147,49 +125,12 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 	public static IPurveyor<Integer, DessertesSheetSubContext> pvFirstExtraDayRow() {
 		return new IPurveyor<Integer, DessertesSheetSubContext>() {
 			@Override public Integer get(DessertesSheetSubContext context) {
-				return context.getLastStationRow() + 8;
-			}
-		};
-	}
-	
-	/**
-	 * @return un fournisseur pour : la première ligne des repas.
-	 */
-	public static IPurveyor<Integer, DessertesSheetSubContext> pvFirstMealRow() {
-		return new IPurveyor<Integer, DessertesSheetSubContext>() {
-			@Override public Integer get(DessertesSheetSubContext context) {
-				return context.getLastStationRow() + 8 + context.getExtraDates().size();
-			}
-		};
-	}
-	
-	/**
-	 * @return un fournisseur pour : la ligne du matériel roulant.
-	 */
-	public static IPurveyor<Integer, DessertesSheetSubContext> pvRollingStockRow() {
-		return new IPurveyor<Integer, DessertesSheetSubContext>() {
-			@Override public Integer get(DessertesSheetSubContext context) {
-				return context.getLastStationRow() + 9 + context.getExtraDates().size() + context.getNumberOfMealRow();
+				return context.getLastStationRow() + 12;
 			}
 		};
 	}
 	
 	// intégrators
-	
-	/**
-	 * @return un intégrateur pour : la table de référence des repas.
-	 */
-	public static IIntegrator<List<MotriceRefMealTypeEntity>, DessertesContext> itRefMeal() {
-		return new IIntegrator<List<MotriceRefMealTypeEntity>, DessertesContext>() {
-			@Override public void set(DessertesContext context, List<MotriceRefMealTypeEntity> value) {
-				Map<String, EnumTypeRepas> refMeal = new HashMap<String, EnumTypeRepas>();
-				for(MotriceRefMealTypeEntity meal : value) {
-					refMeal.put(meal.getLabelMealType(), EnumTypeRepas.getEnumTypeRepas(meal.getCodeMealType()));
-				}
-				context.setRefMeal(refMeal);
-			}
-		};
-	}
 	
 	/**
 	 * @return un intégrateur pour : la table de référence des gares.
@@ -199,25 +140,11 @@ public class EurostarDessertesImportProcess extends AExcelImportProcess<PlanTran
 			@Override public void set(DessertesContext context, List<MotriceRefGareEntity> value) {
 				Map<String, String> refStation = new HashMap<String, String>();
 				for(MotriceRefGareEntity station : value) {
-					refStation.put(station.getLabelMotriceRefGare(), station.getCodeGareMotriceRefGare());
+					refStation.put(station.getCodeGareMotriceRefGare(), station.getCodeGareMotriceRefGare());
 				}
 				context.setRefStation(refStation);
 			}
 		};
 	}
 	
-	/**
-	 * @return un intégrateur pour : la table de référence du matériel roulant.
-	 */
-	public static IIntegrator<List<MotriceRefEqpTypeEntity>, DessertesContext> itRefRollingStock() {
-		return new IIntegrator<List<MotriceRefEqpTypeEntity>, DessertesContext>() {
-			@Override public void set(DessertesContext context, List<MotriceRefEqpTypeEntity> value) {
-				List<String> refRollingStock = new ArrayList<String>();
-				for(MotriceRefEqpTypeEntity stock : value) {
-					refRollingStock.add(stock.getLabelEqpType());
-				}
-				context.setRefRollingStock(refRollingStock);
-			}
-		};
-	}
 }

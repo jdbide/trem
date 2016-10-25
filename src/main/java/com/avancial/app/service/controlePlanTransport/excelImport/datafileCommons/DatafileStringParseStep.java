@@ -25,14 +25,14 @@ public class DatafileStringParseStep extends ADatafileConditionalStep<DatafileCo
 	public DatafileStringParseStep(int column, String code) {
 		this.column = column;
 		this.code = code;
-		this.error = "impossible de lire le code sat";
+		this.error = "impossible de lire la chaine de caractère de la colonne " + column;
 	}
 	
 	/**
 	 * constructeur simple.
 	 * @param column colonne à utiliser.
 	 * @param code nom de la chaine mise en contexte de ligne.
-	 * @param error message d'erreur qui sera complété par " à la ligne [numéro de ligne]".
+	 * @param error message d'erreur qui sera complété par " à la ligne [numéro de ligne], si null aucune erreurs ne sera remonté en cas d'erreur".
 	 */
 	public DatafileStringParseStep(int column, String code, String error) {
 		this.column = column;
@@ -54,7 +54,11 @@ public class DatafileStringParseStep extends ADatafileConditionalStep<DatafileCo
 				String msg = this.error + " à la ligne " + (line.getIndex() + 1);
 				line.putParsed(this.code, this.readCell(context, this.column, line.getIndex(), msg));
 			} catch (ExcelImportException e) {
-				context.addParsingError(e);
+				if(this.error == null) {
+					line.getParseds().remove(this.error);
+				} else {
+					context.addParsingError(e);
+				}
 			}
 		}
 	}

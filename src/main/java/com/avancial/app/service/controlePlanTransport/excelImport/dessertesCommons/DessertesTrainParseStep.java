@@ -3,8 +3,6 @@ package com.avancial.app.service.controlePlanTransport.excelImport.dessertesComm
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import com.avancial.app.fileImport.excelImport.ExcelImportException;
-
 /**
  * étape de parsing des colonnes de train.
  * @author raphael.cabaret
@@ -23,14 +21,19 @@ public class DessertesTrainParseStep extends AConditionalLoopDessertesFinalStep<
 				cell = sheet.getRow(context.getFirstStationRow() - 1).getCell(col);
 				if(cell != null) {
 					int idTrain = (int) Math.floor(cell.getNumericCellValue());
-					subContext.getTrains().add(new DessertesTrainContext(col, idTrain, subContext));
-					col++;
+					if(idTrain != 0) {
+						subContext.getTrains().add(new DessertesTrainContext(col, idTrain, subContext));
+						col++;
+					} else {
+						cell = null;
+						subContext.setLastTrainColumn(col - 1);
+					}
 				} else {
-					subContext.setLastTrainColumn(col);
+					subContext.setLastTrainColumn(col - 1);
 				}
 			} catch (Exception e) {
-				context.addParsingError(new ExcelImportException(cell, "impossible de lire le numéro du train", e));
-				col++;
+				cell = null;
+				subContext.setLastTrainColumn(col - 1);
 			}
 		} while (cell != null);
 	}
